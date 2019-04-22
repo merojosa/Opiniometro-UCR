@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opiniometro_WebApp", "Opiniometro_WebApp\Opiniometro_WebApp.csproj", "{E7885753-B67B-420D-9C85-5F252F8C941B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E7885753-B67B-420D-9C85-5F252F8C941B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7885753-B67B-420D-9C85-5F252F8C941B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7885753-B67B-420D-9C85-5F252F8C941B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7885753-B67B-420D-9C85-5F252F8C941B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {161B936B-25D8-4347-86A7-8BF08F6864A6}
+	EndGlobalSection
+EndGlobal

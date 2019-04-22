@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Opiniometro_Datos", "Opiniometro_Datos\Opiniometro_Datos.sqlproj", "{F85B8882-E9ED-471A-95DB-5637EAE0C635}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F85B8882-E9ED-471A-95DB-5637EAE0C635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F85B8882-E9ED-471A-95DB-5637EAE0C635}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F85B8882-E9ED-471A-95DB-5637EAE0C635}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F85B8882-E9ED-471A-95DB-5637EAE0C635}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F85B8882-E9ED-471A-95DB-5637EAE0C635}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F85B8882-E9ED-471A-95DB-5637EAE0C635}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F0DE2A4B-11B1-4561-81B1-4C17A4BA5C7F}
+	EndGlobalSection
+EndGlobal
