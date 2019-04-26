@@ -58,4 +58,13 @@
   <ItemGroup>
     <Folder Include="Properties" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="Seccion.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Opiniometro_Datos.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeploymentSeccion.sql" />
+  </ItemGroup>
 </Project>
