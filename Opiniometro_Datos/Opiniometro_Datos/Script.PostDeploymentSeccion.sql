@@ -9,14 +9,11 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-DELETE FROM Seccion;
-DBCC CHECKIDENT ('Seccion', RESEED, 0);
-
 MERGE INTO Seccion AS Target  
 USING (VALUES          
-	('Ingenieria de Software'),          
-	('Bases de Datos'),          
-	('Proyecto')  
+	('Información del o la estudiante'),          
+	('Evaluación del desempeño docente'),          
+	('Temáticas transversales de la Universidad de Costa Rica')  
 )
 AS Source (Titulo)
 ON Target.Titulo = Source.Titulo 
