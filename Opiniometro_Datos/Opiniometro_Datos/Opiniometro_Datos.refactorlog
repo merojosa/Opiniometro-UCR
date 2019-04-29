@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="3f55cd4f-33c1-4b5d-9fbd-648fc94e3c95" ChangeDateTime="04/29/2019 01:46:16">
+    <Property Name="ElementName" Value="[dbo].[Persona].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Persona]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Cedula" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c386e1e5-c8da-46fa-a357-dc3b0e02d672" ChangeDateTime="04/29/2019 01:48:43">
+    <Property Name="ElementName" Value="[dbo].[Persona].[Prueba]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Persona]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Nombre" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="04381c33-c660-4ac1-a5d8-429f64f1388b" ChangeDateTime="04/29/2019 01:50:12">
+    <Property Name="ElementName" Value="[dbo].[Estudiante].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Estudiante]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Cedula" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0018c61f-6975-40a1-90c4-d3cd7a123eae" ChangeDateTime="04/29/2019 01:58:50">
+    <Property Name="ElementName" Value="[dbo].[Estudiante].[Cedula]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Estudiante]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Cedula_Estudiante" />
+  </Operation>
+</Operations>

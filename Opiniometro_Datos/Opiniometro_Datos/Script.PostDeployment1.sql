@@ -9,3 +9,13 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+
+INSERT INTO Persona
+VALUES ('111111', 'Juan', 'Carillo', 'Jimenez');
+INSERT INTO Estudiante
+VALUES ('111111', 'BXXXXX');
+
+/* PENDING: PROCEDIMIENTOS ALMACENADOS
+SELECT P.Nombre, P.Apellido1, P.Apellido2, E.Carne
+FROM Persona P JOIN Estudiante E ON E.Cedula_Estudiante = P.Cedula
+/*

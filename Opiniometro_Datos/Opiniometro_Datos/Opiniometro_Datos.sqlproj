@@ -61,4 +61,11 @@
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment1.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="Persona.sql" />
+    <Build Include="Estudiante.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Opiniometro_Datos.refactorlog" />
+  </ItemGroup>
 </Project>
