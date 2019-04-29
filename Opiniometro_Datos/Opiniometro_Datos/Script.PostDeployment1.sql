@@ -1,14 +1,17 @@
-﻿/*
-Post-Deployment Script Template							
---------------------------------------------------------------------------------------
- This file contains SQL statements that will be appended to the build script.		
- Use SQLCMD syntax to include a file in the post-deployment script.			
- Example:      :r .\myfile.sql								
- Use SQLCMD syntax to reference a variable in the post-deployment script.		
- Example:      :setvar TableName MyTable							
-               SELECT * FROM [$(TableName)]					
---------------------------------------------------------------------------------------
-*/
+﻿--Eliminar todos los datos para que quede limpia a la hora de insertar nuevamente datos establecidos.
+
+EXEC sp_MSForEachTable 'DISABLE TRIGGER ALL ON ?'
+GO
+EXEC sp_MSForEachTable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL'
+GO
+EXEC sp_MSForEachTable 'DELETE FROM ?'
+GO
+EXEC sp_MSForEachTable 'ALTER TABLE ? CHECK CONSTRAINT ALL'
+GO
+EXEC sp_MSForEachTable 'ENABLE TRIGGER ALL ON ?'
+GO
+
+--Inserciones
 
 INSERT INTO Persona
 VALUES ('111111', 'Juan', 'Carillo', 'Jimenez');
@@ -18,4 +21,4 @@ VALUES ('111111', 'BXXXXX');
 /* PENDING: PROCEDIMIENTOS ALMACENADOS
 SELECT P.Nombre, P.Apellido1, P.Apellido2, E.Carne
 FROM Persona P JOIN Estudiante E ON E.Cedula_Estudiante = P.Cedula
-/*
+*/
