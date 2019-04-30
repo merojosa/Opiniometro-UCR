@@ -13,12 +13,13 @@ GO
 
 --Inserciones
 
-INSERT INTO Persona
-VALUES ('111111', 'Juan', 'Carillo', 'Jimenez');
-INSERT INTO Estudiante
-VALUES ('111111', 'BXXXXX');
-
-/* PENDING: PROCEDIMIENTOS ALMACENADOS
-SELECT P.Nombre, P.Apellido1, P.Apellido2, E.Carne
-FROM Persona P JOIN Estudiante E ON E.Cedula_Estudiante = P.Cedula
-*/
+INSERT INTO Persona VALUES 
+ ('111111', 'Juan', 'Carillo', 'Jimenez')
+,('222222', 'María', 'Mejías', 'Guierrez')
+,('333333', 'Ellie', 'Rodríguez', 'Rojas')
+,('444444', 'Abel', 'Hernández', 'Pérez');
+INSERT INTO Estudiante VALUES 
+ ('111111', 'B11111')
+,('222222', 'B22222')
+,('333333', 'B33333') 
+,('444444', 'B44444');
