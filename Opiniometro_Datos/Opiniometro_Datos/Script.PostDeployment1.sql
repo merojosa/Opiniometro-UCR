@@ -1,4 +1,4 @@
-﻿--Eliminar todos los datos para que quede limpia a la hora de insertar nuevamente datos establecidos.
+﻿--Eliminar todos los datos para que quede limpia la base a la hora de insertar nuevamente los datos establecidos.
 
 EXEC sp_MSForEachTable 'DISABLE TRIGGER ALL ON ?'
 GO
@@ -11,7 +11,7 @@ GO
 EXEC sp_MSForEachTable 'ENABLE TRIGGER ALL ON ?'
 GO
 
---Inserciones
+--Inserciones de datos
 
 INSERT INTO Persona VALUES 
  ('111111', 'Juan', 'Carillo', 'Jimenez')
@@ -24,6 +24,8 @@ INSERT INTO Estudiante VALUES
 ,('333333', 'B33333') 
 ,('444444', 'B44444');
 
+--Procedimientos almacenados
+
 IF OBJECT_ID('MostrarEstudiantes', 'P') IS NOT NULL 
 DROP PROC MostrarEstudiantes
 
@@ -34,7 +36,7 @@ IF OBJECT_ID('DatosEstudiante', 'P') IS NOT NULL
 DROP PROC DatosEstudiante
 
 go
---Consulta de la pantalla 1
+--Pantalla 1, Home
 CREATE PROCEDURE MostrarEstudiantes
 AS 
 SELECT Nombre, Apellido1, Apellido2, Carne
@@ -51,7 +53,7 @@ FROM Persona
 WHERE Cedula = @Cedula;
 
 
---Pantalla 3, informacion estudiante
+--Pantalla 3, informacion de un estudiante
 GO
 CREATE PROCEDURE DatosEstudiante
 @Cedula VARCHAR(9)
