@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Seccion>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Secciones</h2>
+
+<p>
+    @Html.ActionLink("Agregar Seccion", "Create")
+</p>
+<table class="table">
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titulo)
+            <br />
+            <small>Item 1</small>
+            <br />
+            <small>Item 2</small>
+            <br />
+            <small>Item 3</small>
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Titulo }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Titulo }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Titulo })
+        </td>
+    </tr>
+}
+
+</table>
