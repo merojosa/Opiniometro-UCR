@@ -1,0 +1,41 @@
+﻿@model Opiniometro_WebApp.Models.Estudiante
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Estudiante</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Carne)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Carne)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Persona.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Persona.Nombre)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor( model => model.Persona.Cedula) <!--Buscar como poner etiqueta de cedula sin usar etiqueta de la tabla Persona-->
+        </dt>
+        
+        <dd>
+            @Html.DisplayFor(model => model.Cedula_Estudiante)
+        </dd>
+    </dl>
+</div>
+<p>
+   
+    @Html.ActionLink("Back to perfil", "Perfil", new {id = @Model.Cedula_Estudiante})
+</p>
