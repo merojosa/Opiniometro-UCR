@@ -23,3 +23,39 @@ INSERT INTO Estudiante VALUES
 ,('222222', 'B22222')
 ,('333333', 'B33333') 
 ,('444444', 'B44444');
+
+IF OBJECT_ID('MostrarEstudiantes', 'P') IS NOT NULL 
+DROP PROC MostrarEstudiantes
+
+IF OBJECT_ID('NombrePersona', 'P') IS NOT NULL 
+DROP PROC NombrePersona
+
+IF OBJECT_ID('DatosEstudiante', 'P') IS NOT NULL 
+DROP PROC DatosEstudiante
+
+go
+--Consulta de la pantalla 1
+CREATE PROCEDURE MostrarEstudiantes
+AS 
+SELECT Nombre, Apellido1, Apellido2, Carne
+FROM Persona JOIN Estudiante ON Persona.Cedula = Estudiante.Cedula_Estudiante;
+
+
+--Pantalla 2 solo el nombre para bienvenida
+go
+CREATE PROCEDURE NombrePersona 
+@Cedula VARCHAR(9)
+AS
+SELECT Nombre
+FROM Persona
+WHERE Cedula = @Cedula;
+
+
+--Pantalla 3, informacion estudiante
+GO
+CREATE PROCEDURE DatosEstudiante
+@Cedula VARCHAR(9)
+AS
+SELECT CONCAT(Nombre, ' ' ,Apellido1, ' ', Apellido2) as 'Nombre Completo', Carne, Cedula
+FROM Persona JOIN Estudiante ON Persona.Cedula = Estudiante.Cedula_Estudiante
+WHERE Cedula = @Cedula;
