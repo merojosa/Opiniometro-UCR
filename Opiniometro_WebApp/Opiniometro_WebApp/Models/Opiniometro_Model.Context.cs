@@ -34,8 +34,8 @@ namespace Opiniometro_WebApp.Models
         public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)
         {
             var cedulaParameter = cedula != null ?
-                new ObjectParameter("Cedula_Estudiante", cedula) :
-                new ObjectParameter("Cedula_Estudiante", typeof(string));
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DatosEstudiante_Result>("DatosEstudiante", cedulaParameter);
         }
@@ -48,8 +48,8 @@ namespace Opiniometro_WebApp.Models
         public virtual ObjectResult<string> NombrePersona(string cedula)
         {
             var cedulaParameter = cedula != null ?
-                new ObjectParameter("Cedula_Estudiante", cedula) :
-                new ObjectParameter("Cedula_Estudiante", typeof(string));
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("NombrePersona", cedulaParameter);
         }
