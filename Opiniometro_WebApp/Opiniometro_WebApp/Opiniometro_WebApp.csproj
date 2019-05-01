@@ -222,8 +222,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\TheStrategists\About.cshtml" />
-    <Content Include="Views\TheStrategists\Contact.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\TheStrategists\Index.cshtml" />
     <Content Include="Views\Estudiante\Create.cshtml" />
     <Content Include="Views\Estudiante\Delete.cshtml" />

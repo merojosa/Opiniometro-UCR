@@ -17,7 +17,7 @@ INSERT INTO Persona VALUES
  ('111111', 'Juan', 'Carillo', 'Jimenez')
 ,('222222', 'María', 'Mejías', 'Guierrez')
 ,('333333', 'Ellie', 'Rodríguez', 'Rojas')
-,('444444', 'Abel', 'Hernández', 'Pérez');
+,('444444', 'Abel', 'Hernández', null);
 INSERT INTO Estudiante VALUES 
  ('111111', 'B11111')
 ,('222222', 'B22222')

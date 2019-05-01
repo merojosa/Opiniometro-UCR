@@ -11,7 +11,10 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Carne)
+            <!-- Se comenta para poder desplegarlo con tilde, la columna se llama Carne (sin tilde)
+                @Html.DisplayNameFor(model => model.Carne):-->
+            Carné:
+
         </dt>
 
         <dd>
@@ -19,15 +22,18 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Persona.Nombre)
+            Nombre completo:
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Persona.Nombre)
+            @Html.DisplayFor(model => model.Persona.Nombre) @Html.DisplayFor(model => model.Persona.Apellido1) @Html.DisplayFor(model => model.Persona.Apellido2)
         </dd>
         
         <dt>
-            @Html.DisplayNameFor( model => model.Persona.Cedula) <!--Buscar como poner etiqueta de cedula sin usar etiqueta de la tabla Persona-->
+            <!-- Se comenta para poder desplegarlo con tilde, la columna se llama Cerne (sin tilde)
+                @Html.DisplayNameFor(model => model.Cedula_Estudiante):-->
+            <!--Buscar como poner etiqueta de cedula sin usar etiqueta de la tabla Persona-->
+            Cédula:
         </dt>
         
         <dd>

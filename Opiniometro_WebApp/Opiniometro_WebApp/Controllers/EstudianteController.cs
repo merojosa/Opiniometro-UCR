@@ -12,6 +12,7 @@ namespace Opiniometro_WebApp.Controllers
 {
     public class EstudianteController : Controller
     {
+        /*
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
         // GET: Estudiante
@@ -36,7 +37,6 @@ namespace Opiniometro_WebApp.Controllers
             return View(estudiante);
         }
 
-        /*
         // GET: Estudiante/Create
         public ActionResult Create()
         {
@@ -119,7 +119,6 @@ namespace Opiniometro_WebApp.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        */
 
         public ActionResult Perfil(string id)
         {
@@ -143,5 +142,7 @@ namespace Opiniometro_WebApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+        */
     }
 }

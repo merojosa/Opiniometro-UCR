@@ -23,11 +23,14 @@
     @foreach (var item in Model)
     {
         <tr>
+            <!--Nombre y apellido-->
             <td>
-                @Html.DisplayFor(modelItem => item.Persona.Nombre).ToString() @Html.DisplayFor(modelItem => item.Persona.Apellido1).ToString()
+                @Html.DisplayFor(modelItem => item.Persona.Nombre) @Html.DisplayFor(modelItem => item.Persona.Apellido1)
             </td>
+            <!--Carne-->
             <td>
-                @Html.ActionLink(@Html.DisplayFor(modelItem => item.Carne).ToString(), "Perfil", new { id = item.Cedula_Estudiante })
+                @Html.ActionLink(@Html.DisplayFor(modelItem => item.Carne).ToHtmlString(), "Perfil", new { id = item.Cedula_Estudiante })
+
             </td>
             <!--
             <td>
