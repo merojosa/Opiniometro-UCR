@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<Opiniometro_WebApp.Models.Curso>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Cursos disponibles";
 }
 
-<h2>Index</h2>
+<h2>Cursos disponibles</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @*@Html.ActionLink("Create New", "Create")*@
 </p>
 <table class="table">
     <tr>
@@ -29,9 +29,10 @@
             @Html.DisplayFor(modelItem => item.NombreCurso)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.CodigoCurso }) |
+            
+            @*@Html.ActionLink("Edit", "Edit", new { id = item.CodigoCurso }) |
             @Html.ActionLink("Details", "Details", new { id = item.CodigoCurso }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.CodigoCurso })
+            @Html.ActionLink("Delete", "Delete", new { id = item.CodigoCurso })*@
         </td>
     </tr>
 }
