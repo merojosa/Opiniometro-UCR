@@ -35,14 +35,13 @@ namespace Opiniometro_WebApp.Controllers
             }
             return View(estudiante);
         }
-
+        /*
         // GET: Estudiante/Create
         public ActionResult Create()
         {
             ViewBag.Cedula_Estudiante = new SelectList(db.Personas, "Cedula_Estudiante", "Nombre");
             return View();
         }
-
         // POST: Estudiante/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -119,6 +118,7 @@ namespace Opiniometro_WebApp.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        */
 
         public ActionResult Perfil(string id)
         {
