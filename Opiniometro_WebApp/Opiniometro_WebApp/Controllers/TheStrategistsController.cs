@@ -52,5 +52,19 @@ namespace Opiniometro_WebApp.Controllers
             }
             return View(estudiante);
         }
+
+        public ActionResult Perfil(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Estudiante estudiante = db.Estudiantes.Find(id);
+            if (estudiante == null)
+            {
+                return HttpNotFound();
+            }
+            return View(estudiante);
+        }
     }
 }
