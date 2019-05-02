@@ -135,8 +135,27 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PreguntasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModeloPreguntas.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModeloPreguntas.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModeloPreguntas.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModeloPreguntas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModeloPreguntas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModeloPreguntas.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Pregunta.cs">
+      <DependentUpon>ModeloPreguntas.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -149,8 +168,25 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\ModeloPreguntas.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModeloPreguntas.Context.cs</LastGenOutput>
+      <DependentUpon>ModeloPreguntas.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\ModeloPreguntas.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModeloPreguntas.edmx</DependentUpon>
+      <LastGenOutput>ModeloPreguntas.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\ModeloPreguntas.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModeloPreguntas.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ModeloPreguntas.edmx.diagram">
+      <DependentUpon>ModeloPreguntas.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -176,10 +212,14 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Preguntas\Create.cshtml" />
+    <Content Include="Views\Preguntas\Delete.cshtml" />
+    <Content Include="Views\Preguntas\Details.cshtml" />
+    <Content Include="Views\Preguntas\Edit.cshtml" />
+    <Content Include="Views\Preguntas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
