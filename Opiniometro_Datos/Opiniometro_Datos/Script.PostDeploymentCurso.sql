@@ -13,7 +13,7 @@ MERGE INTO Curso AS Target
 USING (VALUES
  ('CI1213', 'Ingenieria de Software'),
  ('CI1223', 'Bases de Datos'),
- ('CI1211', 'Proyecto')
+ ('CI1211', 'Proyecto Integrador')
 )
 AS Source ([CodigoCurso], NombreCurso)
 ON Target.CodigoCurso = Source.CodigoCurso

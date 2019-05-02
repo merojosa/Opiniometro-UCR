@@ -41,6 +41,12 @@ namespace Opiniometro_WebApp.Controllers
             return View();
         }
 
+        //GET: Formulario
+        public ActionResult Formulario()
+        {
+            return View();
+        }
+
         // POST: Curso/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
