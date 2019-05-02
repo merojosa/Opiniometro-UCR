@@ -61,6 +61,7 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Preguntas/Edit/5
         public ActionResult Edit(string id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -80,6 +81,7 @@ namespace Opiniometro_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Planteamiento")] Preguntas preguntas)
         {
+
             if (ModelState.IsValid)
             {
                 db.Entry(preguntas).State = EntityState.Modified;
