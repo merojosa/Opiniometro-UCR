@@ -212,6 +212,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Preguntas\Create.cshtml" />
+    <Content Include="Views\Preguntas\Delete.cshtml" />
+    <Content Include="Views\Preguntas\Details.cshtml" />
+    <Content Include="Views\Preguntas\Edit.cshtml" />
+    <Content Include="Views\Preguntas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
