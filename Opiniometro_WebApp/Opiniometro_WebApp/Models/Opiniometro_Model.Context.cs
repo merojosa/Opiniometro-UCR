@@ -13,10 +13,10 @@ namespace Opiniometro_WebApp.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Opiniometro_DatosEntities1 : DbContext
+    public partial class Opiniometro_DatosEntities : DbContext
     {
-        public Opiniometro_DatosEntities1()
-            : base("name=Opiniometro_DatosEntities1")
+        public Opiniometro_DatosEntities()
+            : base("name=Opiniometro_DatosEntities")
         {
         }
     
@@ -25,6 +25,6 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Pregunta> Preguntas { get; set; }
+        public DbSet<Preguntas> Preguntas { get; set; }
     }
 }
