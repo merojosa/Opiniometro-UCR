@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Pregunta>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Numero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Planteamiento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoPregunta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Categoria)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Numero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Planteamiento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoPregunta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Categoria)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Planteamiento }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Planteamiento }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Planteamiento })
+        </td>
+    </tr>
+}
+
+</table>
