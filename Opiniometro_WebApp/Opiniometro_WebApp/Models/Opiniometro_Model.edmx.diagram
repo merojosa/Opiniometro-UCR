@@ -4,8 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="11c9f9d9946844ea9e96bbfae37dfc21" Name="Diagram1">
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.Preguntas" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="73625b64052a4f0aa7400e5d68bc52ab" Name="Diagram1">
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Pregunta" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

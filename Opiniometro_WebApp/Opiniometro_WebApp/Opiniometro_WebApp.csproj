@@ -151,7 +151,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Preguntas.cs">
+    <Compile Include="Models\Pregunta.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -167,8 +167,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\Opiniometro_Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Opiniometro_Model.Context.cs</LastGenOutput>
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
+      <LastGenOutput>Opiniometro_Model.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Opiniometro_Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

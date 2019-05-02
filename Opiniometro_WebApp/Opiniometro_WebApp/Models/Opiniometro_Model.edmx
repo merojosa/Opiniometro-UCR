@@ -4,18 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Opiniometro_DatosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Opiniometro_DatosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Preguntas">
           <Key>
             <PropertyRef Name="Planteamiento" />
           </Key>
-          <Property Name="Planteamiento" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Planteamiento" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="Numero" Type="int" />
+          <Property Name="TipoPregunta" Type="nchar" MaxLength="30" />
+          <Property Name="Categoria" Type="nchar" MaxLength="30" />
         </EntityType>
         <EntityContainer Name="Opiniometro_DatosModelStoreContainer">
           <EntitySet Name="Preguntas" EntityType="Self.Preguntas" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Opiniometro_DatosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -23,10 +25,13 @@
           <Key>
             <PropertyRef Name="Planteamiento" />
           </Key>
-          <Property Name="Planteamiento" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Planteamiento" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Numero" Type="Int32" />
+          <Property Name="TipoPregunta" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" />
+          <EntitySet Name="Preguntas" EntityType="Self.Pregunta" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -38,6 +43,9 @@
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Preguntas">
               <MappingFragment StoreEntitySet="Preguntas">
                 <ScalarProperty Name="Planteamiento" ColumnName="Planteamiento" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="TipoPregunta" ColumnName="TipoPregunta" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
