@@ -25,6 +25,6 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Pregunta> Preguntas { get; set; }
+        public virtual DbSet<Preguntas> Preguntas { get; set; }
     }
 }

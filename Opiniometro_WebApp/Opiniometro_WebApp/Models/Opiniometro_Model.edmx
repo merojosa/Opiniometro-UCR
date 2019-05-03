@@ -31,7 +31,7 @@
           <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Preguntas" EntityType="Self.Pregunta" />
+          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>

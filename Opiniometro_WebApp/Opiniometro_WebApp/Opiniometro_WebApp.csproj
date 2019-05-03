@@ -151,7 +151,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Pregunta.cs">
+    <Compile Include="Models\Preguntas.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
