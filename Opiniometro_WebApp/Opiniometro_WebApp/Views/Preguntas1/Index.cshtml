@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Opiniometro_WebApp.Models.Pregunta>
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Preguntas>
 
 @{
     ViewBag.Title = "Index";
@@ -41,9 +41,9 @@
             @Html.DisplayFor(modelItem => item.Categoria)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Planteamiento }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Planteamiento }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Planteamiento })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Planteamiento }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Planteamiento }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Planteamiento })
         </td>
     </tr>
 }

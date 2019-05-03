@@ -10,107 +10,107 @@ using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
 {
-    public class PreguntasController : Controller
+    public class Preguntas1Controller : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
-        // GET: Preguntas
+        // GET: Preguntas1
         public ActionResult Index()
         {
             return View(db.Preguntas.ToList());
         }
 
-        // GET: Preguntas/Details/5
+        // GET: Preguntas1/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pregunta pregunta = db.Preguntas.Find(id);
-            if (pregunta == null)
+            Preguntas preguntas = db.Preguntas.Find(id);
+            if (preguntas == null)
             {
                 return HttpNotFound();
             }
-            return View(pregunta);
+            return View(preguntas);
         }
 
-        // GET: Preguntas/Create
+        // GET: Preguntas1/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Preguntas/Create
+        // POST: Preguntas1/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Planteamiento,Numero,TipoPregunta,Categoria")] Pregunta pregunta)
+        public ActionResult Create([Bind(Include = "Planteamiento,Numero,TipoPregunta,Categoria")] Preguntas preguntas)
         {
             if (ModelState.IsValid)
             {
-                db.Preguntas.Add(pregunta);
+                db.Preguntas.Add(preguntas);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(pregunta);
+            return View(preguntas);
         }
 
-        // GET: Preguntas/Edit/5
+        // GET: Preguntas1/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pregunta pregunta = db.Preguntas.Find(id);
-            if (pregunta == null)
+            Preguntas preguntas = db.Preguntas.Find(id);
+            if (preguntas == null)
             {
                 return HttpNotFound();
             }
-            return View(pregunta);
+            return View(preguntas);
         }
 
-        // POST: Preguntas/Edit/5
+        // POST: Preguntas1/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Planteamiento,Numero,TipoPregunta,Categoria")] Pregunta pregunta)
+        public ActionResult Edit([Bind(Include = "Planteamiento,Numero,TipoPregunta,Categoria")] Preguntas preguntas)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(pregunta).State = EntityState.Modified;
+                db.Entry(preguntas).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(pregunta);
+            return View(preguntas);
         }
 
-        // GET: Preguntas/Delete/5
+        // GET: Preguntas1/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pregunta pregunta = db.Preguntas.Find(id);
-            if (pregunta == null)
+            Preguntas preguntas = db.Preguntas.Find(id);
+            if (preguntas == null)
             {
                 return HttpNotFound();
             }
-            return View(pregunta);
+            return View(preguntas);
         }
 
-        // POST: Preguntas/Delete/5
+        // POST: Preguntas1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Pregunta pregunta = db.Preguntas.Find(id);
-            db.Preguntas.Remove(pregunta);
+            Preguntas preguntas = db.Preguntas.Find(id);
+            db.Preguntas.Remove(preguntas);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
