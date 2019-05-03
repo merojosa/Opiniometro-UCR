@@ -10,115 +10,128 @@ using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
 {
-    public class CursoController : Controller
+    public class EstudianteController : Controller
     {
+        /*
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
-        // GET: Curso
+        // GET: Estudiante
         public ActionResult Index()
         {
-            return View(db.Cursoes.ToList());
+            var estudiantes = db.Estudiantes.Include(e => e.Persona);
+            return View(estudiantes.ToList());
         }
 
-        // GET: Curso/Details/5
+        // GET: Estudiante/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Curso curso = db.Cursoes.Find(id);
-            if (curso == null)
+            Estudiante estudiante = db.Estudiantes.Find(id);
+            if (estudiante == null)
             {
                 return HttpNotFound();
             }
-            return View(curso);
+            return View(estudiante);
         }
 
-        // GET: Curso/Create
+        // GET: Estudiante/Create
         public ActionResult Create()
         {
+            ViewBag.Cedula_Estudiante = new SelectList(db.Personas, "Cedula_Estudiante", "Nombre");
             return View();
         }
-
-        //GET: Formulario
-        public ActionResult Formulario()
-        {
-            return View();
-        }
-
-        // POST: Curso/Create
+        // POST: Estudiante/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CodigoCurso,NombreCurso")] Curso curso)
+        public ActionResult Create([Bind(Include = "Cedula_Estudiante,Carne")] Estudiante estudiante)
         {
             if (ModelState.IsValid)
             {
-                db.Cursoes.Add(curso);
+                db.Estudiantes.Add(estudiante);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(curso);
+            ViewBag.Cedula_Estudiante = new SelectList(db.Personas, "Cedula_Estudiante", "Nombre", estudiante.Cedula_Estudiante);
+            return View(estudiante);
         }
 
-        // GET: Curso/Edit/5
+        // GET: Estudiante/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Curso curso = db.Cursoes.Find(id);
-            if (curso == null)
+            Estudiante estudiante = db.Estudiantes.Find(id);
+            if (estudiante == null)
             {
                 return HttpNotFound();
             }
-            return View(curso);
+            ViewBag.Cedula_Estudiante = new SelectList(db.Personas, "Cedula_Estudiante", "Nombre", estudiante.Cedula_Estudiante);
+            return View(estudiante);
         }
 
-        // POST: Curso/Edit/5
+        // POST: Estudiante/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CodigoCurso,NombreCurso")] Curso curso)
+        public ActionResult Edit([Bind(Include = "Cedula_Estudiante,Carne")] Estudiante estudiante)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(curso).State = EntityState.Modified;
+                db.Entry(estudiante).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(curso);
+            ViewBag.Cedula_Estudiante = new SelectList(db.Personas, "Cedula_Estudiante", "Nombre", estudiante.Cedula_Estudiante);
+            return View(estudiante);
         }
 
-        // GET: Curso/Delete/5
+        // GET: Estudiante/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Curso curso = db.Cursoes.Find(id);
-            if (curso == null)
+            Estudiante estudiante = db.Estudiantes.Find(id);
+            if (estudiante == null)
             {
                 return HttpNotFound();
             }
-            return View(curso);
+            return View(estudiante);
         }
 
-        // POST: Curso/Delete/5
+        // POST: Estudiante/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Curso curso = db.Cursoes.Find(id);
-            db.Cursoes.Remove(curso);
+            Estudiante estudiante = db.Estudiantes.Find(id);
+            db.Estudiantes.Remove(estudiante);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Perfil(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Estudiante estudiante = db.Estudiantes.Find(id);
+            if (estudiante == null)
+            {
+                return HttpNotFound();
+            }
+            return View(estudiante);
         }
 
         protected override void Dispose(bool disposing)
@@ -129,5 +142,7 @@ namespace Opiniometro_WebApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+        */
     }
 }

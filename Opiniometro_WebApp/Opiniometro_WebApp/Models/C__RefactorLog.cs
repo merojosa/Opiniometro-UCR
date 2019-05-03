@@ -12,9 +12,8 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Curso
+    public partial class C__RefactorLog
     {
-        public string CodigoCurso { get; set; }
-        public string NombreCurso { get; set; }
+        public System.Guid OperationKey { get; set; }
     }
 }

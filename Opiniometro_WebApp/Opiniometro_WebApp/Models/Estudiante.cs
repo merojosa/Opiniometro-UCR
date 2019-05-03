@@ -12,9 +12,11 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Curso
+    public partial class Estudiante
     {
-        public string CodigoCurso { get; set; }
-        public string NombreCurso { get; set; }
+        public string Cedula_Estudiante { get; set; }
+        public string Carne { get; set; }
+    
+        public virtual Persona Persona { get; set; }
     }
 }
