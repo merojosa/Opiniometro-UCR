@@ -59,6 +59,19 @@
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment1.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Persona.sql" />
+    <Build Include="Estudiante.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Opiniometro_Datos.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Curso.sql" />
+  </ItemGroup>
+  <ItemGroup>
     <Build Include="Preguntas.sql" />
   </ItemGroup>
   <ItemGroup>
