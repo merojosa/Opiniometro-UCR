@@ -12,6 +12,8 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class Opiniometro_DatosEntities : DbContext
     {
@@ -27,5 +29,31 @@ namespace Opiniometro_WebApp.Models
     
         public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Seccion> Seccions { get; set; }
+        public virtual DbSet<Curso> Cursoes { get; set; }
+        public virtual DbSet<Estudiante> Estudiantes { get; set; }
+        public virtual DbSet<Persona> Personas { get; set; }
+    
+        public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)
+        {
+            var cedulaParameter = cedula != null ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DatosEstudiante_Result>("DatosEstudiante", cedulaParameter);
+        }
+    
+        public virtual ObjectResult<MostrarEstudiantes_Result> MostrarEstudiantes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MostrarEstudiantes_Result>("MostrarEstudiantes");
+        }
+    
+        public virtual ObjectResult<string> NombrePersona(string cedula)
+        {
+            var cedulaParameter = cedula != null ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("NombrePersona", cedulaParameter);
+        }
     }
 }
