@@ -11,6 +11,7 @@
         <EntityTypeShape EntityType="Opiniometro_DatosModel.Estudiante" Width="1.5" PointX="3" PointY="3.125" />
         <EntityTypeShape EntityType="Opiniometro_DatosModel.Persona" Width="1.5" PointX="0.75" PointY="2.875" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Persona" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Pregunta" Width="1.5" PointX="0.75" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

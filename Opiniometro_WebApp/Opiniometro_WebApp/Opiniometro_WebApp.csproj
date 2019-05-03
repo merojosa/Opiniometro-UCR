@@ -176,10 +176,10 @@
     <Compile Include="Models\Persona.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Seccion.cs">
+    <Compile Include="Models\Pregunta.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-	  <Compile Include="Models\Preguntas.cs">
+    <Compile Include="Models\Seccion.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

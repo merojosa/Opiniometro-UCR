@@ -32,6 +32,19 @@ WHEN NOT MATCHED BY TARGET THEN
 INSERT (Titulo)
 VALUES (Titulo);
 
+MERGE INTO Preguntas AS Target
+USING (VALUES
+(1,'¿El curso es bonito?', 'Si_No', 'Curso'),
+(2,'¿Cumple con las horas consulta?', 'Seleccion_Unica', 'Profesor'),
+(3,'Califique de el rendimiento del profesor', 'Escala_0_10', 'Profesor'),
+(4, '¿Que tan satisfecho se encuentra con el mobiliario del aula?','Escala_likert_5','Infrastructura')
+)
+AS Source (Numero, [Planteamiento], TipoPregunta, Categoria)
+ON Target.Planteamiento = Source.Planteamiento
+WHEN NOT MATCHED BY TARGET THEN
+INSERT(Numero, Planteamiento, TipoPregunta, Categoria)
+VALUES(Numero, Planteamiento, TipoPregunta, Categoria);
+
 --Inserciones de datos
 
 INSERT INTO Persona VALUES 

@@ -32,6 +32,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Curso> Cursoes { get; set; }
         public virtual DbSet<Estudiante> Estudiantes { get; set; }
         public virtual DbSet<Persona> Personas { get; set; }
+        public virtual DbSet<Pregunta> Preguntas { get; set; }
     
         public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)
         {

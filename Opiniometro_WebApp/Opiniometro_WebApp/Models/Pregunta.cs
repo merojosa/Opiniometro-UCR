@@ -12,7 +12,7 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Preguntas
+    public partial class Pregunta
     {
         public string Planteamiento { get; set; }
         public Nullable<int> Numero { get; set; }
