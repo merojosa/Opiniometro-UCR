@@ -63,6 +63,7 @@
 	<Build Include="Persona.sql" />
     <Build Include="Estudiante.sql" />
 	<Build Include="Curso.sql" />
+	<Build Include="Preguntas.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Opiniometro_Datos.refactorlog" />

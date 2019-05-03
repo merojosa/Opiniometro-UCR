@@ -139,6 +139,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\TheStrategistsController.cs" />
+    <Compile Include="Controllers\Preguntas1Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -173,6 +174,9 @@
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Persona.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Pregunta.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Seccion.cs">
@@ -251,6 +255,11 @@
     <Content Include="Views\Seccion\Details.cshtml" />
     <Content Include="Views\Seccion\Edit.cshtml" />
     <Content Include="Views\Seccion\Index.cshtml" />
+    <Content Include="Views\Preguntas1\Create.cshtml" />
+    <Content Include="Views\Preguntas1\Delete.cshtml" />
+    <Content Include="Views\Preguntas1\Details.cshtml" />
+    <Content Include="Views\Preguntas1\Edit.cshtml" />
+    <Content Include="Views\Preguntas1\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

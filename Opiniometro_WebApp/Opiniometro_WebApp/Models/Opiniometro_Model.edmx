@@ -34,6 +34,15 @@
           <Property Name="Apellido1" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Apellido2" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Preguntas">
+          <Key>
+            <PropertyRef Name="Planteamiento" />
+          </Key>
+          <Property Name="Planteamiento" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="Numero" Type="int" />
+          <Property Name="TipoPregunta" Type="nchar" MaxLength="30" />
+          <Property Name="Categoria" Type="nchar" MaxLength="30" />
+        </EntityType>
         <EntityType Name="Seccion">
           <Key>
             <PropertyRef Name="Titulo" />
@@ -64,6 +73,7 @@
           <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estudiante" EntityType="Self.Estudiante" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Persona" Association="Self.FK_Persona">
             <End Role="Persona" EntitySet="Persona" />
@@ -97,12 +107,13 @@
             <End Role="Estudiante" EntitySet="Estudiantes" />
           </AssociationSet>
           <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_DatosModel.DatosEstudiante_Result)">
-            <Parameter Name="Cedula" Mode="In" Type="String" />
+          <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_DatosModel.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
-            <Parameter Name="Cedula" Mode="In" Type="String" />
+          <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Preguntas" EntityType="Opiniometro_DatosModel.Pregunta" />
         </EntityContainer>
         <EntityType Name="Curso">
           <Key>
@@ -152,6 +163,15 @@
           <Property Type="String" Name="Apellido2" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Carne" Nullable="false" MaxLength="6" />
         </ComplexType>
+        <EntityType Name="Pregunta">
+          <Key>
+            <PropertyRef Name="Planteamiento" />
+          </Key>
+          <Property Name="Planteamiento" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="Numero" Type="Int32" />
+          <Property Name="TipoPregunta" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -218,6 +238,16 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="Opiniometro_DatosModel.Store.NombrePersona" />
+          <EntitySetMapping Name="Preguntas">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Pregunta">
+              <MappingFragment StoreEntitySet="Preguntas">
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="TipoPregunta" ColumnName="TipoPregunta" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Planteamiento" ColumnName="Planteamiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
