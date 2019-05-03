@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Estudiante>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Estudiantes</h2>
+<!--
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+-->
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Persona.Nombre)
+        </th>
+        <th>
+            <!--@Html.DisplayNameFor(model => model.Carne)-->
+            Carné
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <!--Nombre y apellido-->
+            <td>
+                @Html.DisplayFor(modelItem => item.Persona.Nombre) @Html.DisplayFor(modelItem => item.Persona.Apellido1)
+            </td>
+            <!--Carne-->
+            <td>
+                @Html.ActionLink(@Html.DisplayFor(modelItem => item.Carne).ToHtmlString(), "Perfil", new { id = item.Cedula_Estudiante })
+
+            </td>
+            <!--
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Cedula_Estudiante })
+                @Html.ActionLink("Link", "Perfil", new { id = item.Cedula_Estudiante })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Cedula_Estudiante })
+            </td>
+            -->
+        </tr>
+    }
+
+</table>
