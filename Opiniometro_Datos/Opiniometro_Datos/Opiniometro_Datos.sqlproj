@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{f85b8882-e9ed-471a-95db-5637eae0c635}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -59,16 +59,12 @@
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Seccion.sql" />
-	<Build Include="Persona.sql" />
-    <Build Include="Estudiante.sql" />
-	<Build Include="Curso.sql" />
-	<Build Include="Preguntas.sql" />
-  </ItemGroup>
-  <ItemGroup>
     <RefactorLog Include="Opiniometro_Datos.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Script.PostDeploymentSeccion.sql" />
+    <PostDeploy Include="Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Usuario.sql" />
   </ItemGroup>
 </Project>
