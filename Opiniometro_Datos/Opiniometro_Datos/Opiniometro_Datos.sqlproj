@@ -60,6 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Seccion.sql" />
+    <Build Include="Responde.sql" />
+    <Build Include="Formulario_Respuesta.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Opiniometro_Datos.refactorlog" />
