@@ -20,7 +20,7 @@ namespace Opiniometro_WebApp.Controllers
             return View();
         }
 
-        // Recibe el correo y contraseña en form_collection.
+        // Action method que recibe un correo y contraseña por medio de un FormCollection.
         [HttpPost]
         public string Login(FormCollection form_collection)
         {
@@ -31,12 +31,12 @@ namespace Opiniometro_WebApp.Controllers
             SqlConnection conexion = new SqlConnection();
             conexion.ConnectionString = db.Database.Connection.ConnectionString;
 
-            // Comando para ejecutar la funcion, note que se usan los parametros brindados entre ' como siempre en SQL.
+            // Se declara la instruccion para invocar a la funcion almacenada.
             SqlCommand instruccion = new SqlCommand("SELECT dbo.SF_LoginUsuario(@Correo, @Contrasenna)", conexion);
 
+            // Se crean los parametros y se les da el valor que ingreso el usuario.
             instruccion.Parameters.Add("@Correo", SqlDbType.NVarChar);
             instruccion.Parameters.Add("@Contrasenna", SqlDbType.NVarChar);
-
             instruccion.Parameters["@Correo"].Value = form_collection["Correo"];
             instruccion.Parameters["@Contrasenna"].Value = form_collection["Contrasenna"];
 
