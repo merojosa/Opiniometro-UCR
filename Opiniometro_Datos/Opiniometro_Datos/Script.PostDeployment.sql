@@ -9,24 +9,6 @@ GO
 EXEC sp_MSForEachTable 'ENABLE TRIGGER ALL ON ?'
 
 
--- PROCEDURES
-IF OBJECT_ID('SP_AgregarUsuario') IS NOT NULL
-	DROP PROCEDURE SP_AgregarUsuario
-GO
-CREATE PROCEDURE SP_AgregarUsuario
-	@Correo			NVARCHAR(50),
-	@Contrasenna	NVARCHAR(50),
-	@Cedula			CHAR(9)
-AS
-BEGIN
-	SET NOCOUNT ON
-	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
-
-	INSERT INTO Usuario
-	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
-END
-GO
-
 -- FUNCTIONS
 IF OBJECT_ID('SF_LoginUsuario') IS NOT NULL
 	DROP FUNCTION SF_LoginUsuario
@@ -47,6 +29,24 @@ BEGIN
 		SET @Result = 1
 	RETURN @Result
 END;
+GO
+
+-- PROCEDURES
+IF OBJECT_ID('SP_AgregarUsuario') IS NOT NULL
+	DROP PROCEDURE SP_AgregarUsuario
+GO
+CREATE PROCEDURE SP_AgregarUsuario
+	@Correo			NVARCHAR(50),
+	@Contrasenna	NVARCHAR(50),
+	@Cedula			CHAR(9)
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
+
+	INSERT INTO Usuario
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+END
 GO
 
 EXEC SP_AgregarUsuario @Correo='jose.mejiasrojas@ucr.ac.cr', @Contrasenna='123456', @Cedula='116720500'

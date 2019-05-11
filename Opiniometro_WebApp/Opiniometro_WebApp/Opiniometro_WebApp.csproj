@@ -134,53 +134,28 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\CursoController.cs" />
-    <Compile Include="Controllers\EstudianteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SeccionController.cs" />
-    <Compile Include="Controllers\TheStrategistsController.cs" />
-    <Compile Include="Controllers\Preguntas1Controller.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Curso.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\C__RefactorLog.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DatosEstudiante_Result.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Estudiante.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MostrarEstudiantes_Result.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Opiniometro_Model.Context.cs">
+    <Compile Include="Models\OpiniometroModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Opiniometro_Model.Context.tt</DependentUpon>
+      <DependentUpon>OpiniometroModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Opiniometro_Model.cs">
+    <Compile Include="Models\OpiniometroModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Opiniometro_Model.Designer.cs">
+    <Compile Include="Models\OpiniometroModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
+      <DependentUpon>OpiniometroModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Persona.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Pregunta.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Seccion.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    <Compile Include="Models\Usuario.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -193,24 +168,24 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Opiniometro_Model.Context.tt">
+    <Content Include="Models\OpiniometroModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Opiniometro_Model.Context.cs</LastGenOutput>
-      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
+      <DependentUpon>OpiniometroModel.edmx</DependentUpon>
+      <LastGenOutput>OpiniometroModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Opiniometro_Model.tt">
+    <Content Include="Models\OpiniometroModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
-      <LastGenOutput>Opiniometro_Model.cs</LastGenOutput>
+      <DependentUpon>OpiniometroModel.edmx</DependentUpon>
+      <LastGenOutput>OpiniometroModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\Opiniometro_Model.edmx">
+    <EntityDeploy Include="Models\OpiniometroModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Opiniometro_Model.Designer.cs</LastGenOutput>
+      <LastGenOutput>OpiniometroModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Opiniometro_Model.edmx.diagram">
-      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
+    <Content Include="Models\OpiniometroModel.edmx.diagram">
+      <DependentUpon>OpiniometroModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -236,30 +211,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\TheStrategists\Index.cshtml" />
-    <Content Include="Views\Estudiante\Create.cshtml" />
-    <Content Include="Views\Estudiante\Delete.cshtml" />
-    <Content Include="Views\TheStrategists\Details.cshtml" />
-    <Content Include="Views\Estudiante\Edit.cshtml" />
-    <Content Include="Views\TheStrategists\Estudiantes.cshtml" />
-    <Content Include="Views\TheStrategists\Perfil.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Curso\Create.cshtml" />
-    <Content Include="Views\Curso\Delete.cshtml" />
-    <Content Include="Views\Curso\Details.cshtml" />
-    <Content Include="Views\Curso\Edit.cshtml" />
-    <Content Include="Views\Curso\Index.cshtml" />
-    <Content Include="Views\Curso\Formulario.cshtml" />
-    <Content Include="Views\Seccion\Create.cshtml" />
-    <Content Include="Views\Seccion\Delete.cshtml" />
-    <Content Include="Views\Seccion\Details.cshtml" />
-    <Content Include="Views\Seccion\Edit.cshtml" />
-    <Content Include="Views\Seccion\Index.cshtml" />
-    <Content Include="Views\Preguntas1\Create.cshtml" />
-    <Content Include="Views\Preguntas1\Delete.cshtml" />
-    <Content Include="Views\Preguntas1\Details.cshtml" />
-    <Content Include="Views\Preguntas1\Edit.cshtml" />
-    <Content Include="Views\Preguntas1\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
