@@ -15,10 +15,10 @@ namespace Opiniometro_WebApp.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class Opiniometro_DatosEntities3 : DbContext
+    public partial class Opiniometro_DatosEntities : DbContext
     {
-        public Opiniometro_DatosEntities3()
-            : base("name=Opiniometro_DatosEntities3")
+        public Opiniometro_DatosEntities()
+            : base("name=Opiniometro_DatosEntities")
         {
         }
     
@@ -27,6 +27,7 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     
         public virtual int SP_AgregarUsuario(string correo, string contrasenna, string cedula)
@@ -46,7 +47,7 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AgregarUsuario", correoParameter, contrasennaParameter, cedulaParameter);
         }
     
-        public virtual int SP_Login(string correo, string contrasenna, Nullable<int> resultado)
+        public virtual int SP_LoginUsuario(string correo, string contrasenna, ObjectParameter resultado)
         {
             var correoParameter = correo != null ?
                 new ObjectParameter("Correo", correo) :
@@ -56,11 +57,7 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Contrasenna", contrasenna) :
                 new ObjectParameter("Contrasenna", typeof(string));
     
-            var resultadoParameter = resultado.HasValue ?
-                new ObjectParameter("Resultado", resultado) :
-                new ObjectParameter("Resultado", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Login", correoParameter, contrasennaParameter, resultadoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_LoginUsuario", correoParameter, contrasennaParameter, resultado);
         }
     }
 }

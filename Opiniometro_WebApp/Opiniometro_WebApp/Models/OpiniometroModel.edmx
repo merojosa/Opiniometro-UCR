@@ -5,6 +5,12 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="Opiniometro_DatosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="CorreoInstitucional" />
@@ -15,21 +21,18 @@
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
-        <Function Name="SF_LoginUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
-          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
-          <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="SP_AgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
         </Function>
-        <Function Name="SP_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="SP_LoginUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
-          <Parameter Name="Resultado" Type="int" Mode="In" />
+          <Parameter Name="Resultado" Type="bit" Mode="InOut" />
         </Function>
         <EntityContainer Name="Opiniometro_DatosModelStoreContainer">
+          <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
@@ -37,6 +40,12 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Opiniometro_DatosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="Guid" Nullable="false" />
+        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="CorreoInstitucional" />
@@ -47,17 +56,18 @@
           <Property Name="Cedula" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Id" Type="Guid" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="Opiniometro_DatosEntities3" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
           <FunctionImport Name="SP_AgregarUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_Login">
+          <FunctionImport Name="SP_LoginUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
-            <Parameter Name="Resultado" Mode="In" Type="Int32" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
       </Schema>
@@ -65,7 +75,14 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities3">
+        <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities">
+          <EntitySetMapping Name="C__RefactorLog">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.C__RefactorLog">
+              <MappingFragment StoreEntitySet="__RefactorLog">
+                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
@@ -78,7 +95,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_Login" FunctionName="Opiniometro_DatosModel.Store.SP_Login" />
+          <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

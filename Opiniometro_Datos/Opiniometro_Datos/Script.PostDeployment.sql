@@ -8,29 +8,6 @@ EXEC sp_MSForEachTable 'ALTER TABLE ? CHECK CONSTRAINT ALL'
 GO
 EXEC sp_MSForEachTable 'ENABLE TRIGGER ALL ON ?'
 
-
--- FUNCTIONS
-IF OBJECT_ID('SF_LoginUsuario') IS NOT NULL
-	DROP FUNCTION SF_LoginUsuario
-GO
-CREATE FUNCTION SF_LoginUsuario
-	(@Correo NVARCHAR(50), @Contrasenna NVARCHAR(50))
-RETURNS BIT
-BEGIN
-	DECLARE @CorreoBuscar NVARCHAR(50), @Result BIT
-
-	-- Buscar que el correo y contrasenna calcen con lo que hay en la tabla Usuario.
-	SET @CorreoBuscar =	(SELECT CorreoInstitucional 
-						FROM Usuario
-						WHERE CorreoInstitucional=@Correo AND Contrasena=HASHBYTES('SHA2_512', @Contrasenna+CAST(Id AS NVARCHAR(36))))
-	IF(@CorreoBuscar IS NULL)	-- Si no calzan, no hay autenticacion.
-		SET @Result = 0
-	ELSE						-- Si hay autenticacion
-		SET @Result = 1
-	RETURN @Result
-END;
-GO
-
 -- PROCEDURES
 IF OBJECT_ID('SP_AgregarUsuario') IS NOT NULL
 	DROP PROCEDURE SP_AgregarUsuario
@@ -46,6 +23,31 @@ BEGIN
 
 	INSERT INTO Usuario
 	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+END
+GO
+
+IF OBJECT_ID('SP_LoginUsuario') IS NOT NULL
+	DROP PROCEDURE SP_LoginUsuario
+GO
+CREATE PROCEDURE SP_LoginUsuario
+	@Correo			NVARCHAR(50),
+	@Contrasenna	NVARCHAR(50),
+	@Resultado		BIT OUT
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @CorreoBuscar NVARCHAR(50)
+	
+	-- Buscar que el correo y la contrasenna sean correctos con lo que hay en la tabla Usuario.
+	SET @CorreoBuscar =	(SELECT CorreoInstitucional 
+						FROM Usuario
+						WHERE CorreoInstitucional=@Correo AND Contrasena=HASHBYTES('SHA2_512', @Contrasenna+CAST(Id AS NVARCHAR(36))))
+
+	IF(@CorreoBuscar IS NULL)	-- Si no calzan, no hay autenticacion.
+		SET @Resultado = 0
+	ELSE						-- Si hay autenticacion
+		SET @Resultado = 1
 END
 GO
 

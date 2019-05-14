@@ -18,7 +18,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44368</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -138,6 +138,9 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C__RefactorLog.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OpiniometroModel.Context.cs">
       <AutoGen>True</AutoGen>
