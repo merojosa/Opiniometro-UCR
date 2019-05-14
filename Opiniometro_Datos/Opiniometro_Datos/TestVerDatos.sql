@@ -1,0 +1,2 @@
+SELECT * FROM Persona
+SELECT * FROM Usuario

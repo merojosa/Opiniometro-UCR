@@ -63,8 +63,10 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
+    <None Include="ScriptNuevaPersonaUsuario.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Usuario.sql" />
+    <Build Include="Table1.sql" />
   </ItemGroup>
 </Project>
