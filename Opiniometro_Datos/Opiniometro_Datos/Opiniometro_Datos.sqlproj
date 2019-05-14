@@ -66,5 +66,12 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Usuario.sql" />
+    <Build Include="Persona.sql" />
+    <Build Include="Perfil.sql" />
+    <Build Include="Profesor.sql" />
+    <Build Include="Estudiante.sql" />
+    <Build Include="Administrativo.sql" />
+    <Build Include="Permiso.sql" />
+    <Build Include="Telefono_Persona.sql" />
   </ItemGroup>
 </Project>
