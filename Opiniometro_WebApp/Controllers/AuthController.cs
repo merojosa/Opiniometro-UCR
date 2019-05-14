@@ -8,11 +8,17 @@ using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
 {
-    public class LoginController : Controller
+    public class AuthController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
-        // GET: Login
+        // GET: Auth
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        // GET: Auth/Login
+        public ActionResult Login()
         {
             return View();
         }
@@ -23,11 +29,13 @@ namespace Opiniometro_WebApp.Controllers
         {
             ObjectParameter exito = new ObjectParameter("Resultado", 0);
             db.SP_LoginUsuario(form_collection["Correo"], form_collection["Contrasenna"], exito);
-
+            
             if ((bool)exito.Value == true)
                 return "Login exitoso";
             else
                 return "Login fallido";
+
+
         }
     }
 }

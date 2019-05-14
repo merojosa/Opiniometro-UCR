@@ -27,6 +27,7 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     
         public virtual int SP_AgregarUsuario(string correo, string contrasenna, string cedula)

@@ -26,7 +26,7 @@ namespace Opiniometro_WebApp
             {
                 // Se cambio la ruta para que siempre se redirija a Login para autenticarse, esto aplica para todos los [Authorize].
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Login/Index"),
+                LoginPath = new PathString("/Auth/Login"),
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.
