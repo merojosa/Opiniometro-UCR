@@ -66,5 +66,13 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Usuario.sql" />
+    <Build Include="Unidad_Academica.sql" />
+    <Build Include="Ciclo_Lectivo.sql" />
+    <Build Include="Facultad.sql" />
+    <Build Include="Carrera.sql" />
+    <Build Include="Curso.sql" />
+    <Build Include="Enfasis.sql" />
+    <Build Include="Grupo.sql" />
+    <Build Include="Escuela.sql" />
   </ItemGroup>
 </Project>

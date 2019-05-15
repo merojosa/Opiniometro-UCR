@@ -29,6 +29,13 @@ namespace Opiniometro_WebApp.Models
     
         public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<Carrera> Carrera { get; set; }
+        public virtual DbSet<Ciclo_Lectivo> Ciclo_Lectivo { get; set; }
+        public virtual DbSet<Curso> Curso { get; set; }
+        public virtual DbSet<Enfasis> Enfasis { get; set; }
+        public virtual DbSet<Facultad> Facultad { get; set; }
+        public virtual DbSet<Grupo> Grupo { get; set; }
+        public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
     
         public virtual int SP_AgregarUsuario(string correo, string contrasenna, string cedula)
         {
