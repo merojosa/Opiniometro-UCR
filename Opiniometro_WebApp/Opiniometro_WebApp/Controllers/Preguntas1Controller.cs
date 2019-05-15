@@ -27,7 +27,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Preguntas preguntas = db.Preguntas.Find(id);
+            Pregunta preguntas = db.Preguntas.Find(id);
             if (preguntas == null)
             {
                 return HttpNotFound();
@@ -46,7 +46,7 @@ namespace Opiniometro_WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Planteamiento,Numero,TipoPregunta,Categoria")] Preguntas preguntas)
+        public ActionResult Create([Bind(Include = "Planteamiento,Numero,TipoPregunta,Categoria")] Pregunta preguntas)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Preguntas preguntas = db.Preguntas.Find(id);
+            Pregunta preguntas = db.Preguntas.Find(id);
             if (preguntas == null)
             {
                 return HttpNotFound();
@@ -78,7 +78,7 @@ namespace Opiniometro_WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Planteamiento,Numero,TipoPregunta,Categoria")] Preguntas preguntas)
+        public ActionResult Edit([Bind(Include = "Planteamiento,Numero,TipoPregunta,Categoria")] Pregunta preguntas)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Preguntas preguntas = db.Preguntas.Find(id);
+            Pregunta preguntas = db.Preguntas.Find(id);
             if (preguntas == null)
             {
                 return HttpNotFound();
@@ -109,7 +109,7 @@ namespace Opiniometro_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Preguntas preguntas = db.Preguntas.Find(id);
+            Pregunta preguntas = db.Preguntas.Find(id);
             db.Preguntas.Remove(preguntas);
             db.SaveChanges();
             return RedirectToAction("Index");
