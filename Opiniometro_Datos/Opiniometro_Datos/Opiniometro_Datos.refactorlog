@@ -7,4 +7,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Planteamiento" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="42c1daa1-4027-49bc-abd8-209b05353865" ChangeDateTime="05/02/2019 21:15:55">
+    <Property Name="ElementName" Value="[dbo].[Preguntas].[Tipo]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Preguntas]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TipoPregunta" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8e2b75ea-5bac-4acf-b800-8330a6e1aea7" ChangeDateTime="05/10/2019 19:45:51">
+    <Property Name="ElementName" Value="[dbo].[Usuario].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Usuario]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CorreoInstitucional" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="dca4f05f-64a9-43eb-a7f0-bd5129b2ca3e" ChangeDateTime="05/10/2019 19:46:24">
+    <Property Name="ElementName" Value="[dbo].[Usuario].[Contrasenna]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Usuario]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Contrasena" />
+  </Operation>
 </Operations>

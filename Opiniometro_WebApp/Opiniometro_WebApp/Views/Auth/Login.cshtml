@@ -1,0 +1,34 @@
+﻿@model Opiniometro_WebApp.Models.Usuario
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+
+@using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+{
+    <table>
+        <tr>
+            <td>
+                Correo Institucional
+            </td>
+            <td>
+                @Html.TextBox("Correo")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Contraseña
+            </td>
+            <td>
+                @Html.Password("Contrasenna")
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Acceder" name="Acceder" />
+            </td>
+        </tr>
+    </table>
+}

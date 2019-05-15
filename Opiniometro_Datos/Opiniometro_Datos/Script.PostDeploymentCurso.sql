@@ -9,15 +9,14 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-
-MERGE INTO Preguntas AS Target
+MERGE INTO Curso AS Target
 USING (VALUES
-(1,'Pregunta1', 'SiNo', 'Profesor'),
-(2,'Pregunta2', 'SeleccionUnica', 'Profesor'),
-(3,'Pregunta3', 'SeleccionMultiple', 'Curso')
+ ('CI1213', 'Ingenieria de Software'),
+ ('CI1223', 'Bases de Datos'),
+ ('CI1211', 'Proyecto Integrador')
 )
-AS Source (Numero, [Planteamiento], TipoPregunta, Categoria)
-ON Target.Planteamiento = Source.Planteamiento
+AS Source ([CodigoCurso], NombreCurso)
+ON Target.CodigoCurso = Source.CodigoCurso
 WHEN NOT MATCHED BY TARGET THEN
-INSERT(Numero, Planteamiento, TipoPregunta, Categoria)
-VALUES(Numero, Planteamiento, TipoPregunta, Categoria);
+INSERT (CodigoCurso, NombreCurso)
+VALUES (CodigoCurso, NombreCurso);

@@ -59,12 +59,12 @@
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Preguntas.sql" />
-  </ItemGroup>
-  <ItemGroup>
     <RefactorLog Include="Opiniometro_Datos.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Script.PostDeploymentOpiniometro.sql" />
+    <PostDeploy Include="Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Usuario.sql" />
   </ItemGroup>
 </Project>
