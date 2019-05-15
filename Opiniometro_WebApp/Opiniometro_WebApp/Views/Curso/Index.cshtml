@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Curso>
+
+@{
+    ViewBag.Title = "Cursos disponibles";
+}
+
+<h2>Cursos disponibles</h2>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CodigoCurso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NombreCurso)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CodigoCurso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NombreCurso)
+        </td>
+        <td>
+
+            @Html.ActionLink("Formulario 1", "Formulario")  <br>
+            @Html.ActionLink("Formulario 2", "Formulario")  <br>
+            @Html.ActionLink("Formulario 3", "Formulario") 
+
+            @**@ @*@Html.ActionLink("Details", "Details", new { id = item.CodigoCurso }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.CodigoCurso })*@
+        </td>
+    </tr>
+}
+
+</table>
