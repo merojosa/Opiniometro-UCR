@@ -66,5 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Usuario.sql" />
+    <Build Include="Formulario.sql" />
+    <Build Include="Seccion.sql" />
+    <Build Include="Fecha_Corte.sql" />
+    <Build Include="Conformado_Item_Sec_Form.sql" />
   </ItemGroup>
 </Project>
