@@ -73,5 +73,7 @@
     <Build Include="Administrativo.sql" />
     <Build Include="Permiso.sql" />
     <Build Include="Telefono_Persona.sql" />
+    <Build Include="Posee_Enfasis_Perfil_Permiso.sql" />
+    <Build Include="Empadronado.sql" />
   </ItemGroup>
 </Project>
