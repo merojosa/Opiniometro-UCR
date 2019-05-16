@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Texto_Libre]
+(
+	[ID_Item] INT NOT NULL PRIMARY KEY
+	CONSTRAINT FKaItem FOREIGN KEY (ID_Item) REFERENCES Item(ItemID)
+)
