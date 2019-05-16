@@ -72,5 +72,6 @@
     <Build Include="Conformado_Item_Sec_Form.sql" />
     <Build Include="Texto_Libre.sql" />
     <Build Include="Item.sql" />
+    <Build Include="SeleccionUnica.sql" />
   </ItemGroup>
 </Project>
