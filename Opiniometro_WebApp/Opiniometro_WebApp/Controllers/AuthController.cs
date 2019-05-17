@@ -68,5 +68,10 @@ namespace Opiniometro_WebApp.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public void EnviarCorreo(FormCollection form_collection)
+        {
+        }
     }
 }
