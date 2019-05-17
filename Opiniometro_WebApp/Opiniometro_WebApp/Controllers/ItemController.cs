@@ -40,7 +40,7 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult Create()
         {
             ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID");
-            ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId");
+            //ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId");
             return View();
         }
 
@@ -58,8 +58,8 @@ namespace Opiniometro_WebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemID);
-            ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemID);
+            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemId);
+            //ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
             return View(item);
         }
 
@@ -75,8 +75,8 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemID);
-            ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemID);
+            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemId);
+            ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
             return View(item);
         }
 
@@ -93,8 +93,8 @@ namespace Opiniometro_WebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemID);
-            ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemID);
+            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemId);
+            ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
             return View(item);
         }
 
@@ -112,7 +112,7 @@ namespace Opiniometro_WebApp.Controllers
             }
             return View(item);
         }
-
+        
         // POST: Item/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -132,5 +132,8 @@ namespace Opiniometro_WebApp.Controllers
             }
             base.Dispose(disposing);
         }
+ 
+
     }
+
 }

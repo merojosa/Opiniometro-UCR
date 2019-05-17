@@ -19,12 +19,25 @@
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Pro_Per" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Tel_Per" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Usu_Per" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.Conformado_Item_Sec_Form" Width="1.5" PointX="11.5" PointY="8.375" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.Formulario" Width="1.5" PointX="13.875" PointY="11.375" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.Item" Width="1.5" PointX="9.25" PointY="9.375" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.Seccion" Width="1.5" PointX="9.25" PointY="6.625" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.SeleccionUnica" Width="1.5" PointX="9.25" PointY="12.625" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.Texto_Libre" Width="1.5" PointX="11.375" PointY="12.75" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Empadronado" Width="1.5" PointX="5.25" PointY="9.625" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Fecha_Corte" Width="1.5" PointX="11.375" PointY="5.75" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Formulario_Respuesta" Width="1.5" PointX="11.75" PointY="1.375" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Imparte" Width="1.5" PointX="5.25" PointY="13.25" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Matricula" Width="1.5" PointX="5.25" PointY="6.75" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Posee_Enfasis_Perfil_Permiso" Width="1.5" PointX="9.875" PointY="2.375" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Responde" Width="1.5" PointX="13.375" PointY="1" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Empadronado_Estudiante" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Matricula_Profesor" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Res_ForRes" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Imparte_Profesor" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_PoseeEnfasisPerfil_Perfil" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_PoseeEnfasisPerfil_Permiso" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Conformado_Item_Sec_Form" Width="1.5" PointX="12.625" PointY="11.375" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Formulario" Width="1.5" PointX="10.375" PointY="8" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Item" Width="1.5" PointX="7.375" PointY="11.375" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Seccion" Width="1.5" PointX="10.375" PointY="13.625" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.SeleccionUnica" Width="1.5" PointX="9.625" PointY="16" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Texto_Libre" Width="1.5" PointX="9.625" PointY="10.75" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Con_For" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Con_Ite" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Con_Sec" />

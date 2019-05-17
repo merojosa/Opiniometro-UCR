@@ -36,6 +36,13 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<Profesor> Profesor { get; set; }
         public virtual DbSet<TelefonoPersona> TelefonoPersona { get; set; }
+        public virtual DbSet<Empadronado> Empadronado { get; set; }
+        public virtual DbSet<Fecha_Corte> Fecha_Corte { get; set; }
+        public virtual DbSet<Formulario_Respuesta> Formulario_Respuesta { get; set; }
+        public virtual DbSet<Imparte> Imparte { get; set; }
+        public virtual DbSet<Matricula> Matricula { get; set; }
+        public virtual DbSet<Posee_Enfasis_Perfil_Permiso> Posee_Enfasis_Perfil_Permiso { get; set; }
+        public virtual DbSet<Responde> Responde { get; set; }
         public virtual DbSet<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
         public virtual DbSet<Formulario> Formulario { get; set; }
         public virtual DbSet<Item> Item { get; set; }
