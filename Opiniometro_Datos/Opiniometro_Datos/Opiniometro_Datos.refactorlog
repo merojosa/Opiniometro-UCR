@@ -28,25 +28,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Contrasena" />
   </Operation>
-  <Operation Name="Rename Refactor" Key="b58bd37f-e112-4e85-8ecb-03e227de82b3" ChangeDateTime="05/14/2019 18:13:19">
-    <Property Name="ElementName" Value="[dbo].[Table1].[Id]" />
+  <Operation Name="Rename Refactor" Key="468c2d08-22a9-46e1-ac1c-2124b504e989" ChangeDateTime="05/14/2019 21:57:07">
+    <Property Name="ElementName" Value="[dbo].[Responde].[FechaFormulario]" />
     <Property Name="ElementType" Value="SqlSimpleColumn" />
-    <Property Name="ParentElementName" Value="[dbo].[Table1]" />
+    <Property Name="ParentElementName" Value="[dbo].[Responde]" />
     <Property Name="ParentElementType" Value="SqlTable" />
-    <Property Name="NewName" Value="Cedula" />
+    <Property Name="NewName" Value="FechaRespuesta" />
   </Operation>
-  <Operation Name="Rename Refactor" Key="5be14300-cc70-4885-859c-43bc4c2c7b54" ChangeDateTime="05/14/2019 18:20:20">
-    <Property Name="ElementName" Value="[dbo].[Table1].[Direccion]" />
+  <Operation Name="Rename Refactor" Key="8f58ef06-5d1c-42e6-916f-2a79edb05929" ChangeDateTime="05/14/2019 22:00:01">
+    <Property Name="ElementName" Value="[dbo].[Responde].[AñoGrupoRespuesta]" />
     <Property Name="ElementType" Value="SqlSimpleColumn" />
-    <Property Name="ParentElementName" Value="[dbo].[Table1]" />
+    <Property Name="ParentElementName" Value="[dbo].[Responde]" />
     <Property Name="ParentElementType" Value="SqlTable" />
-    <Property Name="NewName" Value="Apellido2" />
+    <Property Name="NewName" Value="AñoGrupoResp" />
   </Operation>
-  <Operation Name="Rename Refactor" Key="9bcf0cfc-50d3-450b-90e7-a56876a367c5" ChangeDateTime="05/14/2019 18:23:51">
-    <Property Name="ElementName" Value="[dbo].[Table1].[7]" />
+  <Operation Name="Rename Refactor" Key="17d2fed2-ac5f-4310-b33d-006355e2cd87" ChangeDateTime="05/14/2019 22:05:33">
+    <Property Name="ElementName" Value="[dbo].[Responde].[CodigoRespuesta]" />
     <Property Name="ElementType" Value="SqlSimpleColumn" />
-    <Property Name="ParentElementName" Value="[dbo].[Table1]" />
+    <Property Name="ParentElementName" Value="[dbo].[Responde]" />
     <Property Name="ParentElementType" Value="SqlTable" />
-    <Property Name="NewName" Value="trgbrh" />
+    <Property Name="NewName" Value="CodigoFormularioResp" />
   </Operation>
 </Operations>
