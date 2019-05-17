@@ -5,6 +5,6 @@ CREATE TABLE [dbo].[Carrera]
     [Nombre] NVARCHAR(125) NOT NULL, 
     [CodigoUnidadAcademica] NVARCHAR(10) NOT NULL,
 	CONSTRAINT PK_Carrera PRIMARY KEY (Sigla),
-	CONSTRAINT FK_Carrera_UniAcad FOREIGN KEY (CodigoUnidadAcademica) 
+	CONSTRAINT FK_Car_Uni FOREIGN KEY (CodigoUnidadAcademica) 
 	REFERENCES Unidad_Academica(Codigo) --ON DELETE CASCADE ON UPDATE CASCADE
 )

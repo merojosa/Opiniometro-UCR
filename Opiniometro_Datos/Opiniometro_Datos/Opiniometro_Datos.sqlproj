@@ -76,5 +76,6 @@
     <Build Include="Escuela.sql" />
     <Build Include="Se_Encuentra_Unidad_Enfasis.sql" />
     <Build Include="Fecha_Corte.sql" />
+    <Build Include="Tiene_Grupo_Formulario.sql" />
   </ItemGroup>
 </Project>
