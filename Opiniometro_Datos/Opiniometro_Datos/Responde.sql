@@ -19,5 +19,5 @@
 	--CONSTRAINT [FK_Res_Sec] FOREIGN KEY ([TituloSeccion])
 	--REFERENCES [Seccion] ([Titulo]) ON DELETE CASCADE ON UPDATE CASCADE
 	CONSTRAINT [FK_Res_ForRes] FOREIGN KEY ([FechaRespuesta], [CodigoFormularioResp], [CedulaPersona], [CedulaProfesor], [AñoGrupoResp], [SemestreGrupoResp], [NumeroGrupoResp], [SiglaGrupoResp])
-	REFERENCES [Formulario_Respuesta] ([Fecha], [CodigoFormulario], [CedulaPersona], [CedulaProfesor], [AñoGrupo], [SemestreGrupo], [NumeroGrupo], [SiglaGrupo]) ON DELETE NO ACTION ON UPDATE CASCADE
+	REFERENCES [Formulario_Respuesta] ([Fecha], [CodigoFormulario], [CedulaPersona], [CedulaProfesor], [AñoGrupo], [SemestreGrupo], [NumeroGrupo], [SiglaGrupo]) ON DELETE NO ACTION
 )

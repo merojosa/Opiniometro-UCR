@@ -5,20 +5,34 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="ff6de282f1c94eaaae5a41fd1f8dd343" Name="Diagram1">
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.C__RefactorLog" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.Usuario" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.Administrativo" Width="1.5" PointX="3" PointY="12" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.Estudiante" Width="1.5" PointX="3" PointY="5.125" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.Perfil" Width="1.5" PointX="5.625" PointY="4.125" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.Permiso" Width="1.5" PointX="7.625" PointY="1.125" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.Persona" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.Profesor" Width="1.5" PointX="3" PointY="7.5" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.TelefonoPersona" Width="1.5" PointX="3" PointY="9.625" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.C__RefactorLog" Width="1.5" PointX="12.125" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Usuario" Width="1.5" PointX="14" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Administrativo" Width="1.5" PointX="2.25" PointY="5.625" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Estudiante" Width="1.5" PointX="4.375" PointY="5.625" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Perfil" Width="1.5" PointX="9" PointY="0.5" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Permiso" Width="1.5" PointX="17.375" PointY="1" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Persona" Width="1.5" PointX="4.5" PointY="0.625" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Profesor" Width="1.5" PointX="6.25" PointY="5.625" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.TelefonoPersona" Width="1.5" PointX="2.125" PointY="0.5" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Adm_Per" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Est_Per" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Pro_Per" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Tel_Per" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Usu_Per" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Empadronado" Width="1.5" PointX="3.375" PointY="8.75" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Formulario_Respuesta" Width="1.5" PointX="9.75" PointY="4" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Imparte" Width="1.5" PointX="7.5" PointY="8.125" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Matricula" Width="1.5" PointX="5.375" PointY="8.75" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Posee_Enfasis_Perfil_Permiso" Width="1.5" PointX="12.75" PointY="0.625" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Responde" Width="1.5" PointX="9.75" PointY="8.375" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Empadronado_Estudiante" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Matricula_Profesor" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_ForRes_Per" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_ForRes_Pro" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Res_ForRes" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Imparte_Profesor" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_PoseeEnfasisPerfil_Perfil" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_PoseeEnfasisPerfil_Permiso" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
