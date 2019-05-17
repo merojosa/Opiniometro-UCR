@@ -77,5 +77,7 @@
     <Build Include="Empadronado.sql" />
     <Build Include="Imparte.sql" />
     <Build Include="Matricula.sql" />
+    <Build Include="Formulario_Respuesta.sql" />
+    <Build Include="Responde.sql" />
   </ItemGroup>
 </Project>

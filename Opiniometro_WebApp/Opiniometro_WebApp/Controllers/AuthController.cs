@@ -29,6 +29,7 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public ActionResult Login(FormCollection form_collection)
         {
+            // ToDO: apenas llegue la contraseña, se tiene que encriptar (de momento, quizá hay que encriptarlo desde la vista).
             ObjectParameter exito = new ObjectParameter("Resultado", 0);
             db.SP_LoginUsuario(form_collection["Correo"], form_collection["Contrasenna"], exito);
             
@@ -56,6 +57,11 @@ namespace Opiniometro_WebApp.Controllers
                 // Devolverse a la misma pagina de Loing informando de que hay un error de autenticacion.
                 return RedirectToAction("Error");
             }
+        }
+
+        public ActionResult Recuperar()
+        {
+            return View();
         }
 
         public ActionResult Error()
