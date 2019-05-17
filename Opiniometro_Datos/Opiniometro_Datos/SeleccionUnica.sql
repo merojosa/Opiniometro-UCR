@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[SeleccionUnica]
 (
-	[ItemID] INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
-	IsaLikeDislike bit
+	[ItemId] INT IDENTITY (1,1) NOT NULL PRIMARY KEY,
+	IsaLikeDislike BIT,
 
-	CONSTRAINT FK_Sel_Ite FOREIGN KEY (ItemId) REFERENCES Item(ItemID)
+	CONSTRAINT FK_Sel_Ite FOREIGN KEY (ItemId) REFERENCES Item(ItemId)
 )
