@@ -68,8 +68,4 @@
     <None Include="Script.ModificarUsuario.sql" />
     <None Include="Script.EliminarPersona.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <Build Include="Usuario.sql" />
-    <Build Include="Persona.sql" />
-  </ItemGroup>
 </Project>
