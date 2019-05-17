@@ -79,5 +79,6 @@
     <Build Include="Matricula.sql" />
     <Build Include="Formulario_Respuesta.sql" />
     <Build Include="Responde.sql" />
+    <Build Include="Tiene_Enfasis_Perfil_Usuario.sql" />
   </ItemGroup>
 </Project>
