@@ -6,6 +6,6 @@ CREATE TABLE [dbo].[Curso]
     [Tipo] TINYINT NOT NULL, 
     [CodigoUnidad] NVARCHAR(10) NOT NULL,
 	CONSTRAINT PK_Curso PRIMARY KEY (Sigla),
-	CONSTRAINT FK_Curso_UniAcad FOREIGN KEY (CodigoUnidad)
+	CONSTRAINT FK_Cur_Uni FOREIGN KEY (CodigoUnidad)
 	REFERENCES Unidad_Academica(Codigo)
 )
