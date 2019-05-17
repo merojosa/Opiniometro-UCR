@@ -156,9 +156,9 @@
         </EntityType>
         <EntityType Name="Item">
           <Key>
-            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="ItemID" />
           </Key>
-          <Property Name="ItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TextoPregunta" Type="varchar" MaxLength="120" Nullable="false" />
           <Property Name="Categoria" Type="varchar" MaxLength="30" />
           <Property Name="TieneObservacion" Type="bit" />
@@ -213,6 +213,15 @@
           <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="IdPerfil" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="IdPermiso" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Preguntas">
+          <Key>
+            <PropertyRef Name="Planteamiento" />
+          </Key>
+          <Property Name="Planteamiento" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="Numero" Type="int" />
+          <Property Name="TipoPregunta" Type="nchar" MaxLength="30" />
+          <Property Name="Categoria" Type="nchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="Profesor">
           <Key>
@@ -269,6 +278,13 @@
             <PropertyRef Name="ItemId" />
           </Key>
           <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="IsaLikeDislike" Type="bit" />
+        </EntityType>
+        <EntityType Name="SeleccionUnica">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IsaLikeDislike" Type="bit" />
         </EntityType>
         <EntityType Name="TelefonoPersona">
@@ -361,7 +377,7 @@
           <End Role="Conformado_Item_Sec_Form" Type="Self.Conformado_Item_Sec_Form" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Item">
-              <PropertyRef Name="ItemId" />
+              <PropertyRef Name="ItemID" />
             </Principal>
             <Dependent Role="Conformado_Item_Sec_Form">
               <PropertyRef Name="ItemId" />
@@ -602,12 +618,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Sel_Ite">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="SeleccionUnica" Type="Self.SeleccionUnica" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="SeleccionUnica">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Sel_Uni_Ite">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
           <End Role="Seleccion_Unica" Type="Self.Seleccion_Unica" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Item">
-              <PropertyRef Name="ItemId" />
+              <PropertyRef Name="ItemID" />
             </Principal>
             <Dependent Role="Seleccion_Unica">
               <PropertyRef Name="ItemId" />
@@ -631,7 +659,7 @@
           <End Role="Texto_Libre" Type="Self.Texto_Libre" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Item">
-              <PropertyRef Name="ItemId" />
+              <PropertyRef Name="ItemID" />
             </Principal>
             <Dependent Role="Texto_Libre">
               <PropertyRef Name="ItemId" />
@@ -715,11 +743,13 @@
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responde" EntityType="Self.Responde" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Se_Encuentra_Unidad_Enfasis" EntityType="Self.Se_Encuentra_Unidad_Enfasis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seleccion_Unica" EntityType="Self.Seleccion_Unica" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeleccionUnica" EntityType="Self.SeleccionUnica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TelefonoPersona" EntityType="Self.TelefonoPersona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Texto_Libre" EntityType="Self.Texto_Libre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tiene_Grupo_Formulario" EntityType="Self.Tiene_Grupo_Formulario" Schema="dbo" store:Type="Tables" />
@@ -812,6 +842,10 @@
           <AssociationSet Name="FK_Se_Encuentra_Uni_Enf_UniAcad" Association="Self.FK_Se_Encuentra_Uni_Enf_UniAcad">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
             <End Role="Se_Encuentra_Unidad_Enfasis" EntitySet="Se_Encuentra_Unidad_Enfasis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sel_Ite" Association="Self.FK_Sel_Ite">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="SeleccionUnica" EntitySet="SeleccionUnica" />
           </AssociationSet>
           <AssociationSet Name="FK_Sel_Uni_Ite" Association="Self.FK_Sel_Uni_Ite">
             <End Role="Item" EntitySet="Item" />
@@ -1011,14 +1045,15 @@
         </EntityType>
         <EntityType Name="Item">
           <Key>
-            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="ItemID" />
           </Key>
-          <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TextoPregunta" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="TieneObservacion" Type="Boolean" />
           <Property Name="TipoPregunta" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_Ite" FromRole="Item" ToRole="Conformado_Item_Sec_Form" />
+          <NavigationProperty Name="SeleccionUnica" Relationship="Self.FK_Sel_Ite" FromRole="Item" ToRole="SeleccionUnica" />
           <NavigationProperty Name="Seleccion_Unica" Relationship="Self.FK_Sel_Uni_Ite" FromRole="Item" ToRole="Seleccion_Unica" />
           <NavigationProperty Name="Texto_Libre" Relationship="Self.FK_Tex_Ite" FromRole="Item" ToRole="Texto_Libre" />
         </EntityType>
@@ -1082,6 +1117,15 @@
           <NavigationProperty Name="Perfil" Relationship="Self.FK_PoseeEnfasisPerfil_Perfil" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Perfil" />
           <NavigationProperty Name="Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Permiso" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Permiso" />
         </EntityType>
+        <EntityType Name="Preguntas">
+          <Key>
+            <PropertyRef Name="Planteamiento" />
+          </Key>
+          <Property Name="Planteamiento" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Numero" Type="Int32" />
+          <Property Name="TipoPregunta" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+        </EntityType>
         <EntityType Name="Profesor">
           <Key>
             <PropertyRef Name="CedulaProfesor" />
@@ -1133,6 +1177,14 @@
           <Property Name="ItemId" Type="Int32" Nullable="false" />
           <Property Name="IsaLikeDislike" Type="Boolean" />
           <NavigationProperty Name="Item" Relationship="Self.FK_Sel_Uni_Ite" FromRole="Seleccion_Unica" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="SeleccionUnica">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsaLikeDislike" Type="Boolean" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Sel_Ite" FromRole="SeleccionUnica" ToRole="Item" />
         </EntityType>
         <EntityType Name="TelefonoPersona">
           <Key>
@@ -1260,7 +1312,7 @@
           <End Role="Conformado_Item_Sec_Form" Type="Self.Conformado_Item_Sec_Form" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Item">
-              <PropertyRef Name="ItemId" />
+              <PropertyRef Name="ItemID" />
             </Principal>
             <Dependent Role="Conformado_Item_Sec_Form">
               <PropertyRef Name="ItemId" />
@@ -1421,12 +1473,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Sel_Ite">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="SeleccionUnica" Type="Self.SeleccionUnica" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="SeleccionUnica">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Sel_Uni_Ite">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
           <End Role="Seleccion_Unica" Type="Self.Seleccion_Unica" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Item">
-              <PropertyRef Name="ItemId" />
+              <PropertyRef Name="ItemID" />
             </Principal>
             <Dependent Role="Seleccion_Unica">
               <PropertyRef Name="ItemId" />
@@ -1438,7 +1502,7 @@
           <End Role="Texto_Libre" Type="Self.Texto_Libre" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Item">
-              <PropertyRef Name="ItemId" />
+              <PropertyRef Name="ItemID" />
             </Principal>
             <Dependent Role="Texto_Libre">
               <PropertyRef Name="ItemId" />
@@ -1513,7 +1577,7 @@
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Opiniometro_DatosEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" />
@@ -1535,10 +1599,12 @@
           <EntitySet Name="Permiso" EntityType="Self.Permiso" />
           <EntitySet Name="Persona" EntityType="Self.Persona" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" />
+          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" />
           <EntitySet Name="Responde" EntityType="Self.Responde" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" />
           <EntitySet Name="Seleccion_Unica" EntityType="Self.Seleccion_Unica" />
+          <EntitySet Name="SeleccionUnica" EntityType="Self.SeleccionUnica" />
           <EntitySet Name="TelefonoPersona" EntityType="Self.TelefonoPersona" />
           <EntitySet Name="Texto_Libre" EntityType="Self.Texto_Libre" />
           <EntitySet Name="Tiene_Grupo_Formulario" EntityType="Self.Tiene_Grupo_Formulario" />
@@ -1612,6 +1678,10 @@
             <End Role="Profesor" EntitySet="Profesor" />
             <End Role="Imparte" EntitySet="Imparte" />
           </AssociationSet>
+          <AssociationSet Name="FK_Sel_Ite" Association="Self.FK_Sel_Ite">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="SeleccionUnica" EntitySet="SeleccionUnica" />
+          </AssociationSet>
           <AssociationSet Name="FK_Sel_Uni_Ite" Association="Self.FK_Sel_Uni_Ite">
             <End Role="Item" EntitySet="Item" />
             <End Role="Seleccion_Unica" EntitySet="Seleccion_Unica" />
@@ -1664,7 +1734,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities">
+        <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities1">
           <EntitySetMapping Name="C__RefactorLog">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.C__RefactorLog">
               <MappingFragment StoreEntitySet="__RefactorLog">
@@ -1804,7 +1874,7 @@
           <EntitySetMapping Name="Item">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Item">
               <MappingFragment StoreEntitySet="Item">
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="TextoPregunta" ColumnName="TextoPregunta" />
                 <ScalarProperty Name="Categoria" ColumnName="Categoria" />
                 <ScalarProperty Name="TieneObservacion" ColumnName="TieneObservacion" />
@@ -1860,6 +1930,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Preguntas">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Preguntas">
+              <MappingFragment StoreEntitySet="Preguntas">
+                <ScalarProperty Name="Planteamiento" ColumnName="Planteamiento" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="TipoPregunta" ColumnName="TipoPregunta" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Profesor">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Profesor">
               <MappingFragment StoreEntitySet="Profesor">
@@ -1898,6 +1978,14 @@
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Seleccion_Unica">
               <MappingFragment StoreEntitySet="Seleccion_Unica">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="IsaLikeDislike" ColumnName="IsaLikeDislike" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeleccionUnica">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.SeleccionUnica">
+              <MappingFragment StoreEntitySet="SeleccionUnica">
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="IsaLikeDislike" ColumnName="IsaLikeDislike" />
               </MappingFragment>
             </EntityTypeMapping>
