@@ -54,7 +54,7 @@ namespace Opiniometro_WebApp.Controllers
             else
             {
                 // Devolverse a la misma pagina de Loing informando de que hay un error de autenticacion.
-                return RedirectToAction("Error");
+                return RedirectToAction("Login", "Auth");
             }
         }
 
