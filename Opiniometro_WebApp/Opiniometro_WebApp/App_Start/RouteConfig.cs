@@ -13,6 +13,7 @@ namespace Opiniometro_WebApp
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // Se inicia con Home, si no se esta autenticado, se redirige a la pantalla de login.
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
