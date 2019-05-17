@@ -20,7 +20,7 @@ namespace Opiniometro_WebApp.Models
             this.Conformado_Item_Sec_Form = new HashSet<Conformado_Item_Sec_Form>();
         }
     
-        public int ItemID { get; set; }
+        public int ItemId { get; set; }
         public string TextoPregunta { get; set; }
         public string Categoria { get; set; }
         public Nullable<bool> TieneObservacion { get; set; }

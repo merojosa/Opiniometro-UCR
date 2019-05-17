@@ -10,18 +10,18 @@ using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
 {
-    public class ItemController : Controller
+    public class ItemsController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
-        // GET: Item
+        // GET: Items
         public ActionResult Index()
         {
-            var item = db.Item.Include(i => i.SeleccionUnica).Include(i => i.Texto_Libre);
+            var item = db.Item.Include(i => i.Texto_Libre).Include(i => i.SeleccionUnica);
             return View(item.ToList());
         }
 
-        // GET: Item/Details/5
+        // GET: Items/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,20 +36,20 @@ namespace Opiniometro_WebApp.Controllers
             return View(item);
         }
 
-        // GET: Item/Create
+        // GET: Items/Create
         public ActionResult Create()
         {
+            ViewBag.ItemID = new SelectList(db.Texto_Libre, "ID_Item", "ID_Item");
             ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID");
-            //ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId");
             return View();
         }
 
-        // POST: Item/Create
+        // POST: Items/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,Categoria,TieneObservacion")] Item item)
+        public ActionResult Create([Bind(Include = "ItemID,Texto_Pregunta,Categoria,Tiene_Observacion")] Item item)
         {
             if (ModelState.IsValid)
             {
@@ -58,12 +58,12 @@ namespace Opiniometro_WebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemId);
-            //ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
+            ViewBag.ItemID = new SelectList(db.Texto_Libre, "ID_Item", "ID_Item", item.ItemID);
+            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemID);
             return View(item);
         }
 
-        // GET: Item/Edit/5
+        // GET: Items/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -75,17 +75,17 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemId);
-            ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
+            ViewBag.ItemID = new SelectList(db.Texto_Libre, "ID_Item", "ID_Item", item.ItemID);
+            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemID);
             return View(item);
         }
 
-        // POST: Item/Edit/5
+        // POST: Items/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ItemID,TextoPregunta,Categoria,TieneObservacion")] Item item)
+        public ActionResult Edit([Bind(Include = "ItemID,Texto_Pregunta,Categoria,Tiene_Observacion")] Item item)
         {
             if (ModelState.IsValid)
             {
@@ -93,12 +93,12 @@ namespace Opiniometro_WebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemId);
-            ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
+            ViewBag.ItemID = new SelectList(db.Texto_Libre, "ID_Item", "ID_Item", item.ItemID);
+            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemID);
             return View(item);
         }
 
-        // GET: Item/Delete/5
+        // GET: Items/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -112,8 +112,8 @@ namespace Opiniometro_WebApp.Controllers
             }
             return View(item);
         }
-        
-        // POST: Item/Delete/5
+
+        // POST: Items/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -132,8 +132,5 @@ namespace Opiniometro_WebApp.Controllers
             }
             base.Dispose(disposing);
         }
- 
-
     }
-
 }

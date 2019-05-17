@@ -12,18 +12,14 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Profesor
+    public partial class Imparte
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Profesor()
-        {
-            this.Imparte = new HashSet<Imparte>();
-        }
-    
         public string CedulaProfesor { get; set; }
+        public byte Numero { get; set; }
+        public string Sigla { get; set; }
+        public string Anno { get; set; }
+        public byte Semestre { get; set; }
     
-        public virtual Persona Persona { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Imparte> Imparte { get; set; }
+        public virtual Profesor Profesor { get; set; }
     }
 }
