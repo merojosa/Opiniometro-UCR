@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Item>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TextoPregunta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Categoria)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TieneObservacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SeleccionUnica.ItemID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Texto_Libre.ItemId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TextoPregunta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Categoria)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TieneObservacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SeleccionUnica.ItemID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Texto_Libre.ItemId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ItemID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ItemID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ItemID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -15,7 +15,7 @@ namespace Opiniometro_WebApp.Models
     public partial class SeleccionUnica
     {
         public int ItemID { get; set; }
-        public Nullable<bool> Isa_LikeDislike { get; set; }
+        public Nullable<bool> IsaLikeDislike { get; set; }
     
         public virtual Item Item { get; set; }
     }

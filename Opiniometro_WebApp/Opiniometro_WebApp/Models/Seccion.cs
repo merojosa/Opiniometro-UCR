@@ -14,7 +14,16 @@ namespace Opiniometro_WebApp.Models
     
     public partial class Seccion
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Seccion()
+        {
+            this.Conformado_Item_Sec_Form = new HashSet<Conformado_Item_Sec_Form>();
+        }
+    
         public string Titulo { get; set; }
         public string Descripcion { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
     }
 }

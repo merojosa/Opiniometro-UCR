@@ -19,5 +19,7 @@ namespace Opiniometro_WebApp.Models
         public bool Activo { get; set; }
         public string Cedula { get; set; }
         public System.Guid Id { get; set; }
+    
+        public virtual Persona Persona { get; set; }
     }
 }

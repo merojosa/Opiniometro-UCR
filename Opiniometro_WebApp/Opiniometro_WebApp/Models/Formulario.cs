@@ -14,7 +14,16 @@ namespace Opiniometro_WebApp.Models
     
     public partial class Formulario
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Formulario()
+        {
+            this.Conformado_Item_Sec_Form = new HashSet<Conformado_Item_Sec_Form>();
+        }
+    
         public string CodigoFormulario { get; set; }
         public string Nombre { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
     }
 }

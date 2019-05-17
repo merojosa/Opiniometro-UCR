@@ -11,15 +11,30 @@
           </Key>
           <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Fecha_Corte">
+        <EntityType Name="Administrativo">
           <Key>
-            <PropertyRef Name="Fecha_Inicio" />
-            <PropertyRef Name="Fecha_Final" />
+            <PropertyRef Name="CedulaAdministrativo" />
           </Key>
-          <Property Name="Fecha_Inicio" Type="date" Nullable="false" />
-          <Property Name="Fecha_Final" Type="date" Nullable="false" />
+          <Property Name="CedulaAdministrativo" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Conformado_Item_Sec_Form">
+          <Key>
+            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="CodigoFormulario" />
+            <PropertyRef Name="TituloSeccion" />
+          </Key>
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="CodigoFormulario" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="TituloSeccion" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="NombreFormulario" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Estudiante">
+          <Key>
+            <PropertyRef Name="CedulaEstudiante" />
+          </Key>
+          <Property Name="CedulaEstudiante" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="Carne" Type="char" MaxLength="6" Nullable="false" />
         </EntityType>
         <EntityType Name="Formulario">
           <Key>
@@ -33,15 +48,45 @@ warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' do
             <PropertyRef Name="ItemID" />
           </Key>
           <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Texto_Pregunta" Type="varchar" MaxLength="120" />
+          <Property Name="TextoPregunta" Type="varchar" MaxLength="120" />
           <Property Name="Categoria" Type="varchar" MaxLength="30" />
-          <Property Name="Tiene_Observacion" Type="bit" />
+          <Property Name="TieneObservacion" Type="bit" />
+        </EntityType>
+        <EntityType Name="Perfil">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permiso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="Cedula" />
+          </Key>
+          <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido2" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profesor">
+          <Key>
+            <PropertyRef Name="CedulaProfesor" />
+          </Key>
+          <Property Name="CedulaProfesor" Type="char" MaxLength="9" Nullable="false" />
         </EntityType>
         <EntityType Name="Seccion">
           <Key>
             <PropertyRef Name="Titulo" />
           </Key>
-          <Property Name="Titulo" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="Titulo" Type="nvarchar" MaxLength="120" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="SeleccionUnica">
@@ -49,13 +94,21 @@ warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' do
             <PropertyRef Name="ItemID" />
           </Key>
           <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Isa_LikeDislike" Type="bit" />
+          <Property Name="IsaLikeDislike" Type="bit" />
+        </EntityType>
+        <EntityType Name="TelefonoPersona">
+          <Key>
+            <PropertyRef Name="CedulaPersona" />
+            <PropertyRef Name="NumeroTelefono" />
+          </Key>
+          <Property Name="CedulaPersona" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="NumeroTelefono" Type="varchar" MaxLength="11" Nullable="false" />
         </EntityType>
         <EntityType Name="Texto_Libre">
           <Key>
-            <PropertyRef Name="ID_Item" />
+            <PropertyRef Name="ItemId" />
           </Key>
-          <Property Name="ID_Item" Type="int" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -67,19 +120,79 @@ warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' do
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
-        <Association Name="FKaItem">
+        <Association Name="FK_Adm_Per">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Administrativo" Type="Self.Administrativo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Administrativo">
+              <PropertyRef Name="CedulaAdministrativo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Con_For">
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
+          <End Role="Conformado_Item_Sec_Form" Type="Self.Conformado_Item_Sec_Form" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="CodigoFormulario" />
+            </Principal>
+            <Dependent Role="Conformado_Item_Sec_Form">
+              <PropertyRef Name="CodigoFormulario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Con_Ite">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
-          <End Role="Texto_Libre" Type="Self.Texto_Libre" Multiplicity="0..1" />
+          <End Role="Conformado_Item_Sec_Form" Type="Self.Conformado_Item_Sec_Form" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Item">
               <PropertyRef Name="ItemID" />
             </Principal>
-            <Dependent Role="Texto_Libre">
-              <PropertyRef Name="ID_Item" />
+            <Dependent Role="Conformado_Item_Sec_Form">
+              <PropertyRef Name="ItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FKItem">
+        <Association Name="FK_Con_Sec">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1" />
+          <End Role="Conformado_Item_Sec_Form" Type="Self.Conformado_Item_Sec_Form" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Titulo" />
+            </Principal>
+            <Dependent Role="Conformado_Item_Sec_Form">
+              <PropertyRef Name="TituloSeccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Est_Per">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Estudiante">
+              <PropertyRef Name="CedulaEstudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pro_Per">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Profesor">
+              <PropertyRef Name="CedulaProfesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sel_Ite">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
           <End Role="SeleccionUnica" Type="Self.SeleccionUnica" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -88,6 +201,42 @@ warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' do
             </Principal>
             <Dependent Role="SeleccionUnica">
               <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tel_Per">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="TelefonoPersona" Type="Self.TelefonoPersona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="TelefonoPersona">
+              <PropertyRef Name="CedulaPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tex_Ite">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Texto_Libre" Type="Self.Texto_Libre" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="Texto_Libre">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usu_Per">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="Cedula" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -103,20 +252,59 @@ warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' do
         </Function>
         <EntityContainer Name="Opiniometro_DatosModelStoreContainer">
           <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Fecha_Corte" EntityType="Self.Fecha_Corte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Administrativo" EntityType="Self.Administrativo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Conformado_Item_Sec_Form" EntityType="Self.Conformado_Item_Sec_Form" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estudiante" EntityType="Self.Estudiante" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Formulario" EntityType="Self.Formulario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Perfil" EntityType="Self.Perfil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SeleccionUnica" EntityType="Self.SeleccionUnica" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TelefonoPersona" EntityType="Self.TelefonoPersona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Texto_Libre" EntityType="Self.Texto_Libre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FKaItem" Association="Self.FKaItem">
+          <AssociationSet Name="FK_Adm_Per" Association="Self.FK_Adm_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Administrativo" EntitySet="Administrativo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Con_For" Association="Self.FK_Con_For">
+            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Con_Ite" Association="Self.FK_Con_Ite">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Con_Sec" Association="Self.FK_Con_Sec">
+            <End Role="Seccion" EntitySet="Seccion" />
+            <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Est_Per" Association="Self.FK_Est_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pro_Per" Association="Self.FK_Pro_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Profesor" EntitySet="Profesor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sel_Ite" Association="Self.FK_Sel_Ite">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="SeleccionUnica" EntitySet="SeleccionUnica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tel_Per" Association="Self.FK_Tel_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="TelefonoPersona" EntitySet="TelefonoPersona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tex_Ite" Association="Self.FK_Tex_Ite">
             <End Role="Item" EntitySet="Item" />
             <End Role="Texto_Libre" EntitySet="Texto_Libre" />
           </AssociationSet>
-          <AssociationSet Name="FKItem" Association="Self.FKItem">
-            <End Role="Item" EntitySet="Item" />
-            <End Role="SeleccionUnica" EntitySet="SeleccionUnica" />
+          <AssociationSet Name="FK_Usu_Per" Association="Self.FK_Usu_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -138,6 +326,7 @@ warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' do
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <Property Name="Cedula" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Id" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Persona" Relationship="Opiniometro_DatosModel.FK_Usu_Per" FromRole="Usuario" ToRole="Persona" />
         </EntityType>
         <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
@@ -152,28 +341,194 @@ warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' do
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
-          <EntitySet Name="Fecha_Corte" EntityType="Opiniometro_DatosModel.Fecha_Corte" />
+          <EntitySet Name="Administrativo" EntityType="Opiniometro_DatosModel.Administrativo" />
+          <EntitySet Name="Estudiante" EntityType="Opiniometro_DatosModel.Estudiante" />
+          <EntitySet Name="Perfil" EntityType="Opiniometro_DatosModel.Perfil" />
+          <EntitySet Name="Permiso" EntityType="Opiniometro_DatosModel.Permiso" />
+          <EntitySet Name="Persona" EntityType="Opiniometro_DatosModel.Persona" />
+          <EntitySet Name="Profesor" EntityType="Opiniometro_DatosModel.Profesor" />
+          <EntitySet Name="TelefonoPersona" EntityType="Opiniometro_DatosModel.TelefonoPersona" />
+          <AssociationSet Name="FK_Adm_Per" Association="Opiniometro_DatosModel.FK_Adm_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Administrativo" EntitySet="Administrativo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Est_Per" Association="Opiniometro_DatosModel.FK_Est_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pro_Per" Association="Opiniometro_DatosModel.FK_Pro_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Profesor" EntitySet="Profesor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tel_Per" Association="Opiniometro_DatosModel.FK_Tel_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="TelefonoPersona" EntitySet="TelefonoPersona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usu_Per" Association="Opiniometro_DatosModel.FK_Usu_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <EntitySet Name="Conformado_Item_Sec_Form" EntityType="Opiniometro_DatosModel.Conformado_Item_Sec_Form" />
           <EntitySet Name="Formulario" EntityType="Opiniometro_DatosModel.Formulario" />
           <EntitySet Name="Item" EntityType="Opiniometro_DatosModel.Item" />
           <EntitySet Name="Seccion" EntityType="Opiniometro_DatosModel.Seccion" />
           <EntitySet Name="SeleccionUnica" EntityType="Opiniometro_DatosModel.SeleccionUnica" />
           <EntitySet Name="Texto_Libre" EntityType="Opiniometro_DatosModel.Texto_Libre" />
-          <AssociationSet Name="FKaItem" Association="Opiniometro_DatosModel.FKaItem">
-            <End Role="Item" EntitySet="Item" />
-            <End Role="Texto_Libre" EntitySet="Texto_Libre" />
+          <AssociationSet Name="FK_Con_For" Association="Opiniometro_DatosModel.FK_Con_For">
+            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
           </AssociationSet>
-          <AssociationSet Name="FKItem" Association="Opiniometro_DatosModel.FKItem">
+          <AssociationSet Name="FK_Con_Ite" Association="Opiniometro_DatosModel.FK_Con_Ite">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Con_Sec" Association="Opiniometro_DatosModel.FK_Con_Sec">
+            <End Role="Seccion" EntitySet="Seccion" />
+            <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sel_Ite" Association="Opiniometro_DatosModel.FK_Sel_Ite">
             <End Role="Item" EntitySet="Item" />
             <End Role="SeleccionUnica" EntitySet="SeleccionUnica" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tex_Ite" Association="Opiniometro_DatosModel.FK_Tex_Ite">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Texto_Libre" EntitySet="Texto_Libre" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Fecha_Corte">
+        <EntityType Name="Administrativo">
           <Key>
-            <PropertyRef Name="Fecha_Inicio" />
-            <PropertyRef Name="Fecha_Final" />
+            <PropertyRef Name="CedulaAdministrativo" />
           </Key>
-          <Property Name="Fecha_Inicio" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Fecha_Final" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CedulaAdministrativo" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Persona" Relationship="Opiniometro_DatosModel.FK_Adm_Per" FromRole="Administrativo" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Estudiante">
+          <Key>
+            <PropertyRef Name="CedulaEstudiante" />
+          </Key>
+          <Property Name="CedulaEstudiante" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="Carne" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Persona" Relationship="Opiniometro_DatosModel.FK_Est_Per" FromRole="Estudiante" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Perfil">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Permiso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="Cedula" />
+          </Key>
+          <Property Name="Cedula" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Administrativo" Relationship="Opiniometro_DatosModel.FK_Adm_Per" FromRole="Persona" ToRole="Administrativo" />
+          <NavigationProperty Name="Estudiante" Relationship="Opiniometro_DatosModel.FK_Est_Per" FromRole="Persona" ToRole="Estudiante" />
+          <NavigationProperty Name="Profesor" Relationship="Opiniometro_DatosModel.FK_Pro_Per" FromRole="Persona" ToRole="Profesor" />
+          <NavigationProperty Name="TelefonoPersona" Relationship="Opiniometro_DatosModel.FK_Tel_Per" FromRole="Persona" ToRole="TelefonoPersona" />
+          <NavigationProperty Name="Usuario" Relationship="Opiniometro_DatosModel.FK_Usu_Per" FromRole="Persona" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Profesor">
+          <Key>
+            <PropertyRef Name="CedulaProfesor" />
+          </Key>
+          <Property Name="CedulaProfesor" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Persona" Relationship="Opiniometro_DatosModel.FK_Pro_Per" FromRole="Profesor" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="TelefonoPersona">
+          <Key>
+            <PropertyRef Name="CedulaPersona" />
+            <PropertyRef Name="NumeroTelefono" />
+          </Key>
+          <Property Name="CedulaPersona" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="NumeroTelefono" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Persona" Relationship="Opiniometro_DatosModel.FK_Tel_Per" FromRole="TelefonoPersona" ToRole="Persona" />
+        </EntityType>
+        <Association Name="FK_Adm_Per">
+          <End Type="Opiniometro_DatosModel.Persona" Role="Persona" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.Administrativo" Role="Administrativo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Administrativo">
+              <PropertyRef Name="CedulaAdministrativo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Est_Per">
+          <End Type="Opiniometro_DatosModel.Persona" Role="Persona" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.Estudiante" Role="Estudiante" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Estudiante">
+              <PropertyRef Name="CedulaEstudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pro_Per">
+          <End Type="Opiniometro_DatosModel.Persona" Role="Persona" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.Profesor" Role="Profesor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Profesor">
+              <PropertyRef Name="CedulaProfesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tel_Per">
+          <End Type="Opiniometro_DatosModel.Persona" Role="Persona" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.TelefonoPersona" Role="TelefonoPersona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="TelefonoPersona">
+              <PropertyRef Name="CedulaPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usu_Per">
+          <End Type="Opiniometro_DatosModel.Persona" Role="Persona" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="Cedula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Conformado_Item_Sec_Form">
+          <Key>
+            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="CodigoFormulario" />
+            <PropertyRef Name="TituloSeccion" />
+          </Key>
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="CodigoFormulario" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="TituloSeccion" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="NombreFormulario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Formulario" Relationship="Opiniometro_DatosModel.FK_Con_For" FromRole="Conformado_Item_Sec_Form" ToRole="Formulario" />
+          <NavigationProperty Name="Item" Relationship="Opiniometro_DatosModel.FK_Con_Ite" FromRole="Conformado_Item_Sec_Form" ToRole="Item" />
+          <NavigationProperty Name="Seccion" Relationship="Opiniometro_DatosModel.FK_Con_Sec" FromRole="Conformado_Item_Sec_Form" ToRole="Seccion" />
         </EntityType>
         <EntityType Name="Formulario">
           <Key>
@@ -181,53 +536,80 @@ warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' do
           </Key>
           <Property Name="CodigoFormulario" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
           <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Opiniometro_DatosModel.FK_Con_For" FromRole="Formulario" ToRole="Conformado_Item_Sec_Form" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="ItemID" />
           </Key>
           <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Texto_Pregunta" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="TextoPregunta" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
           <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Tiene_Observacion" Type="Boolean" />
-          <NavigationProperty Name="Texto_Libre" Relationship="Opiniometro_DatosModel.FKaItem" FromRole="Item" ToRole="Texto_Libre" />
-          <NavigationProperty Name="SeleccionUnica" Relationship="Opiniometro_DatosModel.FKItem" FromRole="Item" ToRole="SeleccionUnica" />
+          <Property Name="TieneObservacion" Type="Boolean" />
+          <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Opiniometro_DatosModel.FK_Con_Ite" FromRole="Item" ToRole="Conformado_Item_Sec_Form" />
+          <NavigationProperty Name="SeleccionUnica" Relationship="Opiniometro_DatosModel.FK_Sel_Ite" FromRole="Item" ToRole="SeleccionUnica" />
+          <NavigationProperty Name="Texto_Libre" Relationship="Opiniometro_DatosModel.FK_Tex_Ite" FromRole="Item" ToRole="Texto_Libre" />
         </EntityType>
         <EntityType Name="Seccion">
           <Key>
             <PropertyRef Name="Titulo" />
           </Key>
-          <Property Name="Titulo" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Titulo" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
           <Property Name="Descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Opiniometro_DatosModel.FK_Con_Sec" FromRole="Seccion" ToRole="Conformado_Item_Sec_Form" />
         </EntityType>
         <EntityType Name="SeleccionUnica">
           <Key>
             <PropertyRef Name="ItemID" />
           </Key>
           <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Isa_LikeDislike" Type="Boolean" />
-          <NavigationProperty Name="Item" Relationship="Opiniometro_DatosModel.FKItem" FromRole="SeleccionUnica" ToRole="Item" />
+          <Property Name="IsaLikeDislike" Type="Boolean" />
+          <NavigationProperty Name="Item" Relationship="Opiniometro_DatosModel.FK_Sel_Ite" FromRole="SeleccionUnica" ToRole="Item" />
         </EntityType>
         <EntityType Name="Texto_Libre">
           <Key>
-            <PropertyRef Name="ID_Item" />
+            <PropertyRef Name="ItemId" />
           </Key>
-          <Property Name="ID_Item" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Item" Relationship="Opiniometro_DatosModel.FKaItem" FromRole="Texto_Libre" ToRole="Item" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="Opiniometro_DatosModel.FK_Tex_Ite" FromRole="Texto_Libre" ToRole="Item" />
         </EntityType>
-        <Association Name="FKaItem">
+        <Association Name="FK_Con_For">
+          <End Type="Opiniometro_DatosModel.Formulario" Role="Formulario" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.Conformado_Item_Sec_Form" Role="Conformado_Item_Sec_Form" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="CodigoFormulario" />
+            </Principal>
+            <Dependent Role="Conformado_Item_Sec_Form">
+              <PropertyRef Name="CodigoFormulario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Con_Ite">
           <End Type="Opiniometro_DatosModel.Item" Role="Item" Multiplicity="1" />
-          <End Type="Opiniometro_DatosModel.Texto_Libre" Role="Texto_Libre" Multiplicity="0..1" />
+          <End Type="Opiniometro_DatosModel.Conformado_Item_Sec_Form" Role="Conformado_Item_Sec_Form" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Item">
               <PropertyRef Name="ItemID" />
             </Principal>
-            <Dependent Role="Texto_Libre">
-              <PropertyRef Name="ID_Item" />
+            <Dependent Role="Conformado_Item_Sec_Form">
+              <PropertyRef Name="ItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FKItem">
+        <Association Name="FK_Con_Sec">
+          <End Type="Opiniometro_DatosModel.Seccion" Role="Seccion" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.Conformado_Item_Sec_Form" Role="Conformado_Item_Sec_Form" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Titulo" />
+            </Principal>
+            <Dependent Role="Conformado_Item_Sec_Form">
+              <PropertyRef Name="TituloSeccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sel_Ite">
           <End Type="Opiniometro_DatosModel.Item" Role="Item" Multiplicity="1" />
           <End Type="Opiniometro_DatosModel.SeleccionUnica" Role="SeleccionUnica" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -236,6 +618,18 @@ warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' do
             </Principal>
             <Dependent Role="SeleccionUnica">
               <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tex_Ite">
+          <End Type="Opiniometro_DatosModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.Texto_Libre" Role="Texto_Libre" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="Texto_Libre">
+              <PropertyRef Name="ItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -265,11 +659,71 @@ warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' do
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarUsuario" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />
-          <EntitySetMapping Name="Fecha_Corte">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Fecha_Corte">
-              <MappingFragment StoreEntitySet="Fecha_Corte">
-                <ScalarProperty Name="Fecha_Final" ColumnName="Fecha_Final" />
-                <ScalarProperty Name="Fecha_Inicio" ColumnName="Fecha_Inicio" />
+          <EntitySetMapping Name="Administrativo">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Administrativo">
+              <MappingFragment StoreEntitySet="Administrativo">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="CedulaAdministrativo" ColumnName="CedulaAdministrativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estudiante">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Estudiante">
+              <MappingFragment StoreEntitySet="Estudiante">
+                <ScalarProperty Name="Carne" ColumnName="Carne" />
+                <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Perfil">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Perfil">
+              <MappingFragment StoreEntitySet="Perfil">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permiso">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Permiso">
+              <MappingFragment StoreEntitySet="Permiso">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Persona">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Persona">
+              <MappingFragment StoreEntitySet="Persona">
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profesor">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Profesor">
+              <MappingFragment StoreEntitySet="Profesor">
+                <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TelefonoPersona">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.TelefonoPersona">
+              <MappingFragment StoreEntitySet="TelefonoPersona">
+                <ScalarProperty Name="NumeroTelefono" ColumnName="NumeroTelefono" />
+                <ScalarProperty Name="CedulaPersona" ColumnName="CedulaPersona" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Conformado_Item_Sec_Form">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Conformado_Item_Sec_Form">
+              <MappingFragment StoreEntitySet="Conformado_Item_Sec_Form">
+                <ScalarProperty Name="NombreFormulario" ColumnName="NombreFormulario" />
+                <ScalarProperty Name="TituloSeccion" ColumnName="TituloSeccion" />
+                <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -284,9 +738,9 @@ warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' do
           <EntitySetMapping Name="Item">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Item">
               <MappingFragment StoreEntitySet="Item">
-                <ScalarProperty Name="Tiene_Observacion" ColumnName="Tiene_Observacion" />
+                <ScalarProperty Name="TieneObservacion" ColumnName="TieneObservacion" />
                 <ScalarProperty Name="Categoria" ColumnName="Categoria" />
-                <ScalarProperty Name="Texto_Pregunta" ColumnName="Texto_Pregunta" />
+                <ScalarProperty Name="TextoPregunta" ColumnName="TextoPregunta" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -302,7 +756,7 @@ warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' do
           <EntitySetMapping Name="SeleccionUnica">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.SeleccionUnica">
               <MappingFragment StoreEntitySet="SeleccionUnica">
-                <ScalarProperty Name="Isa_LikeDislike" ColumnName="Isa_LikeDislike" />
+                <ScalarProperty Name="IsaLikeDislike" ColumnName="IsaLikeDislike" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -310,7 +764,7 @@ warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' do
           <EntitySetMapping Name="Texto_Libre">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Texto_Libre">
               <MappingFragment StoreEntitySet="Texto_Libre">
-                <ScalarProperty Name="ID_Item" ColumnName="ID_Item" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

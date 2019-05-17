@@ -14,12 +14,20 @@ namespace Opiniometro_WebApp.Models
     
     public partial class Item
     {
-        public int ItemID { get; set; }
-        public string Texto_Pregunta { get; set; }
-        public string Categoria { get; set; }
-        public Nullable<bool> Tiene_Observacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Item()
+        {
+            this.Conformado_Item_Sec_Form = new HashSet<Conformado_Item_Sec_Form>();
+        }
     
-        public virtual Texto_Libre Texto_Libre { get; set; }
+        public int ItemID { get; set; }
+        public string TextoPregunta { get; set; }
+        public string Categoria { get; set; }
+        public Nullable<bool> TieneObservacion { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
         public virtual SeleccionUnica SeleccionUnica { get; set; }
+        public virtual Texto_Libre Texto_Libre { get; set; }
     }
 }
