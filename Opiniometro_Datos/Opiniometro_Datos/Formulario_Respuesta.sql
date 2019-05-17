@@ -13,9 +13,9 @@
 	--CONSTRAINT [FK_ForRes_For] FOREIGN KEY ([CodigoFormulario])
 	--REFERENCES [Formulario] ([CodigoFormulario]) ON UPDATE CASCADE,
 	CONSTRAINT [FK_ForRes_Pro] FOREIGN KEY ([CedulaProfesor])
-	REFERENCES [Profesor] ([CedulaProfesor]) ON UPDATE CASCADE,
+	REFERENCES [Profesor] ([CedulaProfesor]),
 	CONSTRAINT [FK_ForRes_Per] FOREIGN KEY ([CedulaPersona])
-	REFERENCES [Persona] ([Cedula]) ON UPDATE CASCADE
+	REFERENCES [Persona] ([Cedula])
 	--CONSTRAINT [FK_ForRes_Gru] FOREIGN KEY ([AñoGrupo], [SemestreGrupo], [NumeroGrupo], [SiglaGrupo])
 	--REFERENCES [Grupo] ([AñoGrupo], [SemestreGrupo], [Numero], [SiglaCurso]) ON DELETE NO ACTION ON UPDATE CASCADE
 )
