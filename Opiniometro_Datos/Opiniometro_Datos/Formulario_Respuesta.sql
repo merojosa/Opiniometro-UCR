@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Formulario_Respuesta]
 (
 	[Fecha] DATE NOT NULL,
-	[CodigoFormulario] CHAR(6) NOT NULL DEFAULT('000000'),
+	[CodigoFormulario] CHAR(6) NOT NULL,
 	[CedulaPersona] CHAR(9) NOT NULL,
 	[CedulaProfesor] CHAR(9) NOT NULL,
 	[AñoGrupo] SMALLINT NOT NULL,

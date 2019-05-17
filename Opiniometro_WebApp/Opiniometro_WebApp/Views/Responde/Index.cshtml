@@ -1,51 +1,87 @@
 ﻿@model IEnumerable<Opiniometro_WebApp.Models.Responde>
 
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Responde";
 }
+
+<style>
+    /* Style the button that is used to open and close the collapsible content */
+    .collapsible {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 13px; /* button height */
+        width: 100%; /* tab width */
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+        /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+        .active, .collapsible:hover {
+            background-color: #ccc;
+        }
+
+    /* Style the collapsible content. Note: hidden by default */
+    .content {
+        padding: 0 18px;
+        background-color: white;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+    }
+
+    .collapsible:after {
+        content: '\02795'; /* Unicode character for "plus" sign (+) */
+        font-size: 10px; /* character size */
+        color: white;
+        float: right;
+        margin-left: 5px;
+    }
+
+    .active:after {
+        content: "\2796"; /* Unicode character for "minus" sign (-) */
+    }
+</style>
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Observacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Respuesta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RespuestaProfesor)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Formulario_Respuesta.CodigoFormulario)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Observacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Respuesta)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RespuestaProfesor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Formulario_Respuesta.CodigoFormulario)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Respuesta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RespuestaProfesor)
+            </td>
+            <td>
+                <button class="collapsible"> @Html.DisplayFor(modelItem => item.Formulario_Respuesta.CodigoFormulario) </button>
+                <div class="content">
+                    <small>Item 1</small>
+                    <br />
+                    <small>Item 2</small>
+                </div>
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
 
 </table>
+
+<script src="~/Scripts/CollapsibleScript.js"></script>

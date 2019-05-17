@@ -259,6 +259,7 @@
       <DependentUpon>OpiniometroModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\CollapsibleScript.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -287,15 +288,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Auth\Error.cshtml" />
-    <Content Include="Views\Formulario_Respuesta\Create.cshtml" />
-    <Content Include="Views\Formulario_Respuesta\Delete.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Details.cshtml" />
-    <Content Include="Views\Formulario_Respuesta\Edit.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
-    <Content Include="Views\Responde\Create.cshtml" />
-    <Content Include="Views\Responde\Delete.cshtml" />
     <Content Include="Views\Responde\Details.cshtml" />
-    <Content Include="Views\Responde\Edit.cshtml" />
     <Content Include="Views\Responde\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
