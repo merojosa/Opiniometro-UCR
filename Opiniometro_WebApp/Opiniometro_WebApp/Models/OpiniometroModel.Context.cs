@@ -29,6 +29,15 @@ namespace Opiniometro_WebApp.Models
     
         public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<Administrativo> Administrativo { get; set; }
+        public virtual DbSet<Estudiante> Estudiante { get; set; }
+        public virtual DbSet<Perfil> Perfil { get; set; }
+        public virtual DbSet<Permiso> Permiso { get; set; }
+        public virtual DbSet<Persona> Persona { get; set; }
+        public virtual DbSet<Profesor> Profesor { get; set; }
+        public virtual DbSet<TelefonoPersona> TelefonoPersona { get; set; }
+        public virtual DbSet<Formulario_Respuesta> Formulario_Respuesta { get; set; }
+        public virtual DbSet<Responde> Responde { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Ciclo_Lectivo> Ciclo_Lectivo { get; set; }
         public virtual DbSet<Curso> Curso { get; set; }

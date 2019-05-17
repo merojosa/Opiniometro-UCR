@@ -11,6 +11,106 @@
           </Key>
           <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <EntityType Name="Administrativo">
+          <Key>
+            <PropertyRef Name="CedulaAdministrativo" />
+          </Key>
+          <Property Name="CedulaAdministrativo" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estudiante">
+          <Key>
+            <PropertyRef Name="CedulaEstudiante" />
+          </Key>
+          <Property Name="CedulaEstudiante" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="Carne" Type="char" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Formulario_Respuesta">
+          <Key>
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="CodigoFormulario" />
+            <PropertyRef Name="CedulaPersona" />
+            <PropertyRef Name="CedulaProfesor" />
+            <PropertyRef Name="AñoGrupo" />
+            <PropertyRef Name="SemestreGrupo" />
+            <PropertyRef Name="NumeroGrupo" />
+            <PropertyRef Name="SiglaGrupo" />
+          </Key>
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="CodigoFormulario" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="CedulaPersona" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="CedulaProfesor" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="AñoGrupo" Type="smallint" Nullable="false" />
+          <Property Name="SemestreGrupo" Type="tinyint" Nullable="false" />
+          <Property Name="NumeroGrupo" Type="tinyint" Nullable="false" />
+          <Property Name="SiglaGrupo" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="Completado" Type="bit" />
+        </EntityType>
+        <EntityType Name="Perfil">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permiso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="Cedula" />
+          </Key>
+          <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido2" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profesor">
+          <Key>
+            <PropertyRef Name="CedulaProfesor" />
+          </Key>
+          <Property Name="CedulaProfesor" Type="char" MaxLength="9" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Responde">
+          <Key>
+            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="TituloSeccion" />
+            <PropertyRef Name="FechaRespuesta" />
+            <PropertyRef Name="CodigoFormularioResp" />
+            <PropertyRef Name="CedulaPersona" />
+            <PropertyRef Name="CedulaProfesor" />
+            <PropertyRef Name="AñoGrupoResp" />
+            <PropertyRef Name="SemestreGrupoResp" />
+            <PropertyRef Name="NumeroGrupoResp" />
+            <PropertyRef Name="SiglaGrupoResp" />
+          </Key>
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="TituloSeccion" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="FechaRespuesta" Type="date" Nullable="false" />
+          <Property Name="CodigoFormularioResp" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="CedulaPersona" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="CedulaProfesor" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="AñoGrupoResp" Type="smallint" Nullable="false" />
+          <Property Name="SemestreGrupoResp" Type="tinyint" Nullable="false" />
+          <Property Name="NumeroGrupoResp" Type="tinyint" Nullable="false" />
+          <Property Name="SiglaGrupoResp" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="Observacion" Type="nvarchar" MaxLength="500" />
+          <Property Name="Respuesta" Type="nvarchar" MaxLength="500" />
+          <Property Name="RespuestaProfesor" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="TelefonoPersona">
+          <Key>
+            <PropertyRef Name="CedulaPersona" />
+            <PropertyRef Name="NumeroTelefono" />
+          </Key>
+          <Property Name="CedulaPersona" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="NumeroTelefono" Type="varchar" MaxLength="11" Nullable="false" />
+        </EntityType>
         <EntityType Name="Carrera">
           <Key>
             <PropertyRef Name="Sigla" />
@@ -86,6 +186,92 @@
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Adm_Per">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Administrativo" Type="Self.Administrativo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Administrativo">
+              <PropertyRef Name="CedulaAdministrativo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Est_Per">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Estudiante">
+              <PropertyRef Name="CedulaEstudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pro_Per">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Profesor">
+              <PropertyRef Name="CedulaProfesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Res_ForRes">
+          <End Role="Formulario_Respuesta" Type="Self.Formulario_Respuesta" Multiplicity="1" />
+          <End Role="Responde" Type="Self.Responde" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario_Respuesta">
+              <PropertyRef Name="Fecha" />
+              <PropertyRef Name="CodigoFormulario" />
+              <PropertyRef Name="CedulaPersona" />
+              <PropertyRef Name="CedulaProfesor" />
+              <PropertyRef Name="AñoGrupo" />
+              <PropertyRef Name="SemestreGrupo" />
+              <PropertyRef Name="NumeroGrupo" />
+              <PropertyRef Name="SiglaGrupo" />
+            </Principal>
+            <Dependent Role="Responde">
+              <PropertyRef Name="FechaRespuesta" />
+              <PropertyRef Name="CodigoFormularioResp" />
+              <PropertyRef Name="CedulaPersona" />
+              <PropertyRef Name="CedulaProfesor" />
+              <PropertyRef Name="AñoGrupoResp" />
+              <PropertyRef Name="SemestreGrupoResp" />
+              <PropertyRef Name="NumeroGrupoResp" />
+              <PropertyRef Name="SiglaGrupoResp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tel_Per">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="TelefonoPersona" Type="Self.TelefonoPersona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="TelefonoPersona">
+              <PropertyRef Name="CedulaPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usu_Per">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="Cedula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Carrera_UniAcad">
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="1" />
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="*" />
@@ -196,6 +382,15 @@
         </Function>
         <EntityContainer Name="Opiniometro_DatosModelStoreContainer">
           <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Administrativo" EntityType="Self.Administrativo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estudiante" EntityType="Self.Estudiante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Formulario_Respuesta" EntityType="Self.Formulario_Respuesta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Perfil" EntityType="Self.Perfil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Responde" EntityType="Self.Responde" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TelefonoPersona" EntityType="Self.TelefonoPersona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ciclo_Lectivo" EntityType="Self.Ciclo_Lectivo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
@@ -237,6 +432,30 @@
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Grupo" EntitySet="Grupo" />
           </AssociationSet>
+          <AssociationSet Name="FK_Adm_Per" Association="Self.FK_Adm_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Administrativo" EntitySet="Administrativo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Est_Per" Association="Self.FK_Est_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pro_Per" Association="Self.FK_Pro_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Profesor" EntitySet="Profesor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Res_ForRes" Association="Self.FK_Res_ForRes">
+            <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
+            <End Role="Responde" EntitySet="Responde" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tel_Per" Association="Self.FK_Tel_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="TelefonoPersona" EntitySet="TelefonoPersona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usu_Per" Association="Self.FK_Usu_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -257,20 +476,54 @@
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <Property Name="Cedula" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Id" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Persona" Relationship="Opiniometro_DatosModel.FK_Usu_Per" FromRole="Usuario" ToRole="Persona" />
         </EntityType>
         <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
           <FunctionImport Name="SP_AgregarUsuario">
-            <Parameter Name="Correo" Mode="In" Type="String" />
+          <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_LoginUsuario">
-            <Parameter Name="Correo" Mode="In" Type="String" />
+          <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="Administrativo" EntityType="Opiniometro_DatosModel.Administrativo" />
+          <EntitySet Name="Estudiante" EntityType="Opiniometro_DatosModel.Estudiante" />
+          <EntitySet Name="Perfil" EntityType="Opiniometro_DatosModel.Perfil" />
+          <EntitySet Name="Permiso" EntityType="Opiniometro_DatosModel.Permiso" />
+          <EntitySet Name="Persona" EntityType="Opiniometro_DatosModel.Persona" />
+          <EntitySet Name="Profesor" EntityType="Opiniometro_DatosModel.Profesor" />
+          <EntitySet Name="TelefonoPersona" EntityType="Opiniometro_DatosModel.TelefonoPersona" />
+          <AssociationSet Name="FK_Adm_Per" Association="Opiniometro_DatosModel.FK_Adm_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Administrativo" EntitySet="Administrativo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Est_Per" Association="Opiniometro_DatosModel.FK_Est_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pro_Per" Association="Opiniometro_DatosModel.FK_Pro_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Profesor" EntitySet="Profesor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tel_Per" Association="Opiniometro_DatosModel.FK_Tel_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="TelefonoPersona" EntitySet="TelefonoPersona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usu_Per" Association="Opiniometro_DatosModel.FK_Usu_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <EntitySet Name="Formulario_Respuesta" EntityType="Opiniometro_DatosModel.Formulario_Respuesta" />
+          <EntitySet Name="Responde" EntityType="Opiniometro_DatosModel.Responde" />
+          <AssociationSet Name="FK_Res_ForRes" Association="Opiniometro_DatosModel.FK_Res_ForRes">
+            <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
+            <End Role="Responde" EntitySet="Responde" />
+          </AssociationSet>
           <EntitySet Name="Carrera" EntityType="Opiniometro_DatosModel.Carrera" />
           <EntitySet Name="Ciclo_Lectivo" EntityType="Opiniometro_DatosModel.Ciclo_Lectivo" />
           <EntitySet Name="Curso" EntityType="Opiniometro_DatosModel.Curso" />
@@ -307,6 +560,203 @@
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Administrativo">
+          <Key>
+            <PropertyRef Name="CedulaAdministrativo" />
+          </Key>
+          <Property Name="CedulaAdministrativo" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Persona" Relationship="Opiniometro_DatosModel.FK_Adm_Per" FromRole="Administrativo" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Estudiante">
+          <Key>
+            <PropertyRef Name="CedulaEstudiante" />
+          </Key>
+          <Property Name="CedulaEstudiante" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="Carne" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Persona" Relationship="Opiniometro_DatosModel.FK_Est_Per" FromRole="Estudiante" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Perfil">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Permiso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="Cedula" />
+          </Key>
+          <Property Name="Cedula" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Administrativo" Relationship="Opiniometro_DatosModel.FK_Adm_Per" FromRole="Persona" ToRole="Administrativo" />
+          <NavigationProperty Name="Estudiante" Relationship="Opiniometro_DatosModel.FK_Est_Per" FromRole="Persona" ToRole="Estudiante" />
+          <NavigationProperty Name="Profesor" Relationship="Opiniometro_DatosModel.FK_Pro_Per" FromRole="Persona" ToRole="Profesor" />
+          <NavigationProperty Name="TelefonoPersona" Relationship="Opiniometro_DatosModel.FK_Tel_Per" FromRole="Persona" ToRole="TelefonoPersona" />
+          <NavigationProperty Name="Usuario" Relationship="Opiniometro_DatosModel.FK_Usu_Per" FromRole="Persona" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Profesor">
+          <Key>
+            <PropertyRef Name="CedulaProfesor" />
+          </Key>
+          <Property Name="CedulaProfesor" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Persona" Relationship="Opiniometro_DatosModel.FK_Pro_Per" FromRole="Profesor" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="TelefonoPersona">
+          <Key>
+            <PropertyRef Name="CedulaPersona" />
+            <PropertyRef Name="NumeroTelefono" />
+          </Key>
+          <Property Name="CedulaPersona" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="NumeroTelefono" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Persona" Relationship="Opiniometro_DatosModel.FK_Tel_Per" FromRole="TelefonoPersona" ToRole="Persona" />
+        </EntityType>
+        <Association Name="FK_Adm_Per">
+          <End Type="Opiniometro_DatosModel.Persona" Role="Persona" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.Administrativo" Role="Administrativo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Administrativo">
+              <PropertyRef Name="CedulaAdministrativo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Est_Per">
+          <End Type="Opiniometro_DatosModel.Persona" Role="Persona" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.Estudiante" Role="Estudiante" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Estudiante">
+              <PropertyRef Name="CedulaEstudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pro_Per">
+          <End Type="Opiniometro_DatosModel.Persona" Role="Persona" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.Profesor" Role="Profesor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Profesor">
+              <PropertyRef Name="CedulaProfesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tel_Per">
+          <End Type="Opiniometro_DatosModel.Persona" Role="Persona" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.TelefonoPersona" Role="TelefonoPersona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="TelefonoPersona">
+              <PropertyRef Name="CedulaPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usu_Per">
+          <End Type="Opiniometro_DatosModel.Persona" Role="Persona" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="Cedula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Formulario_Respuesta">
+          <Key>
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="CodigoFormulario" />
+            <PropertyRef Name="CedulaPersona" />
+            <PropertyRef Name="CedulaProfesor" />
+            <PropertyRef Name="AñoGrupo" />
+            <PropertyRef Name="SemestreGrupo" />
+            <PropertyRef Name="NumeroGrupo" />
+            <PropertyRef Name="SiglaGrupo" />
+          </Key>
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CodigoFormulario" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="CedulaPersona" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="CedulaProfesor" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="AñoGrupo" Type="Int16" Nullable="false" />
+          <Property Name="SemestreGrupo" Type="Byte" Nullable="false" />
+          <Property Name="NumeroGrupo" Type="Byte" Nullable="false" />
+          <Property Name="SiglaGrupo" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="Completado" Type="Boolean" />
+          <NavigationProperty Name="Responde" Relationship="Opiniometro_DatosModel.FK_Res_ForRes" FromRole="Formulario_Respuesta" ToRole="Responde" />
+        </EntityType>
+        <EntityType Name="Responde">
+          <Key>
+            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="TituloSeccion" />
+            <PropertyRef Name="FechaRespuesta" />
+            <PropertyRef Name="CodigoFormularioResp" />
+            <PropertyRef Name="CedulaPersona" />
+            <PropertyRef Name="CedulaProfesor" />
+            <PropertyRef Name="AñoGrupoResp" />
+            <PropertyRef Name="SemestreGrupoResp" />
+            <PropertyRef Name="NumeroGrupoResp" />
+            <PropertyRef Name="SiglaGrupoResp" />
+          </Key>
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="TituloSeccion" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="FechaRespuesta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CodigoFormularioResp" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="CedulaPersona" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="CedulaProfesor" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="AñoGrupoResp" Type="Int16" Nullable="false" />
+          <Property Name="SemestreGrupoResp" Type="Byte" Nullable="false" />
+          <Property Name="NumeroGrupoResp" Type="Byte" Nullable="false" />
+          <Property Name="SiglaGrupoResp" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="Observacion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Respuesta" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RespuestaProfesor" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Formulario_Respuesta" Relationship="Opiniometro_DatosModel.FK_Res_ForRes" FromRole="Responde" ToRole="Formulario_Respuesta" />
+        </EntityType>
+        <Association Name="FK_Res_ForRes">
+          <End Type="Opiniometro_DatosModel.Formulario_Respuesta" Role="Formulario_Respuesta" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.Responde" Role="Responde" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario_Respuesta">
+              <PropertyRef Name="Fecha" />
+              <PropertyRef Name="CodigoFormulario" />
+              <PropertyRef Name="CedulaPersona" />
+              <PropertyRef Name="CedulaProfesor" />
+              <PropertyRef Name="AñoGrupo" />
+              <PropertyRef Name="SemestreGrupo" />
+              <PropertyRef Name="NumeroGrupo" />
+              <PropertyRef Name="SiglaGrupo" />
+            </Principal>
+            <Dependent Role="Responde">
+              <PropertyRef Name="FechaRespuesta" />
+              <PropertyRef Name="CodigoFormularioResp" />
+              <PropertyRef Name="CedulaPersona" />
+              <PropertyRef Name="CedulaProfesor" />
+              <PropertyRef Name="AñoGrupoResp" />
+              <PropertyRef Name="SemestreGrupoResp" />
+              <PropertyRef Name="NumeroGrupoResp" />
+              <PropertyRef Name="SiglaGrupoResp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="Carrera">
           <Key>
             <PropertyRef Name="Sigla" />
@@ -483,6 +933,98 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarUsuario" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />
+          <EntitySetMapping Name="Administrativo">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Administrativo">
+              <MappingFragment StoreEntitySet="Administrativo">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="CedulaAdministrativo" ColumnName="CedulaAdministrativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estudiante">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Estudiante">
+              <MappingFragment StoreEntitySet="Estudiante">
+                <ScalarProperty Name="Carne" ColumnName="Carne" />
+                <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Perfil">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Perfil">
+              <MappingFragment StoreEntitySet="Perfil">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permiso">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Permiso">
+              <MappingFragment StoreEntitySet="Permiso">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Persona">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Persona">
+              <MappingFragment StoreEntitySet="Persona">
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profesor">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Profesor">
+              <MappingFragment StoreEntitySet="Profesor">
+                <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TelefonoPersona">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.TelefonoPersona">
+              <MappingFragment StoreEntitySet="TelefonoPersona">
+                <ScalarProperty Name="NumeroTelefono" ColumnName="NumeroTelefono" />
+                <ScalarProperty Name="CedulaPersona" ColumnName="CedulaPersona" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Formulario_Respuesta">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Formulario_Respuesta">
+              <MappingFragment StoreEntitySet="Formulario_Respuesta">
+                <ScalarProperty Name="Completado" ColumnName="Completado" />
+                <ScalarProperty Name="SiglaGrupo" ColumnName="SiglaGrupo" />
+                <ScalarProperty Name="NumeroGrupo" ColumnName="NumeroGrupo" />
+                <ScalarProperty Name="SemestreGrupo" ColumnName="SemestreGrupo" />
+                <ScalarProperty Name="AñoGrupo" ColumnName="AñoGrupo" />
+                <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
+                <ScalarProperty Name="CedulaPersona" ColumnName="CedulaPersona" />
+                <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Responde">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Responde">
+              <MappingFragment StoreEntitySet="Responde">
+                <ScalarProperty Name="RespuestaProfesor" ColumnName="RespuestaProfesor" />
+                <ScalarProperty Name="Respuesta" ColumnName="Respuesta" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="SiglaGrupoResp" ColumnName="SiglaGrupoResp" />
+                <ScalarProperty Name="NumeroGrupoResp" ColumnName="NumeroGrupoResp" />
+                <ScalarProperty Name="SemestreGrupoResp" ColumnName="SemestreGrupoResp" />
+                <ScalarProperty Name="AñoGrupoResp" ColumnName="AñoGrupoResp" />
+                <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
+                <ScalarProperty Name="CedulaPersona" ColumnName="CedulaPersona" />
+                <ScalarProperty Name="CodigoFormularioResp" ColumnName="CodigoFormularioResp" />
+                <ScalarProperty Name="FechaRespuesta" ColumnName="FechaRespuesta" />
+                <ScalarProperty Name="TituloSeccion" ColumnName="TituloSeccion" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Carrera">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Carrera">
               <MappingFragment StoreEntitySet="Carrera">

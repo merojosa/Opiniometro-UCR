@@ -1,4 +1,5 @@
-﻿EXEC sp_MSForEachTable 'DISABLE TRIGGER ALL ON ?'
+﻿-- Borrar todas las tuplas existentes en la base de datos para evitar repeticion de llaves primarias.
+EXEC sp_MSForEachTable 'DISABLE TRIGGER ALL ON ?'
 GO
 EXEC sp_MSForEachTable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL'
 GO
@@ -50,6 +51,14 @@ BEGIN
 		SET @Resultado = 1
 END
 GO
+
+--En caso de error en la inserción es posiblemente el dato de CX, reescribir de ser necesario esa inserción.
+INSERT INTO Persona
+VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajuela.'),
+		('115003456', 'Daniel', 'Escalante', 'Perez', 'Desamparados de San José.'),
+		('117720910', 'Jose Andrés', 'Mejías', 'Rojas', 'La Fortuna de San Carlos.'),
+		('236724501', 'Jose Andrés', 'Mejías', 'Rojas', 'Sarchí, Alajuela.'),
+		('100000001', 'CX', 'Solutions', 'S.A.', 'San Pedro Montes de Oca');
 
 EXEC SP_AgregarUsuario @Correo='jose.mejiasrojas@ucr.ac.cr', @Contrasenna='123456', @Cedula='116720500'
 EXEC SP_AgregarUsuario @Correo='daniel.escalanteperez@ucr.ac.cr', @Contrasenna='Danielito', @Cedula='115003456'

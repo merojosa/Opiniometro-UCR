@@ -4,6 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
+      <Diagram DiagramId="ff6de282f1c94eaaae5a41fd1f8dd343" Name="Diagram1">
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.C__RefactorLog" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Usuario" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Administrativo" Width="1.5" PointX="3" PointY="12" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Estudiante" Width="1.5" PointX="3" PointY="5.125" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Perfil" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Permiso" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Persona" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Profesor" Width="1.5" PointX="3" PointY="7.5" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.TelefonoPersona" Width="1.5" PointX="3" PointY="9.625" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Adm_Per" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Est_Per" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Pro_Per" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Tel_Per" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Usu_Per" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Formulario_Respuesta" Width="1.75" PointX="5.375" PointY="7.375" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Responde" Width="1.5" PointX="7.625" PointY="7" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Res_ForRes" />
       <Diagram DiagramId="ff6de282f1c94eaaae5a41fd1f8dd343" Name="Diagram1" ZoomLevel="82">
         <EntityTypeShape EntityType="Opiniometro_DatosModel.C__RefactorLog" Width="1.5" PointX="7.75" PointY="0.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Opiniometro_DatosModel.Usuario" Width="1.5" PointX="7.75" PointY="3.125" IsExpanded="true" />
