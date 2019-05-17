@@ -12,11 +12,18 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Estudiante
+    public partial class Ciclo_Lectivo
     {
-        public string CedulaEstudiante { get; set; }
-        public string Carne { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Ciclo_Lectivo()
+        {
+            this.Grupo = new HashSet<Grupo>();
+        }
     
-        public virtual Persona Persona { get; set; }
+        public string Año { get; set; }
+        public byte Semestre { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Grupo> Grupo { get; set; }
     }
 }

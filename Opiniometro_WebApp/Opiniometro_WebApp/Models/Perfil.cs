@@ -14,16 +14,7 @@ namespace Opiniometro_WebApp.Models
     
     public partial class Perfil
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Perfil()
-        {
-            this.Posee_Enfasis_Perfil_Permiso = new HashSet<Posee_Enfasis_Perfil_Permiso>();
-        }
-    
         public string Id { get; set; }
         public string Tipo { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Posee_Enfasis_Perfil_Permiso> Posee_Enfasis_Perfil_Permiso { get; set; }
     }
 }

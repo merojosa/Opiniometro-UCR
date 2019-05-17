@@ -171,12 +171,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\Conformado_Item_Sec_FormController.cs" />
     <Compile Include="Controllers\FormularioController.cs" />
+    <Compile Include="Controllers\Formulario_RespuestaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\SeleccionUnicaController.cs" />
     <Compile Include="Controllers\Texto_LibreController.cs" />
+    <Compile Include="Controllers\RespondeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -184,7 +186,16 @@
     <Compile Include="Models\Administrativo.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Conformado_Item_Sec_Form.cs">
+    <Compile Include="Models\Carrera.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ciclo_Lectivo.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Curso.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+	<Compile Include="Models\Conformado_Item_Sec_Form.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__RefactorLog.cs">
@@ -203,6 +214,15 @@
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Formulario_Respuesta.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Enfasis.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Facultad.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Grupo.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
@@ -259,6 +279,9 @@
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Texto_Libre.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+	<Compile Include="Models\Unidad_Academica.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Usuario.cs">
@@ -354,6 +377,16 @@
     <Content Include="Views\Texto_Libre\Details.cshtml" />
     <Content Include="Views\Texto_Libre\Edit.cshtml" />
     <Content Include="Views\Texto_Libre\Index.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Create.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Delete.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Details.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Edit.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
+    <Content Include="Views\Responde\Create.cshtml" />
+    <Content Include="Views\Responde\Delete.cshtml" />
+    <Content Include="Views\Responde\Details.cshtml" />
+    <Content Include="Views\Responde\Edit.cshtml" />
+    <Content Include="Views\Responde\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
