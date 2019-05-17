@@ -4,12 +4,58 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Opiniometro_DatosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Opiniometro_DatosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__RefactorLog">
           <Key>
             <PropertyRef Name="OperationKey" />
           </Key>
           <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Opiniometro_Datos.dbo.Conformado_Item_Sec_Form' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Fecha_Corte">
+          <Key>
+            <PropertyRef Name="Fecha_Inicio" />
+            <PropertyRef Name="Fecha_Final" />
+          </Key>
+          <Property Name="Fecha_Inicio" Type="date" Nullable="false" />
+          <Property Name="Fecha_Final" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Formulario">
+          <Key>
+            <PropertyRef Name="CodigoFormulario" />
+          </Key>
+          <Property Name="CodigoFormulario" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Texto_Pregunta" Type="varchar" MaxLength="120" />
+          <Property Name="Categoria" Type="varchar" MaxLength="30" />
+          <Property Name="Tiene_Observacion" Type="bit" />
+        </EntityType>
+        <EntityType Name="Seccion">
+          <Key>
+            <PropertyRef Name="Titulo" />
+          </Key>
+          <Property Name="Titulo" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="SeleccionUnica">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Isa_LikeDislike" Type="bit" />
+        </EntityType>
+        <EntityType Name="Texto_Libre">
+          <Key>
+            <PropertyRef Name="ID_Item" />
+          </Key>
+          <Property Name="ID_Item" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -21,6 +67,30 @@
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <Association Name="FKaItem">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Texto_Libre" Type="Self.Texto_Libre" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="Texto_Libre">
+              <PropertyRef Name="ID_Item" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKItem">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="SeleccionUnica" Type="Self.SeleccionUnica" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="SeleccionUnica">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="SP_AgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
@@ -33,10 +103,23 @@
         </Function>
         <EntityContainer Name="Opiniometro_DatosModelStoreContainer">
           <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fecha_Corte" EntityType="Self.Fecha_Corte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Formulario" EntityType="Self.Formulario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeleccionUnica" EntityType="Self.SeleccionUnica" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Texto_Libre" EntityType="Self.Texto_Libre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FKaItem" Association="Self.FKaItem">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Texto_Libre" EntitySet="Texto_Libre" />
+          </AssociationSet>
+          <AssociationSet Name="FKItem" Association="Self.FKItem">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="SeleccionUnica" EntitySet="SeleccionUnica" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Opiniometro_DatosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -69,7 +152,93 @@
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="Fecha_Corte" EntityType="Opiniometro_DatosModel.Fecha_Corte" />
+          <EntitySet Name="Formulario" EntityType="Opiniometro_DatosModel.Formulario" />
+          <EntitySet Name="Item" EntityType="Opiniometro_DatosModel.Item" />
+          <EntitySet Name="Seccion" EntityType="Opiniometro_DatosModel.Seccion" />
+          <EntitySet Name="SeleccionUnica" EntityType="Opiniometro_DatosModel.SeleccionUnica" />
+          <EntitySet Name="Texto_Libre" EntityType="Opiniometro_DatosModel.Texto_Libre" />
+          <AssociationSet Name="FKaItem" Association="Opiniometro_DatosModel.FKaItem">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Texto_Libre" EntitySet="Texto_Libre" />
+          </AssociationSet>
+          <AssociationSet Name="FKItem" Association="Opiniometro_DatosModel.FKItem">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="SeleccionUnica" EntitySet="SeleccionUnica" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Fecha_Corte">
+          <Key>
+            <PropertyRef Name="Fecha_Inicio" />
+            <PropertyRef Name="Fecha_Final" />
+          </Key>
+          <Property Name="Fecha_Inicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_Final" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="Formulario">
+          <Key>
+            <PropertyRef Name="CodigoFormulario" />
+          </Key>
+          <Property Name="CodigoFormulario" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Texto_Pregunta" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Tiene_Observacion" Type="Boolean" />
+          <NavigationProperty Name="Texto_Libre" Relationship="Opiniometro_DatosModel.FKaItem" FromRole="Item" ToRole="Texto_Libre" />
+          <NavigationProperty Name="SeleccionUnica" Relationship="Opiniometro_DatosModel.FKItem" FromRole="Item" ToRole="SeleccionUnica" />
+        </EntityType>
+        <EntityType Name="Seccion">
+          <Key>
+            <PropertyRef Name="Titulo" />
+          </Key>
+          <Property Name="Titulo" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SeleccionUnica">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Isa_LikeDislike" Type="Boolean" />
+          <NavigationProperty Name="Item" Relationship="Opiniometro_DatosModel.FKItem" FromRole="SeleccionUnica" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="Texto_Libre">
+          <Key>
+            <PropertyRef Name="ID_Item" />
+          </Key>
+          <Property Name="ID_Item" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="Opiniometro_DatosModel.FKaItem" FromRole="Texto_Libre" ToRole="Item" />
+        </EntityType>
+        <Association Name="FKaItem">
+          <End Type="Opiniometro_DatosModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.Texto_Libre" Role="Texto_Libre" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="Texto_Libre">
+              <PropertyRef Name="ID_Item" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKItem">
+          <End Type="Opiniometro_DatosModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="Opiniometro_DatosModel.SeleccionUnica" Role="SeleccionUnica" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="SeleccionUnica">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -96,6 +265,55 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarUsuario" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />
+          <EntitySetMapping Name="Fecha_Corte">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Fecha_Corte">
+              <MappingFragment StoreEntitySet="Fecha_Corte">
+                <ScalarProperty Name="Fecha_Final" ColumnName="Fecha_Final" />
+                <ScalarProperty Name="Fecha_Inicio" ColumnName="Fecha_Inicio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Formulario">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Formulario">
+              <MappingFragment StoreEntitySet="Formulario">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="Tiene_Observacion" ColumnName="Tiene_Observacion" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Texto_Pregunta" ColumnName="Texto_Pregunta" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seccion">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Seccion">
+              <MappingFragment StoreEntitySet="Seccion">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeleccionUnica">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.SeleccionUnica">
+              <MappingFragment StoreEntitySet="SeleccionUnica">
+                <ScalarProperty Name="Isa_LikeDislike" ColumnName="Isa_LikeDislike" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Texto_Libre">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Texto_Libre">
+              <MappingFragment StoreEntitySet="Texto_Libre">
+                <ScalarProperty Name="ID_Item" ColumnName="ID_Item" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
