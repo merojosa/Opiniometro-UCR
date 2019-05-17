@@ -28,7 +28,7 @@ BEGIN
 	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
 
 	INSERT INTO Persona
-	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2)--, @Direccion) En la tabla no está "Direccion" y no me permitió agregarlo
+	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2, @Direccion)
 
 	INSERT INTO Usuario
 	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)

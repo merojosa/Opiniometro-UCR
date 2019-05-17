@@ -64,9 +64,12 @@
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
     <None Include="ScriptNuevaPersonaUsuario.sql" />
+    <None Include="FiltrarUsuarios.sql" />
+    <None Include="Script.ModificarUsuario.sql" />
+    <None Include="Script.EliminarPersona.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Usuario.sql" />
-    <Build Include="Table1.sql" />
+    <Build Include="Persona.sql" />
   </ItemGroup>
 </Project>

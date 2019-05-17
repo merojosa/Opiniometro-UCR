@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Table1]
+﻿CREATE TABLE [dbo].[Persona]
 (
 	[Cedula] NVARCHAR(50) NOT NULL PRIMARY KEY, 
     [Nombre] NVARCHAR(50) NOT NULL, 
