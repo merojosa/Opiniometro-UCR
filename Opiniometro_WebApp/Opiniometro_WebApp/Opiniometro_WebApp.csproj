@@ -172,6 +172,7 @@
     <Compile Include="Controllers\Formulario_RespuestaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\RespondeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -291,6 +292,11 @@
     <Content Include="Views\Formulario_Respuesta\Details.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Edit.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
+    <Content Include="Views\Responde\Create.cshtml" />
+    <Content Include="Views\Responde\Delete.cshtml" />
+    <Content Include="Views\Responde\Details.cshtml" />
+    <Content Include="Views\Responde\Edit.cshtml" />
+    <Content Include="Views\Responde\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
