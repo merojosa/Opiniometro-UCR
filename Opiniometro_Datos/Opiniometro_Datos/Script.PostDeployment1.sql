@@ -17,12 +17,24 @@ INSERT INTO Persona VALUES
  ('111111', 'Juan', 'Carillo', 'Jimenez')
 ,('222222', 'María', 'Mejías', 'Guierrez')
 ,('333333', 'Ellie', 'Rodríguez', 'Rojas')
-,('444444', 'Abel', 'Hernández', 'Pérez');
+,('444444', 'Abel', 'Hernández', null);
 INSERT INTO Estudiante VALUES 
  ('111111', 'B11111')
 ,('222222', 'B22222')
 ,('333333', 'B33333') 
 ,('444444', 'B44444');
+
+MERGE INTO Curso AS Target
+USING (VALUES
+ ('CI1213', 'Ingenieria de Software'),
+ ('CI1223', 'Bases de Datos'),
+ ('CI1211', 'Proyecto Integrador')
+)
+AS Source ([CodigoCurso], NombreCurso)
+ON Target.CodigoCurso = Source.CodigoCurso
+WHEN NOT MATCHED BY TARGET THEN
+INSERT (CodigoCurso, NombreCurso)
+VALUES (CodigoCurso, NombreCurso);
 
 --Procedimientos almacenados
 

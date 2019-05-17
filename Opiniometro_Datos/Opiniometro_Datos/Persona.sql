@@ -1,7 +1,10 @@
 ﻿CREATE TABLE [dbo].[Persona]
 (
-	[Cedula] VARCHAR(9) NOT NULL PRIMARY KEY, 
-    [Nombre] VARCHAR(50) NOT NULL, 
-    [Apellido1] VARCHAR(50) NOT NULL, 
-    [Apellido2] VARCHAR(50) NULL
+	[Cedula]	CHAR(9)			NOT NULL,
+	[Nombre]	NVARCHAR(50)	NOT NULL,
+	[Apellido1]	NVARCHAR(50)	NOT NULL,
+	[Apellido2]	NVARCHAR(50)	NOT NULL,
+	[Direccion]	NVARCHAR(200)	NOT NULL,
+	CONSTRAINT PK_Persona
+		PRIMARY KEY	(Cedula)
 )
