@@ -8,27 +8,24 @@
 
 @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
 {
-    <table>
-        <tr>
-            <td>
-                Correo Institucional
-            </td>
-            <td>
-                @Html.TextBox("Correo")
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Contraseña
-            </td>
-            <td>
-                @Html.Password("Contrasenna")
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
+<div class="container login-container" align="center">
+
+    <div class="login-form-1">
+        <h2>Opiniómetro@UCR</h2>
+        <form>
+            <div class="form-group">
+                <input type="email" class="form-control" placeholder="Correo institucional" name="Correo" />
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Contraseña" name="Contrasenna" />
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Acceder" name="Acceder" />
-            </td>
-        </tr>
-    </table>
+            </div>
+            <div class="form-group">
+                @Html.ActionLink("¿Olvidó su contraseña?", "Recuperar")
+            </div>
+        </form>
+    </div>
+</div>
 }
