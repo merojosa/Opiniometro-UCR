@@ -18,7 +18,7 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Auth/Login
         public ActionResult Login()
         {
-            return View();
+            return PartialView();
         }
 
         /*  
@@ -55,14 +55,14 @@ namespace Opiniometro_WebApp.Controllers
             {
                 ModelState.AddModelError(string.Empty, "");
                 // Devolverse a la misma pagina de Loing informando de que hay un error de autenticacion.
-                return View(usuario);
+                return PartialView(usuario);
             }
 
         }
 
         public ActionResult Recuperar()
         {
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
@@ -76,7 +76,7 @@ namespace Opiniometro_WebApp.Controllers
                 // Enviar correo
             }
             ModelState.AddModelError(string.Empty, "");
-            return View(usuario);
+            return PartialView(usuario);
         }
     }
 }

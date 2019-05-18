@@ -1,38 +1,57 @@
-﻿
-@{
-    ViewBag.Title = "Recuperar";
-}
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="container body-content">
+        @{
+            ViewBag.Title = "Recuperar";
+        }
 
-<!--Barra-->
-@Html.Partial("~\\Views\\Shared\\Auth\\BarraInicio.cshtml")
+        <!--Barra-->
+        @Html.Partial("~\\Views\\Shared\\Auth\\BarraInicio.cshtml")
 
-<div align="center">
-    <h1>Opiniómetro@UCR</h1>
-    @using (Html.BeginForm("Recuperar", "Auth", FormMethod.Post))
-    {
-        <div class="login-container">
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-                    <div class="panel panel-default">
-                        <h3>Recuperar contraseña</h3>
-                        <div class="panel-body">
-                            <div>
-                                <form>
-                                    <div class="input-group" style="width:250px">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                        <input name="CorreoInstitucional" type="email" class="form-control" placeholder="Correo institucional">
+        <div align="center">
+            <h1>Opiniómetro@UCR</h1>
+            @using (Html.BeginForm("Recuperar", "Auth", FormMethod.Post))
+            {
+                <div class="login-container">
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4">
+                            <div class="panel panel-default">
+                                <h3>Recuperar contraseña</h3>
+                                <div class="panel-body">
+                                    <div>
+                                        <form>
+                                            <div class="input-group" style="width:250px">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                                <input name="CorreoInstitucional" type="email" class="form-control" placeholder="Correo institucional">
+                                            </div>
+                                            <br />
+                                            <div class="form-group">
+                                                <input type="submit" value="Enviar Correo" name="Enviar" />
+                                            </div>
+                                            @Html.ValidationSummary(true, "Revise la bandeja de su correo institucional", htmlAttributes: new { @class = "" })
+                                            @Html.ActionLink("Ir a página de Ingreso al Sistema", "Login")
+                                        </form>
                                     </div>
-                                    <br />
-                                    <div class="form-group">
-                                        <input type="submit" value="Enviar Correo" name="Enviar" />
-                                    </div>
-                                    @Html.ValidationSummary(true, "Si los datos coinciden, le llegará un correo", htmlAttributes: new { @class = "" })
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
-            </div>
+            }
+            
         </div>
-    }
-</div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>
