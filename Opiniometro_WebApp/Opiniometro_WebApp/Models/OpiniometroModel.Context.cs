@@ -28,14 +28,35 @@ namespace Opiniometro_WebApp.Models
         }
     
         public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
-        public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<Administrativo> Administrativo { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Ciclo_Lectivo> Ciclo_Lectivo { get; set; }
+        public virtual DbSet<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
         public virtual DbSet<Curso> Curso { get; set; }
+        public virtual DbSet<Empadronado> Empadronado { get; set; }
         public virtual DbSet<Enfasis> Enfasis { get; set; }
+        public virtual DbSet<Estudiante> Estudiante { get; set; }
         public virtual DbSet<Facultad> Facultad { get; set; }
+        public virtual DbSet<Fecha_Corte> Fecha_Corte { get; set; }
+        public virtual DbSet<Formulario> Formulario { get; set; }
+        public virtual DbSet<Formulario_Respuesta> Formulario_Respuesta { get; set; }
         public virtual DbSet<Grupo> Grupo { get; set; }
+        public virtual DbSet<Imparte> Imparte { get; set; }
+        public virtual DbSet<Item> Item { get; set; }
+        public virtual DbSet<Matricula> Matricula { get; set; }
+        public virtual DbSet<Perfil> Perfil { get; set; }
+        public virtual DbSet<Permiso> Permiso { get; set; }
+        public virtual DbSet<Persona> Persona { get; set; }
+        public virtual DbSet<Posee_Enfasis_Perfil_Permiso> Posee_Enfasis_Perfil_Permiso { get; set; }
+        public virtual DbSet<Profesor> Profesor { get; set; }
+        public virtual DbSet<Responde> Responde { get; set; }
+        public virtual DbSet<Seccion> Seccion { get; set; }
+        public virtual DbSet<Seleccion_Unica> Seleccion_Unica { get; set; }
+        public virtual DbSet<TelefonoPersona> TelefonoPersona { get; set; }
+        public virtual DbSet<Texto_Libre> Texto_Libre { get; set; }
+        public virtual DbSet<Tiene_Grupo_Formulario> Tiene_Grupo_Formulario { get; set; }
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
     
         public virtual int SP_AgregarUsuario(string correo, string contrasenna, string cedula)
         {
