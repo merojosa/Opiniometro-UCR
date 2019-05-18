@@ -65,14 +65,23 @@ namespace Opiniometro_WebApp.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Recuperar(Usuario usuario)
+        {
+            ObjectParameter exito = new ObjectParameter("Resultado", 0);
+            db.SP_ExistenciaCorreo(usuario.CorreoInstitucional, exito);
+
+            if ((bool)exito.Value == true)
+            {
+                // Enviar correo
+            }
+            ModelState.AddModelError(string.Empty, "");
+            return View(usuario);
+        }
+
         public ActionResult Error()
         {
             return View();
-        }
-
-        [HttpPost]
-        public void EnviarCorreo(FormCollection form_collection)
-        {
         }
     }
 }

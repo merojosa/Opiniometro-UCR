@@ -4,7 +4,7 @@
 }
 <div align="center">
     <h1>Opiniómetro@UCR</h1>
-    @using (Html.BeginForm("EnviarCorreo", "Auth", FormMethod.Post))
+    @using (Html.BeginForm("Recuperar", "Auth", FormMethod.Post))
     {
         <div class="login-container">
             <div class="row">
@@ -16,12 +16,13 @@
                                 <form>
                                     <div class="input-group" style="width:250px">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                        <input type="email" class="form-control" name="Correo" placeholder="Correo institucional">
+                                        <input name="CorreoInstitucional" type="email" class="form-control" placeholder="Correo institucional">
                                     </div>
                                     <br />
                                     <div class="form-group">
                                         <input type="submit" value="Enviar Correo" name="Enviar" />
                                     </div>
+                                    @Html.ValidationSummary(true, "Si los datos coinciden, le llegará un correo", htmlAttributes: new { @class = "" })
                                 </form>
                             </div>
                         </div>
