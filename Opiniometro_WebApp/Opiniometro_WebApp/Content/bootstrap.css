@@ -4572,6 +4572,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: #f8f8f8;
   border-color: #e7e7e7;
 }
+
+/*Para la barra del login y recuperar contrasena*/
+.navbar-default-opiniometro-inicio {
+    background-color: #8ed8f8;
+    border-color: white;
+}
 .navbar-default .navbar-brand {
   color: #777;
 }

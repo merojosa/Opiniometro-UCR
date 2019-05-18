@@ -2,6 +2,10 @@
 @{
     ViewBag.Title = "Recuperar";
 }
+
+<!--Barra-->
+@Html.Partial("~\\Views\\Shared\\Auth\\BarraInicio.cshtml")
+
 <div align="center">
     <h1>Opiniómetro@UCR</h1>
     @using (Html.BeginForm("Recuperar", "Auth", FormMethod.Post))

@@ -78,10 +78,5 @@ namespace Opiniometro_WebApp.Controllers
             ModelState.AddModelError(string.Empty, "");
             return View(usuario);
         }
-
-        public ActionResult Error()
-        {
-            return View();
-        }
     }
 }
