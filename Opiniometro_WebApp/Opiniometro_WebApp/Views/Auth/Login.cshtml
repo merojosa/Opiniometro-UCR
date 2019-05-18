@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Index";
 }
+<!--Para usar la clase login-error del archivo estilos-propios.css-->
+<link href="@Url.Content("~/Content/estilos-propios.css")" rel="stylesheet" type="text/css" />
 
 <div align="center">
     <h1>Opiniómetro@UCR</h1>
@@ -18,21 +20,22 @@
                                 <form>
                                     <div class="input-group" style="width:250px">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                        <input type="email" class="form-control" name="Correo" placeholder="Correo institucional">
+                                        <input name="CorreoInstitucional" type="email" class="form-control" placeholder="Correo institucional">
                                     </div>
                                     <br />
                                     <div class="input-group" style="width:250px">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
-                                        <input type="password" class="form-control" name="Contrasenna" placeholder="Contraseña">
+                                        <input type="password" class="form-control" name="Contrasena" placeholder="Contraseña">
                                     </div>
                                     <br />
                                     <div class="form-group">
                                         <input type="submit" value="Acceder" name="Acceder" />
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         @Html.ActionLink("¿Olvidó su contraseña?", "Recuperar")
                                     </div>
+                                    @Html.ValidationSummary(true, "Correo o contraseña inválidos", htmlAttributes: new { @class = "login-error" })
                                 </form>
                             </div>
                         </div>
@@ -40,5 +43,6 @@
                 </div>
             </div>
         </div>
+
     }
 </div>
