@@ -186,7 +186,7 @@
     <Compile Include="Models\Administrativo.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AsignarCursosModel.cs" />
+    <Compile Include="Models\AsignarFormulariosModel.cs" />
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
