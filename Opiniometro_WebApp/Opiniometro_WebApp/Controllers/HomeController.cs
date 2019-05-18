@@ -7,7 +7,7 @@ using System.Web.Mvc;
 namespace Opiniometro_WebApp.Controllers
 {
     // Esto hace que se necesite un usuario autenticado para poder hacer uso de los action methods.
-    [Authorize]
+    //[Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
