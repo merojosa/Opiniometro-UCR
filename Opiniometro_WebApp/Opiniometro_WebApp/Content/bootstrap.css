@@ -4349,11 +4349,20 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-brand {
   float: left;
+  height: 50px;
+  padding: 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.navbar-brand-barra-login {
+  float: left;
   height: 145px;
   padding: 20px 20px;
   font-size: 18px;
   line-height: 20px;
 }
+
 .navbar-brand:hover,
 .navbar-brand:focus {
   text-decoration: none;
@@ -4574,7 +4583,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 
 /*Para la barra del login y recuperar contrasena*/
-.navbar-default-opiniometro-inicio {
+.navbar-default-barra-login {
     background-color: #8ed8f8;
     border-color: white;
 }

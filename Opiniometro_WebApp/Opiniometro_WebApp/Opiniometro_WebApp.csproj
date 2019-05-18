@@ -299,7 +299,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Auth\Recuperar.cshtml" />
-    <Content Include="Views\Shared\Auth\BarraInicio.cshtml" />
+    <Content Include="Views\Shared\Auth\BarraLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
