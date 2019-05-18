@@ -36,11 +36,11 @@
     <Property Name="NewName" Value="FechaRespuesta" />
   </Operation>
   <Operation Name="Rename Refactor" Key="8f58ef06-5d1c-42e6-916f-2a79edb05929" ChangeDateTime="05/14/2019 22:00:01">
-    <Property Name="ElementName" Value="[dbo].[Responde].[AñoGrupoRespuesta]" />
+    <Property Name="ElementName" Value="[dbo].[Responde].[AnnoGrupoRespuesta]" />
     <Property Name="ElementType" Value="SqlSimpleColumn" />
     <Property Name="ParentElementName" Value="[dbo].[Responde]" />
     <Property Name="ParentElementType" Value="SqlTable" />
-    <Property Name="NewName" Value="AñoGrupoResp" />
+    <Property Name="NewName" Value="AnnoGrupoResp" />
   </Operation>
   <Operation Name="Rename Refactor" Key="17d2fed2-ac5f-4310-b33d-006355e2cd87" ChangeDateTime="05/14/2019 22:05:33">
     <Property Name="ElementName" Value="[dbo].[Responde].[CodigoRespuesta]" />
@@ -64,11 +64,11 @@
     <Property Name="NewName" Value="SiglaCurso" />
   </Operation>
   <Operation Name="Rename Refactor" Key="0a332804-54b9-4fcd-82e6-cbc26c44fc33" ChangeDateTime="05/17/2019 23:29:49">
-    <Property Name="ElementName" Value="[dbo].[Grupo].[Año]" />
+    <Property Name="ElementName" Value="[dbo].[Grupo].[Anno]" />
     <Property Name="ElementType" Value="SqlSimpleColumn" />
     <Property Name="ParentElementName" Value="[dbo].[Grupo]" />
     <Property Name="ParentElementType" Value="SqlTable" />
-    <Property Name="NewName" Value="AñoGrupo" />
+    <Property Name="NewName" Value="AnnoGrupo" />
   </Operation>
   <Operation Name="Rename Refactor" Key="8d84b71e-667c-4120-9da5-eead8052b7e0" ChangeDateTime="05/17/2019 23:29:58">
     <Property Name="ElementName" Value="[dbo].[Grupo].[Semestre]" />
