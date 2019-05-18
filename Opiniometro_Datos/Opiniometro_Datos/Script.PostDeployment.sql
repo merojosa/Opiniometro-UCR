@@ -116,38 +116,38 @@ INSERT INTO Curso (Sigla, Nombre, Tipo,CodigoUnidad)
 VALUES ('DE2001', 'PRINCIPIOS DEL DERECHO PRIVADO I', 1,'UC-485648')
 
 ----Grupos
---INSERT INTO Grupo(Numero, SiglaCurso, Año, Semestre)
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
 --VALUES ('CI1330', 1, 2019, 1)
 
---INSERT INTO Grupo(Numero, SiglaCurso, Año, Semestre)
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
 --VALUES ('CI1330', 2, 2019, 1)
 
---INSERT INTO Grupo(Numero, SiglaCurso, Año, Semestre)
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
 --VALUES ('CI1331', 1, 2019, 1)
 
---INSERT INTO Grupo(Numero, SiglaCurso, Año, Semestre)
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
 --VALUES ('CI1331', 2, 2019, 1)
 
---INSERT INTO Grupo(Numero, SiglaCurso, Año, Semestre)
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
 --VALUES ('CI1327', 1, 2019, 1)
 
---INSERT INTO Grupo(Numero, SiglaCurso, Año, Semestre)
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
 --VALUES ('CI1327', 2, 2019, 1)
 
---INSERT INTO Grupo(Numero, SiglaCurso, Año, Semestre)
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
 --VALUES ('CI1328', 1, 2019, 1)
 
---INSERT INTO Grupo(Numero, SiglaCurso, Año, Semestre)
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
 --VALUES ('CI1328', 2, 2019, 1)
 
---INSERT INTO Grupo(Numero, SiglaCurso, Año, Semestre)
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
 --VALUES ('DE1001', 1, 2019, 1)
 
---INSERT INTO Grupo(Numero, SiglaCurso, Año, Semestre)
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
 --VALUES ('DE1001', 2, 2019, 1)
 
---INSERT INTO Grupo(Numero, SiglaCurso, Año, Semestre)
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
 --VALUES ('DE2001', 1, 2019, 1)
 
---INSERT INTO Grupo(Numero, SiglaCurso, Año, Semestre)
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
 --VALUES ('DE2001', 2, 2019, 1)
