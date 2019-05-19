@@ -12,12 +12,12 @@ Post-Deployment Script Template
 
 MERGE INTO Preguntas AS Target
 USING (VALUES
-(1,'Pregunta1', 'SiNo', 'Profesor'),
-(2,'Pregunta2', 'SeleccionUnica', 'Profesor'),
-(3,'Pregunta3', 'SeleccionMultiple', 'Curso')
+(1, 'Pregunta1', 'SiNo', 'Profesor'),
+(2, 'Pregunta2', 'SeleccionUnica', 'Profesor'),
+(3, 'Pregunta3', 'SeleccionMultiple', 'Curso')
 )
-AS Source (Numero, [Planteamiento], TipoPregunta, Categoria)
+AS Source ([Numero], Planteamiento, TipoPregunta, Categoria)
 ON Target.Planteamiento = Source.Planteamiento
 WHEN NOT MATCHED BY TARGET THEN
-INSERT(Numero, Planteamiento, TipoPregunta, Categoria)
-VALUES(Numero, Planteamiento, TipoPregunta, Categoria);
+INSERT(Planteamiento, TipoPregunta, Categoria)
+VALUES(Planteamiento, TipoPregunta, Categoria);

@@ -64,4 +64,90 @@ EXEC SP_AgregarUsuario @Correo='jose.mejiasrojas@ucr.ac.cr', @Contrasenna='12345
 EXEC SP_AgregarUsuario @Correo='daniel.escalanteperez@ucr.ac.cr', @Contrasenna='Danielito', @Cedula='115003456'
 EXEC SP_AgregarUsuario @Correo='rodrigo.cascantejuarez@ucr.ac.cr', @Contrasenna='contrasena', @Cedula='117720910'
 EXEC SP_AgregarUsuario @Correo='luis.quesadaborbon@ucr.ac.cr', @Contrasenna='LigaDeportivaAlajuelense', @Cedula='236724501'
-EXEC SP_AgregarUsuario @Correo='cx@cx.solutions', @Contrasenna= 'CXSolutions', @Cedula= '100000001'
+
+
+--Script JJAPH
+
+--Unidad academica
+INSERT INTO Unidad_Academica (Codigo, Nombre)
+VALUES ('UC-023874', 'ECCI')
+
+INSERT INTO Unidad_Academica (Codigo, Nombre)
+VALUES ('UC-485648', 'Derecho')
+
+--Escuela
+--INSERT INTO Escuela(CodigoUnidadAcademica,CodigoFacultad)
+--VALUES ('UC-023874','UC-023874')
+
+--INSERT INTO Escuela(CodigoUnidadAcademica,CodigoFacultad)
+--VALUES ('UC-485648','UC-485648')
+
+--Facultad
+INSERT INTO Facultad (CodigoUnidadAcademica)
+VALUES ('UC-023874')
+
+INSERT INTO Facultad (CodigoUnidadAcademica)
+VALUES ('UC-485648')
+
+--Carrera
+INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
+VALUES ('SC-01234', 'Ciencias de la Computación e Informática','UC-023874')
+
+INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
+VALUES ('SC-89457', 'Derecho','UC-485648')
+
+--Cursos
+INSERT INTO Curso (Sigla, Nombre, Tipo,CodigoUnidad)
+VALUES ('CI1330', 'Ingenieria de software', 1,'UC-023874')
+
+INSERT INTO Curso (Sigla, Nombre, Tipo,CodigoUnidad)
+VALUES ('CI1331', 'Bases de datos', 1,'UC-023874')
+
+INSERT INTO Curso (Sigla, Nombre, Tipo,CodigoUnidad)
+VALUES ('CI1327', 'Programacion 1', 1,'UC-023874')
+
+INSERT INTO Curso (Sigla, Nombre, Tipo,CodigoUnidad)
+VALUES ('CI1328', 'Programacion Paralela y concurrente', 1,'UC-023874')
+
+INSERT INTO Curso (Sigla, Nombre, Tipo,CodigoUnidad)
+VALUES ('DE1001', 'INTRODUCCIÓN AL ESTUDIO DEL DERECHO I', 1,'UC-485648')
+
+INSERT INTO Curso (Sigla, Nombre, Tipo,CodigoUnidad)
+VALUES ('DE2001', 'PRINCIPIOS DEL DERECHO PRIVADO I', 1,'UC-485648')
+
+----Grupos
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
+--VALUES ('CI1330', 1, 2019, 1)
+
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
+--VALUES ('CI1330', 2, 2019, 1)
+
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
+--VALUES ('CI1331', 1, 2019, 1)
+
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
+--VALUES ('CI1331', 2, 2019, 1)
+
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
+--VALUES ('CI1327', 1, 2019, 1)
+
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
+--VALUES ('CI1327', 2, 2019, 1)
+
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
+--VALUES ('CI1328', 1, 2019, 1)
+
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
+--VALUES ('CI1328', 2, 2019, 1)
+
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
+--VALUES ('DE1001', 1, 2019, 1)
+
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
+--VALUES ('DE1001', 2, 2019, 1)
+
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
+--VALUES ('DE2001', 1, 2019, 1)
+
+--INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
+--VALUES ('DE2001', 2, 2019, 1)
