@@ -24,9 +24,9 @@ namespace Opiniometro_WebApp.Models
         public string CedulaEstudiante { get; set; }
         public string Carne { get; set; }
     
+        public virtual Persona Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Empadronado> Empadronado { get; set; }
-        public virtual Persona Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Matricula> Matricula { get; set; }
     }
