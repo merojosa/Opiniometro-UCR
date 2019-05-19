@@ -20,7 +20,7 @@ namespace Opiniometro_WebApp.Models
         public string CodigoFormularioResp { get; set; }
         public string CedulaPersona { get; set; }
         public string CedulaProfesor { get; set; }
-        public short AñoGrupoResp { get; set; }
+        public short AnnoGrupoResp { get; set; }
         public byte SemestreGrupoResp { get; set; }
         public byte NumeroGrupoResp { get; set; }
         public string SiglaGrupoResp { get; set; }
@@ -29,5 +29,7 @@ namespace Opiniometro_WebApp.Models
         public string RespuestaProfesor { get; set; }
     
         public virtual Formulario_Respuesta Formulario_Respuesta { get; set; }
+        public virtual Item Item { get; set; }
+        public virtual Seccion Seccion { get; set; }
     }
 }

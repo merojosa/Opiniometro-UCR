@@ -379,16 +379,16 @@
     <Content Include="Views\Texto_Libre\Details.cshtml" />
     <Content Include="Views\Texto_Libre\Edit.cshtml" />
     <Content Include="Views\Texto_Libre\Index.cshtml" />
-    <Content Include="Views\Formulario_Respuesta\Create.cshtml" />
-    <Content Include="Views\Formulario_Respuesta\Delete.cshtml" />
-    <Content Include="Views\Formulario_Respuesta\Details.cshtml" />
-    <Content Include="Views\Formulario_Respuesta\Edit.cshtml" />
-    <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
     <Content Include="Views\Responde\Create.cshtml" />
     <Content Include="Views\Responde\Delete.cshtml" />
     <Content Include="Views\Responde\Details.cshtml" />
     <Content Include="Views\Responde\Edit.cshtml" />
     <Content Include="Views\Responde\Index.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Create.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Delete.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Details.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Edit.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
