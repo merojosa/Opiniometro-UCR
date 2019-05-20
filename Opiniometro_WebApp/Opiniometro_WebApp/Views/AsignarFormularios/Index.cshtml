@@ -1,7 +1,65 @@
-﻿@model Opiniometro_WebApp.Models.AsignarFormularios
+﻿@model Opiniometro_WebApp.Models.AsignarFormulariosModel
+
 @{
-    ViewBag.Title = "AsignarFormularios";
+    Layout = null;
 }
 
-<h2>AsignarFormularios</h2>
+<!DOCTYPE html>
 
+<html>
+<head>
+    <title>Página de asignación de formularios.</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+</head>
+<body>
+
+    <div>
+        <h1>Asignación de cursos</h1>
+    </div>
+
+    <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1>Buscar Cursos</h1>
+                    <form asp-controller="Movies" asp-action="Index">
+                        <p>
+                            Nombre: <input type="text" name="SearchString">
+                            <input type="submit" value="Buscar" />
+                        </p>
+                    </form>
+
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Cursos
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model.Cursos)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+
+                </div>
+                <div class="col-sm-4">
+                    <h1>Tus formularios</h1>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action">Formulario 1</a>
+                        <a href="#" class="list-group-item list-group-item-action">Formulario 2</a>
+                        <a href="#" class="list-group-item list-group-item-action">Formulario 3</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>
