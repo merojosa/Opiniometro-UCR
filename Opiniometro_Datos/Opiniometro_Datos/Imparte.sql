@@ -13,7 +13,7 @@
 			ON UPDATE CASCADE/*,
 			--Lo siguiente tiene dependencias:
 	CONSTRAINT FK_Imparte_Grupo
-		FOREIGN KEY (Numero, Sigla, Anno, Semestre) REFERENCES Grupo(Numero, Sigla, Año, Semestre)
+		FOREIGN KEY (Numero, Sigla, Anno, Semestre) REFERENCES Grupo(Numero, Sigla, Anno, Semestre)
 			ON DELETE NO ACTION
 			ON UPDATE CASCADE*/
 )
