@@ -79,5 +79,9 @@
     <Build Include="Matricula.sql" />
     <Build Include="Formulario_Respuesta.sql" />
     <Build Include="Responde.sql" />
+    <None Include="ScriptNuevaPersonaUsuario.sql" />
+    <None Include="FiltrarUsuarios.sql" />
+    <None Include="Script.ModificarUsuario.sql" />
+    <None Include="Script.EliminarPersona.sql" />
   </ItemGroup>
 </Project>

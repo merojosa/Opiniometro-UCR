@@ -52,6 +52,30 @@ BEGIN
 END
 GO
 
+IF OBJECT_ID('SP_ExistenciaCorreo') IS NOT NULL
+	DROP PROCEDURE SP_ExistenciaCorreo
+GO
+CREATE PROCEDURE SP_ExistenciaCorreo
+	@Correo			NVARCHAR(50),
+	@Resultado		BIT OUT
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @CorreoBuscar NVARCHAR(50)
+	
+	-- Buscar que el correo y la contrasenna sean correctos con lo que hay en la tabla Usuario.
+	SET @CorreoBuscar =	(SELECT CorreoInstitucional 
+						FROM Usuario
+						WHERE CorreoInstitucional=@Correo)
+
+	IF(@CorreoBuscar IS NULL)	-- Si no calzan, no hay autenticacion.
+		SET @Resultado = 0
+	ELSE						-- Si hay autenticacion
+		SET @Resultado = 1
+END
+GO
+
 INSERT INTO Persona
 VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajuela.'),
 		('115003456', 'Daniel', 'Escalante', 'Perez', 'Desamparados de San José.'),
