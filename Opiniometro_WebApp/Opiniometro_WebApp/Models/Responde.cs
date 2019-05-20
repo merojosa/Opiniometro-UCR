@@ -11,8 +11,9 @@ namespace Opiniometro_WebApp.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Responde
+    using System.Data.Entity;
+
+    public partial class Responde 
     {
         public int ItemId { get; set; }
         public string TituloSeccion { get; set; }
