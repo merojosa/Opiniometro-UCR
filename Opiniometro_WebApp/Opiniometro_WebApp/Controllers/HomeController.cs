@@ -6,7 +6,8 @@ using System.Web.Mvc;
 
 namespace Opiniometro_WebApp.Controllers
 {
-//    [Authorize] se comenta para que no haya conflicto, con Authorize se necesita tener un usuario autenticado para acceder a los action methods del controlador Home.
+    // Esto hace que se necesite un usuario autenticado para poder hacer uso de los action methods.
+    //[Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()

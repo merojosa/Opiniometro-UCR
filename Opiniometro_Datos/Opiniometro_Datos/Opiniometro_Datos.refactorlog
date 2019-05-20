@@ -28,4 +28,74 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Contrasena" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="468c2d08-22a9-46e1-ac1c-2124b504e989" ChangeDateTime="05/14/2019 21:57:07">
+    <Property Name="ElementName" Value="[dbo].[Responde].[FechaFormulario]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Responde]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FechaRespuesta" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8f58ef06-5d1c-42e6-916f-2a79edb05929" ChangeDateTime="05/14/2019 22:00:01">
+    <Property Name="ElementName" Value="[dbo].[Responde].[AnnoGrupoRespuesta]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Responde]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AnnoGrupoResp" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="17d2fed2-ac5f-4310-b33d-006355e2cd87" ChangeDateTime="05/14/2019 22:05:33">
+    <Property Name="ElementName" Value="[dbo].[Responde].[CodigoRespuesta]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Responde]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CodigoFormularioResp" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f774ecd1-378e-4012-aca5-50230c5e65a6" ChangeDateTime="05/17/2019 23:29:16">
+    <Property Name="ElementName" Value="[dbo].[Grupo].[SiglaCurso]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Grupo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Numero" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f209c93f-a119-4a2f-bba7-82f735f44445" ChangeDateTime="05/17/2019 23:29:25">
+    <Property Name="ElementName" Value="[dbo].[Grupo].[Numero]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Grupo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SiglaCurso" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0a332804-54b9-4fcd-82e6-cbc26c44fc33" ChangeDateTime="05/17/2019 23:29:49">
+    <Property Name="ElementName" Value="[dbo].[Grupo].[Anno]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Grupo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AnnoGrupo" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8d84b71e-667c-4120-9da5-eead8052b7e0" ChangeDateTime="05/17/2019 23:29:58">
+    <Property Name="ElementName" Value="[dbo].[Grupo].[Semestre]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Grupo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SemestreGrupo" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="592e99c3-1254-4de1-b05d-9f17f4093372" ChangeDateTime="05/17/2019 23:35:04">
+    <Property Name="ElementName" Value="[dbo].[Tiene_Grupo_Formulario].[Numero]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Tiene_Grupo_Formulario]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="n" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="dc6a0f78-92da-4e59-adcc-a8bd5f3c6367" ChangeDateTime="05/17/2019 23:35:12">
+    <Property Name="ElementName" Value="[dbo].[Tiene_Grupo_Formulario].[SiglaCurso]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Tiene_Grupo_Formulario]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Numero" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="cd123148-89bb-49bf-8116-5668d23b361a" ChangeDateTime="05/17/2019 23:35:22">
+    <Property Name="ElementName" Value="[dbo].[Tiene_Grupo_Formulario].[n]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Tiene_Grupo_Formulario]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SiglaCurso" />
+  </Operation>
 </Operations>

@@ -66,6 +66,19 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Usuario.sql" />
+    <Build Include="Persona.sql" />
+    <Build Include="Perfil.sql" />
+    <Build Include="Profesor.sql" />
+    <Build Include="Estudiante.sql" />
+    <Build Include="Administrativo.sql" />
+    <Build Include="Permiso.sql" />
+    <Build Include="Telefono_Persona.sql" />
+    <Build Include="Posee_Enfasis_Perfil_Permiso.sql" />
+    <Build Include="Empadronado.sql" />
+    <Build Include="Imparte.sql" />
+    <Build Include="Matricula.sql" />
+    <Build Include="Formulario_Respuesta.sql" />
+    <Build Include="Responde.sql" />
     <Build Include="Unidad_Academica.sql" />
     <Build Include="Ciclo_Lectivo.sql" />
     <Build Include="Facultad.sql" />
@@ -76,5 +89,13 @@
     <Build Include="Escuela.sql" />
     <Build Include="Se_Encuentra_Unidad_Enfasis.sql" />
     <Build Include="Fecha_Corte.sql" />
+    <Build Include="Tiene_Grupo_Formulario.sql" />
+    <Build Include="Formulario.sql" />
+    <Build Include="Seccion.sql" />
+    <Build Include="Fecha_Corte.sql" />
+    <Build Include="Conformado_Item_Sec_Form.sql" />
+    <Build Include="Texto_Libre.sql" />
+    <Build Include="Item.sql" />
+    <Build Include="Seleccion_Unica.sql" />
   </ItemGroup>
 </Project>
