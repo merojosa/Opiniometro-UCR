@@ -54,7 +54,7 @@ namespace Opiniometro_WebApp.Controllers
             else
             {
                 ModelState.AddModelError(string.Empty, "");
-                // Devolverse a la misma pagina de Loing informando de que hay un error de autenticacion.
+                // Devolverse a la misma pagina de Login informando de que hay un error de autenticacion.
                 return PartialView(usuario);
             }
 
