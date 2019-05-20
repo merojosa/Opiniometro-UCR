@@ -193,6 +193,9 @@
     <Compile Include="Models\Facultad.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Fecha_Corte.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Grupo.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>

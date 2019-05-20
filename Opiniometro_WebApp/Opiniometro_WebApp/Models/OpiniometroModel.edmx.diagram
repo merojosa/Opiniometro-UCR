@@ -21,6 +21,8 @@
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Grupo_Curso" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Facu_UniAcad" />
         <AssociationConnector Association="Opiniometro_DatosModel.Escuela" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Fecha_Corte" Width="1.5" PointX="3.375" PointY="6.75" />
+        <AssociationConnector Association="Opiniometro_DatosModel.Se_Encuentra_Unidad_Enfasis" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

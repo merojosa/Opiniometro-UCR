@@ -36,6 +36,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Facultad> Facultad { get; set; }
         public virtual DbSet<Grupo> Grupo { get; set; }
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
+        public virtual DbSet<Fecha_Corte> Fecha_Corte { get; set; }
     
         public virtual int SP_AgregarUsuario(string correo, string contrasenna, string cedula)
         {
