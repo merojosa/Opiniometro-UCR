@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Formulario_Respuesta]
+CREATE TABLE [dbo].[Formulario_Respuesta]
 (
 	[Fecha] DATE NOT NULL,
 	[CodigoFormulario] CHAR(6) NOT NULL,
