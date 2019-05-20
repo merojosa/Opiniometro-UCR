@@ -8,19 +8,21 @@ namespace Opiniometro_WebApp.Models
 {
     public class AsignarFormulariosModel
     {
+        //public Tuple<string,string,int,string> Curso { get; set; }
+        public IEnumerable<Curso> Cursos { get; set; }
         // Listas con los parámetros de los filtros
-        public IEnumerable<SelectListItem> Ciclos { get; set; }
-        public IEnumerable<SelectListItem> Carreras { get; set; }
-        public IEnumerable<SelectListItem> Enfasis { get; set; }
-        public IEnumerable<SelectListItem> Cursos { get; set; }
+        //public IEnumerable<SelectListItem> Ciclos { get; set; }
+        //public IEnumerable<SelectListItem> Carreras { get; set; }
+        //public IEnumerable<SelectListItem> Enfasis { get; set; }
+        //public IEnumerable<SelectListItem> Cursos { get; set; }
 
         // Lista de grupos
-        public IEnumerable<SelectListItem> Grupos { get; set; }
+        //public IEnumerable<SelectListItem> Grupos { get; set; }
 
         // Lista de formularios
-        public IEnumerable<SelectListItem> Formularios { get; set; }
+        //public IEnumerable<SelectListItem> Formularios { get; set; }
 
         // Lista signaciones hechas
-        public IEnumerable<SelectListItem> Asignaciones { get; set; }
+        //public IEnumerable<SelectListItem> Asignaciones { get; set; }
     }
 }
