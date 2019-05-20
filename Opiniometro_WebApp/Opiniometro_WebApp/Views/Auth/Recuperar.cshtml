@@ -9,29 +9,22 @@
 </head>
 <body>
     <div class="container body-content">
-
-        @model Opiniometro_WebApp.Models.Usuario
-
         @{
-            ViewBag.Title = "Index";
+            ViewBag.Title = "Recuperar";
         }
-
-        <!--Para usar la clase login-error del archivo estilos-propios.css-->
-        <link href="@Url.Content("~/Content/estilos-propios.css")" rel="stylesheet" type="text/css" />
 
         <!--Barra-->
         @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
 
-        <!--Login-->
         <div align="center">
             <h1>Opiniómetro@UCR</h1>
-            @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+            @using (Html.BeginForm("Recuperar", "Auth", FormMethod.Post))
             {
                 <div class="login-container">
                     <div class="row">
                         <div class="col-md-4 col-md-offset-4">
                             <div class="panel panel-default">
-                                <h3>Ingreso al Sistema</h3>
+                                <h3>Recuperar contraseña</h3>
                                 <div class="panel-body">
                                     <div>
                                         <form>
@@ -40,32 +33,25 @@
                                                 <input name="CorreoInstitucional" type="email" class="form-control" placeholder="Correo institucional">
                                             </div>
                                             <br />
-                                            <div class="input-group" style="width:250px">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
-                                                <input type="password" class="form-control" name="Contrasena" placeholder="Contraseña">
-                                            </div>
-                                            <br />
                                             <div class="form-group">
-                                                <input type="submit" value="Acceder" name="Acceder" />
+                                                <input type="submit" value="Enviar Correo" name="Enviar" />
                                             </div>
-
-                                            <div class="form-group">
-                                                @Html.ActionLink("¿Olvidó su contraseña?", "Recuperar")
-                                            </div>
-                                            @Html.ValidationSummary(true, "Correo o contraseña inválidos", htmlAttributes: new { @class = "login-error" })
+                                            @Html.ValidationSummary(true, "Revise la bandeja de su correo institucional", htmlAttributes: new { @class = "" })
+                                            @Html.ActionLink("Ir a página de Ingreso al Sistema", "Login")
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
-
             }
+            
         </div>
     </div>
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 </body>
 </html>

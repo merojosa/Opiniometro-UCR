@@ -12,14 +12,14 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class Imparte
     {
-        public string CorreoInstitucional { get; set; }
-        public string Contrasena { get; set; }
-        public bool Activo { get; set; }
-        public string Cedula { get; set; }
-        public System.Guid Id { get; set; }
+        public string CedulaProfesor { get; set; }
+        public byte Numero { get; set; }
+        public string Sigla { get; set; }
+        public string Anno { get; set; }
+        public byte Semestre { get; set; }
     
-        public virtual Persona Persona { get; set; }
+        public virtual Profesor Profesor { get; set; }
     }
 }
