@@ -27,15 +27,15 @@
                 <option value="Si-No">Si-No</option>
                 <option value="Texto libre">Texto libre</option>
             </select>
-            <p id="demo"></p>
+            <p id="tipoPreguntaID"></p>
         </div>
     </div>
     <script>
 @*Aqui capturamos los eventos del combo box. *@
         function seleccionarTipoPregunta()
         {
-            var x = document.getElementById("tipoPregunta").value;
-            document.getElementById("demo").innerHTML = "Seleccionaste: " + x;
+            var seleccionTipoPregunta = document.getElementById("tipoPregunta").value;
+            document.getElementById("demo").innerHTML = "Seleccionaste: " + seleccionTipoPregunta;
 
         }
     </script>
@@ -51,10 +51,26 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Categoria, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Categoria, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Categoria, "", new { @class = "text-danger" })
+            @*@Html.EditorFor(model => model.Categoria, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Categoria, "", new { @class = "text-danger" })*@
+            @*Combobox *@
+            <select id="categorias" onchange="seleccionarCategoria()">
+                <option value="Profesor">Profesor</option>
+                <option value="Infraestructura">Infraestructura</option>
+                <option value="Curso">Curso</option>
+            </select>
+            <p id="categoriaID"></p>
         </div>
     </div>
+    <script>
+@*Aqui capturamos los eventos del combo box. *@
+        function seleccionarCategoria()
+        {
+            var seleccionCategoria = document.getElementById("categorias").value;
+            document.getElementById("categoriaID").innerHTML = "Seleccionaste: " + seleccionCategoria;
+
+        }
+    </script>
 
     <div class="form-group">
         @Html.LabelFor(model => model.TieneObservacion, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -68,15 +84,15 @@
                 <option value="Si">Si</option>
                 <option value="No">No</option>
             </select>
-            <p id="demo1"></p>
+            <p id="observacionID"></p>
         </div>
     </div>
     <script>
 @*Aqui capturamos los eventos del combo box. *@
         function seleccionarObservacion()
         {
-            var x = document.getElementById("observacion").value;
-            document.getElementById("demo1").innerHTML = "Seleccionaste: " + x;
+            var seleccionObservacion = document.getElementById("observacion").value;
+            document.getElementById("observacionID").innerHTML = "Seleccionaste: " + seleccionObservacion;
 
         }
     </script>
@@ -88,7 +104,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Vista Previa" class="btn btn-primary" />
+            <input type="submit" value="Vista Previa" class="btn btn-default" />
         </div>
     </div>
     <div class="form-group">
