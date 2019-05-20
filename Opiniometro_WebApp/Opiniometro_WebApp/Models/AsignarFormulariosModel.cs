@@ -8,7 +8,6 @@ namespace Opiniometro_WebApp.Models
 {
     public class AsignarFormulariosModel
     {
-        //public Tuple<string,string,int,string> Curso { get; set; }
         public IEnumerable<Curso> Cursos { get; set; }
         // Listas con los parámetros de los filtros
         //public IEnumerable<SelectListItem> Ciclos { get; set; }
