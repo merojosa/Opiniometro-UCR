@@ -15,16 +15,23 @@ namespace Opiniometro_WebApp.Controllers
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
-        // GET: Auth/Login
+        /* GET: Auth/Login
+         * EFECTO: retornar vista parcial, la cual implica que no se despliega _Layout de la carpeta Shared.
+         * REQUIERE: cshtml con el nombre Login.
+         * MODIFICA: n/a
+         */
         public ActionResult Login()
         {
             return PartialView();
         }
 
         /*  
-         *  Action method que recibe un correo y contraseña por medio de un FormCollection y verifica en la base de datos si se puede
-         *  autenticar.
-         *  Fuente: https://stackoverflow.com/questions/31584506/how-to-implement-custom-authentication-in-asp-net-mvc-5
+         *  
+         *  EFECTO: verificar los datos brindados en la base de datos.
+         *  REQUIERE: correo y contrasenna en "empaquetado" en la clase Usuario.
+         *  MODIFICA: variable Resultado para saber si se acepta la autenticacion (con un true).
+         *  
+         *  Basado en: https://stackoverflow.com/questions/31584506/how-to-implement-custom-authentication-in-asp-net-mvc-5
          */
         [HttpPost]
         public ActionResult Login(Usuario usuario)
@@ -59,12 +66,22 @@ namespace Opiniometro_WebApp.Controllers
             }
 
         }
-
+        /*
+         * GET: Auth/Recuperar
+         * EFECTO: retornar vista parcial, la cual implica que no se despliega _Layout de la carpeta Shared.
+         * REQUIERE: cshtml con el nombre Recuperar.
+         * MODIFICA: n/a
+         */
         public ActionResult Recuperar()
         {
             return PartialView();
         }
 
+        /*
+         * EFECTO: verifica si el correo existe en la base de datos, y si esta, envia un correo con una contrasena nueva.
+         * REQUIERE: un correo.
+         * MODIFICA: la variable Resultado la cual si es true, enviaria el correo.
+         */
         [HttpPost]
         public ActionResult Recuperar(Usuario usuario)
         {
