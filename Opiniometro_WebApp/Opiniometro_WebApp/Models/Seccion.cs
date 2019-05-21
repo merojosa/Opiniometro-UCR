@@ -18,6 +18,7 @@ namespace Opiniometro_WebApp.Models
         public Seccion()
         {
             this.Conformado_Item_Sec_Form = new HashSet<Conformado_Item_Sec_Form>();
+            this.Responde = new HashSet<Responde>();
         }
     
         public string Titulo { get; set; }
@@ -25,5 +26,7 @@ namespace Opiniometro_WebApp.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Responde> Responde { get; set; }
     }
 }
