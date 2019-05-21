@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingreso al sistema - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
+    <!--Para usar la clase login-error del archivo estilos-propios.css-->
+    @Styles.Render("~/Content/estilos-propios.css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -15,9 +17,6 @@
         @{
             ViewBag.Title = "Index";
         }
-
-        <!--Para usar la clase login-error del archivo estilos-propios.css-->
-        <link href="@Url.Content("~/Content/estilos-propios.css")" rel="stylesheet" type="text/css" />
 
         <!--Barra-->
         @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
