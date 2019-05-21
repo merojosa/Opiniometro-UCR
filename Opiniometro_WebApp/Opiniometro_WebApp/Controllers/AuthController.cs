@@ -11,12 +11,14 @@ using Microsoft.Owin.Security;
 using System.Net.Mail;
 using System.Net;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace Opiniometro_WebApp.Controllers
 {
     public class AuthController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        private const string caracteres_aleatorios = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         /* GET: Auth/Login
          * EFECTO: retornar vista parcial, la cual implica que no se despliega _Layout de la carpeta Shared.
@@ -94,9 +96,11 @@ namespace Opiniometro_WebApp.Controllers
             if ((bool)exito.Value == true)
             {
                 // Autogenero una contrasenna generica.
-                string contrasenna_generada = "PruebaDeContrasenna";
+                string contrasenna_generada = GenerarContrasenna(10);
 
-                // La guardo en la base de datos (ahi cambio el flag de la tabla para que se sepa que esa contrasenna se genero)
+                // La guardo en la base de datos llamando al procedimiento almacenado.
+                
+
                 string contenido =
                     "<p>A continuación, su contraseña temporal, ingrésela junto con su correo institucional:</p> <b>"
                     + contrasenna_generada + "</b>";
@@ -125,6 +129,30 @@ namespace Opiniometro_WebApp.Controllers
             correo.BodyEncoding = UTF8Encoding.UTF8;
             cliente.Send(correo);
 
+        }
+
+        /*
+         * EFECTO:
+         * REQUIERE:
+         * MODIFICA:
+         * 
+         * Basado en: https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings
+         */
+        private string GenerarContrasenna(int tamanno)
+        {
+            byte[] datos = new byte[tamanno];
+            using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider())
+            {
+                crypto.GetBytes(datos);
+            }
+
+            StringBuilder contrasenna = new StringBuilder(tamanno);
+
+            foreach (byte byte_aleatorio in datos)
+            {
+                contrasenna.Append(caracteres_aleatorios[byte_aleatorio % (caracteres_aleatorios.Length)]);
+            }
+            return contrasenna.ToString();
         }
     }
 }
