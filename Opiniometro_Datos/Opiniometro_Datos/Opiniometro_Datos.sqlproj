@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{f85b8882-e9ed-471a-95db-5637eae0c635}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -59,25 +59,43 @@
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Script.PostDeployment1.sql" />
+    <RefactorLog Include="Opiniometro_Datos.refactorlog" />
   </ItemGroup>
   <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Usuario.sql" />
     <Build Include="Persona.sql" />
+    <Build Include="Perfil.sql" />
+    <Build Include="Profesor.sql" />
     <Build Include="Estudiante.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <RefactorLog Include="Opiniometro_Datos.refactorlog" />
-  </ItemGroup>
-  <ItemGroup>
+    <Build Include="Administrativo.sql" />
+    <Build Include="Permiso.sql" />
+    <Build Include="Telefono_Persona.sql" />
+    <Build Include="Posee_Enfasis_Perfil_Permiso.sql" />
+    <Build Include="Empadronado.sql" />
+    <Build Include="Imparte.sql" />
+    <Build Include="Matricula.sql" />
+    <Build Include="Formulario_Respuesta.sql" />
+    <Build Include="Responde.sql" />
+    <Build Include="Unidad_Academica.sql" />
+    <Build Include="Ciclo_Lectivo.sql" />
+    <Build Include="Facultad.sql" />
+    <Build Include="Carrera.sql" />
     <Build Include="Curso.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <Build Include="Preguntas.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <RefactorLog Include="Opiniometro_Datos.refactorlog" />
-  </ItemGroup>
-  <ItemGroup>
-    <PostDeploy Include="Script.PostDeploymentOpiniometro.sql" />
+    <Build Include="Enfasis.sql" />
+    <Build Include="Grupo.sql" />
+    <Build Include="Escuela.sql" />
+    <Build Include="Se_Encuentra_Unidad_Enfasis.sql" />
+    <Build Include="Fecha_Corte.sql" />
+    <Build Include="Tiene_Grupo_Formulario.sql" />
+    <Build Include="Formulario.sql" />
+    <Build Include="Seccion.sql" />
+    <Build Include="Fecha_Corte.sql" />
+    <Build Include="Conformado_Item_Sec_Form.sql" />
+    <Build Include="Texto_Libre.sql" />
+    <Build Include="Item.sql" />
+    <Build Include="Seleccion_Unica.sql" />
   </ItemGroup>
 </Project>

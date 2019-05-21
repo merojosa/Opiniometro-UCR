@@ -14,11 +14,25 @@ namespace Opiniometro_WebApp.Models
     
     public partial class Persona
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Persona()
+        {
+            this.TelefonoPersona = new HashSet<TelefonoPersona>();
+            this.Usuario = new HashSet<Usuario>();
+        }
+    
         public string Cedula { get; set; }
         public string Nombre { get; set; }
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
+        public string Direccion { get; set; }
     
+        public virtual Administrativo Administrativo { get; set; }
         public virtual Estudiante Estudiante { get; set; }
+        public virtual Profesor Profesor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TelefonoPersona> TelefonoPersona { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Usuario> Usuario { get; set; }
     }
 }

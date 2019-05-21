@@ -14,9 +14,20 @@ namespace Opiniometro_WebApp.Models
     
     public partial class Estudiante
     {
-        public string Cedula_Estudiante { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Estudiante()
+        {
+            this.Empadronado = new HashSet<Empadronado>();
+            this.Matricula = new HashSet<Matricula>();
+        }
+    
+        public string CedulaEstudiante { get; set; }
         public string Carne { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Empadronado> Empadronado { get; set; }
         public virtual Persona Persona { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Matricula> Matricula { get; set; }
     }
 }

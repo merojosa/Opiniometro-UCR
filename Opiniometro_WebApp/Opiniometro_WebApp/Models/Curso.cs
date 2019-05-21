@@ -14,7 +14,19 @@ namespace Opiniometro_WebApp.Models
     
     public partial class Curso
     {
-        public string CodigoCurso { get; set; }
-        public string NombreCurso { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Curso()
+        {
+            this.Grupo = new HashSet<Grupo>();
+        }
+    
+        public string Sigla { get; set; }
+        public string Nombre { get; set; }
+        public byte Tipo { get; set; }
+        public string CodigoUnidad { get; set; }
+    
+        public virtual Unidad_Academica Unidad_Academica { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Grupo> Grupo { get; set; }
     }
 }

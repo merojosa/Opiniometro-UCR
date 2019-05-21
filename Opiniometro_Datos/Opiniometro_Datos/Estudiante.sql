@@ -1,9 +1,11 @@
 ﻿CREATE TABLE [dbo].[Estudiante]
 (
-	[Cedula_Estudiante] VARCHAR(9) NOT NULL PRIMARY KEY, 
-    [Carne] VARCHAR(6) NOT NULL UNIQUE,
-	
-	CONSTRAINT [FK_Persona] FOREIGN KEY ([Cedula_Estudiante])
-		REFERENCES [dbo].[Persona] (Cedula)	ON DELETE NO ACTION
-											ON UPDATE CASCADE
+	[CedulaEstudiante]	CHAR(9)			NOT NULL,
+	[Carne]				CHAR(6)	UNIQUE	NOT NULL
+	CONSTRAINT PK_Estudiante
+		PRIMARY KEY (CedulaEstudiante),
+		CONSTRAINT FK_Est_Per
+		FOREIGN KEY (CedulaEstudiante) REFERENCES Persona(Cedula)
+			ON DELETE NO ACTION
+			ON UPDATE CASCADE
 )
