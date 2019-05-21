@@ -12,14 +12,17 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Posee_Enfasis_Perfil_Permiso
+    public partial class spt_fallback_dev
     {
-        public byte NumeroEnfasis { get; set; }
-        public string SiglaCarrera { get; set; }
-        public string IdPerfil { get; set; }
-        public byte IdPermiso { get; set; }
-    
-        public virtual Perfil Perfil { get; set; }
-        public virtual Permiso Permiso { get; set; }
+        public string xserver_name { get; set; }
+        public System.DateTime xdttm_ins { get; set; }
+        public System.DateTime xdttm_last_ins_upd { get; set; }
+        public Nullable<int> xfallback_low { get; set; }
+        public string xfallback_drive { get; set; }
+        public int low { get; set; }
+        public int high { get; set; }
+        public short status { get; set; }
+        public string name { get; set; }
+        public string phyname { get; set; }
     }
 }
