@@ -8,6 +8,9 @@ using Opiniometro_WebApp.Models;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System.Net.Mail;
+using System.Net;
+using System.Text;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -90,10 +93,38 @@ namespace Opiniometro_WebApp.Controllers
 
             if ((bool)exito.Value == true)
             {
-                // Enviar correo
+                // Autogenero una contrasenna generica.
+                string contrasenna_generada = "PruebaDeContrasenna";
+
+                // La guardo en la base de datos (ahi cambio el flag de la tabla para que se sepa que esa contrasenna se genero)
+                string contenido =
+                    "<p>A continuación, su contraseña temporal, ingrésela junto con su correo institucional:</p> <b>"
+                    + contrasenna_generada + "</b>";
+
+                // Envio correo con la contrasenna autogenerada
+                EnviarCorreo(usuario.CorreoInstitucional, "Cambio de contraseña - Opiniómetro@UCR", contenido);
             }
             ModelState.AddModelError(string.Empty, "");
             return PartialView(usuario);
+        }
+
+        private void EnviarCorreo(string receptor, string asunto, string contenido)
+        {
+            string autor = System.Configuration.ConfigurationManager.AppSettings["CorreoEmisor"].ToString();
+            string contrasenna = System.Configuration.ConfigurationManager.AppSettings["ContrasennaEmisor"].ToString();
+
+            SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587);
+            cliente.EnableSsl = true;
+            cliente.Timeout = 100000;
+            cliente.DeliveryMethod = SmtpDeliveryMethod.Network;
+            cliente.UseDefaultCredentials = false;
+            cliente.Credentials = new NetworkCredential(autor, contrasenna);
+
+            MailMessage correo = new MailMessage(autor, receptor, asunto, contenido);
+            correo.IsBodyHtml = true;
+            correo.BodyEncoding = UTF8Encoding.UTF8;
+            cliente.Send(correo);
+
         }
     }
 }
