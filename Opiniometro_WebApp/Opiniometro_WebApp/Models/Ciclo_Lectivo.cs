@@ -20,7 +20,7 @@ namespace Opiniometro_WebApp.Models
             this.Grupo = new HashSet<Grupo>();
         }
     
-        public short Anno { get; set; }
+        public string Año { get; set; }
         public byte Semestre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -17,19 +17,16 @@ namespace Opiniometro_WebApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Grupo()
         {
-            this.Formulario_Respuesta = new HashSet<Formulario_Respuesta>();
             this.Tiene_Grupo_Formulario = new HashSet<Tiene_Grupo_Formulario>();
         }
     
-        public string SiglaCurso { get; set; }
         public byte Numero { get; set; }
-        public short AnnoGrupo { get; set; }
-        public byte SemestreGrupo { get; set; }
+        public string SiglaCurso { get; set; }
+        public string Año { get; set; }
+        public byte Semestre { get; set; }
     
         public virtual Ciclo_Lectivo Ciclo_Lectivo { get; set; }
         public virtual Curso Curso { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Formulario_Respuesta> Formulario_Respuesta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tiene_Grupo_Formulario> Tiene_Grupo_Formulario { get; set; }
     }

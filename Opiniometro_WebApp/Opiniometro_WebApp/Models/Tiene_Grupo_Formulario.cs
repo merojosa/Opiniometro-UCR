@@ -14,16 +14,15 @@ namespace Opiniometro_WebApp.Models
     
     public partial class Tiene_Grupo_Formulario
     {
-        public string SiglaCurso { get; set; }
         public byte Numero { get; set; }
-        public short Anno { get; set; }
+        public string SiglaCurso { get; set; }
+        public string Año { get; set; }
         public byte Ciclo { get; set; }
         public string Codigo { get; set; }
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaFinal { get; set; }
     
         public virtual Fecha_Corte Fecha_Corte { get; set; }
-        public virtual Formulario Formulario { get; set; }
         public virtual Grupo Grupo { get; set; }
     }
 }

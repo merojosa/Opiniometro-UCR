@@ -17,7 +17,6 @@ namespace Opiniometro_WebApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Persona()
         {
-            this.Formulario_Respuesta = new HashSet<Formulario_Respuesta>();
             this.TelefonoPersona = new HashSet<TelefonoPersona>();
             this.Usuario = new HashSet<Usuario>();
         }
@@ -30,8 +29,6 @@ namespace Opiniometro_WebApp.Models
     
         public virtual Administrativo Administrativo { get; set; }
         public virtual Estudiante Estudiante { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Formulario_Respuesta> Formulario_Respuesta { get; set; }
         public virtual Profesor Profesor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TelefonoPersona> TelefonoPersona { get; set; }
