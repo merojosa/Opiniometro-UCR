@@ -9,8 +9,6 @@ using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
 using System.IO;
 using System.Threading.Tasks;
-//using Microsoft.AspNetCore.Http;
-//using Microsoft.AspNetCore.Mvc;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -25,29 +23,28 @@ namespace Opiniometro_WebApp.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<ActionResult> CargarArchivos(List<FormFile> files)
+        [HttpGet]
+        public ActionResult CargarArchivo()
         {
-            long size = files.Sum(f => f.Length);
+            return View();
+        }
 
-            // full path to file in temp location
-            var filePath = Path.GetTempFileName();
-
-            foreach (var formFile in files)
+        [HttpPost]
+        public ActionResult CargarArchivo(HttpPostedFileBase postedFile)
+        {
+            if (postedFile != null)
             {
-                if (formFile.Length > 0)
+                string path = Server.MapPath("~/App_Data/ArchivosCargados/");
+                if (!Directory.Exists(path))
                 {
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await formFile.CopyToAsync(stream);
-                    }
+                    Directory.CreateDirectory(path);
                 }
+
+                postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
+                ViewBag.Message = "File uploaded successfully.";
             }
 
-            // process uploaded files
-            // Don't rely on or trust the FileName property without validation.
-
-            return Ok(new { count = files.Count, size, filePath });
+            return View();
         }
 
     }

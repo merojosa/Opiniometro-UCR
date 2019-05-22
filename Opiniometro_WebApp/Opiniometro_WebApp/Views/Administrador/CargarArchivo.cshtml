@@ -4,28 +4,26 @@
 
 <!DOCTYPE html>
 
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title></title>
+    <title>Cargar Archivo</title>
 </head>
 <body>
     <div>
-        <form method="post" enctype="multipart/form-data" asp-controller="Administrador" asp-action="CargarArchivo">
-            <div class="form-group">
-                <div class="col-md-10">
-                    <p>Upload one or more files using this form:</p>
-                    <input type="file" name="files" multiple>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-10">
-                    <input type="submit" value="Upload">
-                </div>
-            </div>
-        </form>
+        @using (Html.BeginForm("CargarArchivo", "Administrador", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <span>Select File:</span>
+            <input type="file" name="postedFile" />
+            <hr />
+            <input type="submit" value="Upload" />
+            <br />
+            <span style="color:green">@ViewBag.Message</span>
+        }
     </div>
 </body>
 </html>
+
 
 
