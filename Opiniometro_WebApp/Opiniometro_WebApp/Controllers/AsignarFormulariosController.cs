@@ -62,6 +62,23 @@ namespace Opiniometro_WebApp.Controllers
         {
             return new List<SelectListItem>() { };
         }
-        
+
+        [HttpGet]
+        public ActionResult Index()
+        {
+            Carrera carrera = db.Carrera.Find("SC-01234");
+
+            var curso = from s in db.Curso
+                           select s;
+            ViewBag.Carreras = new SelectList(db.Carrera, "Sigla", "Nombre", carrera.CodigoUnidadAcademica);
+            
+
+            if (!String.IsNullOrEmpty(carrera.Sigla))
+            {
+                curso = curso.Where(s => s.CodigoUnidad.Equals(carrera.CodigoUnidadAcademica));
+            }
+            ViewBag.Cursos = new SelectList(curso, "Sigla", "Nombre", carrera.Unidad_Academica);
+            return View();
+        }
     }
 }

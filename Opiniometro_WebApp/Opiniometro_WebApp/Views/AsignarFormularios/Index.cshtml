@@ -21,45 +21,55 @@
     </div>
 
     <div class="container">
-            <div class="row">
-                <div class="col-sm-8">
-                    <h1>Buscar Cursos</h1>
-                    <form asp-controller="AsignarFormularios" asp-action="Index">
-                        <p>
-                            Nombre: <input type="text" name="SearchString">
-                            <input type="submit" value="Buscar" />
-                        </p>
-                    </form>
+        <div class="row">
+            <div class="col-sm-8">
+                <h1>Buscar Cursos</h1>
+                <form asp-controller="AsignarFormularios" asp-action="Index">
+                    <p>
+                        Nombre: <input type="text" name="SearchString">
+                        <input type="submit" value="Buscar" />
+                    </p>
+                </form>
 
-                    <table class="table">
+
+                <table class="table">
+                    <tr>
+                        <th>
+                            Cursos
+                        </th>
+                    </tr>
+
+                    @*@foreach (var item in Model.Cursos)
+                    {
                         <tr>
-                            <th>
-                                Cursos
-                            </th>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nombre)
+                            </td>
                         </tr>
+                    }*@
 
-                        @foreach (var item in Model.Cursos)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Nombre)
-                                </td>
-                            </tr>
-                        }
+                </table>
 
-                    </table>
+            </div>
 
-                </div>
-                <div class="col-sm-4">
-                    <h1>Tus formularios</h1>
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action">Formulario 1</a>
-                        <a href="#" class="list-group-item list-group-item-action">Formulario 2</a>
-                        <a href="#" class="list-group-item list-group-item-action">Formulario 3</a>
-                    </div>
+            <div class="col-sm-4">
+                <h1>Búsqueda Avanzada</h1>
+                @Html.DropDownList("Carreras", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("Cursos", null, htmlAttributes: new { @class = "form-control" })
+            </div>  
+            
+            <div class="col-sm-4">
+                <h1>Tus formularios</h1>
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action">Formulario 1</a>
+                    <a href="#" class="list-group-item list-group-item-action">Formulario 2</a>
+                    <a href="#" class="list-group-item list-group-item-action">Formulario 3</a>
                 </div>
             </div>
+        </div>
         </div>
 
 </body>
 </html>
+
+

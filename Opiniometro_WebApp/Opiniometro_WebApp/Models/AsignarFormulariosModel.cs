@@ -22,6 +22,6 @@ namespace Opiniometro_WebApp.Models
         //public IEnumerable<SelectListItem> Formularios { get; set; }
 
         // Lista signaciones hechas
-        //public IEnumerable<SelectListItem> Asignaciones { get; set; }
+        //public IEnumerable<SelectListItem> Asignaciones { get; set; 
     }
 }
