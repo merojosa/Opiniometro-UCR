@@ -9,7 +9,7 @@ EXEC sp_MSForEachTable 'ALTER TABLE ? CHECK CONSTRAINT ALL'
 GO
 EXEC sp_MSForEachTable 'ENABLE TRIGGER ALL ON ?'
 
--- PROCEDURES
+-- PROCEDIMIENTOS
 IF OBJECT_ID('SP_AgregarUsuario') IS NOT NULL
 	DROP PROCEDURE SP_AgregarUsuario
 GO
@@ -64,7 +64,7 @@ BEGIN
 
 	DECLARE @CorreoBuscar NVARCHAR(50)
 	
-	-- Buscar que el correo y la contrasenna sean correctos con lo que hay en la tabla Usuario.
+	-- Buscar que el correo sea correcto con lo que hay en la tabla Usuario.
 	SET @CorreoBuscar =	(SELECT CorreoInstitucional 
 						FROM Usuario
 						WHERE CorreoInstitucional=@Correo)
@@ -75,6 +75,31 @@ BEGIN
 		SET @Resultado = 1
 END
 GO
+
+IF OBJECT_ID('SP_CambiarContrasenna') IS NOT NULL
+	DROP PROCEDURE SP_CambiarContrasenna
+GO
+CREATE PROCEDURE SP_CambiarContrasenna
+	@Correo				NVARCHAR(50),
+	@Contrasenna_Nueva	NVARCHAR(50)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @CorreoBuscar NVARCHAR(50)
+	
+	-- Buscar que el correo y la contrasenna sean correctos con lo que hay en la tabla Usuario.
+	SET @CorreoBuscar =	(SELECT CorreoInstitucional 
+						FROM Usuario
+						WHERE CorreoInstitucional=@Correo)
+
+	IF(@CorreoBuscar IS NOT NULL)	-- Si existe el correo
+		UPDATE Usuario
+		SET Contrasena = HASHBYTES('SHA2_512', @Contrasenna_Nueva+CAST(Id AS NVARCHAR(36)))
+		
+END
+GO
+
 
 INSERT INTO Persona
 VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajuela.'),
