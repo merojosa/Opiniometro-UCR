@@ -6,6 +6,11 @@ using System.Web.Mvc;
 
 namespace Opiniometro_WebApp.Models
 {
+    // ¿Podría/ debería ser una clase que herede del modelo Grupo?
+    /// <summary>
+    /// Clase para almacenar datos sobre un grupo obtenidos desde su tabla en
+    /// la base de datos y desde otras tablas.
+    /// </summary>
     public class GrupoConInfoExtra
     {
         // Atributos originales de la clase Grupo
@@ -17,9 +22,13 @@ namespace Opiniometro_WebApp.Models
         // Atributos extra obtenidos de otras clases
         public string nombreCurso;
         public string codigoUnidad;
-
+        //public string carrera;
+        //public byte enfasis;
     }
 
+    /// <summary>
+    /// Modelo para Asignación de Formularios
+    /// </summary>
     public class AsignarFormulariosModel
     {
         // Listas con los parámetros de los filtros
