@@ -7,6 +7,7 @@ using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
 {
+
     public class AsignarFormulariosController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
@@ -14,26 +15,17 @@ namespace Opiniometro_WebApp.Controllers
         // GET: AsignarFormularios
         public ActionResult Index(string searchString)
         {
-            var cursos = from m in db.Curso
-                         select m;
-            //searchString = "Programacion";
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                cursos = cursos.Where(s => s.Nombre.Contains(searchString));
-            }
-
-            /*var modelo = new AsignarFormulariosModel
+            var modelo = new AsignarFormulariosModel
             {
                 Ciclos = ObtenerCiclos(""),
                 Carreras = ObtenerCarreras(0, 0, ""),
                 Enfasis = ObtenerEnfasis(0, 0, "", ""),
-                Cursos = ObtenerCursos(0, 0, "", "", null, searchString),
+                Cursos = ObtenerCursos(0, 0, "", "", null),
                 Grupos = ObtenerGrupos(0, 0, "", "", 255, "", searchString) //,
                 //Formularios = 
                 //Asignaciones = 
-            };*/
+            };
 
-            var modelo = new AsignarFormulariosModel { Cursos = ObtenerCursos(0, 0, "", "", null, searchString) };
             return View(modelo);
         }
 
@@ -62,18 +54,9 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="numEnfasis">Número del énfasis de la carrera en el que se encuentran los cursos.</param>
         /// <param name="searchString">Frase usada para buscar el nombre o código de un grupo.</param>
         /// <returns>Lista de los cursos que satisfacen los filtros utilizados como parámetros.</returns>
-        public IQueryable<Curso> ObtenerCursos(short anno, byte semestre, String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis,
-                                                          String searchString)
+        public IQueryable<Curso> ObtenerCursos(short anno, byte semestre, String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis)
         {
-            IQueryable<Curso> cursos = from m in db.Curso
-                                       select m;
-            //searchString = "Programacion";
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                cursos = cursos.Where(s => s.Nombre.Contains(searchString));
-            }
-
-            return cursos;
+            return new List<Curso>().AsQueryable();
         }
 
         /// <summary>
@@ -85,10 +68,27 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="numEnfasis">Número del énfasis de la carrera en el que se encuentran los cursos de los grupos.</param>
         /// <param name="siglaCurso">Sigla del curso al que pertenecen los grupos</param>
         /// <returns>Lista de los grupos que satisfacen los filtros utilizados como parámetros.</returns>
-        public IEnumerable<SelectListItem> ObtenerGrupos(String ciclo, String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis,
-                                                         String siglaCurso)
+        public IEnumerable<GrupoConInfoExtra> ObtenerGrupos(short anno, byte semestre, String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis,
+                                                         String siglaCurso, String searchString)
         {
-            return new List<SelectListItem>() { };
+            IQueryable<GrupoConInfoExtra> grupos = 
+                from cur in db.Curso
+                join gru in db.Grupo on cur.Sigla equals gru.SiglaCurso
+                select new GrupoConInfoExtra
+                {
+                    siglaCurso = cur.Sigla,
+                    numero = gru.Numero,
+                    anno = gru.AnnoGrupo,
+                    semestre = gru.SemestreGrupo,
+                    nombreCurso = cur.Nombre,
+                    codigoUnidad = cur.CodigoUnidad
+                };
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                grupos = grupos.Where(c => c.nombreCurso.Contains(searchString));
+            }
+            return grupos;
         }
         
     }

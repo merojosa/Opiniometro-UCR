@@ -6,6 +6,20 @@ using System.Web.Mvc;
 
 namespace Opiniometro_WebApp.Models
 {
+    public class GrupoConInfoExtra
+    {
+        // Atributos originales de la clase Grupo
+        public string siglaCurso;
+        public byte numero;
+        public short anno;
+        public byte semestre;
+
+        // Atributos extra obtenidos de otras clases
+        public string nombreCurso;
+        public string codigoUnidad;
+
+    }
+
     public class AsignarFormulariosModel
     {
         // Listas con los parámetros de los filtros
@@ -15,7 +29,7 @@ namespace Opiniometro_WebApp.Models
         public IEnumerable<Curso> Cursos { get; set; }
 
         // Lista de grupos
-        public IEnumerable<Grupo> Grupos { get; set; }
+        public IEnumerable<GrupoConInfoExtra> Grupos { get; set; }
 
         // Lista de formularios
         //public IEnumerable<SelectListItem> Formularios { get; set; }
