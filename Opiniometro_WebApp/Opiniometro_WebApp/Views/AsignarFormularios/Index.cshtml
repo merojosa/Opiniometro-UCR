@@ -17,48 +17,61 @@
 <body>
 
     <div>
-        <h1>Asignación de cursos</h1>
+        <h1 align="center">Asignación de herramientas de evaluación</h1>
     </div>
 
     <div class="container">
             <div class="row">
                 <div class="col-sm-8">
-                    <h1>Buscar Cursos</h1>
-                    <form asp-controller="AsignarFormularios" asp-action="Index">
-                        <p>
-                            Nombre: <input type="text" name="SearchString">
-                            <input type="submit" value="Buscar" />
-                        </p>
-                    </form>
-
-                    <table class="table">
-                        <tr>
-                            <th>
-                                Cursos
-                            </th>
-                        </tr>
-
-                        @foreach (var item in Model.Cursos)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Nombre)
-                                </td>
-                            </tr>
-                        }
-
-                    </table>
-
-                </div>
-                <div class="col-sm-4">
-                    <h1>Tus formularios</h1>
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action">Formulario 1</a>
-                        <a href="#" class="list-group-item list-group-item-action">Formulario 2</a>
-                        <a href="#" class="list-group-item list-group-item-action">Formulario 3</a>
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3>Buscar Cursos</h3></div>
+                        <div class="panel-body">
+                            <form asp-controller="AsignarFormularios" asp-action="Index">
+                                <p>
+                                    <input type="text" name="SearchString" placeholder="Nombre del curso">
+                                    <input type="submit" value="Buscar" />
+                                </p>
+                            </form>
+                        </div>
+                        
                     </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Resultados</div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        Nombre del Curso
+                                    </th>
+                                </tr>
+
+                                @foreach (var item in Model.Cursos)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nombre)
+                                        </td>
+                                    </tr>
+                                }
+
+                            </table>
+                        </div>                       
+                    </div>
+                    </div>
+                <div class="col-sm-4">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3>Tus formularios</h3></div>
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action">Formulario 1</a>
+                                <a href="#" class="list-group-item list-group-item-action">Formulario 2</a>
+                                <a href="#" class="list-group-item list-group-item-action">Formulario 3</a>
+                            </div>
+                        </div>
+                    </div>                  
                 </div>
-            </div>
+                </div>
         </div>
 
 </body>
