@@ -24,12 +24,16 @@ namespace Opiniometro_WebApp.Models
         public string CodigoFormulario { get; set; }
         public string CedulaPersona { get; set; }
         public string CedulaProfesor { get; set; }
-        public short AñoGrupo { get; set; }
+        public short AnnoGrupo { get; set; }
         public byte SemestreGrupo { get; set; }
         public byte NumeroGrupo { get; set; }
         public string SiglaGrupo { get; set; }
         public Nullable<bool> Completado { get; set; }
     
+        public virtual Formulario Formulario { get; set; }
+        public virtual Grupo Grupo { get; set; }
+        public virtual Persona Persona { get; set; }
+        public virtual Profesor Profesor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Responde> Responde { get; set; }
     }
