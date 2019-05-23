@@ -22,8 +22,8 @@ namespace Opiniometro_WebApp.Controllers
                 Carreras = ObtenerCarreras(0, 0, ""),
                 Enfasis = ObtenerEnfasis(0, 0, "", ""),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
-                Grupos = ObtenerGrupos(0, 0, "", "", 255, "", searchString) //,
-                //Formularios = 
+                Grupos = ObtenerGrupos(0, 0, "", "", 255, "", searchString),
+                Formularios = ObtenerFormularios()
                 //Asignaciones = 
             };
 
@@ -90,13 +90,29 @@ namespace Opiniometro_WebApp.Controllers
                     nombreCurso = cur.Nombre,
                     codigoUnidad = cur.CodigoUnidad
                 };
-
+            
             if (!String.IsNullOrEmpty(searchString))
             {
                 grupos = grupos.Where(c => c.nombreCurso.Contains(searchString));
             }
             return grupos;
         }
-        
+
+        public IEnumerable<Formulario> ObtenerFormularios()
+        {
+            return db.Formulario.ToList();
+           // IQueryable<Formulario> formularios =
+           //     from frml in db.Formulario
+           //     select new Formulario
+           //     {
+                    
+           //     }
+           //return new List<Formulario>();
+
+            //return db.Curso .select(c => new Formulario {Nombre = c.Nombre})
+        }
+   
+
+
     }
 }
