@@ -30,8 +30,6 @@ namespace Opiniometro_WebApp.Models
         public string SiglaGrupo { get; set; }
         public Nullable<bool> Completado { get; set; }
     
-        public virtual Persona Persona { get; set; }
-        public virtual Profesor Profesor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Responde> Responde { get; set; }
     }
