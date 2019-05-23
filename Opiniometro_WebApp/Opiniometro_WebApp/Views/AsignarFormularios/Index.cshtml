@@ -12,111 +12,124 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-
+    <style>
+        .fixed_header {
+            table-layout: fixed;
+            border-collapse: collapse;
+        }
+        .fixed_header tbody {
+            display: block;
+            width: 100%;
+            overflow: auto;
+            height: 300px;
+        }
+        .fixed_header thead tr {
+            display: block;
+        }
+        .fixed_header th {
+            height: 50px;
+        }
+        .fixed_header th, .fixed_header td {
+            width: 200px;
+        }
+    </style>
 </head>
 <body>
 
     <div>
-        <h1>Asignación de cursos</h1>
+        <h1 align="center">Asignación de herramientas de evaluación</h1>
     </div>
 
     <div class="container">
-        <div class="row">
-            <div class="col-sm-8">
-                <h1>Buscar Cursos</h1>
-                <form asp-controller="AsignarFormularios" asp-action="Index">
-                    <p>
-                        Nombre: <input type="text" name="SearchString">
-                        <input type="submit" value="Buscar" />
-                    </p>
-                </form>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3>Buscar grupos</h3></div>
+                        <div class="panel-body">
+                            <!-- Esta forma hace que la búsqueda aparezca como parte del URL. -->
+                            <!--<form asp-controller="AsignarFormularios" asp-action="Index">
+                                <p>
+                                    Nombre: <input type="text" name="SearchString">
+                                   <input type="submit" value="Buscar" />
+                                </p>
+                            </form>-->
+                            <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
+                            @using (Html.BeginForm())
+                            {
+                                <!-- Buscador -->
+                                <p>
+                                    Nombre del curso: @Html.TextBox("SearchString")
+                                    <input type="submit" value="Buscar" />
+                                </p>
+                            }
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Curso, "Ciclo", new { @class = "control-label col-sm-8" })
-                    <div class="col-sm-8">
-                        @Html.DropDownList("Ciclo")
-                        @Html.ValidationMessageFor(model => model.Curso)
+                        </div>
                     </div>
+
+
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3>Resultados:</h3></div>
+                        <div class="panel-body">
+                            <!-- Tabla de grupos -->
+                            <table class="fixed_header">
+                                <!-- Table row (fila) de encabezados. -->
+                                <thead>
+                                    <!-- Table header -->
+                                    <th>
+                                        <div align='center'>Curso</th>
+                                    <th>
+                                        <div align='center'>Ciclo</th>
+                                    <th>
+                                        <div align='center'> Numero de grupo</th>
+                                    <th>
+                                        <div align='center'>Seleccionar para asignar</th>
+                                </thead>
+                                <tbody>
+                                    <!-- Para cada item en Model::Grupos... -->
+                                    @foreach (var item in Model.Grupos)
+                                    {
+                                        <!-- Table row (fila) de elementos -->
+                                        <tr>
+                                            <!-- Nombre de curso -->
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.nombreCurso)
+                                            </td>
+                                            <!-- Año -->
+                                            <td>
+                                                <div align='center'>@Html.DisplayFor(modelItem => item.anno) - @Html.DisplayFor(modelItem => item.semestre)</div>
+                                            </td>
+                                            <!-- Numero de grupo -->
+                                            <td>
+                                                <div align='center'>@Html.DisplayFor(modelItem => item.numero)</div>
+                                            </td>
+                                            <!-- Checkbox para asignar (por el momento no tiene funcionalidad) -->
+                                            <td>
+                                                <div align='center'><input type="checkbox" name="Curso" value="Curso"></div><br>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>                  
+                </div>                       
+                <div class="col-sm-4">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3>Tus formularios</h3></div>
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action">Formulario 1</a>
+                                <a href="#" class="list-group-item list-group-item-action">Formulario 2</a>
+                                <a href="#" class="list-group-item list-group-item-action">Formulario 3</a>
+                            </div>
+                        </div>
+                    </div>                  
                 </div>
-
-                <div class="form-group">
-                    @Html.Hidden("unidad", null, new { @codigo = "unidad" })
-                    @Html.LabelFor(model => model.Curso, "Unidad Académica", new { @class = "control-label col-sm-8" })
-                    <div class="col-sm-8">
-                        @Html.DropDownList("Unidad", (SelectList)ViewBag.Unidad,
-new { onchange = "document.getElementById('unidad').value = " +
-"document.getElementById('Curso').value; this.form.submit();" })
-
-                        @{
-                            <script>
-                                document.getElementById("unidad").value = "";
-                            </script>}
-                            @Html.ValidationMessageFor(model => model.Curso)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.Hidden("carrera", null, new { @codigo = "carrera" })
-                        @Html.LabelFor(model => model.Curso, "Carrera", new { @class = "control-label col-sm-8" })
-                        <div class="col-sm-8">
-                            @Html.DropDownList("Carreras", (SelectList)ViewBag.Carreras,
-                     new { onchange = "document.getElementById('carrera').value = " +
-                     "document.getElementById('Curso').value; this.form.submit();" })
-
-                            @{
-                                <script>
-                                    document.getElementById("carrera").value = "";
-                                </script>}
-                            @Html.ValidationMessageFor(model => model.Curso)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Curso, "Curso", new { @class = "control-label col-sm-8" })
-                        <div class="col-sm-8">
-                            @Html.DropDownList("Curso")
-                            @Html.ValidationMessageFor(model => model.Curso)
-                        </div>
-                    </div>
-
-                    <table class="table">
-                        <tr>
-                            <th>
-                                Cursos
-                            </th>
-                        </tr>
-
-                        @foreach (var item in Model.Curso)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Nombre)
-                                </td>
-                            </tr>
-                        }
-
-                    </table>
-
                 </div>
-
-                    @*<h3>Unidad Académica</h3>
-            @Html.DropDownList("Unidad", null, htmlAttributes: new { @class = "form-control" }) <br />
-            <h3>Carrera</h3>
-            @Html.DropDownList("Carreras", null, htmlAttributes: new { @class = "form-control" }) <br />
-            <h3>Curso</h3>
-            @Html.DropDownList("Cursos", null, htmlAttributes: new { @class = "form-control" })*@
-                
-
-                    <div class="col-sm-4">
-                        <h1>Tus formularios</h1>
-                        <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action">Formulario 1</a>
-                            <a href="#" class="list-group-item list-group-item-action">Formulario 2</a>
-                            <a href="#" class="list-group-item list-group-item-action">Formulario 3</a>
-                        </div>
-                    </div>
         </div>
-    </div>
 
 </body>
 </html>
