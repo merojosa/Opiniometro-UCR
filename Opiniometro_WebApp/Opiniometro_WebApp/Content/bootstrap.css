@@ -282,23 +282,17 @@ th {
         font-size: 16px;
         border: none;
         outline: none;
+        color: rgb(230,230,230);
         padding: 14px 16px;
         background-color: inherit;
         font-family: inherit;
         margin: 0;
-        color: rgb(102 , 102, 102);
     }
 
-    .navbar b:hover .dropdown:hover .dropbtn {
+    .navbar b:hover, .dropdown:hover .dropbtn {
         background-color: rgb(102,102,102);
     }
 
-    .navbar-collapse.dropdown.dropbtn:focus 
-    {
-    color: red;
-    background: red;
-}
-    
 .dropdown-contentt {
     display: none;
     position: relative;
@@ -307,7 +301,6 @@ th {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
-
 
 
 
@@ -4740,9 +4733,8 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #ccc;
 }
 .navbar-inverse {
-    background-color: rgb(230,230,230);
-    border-color: rgb(230,230,230);
-
+    background-color: rgb(230,230 ,230);
+    border-color: #080808;
 }
 .navbar-inverse .navbar-brand {
   color: #9d9d9d;
