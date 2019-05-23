@@ -252,15 +252,4 @@ VALUES ('DE2001', 'PRINCIPIOS DEL DERECHO PRIVADO I', 1,'UC-485648')
 --INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
 --VALUES ('DE2001', 2, 2019, 1)
 
---JOFFI
-MERGE INTO Preguntas AS Target
-USING (VALUES
-(1, 'Pregunta1', 'SiNo', 'Profesor'),
-(2, 'Pregunta2', 'SeleccionUnica', 'Profesor'),
-(3, 'Pregunta3', 'SeleccionMultiple', 'Curso')
-)
-AS Source ([Numero], Planteamiento, TipoPregunta, Categoria)
-ON Target.Planteamiento = Source.Planteamiento
-WHEN NOT MATCHED BY TARGET THEN
-INSERT(Numero, Planteamiento, TipoPregunta, Categoria)
-VALUES(Numero, Planteamiento, TipoPregunta, Categoria);
+
