@@ -10,14 +10,18 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-MERGE INTO Preguntas AS Target
-USING (VALUES
-(1, 'Pregunta1', 'SiNo', 'Profesor'),
-(2, 'Pregunta2', 'SeleccionUnica', 'Profesor'),
-(3, 'Pregunta3', 'SeleccionMultiple', 'Curso')
-)
-AS Source ([Numero], Planteamiento, TipoPregunta, Categoria)
-ON Target.Planteamiento = Source.Planteamiento
-WHEN NOT MATCHED BY TARGET THEN
-INSERT(Planteamiento, TipoPregunta, Categoria)
-VALUES(Planteamiento, TipoPregunta, Categoria);
+-- Eliminar Persona
+IF OBJECT_ID('SP_EliminarPersona') IS NOT NULL
+	DROP PROCEDURE SP_EliminarPersona
+GO
+CREATE PROCEDURE SP_EliminarPersona
+	@CedulaBusqueda		VARCHAR(9)
+AS
+BEGIN
+	DELETE
+	FROM Persona
+	WHERE Cedula = @CedulaBusqueda;
+END
+GO
+
+EXEC SP_EliminarPersona @CedulaBusqueda = '987654321';
