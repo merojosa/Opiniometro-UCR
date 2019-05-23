@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
-    <None Include="Script.ObtenerSeccionesPorFormulario.sql" />
+    <None Include="Script.InformacionDeFormulario.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Usuario.sql" />

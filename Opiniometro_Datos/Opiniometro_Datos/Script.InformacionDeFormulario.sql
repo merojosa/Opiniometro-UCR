@@ -15,8 +15,7 @@ CREATE PROCEDURE [dbo].[Obtener_Secciones_Por_Formulario]
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT C.TituloSeccion
+	SELECT DISTINCT C.TituloSeccion
 	FROM Conformado_Item_Sec_Form C
 	WHERE C.CodigoFormulario = @ForCod
 END
-
