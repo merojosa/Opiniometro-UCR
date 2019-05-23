@@ -18,13 +18,16 @@ namespace Opiniometro_WebApp.Controllers
         {
             var modelo = new AsignarFormulariosModel
             {
-                Ciclos = ObtenerCiclos(""),
+                //Ciclos = ObtenerCiclos(""),
+                Unidad = ObtenerUnidadAcademica(0,0,""),
                 Carreras = ObtenerCarreras(0, 0, ""),
-                Enfasis = ObtenerEnfasis(0, 0, "", ""),
+                //Enfasis = ObtenerEnfasis(0, 0, "", ""),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
                 Grupos = ObtenerGrupos(0, 0, "", "", 255, "", searchString) //,
                 //Formularios = 
                 //Asignaciones = 
+                
+
             };
 
             return View(modelo);
@@ -39,7 +42,19 @@ namespace Opiniometro_WebApp.Controllers
         // Para el filtro por carreras
         public IQueryable<Carrera> ObtenerCarreras(short anno, byte semestre, String codigoUnidadAcadem)
         {
-            return new List<Carrera>().AsQueryable();
+
+            IQueryable<Carrera> carreras = from car in db.Carrera
+                                                     select car;
+            ViewBag.Carreras = new SelectList(carreras, "Sigla", "Nombre");
+            return carreras;
+        }
+
+        public IQueryable<Unidad_Academica> ObtenerUnidadAcademica(short anno, byte semestre, String codigoUnidadAcadem)
+        {
+            IQueryable<Unidad_Academica> unidadAcademica = from u in db.Unidad_Academica
+                                                           select u;
+            ViewBag.UnidadAcademica = new SelectList(unidadAcademica, "Codigo", "Nombre");
+            return unidadAcademica;//
         }
 
         // Para el filtro por énfasis
@@ -60,10 +75,13 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="numEnfasis">Número del énfasis de la carrera en el que se encuentran los cursos.</param>
         /// <param name="searchString">Frase usada para buscar el nombre o código de un grupo.</param>
         /// <returns>Lista de los cursos que satisfacen los filtros utilizados como parámetros.</returns>
-        public IQueryable<Curso> ObtenerCursos(short anno, byte semestre, 
-            String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis)
+
+        public IQueryable<Curso> ObtenerCursos(short anno, byte semestre,String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis)
         {
-            return new List<Curso>().AsQueryable();
+            IQueryable<Curso> cursos = from cur in db.Curso
+                                           select cur;
+            ViewBag.cursos = new SelectList(cursos, "Sigla", "Nombre");
+            return cursos;
         }
 
         /// <summary>

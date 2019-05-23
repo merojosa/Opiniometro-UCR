@@ -35,11 +35,10 @@ namespace Opiniometro_WebApp.Models
         public IEnumerable<Ciclo_Lectivo> Ciclos { get; set; }
         public IEnumerable<Carrera> Carreras { get; set; }
         public IEnumerable<Enfasis> Enfasis { get; set; }
-        public IEnumerable<Curso> Cursos { get; set; }
-
+        public IEnumerable<Curso> Cursos { get; set; }       
         // Lista de grupos
         public IEnumerable<GrupoConInfoExtra> Grupos { get; set; }
-
+        public IEnumerable<Unidad_Academica> Unidad { get; set; }
         // Lista de formularios
         //public IEnumerable<SelectListItem> Formularios { get; set; }
 
