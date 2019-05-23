@@ -1071,9 +1071,9 @@
           </Key>
           <Property Name="CedulaEstudiante" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Carne" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Empadronadoes" Relationship="Self.FK_Empadronado_Estudiante" FromRole="Estudiante" ToRole="Empadronado" />
+          <NavigationProperty Name="Empadronado" Relationship="Self.FK_Empadronado_Estudiante" FromRole="Estudiante" ToRole="Empadronado" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Est_Per" FromRole="Estudiante" ToRole="Persona" />
-          <NavigationProperty Name="Matriculas" Relationship="Self.FK_Matricula_Profesor" FromRole="Estudiante" ToRole="Matricula" />
+          <NavigationProperty Name="Matricula" Relationship="Self.FK_Matricula_Profesor" FromRole="Estudiante" ToRole="Matricula" />
         </EntityType>
         <EntityType Name="Facultad">
           <Key>
@@ -1126,7 +1126,7 @@
           <NavigationProperty Name="Grupo" Relationship="Self.FK_ForRes_Gru" FromRole="Formulario_Respuesta" ToRole="Grupo" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_ForRes_Per" FromRole="Formulario_Respuesta" ToRole="Persona" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK_ForRes_Pro" FromRole="Formulario_Respuesta" ToRole="Profesor" />
-          <NavigationProperty Name="Respondes" Relationship="Self.FK_Res_ForRes" FromRole="Formulario_Respuesta" ToRole="Responde" />
+          <NavigationProperty Name="Responde" Relationship="Self.FK_Res_ForRes" FromRole="Formulario_Respuesta" ToRole="Responde" />
         </EntityType>
         <EntityType Name="Grupo">
           <Key>
@@ -1217,8 +1217,8 @@
           <NavigationProperty Name="Estudiante" Relationship="Self.FK_Est_Per" FromRole="Persona" ToRole="Estudiante" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Per" FromRole="Persona" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK_Pro_Per" FromRole="Persona" ToRole="Profesor" />
-          <NavigationProperty Name="TelefonoPersonas" Relationship="Self.FK_Tel_Per" FromRole="Persona" ToRole="TelefonoPersona" />
-          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usu_Per" FromRole="Persona" ToRole="Usuario" />
+          <NavigationProperty Name="TelefonoPersona" Relationship="Self.FK_Tel_Per" FromRole="Persona" ToRole="TelefonoPersona" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usu_Per" FromRole="Persona" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Posee_Enfasis_Perfil_Permiso">
           <Key>
@@ -1249,7 +1249,7 @@
           </Key>
           <Property Name="CedulaProfesor" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Pro" FromRole="Profesor" ToRole="Formulario_Respuesta" />
-          <NavigationProperty Name="Impartes" Relationship="Self.FK_Imparte_Profesor" FromRole="Profesor" ToRole="Imparte" />
+          <NavigationProperty Name="Imparte" Relationship="Self.FK_Imparte_Profesor" FromRole="Profesor" ToRole="Imparte" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Pro_Per" FromRole="Profesor" ToRole="Persona" />
         </EntityType>
         <EntityType Name="Responde">
@@ -1802,8 +1802,8 @@
           <EntitySet Name="Unidad_Academica" EntityType="Self.Unidad_Academica" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
           <AssociationSet Name="FK_Adm_Per" Association="Self.FK_Adm_Per">
-            <End Role="Persona" EntitySet="Personas" />
-            <End Role="Administrativo" EntitySet="Administrativoes" />
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Administrativo" EntitySet="Administrativo" />
           </AssociationSet>
           <AssociationSet Name="FK_Car_Uni" Association="Self.FK_Car_Uni">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
@@ -1838,16 +1838,16 @@
             <End Role="Grupo" EntitySet="Grupo" />
           </AssociationSet>
           <AssociationSet Name="FK_Empadronado_Estudiante" Association="Self.FK_Empadronado_Estudiante">
-            <End Role="Estudiante" EntitySet="Estudiantes" />
-            <End Role="Empadronado" EntitySet="Empadronadoes" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
+            <End Role="Empadronado" EntitySet="Empadronado" />
           </AssociationSet>
           <AssociationSet Name="FK_Est_Per" Association="Self.FK_Est_Per">
-            <End Role="Persona" EntitySet="Personas" />
-            <End Role="Estudiante" EntitySet="Estudiantes" />
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
           </AssociationSet>
           <AssociationSet Name="FK_Matricula_Profesor" Association="Self.FK_Matricula_Profesor">
-            <End Role="Estudiante" EntitySet="Estudiantes" />
-            <End Role="Matricula" EntitySet="Matriculas" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
+            <End Role="Matricula" EntitySet="Matricula" />
           </AssociationSet>
           <AssociationSet Name="FK_Fac_Uni" Association="Self.FK_Fac_Uni">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
@@ -1870,24 +1870,24 @@
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
           </AssociationSet>
           <AssociationSet Name="FK_ForRes_Per" Association="Self.FK_ForRes_Per">
-            <End Role="Persona" EntitySet="Personas" />
+            <End Role="Persona" EntitySet="Persona" />
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
           </AssociationSet>
           <AssociationSet Name="FK_ForRes_Pro" Association="Self.FK_ForRes_Pro">
-            <End Role="Profesor" EntitySet="Profesors" />
+            <End Role="Profesor" EntitySet="Profesor" />
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
           </AssociationSet>
           <AssociationSet Name="FK_Res_ForRes" Association="Self.FK_Res_ForRes">
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
-            <End Role="Responde" EntitySet="Respondes" />
+            <End Role="Responde" EntitySet="Responde" />
           </AssociationSet>
           <AssociationSet Name="FK_Tie_Gru" Association="Self.FK_Tie_Gru">
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
           </AssociationSet>
           <AssociationSet Name="FK_Imparte_Profesor" Association="Self.FK_Imparte_Profesor">
-            <End Role="Profesor" EntitySet="Profesors" />
-            <End Role="Imparte" EntitySet="Impartes" />
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Imparte" EntitySet="Imparte" />
           </AssociationSet>
           <AssociationSet Name="FK_Res_Ite" Association="Self.FK_Res_Ite">
             <End Role="Item" EntitySet="Item" />
@@ -1902,24 +1902,24 @@
             <End Role="Texto_Libre" EntitySet="Texto_Libre" />
           </AssociationSet>
           <AssociationSet Name="FK_PoseeEnfasisPerfil_Perfil" Association="Self.FK_PoseeEnfasisPerfil_Perfil">
-            <End Role="Perfil" EntitySet="Perfils" />
+            <End Role="Perfil" EntitySet="Perfil" />
             <End Role="Posee_Enfasis_Perfil_Permiso" EntitySet="Posee_Enfasis_Perfil_Permiso" />
           </AssociationSet>
           <AssociationSet Name="FK_PoseeEnfasisPerfil_Permiso" Association="Self.FK_PoseeEnfasisPerfil_Permiso">
-            <End Role="Permiso" EntitySet="Permisoes" />
+            <End Role="Permiso" EntitySet="Permiso" />
             <End Role="Posee_Enfasis_Perfil_Permiso" EntitySet="Posee_Enfasis_Perfil_Permiso" />
           </AssociationSet>
           <AssociationSet Name="FK_Pro_Per" Association="Self.FK_Pro_Per">
-            <End Role="Persona" EntitySet="Personas" />
-            <End Role="Profesor" EntitySet="Profesors" />
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
           <AssociationSet Name="FK_Tel_Per" Association="Self.FK_Tel_Per">
-            <End Role="Persona" EntitySet="Personas" />
-            <End Role="TelefonoPersona" EntitySet="TelefonoPersonas" />
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="TelefonoPersona" EntitySet="TelefonoPersona" />
           </AssociationSet>
           <AssociationSet Name="FK_Usu_Per" Association="Self.FK_Usu_Per">
-            <End Role="Persona" EntitySet="Personas" />
-            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
           <AssociationSet Name="FK_Res_Sec" Association="Self.FK_Res_Sec">
             <End Role="Seccion" EntitySet="Seccion" />
@@ -1949,9 +1949,8 @@
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna_Nueva" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_LoginUsuario">
+          <FunctionImport Name="SP_ExistenciaCorreo">
             <Parameter Name="Correo" Mode="In" Type="String" />
-            <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="SP_LoginUsuario">
@@ -1984,7 +1983,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Administrativoes">
+          <EntitySetMapping Name="Administrativo">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Administrativo">
               <MappingFragment StoreEntitySet="Administrativo">
                 <ScalarProperty Name="CedulaAdministrativo" ColumnName="CedulaAdministrativo" />
@@ -2135,7 +2134,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Perfils">
+          <EntitySetMapping Name="Perfil">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Perfil">
               <MappingFragment StoreEntitySet="Perfil">
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -2143,7 +2142,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Permisoes">
+          <EntitySetMapping Name="Permiso">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Permiso">
               <MappingFragment StoreEntitySet="Permiso">
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -2151,7 +2150,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Personas">
+          <EntitySetMapping Name="Persona">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Persona">
               <MappingFragment StoreEntitySet="Persona">
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
@@ -2189,7 +2188,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Respondes">
+          <EntitySetMapping Name="Responde">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Responde">
               <MappingFragment StoreEntitySet="Responde">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
@@ -2326,7 +2325,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

@@ -17,7 +17,7 @@ namespace Opiniometro_WebApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Formulario_Respuesta()
         {
-            this.Respondes = new HashSet<Responde>();
+            this.Responde = new HashSet<Responde>();
         }
     
         public System.DateTime Fecha { get; set; }
@@ -35,6 +35,6 @@ namespace Opiniometro_WebApp.Models
         public virtual Persona Persona { get; set; }
         public virtual Profesor Profesor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Responde> Respondes { get; set; }
+        public virtual ICollection<Responde> Responde { get; set; }
     }
 }
