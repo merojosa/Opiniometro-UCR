@@ -23,36 +23,68 @@
     <div class="container">
             <div class="row">
                 <div class="col-sm-8">
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><h3>Buscar Cursos</h3></div>
-                        <div class="panel-body">
-                            <form asp-controller="AsignarFormularios" asp-action="Index">
-                                <p>
-                                    <input type="text" name="SearchString" placeholder="Nombre del curso">
-                                    <input type="submit" value="Buscar" />
-                                </p>
-                            </form>
-                        </div>
-                        
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Resultados</div>
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <th>
-                                        Nombre del Curso
-                                    </th>
-                                </tr>
+                    <h1>Buscar grupos</h1>
 
-                                @foreach (var item in Model.Cursos)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Nombre)
-                                        </td>
-                                    </tr>
-                                }
+                    <!-- Esta forma hace que la búsqueda aparezca como parte del URL. -->
+                    <!--<form asp-controller="AsignarFormularios" asp-action="Index">
+                        <p>
+                            Nombre: <input type="text" name="SearchString">
+                            <input type="submit" value="Buscar" />
+                        </p>
+                    </form>-->
+
+                    <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
+                    @using (Html.BeginForm())
+                    {
+                        <!-- Buscador -->
+                        <p>
+                            Nombre del curso: @Html.TextBox("SearchString")
+                            <input type="submit" value="Buscar" />
+                        </p>
+                    }
+
+                    <!-- Tabla de grupos -->
+                    <table class="table">
+                        <!-- Table row (fila) de encabezados. -->
+                        <tr>
+                            <!-- Table header -->
+                            <th>
+                                Curso
+                            </th>
+                            <th>
+                                Ciclo
+                            </th>
+                            <th>
+                                Numero de grupo
+                            </th>
+                            <th>
+                                Seleccionar para asignar
+                            </th>
+                        </tr>
+
+                        <!-- Para cada item en Model::Grupos... -->
+                        @foreach (var item in Model.Grupos)
+                        {
+                            <!-- Table row (fila) de elementos -->
+                        <tr>
+                            <!-- Nombre de curso -->
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nombreCurso)
+                            </td>
+                            <!-- Año -->
+                            <td>
+                                @Html.DisplayFor(modelItem => item.anno) - @Html.DisplayFor(modelItem => item.semestre)
+                            </td>
+                            <!-- Numero de grupo -->
+                            <td>
+                                @Html.DisplayFor(modelItem => item.numero)
+                            </td>
+                            <!-- Checkbox para asignar (por el momento no tiene funcionalidad) -->
+                            <td>
+                                <input type="checkbox" name="Curso" value="Curso"><br>
+                            </td>
+                        </tr>
+                        }
 
                             </table>
                         </div>                       
