@@ -4748,7 +4748,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
 }
 .navbar-inverse .navbar-brand:hover,
 .navbar-inverse .navbar-brand:focus {
-  color: #fff;
+  color: rgb(102,102,102);
   background-color: transparent;
 }
 .navbar-inverse .navbar-text {
