@@ -21,5 +21,11 @@ namespace Opiniometro_WebApp.Controllers
             
             return View();
         }
+
+        public ActionResult CrearUsuario()
+        {
+
+            return View();
+        }
     }
 }
