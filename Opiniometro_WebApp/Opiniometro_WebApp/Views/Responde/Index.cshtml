@@ -8,24 +8,61 @@
 
 @Html.Partial("_Collapsible")
 
+<button class="collapsible main"> Evaluación de aspectos reglamentarios del profesor </button>
 
+<div class="content">
 
-<table class="table">
+    <button class="collapsible secondary"> ¿El profesor repuso clases cuando fue necesario? </button>
+    <div class="content">
 
-    @foreach (var item in Model) 
-    {
-        <tr>
-            <td>
-                <button class="collapsible"> @Html.DisplayFor(modelItem => item.Seccion.Titulo) </button>
-                <div class="content">
-                    <button class="collapsible"> @Html.DisplayFor(modelItem => item.Item.TextoPregunta) </button>
-                </div>
-            </td>
-        </tr>
-    }
+        <button class="collapsible terciary"> Resultados </button>
+        <div class="content">
+        </div>
 
-</table>
+        <button class="collapsible terciary"> Observaciones </button>
+        <div class="content">
 
+        </div>
+    </div>
+
+    <button class="collapsible secondary"> ¿Que opina del curso? </button>
+    <div class="content">
+
+        <button class="collapsible terciary"> Observaciones </button>
+        <div class="content">
+
+        </div>
+    </div>
+
+</div>
+
+<button class="collapsible main"> Opinión General del Curso </button>
+
+<div class="content">
+
+    <button class="collapsible secondary"> ¿El profesor entrego la carta del estudiante en las fechas indicadas por el reglamento? </button>
+    <div class="content">
+
+        <button class="collapsible terciary"> Resultados </button>
+        <div class="content">
+        </div>
+
+        <button class="collapsible terciary"> Observaciones </button>
+        <div class="content">
+
+        </div>
+    </div>
+
+    <button class="collapsible secondary"> ¿Que opina del profesor? </button>
+    <div class="content">
+
+        <button class="collapsible terciary"> Observaciones </button>
+        <div class="content">
+
+        </div>
+    </div>
+
+</div>
 
 
 <script src="~/Scripts/CollapsibleScript.js"></script>

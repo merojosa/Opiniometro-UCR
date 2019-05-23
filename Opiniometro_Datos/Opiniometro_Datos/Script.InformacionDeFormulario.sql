@@ -10,8 +10,9 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
+GO
 CREATE PROCEDURE [dbo].[Obtener_Secciones_Por_Formulario]
-	@ForCod char(6)
+	@ForCod CHAR(6)
 AS
 BEGIN
 	SET NOCOUNT ON
@@ -19,3 +20,17 @@ BEGIN
 	FROM Conformado_Item_Sec_Form C
 	WHERE C.CodigoFormulario = @ForCod
 END
+GO
+
+GO
+CREATE PROCEDURE [dbo].[Obtener_Items_Por_Seccion]
+	@ForCod CHAR(6),
+	@TitSec NVARCHAR(120)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT DISTINCT C.ItemId
+	FROM Conformado_Item_Sec_Form C
+	WHERE C.TituloSeccion = @TitSec AND C.CodigoFormulario = @ForCod
+END
+GO

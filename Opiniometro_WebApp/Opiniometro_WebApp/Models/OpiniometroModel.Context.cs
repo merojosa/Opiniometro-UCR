@@ -27,7 +27,6 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Administrativo> Administrativo { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Ciclo_Lectivo> Ciclo_Lectivo { get; set; }
@@ -48,6 +47,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Permiso> Permiso { get; set; }
         public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<Posee_Enfasis_Perfil_Permiso> Posee_Enfasis_Perfil_Permiso { get; set; }
+        public virtual DbSet<Preguntas> Preguntas { get; set; }
         public virtual DbSet<Profesor> Profesor { get; set; }
         public virtual DbSet<Responde> Responde { get; set; }
         public virtual DbSet<Seccion> Seccion { get; set; }
@@ -57,6 +57,51 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Tiene_Grupo_Formulario> Tiene_Grupo_Formulario { get; set; }
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+    
+        public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)
+        {
+            var cedulaParameter = cedula != null ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DatosEstudiante_Result>("DatosEstudiante", cedulaParameter);
+        }
+    
+        public virtual ObjectResult<MostrarEstudiantes_Result> MostrarEstudiantes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MostrarEstudiantes_Result>("MostrarEstudiantes");
+        }
+    
+        public virtual ObjectResult<string> NombrePersona(string cedula)
+        {
+            var cedulaParameter = cedula != null ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("NombrePersona", cedulaParameter);
+        }
+    
+        public virtual int Obtener_Items_Por_Seccion(string forCod, string titSec, ObjectParameter resultado)
+        {
+            var forCodParameter = forCod != null ?
+                new ObjectParameter("ForCod", forCod) :
+                new ObjectParameter("ForCod", typeof(string));
+    
+            var titSecParameter = titSec != null ?
+                new ObjectParameter("TitSec", titSec) :
+                new ObjectParameter("TitSec", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Obtener_Items_Por_Seccion", forCodParameter, titSecParameter, resultado);
+        }
+    
+        public virtual ObjectResult<string> Obtener_Secciones_Por_Formulario(string forCod)
+        {
+            var forCodParameter = forCod != null ?
+                new ObjectParameter("ForCod", forCod) :
+                new ObjectParameter("ForCod", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Obtener_Secciones_Por_Formulario", forCodParameter);
+        }
     
         public virtual int SP_AgregarUsuario(string correo, string contrasenna, string cedula)
         {
@@ -75,6 +120,28 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AgregarUsuario", correoParameter, contrasennaParameter, cedulaParameter);
         }
     
+        public virtual int SP_CambiarContrasenna(string correo, string contrasenna_Nueva)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var contrasenna_NuevaParameter = contrasenna_Nueva != null ?
+                new ObjectParameter("Contrasenna_Nueva", contrasenna_Nueva) :
+                new ObjectParameter("Contrasenna_Nueva", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CambiarContrasenna", correoParameter, contrasenna_NuevaParameter);
+        }
+    
+        public virtual int SP_ExistenciaCorreo(string correo, ObjectParameter resultado)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ExistenciaCorreo", correoParameter, resultado);
+        }
+    
         public virtual int SP_LoginUsuario(string correo, string contrasenna, ObjectParameter resultado)
         {
             var correoParameter = correo != null ?
@@ -86,15 +153,6 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Contrasenna", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_LoginUsuario", correoParameter, contrasennaParameter, resultado);
-        }
-    
-        public virtual ObjectResult<string> Secciones_Por_Formulario(string forCod)
-        {
-            var forCodParameter = forCod != null ?
-                new ObjectParameter("ForCod", forCod) :
-                new ObjectParameter("ForCod", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Secciones_Por_Formulario", forCodParameter);
         }
     }
 }

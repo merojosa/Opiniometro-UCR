@@ -197,7 +197,7 @@
     <Compile Include="Models\Curso.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C__RefactorLog.cs">
+    <Compile Include="Models\DatosEstudiante_Result.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Empadronado.cs">
@@ -235,6 +235,9 @@
     <Compile Include="Models\Matricula.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MostrarEstudiantes_Result.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OpiniometroModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -260,6 +263,9 @@
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Posee_Enfasis_Perfil_Permiso.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Preguntas.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Profesor.cs">
@@ -332,7 +338,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
