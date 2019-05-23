@@ -9,7 +9,9 @@ EXEC sp_MSForEachTable 'ALTER TABLE ? CHECK CONSTRAINT ALL'
 GO
 EXEC sp_MSForEachTable 'ENABLE TRIGGER ALL ON ?'
 
--- PROCEDIMIENTOS
+--PROCEDIMIENTOS
+
+--The Strategists
 IF OBJECT_ID('SP_AgregarUsuario') IS NOT NULL
 	DROP PROCEDURE SP_AgregarUsuario
 GO
@@ -100,6 +102,44 @@ BEGIN
 END
 GO
 
+--JJAPH
+IF OBJECT_ID('MostrarEstudiantes', 'P') IS NOT NULL 
+	DROP PROC MostrarEstudiantes
+
+IF OBJECT_ID('NombrePersona', 'P') IS NOT NULL 
+	DROP PROC NombrePersona
+
+IF OBJECT_ID('DatosEstudiante', 'P') IS NOT NULL 
+	DROP PROC DatosEstudiante
+
+GO
+--Pantalla 1, Home
+CREATE PROCEDURE MostrarEstudiantes
+AS 
+	SELECT Nombre, Apellido1, Apellido2, Carne
+	FROM Persona P JOIN Estudiante E ON P.Cedula = E.CedulaEstudiante;
+GO
+
+--Pantalla 2 solo el nombre para bienvenida
+GO
+CREATE PROCEDURE NombrePersona 
+@Cedula VARCHAR(9)
+AS
+	SELECT Nombre
+	FROM Persona
+	WHERE Cedula = @Cedula;
+
+--Pantalla 3, informacion de un estudiante
+GO
+CREATE PROCEDURE DatosEstudiante
+@Cedula VARCHAR(9)
+AS
+	SELECT CONCAT(Nombre, ' ' ,Apellido1, ' ', Apellido2) as 'Nombre Completo', Carne, Cedula
+	FROM Persona P JOIN Estudiante E ON P.Cedula = E.CedulaEstudiante
+	WHERE Cedula = @Cedula;
+GO
+
+--Inserciones
 
 INSERT INTO Persona
 VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajuela.'),
@@ -107,6 +147,12 @@ VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajue
 		('117720910', 'Jorge', 'Solano', 'Carrillo', 'La Fortuna de San Carlos.'),
 		('236724501', 'Carolina', 'Gutierrez', 'Lozano', 'Sarchí, Alajuela.'),
 		('123456789', 'Ortencia', 'Cañas', 'Griezman', 'San Pedro de Montes de Oca');
+
+INSERT INTO Estudiante VALUES 
+ ('116720500', 'B11111')
+,('115003456', 'B22222')
+,('117720910', 'B33333') 
+,('236724501', 'B44444');
 
 EXEC SP_AgregarUsuario @Correo='jose.mejiasrojas@ucr.ac.cr', @Contrasenna='123456', @Cedula='116720500'
 EXEC SP_AgregarUsuario @Correo='daniel.escalanteperez@ucr.ac.cr', @Contrasenna='Danielito', @Cedula='115003456'
@@ -123,6 +169,11 @@ VALUES ('UC-023874', 'ECCI')
 
 INSERT INTO Unidad_Academica (Codigo, Nombre)
 VALUES ('UC-485648', 'Derecho')
+
+INSERT Curso
+VALUES  ('CI1213', 'Ingenieria de Software', 1, 'UC-023874'),
+('CI1223', 'Bases de Datos', 1, 'UC-023874'),
+ ('CI1211', 'Proyecto Integrador', 1, 'UC-023874')
 
 --Escuela
 --INSERT INTO Escuela(CodigoUnidadAcademica,CodigoFacultad)
@@ -200,3 +251,16 @@ VALUES ('DE2001', 'PRINCIPIOS DEL DERECHO PRIVADO I', 1,'UC-485648')
 
 --INSERT INTO Grupo(Numero, SiglaCurso, Anno, Semestre)
 --VALUES ('DE2001', 2, 2019, 1)
+
+--JOFFI
+MERGE INTO Preguntas AS Target
+USING (VALUES
+(1, 'Pregunta1', 'SiNo', 'Profesor'),
+(2, 'Pregunta2', 'SeleccionUnica', 'Profesor'),
+(3, 'Pregunta3', 'SeleccionMultiple', 'Curso')
+)
+AS Source ([Numero], Planteamiento, TipoPregunta, Categoria)
+ON Target.Planteamiento = Source.Planteamiento
+WHEN NOT MATCHED BY TARGET THEN
+INSERT(Numero, Planteamiento, TipoPregunta, Categoria)
+VALUES(Numero, Planteamiento, TipoPregunta, Categoria);
