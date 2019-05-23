@@ -98,18 +98,10 @@ namespace Opiniometro_WebApp.Controllers
             return grupos;
         }
 
+        //para la vista de los formularios
         public IEnumerable<Formulario> ObtenerFormularios()
         {
             return db.Formulario.ToList();
-           // IQueryable<Formulario> formularios =
-           //     from frml in db.Formulario
-           //     select new Formulario
-           //     {
-                    
-           //     }
-           //return new List<Formulario>();
-
-            //return db.Curso .select(c => new Formulario {Nombre = c.Nombre})
         }
    
 

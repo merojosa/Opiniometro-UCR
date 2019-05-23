@@ -102,35 +102,28 @@
                     <div class="panel panel-default">
                         <div class="panel-heading"><h3>Tus formularios</h3></div>
                         <div class="panel-body">
-                            @*<div class="list-group">*@
-                            <table class="table">
-                                <tr>
 
-                                </tr>
+                            <table class="table">
+                                <!-- Tabla para mostrar los formularios -->
+                                <tr></tr>
                                 @foreach (var item in Model.Formularios)
                                 {
-                                <tr>
+                                    <tr>
 
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Nombre)
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nombre)
 
-                                    <td>
-                                        <div align='center'><input type="checkbox" name="Formulario" value="Formulario"></div><br>
+                                        <td>
+                                            <!-- checkbox para elegir formulario-->
+                                            <div align='center'><input type="checkbox" name="Formulario" value="Formulario"></div><br>
 
 
 
-                                </tr>
+</tr>
                                 }
 
 
                             </table>
-
-
-
-                                @*<a href="#" class="list-group-item list-group-item-action">Formulario 1</a>   @Html.Display("Formularios")     <p> @Model.Formularios  </p>
-            <a href="#" class="list-group-item list-group-item-action">Formulario 2</a>
-            <a href="#" class="list-group-item list-group-item-action">Formulario 3</a>*@
-                                @*</div>*@
                         </div>
                     </div>                  
                 </div>
