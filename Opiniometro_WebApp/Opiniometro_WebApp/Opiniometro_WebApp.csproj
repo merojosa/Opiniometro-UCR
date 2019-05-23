@@ -199,9 +199,6 @@
     <Compile Include="Models\Curso.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C__RefactorLog.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DatosEstudiante_Result.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
@@ -398,16 +395,6 @@
     <Content Include="Views\Responde\Index.cshtml" />
     <Content Include="Views\Auth\Recuperar.cshtml" />
     <Content Include="Views\Shared\Auth\BarraLogin.cshtml" />
-    <Content Include="Views\Items\Create.cshtml" />
-    <Content Include="Views\Items\Delete.cshtml" />
-    <Content Include="Views\Items\Details.cshtml" />
-    <Content Include="Views\Items\Edit.cshtml" />
-    <Content Include="Views\Items\Index.cshtml" />
-    <Content Include="Views\Preguntas\Create.cshtml" />
-    <Content Include="Views\Preguntas\Delete.cshtml" />
-    <Content Include="Views\Preguntas\Details.cshtml" />
-    <Content Include="Views\Preguntas\Edit.cshtml" />
-    <Content Include="Views\Preguntas\Index.cshtml" />
     <Content Include="Views\Seleccion_Unica\Create.cshtml" />
     <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
     <Content Include="Views\Seleccion_Unica\Details.cshtml" />
