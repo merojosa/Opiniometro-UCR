@@ -21,10 +21,10 @@
             @Html.DisplayNameFor(model => model.TieneObservacion)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Seleccion_Unica.ItemId)
+            @Html.DisplayName("Selección Unica")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Texto_Libre.ItemId)
+            @Html.DisplayName("Texto Libre")
         </th>
         <th></th>
     </tr>
@@ -49,7 +49,7 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ItemId }) |
             @Html.ActionLink("Details", "Details", new { id=item.ItemId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ItemId })
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.ItemId })*@
         </td>
     </tr>
 }
