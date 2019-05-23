@@ -63,21 +63,45 @@ namespace Opiniometro_WebApp.Controllers
             return new List<SelectListItem>() { };
         }
 
+        public IEnumerable<SelectListItem> ObtenerCarreras(string codigoUnidad)
+        {
+            return db.Carrera.Select(carrera => new SelectListItem { Value = carrera.Sigla.ToString(), Text = carrera.Nombre }).ToList();
+        }
+
+        //public IEnumerable<SelectListItem> ObtenerCursos(string codigoUnidad)
+        //{
+        //    //var curso = from s in db.Curso
+        //       //        select s;
+        //    //curso = curso.Where(s => s.CodigoUnidad.Equals(codigoUnidad));
+        //    return db.Curso.Select(curso => curso.CodigoUnidad.Equals(codigoUnidad) => new SelectListItem { Value = curso.Sigla.ToString(), Text = curso.Nombre }).ToList();
+        //}
+
         [HttpGet]
         public ActionResult Index()
         {
-            Carrera carrera = db.Carrera.Find("SC-01234");
+            //Unidad_Academica unidad = db.Unidad_Academica.Find("");
+            Carrera carrera = db.Carrera.Find("SC-89457");
+
+            var carr = from s in db.Carrera
+                        select s;
+            ViewBag.Unidad = new SelectList(db.Unidad_Academica, "Codigo", "Nombre", carrera.CodigoUnidadAcademica);
+
+            if (!String.IsNullOrEmpty(carrera.CodigoUnidadAcademica))
+            {
+                carr = carr.Where(s => s.CodigoUnidadAcademica.Equals(carrera.CodigoUnidadAcademica));
+            }
+
+            ViewBag.Carreras = new SelectList(carr, "Sigla", "Nombre", carrera.CodigoUnidadAcademica);
 
             var curso = from s in db.Curso
-                           select s;
-            ViewBag.Carreras = new SelectList(db.Carrera, "Sigla", "Nombre", carrera.CodigoUnidadAcademica);
-            
+                        select s;
 
             if (!String.IsNullOrEmpty(carrera.Sigla))
             {
                 curso = curso.Where(s => s.CodigoUnidad.Equals(carrera.CodigoUnidadAcademica));
             }
-            ViewBag.Cursos = new SelectList(curso, "Sigla", "Nombre", carrera.Unidad_Academica);
+            ViewBag.Cursos = new SelectList(curso, "Sigla", "Nombre", carrera.CodigoUnidadAcademica);
+
             return View();
         }
     }
