@@ -97,5 +97,6 @@
     <Build Include="Texto_Libre.sql" />
     <Build Include="Item.sql" />
     <Build Include="Seleccion_Unica.sql" />
+    <Build Include="Secciones_Por_Formulario.sql" />
   </ItemGroup>
 </Project>

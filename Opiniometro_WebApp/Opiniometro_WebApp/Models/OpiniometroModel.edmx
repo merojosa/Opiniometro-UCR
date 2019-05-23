@@ -772,6 +772,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="Secciones_Por_Formulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ForCod" Type="char" Mode="In" />
+        </Function>
         <Function Name="SP_AgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
@@ -1133,6 +1136,9 @@
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
           </AssociationSet>
+          <FunctionImport Name="Secciones_Por_Formulario" ReturnType="Collection(String)">
+          <Parameter Name="ForCod" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="C__RefactorLog">
           <Key>
@@ -2136,6 +2142,13 @@
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
               </MappingFragment>
             </EntityTypeMapping>
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Responde">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="Opiniometro_DatosModel.Store.Secciones_Por_Formulario" >
+                  <ScalarProperty Name="CodigoFormularioResp" ParameterName="ForCod" />
+                </InsertFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Seccion">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Seccion">
@@ -2218,6 +2231,7 @@
               <ScalarProperty Name="Numero" ColumnName="NumeroEnfasis" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="Secciones_Por_Formulario" FunctionName="Opiniometro_DatosModel.Store.Secciones_Por_Formulario" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -209,6 +209,14 @@ VALUES  ('2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 1
 		('2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 1),
 		('2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 1);
 
+ --Conformado_Item_Sec_Form
+INSERT INTO Conformado_Item_Sec_Form (ItemId, CodigoFormulario, TituloSeccion, NombreFormulario)
+VALUES	(1, '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
+		(3, '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
+		(2, '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores'),	
+		(4, '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores');
+
+
 --Responde
 INSERT INTO Responde (ItemId, TituloSeccion, FechaRespuesta, CodigoFormularioResp, CedulaPersona, CedulaProfesor, AnnoGrupoResp, SemestreGrupoResp, NumeroGrupoResp, SiglaGrupoResp, Observacion, Respuesta)
 VALUES  (1, 'Evaluación de aspectos reglamentarios del profesor', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Nunca tuvimos que reponer clases', '3'),
