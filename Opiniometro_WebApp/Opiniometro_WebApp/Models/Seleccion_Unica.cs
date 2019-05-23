@@ -12,11 +12,11 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TelefonoPersona
+    public partial class Seleccion_Unica
     {
-        public string CedulaPersona { get; set; }
-        public string NumeroTelefono { get; set; }
+        public int ItemId { get; set; }
+        public Nullable<bool> IsaLikeDislike { get; set; }
     
-        public virtual Persona Persona { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

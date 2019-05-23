@@ -12,21 +12,26 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Profesor
+    public partial class Unidad_Academica
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Profesor()
+        public Unidad_Academica()
         {
-            this.Formulario_Respuesta = new HashSet<Formulario_Respuesta>();
-            this.Imparte = new HashSet<Imparte>();
+            this.Carrera = new HashSet<Carrera>();
+            this.Curso = new HashSet<Curso>();
+            this.Enfasis = new HashSet<Enfasis>();
         }
     
-        public string CedulaProfesor { get; set; }
+        public string Codigo { get; set; }
+        public string Nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Formulario_Respuesta> Formulario_Respuesta { get; set; }
+        public virtual ICollection<Carrera> Carrera { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Imparte> Imparte { get; set; }
-        public virtual Persona Persona { get; set; }
+        public virtual ICollection<Curso> Curso { get; set; }
+        public virtual Facultad Facultad { get; set; }
+        public virtual Facultad Facultad1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Enfasis> Enfasis { get; set; }
     }
 }

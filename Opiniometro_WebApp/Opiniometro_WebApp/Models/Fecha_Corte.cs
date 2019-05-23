@@ -12,22 +12,18 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class Fecha_Corte
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuario()
+        public Fecha_Corte()
         {
-            this.Tiene_Enfasis_Perfil_Usuario = new HashSet<Tiene_Enfasis_Perfil_Usuario>();
+            this.Tiene_Grupo_Formulario = new HashSet<Tiene_Grupo_Formulario>();
         }
     
-        public string CorreoInstitucional { get; set; }
-        public string Contrasena { get; set; }
-        public bool Activo { get; set; }
-        public string Cedula { get; set; }
-        public System.Guid Id { get; set; }
+        public System.DateTime FechaInicio { get; set; }
+        public System.DateTime FechaFinal { get; set; }
     
-        public virtual Persona Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tiene_Enfasis_Perfil_Usuario> Tiene_Enfasis_Perfil_Usuario { get; set; }
+        public virtual ICollection<Tiene_Grupo_Formulario> Tiene_Grupo_Formulario { get; set; }
     }
 }
