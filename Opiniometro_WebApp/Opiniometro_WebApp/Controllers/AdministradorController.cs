@@ -44,6 +44,12 @@ namespace Opiniometro_WebApp.Controllers
                 ViewBag.Message = "File uploaded successfully.";
             }
 
+
+            //Codigo para procesamiento de archivo por ssis
+
+            //Invocar paquete de intregracion, pasar como parametro el nombre del archivo cargado.
+
+
             return View();
         }
     }

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="(localdb)_ProjectsV13.Opiniometro_Datos"
+  DTS:DTSID="{D59D00C8-FA91-4B22-85A7-636DD3ACC1A8}"
+  DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=(localdb)\ProjectsV13;Initial Catalog=Opiniometro_Datos;Integrated Security=True;Application Name=SSIS-AdminCargarArchivo-{D59D00C8-FA91-4B22-85A7-636DD3ACC1A8}(localdb)\ProjectsV13.Opiniometro_Datos;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
