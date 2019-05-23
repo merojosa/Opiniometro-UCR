@@ -18,6 +18,42 @@
           <Property Name="CedulaAdministrativo" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Tipo" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
+        <EntityType Name="Carrera">
+          <Key>
+            <PropertyRef Name="Sigla" />
+          </Key>
+          <Property Name="Sigla" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="125" Nullable="false" />
+          <Property Name="CodigoUnidadAcademica" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ciclo_Lectivo">
+          <Key>
+            <PropertyRef Name="Anno" />
+            <PropertyRef Name="Semestre" />
+          </Key>
+          <Property Name="Anno" Type="smallint" Nullable="false" />
+          <Property Name="Semestre" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Conformado_Item_Sec_Form">
+          <Key>
+            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="CodigoFormulario" />
+            <PropertyRef Name="TituloSeccion" />
+          </Key>
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="CodigoFormulario" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="TituloSeccion" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="NombreFormulario" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="Sigla" />
+          </Key>
+          <Property Name="Sigla" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="Tipo" Type="tinyint" Nullable="false" />
+          <Property Name="CodigoUnidad" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="Empadronado">
           <Key>
             <PropertyRef Name="CedulaEstudiante" />
@@ -28,6 +64,21 @@
           <Property Name="NumeroEnfasis" Type="tinyint" Nullable="false" />
           <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
+        <EntityType Name="Enfasis">
+          <Key>
+            <PropertyRef Name="Numero" />
+            <PropertyRef Name="SiglaCarrera" />
+          </Key>
+          <Property Name="Numero" Type="tinyint" Nullable="false" />
+          <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Escuela">
+          <Key>
+            <PropertyRef Name="CodigoUnidadAcademica" />
+          </Key>
+          <Property Name="CodigoUnidadAcademica" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="CodigoFacultad" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="Estudiante">
           <Key>
             <PropertyRef Name="CedulaEstudiante" />
@@ -35,13 +86,34 @@
           <Property Name="CedulaEstudiante" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Carne" Type="char" MaxLength="6" Nullable="false" />
         </EntityType>
+        <EntityType Name="Facultad">
+          <Key>
+            <PropertyRef Name="CodigoUnidadAcademica" />
+          </Key>
+          <Property Name="CodigoUnidadAcademica" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fecha_Corte">
+          <Key>
+            <PropertyRef Name="FechaInicio" />
+            <PropertyRef Name="FechaFinal" />
+          </Key>
+          <Property Name="FechaInicio" Type="datetime" Nullable="false" />
+          <Property Name="FechaFinal" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Formulario">
+          <Key>
+            <PropertyRef Name="CodigoFormulario" />
+          </Key>
+          <Property Name="CodigoFormulario" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="25" />
+        </EntityType>
         <EntityType Name="Formulario_Respuesta">
           <Key>
             <PropertyRef Name="Fecha" />
             <PropertyRef Name="CodigoFormulario" />
             <PropertyRef Name="CedulaPersona" />
             <PropertyRef Name="CedulaProfesor" />
-            <PropertyRef Name="AñoGrupo" />
+            <PropertyRef Name="AnnoGrupo" />
             <PropertyRef Name="SemestreGrupo" />
             <PropertyRef Name="NumeroGrupo" />
             <PropertyRef Name="SiglaGrupo" />
@@ -50,11 +122,23 @@
           <Property Name="CodigoFormulario" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="CedulaPersona" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="CedulaProfesor" Type="char" MaxLength="9" Nullable="false" />
-          <Property Name="AñoGrupo" Type="smallint" Nullable="false" />
+          <Property Name="AnnoGrupo" Type="smallint" Nullable="false" />
           <Property Name="SemestreGrupo" Type="tinyint" Nullable="false" />
           <Property Name="NumeroGrupo" Type="tinyint" Nullable="false" />
           <Property Name="SiglaGrupo" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="Completado" Type="bit" />
+        </EntityType>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="SiglaCurso" />
+            <PropertyRef Name="Numero" />
+            <PropertyRef Name="AnnoGrupo" />
+            <PropertyRef Name="SemestreGrupo" />
+          </Key>
+          <Property Name="SiglaCurso" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="Numero" Type="tinyint" Nullable="false" />
+          <Property Name="AnnoGrupo" Type="smallint" Nullable="false" />
+          <Property Name="SemestreGrupo" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Imparte">
           <Key>
@@ -69,6 +153,16 @@
           <Property Name="Sigla" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="Anno" Type="char" MaxLength="4" Nullable="false" />
           <Property Name="Semestre" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TextoPregunta" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="Categoria" Type="varchar" MaxLength="30" />
+          <Property Name="TieneObservacion" Type="bit" />
+          <Property Name="TipoPregunta" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Matricula">
           <Key>
@@ -120,6 +214,15 @@
           <Property Name="IdPerfil" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="IdPermiso" Type="tinyint" Nullable="false" />
         </EntityType>
+        <EntityType Name="Preguntas">
+          <Key>
+            <PropertyRef Name="Numero" />
+          </Key>
+          <Property Name="Numero" Type="int" Nullable="false" />
+          <Property Name="Planteamiento" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="TipoPregunta" Type="nchar" MaxLength="30" />
+          <Property Name="Categoria" Type="nchar" MaxLength="30" />
+        </EntityType>
         <EntityType Name="Profesor">
           <Key>
             <PropertyRef Name="CedulaProfesor" />
@@ -134,7 +237,7 @@
             <PropertyRef Name="CodigoFormularioResp" />
             <PropertyRef Name="CedulaPersona" />
             <PropertyRef Name="CedulaProfesor" />
-            <PropertyRef Name="AñoGrupoResp" />
+            <PropertyRef Name="AnnoGrupoResp" />
             <PropertyRef Name="SemestreGrupoResp" />
             <PropertyRef Name="NumeroGrupoResp" />
             <PropertyRef Name="SiglaGrupoResp" />
@@ -145,13 +248,37 @@
           <Property Name="CodigoFormularioResp" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="CedulaPersona" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="CedulaProfesor" Type="char" MaxLength="9" Nullable="false" />
-          <Property Name="AñoGrupoResp" Type="smallint" Nullable="false" />
+          <Property Name="AnnoGrupoResp" Type="smallint" Nullable="false" />
           <Property Name="SemestreGrupoResp" Type="tinyint" Nullable="false" />
           <Property Name="NumeroGrupoResp" Type="tinyint" Nullable="false" />
           <Property Name="SiglaGrupoResp" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="Observacion" Type="nvarchar" MaxLength="500" />
           <Property Name="Respuesta" Type="nvarchar" MaxLength="500" />
           <Property Name="RespuestaProfesor" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Se_Encuentra_Unidad_Enfasis">
+          <Key>
+            <PropertyRef Name="CodigoUnidadAcademica" />
+            <PropertyRef Name="NumeroEnfasis" />
+            <PropertyRef Name="SiglaCarrera" />
+          </Key>
+          <Property Name="CodigoUnidadAcademica" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="NumeroEnfasis" Type="tinyint" Nullable="false" />
+          <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Seccion">
+          <Key>
+            <PropertyRef Name="Titulo" />
+          </Key>
+          <Property Name="Titulo" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Seleccion_Unica">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="IsaLikeDislike" Type="bit" />
         </EntityType>
         <EntityType Name="TelefonoPersona">
           <Key>
@@ -160,6 +287,37 @@
           </Key>
           <Property Name="CedulaPersona" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="NumeroTelefono" Type="varchar" MaxLength="11" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Texto_Libre">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tiene_Grupo_Formulario">
+          <Key>
+            <PropertyRef Name="SiglaCurso" />
+            <PropertyRef Name="Numero" />
+            <PropertyRef Name="Anno" />
+            <PropertyRef Name="Ciclo" />
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="FechaInicio" />
+            <PropertyRef Name="FechaFinal" />
+          </Key>
+          <Property Name="SiglaCurso" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="Numero" Type="tinyint" Nullable="false" />
+          <Property Name="Anno" Type="smallint" Nullable="false" />
+          <Property Name="Ciclo" Type="tinyint" Nullable="false" />
+          <Property Name="Codigo" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="FechaInicio" Type="datetime" Nullable="false" />
+          <Property Name="FechaFinal" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Unidad_Academica">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="75" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -183,6 +341,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Car_Uni">
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="1" />
+          <End Role="Carrera" Type="Self.Carrera" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Carrera">
+              <PropertyRef Name="CodigoUnidadAcademica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Con_For">
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
+          <End Role="Conformado_Item_Sec_Form" Type="Self.Conformado_Item_Sec_Form" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="CodigoFormulario" />
+            </Principal>
+            <Dependent Role="Conformado_Item_Sec_Form">
+              <PropertyRef Name="CodigoFormulario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Con_Ite">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Conformado_Item_Sec_Form" Type="Self.Conformado_Item_Sec_Form" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Conformado_Item_Sec_Form">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Con_Sec">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1" />
+          <End Role="Conformado_Item_Sec_Form" Type="Self.Conformado_Item_Sec_Form" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Titulo" />
+            </Principal>
+            <Dependent Role="Conformado_Item_Sec_Form">
+              <PropertyRef Name="TituloSeccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cur_Uni">
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="1" />
+          <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="CodigoUnidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Empadronado_Estudiante">
           <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="1" />
           <End Role="Empadronado" Type="Self.Empadronado" Multiplicity="*" />
@@ -195,6 +413,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Enf_Car">
+          <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrera">
+              <PropertyRef Name="Sigla" />
+            </Principal>
+            <Dependent Role="Enfasis">
+              <PropertyRef Name="SiglaCarrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Esc_Fac">
+          <End Role="Facultad" Type="Self.Facultad" Multiplicity="1" />
+          <End Role="Escuela" Type="Self.Escuela" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facultad">
+              <PropertyRef Name="CodigoUnidadAcademica" />
+            </Principal>
+            <Dependent Role="Escuela">
+              <PropertyRef Name="CodigoFacultad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Esc_Uni">
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="1" />
+          <End Role="Escuela" Type="Self.Escuela" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Escuela">
+              <PropertyRef Name="CodigoUnidadAcademica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Est_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="0..1" />
@@ -204,6 +458,48 @@
             </Principal>
             <Dependent Role="Estudiante">
               <PropertyRef Name="CedulaEstudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Fac_Uni">
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="1" />
+          <End Role="Facultad" Type="Self.Facultad" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Facultad">
+              <PropertyRef Name="CodigoUnidadAcademica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ForRes_For">
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
+          <End Role="Formulario_Respuesta" Type="Self.Formulario_Respuesta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="CodigoFormulario" />
+            </Principal>
+            <Dependent Role="Formulario_Respuesta">
+              <PropertyRef Name="CodigoFormulario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ForRes_Gru">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="Formulario_Respuesta" Type="Self.Formulario_Respuesta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="SiglaCurso" />
+              <PropertyRef Name="Numero" />
+              <PropertyRef Name="AnnoGrupo" />
+              <PropertyRef Name="SemestreGrupo" />
+            </Principal>
+            <Dependent Role="Formulario_Respuesta">
+              <PropertyRef Name="SiglaGrupo" />
+              <PropertyRef Name="NumeroGrupo" />
+              <PropertyRef Name="AnnoGrupo" />
+              <PropertyRef Name="SemestreGrupo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -228,6 +524,32 @@
             </Principal>
             <Dependent Role="Formulario_Respuesta">
               <PropertyRef Name="CedulaProfesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gru_Cic">
+          <End Role="Ciclo_Lectivo" Type="Self.Ciclo_Lectivo" Multiplicity="1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciclo_Lectivo">
+              <PropertyRef Name="Anno" />
+              <PropertyRef Name="Semestre" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="AnnoGrupo" />
+              <PropertyRef Name="SemestreGrupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gru_Cur">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="Sigla" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="SiglaCurso" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -300,7 +622,7 @@
               <PropertyRef Name="CodigoFormulario" />
               <PropertyRef Name="CedulaPersona" />
               <PropertyRef Name="CedulaProfesor" />
-              <PropertyRef Name="AñoGrupo" />
+              <PropertyRef Name="AnnoGrupo" />
               <PropertyRef Name="SemestreGrupo" />
               <PropertyRef Name="NumeroGrupo" />
               <PropertyRef Name="SiglaGrupo" />
@@ -310,10 +632,72 @@
               <PropertyRef Name="CodigoFormularioResp" />
               <PropertyRef Name="CedulaPersona" />
               <PropertyRef Name="CedulaProfesor" />
-              <PropertyRef Name="AñoGrupoResp" />
+              <PropertyRef Name="AnnoGrupoResp" />
               <PropertyRef Name="SemestreGrupoResp" />
               <PropertyRef Name="NumeroGrupoResp" />
               <PropertyRef Name="SiglaGrupoResp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Res_Ite">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Responde" Type="Self.Responde" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Responde">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Res_Sec">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1" />
+          <End Role="Responde" Type="Self.Responde" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Titulo" />
+            </Principal>
+            <Dependent Role="Responde">
+              <PropertyRef Name="TituloSeccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Se_Encuentra_Uni_Enf_Endasis">
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+          <End Role="Se_Encuentra_Unidad_Enfasis" Type="Self.Se_Encuentra_Unidad_Enfasis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enfasis">
+              <PropertyRef Name="Numero" />
+              <PropertyRef Name="SiglaCarrera" />
+            </Principal>
+            <Dependent Role="Se_Encuentra_Unidad_Enfasis">
+              <PropertyRef Name="NumeroEnfasis" />
+              <PropertyRef Name="SiglaCarrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Se_Encuentra_Uni_Enf_UniAcad">
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="1" />
+          <End Role="Se_Encuentra_Unidad_Enfasis" Type="Self.Se_Encuentra_Unidad_Enfasis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Se_Encuentra_Unidad_Enfasis">
+              <PropertyRef Name="CodigoUnidadAcademica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sel_Uni_Ite">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Seleccion_Unica" Type="Self.Seleccion_Unica" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Seleccion_Unica">
+              <PropertyRef Name="ItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -329,6 +713,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tex_Ite">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Texto_Libre" Type="Self.Texto_Libre" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Texto_Libre">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tie_Fec">
+          <End Role="Fecha_Corte" Type="Self.Fecha_Corte" Multiplicity="1" />
+          <End Role="Tiene_Grupo_Formulario" Type="Self.Tiene_Grupo_Formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fecha_Corte">
+              <PropertyRef Name="FechaInicio" />
+              <PropertyRef Name="FechaFinal" />
+            </Principal>
+            <Dependent Role="Tiene_Grupo_Formulario">
+              <PropertyRef Name="FechaInicio" />
+              <PropertyRef Name="FechaFinal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tie_For">
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
+          <End Role="Tiene_Grupo_Formulario" Type="Self.Tiene_Grupo_Formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="CodigoFormulario" />
+            </Principal>
+            <Dependent Role="Tiene_Grupo_Formulario">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tie_Gru">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="Tiene_Grupo_Formulario" Type="Self.Tiene_Grupo_Formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="SiglaCurso" />
+              <PropertyRef Name="Numero" />
+              <PropertyRef Name="AnnoGrupo" />
+              <PropertyRef Name="SemestreGrupo" />
+            </Principal>
+            <Dependent Role="Tiene_Grupo_Formulario">
+              <PropertyRef Name="SiglaCurso" />
+              <PropertyRef Name="Numero" />
+              <PropertyRef Name="Anno" />
+              <PropertyRef Name="Ciclo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Usu_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -341,10 +781,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DatosEstudiante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cedula" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="MostrarEstudiantes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="NombrePersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cedula" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_AgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
+        </Function>
+        <Function Name="SP_CambiarContrasenna" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Contrasenna_Nueva" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SP_ExistenciaCorreo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
@@ -358,30 +809,92 @@
         <EntityContainer Name="Opiniometro_DatosModelStoreContainer">
           <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ciclo_Lectivo" EntityType="Self.Ciclo_Lectivo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Conformado_Item_Sec_Form" EntityType="Self.Conformado_Item_Sec_Form" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empadronado" EntityType="Self.Empadronado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Enfasis" EntityType="Self.Enfasis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Escuela" EntityType="Self.Escuela" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estudiante" EntityType="Self.Estudiante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Facultad" EntityType="Self.Facultad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fecha_Corte" EntityType="Self.Fecha_Corte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Formulario" EntityType="Self.Formulario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Formulario_Respuesta" EntityType="Self.Formulario_Respuesta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grupo" EntityType="Self.Grupo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Imparte" EntityType="Self.Imparte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Matricula" EntityType="Self.Matricula" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Perfil" EntityType="Self.Perfil" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responde" EntityType="Self.Responde" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Se_Encuentra_Unidad_Enfasis" EntityType="Self.Se_Encuentra_Unidad_Enfasis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seleccion_Unica" EntityType="Self.Seleccion_Unica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TelefonoPersona" EntityType="Self.TelefonoPersona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Texto_Libre" EntityType="Self.Texto_Libre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tiene_Grupo_Formulario" EntityType="Self.Tiene_Grupo_Formulario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unidad_Academica" EntityType="Self.Unidad_Academica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Adm_Per" Association="Self.FK_Adm_Per">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Administrativo" EntitySet="Administrativo" />
           </AssociationSet>
+          <AssociationSet Name="FK_Car_Uni" Association="Self.FK_Car_Uni">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Carrera" EntitySet="Carrera" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Con_For" Association="Self.FK_Con_For">
+            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Con_Ite" Association="Self.FK_Con_Ite">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Con_Sec" Association="Self.FK_Con_Sec">
+            <End Role="Seccion" EntitySet="Seccion" />
+            <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cur_Uni" Association="Self.FK_Cur_Uni">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
           <AssociationSet Name="FK_Empadronado_Estudiante" Association="Self.FK_Empadronado_Estudiante">
             <End Role="Estudiante" EntitySet="Estudiante" />
             <End Role="Empadronado" EntitySet="Empadronado" />
           </AssociationSet>
+          <AssociationSet Name="FK_Enf_Car" Association="Self.FK_Enf_Car">
+            <End Role="Carrera" EntitySet="Carrera" />
+            <End Role="Enfasis" EntitySet="Enfasis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Esc_Fac" Association="Self.FK_Esc_Fac">
+            <End Role="Facultad" EntitySet="Facultad" />
+            <End Role="Escuela" EntitySet="Escuela" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Esc_Uni" Association="Self.FK_Esc_Uni">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Escuela" EntitySet="Escuela" />
+          </AssociationSet>
           <AssociationSet Name="FK_Est_Per" Association="Self.FK_Est_Per">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Estudiante" EntitySet="Estudiante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fac_Uni" Association="Self.FK_Fac_Uni">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Facultad" EntitySet="Facultad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ForRes_For" Association="Self.FK_ForRes_For">
+            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ForRes_Gru" Association="Self.FK_ForRes_Gru">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
           </AssociationSet>
           <AssociationSet Name="FK_ForRes_Per" Association="Self.FK_ForRes_Per">
             <End Role="Persona" EntitySet="Persona" />
@@ -390,6 +903,14 @@
           <AssociationSet Name="FK_ForRes_Pro" Association="Self.FK_ForRes_Pro">
             <End Role="Profesor" EntitySet="Profesor" />
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gru_Cic" Association="Self.FK_Gru_Cic">
+            <End Role="Ciclo_Lectivo" EntitySet="Ciclo_Lectivo" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gru_Cur" Association="Self.FK_Gru_Cur">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Grupo" EntitySet="Grupo" />
           </AssociationSet>
           <AssociationSet Name="FK_Imparte_Profesor" Association="Self.FK_Imparte_Profesor">
             <End Role="Profesor" EntitySet="Profesor" />
@@ -415,9 +936,45 @@
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
             <End Role="Responde" EntitySet="Responde" />
           </AssociationSet>
+          <AssociationSet Name="FK_Res_Ite" Association="Self.FK_Res_Ite">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Responde" EntitySet="Responde" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Res_Sec" Association="Self.FK_Res_Sec">
+            <End Role="Seccion" EntitySet="Seccion" />
+            <End Role="Responde" EntitySet="Responde" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Se_Encuentra_Uni_Enf_Endasis" Association="Self.FK_Se_Encuentra_Uni_Enf_Endasis">
+            <End Role="Enfasis" EntitySet="Enfasis" />
+            <End Role="Se_Encuentra_Unidad_Enfasis" EntitySet="Se_Encuentra_Unidad_Enfasis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Se_Encuentra_Uni_Enf_UniAcad" Association="Self.FK_Se_Encuentra_Uni_Enf_UniAcad">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Se_Encuentra_Unidad_Enfasis" EntitySet="Se_Encuentra_Unidad_Enfasis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sel_Uni_Ite" Association="Self.FK_Sel_Uni_Ite">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Seleccion_Unica" EntitySet="Seleccion_Unica" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tel_Per" Association="Self.FK_Tel_Per">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="TelefonoPersona" EntitySet="TelefonoPersona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tex_Ite" Association="Self.FK_Tex_Ite">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Texto_Libre" EntitySet="Texto_Libre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tie_Fec" Association="Self.FK_Tie_Fec">
+            <End Role="Fecha_Corte" EntitySet="Fecha_Corte" />
+            <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tie_For" Association="Self.FK_Tie_For">
+            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tie_Gru" Association="Self.FK_Tie_Gru">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
           </AssociationSet>
           <AssociationSet Name="FK_Usu_Per" Association="Self.FK_Usu_Per">
             <End Role="Persona" EntitySet="Persona" />
@@ -443,6 +1000,50 @@
           <Property Name="Tipo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Adm_Per" FromRole="Administrativo" ToRole="Persona" />
         </EntityType>
+        <EntityType Name="Carrera">
+          <Key>
+            <PropertyRef Name="Sigla" />
+          </Key>
+          <Property Name="Sigla" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="125" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CodigoUnidadAcademica" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Unidad_Academica" Relationship="Self.FK_Car_Uni" FromRole="Carrera" ToRole="Unidad_Academica" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK_Enf_Car" FromRole="Carrera" ToRole="Enfasis" />
+        </EntityType>
+        <EntityType Name="Ciclo_Lectivo">
+          <Key>
+            <PropertyRef Name="Anno" />
+            <PropertyRef Name="Semestre" />
+          </Key>
+          <Property Name="Anno" Type="Int16" Nullable="false" />
+          <Property Name="Semestre" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_Gru_Cic" FromRole="Ciclo_Lectivo" ToRole="Grupo" />
+        </EntityType>
+        <EntityType Name="Conformado_Item_Sec_Form">
+          <Key>
+            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="CodigoFormulario" />
+            <PropertyRef Name="TituloSeccion" />
+          </Key>
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="CodigoFormulario" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TituloSeccion" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NombreFormulario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Formulario" Relationship="Self.FK_Con_For" FromRole="Conformado_Item_Sec_Form" ToRole="Formulario" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Con_Ite" FromRole="Conformado_Item_Sec_Form" ToRole="Item" />
+          <NavigationProperty Name="Seccion" Relationship="Self.FK_Con_Sec" FromRole="Conformado_Item_Sec_Form" ToRole="Seccion" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="Sigla" />
+          </Key>
+          <Property Name="Sigla" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tipo" Type="Byte" Nullable="false" />
+          <Property Name="CodigoUnidad" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Unidad_Academica" Relationship="Self.FK_Cur_Uni" FromRole="Curso" ToRole="Unidad_Academica" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_Gru_Cur" FromRole="Curso" ToRole="Grupo" />
+        </EntityType>
         <EntityType Name="Empadronado">
           <Key>
             <PropertyRef Name="CedulaEstudiante" />
@@ -454,15 +1055,52 @@
           <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Estudiante" Relationship="Self.FK_Empadronado_Estudiante" FromRole="Empadronado" ToRole="Estudiante" />
         </EntityType>
+        <EntityType Name="Enfasis">
+          <Key>
+            <PropertyRef Name="Numero" />
+            <PropertyRef Name="SiglaCarrera" />
+          </Key>
+          <Property Name="Numero" Type="Byte" Nullable="false" />
+          <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Carrera" Relationship="Self.FK_Enf_Car" FromRole="Enfasis" ToRole="Carrera" />
+          <NavigationProperty Name="Unidad_Academica" Relationship="Self.Se_Encuentra_Unidad_Enfasis" FromRole="Enfasis" ToRole="Unidad_Academica" />
+        </EntityType>
         <EntityType Name="Estudiante">
           <Key>
             <PropertyRef Name="CedulaEstudiante" />
           </Key>
           <Property Name="CedulaEstudiante" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Carne" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Empadronadoes" Relationship="Self.FK_Empadronado_Estudiante" FromRole="Estudiante" ToRole="Empadronado" />
+          <NavigationProperty Name="Empadronado" Relationship="Self.FK_Empadronado_Estudiante" FromRole="Estudiante" ToRole="Empadronado" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Est_Per" FromRole="Estudiante" ToRole="Persona" />
-          <NavigationProperty Name="Matriculas" Relationship="Self.FK_Matricula_Profesor" FromRole="Estudiante" ToRole="Matricula" />
+          <NavigationProperty Name="Matricula" Relationship="Self.FK_Matricula_Profesor" FromRole="Estudiante" ToRole="Matricula" />
+        </EntityType>
+        <EntityType Name="Facultad">
+          <Key>
+            <PropertyRef Name="CodigoUnidadAcademica" />
+          </Key>
+          <Property Name="CodigoUnidadAcademica" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Unidad_Academica" Relationship="Self.FK_Fac_Uni" FromRole="Facultad" ToRole="Unidad_Academica" />
+          <NavigationProperty Name="Unidad_Academica1" Relationship="Self.Escuela" FromRole="Facultad" ToRole="Unidad_Academica" />
+        </EntityType>
+        <EntityType Name="Fecha_Corte">
+          <Key>
+            <PropertyRef Name="FechaInicio" />
+            <PropertyRef Name="FechaFinal" />
+          </Key>
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Tiene_Grupo_Formulario" Relationship="Self.FK_Tie_Fec" FromRole="Fecha_Corte" ToRole="Tiene_Grupo_Formulario" />
+        </EntityType>
+        <EntityType Name="Formulario">
+          <Key>
+            <PropertyRef Name="CodigoFormulario" />
+          </Key>
+          <Property Name="CodigoFormulario" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_For" FromRole="Formulario" ToRole="Conformado_Item_Sec_Form" />
+          <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_For" FromRole="Formulario" ToRole="Formulario_Respuesta" />
+          <NavigationProperty Name="Tiene_Grupo_Formulario" Relationship="Self.FK_Tie_For" FromRole="Formulario" ToRole="Tiene_Grupo_Formulario" />
         </EntityType>
         <EntityType Name="Formulario_Respuesta">
           <Key>
@@ -470,7 +1108,7 @@
             <PropertyRef Name="CodigoFormulario" />
             <PropertyRef Name="CedulaPersona" />
             <PropertyRef Name="CedulaProfesor" />
-            <PropertyRef Name="AñoGrupo" />
+            <PropertyRef Name="AnnoGrupo" />
             <PropertyRef Name="SemestreGrupo" />
             <PropertyRef Name="NumeroGrupo" />
             <PropertyRef Name="SiglaGrupo" />
@@ -479,14 +1117,32 @@
           <Property Name="CodigoFormulario" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="CedulaPersona" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="CedulaProfesor" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="AñoGrupo" Type="Int16" Nullable="false" />
+          <Property Name="AnnoGrupo" Type="Int16" Nullable="false" />
           <Property Name="SemestreGrupo" Type="Byte" Nullable="false" />
           <Property Name="NumeroGrupo" Type="Byte" Nullable="false" />
           <Property Name="SiglaGrupo" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Completado" Type="Boolean" />
+          <NavigationProperty Name="Formulario" Relationship="Self.FK_ForRes_For" FromRole="Formulario_Respuesta" ToRole="Formulario" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_ForRes_Gru" FromRole="Formulario_Respuesta" ToRole="Grupo" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_ForRes_Per" FromRole="Formulario_Respuesta" ToRole="Persona" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK_ForRes_Pro" FromRole="Formulario_Respuesta" ToRole="Profesor" />
-          <NavigationProperty Name="Respondes" Relationship="Self.FK_Res_ForRes" FromRole="Formulario_Respuesta" ToRole="Responde" />
+          <NavigationProperty Name="Responde" Relationship="Self.FK_Res_ForRes" FromRole="Formulario_Respuesta" ToRole="Responde" />
+        </EntityType>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="SiglaCurso" />
+            <PropertyRef Name="Numero" />
+            <PropertyRef Name="AnnoGrupo" />
+            <PropertyRef Name="SemestreGrupo" />
+          </Key>
+          <Property Name="SiglaCurso" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Numero" Type="Byte" Nullable="false" />
+          <Property Name="AnnoGrupo" Type="Int16" Nullable="false" />
+          <Property Name="SemestreGrupo" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Ciclo_Lectivo" Relationship="Self.FK_Gru_Cic" FromRole="Grupo" ToRole="Ciclo_Lectivo" />
+          <NavigationProperty Name="Curso" Relationship="Self.FK_Gru_Cur" FromRole="Grupo" ToRole="Curso" />
+          <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Gru" FromRole="Grupo" ToRole="Formulario_Respuesta" />
+          <NavigationProperty Name="Tiene_Grupo_Formulario" Relationship="Self.FK_Tie_Gru" FromRole="Grupo" ToRole="Tiene_Grupo_Formulario" />
         </EntityType>
         <EntityType Name="Imparte">
           <Key>
@@ -502,6 +1158,20 @@
           <Property Name="Anno" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Semestre" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK_Imparte_Profesor" FromRole="Imparte" ToRole="Profesor" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TextoPregunta" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="TieneObservacion" Type="Boolean" />
+          <Property Name="TipoPregunta" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_Ite" FromRole="Item" ToRole="Conformado_Item_Sec_Form" />
+          <NavigationProperty Name="Responde" Relationship="Self.FK_Res_Ite" FromRole="Item" ToRole="Responde" />
+          <NavigationProperty Name="Seleccion_Unica" Relationship="Self.FK_Sel_Uni_Ite" FromRole="Item" ToRole="Seleccion_Unica" />
+          <NavigationProperty Name="Texto_Libre" Relationship="Self.FK_Tex_Ite" FromRole="Item" ToRole="Texto_Libre" />
         </EntityType>
         <EntityType Name="Matricula">
           <Key>
@@ -547,8 +1217,8 @@
           <NavigationProperty Name="Estudiante" Relationship="Self.FK_Est_Per" FromRole="Persona" ToRole="Estudiante" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Per" FromRole="Persona" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK_Pro_Per" FromRole="Persona" ToRole="Profesor" />
-          <NavigationProperty Name="TelefonoPersonas" Relationship="Self.FK_Tel_Per" FromRole="Persona" ToRole="TelefonoPersona" />
-          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usu_Per" FromRole="Persona" ToRole="Usuario" />
+          <NavigationProperty Name="TelefonoPersona" Relationship="Self.FK_Tel_Per" FromRole="Persona" ToRole="TelefonoPersona" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usu_Per" FromRole="Persona" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Posee_Enfasis_Perfil_Permiso">
           <Key>
@@ -564,13 +1234,22 @@
           <NavigationProperty Name="Perfil" Relationship="Self.FK_PoseeEnfasisPerfil_Perfil" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Perfil" />
           <NavigationProperty Name="Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Permiso" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Permiso" />
         </EntityType>
+        <EntityType Name="Preguntas">
+          <Key>
+            <PropertyRef Name="Numero" />
+          </Key>
+          <Property Name="Numero" Type="Int32" Nullable="false" />
+          <Property Name="Planteamiento" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TipoPregunta" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+        </EntityType>
         <EntityType Name="Profesor">
           <Key>
             <PropertyRef Name="CedulaProfesor" />
           </Key>
           <Property Name="CedulaProfesor" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Pro" FromRole="Profesor" ToRole="Formulario_Respuesta" />
-          <NavigationProperty Name="Impartes" Relationship="Self.FK_Imparte_Profesor" FromRole="Profesor" ToRole="Imparte" />
+          <NavigationProperty Name="Imparte" Relationship="Self.FK_Imparte_Profesor" FromRole="Profesor" ToRole="Imparte" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Pro_Per" FromRole="Profesor" ToRole="Persona" />
         </EntityType>
         <EntityType Name="Responde">
@@ -581,7 +1260,7 @@
             <PropertyRef Name="CodigoFormularioResp" />
             <PropertyRef Name="CedulaPersona" />
             <PropertyRef Name="CedulaProfesor" />
-            <PropertyRef Name="AñoGrupoResp" />
+            <PropertyRef Name="AnnoGrupoResp" />
             <PropertyRef Name="SemestreGrupoResp" />
             <PropertyRef Name="NumeroGrupoResp" />
             <PropertyRef Name="SiglaGrupoResp" />
@@ -592,7 +1271,7 @@
           <Property Name="CodigoFormularioResp" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="CedulaPersona" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="CedulaProfesor" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="AñoGrupoResp" Type="Int16" Nullable="false" />
+          <Property Name="AnnoGrupoResp" Type="Int16" Nullable="false" />
           <Property Name="SemestreGrupoResp" Type="Byte" Nullable="false" />
           <Property Name="NumeroGrupoResp" Type="Byte" Nullable="false" />
           <Property Name="SiglaGrupoResp" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
@@ -600,6 +1279,25 @@
           <Property Name="Respuesta" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="RespuestaProfesor" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_Res_ForRes" FromRole="Responde" ToRole="Formulario_Respuesta" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Res_Ite" FromRole="Responde" ToRole="Item" />
+          <NavigationProperty Name="Seccion" Relationship="Self.FK_Res_Sec" FromRole="Responde" ToRole="Seccion" />
+        </EntityType>
+        <EntityType Name="Seccion">
+          <Key>
+            <PropertyRef Name="Titulo" />
+          </Key>
+          <Property Name="Titulo" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_Sec" FromRole="Seccion" ToRole="Conformado_Item_Sec_Form" />
+          <NavigationProperty Name="Responde" Relationship="Self.FK_Res_Sec" FromRole="Seccion" ToRole="Responde" />
+        </EntityType>
+        <EntityType Name="Seleccion_Unica">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="IsaLikeDislike" Type="Boolean" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Sel_Uni_Ite" FromRole="Seleccion_Unica" ToRole="Item" />
         </EntityType>
         <EntityType Name="TelefonoPersona">
           <Key>
@@ -609,6 +1307,46 @@
           <Property Name="CedulaPersona" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="NumeroTelefono" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Tel_Per" FromRole="TelefonoPersona" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Texto_Libre">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Tex_Ite" FromRole="Texto_Libre" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="Tiene_Grupo_Formulario">
+          <Key>
+            <PropertyRef Name="SiglaCurso" />
+            <PropertyRef Name="Numero" />
+            <PropertyRef Name="Anno" />
+            <PropertyRef Name="Ciclo" />
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="FechaInicio" />
+            <PropertyRef Name="FechaFinal" />
+          </Key>
+          <Property Name="SiglaCurso" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Numero" Type="Byte" Nullable="false" />
+          <Property Name="Anno" Type="Int16" Nullable="false" />
+          <Property Name="Ciclo" Type="Byte" Nullable="false" />
+          <Property Name="Codigo" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Fecha_Corte" Relationship="Self.FK_Tie_Fec" FromRole="Tiene_Grupo_Formulario" ToRole="Fecha_Corte" />
+          <NavigationProperty Name="Formulario" Relationship="Self.FK_Tie_For" FromRole="Tiene_Grupo_Formulario" ToRole="Formulario" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_Tie_Gru" FromRole="Tiene_Grupo_Formulario" ToRole="Grupo" />
+        </EntityType>
+        <EntityType Name="Unidad_Academica">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Carrera" Relationship="Self.FK_Car_Uni" FromRole="Unidad_Academica" ToRole="Carrera" />
+          <NavigationProperty Name="Curso" Relationship="Self.FK_Cur_Uni" FromRole="Unidad_Academica" ToRole="Curso" />
+          <NavigationProperty Name="Facultad" Relationship="Self.FK_Fac_Uni" FromRole="Unidad_Academica" ToRole="Facultad" />
+          <NavigationProperty Name="Facultad1" Relationship="Self.Escuela" FromRole="Unidad_Academica" ToRole="Facultad" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.Se_Encuentra_Unidad_Enfasis" FromRole="Unidad_Academica" ToRole="Enfasis" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -630,6 +1368,104 @@
             </Principal>
             <Dependent Role="Administrativo">
               <PropertyRef Name="CedulaAdministrativo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Car_Uni">
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="1" />
+          <End Role="Carrera" Type="Self.Carrera" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Carrera">
+              <PropertyRef Name="CodigoUnidadAcademica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enf_Car">
+          <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrera">
+              <PropertyRef Name="Sigla" />
+            </Principal>
+            <Dependent Role="Enfasis">
+              <PropertyRef Name="SiglaCarrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gru_Cic">
+          <End Role="Ciclo_Lectivo" Type="Self.Ciclo_Lectivo" Multiplicity="1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciclo_Lectivo">
+              <PropertyRef Name="Anno" />
+              <PropertyRef Name="Semestre" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="AnnoGrupo" />
+              <PropertyRef Name="SemestreGrupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Con_For">
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
+          <End Role="Conformado_Item_Sec_Form" Type="Self.Conformado_Item_Sec_Form" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="CodigoFormulario" />
+            </Principal>
+            <Dependent Role="Conformado_Item_Sec_Form">
+              <PropertyRef Name="CodigoFormulario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Con_Ite">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Conformado_Item_Sec_Form" Type="Self.Conformado_Item_Sec_Form" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Conformado_Item_Sec_Form">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Con_Sec">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1" />
+          <End Role="Conformado_Item_Sec_Form" Type="Self.Conformado_Item_Sec_Form" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Titulo" />
+            </Principal>
+            <Dependent Role="Conformado_Item_Sec_Form">
+              <PropertyRef Name="TituloSeccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cur_Uni">
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="1" />
+          <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="CodigoUnidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gru_Cur">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="Sigla" />
+            </Principal>
+            <Dependent Role="Grupo">
+              <PropertyRef Name="SiglaCurso" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -669,6 +1505,74 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Fac_Uni">
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="1" />
+          <End Role="Facultad" Type="Self.Facultad" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Facultad">
+              <PropertyRef Name="CodigoUnidadAcademica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tie_Fec">
+          <End Role="Fecha_Corte" Type="Self.Fecha_Corte" Multiplicity="1" />
+          <End Role="Tiene_Grupo_Formulario" Type="Self.Tiene_Grupo_Formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fecha_Corte">
+              <PropertyRef Name="FechaInicio" />
+              <PropertyRef Name="FechaFinal" />
+            </Principal>
+            <Dependent Role="Tiene_Grupo_Formulario">
+              <PropertyRef Name="FechaInicio" />
+              <PropertyRef Name="FechaFinal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ForRes_For">
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
+          <End Role="Formulario_Respuesta" Type="Self.Formulario_Respuesta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="CodigoFormulario" />
+            </Principal>
+            <Dependent Role="Formulario_Respuesta">
+              <PropertyRef Name="CodigoFormulario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tie_For">
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
+          <End Role="Tiene_Grupo_Formulario" Type="Self.Tiene_Grupo_Formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="CodigoFormulario" />
+            </Principal>
+            <Dependent Role="Tiene_Grupo_Formulario">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ForRes_Gru">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="Formulario_Respuesta" Type="Self.Formulario_Respuesta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="SiglaCurso" />
+              <PropertyRef Name="Numero" />
+              <PropertyRef Name="AnnoGrupo" />
+              <PropertyRef Name="SemestreGrupo" />
+            </Principal>
+            <Dependent Role="Formulario_Respuesta">
+              <PropertyRef Name="SiglaGrupo" />
+              <PropertyRef Name="NumeroGrupo" />
+              <PropertyRef Name="AnnoGrupo" />
+              <PropertyRef Name="SemestreGrupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ForRes_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Formulario_Respuesta" Type="Self.Formulario_Respuesta" Multiplicity="*" />
@@ -702,7 +1606,7 @@
               <PropertyRef Name="CodigoFormulario" />
               <PropertyRef Name="CedulaPersona" />
               <PropertyRef Name="CedulaProfesor" />
-              <PropertyRef Name="AñoGrupo" />
+              <PropertyRef Name="AnnoGrupo" />
               <PropertyRef Name="SemestreGrupo" />
               <PropertyRef Name="NumeroGrupo" />
               <PropertyRef Name="SiglaGrupo" />
@@ -712,10 +1616,28 @@
               <PropertyRef Name="CodigoFormularioResp" />
               <PropertyRef Name="CedulaPersona" />
               <PropertyRef Name="CedulaProfesor" />
-              <PropertyRef Name="AñoGrupoResp" />
+              <PropertyRef Name="AnnoGrupoResp" />
               <PropertyRef Name="SemestreGrupoResp" />
               <PropertyRef Name="NumeroGrupoResp" />
               <PropertyRef Name="SiglaGrupoResp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tie_Gru">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="Tiene_Grupo_Formulario" Type="Self.Tiene_Grupo_Formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="SiglaCurso" />
+              <PropertyRef Name="Numero" />
+              <PropertyRef Name="AnnoGrupo" />
+              <PropertyRef Name="SemestreGrupo" />
+            </Principal>
+            <Dependent Role="Tiene_Grupo_Formulario">
+              <PropertyRef Name="SiglaCurso" />
+              <PropertyRef Name="Numero" />
+              <PropertyRef Name="Anno" />
+              <PropertyRef Name="Ciclo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -728,6 +1650,42 @@
             </Principal>
             <Dependent Role="Imparte">
               <PropertyRef Name="CedulaProfesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Res_Ite">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Responde" Type="Self.Responde" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Responde">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sel_Uni_Ite">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Seleccion_Unica" Type="Self.Seleccion_Unica" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Seleccion_Unica">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tex_Ite">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Texto_Libre" Type="Self.Texto_Libre" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Texto_Libre">
+              <PropertyRef Name="ItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -791,78 +1749,205 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Res_Sec">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1" />
+          <End Role="Responde" Type="Self.Responde" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Titulo" />
+            </Principal>
+            <Dependent Role="Responde">
+              <PropertyRef Name="TituloSeccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Escuela">
+          <End Role="Facultad" Type="Self.Facultad" Multiplicity="0..1" />
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
+        </Association>
+        <Association Name="Se_Encuentra_Unidad_Enfasis">
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
+        </Association>
         <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
-          <EntitySet Name="Administrativoes" EntityType="Self.Administrativo" />
-          <EntitySet Name="Empadronadoes" EntityType="Self.Empadronado" />
-          <EntitySet Name="Estudiantes" EntityType="Self.Estudiante" />
+          <EntitySet Name="Administrativo" EntityType="Self.Administrativo" />
+          <EntitySet Name="Carrera" EntityType="Self.Carrera" />
+          <EntitySet Name="Ciclo_Lectivo" EntityType="Self.Ciclo_Lectivo" />
+          <EntitySet Name="Conformado_Item_Sec_Form" EntityType="Self.Conformado_Item_Sec_Form" />
+          <EntitySet Name="Curso" EntityType="Self.Curso" />
+          <EntitySet Name="Empadronado" EntityType="Self.Empadronado" />
+          <EntitySet Name="Enfasis" EntityType="Self.Enfasis" />
+          <EntitySet Name="Estudiante" EntityType="Self.Estudiante" />
+          <EntitySet Name="Facultad" EntityType="Self.Facultad" />
+          <EntitySet Name="Fecha_Corte" EntityType="Self.Fecha_Corte" />
+          <EntitySet Name="Formulario" EntityType="Self.Formulario" />
           <EntitySet Name="Formulario_Respuesta" EntityType="Self.Formulario_Respuesta" />
-          <EntitySet Name="Impartes" EntityType="Self.Imparte" />
-          <EntitySet Name="Matriculas" EntityType="Self.Matricula" />
-          <EntitySet Name="Perfils" EntityType="Self.Perfil" />
-          <EntitySet Name="Permisoes" EntityType="Self.Permiso" />
-          <EntitySet Name="Personas" EntityType="Self.Persona" />
+          <EntitySet Name="Grupo" EntityType="Self.Grupo" />
+          <EntitySet Name="Imparte" EntityType="Self.Imparte" />
+          <EntitySet Name="Item" EntityType="Self.Item" />
+          <EntitySet Name="Matricula" EntityType="Self.Matricula" />
+          <EntitySet Name="Perfil" EntityType="Self.Perfil" />
+          <EntitySet Name="Permiso" EntityType="Self.Permiso" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" />
-          <EntitySet Name="Profesors" EntityType="Self.Profesor" />
-          <EntitySet Name="Respondes" EntityType="Self.Responde" />
-          <EntitySet Name="TelefonoPersonas" EntityType="Self.TelefonoPersona" />
-          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" />
+          <EntitySet Name="Profesor" EntityType="Self.Profesor" />
+          <EntitySet Name="Responde" EntityType="Self.Responde" />
+          <EntitySet Name="Seccion" EntityType="Self.Seccion" />
+          <EntitySet Name="Seleccion_Unica" EntityType="Self.Seleccion_Unica" />
+          <EntitySet Name="TelefonoPersona" EntityType="Self.TelefonoPersona" />
+          <EntitySet Name="Texto_Libre" EntityType="Self.Texto_Libre" />
+          <EntitySet Name="Tiene_Grupo_Formulario" EntityType="Self.Tiene_Grupo_Formulario" />
+          <EntitySet Name="Unidad_Academica" EntityType="Self.Unidad_Academica" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
           <AssociationSet Name="FK_Adm_Per" Association="Self.FK_Adm_Per">
-            <End Role="Persona" EntitySet="Personas" />
-            <End Role="Administrativo" EntitySet="Administrativoes" />
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Administrativo" EntitySet="Administrativo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Car_Uni" Association="Self.FK_Car_Uni">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Carrera" EntitySet="Carrera" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enf_Car" Association="Self.FK_Enf_Car">
+            <End Role="Carrera" EntitySet="Carrera" />
+            <End Role="Enfasis" EntitySet="Enfasis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gru_Cic" Association="Self.FK_Gru_Cic">
+            <End Role="Ciclo_Lectivo" EntitySet="Ciclo_Lectivo" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Con_For" Association="Self.FK_Con_For">
+            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Con_Ite" Association="Self.FK_Con_Ite">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Con_Sec" Association="Self.FK_Con_Sec">
+            <End Role="Seccion" EntitySet="Seccion" />
+            <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cur_Uni" Association="Self.FK_Cur_Uni">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gru_Cur" Association="Self.FK_Gru_Cur">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Grupo" EntitySet="Grupo" />
           </AssociationSet>
           <AssociationSet Name="FK_Empadronado_Estudiante" Association="Self.FK_Empadronado_Estudiante">
-            <End Role="Estudiante" EntitySet="Estudiantes" />
-            <End Role="Empadronado" EntitySet="Empadronadoes" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
+            <End Role="Empadronado" EntitySet="Empadronado" />
           </AssociationSet>
           <AssociationSet Name="FK_Est_Per" Association="Self.FK_Est_Per">
-            <End Role="Persona" EntitySet="Personas" />
-            <End Role="Estudiante" EntitySet="Estudiantes" />
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
           </AssociationSet>
           <AssociationSet Name="FK_Matricula_Profesor" Association="Self.FK_Matricula_Profesor">
-            <End Role="Estudiante" EntitySet="Estudiantes" />
-            <End Role="Matricula" EntitySet="Matriculas" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
+            <End Role="Matricula" EntitySet="Matricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Fac_Uni" Association="Self.FK_Fac_Uni">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Facultad" EntitySet="Facultad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tie_Fec" Association="Self.FK_Tie_Fec">
+            <End Role="Fecha_Corte" EntitySet="Fecha_Corte" />
+            <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ForRes_For" Association="Self.FK_ForRes_For">
+            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tie_For" Association="Self.FK_Tie_For">
+            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ForRes_Gru" Association="Self.FK_ForRes_Gru">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
           </AssociationSet>
           <AssociationSet Name="FK_ForRes_Per" Association="Self.FK_ForRes_Per">
-            <End Role="Persona" EntitySet="Personas" />
+            <End Role="Persona" EntitySet="Persona" />
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
           </AssociationSet>
           <AssociationSet Name="FK_ForRes_Pro" Association="Self.FK_ForRes_Pro">
-            <End Role="Profesor" EntitySet="Profesors" />
+            <End Role="Profesor" EntitySet="Profesor" />
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
           </AssociationSet>
           <AssociationSet Name="FK_Res_ForRes" Association="Self.FK_Res_ForRes">
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
-            <End Role="Responde" EntitySet="Respondes" />
+            <End Role="Responde" EntitySet="Responde" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tie_Gru" Association="Self.FK_Tie_Gru">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
           </AssociationSet>
           <AssociationSet Name="FK_Imparte_Profesor" Association="Self.FK_Imparte_Profesor">
-            <End Role="Profesor" EntitySet="Profesors" />
-            <End Role="Imparte" EntitySet="Impartes" />
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Imparte" EntitySet="Imparte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Res_Ite" Association="Self.FK_Res_Ite">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Responde" EntitySet="Responde" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sel_Uni_Ite" Association="Self.FK_Sel_Uni_Ite">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Seleccion_Unica" EntitySet="Seleccion_Unica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tex_Ite" Association="Self.FK_Tex_Ite">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Texto_Libre" EntitySet="Texto_Libre" />
           </AssociationSet>
           <AssociationSet Name="FK_PoseeEnfasisPerfil_Perfil" Association="Self.FK_PoseeEnfasisPerfil_Perfil">
-            <End Role="Perfil" EntitySet="Perfils" />
+            <End Role="Perfil" EntitySet="Perfil" />
             <End Role="Posee_Enfasis_Perfil_Permiso" EntitySet="Posee_Enfasis_Perfil_Permiso" />
           </AssociationSet>
           <AssociationSet Name="FK_PoseeEnfasisPerfil_Permiso" Association="Self.FK_PoseeEnfasisPerfil_Permiso">
-            <End Role="Permiso" EntitySet="Permisoes" />
+            <End Role="Permiso" EntitySet="Permiso" />
             <End Role="Posee_Enfasis_Perfil_Permiso" EntitySet="Posee_Enfasis_Perfil_Permiso" />
           </AssociationSet>
           <AssociationSet Name="FK_Pro_Per" Association="Self.FK_Pro_Per">
-            <End Role="Persona" EntitySet="Personas" />
-            <End Role="Profesor" EntitySet="Profesors" />
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
           <AssociationSet Name="FK_Tel_Per" Association="Self.FK_Tel_Per">
-            <End Role="Persona" EntitySet="Personas" />
-            <End Role="TelefonoPersona" EntitySet="TelefonoPersonas" />
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="TelefonoPersona" EntitySet="TelefonoPersona" />
           </AssociationSet>
           <AssociationSet Name="FK_Usu_Per" Association="Self.FK_Usu_Per">
-            <End Role="Persona" EntitySet="Personas" />
-            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
+          <AssociationSet Name="FK_Res_Sec" Association="Self.FK_Res_Sec">
+            <End Role="Seccion" EntitySet="Seccion" />
+            <End Role="Responde" EntitySet="Responde" />
+          </AssociationSet>
+          <AssociationSet Name="Escuela" Association="Self.Escuela">
+            <End Role="Facultad" EntitySet="Facultad" />
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+          </AssociationSet>
+          <AssociationSet Name="Se_Encuentra_Unidad_Enfasis" Association="Self.Se_Encuentra_Unidad_Enfasis">
+            <End Role="Enfasis" EntitySet="Enfasis" />
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+          </AssociationSet>
+          <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_DatosModel.DatosEstudiante_Result)">
+            <Parameter Name="Cedula" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_DatosModel.MostrarEstudiantes_Result)" />
+          <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
+            <Parameter Name="Cedula" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SP_AgregarUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Cedula" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_CambiarContrasenna">
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Contrasenna_Nueva" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ExistenciaCorreo">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -874,6 +1959,17 @@
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="DatosEstudiante_Result">
+          <Property Type="String" Name="Nombre_Completo" Nullable="false" MaxLength="152" />
+          <Property Type="String" Name="Carne" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="Cedula" Nullable="false" MaxLength="9" />
+        </ComplexType>
+        <ComplexType Name="MostrarEstudiantes_Result">
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Apellido1" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Apellido2" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Carne" Nullable="false" MaxLength="6" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -887,7 +1983,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Administrativoes">
+          <EntitySetMapping Name="Administrativo">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Administrativo">
               <MappingFragment StoreEntitySet="Administrativo">
                 <ScalarProperty Name="CedulaAdministrativo" ColumnName="CedulaAdministrativo" />
@@ -895,7 +1991,44 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Empadronadoes">
+          <EntitySetMapping Name="Carrera">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Carrera">
+              <MappingFragment StoreEntitySet="Carrera">
+                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CodigoUnidadAcademica" ColumnName="CodigoUnidadAcademica" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ciclo_Lectivo">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Ciclo_Lectivo">
+              <MappingFragment StoreEntitySet="Ciclo_Lectivo">
+                <ScalarProperty Name="Anno" ColumnName="Anno" />
+                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Conformado_Item_Sec_Form">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Conformado_Item_Sec_Form">
+              <MappingFragment StoreEntitySet="Conformado_Item_Sec_Form">
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
+                <ScalarProperty Name="TituloSeccion" ColumnName="TituloSeccion" />
+                <ScalarProperty Name="NombreFormulario" ColumnName="NombreFormulario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Curso">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Curso">
+              <MappingFragment StoreEntitySet="Curso">
+                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="CodigoUnidad" ColumnName="CodigoUnidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empadronado">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Empadronado">
               <MappingFragment StoreEntitySet="Empadronado">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
@@ -904,11 +2037,42 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Estudiantes">
+          <EntitySetMapping Name="Enfasis">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Enfasis">
+              <MappingFragment StoreEntitySet="Enfasis">
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estudiante">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Estudiante">
               <MappingFragment StoreEntitySet="Estudiante">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
                 <ScalarProperty Name="Carne" ColumnName="Carne" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Facultad">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Facultad">
+              <MappingFragment StoreEntitySet="Facultad">
+                <ScalarProperty Name="CodigoUnidadAcademica" ColumnName="CodigoUnidadAcademica" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fecha_Corte">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Fecha_Corte">
+              <MappingFragment StoreEntitySet="Fecha_Corte">
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Formulario">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Formulario">
+              <MappingFragment StoreEntitySet="Formulario">
+                <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -919,7 +2083,7 @@
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
                 <ScalarProperty Name="CedulaPersona" ColumnName="CedulaPersona" />
                 <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
-                <ScalarProperty Name="AñoGrupo" ColumnName="AñoGrupo" />
+                <ScalarProperty Name="AnnoGrupo" ColumnName="AnnoGrupo" />
                 <ScalarProperty Name="SemestreGrupo" ColumnName="SemestreGrupo" />
                 <ScalarProperty Name="NumeroGrupo" ColumnName="NumeroGrupo" />
                 <ScalarProperty Name="SiglaGrupo" ColumnName="SiglaGrupo" />
@@ -927,7 +2091,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Impartes">
+          <EntitySetMapping Name="Grupo">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Grupo">
+              <MappingFragment StoreEntitySet="Grupo">
+                <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="AnnoGrupo" ColumnName="AnnoGrupo" />
+                <ScalarProperty Name="SemestreGrupo" ColumnName="SemestreGrupo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Imparte">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Imparte">
               <MappingFragment StoreEntitySet="Imparte">
                 <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
@@ -938,7 +2112,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Matriculas">
+          <EntitySetMapping Name="Item">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="TextoPregunta" ColumnName="TextoPregunta" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="TieneObservacion" ColumnName="TieneObservacion" />
+                <ScalarProperty Name="TipoPregunta" ColumnName="TipoPregunta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Matricula">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Matricula">
               <MappingFragment StoreEntitySet="Matricula">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
@@ -949,7 +2134,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Perfils">
+          <EntitySetMapping Name="Perfil">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Perfil">
               <MappingFragment StoreEntitySet="Perfil">
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -957,7 +2142,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Permisoes">
+          <EntitySetMapping Name="Permiso">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Permiso">
               <MappingFragment StoreEntitySet="Permiso">
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -965,7 +2150,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Personas">
+          <EntitySetMapping Name="Persona">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Persona">
               <MappingFragment StoreEntitySet="Persona">
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
@@ -986,14 +2171,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Profesors">
+          <EntitySetMapping Name="Preguntas">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Preguntas">
+              <MappingFragment StoreEntitySet="Preguntas">
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Planteamiento" ColumnName="Planteamiento" />
+                <ScalarProperty Name="TipoPregunta" ColumnName="TipoPregunta" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profesor">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Profesor">
               <MappingFragment StoreEntitySet="Profesor">
                 <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Respondes">
+          <EntitySetMapping Name="Responde">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Responde">
               <MappingFragment StoreEntitySet="Responde">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
@@ -1002,7 +2197,7 @@
                 <ScalarProperty Name="CodigoFormularioResp" ColumnName="CodigoFormularioResp" />
                 <ScalarProperty Name="CedulaPersona" ColumnName="CedulaPersona" />
                 <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
-                <ScalarProperty Name="AñoGrupoResp" ColumnName="AñoGrupoResp" />
+                <ScalarProperty Name="AnnoGrupoResp" ColumnName="AnnoGrupoResp" />
                 <ScalarProperty Name="SemestreGrupoResp" ColumnName="SemestreGrupoResp" />
                 <ScalarProperty Name="NumeroGrupoResp" ColumnName="NumeroGrupoResp" />
                 <ScalarProperty Name="SiglaGrupoResp" ColumnName="SiglaGrupoResp" />
@@ -1012,7 +2207,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TelefonoPersonas">
+          <EntitySetMapping Name="Seccion">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Seccion">
+              <MappingFragment StoreEntitySet="Seccion">
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seleccion_Unica">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Seleccion_Unica">
+              <MappingFragment StoreEntitySet="Seleccion_Unica">
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="IsaLikeDislike" ColumnName="IsaLikeDislike" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TelefonoPersona">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.TelefonoPersona">
               <MappingFragment StoreEntitySet="TelefonoPersona">
                 <ScalarProperty Name="CedulaPersona" ColumnName="CedulaPersona" />
@@ -1020,7 +2231,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Usuarios">
+          <EntitySetMapping Name="Texto_Libre">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Texto_Libre">
+              <MappingFragment StoreEntitySet="Texto_Libre">
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tiene_Grupo_Formulario">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Tiene_Grupo_Formulario">
+              <MappingFragment StoreEntitySet="Tiene_Grupo_Formulario">
+                <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Anno" ColumnName="Anno" />
+                <ScalarProperty Name="Ciclo" ColumnName="Ciclo" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Unidad_Academica">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Unidad_Academica">
+              <MappingFragment StoreEntitySet="Unidad_Academica">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
                 <ScalarProperty Name="CorreoInstitucional" ColumnName="CorreoInstitucional" />
@@ -1031,7 +2270,45 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="Escuela" TypeName="Opiniometro_DatosModel.Escuela" StoreEntitySet="Escuela">
+            <EndProperty Name="Facultad">
+              <ScalarProperty Name="CodigoUnidadAcademica" ColumnName="CodigoFacultad" />
+            </EndProperty>
+            <EndProperty Name="Unidad_Academica">
+              <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Se_Encuentra_Unidad_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Unidad_Enfasis" StoreEntitySet="Se_Encuentra_Unidad_Enfasis">
+            <EndProperty Name="Enfasis">
+              <ScalarProperty Name="Numero" ColumnName="NumeroEnfasis" />
+              <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
+            </EndProperty>
+            <EndProperty Name="Unidad_Academica">
+              <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_DatosModel.Store.DatosEstudiante">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.DatosEstudiante_Result">
+                <ScalarProperty Name="Nombre_Completo" ColumnName="Nombre Completo" />
+                <ScalarProperty Name="Carne" ColumnName="Carne" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_DatosModel.Store.MostrarEstudiantes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.MostrarEstudiantes_Result">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+                <ScalarProperty Name="Carne" ColumnName="Carne" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="Opiniometro_DatosModel.Store.NombrePersona" />
           <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="Opiniometro_DatosModel.Store.SP_CambiarContrasenna" />
           <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_DatosModel.Store.SP_ExistenciaCorreo" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />
         </EntityContainerMapping>
@@ -1048,7 +2325,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
