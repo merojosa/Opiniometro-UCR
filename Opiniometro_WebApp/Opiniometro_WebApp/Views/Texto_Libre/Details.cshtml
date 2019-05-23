@@ -1,0 +1,26 @@
+﻿@model Opiniometro_WebApp.Models.Texto_Libre
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Texto_Libre</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Item.TextoPregunta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item.TextoPregunta)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ItemId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -169,13 +169,22 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\AdministradorController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Conformado_Item_Sec_FormController.cs" />
+    <Compile Include="Controllers\FormularioController.cs" />
+    <Compile Include="Controllers\Formulario_RespuestaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\PreguntasController.cs" />
+    <Compile Include="Controllers\SeccionController.cs" />
+    <Compile Include="Controllers\Seleccion_UnicaController.cs" />
+    <Compile Include="Controllers\Texto_LibreController.cs" />
+    <Compile Include="Controllers\RespondeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Administrativo.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
@@ -228,7 +237,6 @@
     <Compile Include="Models\Item.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Matricula.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
@@ -357,12 +365,61 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Auth\Error.cshtml" />
+    <Content Include="Views\Formulario\Create.cshtml" />
+    <Content Include="Views\Formulario\Delete.cshtml" />
+    <Content Include="Views\Formulario\Details.cshtml" />
+    <Content Include="Views\Formulario\Edit.cshtml" />
+    <Content Include="Views\Formulario\Index.cshtml" />
+    <Content Include="Views\Item\Create.cshtml" />
+    <Content Include="Views\Item\Delete.cshtml" />
+    <Content Include="Views\Item\Details.cshtml" />
+    <Content Include="Views\Item\Edit.cshtml" />
+    <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Views\Seccion\Create.cshtml" />
+    <Content Include="Views\Seccion\Delete.cshtml" />
+    <Content Include="Views\Seccion\Details.cshtml" />
+    <Content Include="Views\Seccion\Edit.cshtml" />
+    <Content Include="Views\Seccion\Index.cshtml" />
+    <Content Include="Views\Conformado_Item_Sec_Form\Create.cshtml" />
+    <Content Include="Views\Conformado_Item_Sec_Form\Delete.cshtml" />
+    <Content Include="Views\Conformado_Item_Sec_Form\Details.cshtml" />
+    <Content Include="Views\Conformado_Item_Sec_Form\Edit.cshtml" />
+    <Content Include="Views\Conformado_Item_Sec_Form\Index.cshtml" />
+    <Content Include="Views\Texto_Libre\Create.cshtml" />
+    <Content Include="Views\Texto_Libre\Delete.cshtml" />
+    <Content Include="Views\Texto_Libre\Details.cshtml" />
+    <Content Include="Views\Texto_Libre\Edit.cshtml" />
+    <Content Include="Views\Texto_Libre\Index.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Create.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Delete.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Details.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Edit.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
+    <Content Include="Views\Responde\Create.cshtml" />
+    <Content Include="Views\Responde\Delete.cshtml" />
+    <Content Include="Views\Responde\Details.cshtml" />
+    <Content Include="Views\Responde\Edit.cshtml" />
+    <Content Include="Views\Responde\Index.cshtml" />
     <Content Include="Views\Auth\Recuperar.cshtml" />
     <Content Include="Views\Shared\Auth\BarraLogin.cshtml" />
-    <Content Include="Views\CargarArchivo.cshtml" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Administrador\Index.cshtml" />
-    <Content Include="Views\Administrador\CargarArchivo.cshtml" />
+    <Content Include="Views\Items\Create.cshtml" />
+    <Content Include="Views\Items\Delete.cshtml" />
+    <Content Include="Views\Items\Details.cshtml" />
+    <Content Include="Views\Items\Edit.cshtml" />
+    <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\Preguntas\Create.cshtml" />
+    <Content Include="Views\Preguntas\Delete.cshtml" />
+    <Content Include="Views\Preguntas\Details.cshtml" />
+    <Content Include="Views\Preguntas\Edit.cshtml" />
+    <Content Include="Views\Preguntas\Index.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
+    <Content Include="Views\Admin\VerPersonas.cshtml" />
+    <Content Include="Views\Admin\CrearUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
