@@ -4354,6 +4354,15 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   font-size: 18px;
   line-height: 20px;
 }
+
+.navbar-brand-barra-login {
+  float: left;
+  height: 145px;
+  padding: 20px 20px;
+  font-size: 18px;
+  line-height: 20px;
+}
+
 .navbar-brand:hover,
 .navbar-brand:focus {
   text-decoration: none;
@@ -4571,6 +4580,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default {
   background-color: #f8f8f8;
   border-color: #e7e7e7;
+}
+
+/*Para la barra del login y recuperar contrasena*/
+.navbar-default-barra-login {
+    background-color: #8ed8f8;
+    border-color: white;
 }
 .navbar-default .navbar-brand {
   color: #777;

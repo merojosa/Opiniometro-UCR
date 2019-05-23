@@ -12,14 +12,18 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Posee_Enfasis_Perfil_Permiso
+    public partial class spt_monitor
     {
-        public byte NumeroEnfasis { get; set; }
-        public string SiglaCarrera { get; set; }
-        public string IdPerfil { get; set; }
-        public byte IdPermiso { get; set; }
-    
-        public virtual Perfil Perfil { get; set; }
-        public virtual Permiso Permiso { get; set; }
+        public System.DateTime lastrun { get; set; }
+        public int cpu_busy { get; set; }
+        public int io_busy { get; set; }
+        public int idle { get; set; }
+        public int pack_received { get; set; }
+        public int pack_sent { get; set; }
+        public int connections { get; set; }
+        public int pack_errors { get; set; }
+        public int total_read { get; set; }
+        public int total_write { get; set; }
+        public int total_errors { get; set; }
     }
 }
