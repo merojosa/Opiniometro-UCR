@@ -10,13 +10,12 @@
 namespace Opiniometro_WebApp.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class SeleccionUnica
+    public partial class MostrarEstudiantes_Result
     {
-        public int ItemID { get; set; }
-        public Nullable<bool> IsaLikeDislike { get; set; }
-    
-        public virtual Item Item { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido1 { get; set; }
+        public string Apellido2 { get; set; }
+        public string Carne { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Item
         public ActionResult Index()
         {
-            var item = db.Item.Include(i => i.SeleccionUnica).Include(i => i.Texto_Libre);
+            var item = db.Item.Include(i => i.Seleccion_Unica).Include(i => i.Texto_Libre);
             return View(item.ToList());
         }
 
@@ -39,7 +39,7 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Item/Create
         public ActionResult Create()
         {
-            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID");
+            ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID");
             //ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId");
             return View();
         }
@@ -51,6 +51,9 @@ namespace Opiniometro_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,Categoria,TieneObservacion")] Item item)
         {
+
+
+
             if (ModelState.IsValid)
             {
                 db.Item.Add(item);
@@ -58,7 +61,7 @@ namespace Opiniometro_WebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemId);
+            ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID", item.ItemId);
             //ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
             return View(item);
         }
@@ -75,7 +78,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemId);
+            ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID", item.ItemId);
             ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
             return View(item);
         }
@@ -93,7 +96,7 @@ namespace Opiniometro_WebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ItemID = new SelectList(db.SeleccionUnica, "ItemID", "ItemID", item.ItemId);
+            ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID", item.ItemId);
             ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
             return View(item);
         }
