@@ -14,10 +14,20 @@ namespace Opiniometro_WebApp.Models
     
     public partial class Usuario
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Usuario()
+        {
+            this.Tiene_Enfasis_Perfil_Usuario = new HashSet<Tiene_Enfasis_Perfil_Usuario>();
+        }
+    
         public string CorreoInstitucional { get; set; }
         public string Contrasena { get; set; }
         public bool Activo { get; set; }
         public string Cedula { get; set; }
         public System.Guid Id { get; set; }
+    
+        public virtual Persona Persona { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tiene_Enfasis_Perfil_Usuario> Tiene_Enfasis_Perfil_Usuario { get; set; }
     }
 }

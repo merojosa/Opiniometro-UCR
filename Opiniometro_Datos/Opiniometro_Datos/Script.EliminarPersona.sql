@@ -9,14 +9,19 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-MERGE INTO Curso AS Target
-USING (VALUES
- ('CI1213', 'Ingenieria de Software'),
- ('CI1223', 'Bases de Datos'),
- ('CI1211', 'Proyecto Integrador')
-)
-AS Source ([CodigoCurso], NombreCurso)
-ON Target.CodigoCurso = Source.CodigoCurso
-WHEN NOT MATCHED BY TARGET THEN
-INSERT (CodigoCurso, NombreCurso)
-VALUES (CodigoCurso, NombreCurso);
+
+-- Eliminar Persona
+IF OBJECT_ID('SP_EliminarPersona') IS NOT NULL
+	DROP PROCEDURE SP_EliminarPersona
+GO
+CREATE PROCEDURE SP_EliminarPersona
+	@CedulaBusqueda		VARCHAR(9)
+AS
+BEGIN
+	DELETE
+	FROM Persona
+	WHERE Cedula = @CedulaBusqueda;
+END
+GO
+
+EXEC SP_EliminarPersona @CedulaBusqueda = '987654321';
