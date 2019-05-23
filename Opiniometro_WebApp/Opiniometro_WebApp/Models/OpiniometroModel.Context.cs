@@ -55,6 +55,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Seleccion_Unica> Seleccion_Unica { get; set; }
         public virtual DbSet<TelefonoPersona> TelefonoPersona { get; set; }
         public virtual DbSet<Texto_Libre> Texto_Libre { get; set; }
+        public virtual DbSet<Tiene_Enfasis_Perfil_Usuario> Tiene_Enfasis_Perfil_Usuario { get; set; }
         public virtual DbSet<Tiene_Grupo_Formulario> Tiene_Grupo_Formulario { get; set; }
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
