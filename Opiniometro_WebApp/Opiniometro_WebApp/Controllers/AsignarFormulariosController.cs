@@ -63,46 +63,56 @@ namespace Opiniometro_WebApp.Controllers
             return new List<SelectListItem>() { };
         }
 
-        public IEnumerable<SelectListItem> ObtenerCarreras(string codigoUnidad)
-        {
-            return db.Carrera.Select(carrera => new SelectListItem { Value = carrera.Sigla.ToString(), Text = carrera.Nombre }).ToList();
-        }
-
-        //public IEnumerable<SelectListItem> ObtenerCursos(string codigoUnidad)
+        //Se obtienen las carreras de la tabla Carrera
+        //public IEnumerable<SelectListItem> ObtenerCarreras(string codigoUnidad)
         //{
-        //    //var curso = from s in db.Curso
-        //       //        select s;
-        //    //curso = curso.Where(s => s.CodigoUnidad.Equals(codigoUnidad));
-        //    return db.Curso.Select(curso => curso.CodigoUnidad.Equals(codigoUnidad) => new SelectListItem { Value = curso.Sigla.ToString(), Text = curso.Nombre }).ToList();
+        //    return db.Carrera.Select(carrera => new SelectListItem { Value = carrera.Sigla.ToString(), Text = carrera.Nombre }).ToList();
         //}
 
+        //Se obtienen los cursos de la tabla Curso
+        //public IEnumerable<SelectListItem> ObtenerCursos(string codigoUnidad)
+        //{
+        //    return db.Curso.Select(curso => new SelectListItem { Value = curso.Sigla.ToString(), Text = curso.Nombre }).ToList();
+        //}
+
+        //Se despliegan los filtros (Unidad Academica, Carrera, Cursos)
         [HttpGet]
         public ActionResult Index()
         {
-            //Unidad_Academica unidad = db.Unidad_Academica.Find("");
-            Carrera carrera = db.Carrera.Find("SC-89457");
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            list.Add(new SelectListItem() { Text = "I Ciclo 2019", Value = "1" });
+            list.Add(new SelectListItem() { Text = "III Ciclo 2018", Value = "2" });
+            list.Add(new SelectListItem() { Text = "II Ciclo 2018", Value = "3" });
+            list.Add(new SelectListItem() { Text = "I Ciclo 2018", Value = "4" });
+
+            ViewBag.Ciclo = list;
+
+            Unidad_Academica unidad = db.Unidad_Academica.Find("UC-023874"); //"UC-023874"
 
             var carr = from s in db.Carrera
-                        select s;
-            ViewBag.Unidad = new SelectList(db.Unidad_Academica, "Codigo", "Nombre", carrera.CodigoUnidadAcademica);
+                       select s;
+            ViewBag.Unidad = new SelectList(db.Unidad_Academica, "Codigo", "Nombre", unidad.Codigo);
 
-            if (!String.IsNullOrEmpty(carrera.CodigoUnidadAcademica))
+            if (!String.IsNullOrEmpty(unidad.Codigo))
             {
-                carr = carr.Where(s => s.CodigoUnidadAcademica.Equals(carrera.CodigoUnidadAcademica));
+                carr = carr.Where(s => s.CodigoUnidadAcademica.Equals(unidad.Codigo));
             }
 
-            ViewBag.Carreras = new SelectList(carr, "Sigla", "Nombre", carrera.CodigoUnidadAcademica);
+            ViewBag.Carreras = new SelectList(carr, "Sigla", "Nombre", unidad.Codigo);
 
             var curso = from s in db.Curso
                         select s;
 
-            if (!String.IsNullOrEmpty(carrera.Sigla))
+            if (!String.IsNullOrEmpty(unidad.Codigo))
             {
-                curso = curso.Where(s => s.CodigoUnidad.Equals(carrera.CodigoUnidadAcademica));
+                curso = curso.Where(s => s.CodigoUnidad.Equals(unidad.Codigo));
             }
-            ViewBag.Cursos = new SelectList(curso, "Sigla", "Nombre", carrera.CodigoUnidadAcademica);
+            ViewBag.Curso = new SelectList(curso, "Sigla", "Nombre");
 
-            return View();
+            var modelo = new AsignarFormulariosModel { Curso = curso };
+            return View(modelo);
         }
+
     }
 }

@@ -10,10 +10,11 @@ namespace Opiniometro_WebApp.Models
     {
         public IEnumerable<Curso> Cursos { get; set; }
         // Listas con los parámetros de los filtros
-        //public IEnumerable<SelectListItem> Ciclos { get; set; }
-        //public IEnumerable<SelectListItem> Carreras { get; set; }
+        public IEnumerable<SelectListItem> Ciclos { get; set; }
+        public IEnumerable<Unidad_Academica> UnidadAcademica { get; set; }
+        public IEnumerable<Carrera> Carreras { get; set; }
         //public IEnumerable<SelectListItem> Enfasis { get; set; }
-        //public IEnumerable<SelectListItem> Cursos { get; set; }
+        public IEnumerable<Curso> Curso { get; set; }
 
         // Lista de grupos
         //public IEnumerable<SelectListItem> Grupos { get; set; }

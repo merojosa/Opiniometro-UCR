@@ -94,6 +94,9 @@ INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-01234', 'Ciencias de la Computación e Informática','UC-023874')
 
 INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
+VALUES ('SC-01235', 'Computación con varios Énfasis','UC-023874')
+
+INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-89457', 'Derecho','UC-485648')
 
 --Cursos

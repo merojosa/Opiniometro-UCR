@@ -1,40 +1,11 @@
 ﻿function cambioUnidadSelecionada(codigoUnidad) {
-    ObtenerCarreras(codigoUnidad);
-    ObtenerCursos(codigoUnidad);
-}
-
-function obtenerUnidad(cursoId) {
-    $.get("/CursoDetalles/ObtenerCantidadEstudiantes", {
-        cursoId: cursoId
-    }, function (resultadoCantidadEstudiantes) {
-        $('#cantidadEstudiantes').val(resultadoCantidadEstudiantes);
+    $.get("/AsignarFormularios/ObtenerCarreras", {
+        codigoUnidad: codigoUnidad
     });
+    cambioCarreraSelecionada(codigoUnidad)
 }
 
-function obtenerCarrera(cursoId) {
-    $.get("/CursoDetalles/ObtenerCantidadEstudiantes", {
-        cursoId: cursoId
-    }, function (resultadoCantidadEstudiantes) {
-        $('#cantidadEstudiantes').val(resultadoCantidadEstudiantes);
-    });
-}
-
-function obtenerCursos(cursoId) {
-    $.get("/CursoDetalles/ObtenerCantidadEstudiantes", {
-        cursoId: cursoId
-    }, function (resultadoCantidadEstudiantes) {
-        $('#cantidadEstudiantes').val(resultadoCantidadEstudiantes);
-    });
-}
-
-function cambioCarreraSelecionada(cursoId) {
-    obtenerCantidadEstudiantes(cursoId);
-}
-
-function obtenerCursos(cursoId) {
-    $.get("/CursoDetalles/ObtenerCantidadEstudiantes", {
-        cursoId: cursoId
-    }, function (resultadoCantidadEstudiantes) {
-        $('#cantidadEstudiantes').val(resultadoCantidadEstudiantes);
-    });
-}
+function cambioCarreraSelecionada(codigoUnidad) {
+    $.get("/AsignarFormularios/ObtenerCursos", {
+        codigoUnidad: codigoUnidad
+    });}
