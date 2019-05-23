@@ -1,7 +1,7 @@
 ﻿@model Opiniometro_WebApp.Models.Item
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Crear Pregunta";
 }
 
 <h2>Crear Pregunta</h2>
@@ -31,11 +31,11 @@
         </div>
     </div>
     <script>
-@*Aqui capturamos los eventos del combo box. *@
+        @*Aqui capturamos los eventos del combo box. *@
         function seleccionarTipoPregunta()
         {
-            var seleccionTipoPregunta = document.getElementById("tipoPregunta").value;
-            document.getElementById("tipoPreguntaID").innerHTML = "Seleccionaste: " + seleccionTipoPregunta;
+            var seleccion = document.getElementById("tipoPregunta").value;
+            //document.getElementById("demo").innerHTML = "Seleccionaste: " + seleccion;
 
         }
     </script>
@@ -76,8 +76,8 @@
         @Html.Label("Tiene Observación", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @*<div class="checkbox">
-                    @Html.EditorFor(model => model.TieneObservacion)
-                    @Html.ValidationMessageFor(model => model.TieneObservacion, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.TieneObservacion)
+                        @Html.ValidationMessageFor(model => model.TieneObservacion, "", new { @class = "text-danger" })
                 </div>*@
             @*Combobox *@
             <select id="observacion" onchange="seleccionarObservacion()">
@@ -88,12 +88,15 @@
         </div>
     </div>
     <script>
-@*Aqui capturamos los eventos del combo box. *@
+        @*Aqui capturamos los eventos del combo box. *@
         function seleccionarObservacion()
         {
-            var seleccionObservacion = document.getElementById("observacion").value;
-            document.getElementById("observacionID").innerHTML = "Seleccionaste: " + seleccionObservacion;
-
+            var seleccion = document.getElementById("observacion").value;
+            if (seleccion == "Si")
+                @Html.EditorFor(model => model.TieneObservacion, true);
+            else 
+                model => model.TieneObservacion = false
+            //document.getElementById("demo1").innerHTML = "Seleccionaste: " + seleccion;
         }
     </script>
 
@@ -129,9 +132,7 @@
     </script>
 
 </div>
-            }
-
-
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -21,11 +21,9 @@
             @Html.DisplayNameFor(model => model.TieneObservacion)
         </th>
         <th>
-            @Html.DisplayName("Selección Unica")
+            @Html.DisplayNameFor(model => model.ItemId)
         </th>
-        <th>
-            @Html.DisplayName("Texto Libre")
-        </th>
+
         <th></th>
     </tr>
 
@@ -38,18 +36,16 @@
             @Html.DisplayFor(modelItem => item.Categoria)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TieneObservacion)
+            @Html.DisplayFor(modelItem => item.TieneObservacion )
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Seleccion_Unica.ItemId)
+            @Html.DisplayFor(modelItem => item.ItemId)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Texto_Libre.ItemId)
-        </td>
+
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ItemId }) |
             @Html.ActionLink("Details", "Details", new { id=item.ItemId }) |
-            @*@Html.ActionLink("Delete", "Delete", new { id=item.ItemId })*@
+            @Html.ActionLink("Delete", "Delete", new { id=item.ItemId })
         </td>
     </tr>
 }
