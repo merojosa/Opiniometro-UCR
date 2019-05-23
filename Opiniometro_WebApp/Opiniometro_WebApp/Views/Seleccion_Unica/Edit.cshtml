@@ -1,4 +1,4 @@
-﻿@model Opiniometro_WebApp.Models.SeleccionUnica
+﻿@model Opiniometro_WebApp.Models.Seleccion_Unica
 
 @{
     ViewBag.Title = "Edit";
@@ -6,16 +6,15 @@
 
 <h2>Edit</h2>
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>SeleccionUnica</h4>
+        <h4>Seleccion_Unica</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ItemID)
+        @Html.HiddenFor(model => model.ItemId)
 
         <div class="form-group">
             @Html.LabelFor(model => model.IsaLikeDislike, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -38,7 +37,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

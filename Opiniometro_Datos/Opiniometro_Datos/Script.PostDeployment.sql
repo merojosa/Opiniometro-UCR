@@ -9,7 +9,9 @@ EXEC sp_MSForEachTable 'ALTER TABLE ? CHECK CONSTRAINT ALL'
 GO
 EXEC sp_MSForEachTable 'ENABLE TRIGGER ALL ON ?'
 
--- PROCEDURES
+--PROCEDIMIENTOS
+
+--The Strategists
 IF OBJECT_ID('SP_AgregarUsuario') IS NOT NULL
 	DROP PROCEDURE SP_AgregarUsuario
 GO
@@ -52,7 +54,93 @@ BEGIN
 END
 GO
 
---En caso de error en la inserción es posiblemente el dato de CX, reescribir de ser necesario esa inserción.
+IF OBJECT_ID('SP_ExistenciaCorreo') IS NOT NULL
+	DROP PROCEDURE SP_ExistenciaCorreo
+GO
+CREATE PROCEDURE SP_ExistenciaCorreo
+	@Correo			NVARCHAR(50),
+	@Resultado		BIT OUT
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @CorreoBuscar NVARCHAR(50)
+	
+	-- Buscar que el correo sea correcto con lo que hay en la tabla Usuario.
+	SET @CorreoBuscar =	(SELECT CorreoInstitucional 
+						FROM Usuario
+						WHERE CorreoInstitucional=@Correo)
+
+	IF(@CorreoBuscar IS NULL)	-- Si no calzan, no hay autenticacion.
+		SET @Resultado = 0
+	ELSE						-- Si hay autenticacion
+		SET @Resultado = 1
+END
+GO
+
+IF OBJECT_ID('SP_CambiarContrasenna') IS NOT NULL
+	DROP PROCEDURE SP_CambiarContrasenna
+GO
+CREATE PROCEDURE SP_CambiarContrasenna
+	@Correo				NVARCHAR(50),
+	@Contrasenna_Nueva	NVARCHAR(50)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @CorreoBuscar NVARCHAR(50)
+	
+	-- Buscar que el correo y la contrasenna sean correctos con lo que hay en la tabla Usuario.
+	SET @CorreoBuscar =	(SELECT CorreoInstitucional 
+						FROM Usuario
+						WHERE CorreoInstitucional=@Correo)
+
+	IF(@CorreoBuscar IS NOT NULL)	-- Si existe el correo
+		UPDATE Usuario
+		SET Contrasena = HASHBYTES('SHA2_512', @Contrasenna_Nueva+CAST(Id AS NVARCHAR(36)))
+		
+END
+GO
+
+--JJAPH
+IF OBJECT_ID('MostrarEstudiantes', 'P') IS NOT NULL 
+	DROP PROC MostrarEstudiantes
+
+IF OBJECT_ID('NombrePersona', 'P') IS NOT NULL 
+	DROP PROC NombrePersona
+
+IF OBJECT_ID('DatosEstudiante', 'P') IS NOT NULL 
+	DROP PROC DatosEstudiante
+
+GO
+--Pantalla 1, Home
+CREATE PROCEDURE MostrarEstudiantes
+AS 
+	SELECT Nombre, Apellido1, Apellido2, Carne
+	FROM Persona P JOIN Estudiante E ON P.Cedula = E.CedulaEstudiante;
+GO
+
+--Pantalla 2 solo el nombre para bienvenida
+GO
+CREATE PROCEDURE NombrePersona 
+@Cedula VARCHAR(9)
+AS
+	SELECT Nombre
+	FROM Persona
+	WHERE Cedula = @Cedula;
+
+--Pantalla 3, informacion de un estudiante
+GO
+CREATE PROCEDURE DatosEstudiante
+@Cedula VARCHAR(9)
+AS
+	SELECT CONCAT(Nombre, ' ' ,Apellido1, ' ', Apellido2) as 'Nombre Completo', Carne, Cedula
+	FROM Persona P JOIN Estudiante E ON P.Cedula = E.CedulaEstudiante
+	WHERE Cedula = @Cedula;
+GO
+
+--Inserciones
+
 INSERT INTO Persona
 VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajuela.'),
 		('115003456', 'Daniel', 'Escalante', 'Perez', 'Desamparados de San José.'),
@@ -65,11 +153,21 @@ VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajue
 		('100000003', 'Juan', 'Briceño', 'Lupon', '400 metros norte del Heraldo de la Grieta'),
 		('100000005', 'Pepito', 'Fonsi', 'Monge', '20 metros norte del Blue del lado Rojo'),
 		('100000004', 'Maria', 'Fallas', 'Merdi', 'Costado este del estandarte de top');
+		('117720910', 'Jorge', 'Solano', 'Carrillo', 'La Fortuna de San Carlos.'),
+		('236724501', 'Carolina', 'Gutierrez', 'Lozano', 'Sarchí, Alajuela.'),
+		('123456789', 'Ortencia', 'Cañas', 'Griezman', 'San Pedro de Montes de Oca');
+
+INSERT INTO Estudiante VALUES 
+ ('116720500', 'B11111')
+,('115003456', 'B22222')
+,('117720910', 'B33333') 
+,('236724501', 'B44444');
 
 EXEC SP_AgregarUsuario @Correo='jose.mejiasrojas@ucr.ac.cr', @Contrasenna='123456', @Cedula='116720500'
 EXEC SP_AgregarUsuario @Correo='daniel.escalanteperez@ucr.ac.cr', @Contrasenna='Danielito', @Cedula='115003456'
 EXEC SP_AgregarUsuario @Correo='rodrigo.cascantejuarez@ucr.ac.cr', @Contrasenna='contrasena', @Cedula='117720910'
 EXEC SP_AgregarUsuario @Correo='luis.quesadaborbon@ucr.ac.cr', @Contrasenna='LigaDeportivaAlajuelense', @Cedula='236724501'
+EXEC SP_AgregarUsuario @Correo='admin@ucr.ac.cr', @Contrasenna='adminUCR2019', @Cedula='123456789'
 
 --Script JJAPH
 
@@ -79,6 +177,11 @@ VALUES ('UC-023874', 'ECCI')
 
 INSERT INTO Unidad_Academica (Codigo, Nombre)
 VALUES ('UC-485648', 'Derecho')
+
+INSERT Curso
+VALUES  ('CI1213', 'Ingenieria de Software', 1, 'UC-023874'),
+('CI1223', 'Bases de Datos', 1, 'UC-023874'),
+ ('CI1211', 'Proyecto Integrador', 1, 'UC-023874')
 
 --Escuela
 --INSERT INTO Escuela(CodigoUnidadAcademica,CodigoFacultad)
@@ -221,4 +324,4 @@ VALUES  (1, 'Evaluación de aspectos reglamentarios del profesor', '2017-4-5', '
 		(3, 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Entretenido'),
 		(4, 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Muy buena profesora');
 
---Fin Por el momento de script CX Solutions
+--Fin Por el momento de script CX SolutionsMERGE INTO Preguntas AS Target
