@@ -51,6 +51,9 @@ namespace Opiniometro_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,Categoria,TieneObservacion")] Item item)
         {
+
+
+
             if (ModelState.IsValid)
             {
                 db.Item.Add(item);
