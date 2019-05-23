@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
+    <None Include="Script.ObtenerSeccionesPorFormulario.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Usuario.sql" />
@@ -97,6 +98,5 @@
     <Build Include="Texto_Libre.sql" />
     <Build Include="Item.sql" />
     <Build Include="Seleccion_Unica.sql" />
-    <Build Include="Secciones_Por_Formulario.sql" />
   </ItemGroup>
 </Project>
