@@ -20,86 +20,39 @@ namespace Opiniometro_WebApp.Controllers
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
-        public ActionResult VerPersonas()
+        public ActionResult VerPersonas(string cedula)
         {
-            return View();
-        }
 
-       /* public ActionResult VerPersonas(Persona persona)
-        {
-            ObjectParameter exito = new ObjectParameter("Resultado", 0);
-            db.SP_ExistenciaCorreo(usuario.CorreoInstitucional, exito);
+            List<Persona> personas = db.Personas.ToList();
+            var persona = from s in db.Personas
+                          select s;
+
+            if (!String.IsNullOrEmpty(cedula))
+            {
+                persona = persona.Where(s => s.Cedula.Contains(cedula)
+                                       );
+                return View(persona);
+            }
+            else
+            {
+                return View(personas);
+            }
+
             
-            if ((bool)exito.Value == true)
-            {
-                // Autogenero una contrasenna generica.
-                string contrasenna_generada = GenerarContrasenna(10);
-
-                // La guardo en la base de datos llamando al procedimiento almacenado.
-                db.SP_CambiarContrasenna(usuario.CorreoInstitucional, contrasenna_generada);
-
-
-                string contenido =
-                    "<p>A continuación, su contraseña temporal, ingrésela junto con su correo institucional:</p> <b>"
-                    + contrasenna_generada + "</b>";
-
-                // Envio correo con la contrasenna autogenerada
-                EnviarCorreo(usuario.CorreoInstitucional, "Cambio de contraseña - Opiniómetro@UCR", contenido);
-            }
-            ModelState.AddModelError(string.Empty, "");
-            return PartialView(persona);
         }
 
-        protected void Page_Load(object sender, EventArgs e)
+       public ActionResult Borrar(string id)
         {
-            if (!this.IsPostBack)
-            {
-                //Populating a DataTable from database.
-                DataTable dt = this.GetData();
+            
+            db.SP_EliminarPersona(id);
+            return RedirectToAction("VerPersonas");
+        }
 
-                //Building an HTML string.
-                StringBuilder html = new StringBuilder();
-
-                //Table start.
-                html.Append("<table border = '1'>");
-
-                //Building the Header row.
-                html.Append("<tr>");
-                foreach (DataColumn column in dt.Columns)
-                {
-                    html.Append("<th>");
-                    html.Append(column.ColumnName);
-                    html.Append("</th>");
-                }
-                html.Append("</tr>");
-
-                //Building the Data rows.
-                foreach (DataRow row in dt.Rows)
-                {
-                    html.Append("<tr>");
-                    foreach (DataColumn column in dt.Columns)
-                    {
-                        html.Append("<td>");
-                        html.Append(row[column.ColumnName]);
-                        html.Append("</td>");
-                    }
-                    html.Append("</tr>");
-                }
-
-                //Table end.
-                html.Append("</table>");
-
-                //Append the HTML string to Placeholder.
-                CrearUsuario.Controls.Add(new Literal { Text = html.ToString() });
-            }
-        }*/
-
-    
 
         public ActionResult CrearUsuario()
         {
-
-            return PartialView();
+            
+            return View();
         }
 
        /* public DataSet GetDataSet(string ConnectionString, string SQL)
