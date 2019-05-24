@@ -56,7 +56,7 @@ namespace Opiniometro_WebApp.Controllers
                   new ListItem { Text = "Infraestructura", Value="Infraestructura" },
                   new ListItem { Text = "Curso", Value="Curso" }
             };
-            ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID");
+            //ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID");
             //ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId");
             return View();
         }

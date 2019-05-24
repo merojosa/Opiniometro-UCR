@@ -5,9 +5,13 @@
 }
 
 <h2>Banco de Secciones</h2>
-
+<script>
+        function accionBotonNuevo() {
+            document.location = '@Url.Action("Create")';
+        }
+</script>
 <p>
-    <input type="submit" value="Crear Nueva Sección" class="btn btn-secondary"  id="botonNuevaSeccion" onclick="location.href = 'http://localhost:51103/Seccion/create'()" />
+    <input type="submit" value="Crear Nueva Sección" class="btn btn-secondary"  id="botonNuevaSeccion" onclick="accionBotonNuevo()" />
 </p>
 <table class="table">
     <tr>
