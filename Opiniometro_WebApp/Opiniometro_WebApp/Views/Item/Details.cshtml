@@ -16,6 +16,18 @@
             @*<textarea name="descripcion" rows="5" cols="40">@Html.DisplayFor(model => model.TextoPregunta)</textarea>*@
         </dd>
 
+        <div class="form-group">
+            @Html.Label("", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="observacion" onchange="seleccionarObservacion()">
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                    <option value="No se/No respondo/No aplica">No se/No respondo/No aplica</option>
+                </select>
+                <p id="observacionID"></p>
+            </div>
+        </div>
+
     </dl>
 </div>
 
@@ -40,17 +52,7 @@
     }
 </script>
 
-<div class="form-group">
-    @Html.Label("", htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        <select id="observacion" onchange="seleccionarObservacion()">
-            <option value="Si">Si</option>
-            <option value="No">No</option>
-            <option value="No se/No respondo/No aplica">No se/No respondo/No aplica</option>
-        </select>
-        <p id="observacionID"></p>
-    </div>
-</div>
+
 
 <dt>
     @Html.DisplayNameFor(model => model.TieneObservacion)
