@@ -1,29 +1,34 @@
 ﻿@model IEnumerable<Opiniometro_WebApp.Models.Item>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Banco de Preguntas";
 }
 
-<h2>Index</h2>
+<h2>Banco de Preguntas</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <input type="submit" value="Crear Nueva Pregunta" class="btn btn-secondary"  id="botonNuevaPregunta" onclick="accionBotonNuevaPregunta()" />
 </p>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.TextoPregunta)
+            @Html.Label("Número")
+            @*@Html.DisplayNameFor(model => model.ItemId)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Categoria)
+            @Html.Label("Planteamiento de la pregunta")
+            @*@Html.DisplayNameFor(model => model.TextoPregunta)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TieneObservacion)
+            @Html.Label("Categoría")
+            @*@Html.DisplayNameFor(model => model.Categoria)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ItemId)
+            @Html.Label("Tiene Observación")
+            @*@Html.DisplayNameFor(model => model.TieneObservacion)*@
         </th>
+
 
         <th></th>
     </tr>
