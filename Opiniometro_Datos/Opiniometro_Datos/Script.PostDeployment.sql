@@ -145,15 +145,15 @@ INSERT INTO Persona
 VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajuela.'),
 		('115003456', 'Daniel', 'Escalante', 'Perez', 'Desamparados de San José.'),
 		('117720910', 'Jose Andrés', 'Mejías', 'Rojas', 'La Fortuna de San Carlos.'),
-		('236724501', 'Jose Andrés', 'Mejías', 'Rojas', 'Sarchí, Alajuela.'),
+		('236724507', 'Jose Andrés', 'Mejías', 'Rojas', 'Sarchí, Alajuela.'),
 		--Agregado de datos para visualizacion a cargo de CX Solutions
 		('100000001', 'CX', 'Solutions', 'S.A.', 'San Pedro Montes de Oca'),
 		('100000002', 'Marta', 'Rojas', 'Sanches', '300 metros norte de Pulmitan'),--Profesora
 		--Estudiantes
 		('100000003', 'Juan', 'Briceño', 'Lupon', '400 metros norte del Heraldo de la Grieta'),
 		('100000005', 'Pepito', 'Fonsi', 'Monge', '20 metros norte del Blue del lado Rojo'),
-		('100000004', 'Maria', 'Fallas', 'Merdi', 'Costado este del estandarte de top');
-		('117720910', 'Jorge', 'Solano', 'Carrillo', 'La Fortuna de San Carlos.'),
+		('100000004', 'Maria', 'Fallas', 'Merdi', 'Costado este del estandarte de top'),
+		('117720912', 'Jorge', 'Solano', 'Carrillo', 'La Fortuna de San Carlos.'),
 		('236724501', 'Carolina', 'Gutierrez', 'Lozano', 'Sarchí, Alajuela.'),
 		('123456789', 'Ortencia', 'Cañas', 'Griezman', 'San Pedro de Montes de Oca');
 

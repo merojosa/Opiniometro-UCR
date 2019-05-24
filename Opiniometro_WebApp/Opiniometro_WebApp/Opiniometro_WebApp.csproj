@@ -176,7 +176,6 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
-    <Compile Include="Controllers\PreguntasController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\Seleccion_UnicaController.cs" />
     <Compile Include="Controllers\Texto_LibreController.cs" />
@@ -196,9 +195,6 @@
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Curso.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DatosEstudiante_Result.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DatosEstudiante_Result.cs">
