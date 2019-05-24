@@ -24,10 +24,10 @@ namespace Opiniometro_WebApp.Controllers
             return View(responde.ToList());
         }
 
-        public void ObtenerSeccionesFormulario(string CodigoFormulario)
-        {
-            System.Data.Entity.Core.Objects.ObjectResult<string> Secciones = db.Obtener_Secciones_Por_Formulario(CodigoFormulario);
-        }
+        //public void ObtenerSeccionesFormulario(string CodigoFormulario)
+        //{
+        //    System.Data.Entity.Core.Objects.ObjectResult<string> Secciones = db.Obtener_Secciones_Por_Formulario(CodigoFormulario);
+        //}
 
         // GET: Responde/Details/5
         public ActionResult Details(int? id)

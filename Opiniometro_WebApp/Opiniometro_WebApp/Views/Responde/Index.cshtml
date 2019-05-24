@@ -8,10 +8,9 @@
 
 @Html.Partial("_Collapsible")
 
-<div class="row">
-
+@*<div class="row">
     <img src="@Url.Action(" GraficoPie")" alt="SimpleChart" />
-</div>
+</div>*@
 
 <button class="collapsible main"> Evaluación de aspectos reglamentarios del profesor </button>
 
@@ -22,6 +21,7 @@
 
         <button class="collapsible terciary"> Resultados </button>
         <div class="content">
+            <img src="@Url.Action("GraficoPie")" alt="SimpleChart" />
         </div>
 
         <button class="collapsible terciary"> Observaciones </button>
@@ -42,14 +42,14 @@
 </div>
 
 <button class="collapsible main"> Opinión General del Curso </button>
-
 <div class="content">
 
     <button class="collapsible secondary"> ¿El profesor entrego la carta del estudiante en las fechas indicadas por el reglamento? </button>
     <div class="content">
 
-        <button class="collapsible terciary"> Resultados </button>
         <div class="content">
+        <button class="collapsible terciary"> Resultados </button>
+        <img src="@Url.Action("GraficoPie")" alt="SimpleChart" />
         </div>
 
         <button class="collapsible terciary"> Observaciones </button>
