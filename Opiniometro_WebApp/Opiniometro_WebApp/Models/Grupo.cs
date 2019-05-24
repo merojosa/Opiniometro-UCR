@@ -12,29 +12,25 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Formulario_Respuesta
+    public partial class Grupo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Formulario_Respuesta()
+        public Grupo()
         {
-            this.Responde = new HashSet<Responde>();
+            this.Formulario_Respuesta = new HashSet<Formulario_Respuesta>();
+            this.Tiene_Grupo_Formulario = new HashSet<Tiene_Grupo_Formulario>();
         }
     
-        public System.DateTime Fecha { get; set; }
-        public string CodigoFormulario { get; set; }
-        public string CedulaPersona { get; set; }
-        public string CedulaProfesor { get; set; }
+        public string SiglaCurso { get; set; }
+        public byte Numero { get; set; }
         public short AnnoGrupo { get; set; }
         public byte SemestreGrupo { get; set; }
-        public byte NumeroGrupo { get; set; }
-        public string SiglaGrupo { get; set; }
-        public Nullable<bool> Completado { get; set; }
     
-        public virtual Formulario Formulario { get; set; }
-        public virtual Grupo Grupo { get; set; }
-        public virtual Persona Persona { get; set; }
-        public virtual Profesor Profesor { get; set; }
+        public virtual Ciclo_Lectivo Ciclo_Lectivo { get; set; }
+        public virtual Curso Curso { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Responde> Responde { get; set; }
+        public virtual ICollection<Formulario_Respuesta> Formulario_Respuesta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tiene_Grupo_Formulario> Tiene_Grupo_Formulario { get; set; }
     }
 }

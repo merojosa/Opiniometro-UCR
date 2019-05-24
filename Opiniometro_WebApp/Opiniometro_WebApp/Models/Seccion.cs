@@ -12,28 +12,20 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Formulario_Respuesta
+    public partial class Seccion
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Formulario_Respuesta()
+        public Seccion()
         {
+            this.Conformado_Item_Sec_Form = new HashSet<Conformado_Item_Sec_Form>();
             this.Responde = new HashSet<Responde>();
         }
     
-        public System.DateTime Fecha { get; set; }
-        public string CodigoFormulario { get; set; }
-        public string CedulaPersona { get; set; }
-        public string CedulaProfesor { get; set; }
-        public short AnnoGrupo { get; set; }
-        public byte SemestreGrupo { get; set; }
-        public byte NumeroGrupo { get; set; }
-        public string SiglaGrupo { get; set; }
-        public Nullable<bool> Completado { get; set; }
+        public string Titulo { get; set; }
+        public string Descripcion { get; set; }
     
-        public virtual Formulario Formulario { get; set; }
-        public virtual Grupo Grupo { get; set; }
-        public virtual Persona Persona { get; set; }
-        public virtual Profesor Profesor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Responde> Responde { get; set; }
     }

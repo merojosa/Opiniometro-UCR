@@ -12,29 +12,26 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Formulario_Respuesta
+    public partial class Item
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Formulario_Respuesta()
+        public Item()
         {
+            this.Conformado_Item_Sec_Form = new HashSet<Conformado_Item_Sec_Form>();
             this.Responde = new HashSet<Responde>();
         }
     
-        public System.DateTime Fecha { get; set; }
-        public string CodigoFormulario { get; set; }
-        public string CedulaPersona { get; set; }
-        public string CedulaProfesor { get; set; }
-        public short AnnoGrupo { get; set; }
-        public byte SemestreGrupo { get; set; }
-        public byte NumeroGrupo { get; set; }
-        public string SiglaGrupo { get; set; }
-        public Nullable<bool> Completado { get; set; }
+        public int ItemId { get; set; }
+        public string TextoPregunta { get; set; }
+        public string Categoria { get; set; }
+        public Nullable<bool> TieneObservacion { get; set; }
+        public byte TipoPregunta { get; set; }
     
-        public virtual Formulario Formulario { get; set; }
-        public virtual Grupo Grupo { get; set; }
-        public virtual Persona Persona { get; set; }
-        public virtual Profesor Profesor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Responde> Responde { get; set; }
+        public virtual Seleccion_Unica Seleccion_Unica { get; set; }
+        public virtual Texto_Libre Texto_Libre { get; set; }
     }
 }
