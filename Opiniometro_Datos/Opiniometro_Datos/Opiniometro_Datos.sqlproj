@@ -103,4 +103,7 @@
     <None Include="Script.EliminarPersona.sql" />
     <Build Include="Preguntas.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ScriptGenerarContrasena.sql" />
+  </ItemGroup>
 </Project>
