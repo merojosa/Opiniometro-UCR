@@ -292,9 +292,6 @@
     <Compile Include="Models\Texto_Libre.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tiene_Enfasis_Perfil_Usuario.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Tiene_Grupo_Formulario.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
