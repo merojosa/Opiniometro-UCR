@@ -27,7 +27,6 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Administrativo> Administrativo { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Ciclo_Lectivo> Ciclo_Lectivo { get; set; }
@@ -80,6 +79,51 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Cedula", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("NombrePersona", cedulaParameter);
+        }
+    
+        public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)
+        {
+            var cedulaParameter = cedula != null ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DatosEstudiante_Result>("DatosEstudiante", cedulaParameter);
+        }
+    
+        public virtual ObjectResult<MostrarEstudiantes_Result> MostrarEstudiantes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MostrarEstudiantes_Result>("MostrarEstudiantes");
+        }
+    
+        public virtual ObjectResult<string> NombrePersona(string cedula)
+        {
+            var cedulaParameter = cedula != null ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("NombrePersona", cedulaParameter);
+        }
+    
+        public virtual int Obtener_Items_Por_Seccion(string forCod, string titSec, ObjectParameter resultado)
+        {
+            var forCodParameter = forCod != null ?
+                new ObjectParameter("ForCod", forCod) :
+                new ObjectParameter("ForCod", typeof(string));
+    
+            var titSecParameter = titSec != null ?
+                new ObjectParameter("TitSec", titSec) :
+                new ObjectParameter("TitSec", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Obtener_Items_Por_Seccion", forCodParameter, titSecParameter, resultado);
+        }
+    
+        public virtual ObjectResult<string> Obtener_Secciones_Por_Formulario(string forCod)
+        {
+            var forCodParameter = forCod != null ?
+                new ObjectParameter("ForCod", forCod) :
+                new ObjectParameter("ForCod", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Obtener_Secciones_Por_Formulario", forCodParameter);
         }
     
         public virtual int SP_AgregarUsuario(string correo, string contrasenna, string cedula)

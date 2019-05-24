@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -17,8 +18,13 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Responde
         public ActionResult Index()
         {
-            var responde = db.Responde.Include(r => r.Formulario_Respuesta);
+            var responde = db.Responde.Include(r => r.Formulario_Respuesta).Include(r => r.Item).Include(r => r.Seccion);
             return View(responde.ToList());
+        }
+
+        public void ObtenerSeccionesFormulario(string CodigoFormulario)
+        {
+            System.Data.Entity.Core.Objects.ObjectResult<string> Secciones = db.Obtener_Secciones_Por_Formulario(CodigoFormulario);
         }
 
         // GET: Responde/Details/5
@@ -40,6 +46,8 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult Create()
         {
             ViewBag.FechaRespuesta = new SelectList(db.Formulario_Respuesta, "Fecha", "CodigoFormulario");
+            ViewBag.ItemId = new SelectList(db.Item, "ItemId", "TextoPregunta");
+            ViewBag.TituloSeccion = new SelectList(db.Seccion, "Titulo", "Descripcion");
             return View();
         }
 
@@ -48,7 +56,7 @@ namespace Opiniometro_WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemId,TituloSeccion,FechaRespuesta,CodigoFormularioResp,CedulaPersona,CedulaProfesor,AñoGrupoResp,SemestreGrupoResp,NumeroGrupoResp,SiglaGrupoResp,Observacion,Respuesta,RespuestaProfesor")] Responde responde)
+        public ActionResult Create([Bind(Include = "ItemId,TituloSeccion,FechaRespuesta,CodigoFormularioResp,CedulaPersona,CedulaProfesor,AnnoGrupoResp,SemestreGrupoResp,NumeroGrupoResp,SiglaGrupoResp,Observacion,Respuesta,RespuestaProfesor")] Responde responde)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +66,8 @@ namespace Opiniometro_WebApp.Controllers
             }
 
             ViewBag.FechaRespuesta = new SelectList(db.Formulario_Respuesta, "Fecha", "CodigoFormulario", responde.FechaRespuesta);
+            ViewBag.ItemId = new SelectList(db.Item, "ItemId", "TextoPregunta", responde.ItemId);
+            ViewBag.TituloSeccion = new SelectList(db.Seccion, "Titulo", "Descripcion", responde.TituloSeccion);
             return View(responde);
         }
 
@@ -74,6 +84,8 @@ namespace Opiniometro_WebApp.Controllers
                 return HttpNotFound();
             }
             ViewBag.FechaRespuesta = new SelectList(db.Formulario_Respuesta, "Fecha", "CodigoFormulario", responde.FechaRespuesta);
+            ViewBag.ItemId = new SelectList(db.Item, "ItemId", "TextoPregunta", responde.ItemId);
+            ViewBag.TituloSeccion = new SelectList(db.Seccion, "Titulo", "Descripcion", responde.TituloSeccion);
             return View(responde);
         }
 
@@ -82,7 +94,7 @@ namespace Opiniometro_WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ItemId,TituloSeccion,FechaRespuesta,CodigoFormularioResp,CedulaPersona,CedulaProfesor,AñoGrupoResp,SemestreGrupoResp,NumeroGrupoResp,SiglaGrupoResp,Observacion,Respuesta,RespuestaProfesor")] Responde responde)
+        public ActionResult Edit([Bind(Include = "ItemId,TituloSeccion,FechaRespuesta,CodigoFormularioResp,CedulaPersona,CedulaProfesor,AnnoGrupoResp,SemestreGrupoResp,NumeroGrupoResp,SiglaGrupoResp,Observacion,Respuesta,RespuestaProfesor")] Responde responde)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +103,8 @@ namespace Opiniometro_WebApp.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.FechaRespuesta = new SelectList(db.Formulario_Respuesta, "Fecha", "CodigoFormulario", responde.FechaRespuesta);
+            ViewBag.ItemId = new SelectList(db.Item, "ItemId", "TextoPregunta", responde.ItemId);
+            ViewBag.TituloSeccion = new SelectList(db.Seccion, "Titulo", "Descripcion", responde.TituloSeccion);
             return View(responde);
         }
 
@@ -128,5 +142,16 @@ namespace Opiniometro_WebApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public int ObtenerSecciones(string Codigo)
+        {
+
+
+
+            return 0;
+        }
+
     }
 }
+
+

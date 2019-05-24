@@ -163,6 +163,11 @@ INSERT INTO Estudiante VALUES
 ,('117720910', 'B33333') 
 ,('236724501', 'B44444');
 
+--INSERT INTO Responde (ItemId,TituloSeccion, FechaRespuesta, CodigoFormularioResp, CedulaPersona, CedulaProfesor, AnnoGrupoResp, SemestreGrupoResp, NumeroGrupoResp, SiglaGrupoResp)
+--VALUES (3,'Titulo Seccion 1','8-12-1994','CodF01','123456789','987654321',54,01,21,'SG1234'),
+--	   (1,'Titulo Seccion 2','8-12-1998','CodF02','123789659','987678951',59,01,20,'SG2345'),
+--	   (2,'Titulo Seccion 3','8-12-1997','CodF03','135786789','982455321',51,01,15,'SG3456');
+
 EXEC SP_AgregarUsuario @Correo='jose.mejiasrojas@ucr.ac.cr', @Contrasenna='123456', @Cedula='116720500'
 EXEC SP_AgregarUsuario @Correo='daniel.escalanteperez@ucr.ac.cr', @Contrasenna='Danielito', @Cedula='115003456'
 EXEC SP_AgregarUsuario @Correo='rodrigo.cascantejuarez@ucr.ac.cr', @Contrasenna='contrasena', @Cedula='117720910'
@@ -306,6 +311,14 @@ INSERT INTO Formulario_Respuesta (Fecha, CodigoFormulario, CedulaPersona, Cedula
 VALUES  ('2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 1),
 		('2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 1),
 		('2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 1);
+
+ --Conformado_Item_Sec_Form
+INSERT INTO Conformado_Item_Sec_Form (ItemId, CodigoFormulario, TituloSeccion, NombreFormulario)
+VALUES	(1, '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
+		(3, '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
+		(2, '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores'),	
+		(4, '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores');
+
 
 --Responde
 INSERT INTO Responde (ItemId, TituloSeccion, FechaRespuesta, CodigoFormularioResp, CedulaPersona, CedulaProfesor, AnnoGrupoResp, SemestreGrupoResp, NumeroGrupoResp, SiglaGrupoResp, Observacion, Respuesta)
