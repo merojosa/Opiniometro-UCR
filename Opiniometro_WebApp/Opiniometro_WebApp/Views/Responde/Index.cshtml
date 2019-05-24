@@ -9,43 +9,51 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+<div class="row">
+        
+        <img src="@Url.Action("GraficoPie")" alt="SimpleChart" />
+</div>
+
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Observacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Respuesta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RespuestaProfesor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Formulario_Respuesta.CodigoFormulario)
-        </th>
-        <th></th>
-    </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Observacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Respuesta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RespuestaProfesor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Formulario_Respuesta.CodigoFormulario)
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Observacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Respuesta)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RespuestaProfesor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Formulario_Respuesta.CodigoFormulario)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Observacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Respuesta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RespuestaProfesor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Formulario_Respuesta.CodigoFormulario)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
 
-</table>
+ </table>
+<script src="~/Scripts/RespondeScript.js"></script>

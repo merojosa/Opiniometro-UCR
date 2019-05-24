@@ -111,7 +111,7 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CambiarContrasenna", correoParameter, contrasenna_NuevaParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> SP_ContarRespuestasPorGrupo(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, Nullable<int> itemId, string respuesta, ObjectParameter cntResp)
+        public virtual int SP_ContarRespuestasPorGrupo(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, Nullable<int> itemId, string respuesta, ObjectParameter cntResp)
         {
             var codigoFormularioParameter = codigoFormulario != null ?
                 new ObjectParameter("codigoFormulario", codigoFormulario) :
@@ -145,40 +145,7 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("respuesta", respuesta) :
                 new ObjectParameter("respuesta", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_ContarRespuestasPorGrupo", codigoFormularioParameter, cedulaProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numeroGrupoParameter, siglaCursoParameter, itemIdParameter, respuestaParameter, cntResp);
-        }
-    
-        public virtual int SP_ContarRespuestasPorGrupor(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, Nullable<int> itemId)
-        {
-            var codigoFormularioParameter = codigoFormulario != null ?
-                new ObjectParameter("codigoFormulario", codigoFormulario) :
-                new ObjectParameter("codigoFormulario", typeof(string));
-    
-            var cedulaProfesorParameter = cedulaProfesor != null ?
-                new ObjectParameter("cedulaProfesor", cedulaProfesor) :
-                new ObjectParameter("cedulaProfesor", typeof(string));
-    
-            var annoGrupoParameter = annoGrupo.HasValue ?
-                new ObjectParameter("annoGrupo", annoGrupo) :
-                new ObjectParameter("annoGrupo", typeof(short));
-    
-            var semestreGrupoParameter = semestreGrupo.HasValue ?
-                new ObjectParameter("semestreGrupo", semestreGrupo) :
-                new ObjectParameter("semestreGrupo", typeof(byte));
-    
-            var numeroGrupoParameter = numeroGrupo.HasValue ?
-                new ObjectParameter("numeroGrupo", numeroGrupo) :
-                new ObjectParameter("numeroGrupo", typeof(byte));
-    
-            var siglaCursoParameter = siglaCurso != null ?
-                new ObjectParameter("siglaCurso", siglaCurso) :
-                new ObjectParameter("siglaCurso", typeof(string));
-    
-            var itemIdParameter = itemId.HasValue ?
-                new ObjectParameter("itemId", itemId) :
-                new ObjectParameter("itemId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ContarRespuestasPorGrupor", codigoFormularioParameter, cedulaProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numeroGrupoParameter, siglaCursoParameter, itemIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ContarRespuestasPorGrupo", codigoFormularioParameter, cedulaProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numeroGrupoParameter, siglaCursoParameter, itemIdParameter, respuestaParameter, cntResp);
         }
     
         public virtual ObjectResult<string> SP_DevolverObservacionesPorGrupo(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, Nullable<int> itemId)

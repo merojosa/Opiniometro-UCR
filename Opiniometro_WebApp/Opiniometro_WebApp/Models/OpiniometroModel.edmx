@@ -802,15 +802,6 @@
           <Parameter Name="respuesta" Type="nvarchar" Mode="In" />
           <Parameter Name="cntResp" Type="int" Mode="InOut" />
         </Function>
-        <Function Name="SP_ContarRespuestasPorGrupor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigoFormulario" Type="char" Mode="In" />
-          <Parameter Name="cedulaProfesor" Type="char" Mode="In" />
-          <Parameter Name="annoGrupo" Type="smallint" Mode="In" />
-          <Parameter Name="semestreGrupo" Type="tinyint" Mode="In" />
-          <Parameter Name="numeroGrupo" Type="tinyint" Mode="In" />
-          <Parameter Name="siglaCurso" Type="char" Mode="In" />
-          <Parameter Name="itemId" Type="int" Mode="In" />
-        </Function>
         <Function Name="SP_DevolverObservacionesPorGrupo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigoFormulario" Type="char" Mode="In" />
           <Parameter Name="cedulaProfesor" Type="char" Mode="In" />
@@ -1964,7 +1955,7 @@
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna_Nueva" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_ContarRespuestasPorGrupo" ReturnType="Collection(Int32)">
+          <FunctionImport Name="SP_ContarRespuestasPorGrupo">
             <Parameter Name="codigoFormulario" Mode="In" Type="String" />
             <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
             <Parameter Name="annoGrupo" Mode="In" Type="Int16" />
@@ -1974,15 +1965,6 @@
             <Parameter Name="itemId" Mode="In" Type="Int32" />
             <Parameter Name="respuesta" Mode="In" Type="String" />
             <Parameter Name="cntResp" Mode="InOut" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ContarRespuestasPorGrupor">
-            <Parameter Name="codigoFormulario" Mode="In" Type="String" />
-            <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
-            <Parameter Name="annoGrupo" Mode="In" Type="Int16" />
-            <Parameter Name="semestreGrupo" Mode="In" Type="Byte" />
-            <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
-            <Parameter Name="siglaCurso" Mode="In" Type="String" />
-            <Parameter Name="itemId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_DevolverObservacionesPorGrupo" ReturnType="Collection(String)">
             <Parameter Name="codigoFormulario" Mode="In" Type="String" />
@@ -2347,7 +2329,6 @@
           <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarUsuario" />
           <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="Opiniometro_DatosModel.Store.SP_CambiarContrasenna" />
           <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_ContarRespuestasPorGrupo" />
-          <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupor" FunctionName="Opiniometro_DatosModel.Store.SP_ContarRespuestasPorGrupor" />
           <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_DevolverObservacionesPorGrupo" />
           <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_DatosModel.Store.SP_ExistenciaCorreo" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />

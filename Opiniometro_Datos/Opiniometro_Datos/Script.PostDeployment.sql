@@ -344,11 +344,13 @@ CREATE PROCEDURE SP_ContarRespuestasPorGrupo
 	@respuesta			NVARCHAR(500),
 	@cntResp			INT OUTPUT
 AS
+BEGIN
 	SET NOCOUNT ON
-	SELECT COUNT(e.Respuesta)
+	SELECT @cntResp= COUNT(e.Respuesta)
 	FROM Responde as e
 	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId AND e.Respuesta = @respuesta
 	GROUP BY e.CodigoFormularioResp, e.CedulaProfesor, e.AnnoGrupoResp, e.SemestreGrupoResp, e.NumeroGrupoResp, e.SiglaGrupoResp, e.ItemId, e.Respuesta
+END
 GO
 
 GO
@@ -368,10 +370,12 @@ CREATE PROCEDURE SP_DevolverObservacionesPorGrupo
 	@siglaCurso CHAR(6),
 	@itemId INT
 AS
+BEGIN
 	SET NOCOUNT ON
 	SELECT e.Observacion
 	FROM Responde as e
 	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
+END
 GO
 
 --select de prueba para la cnt de respuestas
