@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
+using System.Data.SqlClient;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -36,89 +38,30 @@ namespace Opiniometro_WebApp.Controllers
             return View(responde);
         }
 
-        // GET: Responde/Create
-        public ActionResult Create()
+        [HttpGet]
+        private int ObtenerCantidadRespuestasPorPregunta(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, int itemId, string respuesta)
         {
-            ViewBag.FechaRespuesta = new SelectList(db.Formulario_Respuesta, "Fecha", "CodigoFormulario");
-            return View();
+            ObjectParameter resultado = new ObjectParameter("resultado", typeof(int));
+
+            db.SP_ContarRespuestasPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId, respuesta, resultado);
+
+            return Convert.ToInt32(resultado.Value);
+
         }
 
-        // POST: Responde/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemId,TituloSeccion,FechaRespuesta,CodigoFormularioResp,CedulaPersona,CedulaProfesor,AñoGrupoResp,SemestreGrupoResp,NumeroGrupoResp,SiglaGrupoResp,Observacion,Respuesta,RespuestaProfesor")] Responde responde)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Responde.Add(responde);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //[HttpGet]
+        //private int ObtenerObservaciones(int cursoId)
+        //{
+        //    //Parametro para que se guarde el resultado             
+        //    ObjectParameter resultado = new ObjectParameter("resultado", typeof(Double));
 
-            ViewBag.FechaRespuesta = new SelectList(db.Formulario_Respuesta, "Fecha", "CodigoFormulario", responde.FechaRespuesta);
-            return View(responde);
-        }
+        //    //Invoca el metodo            
+        //    db.ProcObtenerPromedioCurso(cursoId, resultado);
 
-        // GET: Responde/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Responde responde = db.Responde.Find(id);
-            if (responde == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.FechaRespuesta = new SelectList(db.Formulario_Respuesta, "Fecha", "CodigoFormulario", responde.FechaRespuesta);
-            return View(responde);
-        }
+        //    //Devuelve el resultado            
+        //    return Convert.ToDouble(resultado.Value);
 
-        // POST: Responde/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ItemId,TituloSeccion,FechaRespuesta,CodigoFormularioResp,CedulaPersona,CedulaProfesor,AñoGrupoResp,SemestreGrupoResp,NumeroGrupoResp,SiglaGrupoResp,Observacion,Respuesta,RespuestaProfesor")] Responde responde)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(responde).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.FechaRespuesta = new SelectList(db.Formulario_Respuesta, "Fecha", "CodigoFormulario", responde.FechaRespuesta);
-            return View(responde);
-        }
-
-        // GET: Responde/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Responde responde = db.Responde.Find(id);
-            if (responde == null)
-            {
-                return HttpNotFound();
-            }
-            return View(responde);
-        }
-
-        // POST: Responde/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Responde responde = db.Responde.Find(id);
-            db.Responde.Remove(responde);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //}
 
         protected override void Dispose(bool disposing)
         {
