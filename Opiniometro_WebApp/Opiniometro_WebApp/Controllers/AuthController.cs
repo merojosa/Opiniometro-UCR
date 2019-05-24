@@ -61,7 +61,8 @@ namespace Opiniometro_WebApp.Controllers
                     DefaultAuthenticationTypes.ApplicationCookie);
 
                 HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, ident);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "LogInPerfiles");
+
             }
             else
             {
