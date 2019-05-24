@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity.Core.Objects;
 using Opiniometro_WebApp.Models;
 using System.Data.SqlClient;
 using System.Web.Helpers;
