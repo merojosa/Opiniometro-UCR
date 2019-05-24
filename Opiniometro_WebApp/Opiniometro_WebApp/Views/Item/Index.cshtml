@@ -7,21 +7,20 @@
 <h2>Banco de Preguntas</h2>
 
 <p>
-    <input type="submit" value="Crear Nueva Pregunta" class="btn btn-secondary"  id="botonNuevaPregunta" onclick="accionBotonNuevaPregunta()" />
+    <input type="submit" value="Crear Nueva Pregunta" class="btn btn-secondary"  id="botonNuevaPregunta" onclick="location.href = 'http://localhost:51103/Item/create'" />
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.Label("Número")
-            @*@Html.DisplayNameFor(model => model.ItemId)*@
+            
+            @Html.DisplayNameFor(model => model.ItemId)
         </th>
         <th>
             @Html.Label("Planteamiento de la pregunta")
             @*@Html.DisplayNameFor(model => model.TextoPregunta)*@
         </th>
         <th>
-            @Html.Label("Categoría")
-            @*@Html.DisplayNameFor(model => model.Categoria)*@
+            @Html.DisplayNameFor(model => model.Categoria)
         </th>
         <th>
             @Html.Label("Tiene Observación")
@@ -35,6 +34,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.ItemId)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.TextoPregunta)
         </td>
         <td>
@@ -42,9 +44,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TieneObservacion )
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemId)
         </td>
 
         <td>
