@@ -364,7 +364,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
-    <Content Include="Views\Auth\Error.cshtml" />
     <Content Include="Views\Formulario\Create.cshtml" />
     <Content Include="Views\Formulario\Delete.cshtml" />
     <Content Include="Views\Formulario\Details.cshtml" />

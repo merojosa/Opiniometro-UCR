@@ -34,7 +34,7 @@ namespace Opiniometro_WebApp.Controllers
          *  
          *  EFECTO: verificar los datos brindados en la base de datos.
          *  REQUIERE: correo y contrasenna en "empaquetado" en la clase Usuario.
-         *  MODIFICA: variable Resultado para saber si se acepta la autenticacion (con un true).
+         *  MODIFICA: la identidad para que el usario este loggeado en el sistema.
          *  
          *  Basado en: https://stackoverflow.com/questions/31584506/how-to-implement-custom-authentication-in-asp-net-mvc-5
          */
@@ -47,7 +47,7 @@ namespace Opiniometro_WebApp.Controllers
             // Si se pudo autenticar.
             if ((bool)exito.Value == true)
             {
-                var ident = new ClaimsIdentity(
+                var identidad = new ClaimsIdentity(
                     new[] {
                     new Claim(ClaimTypes.NameIdentifier, usuario.CorreoInstitucional),
                     new Claim(ClaimTypes.Name, usuario.CorreoInstitucional),
@@ -60,7 +60,7 @@ namespace Opiniometro_WebApp.Controllers
                     },
                     DefaultAuthenticationTypes.ApplicationCookie);
 
-                HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, ident);
+                HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, identidad);
                 return RedirectToAction("Index", "LogInPerfiles");
 
             }
@@ -86,7 +86,7 @@ namespace Opiniometro_WebApp.Controllers
         /*
          * EFECTO: verifica si el correo existe en la base de datos, y si esta, envia un correo con una contrasena nueva.
          * REQUIERE: un correo.
-         * MODIFICA: la variable Resultado la cual si es true, enviaria el correo.
+         * MODIFICA: la contrasena del usuario, si es que calza con lo que hay en la base de datos.
          */
         [HttpPost]
         public ActionResult Recuperar(Usuario usuario)
@@ -114,9 +114,14 @@ namespace Opiniometro_WebApp.Controllers
             return PartialView(usuario);
         }
 
-        private void EnviarCorreo(string receptor, string asunto, string contenido)
+        /*
+         * EFECTO: envia un correo con una contrasena aleatoria.
+         * REQUIERE: el correo de la persona que va a recibir la contrasena, el asunto de la persona, y el contenido del mismo.
+         * MODIFICA: n/a
+         */
+        private void EnviarCorreo(string correo_receptor, string asunto, string contenido)
         {
-            string autor = System.Configuration.ConfigurationManager.AppSettings["CorreoEmisor"].ToString();
+            string correo_emisor = System.Configuration.ConfigurationManager.AppSettings["CorreoEmisor"].ToString();
             string contrasenna = System.Configuration.ConfigurationManager.AppSettings["ContrasennaEmisor"].ToString();
 
             SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587);
@@ -124,9 +129,9 @@ namespace Opiniometro_WebApp.Controllers
             cliente.Timeout = 100000;
             cliente.DeliveryMethod = SmtpDeliveryMethod.Network;
             cliente.UseDefaultCredentials = false;
-            cliente.Credentials = new NetworkCredential(autor, contrasenna);
+            cliente.Credentials = new NetworkCredential(correo_emisor, contrasenna);
 
-            MailMessage correo = new MailMessage(autor, receptor, asunto, contenido);
+            MailMessage correo = new MailMessage(correo_emisor, correo_receptor, asunto, contenido);
             correo.IsBodyHtml = true;
             correo.BodyEncoding = UTF8Encoding.UTF8;
             cliente.Send(correo);
@@ -134,9 +139,9 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         /*
-         * EFECTO:
-         * REQUIERE:
-         * MODIFICA:
+         * EFECTO: genera y retorna una contrasena aleatoria.
+         * REQUIERE: el tamano de la contrasena.
+         * MODIFICA: n/a
          * 
          * Basado en: https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings
          */
