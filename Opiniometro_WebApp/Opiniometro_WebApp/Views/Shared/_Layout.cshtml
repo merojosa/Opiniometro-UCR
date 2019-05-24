@@ -11,7 +11,10 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <!--Barra-->
+    @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-top:145px" ;>
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -32,7 +35,7 @@
                         <a onclick="location.href='@Url.Action("CrearUsuario", "Admin")';return false;">Insertar Usuario</a>
                         <a onclick="location.href='@Url.Action("Index", "LogInPerfiles")';return false;">orueba perfiles Usuario</a>
                     </div>
-                </div> 
+                </div>
 
 
                 <div class="dropdown">
@@ -42,17 +45,21 @@
                     </button>
                     <div class="dropdown-contentt">
                         <a onclick="location.href='@Url.Action("Index", "Formulario")';return false;"> Insertar Formulario </a>
+
                         <a onclick="location.href='@Url.Action("AsignarFormularios", "AsignarFormularios")';return false;">Asignar Formulario</a>
                         <a onclick="location.href='@Url.Action("Index", "Responde")';return false;">Visualizar resultados evaluaciones</a>
                         <a onclick="location.href='@Url.Action("Index", "Seccion")';return false;"> Seccion </a>
                         <a onclick="location.href='@Url.Action("Index", "Item")';return false;"> Item </a>
                     </div>
-                </div> 
-               
+                </div>
+
 
             </div>
         </div>
-    </div>
+    </nav>
+
+
+
     <div class="container body-content">
         @RenderBody()
         <hr />
