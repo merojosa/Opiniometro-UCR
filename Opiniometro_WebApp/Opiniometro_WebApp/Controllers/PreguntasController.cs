@@ -13,7 +13,7 @@ namespace Opiniometro_WebApp.Controllers
     public class PreguntasController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
-
+        
         // GET: Preguntas
         public ActionResult Index()
         {
@@ -21,7 +21,7 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // GET: Preguntas/Details/5
-        public ActionResult Details(string id)
+       /* public ActionResult Details(string id)
         {
             if (id == null)
             {
@@ -33,7 +33,7 @@ namespace Opiniometro_WebApp.Controllers
                 return HttpNotFound();
             }
             return View(preguntas);
-        }
+        }*/
 
         // GET: Preguntas/Create
         public ActionResult Create()
@@ -46,7 +46,7 @@ namespace Opiniometro_WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Planteamiento")] Preguntas preguntas)
+        /*public ActionResult Create([Bind(Include = "Planteamiento")] Preguntas preguntas)
         {
             if (ModelState.IsValid)
             {
@@ -56,10 +56,10 @@ namespace Opiniometro_WebApp.Controllers
             }
 
             return View(preguntas);
-        }
+        }*/
 
         // GET: Preguntas/Edit/5
-        public ActionResult Edit(string id)
+       /* public ActionResult Edit(string id)
         {
 
             if (id == null)
@@ -72,12 +72,12 @@ namespace Opiniometro_WebApp.Controllers
                 return HttpNotFound();
             }
             return View(preguntas);
-        }
+        }*/
 
         // POST: Preguntas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Planteamiento")] Preguntas preguntas)
         {
@@ -89,10 +89,10 @@ namespace Opiniometro_WebApp.Controllers
                 return RedirectToAction("Index");
             }
             return View(preguntas);
-        }
+        }*/
 
         // GET: Preguntas/Delete/5
-        public ActionResult Delete(string id)
+        /*public ActionResult Delete(string id)
         {
             if (id == null)
             {
@@ -104,10 +104,10 @@ namespace Opiniometro_WebApp.Controllers
                 return HttpNotFound();
             }
             return View(preguntas);
-        }
+        }*/
 
         // POST: Preguntas/Delete/5
-        [HttpPost, ActionName("Delete")]
+        /*[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
@@ -115,7 +115,7 @@ namespace Opiniometro_WebApp.Controllers
             db.Preguntas.Remove(preguntas);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
+        }*/
 
         protected override void Dispose(bool disposing)
         {

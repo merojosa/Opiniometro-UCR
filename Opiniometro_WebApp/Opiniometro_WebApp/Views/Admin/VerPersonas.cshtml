@@ -1,137 +1,65 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Persona>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <title>Document</title>
-</head>
+@{
+    ViewBag.Title = "VerPersonas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-<body>
-
-    <div class="container">
-        <div class="row">
-            <div class="center_table">
-                <table class="table table-hover table-responsive table-striped">
-                    <thead class="thead-inverse">
-                        <tr>
-                            <th>
-                                Nombre
-                            </th>
-                            <th>
-                                Ubicación
-                            </th>
-                            <th>
-                                Descripción
-                            </th>
-                            <th>
-                                Tema
-                            </th>
-                            <th>
-                                Inicio
-                            </th>
-                            <th>
-                                Fin
-                            </th>
-                            <th>
-                                Edad Mínima
-                            </th>
-                            <th>
-                                Edad Máxima
-                            </th>
-                            <th>
-                                Plazas Totales
-                            </th>
-                            <th>
-                                Plazas Disponibles
-                            </th>
-                            <th>
-                                Precio
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                            <td>
-                                Cell
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+<h2>Personas registradas</h2>
+@using (Html.BeginForm())
+{
+    <p>
+        <div class="form-group, form-inline">
+            @Html.TextBox("cedula")
+            <input type="submit" value="Buscar" class="btn btn-default" />
         </div>
-    </div>
+     </p>
+}
+    <table class="table">
+        <tr>
+            <th>
+                <!--@Html.DisplayNameFor(model => model.Cedula)-->
+                Cédula
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                <!--@Html.DisplayNameFor(model => model.Apellido1)-->
+                Primer apellido
+            </th>
+            <th>
+                <!--@Html.DisplayNameFor(model => model.Apellido2)-->
+                Segundo apellido
+            </th>
+            <th>
+                <!--@Html.DisplayNameFor(model => model.Direccion)-->
+                Dirección
+            </th>
+            <th></th>
+        </tr>
 
-</body>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cedula)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direccion)
+                </td>
 
-</html>
+              
+            </tr> 
+        }
+
+    </table>
