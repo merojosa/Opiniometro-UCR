@@ -7,7 +7,7 @@
 <h2>Formularios</h2>
 
 <p>
-    <input type="submit" value="Crear Nuevo Formulario" class="btn btn-secondary" id="botonNuevaSeccion" onclick="location.href = 'http://localhost:51103/Formulario/create'()" />
+    <input type="button" value="Crear Nuevo Formulario" class="btn btn-secondary" id="botonNuevaSeccion" onclick="accionBotonCrearNueva()" />
 </p>
 <table class="table">
     <tr>
@@ -21,21 +21,28 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CodigoFormulario)
-        </td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoFormulario)
+            </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.CodigoFormulario }) |*@
-            @*@Html.ActionLink("Details", "Details", new { id=item.CodigoFormulario }) |*@
-            @*@Html.ActionLink("Delete", "Delete", new { id=item.CodigoFormulario })*@
-        </td>
-    </tr>
-}
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.CodigoFormulario }) |*@
+                @*@Html.ActionLink("Details", "Details", new { id=item.CodigoFormulario }) |*@
+                @*@Html.ActionLink("Delete", "Delete", new { id=item.CodigoFormulario })*@
+            </td>
+        </tr>
+    }
 
 </table>
+
+<script>
+        function accionBotonCrearNueva() {
+            document.location = '@Url.Action("Create")';
+        }
+</script>
