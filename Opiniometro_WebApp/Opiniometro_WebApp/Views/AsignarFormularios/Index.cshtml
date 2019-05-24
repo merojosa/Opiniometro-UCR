@@ -58,7 +58,7 @@
                             {
                                 <!-- Buscador -->
                                 <p>
-                                    Nombre del curso: @Html.TextBox("SearchString")
+                                    @Html.TextBox("SearchString", "", new { placeholder= "Nombre del curso"})
                                     <input type="submit" value="Buscar" />
                                 </p>
                             }
@@ -77,13 +77,17 @@
                                 <thead>
                                     <!-- Table header -->
                                     <th>
-                                        <div align='center'>Curso</th>
+                                        <div align='center'>Curso</div>
+                                    </th>
                                     <th>
-                                        <div align='center'>Ciclo</th>
+                                        <div align='center'>Ciclo</div>
+                                    </th>
                                     <th>
-                                        <div align='center'> Numero de grupo</th>
+                                        <div align='center'> Numero de grupo</div>
+                                    </th>
                                     <th>
-                                        <div align='center'>Seleccionar para asignar</th>
+                                        <div align='center'>Seleccionar para asignar</div>
+                                    </th>
                                 </thead>
                                 <tbody>
                                     <!-- Para cada item en Model::Grupos... -->
