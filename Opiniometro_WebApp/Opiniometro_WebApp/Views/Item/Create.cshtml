@@ -18,27 +18,11 @@
     <div class="form-group">
         @Html.Label("Tipo Pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @*<div class="checkbox">
-                    @Html.EditorFor(model => model.TieneObservacion)
-                    @Html.ValidationMessageFor(model => model.TieneObservacion, "", new { @class = "text-danger" })
-                </div>*@
-            @*Combobox *@
-            <select id="tipoPregunta" onchange="seleccionarTipoPregunta()">
-                <option value="Si-No">Si-No</option>
-                <option value="Texto libre">Texto libre</option>
-            </select>
-            <p id="tipoPreguntaID"></p>
+           
+            @Html.DropDownListFor(model => model.TipoPregunta, new SelectList(ViewBag.TipoPreguntaItems, "Value", "Text"),"Seleccione")
         </div>
     </div>
-    <script>
-        @*Aqui capturamos los eventos del combo box. *@
-        function seleccionarTipoPregunta()
-        {
-            var seleccion = document.getElementById("tipoPregunta").value;
-            //document.getElementById("demo").innerHTML = "Seleccionaste: " + seleccion;
-
-        }
-    </script>
+    
 
     <div class="form-group">
         @Html.Label("Texto Pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -51,9 +35,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Categoria, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @*@Html.EditorFor(model => model.Categoria, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Categoria, "", new { @class = "text-danger" })*@
-            @*Combobox *@
+            @Html.DropDownListFor(model => model.Categoria, new SelectList(ViewBag.CategoriaItems, "Value", "Text"), "Seleccione")
             <select id="categorias" onchange="seleccionarCategoria()">
                 <option value="Profesor">Profesor</option>
                 <option value="Infraestructura">Infraestructura</option>
@@ -62,29 +44,12 @@
             <p id="categoriaID"></p>
         </div>
     </div>
-    <script>
-@*Aqui capturamos los eventos del combo box. *@
-        function seleccionarCategoria()
-        {
-            var seleccionCategoria = document.getElementById("categorias").value;
-            document.getElementById("categoriaID").innerHTML = "Seleccionaste: " + seleccionCategoria;
-
-        }
-    </script>
+    
 
     <div class="form-group">
         @Html.Label("Tiene Observación", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @*<div class="checkbox">
-                        @Html.EditorFor(model => model.TieneObservacion)
-                        @Html.ValidationMessageFor(model => model.TieneObservacion, "", new { @class = "text-danger" })
-                </div>*@
-            @*Combobox *@
-            <select id="observacion" onchange="seleccionarObservacion()">
-                <option value="Si">Si</option>
-                <option value="No">No</option>
-            </select>
-            <p id="observacionID"></p>
+            @Html.DropDownListFor(model => model.TieneObservacion, new SelectList(ViewBag.BooleanItems, "Value", "Text"), "Seleccione")
         </div>
     </div>
     <script>
@@ -104,30 +69,16 @@
  <div class="form-group">
      <div class="col-md-offset-2 col-md-10">
      <input type="submit" value="Crear"  class="btn btn-secondary" p id="botonCrear" onclick="accionBotonCrear()"/>
-         <input type="submit" value="Vista Previa" disabled class="btn btn-secondary" p id="botonVistaPrevia" onclick="accionBotonVistaPrevia()"/>
-         <input type="submit" value="Cancelar" class="btn btn-secondary"  id="botonCancelar" onclick="accionBotonCancelar()" />
+         @*<input type="submit" value="Vista Previa" disabled class="btn btn-secondary" p id="botonVistaPrevia" onclick="accionBotonVistaPrevia()"/>*@
+         <input type="button" value="Cancelar" class="btn btn-secondary"  id="botonCancelar" onclick="accionBotonCancelar()" />
      </div>
     </div>
 
-    @* La accion que sucede al seleccionar boton Crear *@
-    <script>
-        function accionBotonCrear() {
-            document.getElementById("botonCrear").style.color = "green";
-           
-        }
-    </script>
-
-    @* La accion que sucede al seleccionar boton Vista Previa *@
-    <script>
-        function accionBotonVistaPrevia() {
-            document.getElementById("botonVistaPrevia").style.color = "blue";
-        }
-    </script>
 
     @* La accion que sucede al seleccionar boton Cancelar *@
     <script>
         function accionBotonCancelar() {
-            document.getElementById("botonCancelar").style.color = "red";
+            document.location = '@Url.Action("Index")';
         }
     </script>
 

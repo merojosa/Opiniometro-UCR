@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
@@ -39,6 +40,22 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Item/Create
         public ActionResult Create()
         {
+            ViewBag.TipoPreguntaItems = new List<ListItem>
+            {
+                  new ListItem { Text = "Sí-No", Value="3" },
+                  new ListItem { Text = "Texto Libre", Value="1" }
+            };
+            ViewBag.BooleanItems = new List<ListItem>
+            {
+                  new ListItem { Text = "Sí", Value="true" },
+                  new ListItem { Text = "No", Value="false" }
+            };
+            ViewBag.CategoriaItems = new List<ListItem>
+            {
+                  new ListItem { Text = "Profesor", Value="Profesor" },
+                  new ListItem { Text = "Infraestructura", Value="Infraestructura" },
+                  new ListItem { Text = "Curso", Value="Curso" }
+            };
             ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID");
             //ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId");
             return View();
@@ -49,7 +66,7 @@ namespace Opiniometro_WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,Categoria,TieneObservacion")] Item item)
+        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,Categoria,TieneObservacion,TipoPregunta")] Item item)
         {
 
 
