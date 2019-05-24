@@ -5,12 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>VerPersonas</h2>
+<h2>Personas registradas</h2>
 @using (Html.BeginForm())
 {
     <p>
         <div class="form-group, form-inline">
-            Buscar:@Html.TextBox("cedula")
+            @Html.TextBox("cedula")
             <input type="submit" value="Buscar" class="btn btn-default" />
         </div>
      </p>
@@ -18,19 +18,23 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Cedula)
+                <!--@Html.DisplayNameFor(model => model.Cedula)-->
+                Cédula
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Apellido1)
+                <!--@Html.DisplayNameFor(model => model.Apellido1)-->
+                Primer apellido
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Apellido2)
+                <!--@Html.DisplayNameFor(model => model.Apellido2)-->
+                Segundo apellido
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Direccion)
+                <!--@Html.DisplayNameFor(model => model.Direccion)-->
+                Dirección
             </th>
             <th></th>
         </tr>

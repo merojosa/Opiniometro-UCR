@@ -12,18 +12,19 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Perfil
+    public partial class Enfasis
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Perfil()
+        public Enfasis()
         {
-            this.Posee_Enfasis_Perfil_Permiso = new HashSet<Posee_Enfasis_Perfil_Permiso>();
+            this.Unidad_Academica = new HashSet<Unidad_Academica>();
         }
     
-        public string Id { get; set; }
-        public string Tipo { get; set; }
+        public byte Numero { get; set; }
+        public string SiglaCarrera { get; set; }
     
+        public virtual Carrera Carrera { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Posee_Enfasis_Perfil_Permiso> Posee_Enfasis_Perfil_Permiso { get; set; }
+        public virtual ICollection<Unidad_Academica> Unidad_Academica { get; set; }
     }
 }
