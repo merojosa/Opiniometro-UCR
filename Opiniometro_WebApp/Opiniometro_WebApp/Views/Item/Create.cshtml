@@ -36,12 +36,7 @@
         @Html.LabelFor(model => model.Categoria, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.Categoria, new SelectList(ViewBag.CategoriaItems, "Value", "Text"), "Seleccione")
-            <select id="categorias" onchange="seleccionarCategoria()">
-                <option value="Profesor">Profesor</option>
-                <option value="Infraestructura">Infraestructura</option>
-                <option value="Curso">Curso</option>
-            </select>
-            <p id="categoriaID"></p>
+
         </div>
     </div>
     
@@ -52,19 +47,7 @@
             @Html.DropDownListFor(model => model.TieneObservacion, new SelectList(ViewBag.BooleanItems, "Value", "Text"), "Seleccione")
         </div>
     </div>
-    <script>
-        @*Aqui capturamos los eventos del combo box. *@
-        function seleccionarObservacion()
-        {
-            var seleccion = document.getElementById("observacion");
 
-            if (seleccion.value == "Si")
-                @Html.EditorFor(model => model.TieneObservacion, true);
-            else 
-                @Html.EditorFor(model => model.TieneObservacion, false);
-            //document.getElementById("demo1").innerHTML = "Seleccionaste: " + seleccion;
-        }
-    </script>
 
     @* Creacion de botones en la misma linea y con color gris *@
  <div class="form-group">
