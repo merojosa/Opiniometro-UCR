@@ -102,6 +102,61 @@ BEGIN
 END
 GO
 
+IF OBJECT_ID('ValorRandom') IS NOT NULL
+	DROP VIEW ValorRandom
+GO
+CREATE VIEW ValorRandom
+AS
+SELECT randomvalue = CRYPT_GEN_RANDOM(10)
+GO
+
+IF OBJECT_ID('SF_GenerarContrasena') IS NOT NULL
+	DROP FUNCTION SF_GenerarContrasena
+GO
+CREATE FUNCTION SF_GenerarContrasena()
+RETURNS NVARCHAR(10)
+AS
+BEGIN
+	DECLARE @Resultado NVARCHAR(10);
+	DECLARE @InfoBinario VARBINARY(10);
+	DECLARE @DatosCaracteres NVARCHAR(10);
+
+	SELECT @InfoBinario = randomvalue FROM ValorRandom;
+
+	SET @DatosCaracteres = CAST ('' as xml).value('xs:base64Binary(sql:variable("@InfoBinario"))', 'varchar (max)');
+
+	SET @Resultado = @DatosCaracteres;
+
+	RETURN @Resultado;
+
+END
+GO
+
+IF OBJECT_ID('SP_AgregarPersonaUsuario') IS NOT NULL
+	DROP PROCEDURE SP_AgregarPersonaUsuario
+GO
+CREATE PROCEDURE SP_AgregarPersonaUsuario
+	@Cedula			CHAR(9),
+	@Nombre			NVARCHAR(50),
+	@Apellido1		NVARCHAR(50),
+	@Apellido2		NVARCHAR(50),
+	@Correo			NVARCHAR(50),
+	@Direccion		NVARCHAR(200)
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
+	DECLARE @Contrasenna NVARCHAR(10)
+
+	INSERT INTO Persona
+	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2, @Direccion)
+	SET @Contrasenna = (SELECT dbo.SF_GenerarContrasena());
+	INSERT INTO Usuario
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+END
+GO
+
+
 --JJAPH
 IF OBJECT_ID('MostrarEstudiantes', 'P') IS NOT NULL 
 	DROP PROC MostrarEstudiantes
