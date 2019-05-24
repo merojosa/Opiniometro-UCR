@@ -55,7 +55,6 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Seleccion_Unica> Seleccion_Unica { get; set; }
         public virtual DbSet<TelefonoPersona> TelefonoPersona { get; set; }
         public virtual DbSet<Texto_Libre> Texto_Libre { get; set; }
-        public virtual DbSet<Tiene_Enfasis_Perfil_Usuario> Tiene_Enfasis_Perfil_Usuario { get; set; }
         public virtual DbSet<Tiene_Grupo_Formulario> Tiene_Grupo_Formulario { get; set; }
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
@@ -81,6 +80,39 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Cedula", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("NombrePersona", cedulaParameter);
+        }
+    
+        public virtual int SP_AgregarPersonaUsuario(string correo, string contrasenna, string cedula, string nombre, string apellido1, string apellido2, string direccion)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var contrasennaParameter = contrasenna != null ?
+                new ObjectParameter("Contrasenna", contrasenna) :
+                new ObjectParameter("Contrasenna", typeof(string));
+    
+            var cedulaParameter = cedula != null ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellido1Parameter = apellido1 != null ?
+                new ObjectParameter("Apellido1", apellido1) :
+                new ObjectParameter("Apellido1", typeof(string));
+    
+            var apellido2Parameter = apellido2 != null ?
+                new ObjectParameter("Apellido2", apellido2) :
+                new ObjectParameter("Apellido2", typeof(string));
+    
+            var direccionParameter = direccion != null ?
+                new ObjectParameter("Direccion", direccion) :
+                new ObjectParameter("Direccion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AgregarPersonaUsuario", correoParameter, contrasennaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, direccionParameter);
         }
     
         public virtual int SP_AgregarUsuario(string correo, string contrasenna, string cedula)

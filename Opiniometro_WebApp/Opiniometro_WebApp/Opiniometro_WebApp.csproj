@@ -234,6 +234,7 @@
     <Compile Include="Models\Imparte.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\InfoPersonaUsuario.cs" />
     <Compile Include="Models\Item.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
@@ -291,9 +292,6 @@
     <Compile Include="Models\Texto_Libre.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tiene_Enfasis_Perfil_Usuario.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Tiene_Grupo_Formulario.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
@@ -347,7 +345,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
