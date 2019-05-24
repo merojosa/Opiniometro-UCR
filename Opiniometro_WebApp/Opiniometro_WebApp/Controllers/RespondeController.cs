@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -97,16 +96,5 @@ namespace Opiniometro_WebApp.Controllers
             }
             base.Dispose(disposing);
         }
-
-        public int ObtenerSecciones(string Codigo)
-        {
-
-
-
-            return 0;
-        }
-
     }
 }
-
-
