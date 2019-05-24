@@ -176,11 +176,9 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
-    <Compile Include="Controllers\PreguntasController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\Seleccion_UnicaController.cs" />
     <Compile Include="Controllers\Texto_LibreController.cs" />
-    <Compile Include="Controllers\RespondeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -330,6 +328,7 @@
       <DependentUpon>OpiniometroModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\CollapsibleScript.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -340,8 +339,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\RespondeScript.js" />
-    <Content Include="Web.config" />
+	<Content Include="Scripts\RespondeScript.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -387,13 +388,13 @@
     <Content Include="Views\Formulario_Respuesta\Create.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Delete.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Details.cshtml" />
-    <Content Include="Views\Formulario_Respuesta\Edit.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
     <Content Include="Views\Responde\Create.cshtml" />
     <Content Include="Views\Responde\Delete.cshtml" />
     <Content Include="Views\Responde\Details.cshtml" />
     <Content Include="Views\Responde\Edit.cshtml" />
     <Content Include="Views\Responde\Index.cshtml" />
+    <Content Include="Views\Shared\_Collapsible.cshtml" />
     <Content Include="Views\Auth\Recuperar.cshtml" />
     <Content Include="Views\Shared\Auth\BarraLogin.cshtml" />
     <Content Include="Views\Items\Create.cshtml" />

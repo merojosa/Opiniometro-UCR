@@ -81,6 +81,15 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("NombrePersona", cedulaParameter);
         }
     
+        public virtual ObjectResult<string> Secciones_Por_Formulario(string forCod)
+        {
+            var forCodParameter = forCod != null ?
+                new ObjectParameter("ForCod", forCod) :
+                new ObjectParameter("ForCod", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Secciones_Por_Formulario", forCodParameter);
+        }
+    
         public virtual int SP_AgregarUsuario(string correo, string contrasenna, string cedula)
         {
             var correoParameter = correo != null ?

@@ -20,8 +20,13 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Responde
         public ActionResult Index()
         {
-            var responde = db.Responde.Include(r => r.Formulario_Respuesta);
+            var responde = db.Responde.Include(r => r.Formulario_Respuesta).Include(r => r.Item).Include(r => r.Seccion);
             return View(responde.ToList());
+        }
+
+        public void ObtenerSeccionesFormulario(string CodigoFormulario)
+        {
+            System.Data.Entity.Core.Objects.ObjectResult<string> Secciones = db.Obtener_Secciones_Por_Formulario(CodigoFormulario);
         }
 
         // GET: Responde/Details/5
@@ -92,5 +97,16 @@ namespace Opiniometro_WebApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public int ObtenerSecciones(string Codigo)
+        {
+
+
+
+            return 0;
+        }
+
     }
 }
+
+

@@ -145,7 +145,7 @@ INSERT INTO Persona
 VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajuela.'),
 		('115003456', 'Daniel', 'Escalante', 'Perez', 'Desamparados de San José.'),
 		('117720910', 'Jose Andrés', 'Mejías', 'Rojas', 'La Fortuna de San Carlos.'),
-		('236724501', 'Jose Andrés', 'Mejías', 'Rojas', 'Sarchí, Alajuela.'),
+		('236724507', 'Jose Andrés', 'Mejías', 'Rojas', 'Sarchí, Alajuela.'),
 		--Agregado de datos para visualizacion a cargo de CX Solutions
 		('100000001', 'CX', 'Solutions', 'S.A.', 'San Pedro Montes de Oca'),
 		('100000002', 'Marta', 'Rojas', 'Sanches', '300 metros norte de Pulmitan'),--Profesora
@@ -153,8 +153,8 @@ VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajue
 		('100000003', 'Juan', 'Briceño', 'Lupon', '400 metros norte del Heraldo de la Grieta'),
 		('100000005', 'Pepito', 'Fonsi', 'Monge', '20 metros norte del Blue del lado Rojo'),
 		('100000004', 'Maria', 'Fallas', 'Merdi', 'Costado este del estandarte de top'),
-		('117720911', 'Jorge', 'Solano', 'Carrillo', 'La Fortuna de San Carlos.'),
-		('236724502', 'Carolina', 'Gutierrez', 'Lozano', 'Sarchí, Alajuela.'),
+		('117720912', 'Jorge', 'Solano', 'Carrillo', 'La Fortuna de San Carlos.'),
+		('236724501', 'Carolina', 'Gutierrez', 'Lozano', 'Sarchí, Alajuela.'),
 		('123456789', 'Ortencia', 'Cañas', 'Griezman', 'San Pedro de Montes de Oca');
 
 INSERT INTO Estudiante VALUES 
@@ -162,6 +162,11 @@ INSERT INTO Estudiante VALUES
 ,('115003456', 'B22222')
 ,('117720910', 'B33333') 
 ,('236724501', 'B44444');
+
+--INSERT INTO Responde (ItemId,TituloSeccion, FechaRespuesta, CodigoFormularioResp, CedulaPersona, CedulaProfesor, AnnoGrupoResp, SemestreGrupoResp, NumeroGrupoResp, SiglaGrupoResp)
+--VALUES (3,'Titulo Seccion 1','8-12-1994','CodF01','123456789','987654321',54,01,21,'SG1234'),
+--	   (1,'Titulo Seccion 2','8-12-1998','CodF02','123789659','987678951',59,01,20,'SG2345'),
+--	   (2,'Titulo Seccion 3','8-12-1997','CodF03','135786789','982455321',51,01,15,'SG3456');
 
 EXEC SP_AgregarUsuario @Correo='jose.mejiasrojas@ucr.ac.cr', @Contrasenna='123456', @Cedula='116720500'
 EXEC SP_AgregarUsuario @Correo='daniel.escalanteperez@ucr.ac.cr', @Contrasenna='Danielito', @Cedula='115003456'
@@ -307,6 +312,14 @@ INSERT INTO Formulario_Respuesta (Fecha, CodigoFormulario, CedulaPersona, Cedula
 VALUES  ('2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 1),
 		('2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 1),
 		('2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 1);
+
+ --Conformado_Item_Sec_Form
+INSERT INTO Conformado_Item_Sec_Form (ItemId, CodigoFormulario, TituloSeccion, NombreFormulario)
+VALUES	(1, '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
+		(3, '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
+		(2, '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores'),	
+		(4, '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores');
+
 
 --Responde
 INSERT INTO Responde (ItemId, TituloSeccion, FechaRespuesta, CodigoFormularioResp, CedulaPersona, CedulaProfesor, AnnoGrupoResp, SemestreGrupoResp, NumeroGrupoResp, SiglaGrupoResp, Respuesta, Observacion)

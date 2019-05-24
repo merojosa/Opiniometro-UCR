@@ -17,7 +17,8 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Formulario_Respuesta
         public ActionResult Index()
         {
-            return View(db.Formulario_Respuesta.ToList());
+            var formulario_Respuesta = db.Formulario_Respuesta.Include(f => f.Formulario).Include(f => f.Grupo).Include(f => f.Persona).Include(f => f.Profesor);
+            return View(formulario_Respuesta.ToList());
         }
 
         // GET: Formulario_Respuesta/Details/5
@@ -38,6 +39,10 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Formulario_Respuesta/Create
         public ActionResult Create()
         {
+            ViewBag.CodigoFormulario = new SelectList(db.Formulario, "CodigoFormulario", "Nombre");
+            ViewBag.SiglaGrupo = new SelectList(db.Grupo, "SiglaCurso", "SiglaCurso");
+            ViewBag.CedulaPersona = new SelectList(db.Persona, "Cedula", "Nombre");
+            ViewBag.CedulaProfesor = new SelectList(db.Profesor, "CedulaProfesor", "CedulaProfesor");
             return View();
         }
 
@@ -46,7 +51,7 @@ namespace Opiniometro_WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Fecha,CodigoFormulario,CedulaPersona,CedulaProfesor,AñoGrupo,SemestreGrupo,NumeroGrupo,SiglaGrupo,Completado")] Formulario_Respuesta formulario_Respuesta)
+        public ActionResult Create([Bind(Include = "Fecha,CodigoFormulario,CedulaPersona,CedulaProfesor,AnnoGrupo,SemestreGrupo,NumeroGrupo,SiglaGrupo,Completado")] Formulario_Respuesta formulario_Respuesta)
         {
             if (ModelState.IsValid)
             {
@@ -55,6 +60,10 @@ namespace Opiniometro_WebApp.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.CodigoFormulario = new SelectList(db.Formulario, "CodigoFormulario", "Nombre", formulario_Respuesta.CodigoFormulario);
+            ViewBag.SiglaGrupo = new SelectList(db.Grupo, "SiglaCurso", "SiglaCurso", formulario_Respuesta.SiglaGrupo);
+            ViewBag.CedulaPersona = new SelectList(db.Persona, "Cedula", "Nombre", formulario_Respuesta.CedulaPersona);
+            ViewBag.CedulaProfesor = new SelectList(db.Profesor, "CedulaProfesor", "CedulaProfesor", formulario_Respuesta.CedulaProfesor);
             return View(formulario_Respuesta);
         }
 
@@ -70,6 +79,10 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CodigoFormulario = new SelectList(db.Formulario, "CodigoFormulario", "Nombre", formulario_Respuesta.CodigoFormulario);
+            ViewBag.SiglaGrupo = new SelectList(db.Grupo, "SiglaCurso", "SiglaCurso", formulario_Respuesta.SiglaGrupo);
+            ViewBag.CedulaPersona = new SelectList(db.Persona, "Cedula", "Nombre", formulario_Respuesta.CedulaPersona);
+            ViewBag.CedulaProfesor = new SelectList(db.Profesor, "CedulaProfesor", "CedulaProfesor", formulario_Respuesta.CedulaProfesor);
             return View(formulario_Respuesta);
         }
 
@@ -78,7 +91,7 @@ namespace Opiniometro_WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Fecha,CodigoFormulario,CedulaPersona,CedulaProfesor,AñoGrupo,SemestreGrupo,NumeroGrupo,SiglaGrupo,Completado")] Formulario_Respuesta formulario_Respuesta)
+        public ActionResult Edit([Bind(Include = "Fecha,CodigoFormulario,CedulaPersona,CedulaProfesor,AnnoGrupo,SemestreGrupo,NumeroGrupo,SiglaGrupo,Completado")] Formulario_Respuesta formulario_Respuesta)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +99,10 @@ namespace Opiniometro_WebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.CodigoFormulario = new SelectList(db.Formulario, "CodigoFormulario", "Nombre", formulario_Respuesta.CodigoFormulario);
+            ViewBag.SiglaGrupo = new SelectList(db.Grupo, "SiglaCurso", "SiglaCurso", formulario_Respuesta.SiglaGrupo);
+            ViewBag.CedulaPersona = new SelectList(db.Persona, "Cedula", "Nombre", formulario_Respuesta.CedulaPersona);
+            ViewBag.CedulaProfesor = new SelectList(db.Profesor, "CedulaProfesor", "CedulaProfesor", formulario_Respuesta.CedulaProfesor);
             return View(formulario_Respuesta);
         }
 
