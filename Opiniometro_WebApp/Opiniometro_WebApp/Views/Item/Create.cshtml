@@ -56,11 +56,12 @@
         @*Aqui capturamos los eventos del combo box. *@
         function seleccionarObservacion()
         {
-            var seleccion = document.getElementById("observacion").value;
-            if (seleccion == "Si")
+            var seleccion = document.getElementById("observacion");
+
+            if (seleccion.value == "Si")
                 @Html.EditorFor(model => model.TieneObservacion, true);
             else 
-                model => model.TieneObservacion = false
+                @Html.EditorFor(model => model.TieneObservacion, false);
             //document.getElementById("demo1").innerHTML = "Seleccionaste: " + seleccion;
         }
     </script>
