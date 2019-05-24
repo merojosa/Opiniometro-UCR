@@ -177,6 +177,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\LogInPerfilesController.cs" />
     <Compile Include="Controllers\PreguntasController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\Seleccion_UnicaController.cs" />
@@ -209,7 +210,7 @@
     <Compile Include="Models\Empadronado.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Enfasi.cs">
+    <Compile Include="Models\Enfasis.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Estudiante.cs">
@@ -270,7 +271,7 @@
     <Compile Include="Models\Posee_Enfasis_Perfil_Permiso.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Pregunta.cs">
+    <Compile Include="Models\Preguntas.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Profesor.cs">
@@ -414,8 +415,9 @@
     <Content Include="Views\Seleccion_Unica\Details.cshtml" />
     <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
     <Content Include="Views\Seleccion_Unica\Index.cshtml" />
-    <Content Include="Views\Admin\CrearUsuario.cshtml" />
     <Content Include="Views\Admin\VerPersonas.cshtml" />
+    <Content Include="Views\Admin\CrearUsuario.cshtml" />
+    <Content Include="Views\LogInPerfiles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
