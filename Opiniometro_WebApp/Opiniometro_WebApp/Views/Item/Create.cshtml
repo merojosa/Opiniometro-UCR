@@ -80,7 +80,7 @@
                         @Html.ValidationMessageFor(model => model.TieneObservacion, "", new { @class = "text-danger" })
                 </div>*@
             @*Combobox *@
-            <select id="observacion" onchange="seleccionarObservacion()">
+            <select id="observacion" onchange="seleccionarObservacion();">
                 <option value="Si">Si</option>
                 <option value="No">No</option>
             </select>
@@ -91,11 +91,12 @@
         @*Aqui capturamos los eventos del combo box. *@
         function seleccionarObservacion()
         {
-            var seleccion = document.getElementById("observacion").value;
-            if (seleccion == "Si")
+            var seleccion = document.getElementById("observacion");
+
+            if (seleccion.value == "Si")
                 @Html.EditorFor(model => model.TieneObservacion, true);
             else 
-                model => model.TieneObservacion = false
+                @Html.EditorFor(model => model.TieneObservacion, false);
             //document.getElementById("demo1").innerHTML = "Seleccionaste: " + seleccion;
         }
     </script>
@@ -103,9 +104,9 @@
     @* Creacion de botones en la misma linea y con color gris *@
  <div class="form-group">
      <div class="col-md-offset-2 col-md-10">
-     <input type="submit" value="Crear"  class="btn btn-secondary" p id="botonCrear" onclick="accionBotonCrear()"/>
-         <input type="submit" value="Vista Previa" disabled class="btn btn-secondary" p id="botonVistaPrevia" onclick="accionBotonVistaPrevia()"/>
-         <input type="submit" value="Cancelar" class="btn btn-secondary"  id="botonCancelar" onclick="accionBotonCancelar()" />
+     <input type="submit" value="Create"  class="btn btn-default"  id="Crear pregunta" p/>
+         @*<input type="submit" value="Vista Previa" disabled class="btn btn-secondary" p id="botonVistaPrevia" onclick="accionBotonVistaPrevia()"/>*@
+         <input type="submit" value="Cancelar" class="btn btn-secondary" p id="botonCancelar" onclick="accionBotonCancelar()" />
      </div>
     </div>
 
