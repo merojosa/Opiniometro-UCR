@@ -10,26 +10,20 @@
 
 <div>
     <dl class="dl-horizontal">
-
         <dd>
             @Html.DisplayFor(model => model.TextoPregunta)
-            @*<textarea name="descripcion" rows="5" cols="40">@Html.DisplayFor(model => model.TextoPregunta)</textarea>*@
         </dd>
-
-        <div class="form-group">
-            @Html.Label("", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select id="observacion" onchange="seleccionarObservacion()">
-                    <option value="Si">Si</option>
-                    <option value="No">No</option>
-                    <option value="No se/No respondo/No aplica">No se/No respondo/No aplica</option>
-                </select>
-                <p id="observacionID"></p>
-            </div>
-        </div>
-
+        <dd>
+            <input type="checkbox" name="Si" value='Si'> Si<br>
+            <input type="checkbox" name="No" value='No'> No<br>
+            <input type="checkbox" name="NoSe" value='NoSe'> No se/No respondo/No aplica<br>
+        </dd>
+        <dd>
+            <textarea name="comentarioAdicional" rows="5" cols="40">Escriba su comentario aqui</textarea>
+        </dd>
     </dl>
 </div>
+
 
 <script language="javascript">
     if (model.TipoPregunta == 1) {
