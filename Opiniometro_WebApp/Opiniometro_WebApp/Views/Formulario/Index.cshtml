@@ -1,16 +1,20 @@
 ﻿@model IEnumerable<Opiniometro_WebApp.Models.Formulario>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Formularios";
 }
 
-<h2>Index</h2>
+<h2>Formularios</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <input type="submit" value="Crear Nuevo Formulario" class="btn btn-secondary" id="botonNuevaSeccion" onclick="location.href = 'http://localhost:51103/Formulario/create'()" />
 </p>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayName("Código Formulario")
+        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.Nombre)
         </th>
@@ -20,12 +24,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.CodigoFormulario)
+        </td>
+
+        <td>
             @Html.DisplayFor(modelItem => item.Nombre)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CodigoFormulario }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CodigoFormulario }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CodigoFormulario })
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.CodigoFormulario }) |*@
+            @*@Html.ActionLink("Details", "Details", new { id=item.CodigoFormulario }) |*@
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.CodigoFormulario })*@
         </td>
     </tr>
 }
