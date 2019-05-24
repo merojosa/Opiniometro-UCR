@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -10,112 +10,112 @@ using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
 {
-    public class SeleccionUnicaController : Controller
+    public class Seleccion_UnicaController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
-        // GET: SeleccionUnica
+        // GET: Seleccion_Unica
         public ActionResult Index()
         {
-            var seleccionUnica = db.SeleccionUnica.Include(s => s.Item);
-            return View(seleccionUnica.ToList());
+            var seleccion_Unica = db.Seleccion_Unica.Include(s => s.Item);
+            return View(seleccion_Unica.ToList());
         }
 
-        // GET: SeleccionUnica/Details/5
+        // GET: Seleccion_Unica/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SeleccionUnica seleccionUnica = db.SeleccionUnica.Find(id);
-            if (seleccionUnica == null)
+            Seleccion_Unica seleccion_Unica = db.Seleccion_Unica.Find(id);
+            if (seleccion_Unica == null)
             {
                 return HttpNotFound();
             }
-            return View(seleccionUnica);
+            return View(seleccion_Unica);
         }
 
-        // GET: SeleccionUnica/Create
+        // GET: Seleccion_Unica/Create
         public ActionResult Create()
         {
-            ViewBag.ItemID = new SelectList(db.Item, "ItemID", "TextoPregunta");
+            ViewBag.ItemId = new SelectList(db.Item, "ItemId", "TextoPregunta");
             return View();
         }
 
-        // POST: SeleccionUnica/Create
+        // POST: Seleccion_Unica/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,IsaLikeDislike")] SeleccionUnica seleccionUnica)
+        public ActionResult Create([Bind(Include = "ItemId,IsaLikeDislike")] Seleccion_Unica seleccion_Unica)
         {
             if (ModelState.IsValid)
             {
-                db.SeleccionUnica.Add(seleccionUnica);
+                db.Seleccion_Unica.Add(seleccion_Unica);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ItemID = new SelectList(db.Item, "ItemID", "TextoPregunta", seleccionUnica.ItemID);
-            return View(seleccionUnica);
+            ViewBag.ItemId = new SelectList(db.Item, "ItemId", "TextoPregunta", seleccion_Unica.ItemId);
+            return View(seleccion_Unica);
         }
 
-        // GET: SeleccionUnica/Edit/5
+        // GET: Seleccion_Unica/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SeleccionUnica seleccionUnica = db.SeleccionUnica.Find(id);
-            if (seleccionUnica == null)
+            Seleccion_Unica seleccion_Unica = db.Seleccion_Unica.Find(id);
+            if (seleccion_Unica == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ItemID = new SelectList(db.Item, "ItemID", "TextoPregunta", seleccionUnica.ItemID);
-            return View(seleccionUnica);
+            ViewBag.ItemId = new SelectList(db.Item, "ItemId", "TextoPregunta", seleccion_Unica.ItemId);
+            return View(seleccion_Unica);
         }
 
-        // POST: SeleccionUnica/Edit/5
+        // POST: Seleccion_Unica/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ItemID,IsaLikeDislike")] SeleccionUnica seleccionUnica)
+        public ActionResult Edit([Bind(Include = "ItemId,IsaLikeDislike")] Seleccion_Unica seleccion_Unica)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(seleccionUnica).State = EntityState.Modified;
+                db.Entry(seleccion_Unica).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ItemID = new SelectList(db.Item, "ItemID", "TextoPregunta", seleccionUnica.ItemID);
-            return View(seleccionUnica);
+            ViewBag.ItemId = new SelectList(db.Item, "ItemId", "TextoPregunta", seleccion_Unica.ItemId);
+            return View(seleccion_Unica);
         }
 
-        // GET: SeleccionUnica/Delete/5
+        // GET: Seleccion_Unica/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SeleccionUnica seleccionUnica = db.SeleccionUnica.Find(id);
-            if (seleccionUnica == null)
+            Seleccion_Unica seleccion_Unica = db.Seleccion_Unica.Find(id);
+            if (seleccion_Unica == null)
             {
                 return HttpNotFound();
             }
-            return View(seleccionUnica);
+            return View(seleccion_Unica);
         }
 
-        // POST: SeleccionUnica/Delete/5
+        // POST: Seleccion_Unica/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            SeleccionUnica seleccionUnica = db.SeleccionUnica.Find(id);
-            db.SeleccionUnica.Remove(seleccionUnica);
+            Seleccion_Unica seleccion_Unica = db.Seleccion_Unica.Find(id);
+            db.Seleccion_Unica.Remove(seleccion_Unica);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -130,3 +130,4 @@ namespace Opiniometro_WebApp.Controllers
         }
     }
 }
+*/

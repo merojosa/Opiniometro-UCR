@@ -10,14 +10,18 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-MERGE INTO Preguntas AS Target
-USING (VALUES
-(1, 'Pregunta1', 'SiNo', 'Profesor'),
-(2, 'Pregunta2', 'SeleccionUnica', 'Profesor'),
-(3, 'Pregunta3', 'SeleccionMultiple', 'Curso')
-)
-AS Source ([Numero], Planteamiento, TipoPregunta, Categoria)
-ON Target.Planteamiento = Source.Planteamiento
-WHEN NOT MATCHED BY TARGET THEN
-INSERT(Planteamiento, TipoPregunta, Categoria)
-VALUES(Planteamiento, TipoPregunta, Categoria);
+-- Ver los usuarios agregados recientemente
+IF OBJECT_ID('SP_FiltrarUsuarios') IS NOT NULL
+	DROP PROCEDURE SP_FiltrarUsuarios
+GO
+CREATE PROCEDURE SP_FiltrarUsuarios
+@Ced VARCHAR(10)
+AS
+BEGIN
+	SELECT Cedula, Nombre, Apellido1, Apellido2
+	FROM Persona
+	WHERE Cedula LIKE @Ced+'%';
+END
+GO
+
+--EXEC SP_FiltrarUsuarios @Ced = '12';
