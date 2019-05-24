@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">DESKTOP-2F1SSN9</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAigdog9zS5UuX/FRxgPdgfwAAAAACAAAAAAAQZgAAAAEAACAAAABU5kK2VyMt8e3BvzSASzT85n26PVaUJDpcAgf1ftE5OQAAAAAOgAAAAAIAACAAAADFrog7u6jh7pQ2GOj0r1wM4JuOqyLCK20fZAhTxgaP9pAAAACwzwv9lDkAluTVOfQzP4jSvJ19Gv609wcdNwS2WQ+2hFVELRX7FZDe49sMf081PaxxznX7MWJxpqK7udPXn/NF9cJIJRvTkig71SLgjkXwkYDvuzN+y93j5+6yxsrwxoA77Uy//ZM8+FjGFY+FCwt9mG0sVXuAlPvGDCkTolRSjUmCKMb3VuBPDODjOfzWObBAAAAAkPXcD8rfBoi0W8AreSaJOXz6nrS3hp+PJd+wn604IeVy8w+9bmzW+1ipBm08RrCxxQ1CecYR/c4hs3kV19DLbQ==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAigdog9zS5UuX/FRxgPdgfwAAAAACAAAAAAAQZgAAAAEAACAAAAA+x+i9FUKzi3ea44wT8brVvWqnn7U3RhLAuvhBBZP/SgAAAAAOgAAAAAIAACAAAACqZzYmiB/OeDfVkC3VYXxSGmKUKHz2lg1iMbyHMsrWAZAAAAAkU7VG2JsCF99d5kyaPXR6B+RpIDaiR7feCAbLUGsRn+DdmUXSheONoCQdzUK9ZjpuMpy1utIylaLMq/cxOL3PXt+v/Edv8WcBbGd5bzn6wg7qbkRy322enl2ZTzjvMn+5sqq1DCSzgDSyRfT6ASwoXLEYaWQhFneGFtAsZKIK/yvqc05q0hsjj2Q3hHdzV2FAAAAAhexVRZ8iFOZW1WDLi/6scF24EsJtdVANB5QQ/sjnzC8BlTyhYbxWzfvorUtj1Z36lw1+RvBScYwVlJx+Kly32w==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -346,10 +346,10 @@
                 <SSIS:Property SSIS:Name="Name">PackageCargarUsuarios</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">9</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">10</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{FB5F5670-DBCB-4BF8-A697-BE0D03D0AB25}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{E672DDAA-F820-4ED6-B19D-E2EFED2160B9}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
@@ -1246,7 +1246,7 @@
                     <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                     <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">Provider=Microsoft.ACE.OLEDB.16.0;Data Source=D:\Aldo\Git-repositories\CI-0128\ecci_ci0128_i2019\Opiniometro_Datos\Opiniometro_Datos\ssis\File-Destinations\AdminCargarArchivo-Destinations\usuarios-a-insertar.xls;Extended Properties="Excel 12.0 XML;HDR=NO";</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">Provider=Microsoft.ACE.OLEDB.16.0;Data Source=D:\Aldo\Git-repositories\CI-0128\ecci_ci0128_i2019\Opiniometro_Datos\Opiniometro_Datos\ssis\File-Destinations\AdminCargarArchivo-Destinations\usuarios-a-insertar.xls;Extended Properties="EXCEL 12.0 XML;HDR=NO";</SSIS:Property>
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>

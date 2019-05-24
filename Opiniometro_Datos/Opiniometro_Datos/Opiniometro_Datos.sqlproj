@@ -102,6 +102,7 @@
     <None Include="Script.ModificarUsuario.sql" />
     <None Include="Script.EliminarPersona.sql" />
     <Build Include="Preguntas.sql" />
+    <Build Include="UsuariosStaging.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ScriptGenerarContrasena.sql" />

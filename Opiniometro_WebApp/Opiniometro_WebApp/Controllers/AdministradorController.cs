@@ -5,9 +5,13 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
+using Microsoft.SqlServer.Dts;
+using Microsoft.SqlServer.Dts.Runtime;
+
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -49,6 +53,8 @@ namespace Opiniometro_WebApp.Controllers
 
             //Invocar paquete de intregracion, pasar como parametro el nombre del archivo cargado.
 
+            //Application app = new Application()
+            
 
             return View();
         }
