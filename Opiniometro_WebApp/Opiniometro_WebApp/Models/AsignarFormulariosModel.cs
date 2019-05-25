@@ -22,8 +22,10 @@ namespace Opiniometro_WebApp.Models
         // Atributos extra obtenidos de otras clases
         public string nombreCurso;
         public string codigoUnidad;
-        //public string carrera;
+        public string nombreUnidadAcademica;
+        public string carrera;
         //public byte enfasis;
+        
     }
 
     /// <summary>
@@ -44,5 +46,9 @@ namespace Opiniometro_WebApp.Models
 
         // Lista signaciones hechas
         //public IEnumerable<SelectListItem> Asignaciones { get; set; }
+
     }
+
+   
+
 }

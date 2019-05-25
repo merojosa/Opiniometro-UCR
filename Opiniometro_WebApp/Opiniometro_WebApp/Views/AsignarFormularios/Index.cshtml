@@ -28,30 +28,33 @@
                     <div class="panel-body">
                         <!-- Esta forma hace que la búsqueda aparezca como parte del URL. -->
                         <!--<form asp-controller="AsignarFormularios" asp-action="Index">
-        <p>
-            Nombre: <input type="text" name="SearchString">
-           <input type="submit" value="Buscar" />
-        </p>
-    </form>-->
+                        <p>
+                            Nombre: <input type="text" name="SearchString">
+                           <input type="submit" value="Buscar" />
+                        </p>
+                        </form>-->
                         <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
                         @using (Html.BeginForm())
                         {
                             <!-- Buscador -->
-                            <p>
-                                Nombre del curso: @Html.TextBox("SearchString")
-                                <input type="submit" value="Buscar" />
-                            </p>
+                        <p>
+                           <label>Nombre del curso:</label> @Html.TextBox("SearchString") <br /> <br />
+                           <label>Unidad Academica: </label> @Html.TextBox("NombUniAcad") <br /> <br />
+                           <label>Carrera: </label> @Html.TextBox("NombCarrera") <br /> <br />
+                           @*<label>Ciclo:</label> @Html.TextBox("semestre") <br /> <br />*@
+                           <input type="submit" value="Buscar" />
+                        </p>
                         }
 
-                        Unidad Académica: @Html.DropDownList("UnidadAcademica") <br /> <br />
-                        Carreras: @Html.DropDownList("Carreras") <br /> <br />
-                        Cursos: @Html.DropDownList("Cursos")
+                        @*Unidad Académica:  @Html.DropDownList("UnidadAcademica")
+                        Carreras: @Html.DropDownList("Carreras", ViewBag.B as SelectList, "<Seleccione uno>", new { @class = "form-control" })
+                        Cursos: @Html.DropDownList("Cursos", ViewBag.C as SelectList, "<Seleccione uno>", new { @class = "form-control" })*@
 
 
                     </div>
                 </div>
 
-
+                
 
                 <div class="panel panel-default">
                     <div class="panel-heading"><h3>Resultados:</h3></div>

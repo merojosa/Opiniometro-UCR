@@ -772,9 +772,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="BuscarCursoPorNombre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="NombreCurso" Type="varchar" Mode="In" />
-        </Function>
         <Function Name="SP_AgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
@@ -1901,9 +1898,6 @@
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
           </AssociationSet>
-          <FunctionImport Name="BuscarCursoPorNombre" ReturnType="Collection(Opiniometro_DatosModel.BuscarCursoPorNombre_Result)">
-            <Parameter Name="NombreCurso" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_AgregarUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
@@ -1915,12 +1909,6 @@
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="BuscarCursoPorNombre_Result">
-          <Property Type="String" Name="Sigla" Nullable="false" MaxLength="6" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="75" />
-          <Property Type="Byte" Name="Tipo" Nullable="false" />
-          <Property Type="String" Name="CodigoUnidad" Nullable="false" MaxLength="10" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2228,16 +2216,6 @@
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="BuscarCursoPorNombre" FunctionName="Opiniometro_DatosModel.Store.BuscarCursoPorNombre">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.BuscarCursoPorNombre_Result">
-                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="CodigoUnidad" ColumnName="CodigoUnidad" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarUsuario" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />
         </EntityContainerMapping>
@@ -2257,7 +2235,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
