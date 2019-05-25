@@ -428,6 +428,7 @@
     <Content Include="Views\LogInPerfiles\Index.cshtml" />
     <Content Include="Views\Administrador\CargarArchivo.cshtml" />
     <Content Include="Views\Administrador\Index.cshtml" />
+    <Content Include="Views\AsignarFormularios\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
