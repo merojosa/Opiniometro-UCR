@@ -1,41 +1,36 @@
 ﻿@model Opiniometro_WebApp.Models.AsignarFormulariosModel
 
 @{
-    Layout = null;
+    ViewBag.Title = "Index";
 }
 
-<!DOCTYPE html>
-
 <html>
-<head>
-    <title>Página de asignación de formularios.</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <style>
-        .fixed_header {
-            table-layout: fixed;
-            border-collapse: collapse;
-        }
+
+<style>
+    .fixed_header {
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+
         .fixed_header tbody {
             display: block;
             width: 100%;
             overflow: auto;
             height: 300px;
         }
+
         .fixed_header thead tr {
             display: block;
         }
+
         .fixed_header th {
             height: 50px;
         }
+
         .fixed_header th, .fixed_header td {
             width: 200px;
         }
-    </style>
-</head>
-<body>
-
+</style>
     <div>
         <h1 align="center">Asignación de herramientas de evaluación</h1>
     </div>
@@ -152,5 +147,4 @@
                 </div>
         </div>
 
-</body>
 </html>
