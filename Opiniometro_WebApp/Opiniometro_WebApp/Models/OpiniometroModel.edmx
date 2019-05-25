@@ -781,6 +781,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="BuscarCursoPorNombre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NombreCurso" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="DatosEstudiante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
@@ -1865,14 +1868,6 @@
             <End Role="Formulario" EntitySet="Formulario" />
             <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
           </AssociationSet>
-          <AssociationSet Name="FK_ForRes_For" Association="Self.FK_ForRes_For">
-            <End Role="Formulario" EntitySet="Formulario" />
-            <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tie_For" Association="Self.FK_Tie_For">
-            <End Role="Formulario" EntitySet="Formulario" />
-            <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
-          </AssociationSet>
           <AssociationSet Name="FK_ForRes_Gru" Association="Self.FK_ForRes_Gru">
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
@@ -1941,6 +1936,9 @@
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
           </AssociationSet>
+          <FunctionImport Name="BuscarCursoPorNombre" ReturnType="Collection(Opiniometro_DatosModel.BuscarCursoPorNombre_Result)">
+            <Parameter Name="NombreCurso" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_DatosModel.DatosEstudiante_Result)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
@@ -1967,6 +1965,12 @@
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="BuscarCursoPorNombre_Result">
+          <Property Type="String" Name="Sigla" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="75" />
+          <Property Type="Byte" Name="Tipo" Nullable="false" />
+          <Property Type="String" Name="CodigoUnidad" Nullable="false" MaxLength="10" />
+        </ComplexType>
         <ComplexType Name="DatosEstudiante_Result">
           <Property Type="String" Name="Nombre_Completo" Nullable="false" MaxLength="152" />
           <Property Type="String" Name="Carne" Nullable="false" MaxLength="6" />
@@ -2295,6 +2299,16 @@
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="BuscarCursoPorNombre" FunctionName="Opiniometro_DatosModel.Store.BuscarCursoPorNombre">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.BuscarCursoPorNombre_Result">
+                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="CodigoUnidad" ColumnName="CodigoUnidad" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_DatosModel.Store.DatosEstudiante">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Opiniometro_DatosModel.DatosEstudiante_Result">
