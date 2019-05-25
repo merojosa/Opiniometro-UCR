@@ -43,35 +43,40 @@
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-contentt">
+                        <a onclick="location.href='@Url.Action("Index", "Formulario")';return false;"> Insertar Formulario </a>
                         @Html.ActionLink("Asignar Formulario", "Index", "AsignarFormularios")
+                        <!--<a onclick="location.href='@Url.Action("Index", "AsignarFomularios")';return false;">Asignar Formulario</a>-->
+                        <a onclick="location.href='@Url.Action("Index", "Responde")';return false;">Visualizar resultados evaluaciones</a>
+                        <a onclick="location.href='@Url.Action("Index", "Seccion")';return false;"> Seccion </a>
+                        <a onclick="location.href='@Url.Action("Index", "Item")';return false;">Item </a>
+                    </div>
                     </div>
                 </div>
             </div>
+        </nav>
+
+
+
+
+
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Opiniometro@UCR</p>
+            </footer>
         </div>
-    </nav>
 
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>
 
+    <script>
+        function redirect()
+        {
+            alert("Javasript");
 
-
-
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Opiniometro@UCR</p>
-        </footer>
-    </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
-</html>
-
-<script>
-    function redirect()
-    {
-        alert("Javasript");
-
-    }
-</script>
+        }
+    </script>
