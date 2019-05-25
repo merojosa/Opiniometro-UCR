@@ -32,9 +32,8 @@
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-contentt">
-                        <a onclick="location.href='@Url.Action("VerPersonas", "Admin")';return false;">Ver información de Personas</a>
-                        <a onclick="location.href='@Url.Action("CrearUsuario", "Admin")';return false;">Insertar Usuario</a>
-                        <!--<a onclick="location.href='@Url.Action("Index", "LogInPerfiles")';return false;">orueba perfiles Usuario</a>-->
+                        @Html.ActionLink("Ver información de personas", "VerPersonas", "Admin")
+                        @Html.ActionLink("Insertar usuario", "CrearUsuario", "Admin")
                     </div>
                 </div>
                 <div class="dropdown">
@@ -43,12 +42,11 @@
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-contentt">
-                        <a onclick="location.href='@Url.Action("Index", "Formulario")';return false;"> Insertar Formulario </a>
-
-                        <a onclick="location.href='@Url.Action("Index", "AsignarFomularios")';return false;">Asignar Formulario</a>
-                        <a onclick="location.href='@Url.Action("Index", "Responde")';return false;">Visualizar resultados evaluaciones</a>
-                        <a onclick="location.href='@Url.Action("Index", "Seccion")';return false;"> Seccion </a>
-                        <a onclick="location.href='@Url.Action("Index", "Item")';return false;">Item </a>
+                        @Html.ActionLink("Insertar formulario", "Index", "Formulario")
+                        @Html.ActionLink("Asignar formulario", "Index", "AsignarFomularios")
+                        @Html.ActionLink("Visualizar resultados de evaluaciones", "Index", "Responde")
+                        @Html.ActionLink("Sección", "Index", "Seccion")
+                        @Html.ActionLink("Ítem", "Index", "Item")   
                     </div>
                 </div>
             </div>

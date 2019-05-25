@@ -68,6 +68,7 @@
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Res_Sec" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.Escuela" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.Se_Encuentra_Unidad_Enfasis" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Preguntas" Width="1.5" PointX="5.375" PointY="2.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
