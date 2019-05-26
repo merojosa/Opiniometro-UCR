@@ -799,6 +799,26 @@
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna_Nueva" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="SP_ContarRespuestasPorGrupo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigoFormulario" Type="char" Mode="In" />
+          <Parameter Name="cedulaProfesor" Type="char" Mode="In" />
+          <Parameter Name="annoGrupo" Type="smallint" Mode="In" />
+          <Parameter Name="semestreGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="numeroGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="siglaCurso" Type="char" Mode="In" />
+          <Parameter Name="itemId" Type="int" Mode="In" />
+          <Parameter Name="respuesta" Type="nvarchar" Mode="In" />
+          <Parameter Name="cntResp" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_DevolverObservacionesPorGrupo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigoFormulario" Type="char" Mode="In" />
+          <Parameter Name="cedulaProfesor" Type="char" Mode="In" />
+          <Parameter Name="annoGrupo" Type="smallint" Mode="In" />
+          <Parameter Name="semestreGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="numeroGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="siglaCurso" Type="char" Mode="In" />
+          <Parameter Name="itemId" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_ExistenciaCorreo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
@@ -1952,6 +1972,26 @@
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
           <EntitySet Name="Preguntas" EntityType="Opiniometro_DatosModel.Preguntas" />
+          <FunctionImport Name="SP_ContarRespuestasPorGrupo">
+            <Parameter Name="codigoFormulario" Mode="In" Type="String" />
+            <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
+            <Parameter Name="annoGrupo" Mode="In" Type="Int16" />
+            <Parameter Name="semestreGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="siglaCurso" Mode="In" Type="String" />
+            <Parameter Name="itemId" Mode="In" Type="Int32" />
+            <Parameter Name="respuesta" Mode="In" Type="String" />
+            <Parameter Name="cntResp" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_DevolverObservacionesPorGrupo" ReturnType="Collection(String)">
+            <Parameter Name="codigoFormulario" Mode="In" Type="String" />
+            <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
+            <Parameter Name="annoGrupo" Mode="In" Type="Int16" />
+            <Parameter Name="semestreGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="siglaCurso" Mode="In" Type="String" />
+            <Parameter Name="itemId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DatosEstudiante_Result">
           <Property Type="String" Name="Nombre_Completo" Nullable="false" MaxLength="152" />
@@ -2316,6 +2356,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_ContarRespuestasPorGrupo" />
+          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_DevolverObservacionesPorGrupo" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
