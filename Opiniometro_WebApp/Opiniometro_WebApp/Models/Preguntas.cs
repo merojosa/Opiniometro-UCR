@@ -12,8 +12,11 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class C__RefactorLog
+    public partial class Preguntas
     {
-        public System.Guid OperationKey { get; set; }
+        public int Numero { get; set; }
+        public string Planteamiento { get; set; }
+        public string TipoPregunta { get; set; }
+        public string Categoria { get; set; }
     }
 }
