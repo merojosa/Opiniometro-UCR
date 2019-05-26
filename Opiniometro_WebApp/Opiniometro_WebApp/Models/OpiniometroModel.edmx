@@ -774,6 +774,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="BuscarCursoPorNombre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NombreCurso" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="DatosEstudiante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
@@ -1917,6 +1920,9 @@
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
           </AssociationSet>
+          <FunctionImport Name="BuscarCursoPorNombre" ReturnType="Collection(Opiniometro_DatosModel.BuscarCursoPorNombre_Result)">
+            <Parameter Name="NombreCurso" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_DatosModel.DatosEstudiante_Result)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
@@ -1943,6 +1949,12 @@
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="BuscarCursoPorNombre_Result">
+          <Property Type="String" Name="Sigla" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="75" />
+          <Property Type="Byte" Name="Tipo" Nullable="false" />
+          <Property Type="String" Name="CodigoUnidad" Nullable="false" MaxLength="10" />
+        </ComplexType>
         <ComplexType Name="DatosEstudiante_Result">
           <Property Type="String" Name="Nombre_Completo" Nullable="false" MaxLength="152" />
           <Property Type="String" Name="Carne" Nullable="false" MaxLength="6" />
@@ -2263,6 +2275,16 @@
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="BuscarCursoPorNombre" FunctionName="Opiniometro_DatosModel.Store.BuscarCursoPorNombre">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.BuscarCursoPorNombre_Result">
+                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="CodigoUnidad" ColumnName="CodigoUnidad" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_DatosModel.Store.DatosEstudiante">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Opiniometro_DatosModel.DatosEstudiante_Result">
@@ -2304,7 +2326,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
