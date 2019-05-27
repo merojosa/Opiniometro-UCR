@@ -1,39 +1,72 @@
 ﻿@model IEnumerable<Opiniometro_WebApp.Models.Responde>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Formulario";
 }
 
+@Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
 @Html.Partial("_Collapsible")
 
-<h2>Index</h2>
+<h2>Formulario</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Formulario_Respuesta.CodigoFormulario)
-        </th>
-        <th></th>
-    </tr>
+@*<div class="row">
+        <img src="@Url.Action(" GraficoPie")" alt="SimpleChart" />
+    </div>*@
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Observacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Respuesta)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RespuestaProfesor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Formulario_Respuesta.CodigoFormulario)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+<button class="collapsible main"> Evaluación de aspectos reglamentarios del profesor </button>
+<div class="content">
 
-</table>
+    <button class="collapsible secondary"> ¿El profesor repuso clases cuando fue necesario? </button>
+    <div class="content">
+
+        <button class="collapsible terciary"> Resultados </button>
+        <div class="content">
+            <img src="@Url.Action("GraficoPie")" alt="SimpleChart" />
+        </div>
+
+        <button class="collapsible terciary"> Observaciones </button>
+        <div class="content">
+
+        </div>
+    </div>
+
+    <button class="collapsible secondary"> ¿Que opina del curso? </button>
+    <div class="content">
+
+        <button class="collapsible terciary"> Observaciones </button>
+        <div class="content">
+
+        </div>
+    </div>
+
+</div>
+
+<button class="collapsible main"> Opinión General del Curso </button>
+<div class="content">
+
+    <button class="collapsible secondary"> ¿El profesor entrego la carta del estudiante en las fechas indicadas por el reglamento? </button>
+    <div class="content">
+        <button class="collapsible terciary"> Resultados </button>
+        <div class="content">
+            <img src="@Url.Action("GraficoPie")" alt="SimpleChart" />
+        </div>
+
+        <button class="collapsible terciary"> Observaciones </button>
+        <div class="content">
+
+        </div>
+    </div>
+
+    <button class="collapsible secondary"> ¿Que opina del profesor? </button>
+    <div class="content">
+
+        <button class="collapsible terciary"> Observaciones </button>
+        <div class="content">
+
+        </div>
+    </div>
+
+</div>
+
+
+<script src="~/Scripts/CollapsibleScript.js"></script>
