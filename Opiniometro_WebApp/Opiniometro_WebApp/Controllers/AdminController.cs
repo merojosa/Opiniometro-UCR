@@ -143,7 +143,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 da.Fill(table);
-            }*/
+            }
 
         }
-    }
+    }*/
