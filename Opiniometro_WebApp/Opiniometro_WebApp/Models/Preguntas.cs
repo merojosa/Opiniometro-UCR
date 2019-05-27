@@ -10,12 +10,13 @@
 namespace Opiniometro_WebApp.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class SP_FiltrarUsuarios_Result
+    public partial class Preguntas
     {
-        public string Cedula { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido1 { get; set; }
-        public string Apellido2 { get; set; }
+        public int Numero { get; set; }
+        public string Planteamiento { get; set; }
+        public string TipoPregunta { get; set; }
+        public string Categoria { get; set; }
     }
 }

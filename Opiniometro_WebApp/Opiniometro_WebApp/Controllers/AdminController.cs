@@ -22,8 +22,8 @@ namespace Opiniometro_WebApp.Controllers
 
         public ActionResult VerPersonas(string cedula)
         {
-            List<Persona> personas = db.Personas.ToList();
-            var persona = from s in db.Personas
+            List<Persona> personas = db.Persona.ToList();
+            var persona = from s in db.Persona
                           select s;
 
             if (!String.IsNullOrEmpty(cedula))
@@ -46,7 +46,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 using (db)
                 {
-                    Persona persona = db.Personas.Find(id);
+                    Persona persona = db.Persona.Find(id);
                     return View(persona);
                 }
             }

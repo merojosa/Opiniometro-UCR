@@ -28,36 +28,36 @@ namespace Opiniometro_WebApp.Models
         }
     
         public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
-        public virtual DbSet<Administrativo> Administrativoes { get; set; }
-        public virtual DbSet<Carrera> Carreras { get; set; }
+        public virtual DbSet<Administrativo> Administrativo { get; set; }
+        public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Ciclo_Lectivo> Ciclo_Lectivo { get; set; }
         public virtual DbSet<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
-        public virtual DbSet<Curso> Cursoes { get; set; }
-        public virtual DbSet<Empadronado> Empadronadoes { get; set; }
-        public virtual DbSet<Enfasi> Enfasis { get; set; }
-        public virtual DbSet<Estudiante> Estudiantes { get; set; }
-        public virtual DbSet<Facultad> Facultads { get; set; }
+        public virtual DbSet<Curso> Curso { get; set; }
+        public virtual DbSet<Empadronado> Empadronado { get; set; }
+        public virtual DbSet<Enfasis> Enfasis { get; set; }
+        public virtual DbSet<Estudiante> Estudiante { get; set; }
+        public virtual DbSet<Facultad> Facultad { get; set; }
         public virtual DbSet<Fecha_Corte> Fecha_Corte { get; set; }
-        public virtual DbSet<Formulario> Formularios { get; set; }
+        public virtual DbSet<Formulario> Formulario { get; set; }
         public virtual DbSet<Formulario_Respuesta> Formulario_Respuesta { get; set; }
-        public virtual DbSet<Grupo> Grupoes { get; set; }
-        public virtual DbSet<Imparte> Impartes { get; set; }
-        public virtual DbSet<Item> Items { get; set; }
-        public virtual DbSet<Matricula> Matriculas { get; set; }
-        public virtual DbSet<Perfil> Perfils { get; set; }
-        public virtual DbSet<Permiso> Permisoes { get; set; }
-        public virtual DbSet<Persona> Personas { get; set; }
+        public virtual DbSet<Grupo> Grupo { get; set; }
+        public virtual DbSet<Imparte> Imparte { get; set; }
+        public virtual DbSet<Item> Item { get; set; }
+        public virtual DbSet<Matricula> Matricula { get; set; }
+        public virtual DbSet<Perfil> Perfil { get; set; }
+        public virtual DbSet<Permiso> Permiso { get; set; }
+        public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<Posee_Enfasis_Perfil_Permiso> Posee_Enfasis_Perfil_Permiso { get; set; }
-        public virtual DbSet<Pregunta> Preguntas { get; set; }
-        public virtual DbSet<Profesor> Profesors { get; set; }
-        public virtual DbSet<Responde> Respondes { get; set; }
-        public virtual DbSet<Seccion> Seccions { get; set; }
+        public virtual DbSet<Preguntas> Preguntas { get; set; }
+        public virtual DbSet<Profesor> Profesor { get; set; }
+        public virtual DbSet<Responde> Responde { get; set; }
+        public virtual DbSet<Seccion> Seccion { get; set; }
         public virtual DbSet<Seleccion_Unica> Seleccion_Unica { get; set; }
-        public virtual DbSet<TelefonoPersona> TelefonoPersonas { get; set; }
+        public virtual DbSet<TelefonoPersona> TelefonoPersona { get; set; }
         public virtual DbSet<Texto_Libre> Texto_Libre { get; set; }
         public virtual DbSet<Tiene_Grupo_Formulario> Tiene_Grupo_Formulario { get; set; }
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
-        public virtual DbSet<Usuario> Usuarios { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
     
         public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)
         {
@@ -112,22 +112,74 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CambiarContrasenna", correoParameter, contrasenna_NuevaParameter);
         }
     
-        public virtual int SP_DesactivarUsuario(string cedulaBusqueda)
+        public virtual int SP_ContarRespuestasPorGrupo(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, Nullable<int> itemId, string respuesta, ObjectParameter cntResp)
         {
-            var cedulaBusquedaParameter = cedulaBusqueda != null ?
-                new ObjectParameter("CedulaBusqueda", cedulaBusqueda) :
-                new ObjectParameter("CedulaBusqueda", typeof(string));
+            var codigoFormularioParameter = codigoFormulario != null ?
+                new ObjectParameter("codigoFormulario", codigoFormulario) :
+                new ObjectParameter("codigoFormulario", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_DesactivarUsuario", cedulaBusquedaParameter);
+            var cedulaProfesorParameter = cedulaProfesor != null ?
+                new ObjectParameter("cedulaProfesor", cedulaProfesor) :
+                new ObjectParameter("cedulaProfesor", typeof(string));
+    
+            var annoGrupoParameter = annoGrupo.HasValue ?
+                new ObjectParameter("annoGrupo", annoGrupo) :
+                new ObjectParameter("annoGrupo", typeof(short));
+    
+            var semestreGrupoParameter = semestreGrupo.HasValue ?
+                new ObjectParameter("semestreGrupo", semestreGrupo) :
+                new ObjectParameter("semestreGrupo", typeof(byte));
+    
+            var numeroGrupoParameter = numeroGrupo.HasValue ?
+                new ObjectParameter("numeroGrupo", numeroGrupo) :
+                new ObjectParameter("numeroGrupo", typeof(byte));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("siglaCurso", siglaCurso) :
+                new ObjectParameter("siglaCurso", typeof(string));
+    
+            var itemIdParameter = itemId.HasValue ?
+                new ObjectParameter("itemId", itemId) :
+                new ObjectParameter("itemId", typeof(int));
+    
+            var respuestaParameter = respuesta != null ?
+                new ObjectParameter("respuesta", respuesta) :
+                new ObjectParameter("respuesta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ContarRespuestasPorGrupo", codigoFormularioParameter, cedulaProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numeroGrupoParameter, siglaCursoParameter, itemIdParameter, respuestaParameter, cntResp);
         }
     
-        public virtual int SP_EliminarPersona(string cedulaBusqueda)
+        public virtual ObjectResult<string> SP_DevolverObservacionesPorGrupo(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, Nullable<int> itemId)
         {
-            var cedulaBusquedaParameter = cedulaBusqueda != null ?
-                new ObjectParameter("CedulaBusqueda", cedulaBusqueda) :
-                new ObjectParameter("CedulaBusqueda", typeof(string));
+            var codigoFormularioParameter = codigoFormulario != null ?
+                new ObjectParameter("codigoFormulario", codigoFormulario) :
+                new ObjectParameter("codigoFormulario", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_EliminarPersona", cedulaBusquedaParameter);
+            var cedulaProfesorParameter = cedulaProfesor != null ?
+                new ObjectParameter("cedulaProfesor", cedulaProfesor) :
+                new ObjectParameter("cedulaProfesor", typeof(string));
+    
+            var annoGrupoParameter = annoGrupo.HasValue ?
+                new ObjectParameter("annoGrupo", annoGrupo) :
+                new ObjectParameter("annoGrupo", typeof(short));
+    
+            var semestreGrupoParameter = semestreGrupo.HasValue ?
+                new ObjectParameter("semestreGrupo", semestreGrupo) :
+                new ObjectParameter("semestreGrupo", typeof(byte));
+    
+            var numeroGrupoParameter = numeroGrupo.HasValue ?
+                new ObjectParameter("numeroGrupo", numeroGrupo) :
+                new ObjectParameter("numeroGrupo", typeof(byte));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("siglaCurso", siglaCurso) :
+                new ObjectParameter("siglaCurso", typeof(string));
+    
+            var itemIdParameter = itemId.HasValue ?
+                new ObjectParameter("itemId", itemId) :
+                new ObjectParameter("itemId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_DevolverObservacionesPorGrupo", codigoFormularioParameter, cedulaProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numeroGrupoParameter, siglaCursoParameter, itemIdParameter);
         }
     
         public virtual int SP_ExistenciaCorreo(string correo, ObjectParameter resultado)
@@ -137,15 +189,6 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Correo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ExistenciaCorreo", correoParameter, resultado);
-        }
-    
-        public virtual ObjectResult<SP_FiltrarUsuarios_Result> SP_FiltrarUsuarios(string ced)
-        {
-            var cedParameter = ced != null ?
-                new ObjectParameter("Ced", ced) :
-                new ObjectParameter("Ced", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_FiltrarUsuarios_Result>("SP_FiltrarUsuarios", cedParameter);
         }
     
         public virtual int SP_LoginUsuario(string correo, string contrasenna, ObjectParameter resultado)
