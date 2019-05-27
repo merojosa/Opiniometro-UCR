@@ -44,6 +44,8 @@
           <Property Name="CodigoFormulario" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="TituloSeccion" Type="nvarchar" MaxLength="120" Nullable="false" />
           <Property Name="NombreFormulario" Type="varchar" MaxLength="30" />
+          <Property Name="Orden_Item" Type="int" />
+          <Property Name="Orden_Seccion" Type="int" />
         </EntityType>
         <EntityType Name="Curso">
           <Key>
@@ -1057,6 +1059,8 @@
           <Property Name="CodigoFormulario" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="TituloSeccion" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NombreFormulario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Orden_Item" Type="Int32" />
+          <Property Name="Orden_Seccion" Type="Int32" />
           <NavigationProperty Name="Formulario" Relationship="Self.FK_Con_For" FromRole="Conformado_Item_Sec_Form" ToRole="Formulario" />
           <NavigationProperty Name="Item" Relationship="Self.FK_Con_Ite" FromRole="Conformado_Item_Sec_Form" ToRole="Item" />
           <NavigationProperty Name="Seccion" Relationship="Self.FK_Con_Sec" FromRole="Conformado_Item_Sec_Form" ToRole="Seccion" />
@@ -2071,6 +2075,8 @@
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
                 <ScalarProperty Name="TituloSeccion" ColumnName="TituloSeccion" />
                 <ScalarProperty Name="NombreFormulario" ColumnName="NombreFormulario" />
+                <ScalarProperty Name="Orden_Item" ColumnName="Orden_Item" />
+                <ScalarProperty Name="Orden_Seccion" ColumnName="Orden_Seccion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
