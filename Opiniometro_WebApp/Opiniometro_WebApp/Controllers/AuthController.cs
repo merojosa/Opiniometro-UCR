@@ -12,6 +12,7 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 using System.Security.Cryptography;
+using System.Threading;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -31,12 +32,13 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         /*  
-         *  
          *  EFECTO: verificar los datos brindados en la base de datos.
          *  REQUIERE: correo y contrasenna en "empaquetado" en la clase Usuario.
          *  MODIFICA: la identidad para que el usario este loggeado en el sistema.
          *  
-         *  Basado en: https://stackoverflow.com/questions/31584506/how-to-implement-custom-authentication-in-asp-net-mvc-5
+         *  Basado en:
+         *  SigIn: https://stackoverflow.com/questions/31584506/how-to-implement-custom-authentication-in-asp-net-mvc-5,
+         *  Obtener la identidad desde otro sitio: https://stackoverflow.com/questions/22246538/access-claim-values-in-controller-in-mvc-5
          */
         [HttpPost]
         public ActionResult Login(Usuario usuario)
@@ -49,8 +51,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 var identidad = new ClaimsIdentity(
                     new[] {
-                    new Claim(ClaimTypes.NameIdentifier, usuario.CorreoInstitucional),
-                    new Claim(ClaimTypes.Name, usuario.CorreoInstitucional),
+                    new Claim(ClaimTypes.Email, usuario.CorreoInstitucional)
 
                     /*
                     // optionally you could add roles if any
@@ -59,10 +60,10 @@ namespace Opiniometro_WebApp.Controllers
                     */
                     },
                     DefaultAuthenticationTypes.ApplicationCookie);
+                Thread.CurrentPrincipal = new ClaimsPrincipal(identidad);
 
                 HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, identidad);
                 return RedirectToAction("Index", "LogInPerfiles");
-
             }
             else
             {
