@@ -35,7 +35,7 @@ namespace Opiniometro_WebApp.Controllers
         {
             return new List<Ciclo_Lectivo>().AsQueryable();
         }
-        
+
         // Para el filtro por carreras
         public IQueryable<Carrera> ObtenerCarreras(short anno, byte semestre, String codigoUnidadAcadem)
         {
@@ -60,7 +60,7 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="numEnfasis">Número del énfasis de la carrera en el que se encuentran los cursos.</param>
         /// <param name="searchString">Frase usada para buscar el nombre o código de un grupo.</param>
         /// <returns>Lista de los cursos que satisfacen los filtros utilizados como parámetros.</returns>
-        public IQueryable<Curso> ObtenerCursos(short anno, byte semestre, 
+        public IQueryable<Curso> ObtenerCursos(short anno, byte semestre,
             String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis)
         {
             return new List<Curso>().AsQueryable();
@@ -75,10 +75,10 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="numEnfasis">Número del énfasis de la carrera en el que se encuentran los cursos de los grupos.</param>
         /// <param name="siglaCurso">Sigla del curso al que pertenecen los grupos</param>
         /// <returns>Lista de los grupos que satisfacen los filtros utilizados como parámetros.</returns>
-        public IEnumerable<GrupoConInfoExtra> ObtenerGrupos(short anno, byte semestre, String codigoUnidadAcadem, 
+        public IEnumerable<GrupoConInfoExtra> ObtenerGrupos(short anno, byte semestre, String codigoUnidadAcadem,
             String siglaCarrera, byte? numEnfasis, String siglaCurso, String searchString)
         {
-            IQueryable<GrupoConInfoExtra> grupos = 
+            IQueryable<GrupoConInfoExtra> grupos =
                 from cur in db.Curso
                 join gru in db.Grupo on cur.Sigla equals gru.SiglaCurso
                 select new GrupoConInfoExtra
@@ -90,7 +90,7 @@ namespace Opiniometro_WebApp.Controllers
                     nombreCurso = cur.Nombre,
                     codigoUnidad = cur.CodigoUnidad
                 };
-            
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 grupos = grupos.Where(c => c.nombreCurso.Contains(searchString));
@@ -103,7 +103,7 @@ namespace Opiniometro_WebApp.Controllers
         {
             return db.Formulario.ToList();
         }
-   
+
 
 
     }
