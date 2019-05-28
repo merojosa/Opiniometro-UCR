@@ -1,67 +1,52 @@
 ﻿@model Opiniometro_WebApp.Models.Seccion
 
 @{
-    ViewBag.Title = "Sección";
+    ViewBag.Title = "Crear Sección";
 }
 
-<h2>Crear Sección</h2>
+<h2>Crear Seccion</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    @*<h4>Seccion</h4>*@
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.Label("Título", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
+
+    <div class="form-horizontal">
+        <h4>Seccion</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Crear" class="btn btn-secondary" />
+                <input type="button" value="Cancelar" class="btn btn-secondary" onclick="accionBotonCancelar()" />
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.Label("Descripción", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Crear" class="btn btn-secondary" onclick="accionBotonCrearSeccion" />
-            <input type="submit" value="Cancelar" class="btn btn-secondary" onclick="accionBotonCancelarSeccion" />
-        </div>
-    </div>
-
-    @* script en el que se pone lo que debe suceder cuando se seleccione el boton de crear seccion *@
-    <script>
-        function accionBotonCrearSeccion() {
-
-
-
-        }
-    </script>
-
-    @* script en el que se pone lo que debe suceder cuando se seleccione el boton de cancelar la creacion de la seccion *@
-    <script>
-        function accionBotonCancelarSeccion() {
-
-         
-
-        }
-    </script>
-
-</div>
 }
 
-<div>
-    @*@Html.ActionLink("Back to List", "Index")*@
-</div>
+@* La accion que sucede al seleccionar boton Cancelar *@
+<script>
+        function accionBotonCancelar() {
+            document.location = '@Url.Action("Index")';
+        }
+</script>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

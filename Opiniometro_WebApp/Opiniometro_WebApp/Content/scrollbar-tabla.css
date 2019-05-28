@@ -1,0 +1,23 @@
+﻿.fixed_header {
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+    .fixed_header tbody {
+        display: block;
+        width: 100%;
+        overflow: auto;
+        height: 300px;
+    }
+
+    .fixed_header thead tr {
+        display: block;
+    }
+
+    .fixed_header th {
+        height: 50px;
+    }
+
+    .fixed_header th, .fixed_header td {
+        width: 200px;
+    }
