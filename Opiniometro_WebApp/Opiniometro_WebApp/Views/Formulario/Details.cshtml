@@ -4,23 +4,50 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+@Html.Partial("_Collapsible")
 
-<div>
-    <h4>Formulario</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
+@foreach (var title in Model.Formulario_Respuesta.Take(1))
+{
+    <td>
+        @Html.DisplayFor(modelItem => title.CodigoFormulario)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => title.Formulario.Nombre)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => title.Grupo.SiglaCurso)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => title.Grupo.Curso.Nombre)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => title.Grupo.SemestreGrupo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => title.Grupo.AnnoGrupo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => title.Grupo.Ciclo_Lectivo)
+    </td>
+}
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CodigoFormulario }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@foreach (var seccion in Model.Conformado_Item_Sec_Form)
+{
+    <button class="collapsible main"> @Html.DisplayFor(modelItem => seccion.TituloSeccion) </button>
+    <div class="content">
+
+        <button class="collapsible secondary"> @Html.DisplayFor(modelItem => seccion.Item.TextoPregunta) </button>
+        <div class="content">
+
+            <button class="collapsible terciary">  @Html.DisplayFor(modelItem => seccion.Item.responde_respuesta.Respuesta) </button>
+            <div class="content">
+
+            </div>
+
+        </div>
+
+    </div>
+}
+
+<script src="~/Scripts/CollapsibleScript.js"></script>

@@ -27,7 +27,6 @@ namespace Opiniometro_WebApp.Models
         public string Observacion { get; set; }
         public string Respuesta { get; set; }
         public string RespuestaProfesor { get; set; }
-    
         public virtual Formulario_Respuesta Formulario_Respuesta { get; set; }
         public virtual Item Item { get; set; }
         public virtual Seccion Seccion { get; set; }
