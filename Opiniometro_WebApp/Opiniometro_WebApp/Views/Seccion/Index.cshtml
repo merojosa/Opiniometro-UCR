@@ -5,9 +5,13 @@
 }
 
 <h2>Banco de Secciones</h2>
-
+<script>
+        function accionBotonNuevo() {
+            document.location = '@Url.Action("Create")';
+        }
+</script>
 <p>
-    <input type="submit" value="Crear Nueva Sección" class="btn btn-secondary"  id="botonNuevaSeccion" onclick="accionBotonNuevaSeccion()" />
+    <input type="submit" value="Crear Nueva Sección" class="btn btn-secondary"  id="botonNuevaSeccion" onclick="accionBotonNuevo()" />
 </p>
 <table class="table">
     <tr>
@@ -34,9 +38,9 @@
             @Html.DisplayFor(modelItem => item.Descripcion)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Titulo }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Titulo }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Titulo })
+@*            @Html.ActionLink("Edit", "Edit", new { id = item.Titulo }) |*@
+            @*@Html.ActionLink("Details", "Details", new { id = item.Titulo }) |*@
+            @*@Html.ActionLink("Delete", "Delete", new { id = item.Titulo })*@
         </td>
     </tr>
 }

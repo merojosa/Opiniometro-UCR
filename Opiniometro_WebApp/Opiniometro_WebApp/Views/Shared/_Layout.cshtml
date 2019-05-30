@@ -1,42 +1,82 @@
 ﻿<!DOCTYPE html>
 <html>
+
+
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>Opiniómetro@UCR</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <!--Barra-->
+    @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-top:145px" ;>
         <div class="container">
             <div class="navbar-header">
+
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Opiniómetro@UCR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        Usuario
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-contentt">
+                        <a onclick="location.href='@Url.Action("VerPersonas", "Admin")';return false;">Ver información de Personas</a>
+                        <a onclick="location.href='@Url.Action("CrearUsuario", "Admin")';return false;">Insertar Usuario</a>
+                        <!--<a onclick="location.href='@Url.Action("Index", "LogInPerfiles")';return false;">orueba perfiles Usuario</a>-->
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        Evaluaciones
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-contentt">
+                        <a onclick="location.href='@Url.Action("Index", "Formulario")';return false;"> Insertar Formulario </a>
+                        @Html.ActionLink("Asignar Formulario", "Index", "AsignarFormularios")
+                        <!--<a onclick="location.href='@Url.Action("Index", "AsignarFomularios")';return false;">Asignar Formulario</a>-->
+                        <a onclick="location.href='@Url.Action("Index", "Responde")';return false;">Visualizar resultados evaluaciones</a>
+                        <a onclick="location.href='@Url.Action("Index", "Seccion")';return false;"> Seccion </a>
+                        <a onclick="location.href='@Url.Action("Index", "Item")';return false;">Item </a>
+                    </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+        </nav>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
-</html>
+
+
+
+
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Opiniometro@UCR</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>
+
+    <script>
+        function redirect()
+        {
+            alert("Javasript");
+
+        }
+    </script>
