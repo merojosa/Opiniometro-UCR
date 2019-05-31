@@ -81,19 +81,24 @@ namespace Opiniometro_WebApp.Controllers
             return null;
         }
 
-        //[HttpGet]
-        //private int ObtenerObservaciones(int cursoId)
-        //{
-        //    //Parametro para que se guarde el resultado
-        //    ObjectParameter resultado = new ObjectParameter("resultado", typeof(Double));
+        [HttpGet]
+        private List<string> ObtenerObservaciones(int cursoId)
+        {
+            //Parametro para que se guarde el resultado
+            //ObjectParameter resultado = new ObjectParameter("resultado", typeof(Double));
 
-        //    //Invoca el metodo
-        //    db.ProcObtenerPromedioCurso(cursoId, resultado);
+            //Invoca el metodo
+            //db.ProcObtenerPromedioCurso(cursoId, resultado);
+            var result = db.Database.SqlQuery<string>("[SP_DevolverObservacionesPorGrupo]").ToList();
+            //Devuelve el resultado
+            return (result);
 
-        //    //Devuelve el resultado
-        //    return Convert.ToDouble(resultado.Value);
+        }
 
-        //}
+        private ActionResult RecComentarios()
+        {
+            return View(ObtenerObservaciones(1));
+        }
 
         protected override void Dispose(bool disposing)
         {

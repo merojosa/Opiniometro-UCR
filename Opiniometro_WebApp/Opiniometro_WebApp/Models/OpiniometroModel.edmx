@@ -1994,6 +1994,17 @@
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="ContarRespuestaPorGrupo" EntitySet="Responde" ReturnType="Collection(Opiniometro_DatosModel.Responde)">
+            <Parameter Name="codigoFormulario" Mode="In" Type="String" />
+            <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
+            <Parameter Name="annoGrupo" Mode="In" Type="Int16" />
+            <Parameter Name="semestreGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="siglaCurso" Mode="In" Type="String" />
+            <Parameter Name="itemId" Mode="In" Type="Int32" />
+            <Parameter Name="respuesta" Mode="In" Type="String" />
+            <Parameter Name="cntResp" Mode="InOut" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="BuscarCursoPorNombre_Result">
           <Property Type="String" Name="Sigla" Nullable="false" MaxLength="6" />
@@ -2360,6 +2371,7 @@
           <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_DevolverObservacionesPorGrupo" />
           <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_DatosModel.Store.SP_ExistenciaCorreo" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />
+          <FunctionImportMapping FunctionImportName="ContarRespuestaPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_ContarRespuestasPorGrupo" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
