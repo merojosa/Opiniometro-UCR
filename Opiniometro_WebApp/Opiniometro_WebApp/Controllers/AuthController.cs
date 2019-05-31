@@ -73,6 +73,19 @@ namespace Opiniometro_WebApp.Controllers
             }
 
         }
+
+        public ActionResult CerrarSesion()
+        {
+            // Obtener identidad actual.
+            var identidad = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+            // Elimino cookies
+            Request.GetOwinContext().Authentication.SignOut(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie);
+
+            // Como no esta loggeado, se tiene que redigir a login para volver a hacerlo.
+            return RedirectToAction("Login");
+        }
+
         /*
          * GET: Auth/Recuperar
          * EFECTO: retornar vista parcial, la cual implica que no se despliega _Layout de la carpeta Shared.
