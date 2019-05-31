@@ -153,7 +153,7 @@
           <Property Name="CedulaProfesor" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Numero" Type="tinyint" Nullable="false" />
           <Property Name="Sigla" Type="char" MaxLength="6" Nullable="false" />
-          <Property Name="Anno" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="Anno" Type="smallint" Nullable="false" />
           <Property Name="Semestre" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Item">
@@ -215,15 +215,6 @@
           <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="IdPerfil" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="IdPermiso" Type="tinyint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Preguntas">
-          <Key>
-            <PropertyRef Name="Numero" />
-          </Key>
-          <Property Name="Numero" Type="int" Nullable="false" />
-          <Property Name="Planteamiento" Type="nvarchar" MaxLength="120" Nullable="false" />
-          <Property Name="TipoPregunta" Type="nchar" MaxLength="30" />
-          <Property Name="Categoria" Type="nchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="Profesor">
           <Key>
@@ -555,6 +546,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Imparte_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="Imparte" Type="Self.Imparte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="SiglaCurso" />
+              <PropertyRef Name="Numero" />
+              <PropertyRef Name="AnnoGrupo" />
+              <PropertyRef Name="SemestreGrupo" />
+            </Principal>
+            <Dependent Role="Imparte">
+              <PropertyRef Name="Sigla" />
+              <PropertyRef Name="Numero" />
+              <PropertyRef Name="Anno" />
+              <PropertyRef Name="Semestre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Imparte_Profesor">
           <End Role="Profesor" Type="Self.Profesor" Multiplicity="1" />
           <End Role="Imparte" Type="Self.Imparte" Multiplicity="*" />
@@ -859,7 +868,6 @@
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responde" EntityType="Self.Responde" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Se_Encuentra_Unidad_Enfasis" EntityType="Self.Se_Encuentra_Unidad_Enfasis" Schema="dbo" store:Type="Tables" />
@@ -941,6 +949,10 @@
           <AssociationSet Name="FK_Gru_Cur" Association="Self.FK_Gru_Cur">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Imparte_Grupo" Association="Self.FK_Imparte_Grupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Imparte" EntitySet="Imparte" />
           </AssociationSet>
           <AssociationSet Name="FK_Imparte_Profesor" Association="Self.FK_Imparte_Profesor">
             <End Role="Profesor" EntitySet="Profesor" />
@@ -1175,21 +1187,7 @@
           <NavigationProperty Name="Curso" Relationship="Self.FK_Gru_Cur" FromRole="Grupo" ToRole="Curso" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Gru" FromRole="Grupo" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Tiene_Grupo_Formulario" Relationship="Self.FK_Tie_Gru" FromRole="Grupo" ToRole="Tiene_Grupo_Formulario" />
-        </EntityType>
-        <EntityType Name="Imparte">
-          <Key>
-            <PropertyRef Name="CedulaProfesor" />
-            <PropertyRef Name="Numero" />
-            <PropertyRef Name="Sigla" />
-            <PropertyRef Name="Anno" />
-            <PropertyRef Name="Semestre" />
-          </Key>
-          <Property Name="CedulaProfesor" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Numero" Type="Byte" Nullable="false" />
-          <Property Name="Sigla" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Anno" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Semestre" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Profesor" Relationship="Self.FK_Imparte_Profesor" FromRole="Imparte" ToRole="Profesor" />
+          <NavigationProperty Name="Profesor" Relationship="Self.Imparte" FromRole="Grupo" ToRole="Profesor" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -1266,23 +1264,14 @@
           <NavigationProperty Name="Perfil" Relationship="Self.FK_PoseeEnfasisPerfil_Perfil" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Perfil" />
           <NavigationProperty Name="Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Permiso" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Permiso" />
         </EntityType>
-        <EntityType Name="Preguntas">
-          <Key>
-            <PropertyRef Name="Numero" />
-          </Key>
-          <Property Name="Numero" Type="Int32" Nullable="false" />
-          <Property Name="Planteamiento" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TipoPregunta" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
-          <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
-        </EntityType>
         <EntityType Name="Profesor">
           <Key>
             <PropertyRef Name="CedulaProfesor" />
           </Key>
           <Property Name="CedulaProfesor" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Pro" FromRole="Profesor" ToRole="Formulario_Respuesta" />
-          <NavigationProperty Name="Imparte" Relationship="Self.FK_Imparte_Profesor" FromRole="Profesor" ToRole="Imparte" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Pro_Per" FromRole="Profesor" ToRole="Persona" />
+          <NavigationProperty Name="Grupo" Relationship="Self.Imparte" FromRole="Profesor" ToRole="Grupo" />
         </EntityType>
         <EntityType Name="Responde">
           <Key>
@@ -1673,18 +1662,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Imparte_Profesor">
-          <End Role="Profesor" Type="Self.Profesor" Multiplicity="1" />
-          <End Role="Imparte" Type="Self.Imparte" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Profesor">
-              <PropertyRef Name="CedulaProfesor" />
-            </Principal>
-            <Dependent Role="Imparte">
-              <PropertyRef Name="CedulaProfesor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Res_Ite">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
           <End Role="Responde" Type="Self.Responde" Multiplicity="*" />
@@ -1797,6 +1774,10 @@
           <End Role="Facultad" Type="Self.Facultad" Multiplicity="0..1" />
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
         </Association>
+        <Association Name="Imparte">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="*" />
+        </Association>
         <Association Name="Se_Encuentra_Unidad_Enfasis">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
@@ -1816,14 +1797,12 @@
           <EntitySet Name="Formulario" EntityType="Self.Formulario" />
           <EntitySet Name="Formulario_Respuesta" EntityType="Self.Formulario_Respuesta" />
           <EntitySet Name="Grupo" EntityType="Self.Grupo" />
-          <EntitySet Name="Imparte" EntityType="Self.Imparte" />
           <EntitySet Name="Item" EntityType="Self.Item" />
           <EntitySet Name="Matricula" EntityType="Self.Matricula" />
           <EntitySet Name="Perfil" EntityType="Self.Perfil" />
           <EntitySet Name="Permiso" EntityType="Self.Permiso" />
           <EntitySet Name="Persona" EntityType="Self.Persona" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" />
-          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" />
           <EntitySet Name="Responde" EntityType="Self.Responde" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" />
@@ -1917,10 +1896,6 @@
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
           </AssociationSet>
-          <AssociationSet Name="FK_Imparte_Profesor" Association="Self.FK_Imparte_Profesor">
-            <End Role="Profesor" EntitySet="Profesor" />
-            <End Role="Imparte" EntitySet="Imparte" />
-          </AssociationSet>
           <AssociationSet Name="FK_Res_Ite" Association="Self.FK_Res_Ite">
             <End Role="Item" EntitySet="Item" />
             <End Role="Responde" EntitySet="Responde" />
@@ -1960,6 +1935,10 @@
           <AssociationSet Name="Escuela" Association="Self.Escuela">
             <End Role="Facultad" EntitySet="Facultad" />
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+          </AssociationSet>
+          <AssociationSet Name="Imparte" Association="Self.Imparte">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
           <AssociationSet Name="Se_Encuentra_Unidad_Enfasis" Association="Self.Se_Encuentra_Unidad_Enfasis">
             <End Role="Enfasis" EntitySet="Enfasis" />
@@ -2163,17 +2142,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Imparte">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Imparte">
-              <MappingFragment StoreEntitySet="Imparte">
-                <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
-                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
-                <ScalarProperty Name="Anno" ColumnName="Anno" />
-                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Item">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Item">
               <MappingFragment StoreEntitySet="Item">
@@ -2230,16 +2198,6 @@
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
                 <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
                 <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Preguntas">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Preguntas">
-              <MappingFragment StoreEntitySet="Preguntas">
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
-                <ScalarProperty Name="Planteamiento" ColumnName="Planteamiento" />
-                <ScalarProperty Name="TipoPregunta" ColumnName="TipoPregunta" />
-                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2338,6 +2296,17 @@
             </EndProperty>
             <EndProperty Name="Unidad_Academica">
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Imparte" TypeName="Opiniometro_DatosModel.Imparte" StoreEntitySet="Imparte">
+            <EndProperty Name="Grupo">
+              <ScalarProperty Name="SiglaCurso" ColumnName="Sigla" />
+              <ScalarProperty Name="Numero" ColumnName="Numero" />
+              <ScalarProperty Name="AnnoGrupo" ColumnName="Anno" />
+              <ScalarProperty Name="SemestreGrupo" ColumnName="Semestre" />
+            </EndProperty>
+            <EndProperty Name="Profesor">
+              <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="Se_Encuentra_Unidad_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Unidad_Enfasis" StoreEntitySet="Se_Encuentra_Unidad_Enfasis">

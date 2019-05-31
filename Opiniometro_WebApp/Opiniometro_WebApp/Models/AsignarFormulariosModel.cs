@@ -20,10 +20,13 @@ namespace Opiniometro_WebApp.Models
         public byte semestre;
 
         // Atributos extra obtenidos de otras clases
+        public ICollection<Profesor> profesores;
+
         public string nombreCurso;
+
         public string codigoUnidad;
-        //public string carrera;
-        //public byte enfasis;
+        //public string codigoCarrera;
+        //public byte codigoEnfasis;
     }
 
     /// <summary>

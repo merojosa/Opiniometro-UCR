@@ -79,17 +79,20 @@ namespace Opiniometro_WebApp.Controllers
             String siglaCarrera, byte? numEnfasis, String siglaCurso, String searchString)
         {
             IQueryable<GrupoConInfoExtra> grupos =
-                from cur in db.Curso
-                join gru in db.Grupo on cur.Sigla equals gru.SiglaCurso
-                select new GrupoConInfoExtra
-                {
-                    siglaCurso = cur.Sigla,
-                    numero = gru.Numero,
-                    anno = gru.AnnoGrupo,
-                    semestre = gru.SemestreGrupo,
-                    nombreCurso = cur.Nombre,
-                    codigoUnidad = cur.CodigoUnidad
-                };
+                from gru in db.Grupo 
+                join cur in db.Curso on gru.SiglaCurso equals cur.Sigla
+            select new GrupoConInfoExtra
+            {
+                siglaCurso = cur.Sigla,
+                numero = gru.Numero,
+                anno = gru.AnnoGrupo,
+                semestre = gru.SemestreGrupo,
+
+                profesores = gru.Profesor,
+
+                nombreCurso = cur.Nombre,
+                codigoUnidad = cur.CodigoUnidad
+            };
 
             if (!String.IsNullOrEmpty(searchString))
             {
