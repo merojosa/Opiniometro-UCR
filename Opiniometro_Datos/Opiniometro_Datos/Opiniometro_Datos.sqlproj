@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
+    <None Include="Script.InformacionDeFormulario.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Usuario.sql" />
@@ -97,5 +98,8 @@
     <Build Include="Texto_Libre.sql" />
     <Build Include="Item.sql" />
     <Build Include="Seleccion_Unica.sql" />
+    <None Include="ScriptNuevaPersonaUsuario.sql" />
+    <None Include="FiltrarUsuarios.sql" />
+    <None Include="Script.EliminarPersona.sql" />
   </ItemGroup>
 </Project>

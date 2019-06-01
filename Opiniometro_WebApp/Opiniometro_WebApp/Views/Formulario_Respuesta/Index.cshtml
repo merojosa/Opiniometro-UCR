@@ -1,18 +1,27 @@
 ﻿@model IEnumerable<Opiniometro_WebApp.Models.Formulario_Respuesta>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Formulario Responde";
 }
 
-<h2>Index</h2>
+<h2>Formulario Responde</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Completado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Formulario.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Grupo.SiglaCurso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Persona.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Profesor.CedulaProfesor)
         </th>
         <th></th>
     </tr>
@@ -21,6 +30,18 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Completado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Formulario.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Grupo.SiglaCurso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Persona.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Profesor.CedulaProfesor)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

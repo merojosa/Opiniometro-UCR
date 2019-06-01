@@ -41,7 +41,7 @@ namespace Opiniometro_WebApp.Models
         public IEnumerable<GrupoConInfoExtra> Grupos { get; set; }
 
         // Lista de formularios
-        //public IEnumerable<SelectListItem> Formularios { get; set; }
+        public IEnumerable<Formulario> Formularios { get; set; }
 
         // Lista signaciones hechas
         //public IEnumerable<SelectListItem> Asignaciones { get; set; 
