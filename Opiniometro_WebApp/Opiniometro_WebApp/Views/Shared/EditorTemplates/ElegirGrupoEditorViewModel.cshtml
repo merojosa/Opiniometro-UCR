@@ -1,0 +1,89 @@
+﻿@model Opiniometro_WebApp.Models.ElegirGrupoEditorViewModel
+
+
+<!-- Table row (fila) de elementos --
+<tr>
+    @*Checkbox para asignar*@
+    <td style="text-align:center">
+        @Html.CheckBoxFor(model => model.Seleccionado)
+    </td>
+
+    @*Sigla de curso*@
+    <td style="text-align:center">
+        @Html.DisplayFor(model => model.SiglaCurso)
+    </td>
+
+    @*Nombre de curso*@
+    <td style="text-align:center">
+        @Html.DisplayFor(model => model.NombreCurso)
+    </td>
+
+    @*Numero de grupo*@
+    <td style="text-align:center">
+        @Html.DisplayFor(model => model.Numero)
+    </td>
+
+    @*Profesores*@
+    <td style="text-align:center">
+        @foreach (var profe in Model.Profesores)
+        {
+            @Html.DisplayFor(model => profe.Persona.Nombre) <span> </span>
+            @Html.DisplayFor(model => profe.Persona.Apellido1) <span> </span>
+            @Html.DisplayFor(model => profe.Persona.Apellido2) <br>
+        }
+    </td>
+
+    @*Año (escondido)*@
+    <td style="text-align:center">
+        @Html.HiddenFor(model => model.Anno)
+    </td>
+
+    @*Semestre (escondido)*@
+    <td style="text-align:center">
+        @Html.HiddenFor(model => model.Semestre) <span></span>
+    </td>
+</tr>-->
+
+<tr>
+    @*Checkbox para asignar*@
+    <td>
+        <div align='center'>@Html.CheckBoxFor(model => model.Seleccionado)</div>
+    </td>
+
+    @*Sigla de curso*@
+    <td style="text-align:center">
+        <div align='center'>@Html.DisplayFor(model => model.SiglaCurso)</div>
+    </td>
+
+    @*Nombre de curso*@
+    <td>
+        <div align='center'>@Html.DisplayFor(model => model.NombreCurso)</div>
+    </td>
+
+    @*Numero de grupo*@
+    <td>
+        <div align='center'>@Html.DisplayFor(model => model.Numero)</div>
+    </td>
+
+    @*Profesores*@
+    <td>
+        @foreach (var profe in Model.Profesores)
+        {
+        <div align='center'>
+            @Html.DisplayFor(model => profe.Persona.Nombre) <span> </span>
+            @Html.DisplayFor(model => profe.Persona.Apellido1) <span> </span>
+            @Html.DisplayFor(model => profe.Persona.Apellido2) <br>
+        </div>
+        }
+    </td>
+
+    @*Año (escondido)*@
+    <td>
+        <div align='center'>@Html.HiddenFor(model => model.Anno)</div>
+    </td>
+
+    @*Semestre (escondido)*@
+    <td>
+        <div align='center'>@Html.HiddenFor(model => model.Semestre)</div>
+    </td>
+</tr>

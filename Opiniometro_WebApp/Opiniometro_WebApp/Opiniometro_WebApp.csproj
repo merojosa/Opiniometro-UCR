@@ -189,7 +189,7 @@
     <Compile Include="Models\Administrativo.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AsignarFormulariosModel.cs" />
+    <Compile Include="ViewModels\AsignarFormulariosViewModel.cs" />
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
@@ -298,6 +298,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ElegirGrupoEditorViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\estilos-propios.css" />
@@ -407,9 +408,11 @@
     <Content Include="Views\Administrador\CargarArchivo.cshtml" />
     <Content Include="Views\Administrador\Index.cshtml" />
     <Content Include="Views\Admin\Editar.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ElegirGrupoEditorViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
+    <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

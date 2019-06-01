@@ -16,7 +16,7 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult Index(/*short anno, byte semestre, String codigoUnidadAcadem, 
             String siglaCarrera, byte? numEnfasis, String siglaCurso,*/ string searchString)
         {
-            var modelo = new AsignarFormulariosModel
+            var modelo = new AsignarFormulariosViewModel
             {
                 Ciclos = ObtenerCiclos(""),
                 Carreras = ObtenerCarreras(0, 0, ""),
@@ -75,39 +75,34 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="numEnfasis">Número del énfasis de la carrera en el que se encuentran los cursos de los grupos.</param>
         /// <param name="siglaCurso">Sigla del curso al que pertenecen los grupos</param>
         /// <returns>Lista de los grupos que satisfacen los filtros utilizados como parámetros.</returns>
-        public IEnumerable<GrupoConInfoExtra> ObtenerGrupos(short anno, byte semestre, String codigoUnidadAcadem,
+        public IQueryable<ElegirGrupoEditorViewModel> ObtenerGrupos(short anno, byte semestre, String codigoUnidadAcadem,
             String siglaCarrera, byte? numEnfasis, String siglaCurso, String searchString)
         {
-            IQueryable<GrupoConInfoExtra> grupos =
-                from gru in db.Grupo 
-                join cur in db.Curso on gru.SiglaCurso equals cur.Sigla
-            select new GrupoConInfoExtra
-            {
-                siglaCurso = cur.Sigla,
-                numero = gru.Numero,
-                anno = gru.AnnoGrupo,
-                semestre = gru.SemestreGrupo,
-
-                profesores = gru.Profesor,
-
-                nombreCurso = cur.Nombre,
-                codigoUnidad = cur.CodigoUnidad
-            };
+            // En la base, cuando este query se transforme en un proc. almacenado, se deberá usar join con la tabla curso
+            IQueryable<ElegirGrupoEditorViewModel> grupos = 
+                from gru in db.Grupo
+                select new ElegirGrupoEditorViewModel
+                {
+                    Seleccionado = false,
+                    SiglaCurso = gru.SiglaCurso,
+                    Numero = gru.Numero,
+                    Anno = gru.AnnoGrupo,
+                    Semestre = gru.SemestreGrupo,
+                    Profesores = gru.Profesor.ToList(),
+                    NombreCurso = gru.Curso.Nombre
+                };
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                grupos = grupos.Where(c => c.nombreCurso.Contains(searchString));
+                grupos = grupos.Where(c => c.NombreCurso.Contains(searchString));
             }
             return grupos;
         }
 
-        //para la vista de los formularios
-        public IEnumerable<Formulario> ObtenerFormularios()
+        // Para la vista de los formularios
+        public List<Formulario> ObtenerFormularios()
         {
             return db.Formulario.ToList();
         }
-
-
-
     }
 }
