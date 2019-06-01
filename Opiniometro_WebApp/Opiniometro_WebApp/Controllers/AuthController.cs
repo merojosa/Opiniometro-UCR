@@ -28,7 +28,19 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult Login()
         {
-            return PartialView();
+            var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+            string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email)
+                                                .Select(c => c.Value).SingleOrDefault();
+
+            if (correo_autenticado != null)      // Si esta autenticado, redireccione a Home.
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else                                 // Si no, retorne la vista para el login.
+            {
+                return PartialView();
+            }
         }
 
         /*  
@@ -45,9 +57,16 @@ namespace Opiniometro_WebApp.Controllers
         {
             ObjectParameter exito = new ObjectParameter("Resultado", 0);
             db.SP_LoginUsuario(usuario.CorreoInstitucional, usuario.Contrasena, exito);
+            var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
 
-            // Si se pudo autenticar.
-            if ((bool)exito.Value == true)
+            string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email)
+                                                .Select(c => c.Value).SingleOrDefault();
+
+            if(correo_autenticado != null)      // Si esta autenticado
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else if ((bool)exito.Value == true) // Si se pudo autenticar.
             {
                 var identidad = new ClaimsIdentity(
                     new[] {
@@ -65,9 +84,10 @@ namespace Opiniometro_WebApp.Controllers
                 HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, identidad);
                 return RedirectToAction("Index", "LogInPerfiles");
             }
-            else
+            else    // Si hay error en la autenticacion
             {
                 ModelState.AddModelError(string.Empty, "");
+
                 // Devolverse a la misma pagina de Login informando de que hay un error de autenticacion.
                 return PartialView(usuario);
             }
