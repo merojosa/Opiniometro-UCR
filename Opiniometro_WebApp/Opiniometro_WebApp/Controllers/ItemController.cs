@@ -50,12 +50,14 @@ namespace Opiniometro_WebApp.Controllers
                   new ListItem { Text = "Sí", Value="true" },
                   new ListItem { Text = "No", Value="false" }
             };
-            ViewBag.CategoriaItems = new List<ListItem>
-            {
-                  new ListItem { Text = "Profesor", Value="Profesor" },
-                  new ListItem { Text = "Infraestructura", Value="Infraestructura" },
-                  new ListItem { Text = "Curso", Value="Curso" }
-            };
+
+            ViewBag.SiglasCurso = new SelectList(db.Categoria, "NombreCategoria");
+            //ViewBag.CategoriaItems = new List<ListItem>
+            //{
+            //      new ListItem { Text = "Profesor", Value="Profesor" },
+            //      new ListItem { Text = "Infraestructura", Value="Infraestructura" },
+            //      new ListItem { Text = "Curso", Value="Curso" }
+            //};
             ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID");
             ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId");
             return View();
