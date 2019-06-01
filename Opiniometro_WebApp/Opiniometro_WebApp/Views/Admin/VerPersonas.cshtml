@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Persona>
+
+@{
+    ViewBag.Title = "VerPersonas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Personas registradas</h2>
+@using (Html.BeginForm())
+{
+    <p>
+        <div class="form-group, form-inline">
+            @Html.TextBox("cedula")
+            <input type="submit" value="Buscar" class="btn btn-default" />
+        </div>
+     </p>
+}
+    <table class="table">
+        <tr>
+            <th>
+                <!--@Html.DisplayNameFor(model => model.Cedula)-->
+                Cédula
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                <!--@Html.DisplayNameFor(model => model.Apellido1)-->
+                Primer apellido
+            </th>
+            <th>
+                <!--@Html.DisplayNameFor(model => model.Apellido2)-->
+                Segundo apellido
+            </th>
+            <th>
+                <!--@Html.DisplayNameFor(model => model.Direccion)-->
+                Dirección
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Editar", new { id = item.Cedula })
+            </td>
+        </tr> 
+        }
+
+    </table>

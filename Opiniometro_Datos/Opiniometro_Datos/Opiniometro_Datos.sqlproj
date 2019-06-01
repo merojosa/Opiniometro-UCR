@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{f85b8882-e9ed-471a-95db-5637eae0c635}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
+    <None Include="Script.InformacionDeFormulario.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Usuario.sql" />
@@ -99,7 +100,6 @@
     <Build Include="Seleccion_Unica.sql" />
     <None Include="ScriptNuevaPersonaUsuario.sql" />
     <None Include="FiltrarUsuarios.sql" />
-    <None Include="Script.ModificarUsuario.sql" />
     <None Include="Script.EliminarPersona.sql" />
     <Build Include="Preguntas.sql" />
     <Build Include="UsuariosStaging.sql" />
