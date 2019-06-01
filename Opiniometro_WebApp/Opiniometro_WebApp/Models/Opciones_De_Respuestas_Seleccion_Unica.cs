@@ -15,8 +15,8 @@ namespace Opiniometro_WebApp.Models
     public partial class Opciones_De_Respuestas_Seleccion_Unica
     {
         public string ItemId { get; set; }
-        public byte Orden { get; set; }
-        public byte OpcionRespuesta { get; set; }
+        public short Orden { get; set; }
+        public string OpcionRespuesta { get; set; }
     
         public virtual Seleccion_Unica Seleccion_Unica { get; set; }
     }

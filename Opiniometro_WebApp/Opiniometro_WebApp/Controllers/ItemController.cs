@@ -51,7 +51,7 @@ namespace Opiniometro_WebApp.Controllers
                   new ListItem { Text = "No", Value="false" }
             };
 
-            ViewBag.SiglasCurso = new SelectList(db.Categoria, "NombreCategoria");
+            ViewBag.NombreCategoria = new SelectList(db.Categoria, "NombreCategoria");
             //ViewBag.CategoriaItems = new List<ListItem>
             //{
             //      new ListItem { Text = "Profesor", Value="Profesor" },
@@ -68,7 +68,7 @@ namespace Opiniometro_WebApp.Controllers
          //more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,Categoria,TieneObservacion,TipoPregunta")] Item item)
+        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria")] Item item)
         {
 
 

@@ -11,15 +11,21 @@
 </p>
 <table class="table">
     <tr>
-        <th></th>
+        <th>
+           
+        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.NombreCategoria }) |
-            @Html.ActionLink("Details", "Details", new { id=item.NombreCategoria }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.NombreCategoria })
+            @Html.DisplayFor(modelItem => item.NombreCategoria)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.NombreCategoria }) |
+            @Html.ActionLink("Details", "Details", new { id = item.NombreCategoria }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.NombreCategoria })
         </td>
     </tr>
 }
