@@ -82,14 +82,18 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpGet]
-        private List<string> ObtenerObservaciones(int cursoId)
+        private ObjectResult ObtenerObservaciones(int cursoId)
         {
             //Parametro para que se guarde el resultado
             //ObjectParameter resultado = new ObjectParameter("resultado", typeof(Double));
 
             //Invoca el metodo
             //db.ProcObtenerPromedioCurso(cursoId, resultado);
-            var result = db.Database.SqlQuery<string>("[SP_DevolverObservacionesPorGrupo]").ToList();
+            var result = db.SP_DevolverObservacionesPorGrupo("131313", "100000002", 2017, 2, 1, "CI1330", 1);
+            foreach (var valor in result)
+            {
+                Console.WriteLine("1. " + valor.ToString());
+            }
             //Devuelve el resultado
             return (result);
 
