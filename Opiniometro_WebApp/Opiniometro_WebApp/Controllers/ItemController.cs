@@ -51,7 +51,7 @@ namespace Opiniometro_WebApp.Controllers
                   new ListItem { Text = "No", Value="false" }
             };
 
-            ViewBag.NombreCategoria = new SelectList(db.Categoria, "NombreCategoria");
+            ViewBag.NombreCategoria = new SelectList(db.Categoria, "NombreCategoria", "NombreCategoria");
             //ViewBag.CategoriaItems = new List<ListItem>
             //{
             //      new ListItem { Text = "Profesor", Value="Profesor" },
