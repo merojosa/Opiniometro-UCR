@@ -1,49 +1,7 @@
 ﻿@model Opiniometro_WebApp.Models.ElegirGrupoEditorViewModel
 
 
-<!-- Table row (fila) de elementos --
-<tr>
-    @*Checkbox para asignar*@
-    <td style="text-align:center">
-        @Html.CheckBoxFor(model => model.Seleccionado)
-    </td>
-
-    @*Sigla de curso*@
-    <td style="text-align:center">
-        @Html.DisplayFor(model => model.SiglaCurso)
-    </td>
-
-    @*Nombre de curso*@
-    <td style="text-align:center">
-        @Html.DisplayFor(model => model.NombreCurso)
-    </td>
-
-    @*Numero de grupo*@
-    <td style="text-align:center">
-        @Html.DisplayFor(model => model.Numero)
-    </td>
-
-    @*Profesores*@
-    <td style="text-align:center">
-        @foreach (var profe in Model.Profesores)
-        {
-            @Html.DisplayFor(model => profe.Persona.Nombre) <span> </span>
-            @Html.DisplayFor(model => profe.Persona.Apellido1) <span> </span>
-            @Html.DisplayFor(model => profe.Persona.Apellido2) <br>
-        }
-    </td>
-
-    @*Año (escondido)*@
-    <td style="text-align:center">
-        @Html.HiddenFor(model => model.Anno)
-    </td>
-
-    @*Semestre (escondido)*@
-    <td style="text-align:center">
-        @Html.HiddenFor(model => model.Semestre) <span></span>
-    </td>
-</tr>-->
-
+<!-- Table row (fila) de elementos -->
 <tr>
     @*Checkbox para asignar*@
     <td>
