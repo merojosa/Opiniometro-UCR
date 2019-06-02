@@ -102,5 +102,6 @@
     <None Include="FiltrarUsuarios.sql" />
     <None Include="Script.ModificarUsuario.sql" />
     <None Include="Script.EliminarPersona.sql" />
+    <Build Include="RespondePorGruposView.sql" />
   </ItemGroup>
 </Project>
