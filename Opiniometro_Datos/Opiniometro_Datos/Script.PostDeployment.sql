@@ -121,6 +121,19 @@ BEGIN
 END
 GO
 
+IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
+	DROP PROCEDURE SP_ObtenerPermisosUsuario
+GO
+CREATE PROCEDURE SP_ObtenerPermisosUsuario
+	@Correo		NVARCHAR(50)
+AS
+	SELECT PER.Id
+	FROM Tiene_Usuario_Perfil_Enfasis TU	JOIN Perfil ON TU.IdPerfil = Perfil.Id
+											JOIN Posee_Enfasis_Perfil_Permiso PE ON Perfil.Id = PE.IdPerfil
+											JOIN Permiso PER ON PER.Id = PE.IdPermiso
+	WHERE TU.CorreoInstitucional=@Correo
+GO
+
 EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
 
 --JJAPH
@@ -227,6 +240,9 @@ VALUES ('UC-485648')
 --Carrera
 INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-01234', 'Ciencias de la Computación e Informática','UC-023874')
+
+INSERT INTO Enfasis
+VALUES (0, 'SC-01234')
 
 INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-89457', 'Derecho','UC-485648')
@@ -404,6 +420,27 @@ BEGIN
 	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
 END
 GO
+
+
+--Permisos
+INSERT INTO Permiso
+VALUES	(1, 'Hacer todo'),
+		(2, 'Asignar formulario'),
+		(3, 'Calificar cursos'),
+		(4, 'Ver cursos')
+
+INSERT INTO Perfil
+VALUES	('Estudiante', 'Default'),
+		('Admin', 'Default')
+
+INSERT INTO Tiene_Usuario_Perfil_Enfasis
+VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
+		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin')
+
+INSERT INTO Posee_Enfasis_Perfil_Permiso
+VALUES	(0, 'SC-01234', 'Estudiante', 3),
+		(0, 'SC-01234', 'Estudiante', 4),
+		(0, 'SC-01234', 'Admin', 1)
 
 --select de prueba para la cnt de respuestas
 --SELECT e.Respuesta, COUNT(e.Respuesta) as cantidadRespuestas
