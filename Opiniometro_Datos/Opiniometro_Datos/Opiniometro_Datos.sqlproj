@@ -101,5 +101,6 @@
     <None Include="ScriptNuevaPersonaUsuario.sql" />
     <None Include="FiltrarUsuarios.sql" />
     <None Include="Script.EliminarPersona.sql" />
+    <Build Include="Se_Encuentra_Curso_Enfasis.sql" />
   </ItemGroup>
 </Project>

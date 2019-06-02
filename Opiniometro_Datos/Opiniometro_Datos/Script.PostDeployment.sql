@@ -281,6 +281,23 @@ values
 
 	((select c.Sigla from Curso c where c.Sigla = 'DE2001'), 1, 2018, 2);
 
+----Enfasis
+INSERT INTO Enfasis(Numero, SiglaCarrera)
+VALUES (100, 'SC-01234'), 
+	   (101, 'SC-01234'),
+	   (12, 'SC-89457');
+
+----Curso-Enfasis
+INSERT INTO Se_Encuentra_Curso_Enfasis(SiglaCurso, CodigoEnfasis, SiglaCarrera)
+VALUES ('CI1330', 100, 'SC-01234'), 
+	   ('CI1331', 100, 'SC-01234'),
+	   ('CI1327', 101, 'SC-01234'),
+	   ('CI1328', 101, 'SC-01234'),
+	   ('DE1001', 12, 'SC-89457'),
+	   ('DE2001', 12, 'SC-89457');
+
+
+
 --Script C.X. Solutions
 
 --Ciclo Lectivo

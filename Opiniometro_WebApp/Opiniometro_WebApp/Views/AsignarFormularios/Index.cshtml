@@ -18,25 +18,35 @@
                     <div class="panel-body">
                         <!-- Esta forma hace que la búsqueda aparezca como parte del URL. -->
                         <!--<form asp-controller="AsignarFormularios" asp-action="Index">
-                            <p>
-                                Nombre: <input type="text" name="SearchString">
-                                <input type="submit" value="Buscar" />
-                            </p>
-                        </form>-->
+        <p>
+            Nombre: <input type="text" name="SearchString">
+            <input type="submit" value="Buscar" />
+        </p>
+    </form>-->
                         <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
                         @using (Html.BeginForm())
                         {
                             <!-- Buscador -->
                             <p>
-                                @Html.TextBox("SearchString", "", new { placeholder= "Nombre del curso"})
+                                @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
                                 <input type="submit" value="Buscar" />
                             </p>
-                        }
+                        }  
+
+                        Unidad Academica: @Html.DropDownList("UnidadAcademica", (SelectList)ViewBag.UnidadAcademica,
+                        new { onchange = "document.getElementById('changeUnidad').value = document.getElementById('Codigo').value;" +
+                        " alert(Selected Value: + 'changeUnidad); this.form.submit(); " })
+
+                        @{
+                            <script>
+                                document.getElementById("changeUnidad").value = ""; 
+                            </script>}
+                        <br /> <br />
+                        Carreras: @Html.DropDownList("Carreras") <br /> <br />
+                        Cursos: @Html.DropDownList("Cursos")
 
                     </div>
                 </div>
-
-
 
                 <div class="panel panel-default">
                     <div class="panel-heading"><h3>Resultados:</h3></div>
