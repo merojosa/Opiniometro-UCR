@@ -20,7 +20,7 @@ namespace Opiniometro_WebApp
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             // Para solucionar el problema con el atributo [ValidateAntiForgeryToken].
-            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.Email;
         }
     }
 }

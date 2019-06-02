@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Opiniometro_WebApp.Controllers
 {
+    [Authorize]
     public class LogInPerfilesController : Controller
     {
         // GET: LogInPerfiles

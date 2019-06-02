@@ -12,18 +12,17 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Perfil
+    public partial class Categoria
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Perfil()
+        public Categoria()
         {
-            this.Posee_Enfasis_Perfil_Permiso = new HashSet<Posee_Enfasis_Perfil_Permiso>();
+            this.Item = new HashSet<Item>();
         }
     
-        public string Id { get; set; }
-        public string Tipo { get; set; }
+        public string NombreCategoria { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Posee_Enfasis_Perfil_Permiso> Posee_Enfasis_Perfil_Permiso { get; set; }
+        public virtual ICollection<Item> Item { get; set; }
     }
 }
