@@ -14,9 +14,17 @@ namespace Opiniometro_WebApp.Models
     
     public partial class Seleccion_Unica
     {
-        public int ItemId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Seleccion_Unica()
+        {
+            this.Opciones_De_Respuestas_Seleccion_Unica = new HashSet<Opciones_De_Respuestas_Seleccion_Unica>();
+        }
+    
+        public string ItemId { get; set; }
         public Nullable<bool> IsaLikeDislike { get; set; }
     
         public virtual Item Item { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Opciones_De_Respuestas_Seleccion_Unica> Opciones_De_Respuestas_Seleccion_Unica { get; set; }
     }
 }

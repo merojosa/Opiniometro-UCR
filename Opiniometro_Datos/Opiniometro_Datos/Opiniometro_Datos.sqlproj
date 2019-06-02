@@ -101,5 +101,7 @@
     <None Include="ScriptNuevaPersonaUsuario.sql" />
     <None Include="FiltrarUsuarios.sql" />
     <None Include="Script.EliminarPersona.sql" />
+    <Build Include="Categoria.sql" />
+    <Build Include="Opciones_De_Respuestas_Seleccion_Multiple.sql" />
   </ItemGroup>
 </Project>

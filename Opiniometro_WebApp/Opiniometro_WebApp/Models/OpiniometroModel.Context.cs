@@ -30,6 +30,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Administrativo> Administrativo { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
+        public virtual DbSet<Categoria> Categoria { get; set; }
         public virtual DbSet<Ciclo_Lectivo> Ciclo_Lectivo { get; set; }
         public virtual DbSet<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
         public virtual DbSet<Curso> Curso { get; set; }
@@ -44,11 +45,11 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Imparte> Imparte { get; set; }
         public virtual DbSet<Item> Item { get; set; }
         public virtual DbSet<Matricula> Matricula { get; set; }
+        public virtual DbSet<Opciones_De_Respuestas_Seleccion_Unica> Opciones_De_Respuestas_Seleccion_Unica { get; set; }
         public virtual DbSet<Perfil> Perfil { get; set; }
         public virtual DbSet<Permiso> Permiso { get; set; }
         public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<Posee_Enfasis_Perfil_Permiso> Posee_Enfasis_Perfil_Permiso { get; set; }
-        public virtual DbSet<Preguntas> Preguntas { get; set; }
         public virtual DbSet<Profesor> Profesor { get; set; }
         public virtual DbSet<Responde> Responde { get; set; }
         public virtual DbSet<Seccion> Seccion { get; set; }
@@ -112,7 +113,7 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CambiarContrasenna", correoParameter, contrasenna_NuevaParameter);
         }
     
-        public virtual int SP_ContarRespuestasPorGrupo(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, Nullable<int> itemId, string respuesta, ObjectParameter cntResp)
+        public virtual int SP_ContarRespuestasPorGrupo(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, string itemId, string respuesta, ObjectParameter cntResp)
         {
             var codigoFormularioParameter = codigoFormulario != null ?
                 new ObjectParameter("codigoFormulario", codigoFormulario) :
@@ -138,9 +139,9 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("siglaCurso", siglaCurso) :
                 new ObjectParameter("siglaCurso", typeof(string));
     
-            var itemIdParameter = itemId.HasValue ?
+            var itemIdParameter = itemId != null ?
                 new ObjectParameter("itemId", itemId) :
-                new ObjectParameter("itemId", typeof(int));
+                new ObjectParameter("itemId", typeof(string));
     
             var respuestaParameter = respuesta != null ?
                 new ObjectParameter("respuesta", respuesta) :
@@ -149,7 +150,7 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ContarRespuestasPorGrupo", codigoFormularioParameter, cedulaProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numeroGrupoParameter, siglaCursoParameter, itemIdParameter, respuestaParameter, cntResp);
         }
     
-        public virtual ObjectResult<string> SP_DevolverObservacionesPorGrupo(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, Nullable<int> itemId)
+        public virtual ObjectResult<string> SP_DevolverObservacionesPorGrupo(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, string itemId)
         {
             var codigoFormularioParameter = codigoFormulario != null ?
                 new ObjectParameter("codigoFormulario", codigoFormulario) :
@@ -175,9 +176,9 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("siglaCurso", siglaCurso) :
                 new ObjectParameter("siglaCurso", typeof(string));
     
-            var itemIdParameter = itemId.HasValue ?
+            var itemIdParameter = itemId != null ?
                 new ObjectParameter("itemId", itemId) :
-                new ObjectParameter("itemId", typeof(int));
+                new ObjectParameter("itemId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_DevolverObservacionesPorGrupo", codigoFormularioParameter, cedulaProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numeroGrupoParameter, siglaCursoParameter, itemIdParameter);
         }
