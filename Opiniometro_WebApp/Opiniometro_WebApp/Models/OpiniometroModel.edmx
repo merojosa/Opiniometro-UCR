@@ -5,12 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="Opiniometro_DatosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="__RefactorLog">
-          <Key>
-            <PropertyRef Name="OperationKey" />
-          </Key>
-          <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
-        </EntityType>
         <EntityType Name="Administrativo">
           <Key>
             <PropertyRef Name="CedulaAdministrativo" />
@@ -314,6 +308,18 @@
           <Property Name="FechaInicio" Type="datetime" Nullable="false" />
           <Property Name="FechaFinal" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Tiene_Usuario_Perfil_Enfasis">
+          <Key>
+            <PropertyRef Name="CorreoInstitucional" />
+            <PropertyRef Name="NumeroEnfasis" />
+            <PropertyRef Name="SiglaCarrera" />
+            <PropertyRef Name="IdPerfil" />
+          </Key>
+          <Property Name="CorreoInstitucional" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NumeroEnfasis" Type="tinyint" Nullable="false" />
+          <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="IdPerfil" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="Unidad_Academica">
           <Key>
             <PropertyRef Name="Codigo" />
@@ -388,6 +394,18 @@
             </Principal>
             <Dependent Role="Conformado_Item_Sec_Form">
               <PropertyRef Name="TituloSeccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="CorreoInstitucional" />
+            </Principal>
+            <Dependent Role="Tiene_Usuario_Perfil_Enfasis">
+              <PropertyRef Name="CorreoInstitucional" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -555,6 +573,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+          <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfil">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tiene_Usuario_Perfil_Enfasis">
+              <PropertyRef Name="IdPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Imparte_Profesor">
           <End Role="Profesor" Type="Self.Profesor" Multiplicity="1" />
           <End Role="Imparte" Type="Self.Imparte" Multiplicity="*" />
@@ -576,6 +606,20 @@
             </Principal>
             <Dependent Role="Matricula">
               <PropertyRef Name="CedulaEstudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+          <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enfasis">
+              <PropertyRef Name="Numero" />
+              <PropertyRef Name="SiglaCarrera" />
+            </Principal>
+            <Dependent Role="Tiene_Usuario_Perfil_Enfasis">
+              <PropertyRef Name="NumeroEnfasis" />
+              <PropertyRef Name="SiglaCarrera" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -836,8 +880,10 @@
           <Parameter Name="Apellido2" Type="nvarchar" Mode="In" />
           <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="SP_ObtenerPermisosUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="Opiniometro_DatosModelStoreContainer">
-          <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ciclo_Lectivo" EntityType="Self.Ciclo_Lectivo" Schema="dbo" store:Type="Tables" />
@@ -868,6 +914,7 @@
           <EntitySet Name="TelefonoPersona" EntityType="Self.TelefonoPersona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Texto_Libre" EntityType="Self.Texto_Libre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tiene_Grupo_Formulario" EntityType="Self.Tiene_Grupo_Formulario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tiene_Usuario_Perfil_Enfasis" EntityType="Self.Tiene_Usuario_Perfil_Enfasis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unidad_Academica" EntityType="Self.Unidad_Academica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Adm_Per" Association="Self.FK_Adm_Per">
@@ -889,6 +936,10 @@
           <AssociationSet Name="FK_Con_Sec" Association="Self.FK_Con_Sec">
             <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" Association="Self.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
           </AssociationSet>
           <AssociationSet Name="FK_Cur_Uni" Association="Self.FK_Cur_Uni">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
@@ -942,6 +993,10 @@
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Grupo" EntitySet="Grupo" />
           </AssociationSet>
+          <AssociationSet Name="FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" Association="Self.FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
+            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
+          </AssociationSet>
           <AssociationSet Name="FK_Imparte_Profesor" Association="Self.FK_Imparte_Profesor">
             <End Role="Profesor" EntitySet="Profesor" />
             <End Role="Imparte" EntitySet="Imparte" />
@@ -949,6 +1004,10 @@
           <AssociationSet Name="FK_Matricula_Profesor" Association="Self.FK_Matricula_Profesor">
             <End Role="Estudiante" EntitySet="Estudiante" />
             <End Role="Matricula" EntitySet="Matricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" Association="Self.FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
+            <End Role="Enfasis" EntitySet="Enfasis" />
+            <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
           </AssociationSet>
           <AssociationSet Name="FK_PoseeEnfasisPerfil_Perfil" Association="Self.FK_PoseeEnfasisPerfil_Perfil">
             <End Role="Perfil" EntitySet="Perfil" />
@@ -1016,12 +1075,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Opiniometro_DatosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="C__RefactorLog">
-          <Key>
-            <PropertyRef Name="OperationKey" />
-          </Key>
-          <Property Name="OperationKey" Type="Guid" Nullable="false" />
-        </EntityType>
         <EntityType Name="Administrativo">
           <Key>
             <PropertyRef Name="CedulaAdministrativo" />
@@ -1095,6 +1148,7 @@
           <Property Name="Numero" Type="Byte" Nullable="false" />
           <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Carrera" Relationship="Self.FK_Enf_Car" FromRole="Enfasis" ToRole="Carrera" />
+          <NavigationProperty Name="Tiene_Usuario_Perfil_Enfasis" Relationship="Self.FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Enfasis" ToRole="Tiene_Usuario_Perfil_Enfasis" />
           <NavigationProperty Name="Unidad_Academica" Relationship="Self.Se_Encuentra_Unidad_Enfasis" FromRole="Enfasis" ToRole="Unidad_Academica" />
         </EntityType>
         <EntityType Name="Estudiante">
@@ -1226,6 +1280,7 @@
           </Key>
           <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Tipo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Tiene_Usuario_Perfil_Enfasis" Relationship="Self.FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Perfil" ToRole="Tiene_Usuario_Perfil_Enfasis" />
           <NavigationProperty Name="Posee_Enfasis_Perfil_Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Perfil" FromRole="Perfil" ToRole="Posee_Enfasis_Perfil_Permiso" />
         </EntityType>
         <EntityType Name="Permiso">
@@ -1368,6 +1423,21 @@
           <NavigationProperty Name="Formulario" Relationship="Self.FK_Tie_For" FromRole="Tiene_Grupo_Formulario" ToRole="Formulario" />
           <NavigationProperty Name="Grupo" Relationship="Self.FK_Tie_Gru" FromRole="Tiene_Grupo_Formulario" ToRole="Grupo" />
         </EntityType>
+        <EntityType Name="Tiene_Usuario_Perfil_Enfasis">
+          <Key>
+            <PropertyRef Name="CorreoInstitucional" />
+            <PropertyRef Name="NumeroEnfasis" />
+            <PropertyRef Name="SiglaCarrera" />
+            <PropertyRef Name="IdPerfil" />
+          </Key>
+          <Property Name="CorreoInstitucional" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumeroEnfasis" Type="Byte" Nullable="false" />
+          <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdPerfil" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Tiene_Usuario_Perfil_Enfasis" ToRole="Enfasis" />
+          <NavigationProperty Name="Perfil" Relationship="Self.FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Tiene_Usuario_Perfil_Enfasis" ToRole="Perfil" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" FromRole="Tiene_Usuario_Perfil_Enfasis" ToRole="Usuario" />
+        </EntityType>
         <EntityType Name="Unidad_Academica">
           <Key>
             <PropertyRef Name="Codigo" />
@@ -1390,6 +1460,7 @@
           <Property Name="Cedula" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Id" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Usu_Per" FromRole="Usuario" ToRole="Persona" />
+          <NavigationProperty Name="Tiene_Usuario_Perfil_Enfasis" Relationship="Self.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" FromRole="Usuario" ToRole="Tiene_Usuario_Perfil_Enfasis" />
         </EntityType>
         <Association Name="FK_Adm_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
@@ -1510,6 +1581,20 @@
             </Principal>
             <Dependent Role="Empadronado">
               <PropertyRef Name="CedulaEstudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+          <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enfasis">
+              <PropertyRef Name="Numero" />
+              <PropertyRef Name="SiglaCarrera" />
+            </Principal>
+            <Dependent Role="Tiene_Usuario_Perfil_Enfasis">
+              <PropertyRef Name="NumeroEnfasis" />
+              <PropertyRef Name="SiglaCarrera" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1721,6 +1806,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+          <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfil">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tiene_Usuario_Perfil_Enfasis">
+              <PropertyRef Name="IdPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PoseeEnfasisPerfil_Perfil">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
           <End Role="Posee_Enfasis_Perfil_Permiso" Type="Self.Posee_Enfasis_Perfil_Permiso" Multiplicity="*" />
@@ -1793,6 +1890,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="CorreoInstitucional" />
+            </Principal>
+            <Dependent Role="Tiene_Usuario_Perfil_Enfasis">
+              <PropertyRef Name="CorreoInstitucional" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Escuela">
           <End Role="Facultad" Type="Self.Facultad" Multiplicity="0..1" />
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
@@ -1802,7 +1911,6 @@
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
         </Association>
         <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" />
           <EntitySet Name="Ciclo_Lectivo" EntityType="Self.Ciclo_Lectivo" />
@@ -1831,6 +1939,7 @@
           <EntitySet Name="TelefonoPersona" EntityType="Self.TelefonoPersona" />
           <EntitySet Name="Texto_Libre" EntityType="Self.Texto_Libre" />
           <EntitySet Name="Tiene_Grupo_Formulario" EntityType="Self.Tiene_Grupo_Formulario" />
+          <EntitySet Name="Tiene_Usuario_Perfil_Enfasis" EntityType="Self.Tiene_Usuario_Perfil_Enfasis" />
           <EntitySet Name="Unidad_Academica" EntityType="Self.Unidad_Academica" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
           <AssociationSet Name="FK_Adm_Per" Association="Self.FK_Adm_Per">
@@ -1872,6 +1981,10 @@
           <AssociationSet Name="FK_Empadronado_Estudiante" Association="Self.FK_Empadronado_Estudiante">
             <End Role="Estudiante" EntitySet="Estudiante" />
             <End Role="Empadronado" EntitySet="Empadronado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" Association="Self.FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
+            <End Role="Enfasis" EntitySet="Enfasis" />
+            <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
           </AssociationSet>
           <AssociationSet Name="FK_Est_Per" Association="Self.FK_Est_Per">
             <End Role="Persona" EntitySet="Persona" />
@@ -1933,6 +2046,10 @@
             <End Role="Item" EntitySet="Item" />
             <End Role="Texto_Libre" EntitySet="Texto_Libre" />
           </AssociationSet>
+          <AssociationSet Name="FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" Association="Self.FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
+            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
+          </AssociationSet>
           <AssociationSet Name="FK_PoseeEnfasisPerfil_Perfil" Association="Self.FK_PoseeEnfasisPerfil_Perfil">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="Posee_Enfasis_Perfil_Permiso" EntitySet="Posee_Enfasis_Perfil_Permiso" />
@@ -1956,6 +2073,10 @@
           <AssociationSet Name="FK_Res_Sec" Association="Self.FK_Res_Sec">
             <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Responde" EntitySet="Responde" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" Association="Self.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
           </AssociationSet>
           <AssociationSet Name="Escuela" Association="Self.Escuela">
             <End Role="Facultad" EntitySet="Facultad" />
@@ -2018,6 +2139,9 @@
             <Parameter Name="Apellido2" Mode="In" Type="String" />
             <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(Byte)">
+            <Parameter Name="Correo" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DatosEstudiante_Result">
           <Property Type="String" Name="Nombre_Completo" Nullable="false" MaxLength="152" />
@@ -2036,13 +2160,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities">
-          <EntitySetMapping Name="C__RefactorLog">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.C__RefactorLog">
-              <MappingFragment StoreEntitySet="__RefactorLog">
-                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Administrativo">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Administrativo">
               <MappingFragment StoreEntitySet="Administrativo">
@@ -2313,6 +2430,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tiene_Usuario_Perfil_Enfasis">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Tiene_Usuario_Perfil_Enfasis">
+              <MappingFragment StoreEntitySet="Tiene_Usuario_Perfil_Enfasis">
+                <ScalarProperty Name="CorreoInstitucional" ColumnName="CorreoInstitucional" />
+                <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
+                <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
+                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Unidad_Academica">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Unidad_Academica">
               <MappingFragment StoreEntitySet="Unidad_Academica">
@@ -2376,6 +2503,7 @@
           <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_DatosModel.Store.SP_ExistenciaCorreo" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />
           <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_DatosModel.Store.SP_ModificarPersona" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_ObtenerPermisosUsuario" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
