@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="container body-content">
+
+        @model Opiniometro_WebApp.Models.Usuario
+
+        @{
+            ViewBag.Title = "Index";
+        }
+
+        <!--Para usar la clase login-error del archivo estilos-propios.css-->
+        <link href="@Url.Content("~/Content/estilos-propios.css")" rel="stylesheet" type="text/css" />
+
+        <!--Barra-->
+        @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
+
+        <!--Login-->
+        <div align="center">
+            <h1>Opiniómetro@UCR</h1>
+            @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+            {
+                <div class="login-container">
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4">
+                            <div class="panel panel-default">
+                                <h3>Nuevo Usuario</h3>
+                                <div class="panel-body">
+                                    <div>
+                                        <form>
+                                            <div class="input-group" style="width:250px">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                <input type="text" class="form-control" name="Nombre" placeholder="Cedula">
+                                            </div>
+                                            <br />
+                                            <div class="input-group" style="width:250px">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                <input type="text" class="form-control" name="Nombre" placeholder="Nombre">
+                                            </div>
+                                            <br />
+                                            <div class="input-group" style="width:250px">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                <input type="text" class="form-control" name="PrimerApellido" placeholder="Primer Apellido">
+                                            </div>
+                                            <br />
+                                            <div class="input-group" style="width:250px">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                <input type="text" class="form-control" name="SegundoApellido" placeholder="Segundo Apellido">
+                                            </div>
+                                            <br />
+                                            <div class="input-group" style="width:250px">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                <input type="text" class="form-control" name="SegundoApellido" placeholder="Direccion">
+                                            </div>
+                                            <br />
+                                            <div class="input-group" style="width:250px">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                                <input name="CorreoInstitucional" type="email" class="form-control" placeholder="Correo institucional">
+                                            </div>
+                                            <br />
+                                            <div class="input-group" style="width:250px">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+                                                <input type="password" class="form-control" name="Contrasena" placeholder="Contraseña">
+                                            </div>
+                                            <br />
+                                            <div class="form-group">
+                                                <input type="submit" value="Registrar" name="Registrar" />
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.ActionLink("Volver", "VerPersonas")
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>

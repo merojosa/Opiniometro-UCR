@@ -1,18 +1,28 @@
 ﻿@model IEnumerable<Opiniometro_WebApp.Models.Seccion>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Banco de Secciones";
 }
 
-<h2>Index</h2>
-
+<h2>Banco de Secciones</h2>
+<script>
+        function accionBotonNuevo() {
+            document.location = '@Url.Action("Create")';
+        }
+</script>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <input type="submit" value="Crear Nueva Sección" class="btn btn-secondary"  id="botonNuevaSeccion" onclick="accionBotonNuevo()" />
 </p>
 <table class="table">
     <tr>
+
         <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
+            @Html.Label("Título")
+            @*@Html.DisplayNameFor(model => model.Titulo)*@
+        </th>
+        <th>
+            @Html.Label("Descripción")
+            @*@Html.DisplayNameFor(model => model.Descripcion)*@
         </th>
         <th></th>
     </tr>
@@ -20,12 +30,15 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.Titulo)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Descripcion)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Titulo }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Titulo }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Titulo })
+@*            @Html.ActionLink("Edit", "Edit", new { id = item.Titulo }) |*@
+            @*@Html.ActionLink("Details", "Details", new { id = item.Titulo }) |*@
+            @*@Html.ActionLink("Delete", "Delete", new { id = item.Titulo })*@
         </td>
     </tr>
 }

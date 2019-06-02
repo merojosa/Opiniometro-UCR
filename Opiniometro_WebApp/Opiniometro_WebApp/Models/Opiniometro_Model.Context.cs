@@ -48,6 +48,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Permiso> Permiso { get; set; }
         public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<Posee_Enfasis_Perfil_Permiso> Posee_Enfasis_Perfil_Permiso { get; set; }
+        public virtual DbSet<Preguntas> Preguntas { get; set; }
         public virtual DbSet<Profesor> Profesor { get; set; }
         public virtual DbSet<Responde> Responde { get; set; }
         public virtual DbSet<Seccion> Seccion { get; set; }
@@ -57,6 +58,29 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Tiene_Grupo_Formulario> Tiene_Grupo_Formulario { get; set; }
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+    
+        public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)
+        {
+            var cedulaParameter = cedula != null ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DatosEstudiante_Result>("DatosEstudiante", cedulaParameter);
+        }
+    
+        public virtual ObjectResult<MostrarEstudiantes_Result> MostrarEstudiantes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MostrarEstudiantes_Result>("MostrarEstudiantes");
+        }
+    
+        public virtual ObjectResult<string> NombrePersona(string cedula)
+        {
+            var cedulaParameter = cedula != null ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("NombrePersona", cedulaParameter);
+        }
     
         public virtual int SP_AgregarUsuario(string correo, string contrasenna, string cedula)
         {
@@ -75,6 +99,98 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AgregarUsuario", correoParameter, contrasennaParameter, cedulaParameter);
         }
     
+        public virtual int SP_CambiarContrasenna(string correo, string contrasenna_Nueva)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var contrasenna_NuevaParameter = contrasenna_Nueva != null ?
+                new ObjectParameter("Contrasenna_Nueva", contrasenna_Nueva) :
+                new ObjectParameter("Contrasenna_Nueva", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CambiarContrasenna", correoParameter, contrasenna_NuevaParameter);
+        }
+    
+        public virtual int SP_ContarRespuestasPorGrupo(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, Nullable<int> itemId, string respuesta, ObjectParameter cntResp)
+        {
+            var codigoFormularioParameter = codigoFormulario != null ?
+                new ObjectParameter("codigoFormulario", codigoFormulario) :
+                new ObjectParameter("codigoFormulario", typeof(string));
+    
+            var cedulaProfesorParameter = cedulaProfesor != null ?
+                new ObjectParameter("cedulaProfesor", cedulaProfesor) :
+                new ObjectParameter("cedulaProfesor", typeof(string));
+    
+            var annoGrupoParameter = annoGrupo.HasValue ?
+                new ObjectParameter("annoGrupo", annoGrupo) :
+                new ObjectParameter("annoGrupo", typeof(short));
+    
+            var semestreGrupoParameter = semestreGrupo.HasValue ?
+                new ObjectParameter("semestreGrupo", semestreGrupo) :
+                new ObjectParameter("semestreGrupo", typeof(byte));
+    
+            var numeroGrupoParameter = numeroGrupo.HasValue ?
+                new ObjectParameter("numeroGrupo", numeroGrupo) :
+                new ObjectParameter("numeroGrupo", typeof(byte));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("siglaCurso", siglaCurso) :
+                new ObjectParameter("siglaCurso", typeof(string));
+    
+            var itemIdParameter = itemId.HasValue ?
+                new ObjectParameter("itemId", itemId) :
+                new ObjectParameter("itemId", typeof(int));
+    
+            var respuestaParameter = respuesta != null ?
+                new ObjectParameter("respuesta", respuesta) :
+                new ObjectParameter("respuesta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ContarRespuestasPorGrupo", codigoFormularioParameter, cedulaProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numeroGrupoParameter, siglaCursoParameter, itemIdParameter, respuestaParameter, cntResp);
+        }
+    
+        public virtual ObjectResult<string> SP_DevolverObservacionesPorGrupo(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, Nullable<int> itemId)
+        {
+            var codigoFormularioParameter = codigoFormulario != null ?
+                new ObjectParameter("codigoFormulario", codigoFormulario) :
+                new ObjectParameter("codigoFormulario", typeof(string));
+    
+            var cedulaProfesorParameter = cedulaProfesor != null ?
+                new ObjectParameter("cedulaProfesor", cedulaProfesor) :
+                new ObjectParameter("cedulaProfesor", typeof(string));
+    
+            var annoGrupoParameter = annoGrupo.HasValue ?
+                new ObjectParameter("annoGrupo", annoGrupo) :
+                new ObjectParameter("annoGrupo", typeof(short));
+    
+            var semestreGrupoParameter = semestreGrupo.HasValue ?
+                new ObjectParameter("semestreGrupo", semestreGrupo) :
+                new ObjectParameter("semestreGrupo", typeof(byte));
+    
+            var numeroGrupoParameter = numeroGrupo.HasValue ?
+                new ObjectParameter("numeroGrupo", numeroGrupo) :
+                new ObjectParameter("numeroGrupo", typeof(byte));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("siglaCurso", siglaCurso) :
+                new ObjectParameter("siglaCurso", typeof(string));
+    
+            var itemIdParameter = itemId.HasValue ?
+                new ObjectParameter("itemId", itemId) :
+                new ObjectParameter("itemId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_DevolverObservacionesPorGrupo", codigoFormularioParameter, cedulaProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numeroGrupoParameter, siglaCursoParameter, itemIdParameter);
+        }
+    
+        public virtual int SP_ExistenciaCorreo(string correo, ObjectParameter resultado)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ExistenciaCorreo", correoParameter, resultado);
+        }
+    
         public virtual int SP_LoginUsuario(string correo, string contrasenna, ObjectParameter resultado)
         {
             var correoParameter = correo != null ?
@@ -86,6 +202,35 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Contrasenna", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_LoginUsuario", correoParameter, contrasennaParameter, resultado);
+        }
+    
+        public virtual int SP_ModificarPersona(string cedulaBusqueda, string cedula, string nombre, string apellido1, string apellido2, string direccion)
+        {
+            var cedulaBusquedaParameter = cedulaBusqueda != null ?
+                new ObjectParameter("CedulaBusqueda", cedulaBusqueda) :
+                new ObjectParameter("CedulaBusqueda", typeof(string));
+    
+            var cedulaParameter = cedula != null ?
+                new ObjectParameter("Cedula", cedula) :
+                new ObjectParameter("Cedula", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellido1Parameter = apellido1 != null ?
+                new ObjectParameter("Apellido1", apellido1) :
+                new ObjectParameter("Apellido1", typeof(string));
+    
+            var apellido2Parameter = apellido2 != null ?
+                new ObjectParameter("Apellido2", apellido2) :
+                new ObjectParameter("Apellido2", typeof(string));
+    
+            var direccionParameter = direccion != null ?
+                new ObjectParameter("Direccion", direccion) :
+                new ObjectParameter("Direccion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, direccionParameter);
         }
     }
 }
