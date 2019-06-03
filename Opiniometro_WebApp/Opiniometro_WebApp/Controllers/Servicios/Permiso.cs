@@ -11,5 +11,6 @@ namespace Opiniometro_WebApp.Controllers.Servicios
         public const int ASIGNAR_FORMUALRIO = 2;
         public const int CALIFICAR_CURSOS = 3;
         public const int VER_CURSOS = 4;
+        //etc...
     }
 }

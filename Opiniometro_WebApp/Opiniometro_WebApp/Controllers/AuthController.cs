@@ -64,7 +64,7 @@ namespace Opiniometro_WebApp.Controllers
             string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email)
                                                 .Select(c => c.Value).SingleOrDefault();
 
-            if(correo_autenticado != null)      // Si esta autenticado
+            if (correo_autenticado != null)      // Si esta autenticado
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -85,7 +85,11 @@ namespace Opiniometro_WebApp.Controllers
                 Thread.CurrentPrincipal = new ClaimsPrincipal(identidad);
                 HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, identidad);
 
-                PermisosUsuario.cargar_permisos();
+                PermisosUsuario permisos_usuario = new PermisosUsuario();
+
+                // Guardar permisos_usuario, la llave seria el correo, el cual es unico para cada usuario.
+                Session[usuario.CorreoInstitucional] = permisos_usuario;
+
 
                 return RedirectToAction("Index", "LogInPerfiles");
             }
@@ -108,7 +112,18 @@ namespace Opiniometro_WebApp.Controllers
         {
             // Elimino cookies
             Request.GetOwinContext().Authentication.SignOut(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie);
-            PermisosUsuario.limpiar_permisos();
+
+            // Obtener la identidad de la sesion actual.
+            var identidad = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+            // Obtener el correo de la sesion.
+            var correo = identidad.Claims.Where(c => c.Type == ClaimTypes.Email).Select(c => c.Value).SingleOrDefault();
+
+            // Obtengo los permisos del correo actual.
+            var permisos_usuario = (PermisosUsuario)Session[correo];
+
+            if(permisos_usuario != null)
+                permisos_usuario.limpiar_permisos();
 
             // Como no esta loggeado, se tiene que redigir a login para volver a hacerlo.
             return RedirectToAction("Login");
@@ -202,6 +217,11 @@ namespace Opiniometro_WebApp.Controllers
                 contrasenna.Append(caracteres_aleatorios[byte_aleatorio % (caracteres_aleatorios.Length)]);
             }
             return contrasenna.ToString();
+        }
+
+        public ActionResult Permisos()
+        {
+            return View();
         }
     }
 }

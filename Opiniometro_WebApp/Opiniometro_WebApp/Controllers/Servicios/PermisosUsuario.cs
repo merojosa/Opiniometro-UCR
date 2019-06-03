@@ -10,13 +10,18 @@ using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers.Servicios
 {
-    public static class PermisosUsuario
+    public class PermisosUsuario
     {
         // Esto sera otra estructura de datos (probablemente un hash).
-        private static List<int> permisos_usuario = new List<int>();
-        private static Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        private List<int> permisos_usuario = new List<int>();
+        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
-        public static bool verificar_permiso(int id_permiso)
+        public PermisosUsuario()
+        {
+            cargar_permisos();
+        }
+
+        public bool verificar_permiso(int id_permiso)
         {
             return permisos_usuario.Contains(id_permiso);
         }
@@ -25,7 +30,7 @@ namespace Opiniometro_WebApp.Controllers.Servicios
          * Basado en:
          * Obtener multiples tuplas llamando a un procedimiento almacenado: https://docs.microsoft.com/es-es/ef/ef6/modeling/designer/advanced/multiple-result-sets#multiple-result-sets-with-configured-in-edmx
          */
-        public static void cargar_permisos()
+        public void cargar_permisos()
         {
             var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
 
@@ -46,7 +51,7 @@ namespace Opiniometro_WebApp.Controllers.Servicios
             }
         }
 
-        public static void limpiar_permisos()
+        public void limpiar_permisos()
         {
             permisos_usuario.Clear();
         }

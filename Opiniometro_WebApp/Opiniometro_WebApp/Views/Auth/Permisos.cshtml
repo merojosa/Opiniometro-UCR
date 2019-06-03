@@ -1,0 +1,27 @@
+﻿@using Opiniometro_WebApp.Controllers.Servicios
+@using System.Security.Claims
+@using System.Threading
+
+@{
+    ViewBag.Title = "Permisos";
+}
+
+<h2>Permisos</h2>
+
+@{
+    // Obtener la identidad de la sesion actual.
+    var identidad = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+    // Obtener el correo de la sesion.
+    var correo = identidad.Claims.Where(c => c.Type == ClaimTypes.Email)
+                       .Select(c => c.Value).SingleOrDefault();
+
+    // Obtengo los permisos del correo actual.
+    var permisos_usuario = (PermisosUsuario)Session[correo];
+
+    if (permisos_usuario.verificar_permiso(Permiso.CALIFICAR_CURSOS))
+    {
+        <div>Todo bien</div>
+    }
+}
+

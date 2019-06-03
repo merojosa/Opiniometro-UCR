@@ -204,6 +204,9 @@
     <Compile Include="Models\Curso.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\C__RefactorLog.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DatosEstudiante_Result.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
@@ -415,6 +418,7 @@
     <Content Include="Views\Administrador\CargarArchivo.cshtml" />
     <Content Include="Views\Administrador\Index.cshtml" />
     <Content Include="Views\Admin\Editar.cshtml" />
+    <Content Include="Views\Auth\Permisos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
