@@ -12,19 +12,17 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Seleccion_Unica
+    public partial class Categoria
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Seleccion_Unica()
+        public Categoria()
         {
-            this.Opciones_De_Respuestas_Seleccion_Unica = new HashSet<Opciones_De_Respuestas_Seleccion_Unica>();
+            this.Item = new HashSet<Item>();
         }
     
-        public string ItemId { get; set; }
-        public Nullable<bool> IsaLikeDislike { get; set; }
+        public string NombreCategoria { get; set; }
     
-        public virtual Item Item { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Opciones_De_Respuestas_Seleccion_Unica> Opciones_De_Respuestas_Seleccion_Unica { get; set; }
+        public virtual ICollection<Item> Item { get; set; }
     }
 }

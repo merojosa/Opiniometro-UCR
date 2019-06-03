@@ -172,6 +172,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\AsignarFormulariosController.cs" />
+    <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\FormularioController.cs" />
     <Compile Include="Controllers\Formulario_RespuestaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -191,6 +192,9 @@
     </Compile>
     <Compile Include="Models\AsignarFormulariosModel.cs" />
     <Compile Include="Models\Carrera.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Categoria.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Ciclo_Lectivo.cs">
@@ -243,6 +247,9 @@
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MostrarEstudiantes_Result.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Opciones_De_Respuestas_Seleccion_Unica.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OpiniometroModel.Context.cs">
@@ -411,6 +418,11 @@
     <Content Include="Views\Administrador\CargarArchivo.cshtml" />
     <Content Include="Views\Administrador\Index.cshtml" />
     <Content Include="Views\Admin\Editar.cshtml" />
+    <Content Include="Views\Categoria\Create.cshtml" />
+    <Content Include="Views\Categoria\Delete.cshtml" />
+    <Content Include="Views\Categoria\Details.cshtml" />
+    <Content Include="Views\Categoria\Edit.cshtml" />
+    <Content Include="Views\Categoria\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

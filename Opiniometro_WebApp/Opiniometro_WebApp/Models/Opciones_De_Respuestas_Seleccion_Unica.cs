@@ -12,17 +12,12 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Conformado_Item_Sec_Form
+    public partial class Opciones_De_Respuestas_Seleccion_Unica
     {
         public string ItemId { get; set; }
-        public string CodigoFormulario { get; set; }
-        public string TituloSeccion { get; set; }
-        public string NombreFormulario { get; set; }
-        public Nullable<int> Orden_Item { get; set; }
-        public Nullable<int> Orden_Seccion { get; set; }
+        public short Orden { get; set; }
+        public string OpcionRespuesta { get; set; }
     
-        public virtual Formulario Formulario { get; set; }
-        public virtual Item Item { get; set; }
-        public virtual Seccion Seccion { get; set; }
+        public virtual Seleccion_Unica Seleccion_Unica { get; set; }
     }
 }
