@@ -278,7 +278,7 @@ values
 
 	((select c.Sigla from Curso c where c.Sigla = 'DE2001'), 1, 2018, 2);
 
---Script C.X. Solutions
+--Script C.X. Solutions NO TOCAR
 
 --Ciclo Lectivo
 INSERT INTO Ciclo_Lectivo (Anno, Semestre)
@@ -288,25 +288,28 @@ VALUES  (2017, 2);
 INSERT INTO Grupo(SiglaCurso, Numero, AnnoGrupo, SemestreGrupo)
 VALUES ('CI1330', 1, 2017, 2);
 
-----Item
---DELETE FROM Item;
---DBCC CHECKIDENT ('Item', RESEED, 0);
+--Categoria
+INSERT INTO Categoria
+VALUES  ('Reglamento'),
+		('Curso'),
+		('Opinion');
 
---INSERT INTO Item(TextoPregunta, TieneObservacion, TipoPregunta)
---VALUES  ('¿El profesor repuso clases cuando fue necesario?', 1, 3),
---		('¿El profesor entrego la carta del estudiante en las fechas indicadas por el reglamento?', 1, 3),
---		('¿Que opina del curso?', 0, 1),
---		('¿Que opina del profesor?', 0, 1);
+--Item
+INSERT INTO Item(ItemId, TextoPregunta, TieneObservacion, TipoPregunta, NombreCategoria)
+VALUES  ('PRE303', '¿El profesor repuso clases cuando fue necesario?', 1, 3, 'Reglamento'),
+		('PRE404', '¿El profesor entrego la carta del estudiante en las fechas indicadas por el reglamento?', 1, 3, 'Reglamento'),
+		('PRE101', '¿Que opina del curso?', 0, 1, 'Opinion'),
+		('PRE202', '¿Que opina del profesor?', 0, 1, 'Opinion');
 
-----Item-Texto Libre
---INSERT INTO Texto_Libre (ItemId)
---VALUES  ('PRE101'),
---		('PRE202');
+--Item-Texto Libre
+INSERT INTO Texto_Libre (ItemId)
+VALUES  ('PRE101'),
+		('PRE202');
 
-----Item-Si/no
---INSERT INTO Seleccion_Unica (ItemId, IsaLikeDislike)
---VALUES  ('PRE303', 1),
---		('PRE404', 1);
+--Item-Si/no
+INSERT INTO Seleccion_Unica (ItemId, IsaLikeDislike)
+VALUES  ('PRE303', 1),
+		('PRE404', 1);
 
 --Seccion
 INSERT INTO Seccion (Titulo, Descripcion)
@@ -327,30 +330,29 @@ VALUES  ('2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 1
 		('2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 1),
 		('2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 1);
 
--- --Conformado_Item_Sec_Form
---INSERT INTO Conformado_Item_Sec_Form (ItemId, CodigoFormulario, TituloSeccion, NombreFormulario)
---VALUES	('PRE101', '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
---		('PRE303', '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
---		('PRE202', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores'),	
---		('PRE404', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores');
+ --Conformado_Item_Sec_Form
+INSERT INTO Conformado_Item_Sec_Form (ItemId, CodigoFormulario, TituloSeccion, NombreFormulario)
+VALUES	('PRE101', '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
+		('PRE202', '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
+		('PRE303', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores'),	
+		('PRE404', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores');
 
-
-----Responde
---INSERT INTO Responde (ItemId, TituloSeccion, FechaRespuesta, CodigoFormularioResp, CedulaPersona, CedulaProfesor, AnnoGrupoResp, SemestreGrupoResp, NumeroGrupoResp, SiglaGrupoResp, Respuesta, Observacion)
---VALUES  ('PRE101', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '3', 'Nunca tuvimos que reponer clases'),
---		('PRE202', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '2', 'La profesora olvido enviar la carta del estudiante pero si la revisamos en la primera semana de clases'),
---		('PRE303', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '', 'La materia estuvo muy interesante y espero poder aplicarla en el futuro en el trabajo'),
---		('PRE404', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '', 'La profesora tardo mucho para devolver las evaluaciones'),
---		--Segunda evaluacion
---		('PRE101', 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '2', 'No fue necesario reponer clases'),
---		('PRE202', 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '1', 'Revisamos la carta del estudiante en la primera semana'),
---		('PRE303', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '', 'No estoy seguro de si en el ambiente laboral me servira la materia'),
---		('PRE404', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '', 'La profesora logro que las clases fueran muy entretenidas y dinámicas'),
---		--Tercera evaluacion
---		('PRE101', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '1', 'Me repuso una clase a la que falte'),
---		('PRE202', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '1', 'Sí se reviso'),
---		('PRE303', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Entretenido'),
---		('PRE404', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Muy buena profesora');
+--Responde
+INSERT INTO Responde (ItemId, TituloSeccion, FechaRespuesta, CodigoFormularioResp, CedulaPersona, CedulaProfesor, AnnoGrupoResp, SemestreGrupoResp, NumeroGrupoResp, SiglaGrupoResp, Respuesta, Observacion)
+VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '3', 'Nunca tuvimos que reponer clases'),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '2', 'La profesora olvido enviar la carta del estudiante pero si la revisamos en la primera semana de clases'),
+		('PRE101', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '', 'La materia estuvo muy interesante y espero poder aplicarla en el futuro en el trabajo'),
+		('PRE202', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '', 'La profesora tardo mucho para devolver las evaluaciones'),
+		--Segunda evaluacion
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '2', 'No fue necesario reponer clases'),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '1', 'Revisamos la carta del estudiante en la primera semana'),
+		('PRE101', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '', 'No estoy seguro de si en el ambiente laboral me servira la materia'),
+		('PRE202', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '', 'La profesora logro que las clases fueran muy entretenidas y dinámicas'),
+		--Tercera evaluacion
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '1', 'Me repuso una clase a la que falte'),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '1', 'Sí se reviso'),
+		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Entretenido'),
+		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Muy buena profesora');
 
 GO
 IF OBJECT_ID('SP_ContarRespuestasPorGrupo') IS NOT NULL
