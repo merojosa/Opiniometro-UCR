@@ -18,25 +18,27 @@
                     <div class="panel-body">
                         <!-- Esta forma hace que la búsqueda aparezca como parte del URL. -->
                         <!--<form asp-controller="AsignarFormularios" asp-action="Index">
-                            <p>
-                                Nombre: <input type="text" name="SearchString">
-                                <input type="submit" value="Buscar" />
-                            </p>
-                        </form>-->
+        <p>
+            Nombre: <input type="text" name="SearchString">
+            <input type="submit" value="Buscar" />
+        </p>
+    </form>-->
                         <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
                         @using (Html.BeginForm())
                         {
+                            
                             <!-- Buscador -->
-                        <p>
-                            <label>Unidad Academica:</label> @Html.DropDownList("unidadAcademica", null, "<Seleccione Unidad Académica>", new { @class = "form-control" })
-                            <label> Carreras: </label> @Html.DropDownList("nombreCarrera", null, "<Seleccione Carrera>", new { @class = "form-control" })
-                            <label> Cursos: </label> @Html.DropDownList("nombreCurso", null, "<Seleccione Curso>", new { @class = "form-control" })
-                           @* <label> Semestre: </label> @Html.DropDownList("semestre", null, "<Seleccione Semestre>", new { @class = "form-control" })*@
-                           @* <label> Año: </label> @Html.DropDownList("ano", null, "<Seleccione Año>", new { @class = "form-control" })<br />*@
-                            @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
+                            <p>
+                                <label>Unidad Academica:</label> @Html.DropDownList("unidadAcademica", null, "<Seleccione Unidad Académica>",new { @class = "form-control"})
 
-                            <input type="submit" value="Buscar" />
-                        </p>
+                                <label> Carreras: </label> @Html.DropDownList("nombreCarrera", null, "<Seleccione Carrera>", new { @class = "form-control" })
+                                <label> Cursos: </label> @Html.DropDownList("nombreCurso", null, "<Seleccione Curso>", new { @class = "form-control" })
+                                @* <label> Semestre: </label> @Html.DropDownList("semestre", null, "<Seleccione Semestre>", new { @class = "form-control" })*@
+                                @* <label> Año: </label> @Html.DropDownList("ano", null, "<Seleccione Año>", new { @class = "form-control" })<br />*@
+                                @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
+
+                                <input type="submit" value="Buscar" />
+                            </p>
                         }
 
                     </div>

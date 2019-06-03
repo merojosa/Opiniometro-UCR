@@ -24,7 +24,6 @@ namespace Opiniometro_WebApp.Controllers
                 //Enfasis = ObtenerEnfasis(0, 0, "", ""),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
                 Grupos = ObtenerGrupos(0, 0, "","", "", "", 255, "", "" ,""),
-                Unidad = ObtenerUnidadAcademica(0, 0, ""),
                 Formularios = ObtenerFormularios()
             };
 
@@ -55,40 +54,28 @@ namespace Opiniometro_WebApp.Controllers
             return ciclo;
         }
 
-        //GET
-        //Para el filtro por Unidad Academica
-        public IQueryable<Unidad_Academica> ObtenerUnidadAcademica(short anno, byte semestre, String codigoUnidadAcadem)
-        {
-            IQueryable<Unidad_Academica> unidadAcademica = from u in db.Unidad_Academica
-                                                           select u;
-            ViewBag.UnidadAcademica = new SelectList(unidadAcademica, "Codigo", "Nombre");
-            return unidadAcademica;
-        }
-
-        [HttpPost]
-        public IQueryable<Unidad_Academica> ObtenerUnidadAcademica(String changeUnidad)
-        {
-            IQueryable<Unidad_Academica> unidadAcademica = from u in db.Unidad_Academica
-                                                           select u;
-            ViewBag.UnidadAcademica = new SelectList(unidadAcademica, "Codigo", "Nombre");
-            return unidadAcademica;
-        }
-
-        //GET
-        // Para el filtro por carreras
-        public IQueryable<Carrera> ObtenerCarreras(short anno, byte semestre, String codigoUnidadAcadem){
-
-            IQueryable<Carrera> nombreCarrera = from car in db.Carrera select car;
-            ViewBag.nombreCarrera = new SelectList(nombreCarrera, "Nombre", "Nombre");
-            return nombreCarrera;
-        }
-
+        // Para el filtro por Unidad Academica
         public IQueryable<Unidad_Academica> ObtenerUnidadAcademica(short anno, byte semestre, String codigoUnidadAcadem)
         {
             IQueryable<Unidad_Academica> unidadAcademica = from u in db.Unidad_Academica select u;
             ViewBag.unidadAcademica = new SelectList(unidadAcademica, "Nombre", "Nombre");
             return unidadAcademica;
         }
+
+        // Para el filtro por carreras
+        public IQueryable<Carrera> ObtenerCarreras(short anno, byte semestre, String codigoUnidadAcadem){
+                    
+            IQueryable < Carrera > nombreCarrera = from car in db.Carrera select car;
+
+            if (!String.IsNullOrEmpty(codigoUnidadAcadem))
+            {
+                nombreCarrera = nombreCarrera.Where(c => c.CodigoUnidadAcademica.Equals(codigoUnidadAcadem));
+            }
+
+            ViewBag.nombreCarrera = new SelectList(nombreCarrera, "Nombre", "Nombre");
+            return nombreCarrera;
+        }
+
 
         // Para el filtro por énfasis
         public IQueryable<Enfasis> ObtenerEnfasis(short anno, byte semestre, String codigoUnidadAcadem, String siglaCarrera)

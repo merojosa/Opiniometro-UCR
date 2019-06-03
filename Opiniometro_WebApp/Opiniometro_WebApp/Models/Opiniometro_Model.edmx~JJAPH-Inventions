@@ -216,6 +216,15 @@
           <Property Name="IdPerfil" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="IdPermiso" Type="tinyint" Nullable="false" />
         </EntityType>
+        <EntityType Name="Preguntas">
+          <Key>
+            <PropertyRef Name="Numero" />
+          </Key>
+          <Property Name="Numero" Type="int" Nullable="false" />
+          <Property Name="Planteamiento" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="TipoPregunta" Type="nchar" MaxLength="30" />
+          <Property Name="Categoria" Type="nchar" MaxLength="30" />
+        </EntityType>
         <EntityType Name="Profesor">
           <Key>
             <PropertyRef Name="CedulaProfesor" />
@@ -248,16 +257,6 @@
           <Property Name="Observacion" Type="nvarchar" MaxLength="500" />
           <Property Name="Respuesta" Type="nvarchar" MaxLength="500" />
           <Property Name="RespuestaProfesor" Type="nvarchar" MaxLength="500" />
-        </EntityType>
-        <EntityType Name="Se_Encuentra_Curso_Enfasis">
-          <Key>
-            <PropertyRef Name="SiglaCurso" />
-            <PropertyRef Name="CodigoEnfasis" />
-            <PropertyRef Name="SiglaCarrera" />
-          </Key>
-          <Property Name="SiglaCurso" Type="char" MaxLength="6" Nullable="false" />
-          <Property Name="CodigoEnfasis" Type="tinyint" Nullable="false" />
-          <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="Se_Encuentra_Unidad_Enfasis">
           <Key>
@@ -692,32 +691,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SeE_Cur">
-          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
-          <End Role="Se_Encuentra_Curso_Enfasis" Type="Self.Se_Encuentra_Curso_Enfasis" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Curso">
-              <PropertyRef Name="Sigla" />
-            </Principal>
-            <Dependent Role="Se_Encuentra_Curso_Enfasis">
-              <PropertyRef Name="SiglaCurso" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SeE_Enf">
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
-          <End Role="Se_Encuentra_Curso_Enfasis" Type="Self.Se_Encuentra_Curso_Enfasis" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Enfasis">
-              <PropertyRef Name="Numero" />
-              <PropertyRef Name="SiglaCarrera" />
-            </Principal>
-            <Dependent Role="Se_Encuentra_Curso_Enfasis">
-              <PropertyRef Name="CodigoEnfasis" />
-              <PropertyRef Name="SiglaCarrera" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Sel_Uni_Ite">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
           <End Role="Seleccion_Unica" Type="Self.Seleccion_Unica" Multiplicity="0..1" />
@@ -886,9 +859,9 @@
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responde" EntityType="Self.Responde" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Se_Encuentra_Curso_Enfasis" EntityType="Self.Se_Encuentra_Curso_Enfasis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Se_Encuentra_Unidad_Enfasis" EntityType="Self.Se_Encuentra_Unidad_Enfasis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seleccion_Unica" EntityType="Self.Seleccion_Unica" Schema="dbo" store:Type="Tables" />
@@ -1009,14 +982,6 @@
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
             <End Role="Se_Encuentra_Unidad_Enfasis" EntitySet="Se_Encuentra_Unidad_Enfasis" />
           </AssociationSet>
-          <AssociationSet Name="FK_SeE_Cur" Association="Self.FK_SeE_Cur">
-            <End Role="Curso" EntitySet="Curso" />
-            <End Role="Se_Encuentra_Curso_Enfasis" EntitySet="Se_Encuentra_Curso_Enfasis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SeE_Enf" Association="Self.FK_SeE_Enf">
-            <End Role="Enfasis" EntitySet="Enfasis" />
-            <End Role="Se_Encuentra_Curso_Enfasis" EntitySet="Se_Encuentra_Curso_Enfasis" />
-          </AssociationSet>
           <AssociationSet Name="FK_Sel_Uni_Ite" Association="Self.FK_Sel_Uni_Ite">
             <End Role="Item" EntitySet="Item" />
             <End Role="Seleccion_Unica" EntitySet="Seleccion_Unica" />
@@ -1110,7 +1075,6 @@
           <Property Name="CodigoUnidad" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Unidad_Academica" Relationship="Self.FK_Cur_Uni" FromRole="Curso" ToRole="Unidad_Academica" />
           <NavigationProperty Name="Grupo" Relationship="Self.FK_Gru_Cur" FromRole="Curso" ToRole="Grupo" />
-          <NavigationProperty Name="Enfasis" Relationship="Self.Se_Encuentra_Curso_Enfasis" FromRole="Curso" ToRole="Enfasis" />
         </EntityType>
         <EntityType Name="Empadronado">
           <Key>
@@ -1131,7 +1095,6 @@
           <Property Name="Numero" Type="Byte" Nullable="false" />
           <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Carrera" Relationship="Self.FK_Enf_Car" FromRole="Enfasis" ToRole="Carrera" />
-          <NavigationProperty Name="Curso" Relationship="Self.Se_Encuentra_Curso_Enfasis" FromRole="Enfasis" ToRole="Curso" />
           <NavigationProperty Name="Unidad_Academica" Relationship="Self.Se_Encuentra_Unidad_Enfasis" FromRole="Enfasis" ToRole="Unidad_Academica" />
         </EntityType>
         <EntityType Name="Estudiante">
@@ -1302,6 +1265,15 @@
           <Property Name="IdPermiso" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Perfil" Relationship="Self.FK_PoseeEnfasisPerfil_Perfil" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Perfil" />
           <NavigationProperty Name="Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Permiso" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Permiso" />
+        </EntityType>
+        <EntityType Name="Preguntas">
+          <Key>
+            <PropertyRef Name="Numero" />
+          </Key>
+          <Property Name="Numero" Type="Int32" Nullable="false" />
+          <Property Name="Planteamiento" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TipoPregunta" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="Profesor">
           <Key>
@@ -1825,10 +1797,6 @@
           <End Role="Facultad" Type="Self.Facultad" Multiplicity="0..1" />
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
         </Association>
-        <Association Name="Se_Encuentra_Curso_Enfasis">
-          <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
-        </Association>
         <Association Name="Se_Encuentra_Unidad_Enfasis">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
@@ -1855,6 +1823,7 @@
           <EntitySet Name="Permiso" EntityType="Self.Permiso" />
           <EntitySet Name="Persona" EntityType="Self.Persona" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" />
+          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" />
           <EntitySet Name="Responde" EntityType="Self.Responde" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" />
@@ -1991,10 +1960,6 @@
           <AssociationSet Name="Escuela" Association="Self.Escuela">
             <End Role="Facultad" EntitySet="Facultad" />
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
-          </AssociationSet>
-          <AssociationSet Name="Se_Encuentra_Curso_Enfasis" Association="Self.Se_Encuentra_Curso_Enfasis">
-            <End Role="Curso" EntitySet="Curso" />
-            <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
           <AssociationSet Name="Se_Encuentra_Unidad_Enfasis" Association="Self.Se_Encuentra_Unidad_Enfasis">
             <End Role="Enfasis" EntitySet="Enfasis" />
@@ -2268,6 +2233,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Preguntas">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Preguntas">
+              <MappingFragment StoreEntitySet="Preguntas">
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Planteamiento" ColumnName="Planteamiento" />
+                <ScalarProperty Name="TipoPregunta" ColumnName="TipoPregunta" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Profesor">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Profesor">
               <MappingFragment StoreEntitySet="Profesor">
@@ -2363,15 +2338,6 @@
             </EndProperty>
             <EndProperty Name="Unidad_Academica">
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="Se_Encuentra_Curso_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Curso_Enfasis" StoreEntitySet="Se_Encuentra_Curso_Enfasis">
-            <EndProperty Name="Curso">
-              <ScalarProperty Name="Sigla" ColumnName="SiglaCurso" />
-            </EndProperty>
-            <EndProperty Name="Enfasis">
-              <ScalarProperty Name="Numero" ColumnName="CodigoEnfasis" />
-              <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="Se_Encuentra_Unidad_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Unidad_Enfasis" StoreEntitySet="Se_Encuentra_Unidad_Enfasis">
