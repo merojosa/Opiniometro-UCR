@@ -98,11 +98,14 @@
             <div class="col-sm-4">
 
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h3>Tus formularios</h3></div>
+                    <div class="panel-heading"><h3>Formularios</h3></div>
                     <div class="panel-body">
 
                         <table class="table">
                             <!-- Tabla para mostrar los formularios -->
+                            @Html.TextBox("SearchString", "", new { placeholder = "Nombre del formulario" })
+
+                            <input type="submit" value="Buscar" />
                             <tr></tr>
                             @foreach (var item in Model.Formularios)
                             {
