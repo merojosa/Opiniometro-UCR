@@ -98,5 +98,10 @@
     <Build Include="Texto_Libre.sql" />
     <Build Include="Item.sql" />
     <Build Include="Seleccion_Unica.sql" />
+    <None Include="ScriptNuevaPersonaUsuario.sql" />
+    <None Include="FiltrarUsuarios.sql" />
+    <None Include="Script.ModificarUsuario.sql" />
+    <None Include="Script.EliminarPersona.sql" />
+    <Build Include="Preguntas.sql" />
   </ItemGroup>
 </Project>

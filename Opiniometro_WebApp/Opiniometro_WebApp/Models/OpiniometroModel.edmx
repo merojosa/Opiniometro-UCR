@@ -782,14 +782,6 @@
         <Function Name="NombrePersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="Obtener_Items_Por_Seccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ForCod" Type="char" Mode="In" />
-          <Parameter Name="TitSec" Type="nvarchar" Mode="In" />
-          <Parameter Name="Resultado" Type="int" Mode="InOut" />
-        </Function>
-        <Function Name="Obtener_Secciones_Por_Formulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ForCod" Type="char" Mode="In" />
-        </Function>
         <Function Name="SP_AgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
@@ -1934,14 +1926,6 @@
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="Obtener_Items_Por_Seccion">
-            <Parameter Name="ForCod" Mode="In" Type="String" />
-            <Parameter Name="TitSec" Mode="In" Type="String" />
-            <Parameter Name="Resultado" Mode="InOut" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="Obtener_Secciones_Por_Formulario" ReturnType="Collection(String)">
-            <Parameter Name="ForCod" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_AgregarUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
@@ -2302,8 +2286,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="Opiniometro_DatosModel.Store.NombrePersona" />
-          <FunctionImportMapping FunctionImportName="Obtener_Items_Por_Seccion" FunctionName="Opiniometro_DatosModel.Store.Obtener_Items_Por_Seccion" />
-          <FunctionImportMapping FunctionImportName="Obtener_Secciones_Por_Formulario" FunctionName="Opiniometro_DatosModel.Store.Obtener_Secciones_Por_Formulario" />
           <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarUsuario" />
           <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="Opiniometro_DatosModel.Store.SP_CambiarContrasenna" />
           <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_DatosModel.Store.SP_ExistenciaCorreo" />
