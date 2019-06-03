@@ -136,6 +136,17 @@ GO
 
 EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
 
+
+IF OBJECT_ID('ObtenerPerfilUsuario') IS NOT NULL
+	DROP PROCEDURE ObtenerPerfilUsuario
+GO
+CREATE PROCEDURE ObtenerPerfilUsuario @correo nvarchar(100)
+as 
+select distinct IdPerfil 
+from Tiene_Usuario_Perfil_Enfasis
+where CorreoInstitucional = @correo;
+go
+
 --JJAPH
 IF OBJECT_ID('MostrarEstudiantes', 'P') IS NOT NULL 
 	DROP PROC MostrarEstudiantes
