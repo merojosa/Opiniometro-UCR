@@ -29,6 +29,7 @@ namespace Opiniometro_WebApp.Models
         public byte NumeroGrupo { get; set; }
         public string SiglaGrupo { get; set; }
         public Nullable<bool> Completado { get; set; }
+    
         public virtual Formulario Formulario { get; set; }
         public virtual Grupo Grupo { get; set; }
         public virtual Persona Persona { get; set; }
