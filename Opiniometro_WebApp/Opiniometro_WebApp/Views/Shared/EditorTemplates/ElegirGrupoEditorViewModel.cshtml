@@ -9,7 +9,7 @@
     </td>
 
     @*Sigla de curso*@
-    <td style="text-align:center">
+    <td>
         <div align='center'>@Html.DisplayFor(model => model.SiglaCurso)</div>
     </td>
 
@@ -36,12 +36,10 @@
     </td>
 
     @*Año (escondido)*@
-    <td>
-        <div align='center'>@Html.HiddenFor(model => model.Anno)</div>
-    </td>
+    <td style="display: none;">@Html.DisplayFor(model => model.Anno)</td>
+    
 
     @*Semestre (escondido)*@
-    <td>
-        <div align='center'>@Html.HiddenFor(model => model.Semestre)</div>
-    </td>
+    <td style="display: none;">@Html.DisplayFor(model => model.Semestre)</td>
+    
 </tr>

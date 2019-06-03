@@ -64,14 +64,10 @@
                                 <th>
                                     <div align='center'>Profesor</div>
                                 </th>
-
-                                <th></th>
-                                <th></th>
-
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Para cada grupo en Model::Grupos... -->
+                            <!-- Despliega los datos de los grupos usando un modelo personalizado: ElegirGrupoEditorTemplate -->
                             @Html.EditorFor(model => Model.Grupos)
                         </tbody>
                     </table>
