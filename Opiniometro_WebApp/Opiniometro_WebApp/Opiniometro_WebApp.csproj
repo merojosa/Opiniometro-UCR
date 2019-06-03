@@ -246,6 +246,7 @@
     <Compile Include="Models\Matricula.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ValidacionJOFFI\Metadata.cs" />
     <Compile Include="Models\MostrarEstudiantes_Result.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
@@ -267,6 +268,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OpiniometroModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ValidacionJOFFI\PartialClasses.cs" />
     <Compile Include="Models\Perfil.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>

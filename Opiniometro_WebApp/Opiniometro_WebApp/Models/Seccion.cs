@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace Opiniometro_WebApp.Models
 {
     using System;
@@ -22,12 +20,8 @@ namespace Opiniometro_WebApp.Models
             this.Conformado_Item_Sec_Form = new HashSet<Conformado_Item_Sec_Form>();
             this.Responde = new HashSet<Responde>();
         }
-
-        [StringLength(120, ErrorMessage = "El límite de este campo son 120 caracteres.")]
-        [Required]
+    
         public string Titulo { get; set; }
-        [StringLength(300, ErrorMessage = "El límite de este campo son 300 caracteres.")]
-        [Required]
         public string Descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
