@@ -30,6 +30,17 @@ namespace Opiniometro_WebApp.Controllers
             return View(modelo);
         }
 
+        [HttpPost]
+        public ActionResult Asignar(AsignarFormulariosViewModel model)
+        {
+            var GruposSeleccionados = model.gruposSeleccionados();
+            //var FormulariosSeleccionados = model.FormulariosSeleccionados();
+
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
         // Para el filtro por ciclos
         public IQueryable<Ciclo_Lectivo> ObtenerCiclos(String codigoUnidadAcadem)
         {
