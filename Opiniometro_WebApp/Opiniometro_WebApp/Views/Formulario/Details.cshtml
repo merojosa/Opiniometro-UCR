@@ -4,8 +4,6 @@
     ViewBag.Title = "Details";
 }
 
-@Html.Partial("_Collapsible")
-
 
 @foreach (var title in Model.Formulario_Respuesta.Take(1))
 {
@@ -32,22 +30,43 @@
     </td>
 }
 
-@foreach (var seccion in Model.Conformado_Item_Sec_Form)
+@foreach (var titulo in Model.Formulario_Respuesta.Take(1))
 {
-    <button class="collapsible main"> @Html.DisplayFor(modelItem => seccion.TituloSeccion) </button>
-    <div class="content">
+    <div class="panel-group" id="accordion1">
 
-        <button class="collapsible secondary"> @Html.DisplayFor(modelItem => seccion.Item.TextoPregunta) </button>
-        <div class="content">
-
-            <button class="collapsible terciary">  @Html.DisplayFor(modelItem => seccion.Item.responde_respuesta.Respuesta) </button>
-            <div class="content">
-
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapseThree">
+                        @Html.DisplayFor(modelItem => titulo.Formulario.Nombre)
+                    </a>
+                </h4>
             </div>
+            <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
 
+                    @foreach (var seccion in Model.Conformado_Item_Sec_Form)
+                    {
+                        <div class="panel-group" id="accordion2">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion2" href="#collapseThreeOne">
+                                            @Html.DisplayFor(modelItem => seccion.TituloSeccion)
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseThreeOne" class="panel-collapse collapse in">
+                                    <div class="panel-body">@Html.DisplayFor(modelItem => seccion.Item.TextoPregunta)</div>
+                                </div>
+                            </div>                           
+                        </div>
+                    }
+
+                </div>
+            </div>
         </div>
-
     </div>
 }
 
-<script src="~/Scripts/CollapsibleScript.js"></script>
+
