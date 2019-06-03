@@ -1,6 +1,4 @@
 ﻿@using Opiniometro_WebApp.Controllers.Servicios
-@using System.Security.Claims
-@using System.Threading
 
 @{
     ViewBag.Title = "Permisos";
@@ -9,19 +7,22 @@
 <h2>Permisos</h2>
 
 @{
-    // Obtener la identidad de la sesion actual.
-    var identidad = (ClaimsPrincipal)Thread.CurrentPrincipal;
-
-    // Obtener el correo de la sesion.
-    var correo = identidad.Claims.Where(c => c.Type == ClaimTypes.Email)
-                       .Select(c => c.Value).SingleOrDefault();
-
     // Obtengo los permisos del correo actual.
-    var permisos_usuario = (PermisosUsuario)Session[correo];
+    var permisos_usuario = (PermisosUsuario)Session[PermisosUsuario.obtener_correo_actual()];
 
-    if (permisos_usuario.verificar_permiso(Permiso.CALIFICAR_CURSOS))
+    // Si el usuario tiene permisos en el sistema.
+    if (permisos_usuario != null)
     {
-        <div>Todo bien</div>
+        if (permisos_usuario.verificar_permiso(Permiso.CALIFICAR_CURSOS))
+        {
+            Html.Label("Puedo usar razor incluso");
+            <b>Este html se inserta si el usuario es un estudiante que puede calificar un curso</b>
+        }
+
+        if(permisos_usuario.verificar_permiso(Permiso.ASIGNAR_FORMUALRIO))
+        {
+            <b>Esto es un html de un administrativo para cuando se quiere asignar un formulario</b>
+        }
     }
 }
 

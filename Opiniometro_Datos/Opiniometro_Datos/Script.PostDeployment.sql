@@ -440,7 +440,8 @@ VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
 		(0, 'SC-01234', 'Estudiante', 4),
-		(0, 'SC-01234', 'Admin', 1)
+		(0, 'SC-01234', 'Admin', 1),
+		(0, 'SC-01234', 'Admin', 2)
 
 --select de prueba para la cnt de respuestas
 --SELECT e.Respuesta, COUNT(e.Respuesta) as cantidadRespuestas

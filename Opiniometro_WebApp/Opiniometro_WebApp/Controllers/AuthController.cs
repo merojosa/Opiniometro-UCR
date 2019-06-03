@@ -110,20 +110,14 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult CerrarSesion()
         {
-            // Elimino cookies
+            // Elimino datos de la sesion.
             Request.GetOwinContext().Authentication.SignOut(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie);
 
-            // Obtener la identidad de la sesion actual.
-            var identidad = (ClaimsPrincipal)Thread.CurrentPrincipal;
-
-            // Obtener el correo de la sesion.
-            var correo = identidad.Claims.Where(c => c.Type == ClaimTypes.Email).Select(c => c.Value).SingleOrDefault();
-
             // Obtengo los permisos del correo actual.
-            var permisos_usuario = (PermisosUsuario)Session[correo];
+            var permisos_usuario = (PermisosUsuario)Session[PermisosUsuario.obtener_correo_actual()];
 
             if(permisos_usuario != null)
-                permisos_usuario.limpiar_permisos();
+                permisos_usuario.limpiar_permisos();    // Elimino los permisos.
 
             // Como no esta loggeado, se tiene que redigir a login para volver a hacerlo.
             return RedirectToAction("Login");

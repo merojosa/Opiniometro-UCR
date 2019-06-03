@@ -34,8 +34,7 @@ namespace Opiniometro_WebApp.Controllers.Servicios
         {
             var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
 
-            string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email)
-                                                .Select(c => c.Value).SingleOrDefault();
+            string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email).Select(c => c.Value).SingleOrDefault();
 
             if(correo_autenticado != null)
             {
@@ -54,6 +53,18 @@ namespace Opiniometro_WebApp.Controllers.Servicios
         public void limpiar_permisos()
         {
             permisos_usuario.Clear();
+        }
+
+        public static string obtener_correo_actual()
+        {
+            // Obtener la identidad de la sesion actual.
+            var identidad = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+            // Obtener el correo de la sesion.
+            var correo = identidad.Claims.Where(c => c.Type == ClaimTypes.Email)
+                               .Select(c => c.Value).SingleOrDefault();
+
+            return correo;
         }
     }
 }
