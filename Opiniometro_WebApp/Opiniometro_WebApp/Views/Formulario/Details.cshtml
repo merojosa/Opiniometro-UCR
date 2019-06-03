@@ -25,48 +25,31 @@
     <td>
         @Html.DisplayFor(modelItem => title.Grupo.AnnoGrupo)
     </td>
-    <td>
-        @Html.DisplayFor(modelItem => title.Grupo.Ciclo_Lectivo)
-    </td>
 }
 
-@foreach (var titulo in Model.Formulario_Respuesta.Take(1))
-{
-    <div class="panel-group" id="accordion1">
 
-        <div class="panel panel-default">
+
+@{int id_counter = 0; }}
+@foreach (var seccion in Model.Conformado_Item_Sec_Form)
+{
+    <div class="panel-group" id="accordion_@id_counter">
+        <div class="panel panel-default" id="panel_@id_counter">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapseThree">
-                        @Html.DisplayFor(modelItem => titulo.Formulario.Nombre)
+                    <a data-toggle="collapse" data-target="#collapseOne_@id_counter" href="#collapseOne_@id_counter">
+                        @Html.DisplayFor(modelItem => seccion.TituloSeccion)
                     </a>
                 </h4>
             </div>
-            <div id="collapseThree" class="panel-collapse collapse">
+
+            <div id="collapseOne_@id_counter" class="panel-collapse collapse in">
                 <div class="panel-body">
-
-                    @foreach (var seccion in Model.Conformado_Item_Sec_Form)
-                    {
-                        <div class="panel-group" id="accordion2">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion2" href="#collapseThreeOne">
-                                            @Html.DisplayFor(modelItem => seccion.TituloSeccion)
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseThreeOne" class="panel-collapse collapse in">
-                                    <div class="panel-body">@Html.DisplayFor(modelItem => seccion.Item.TextoPregunta)</div>
-                                </div>
-                            </div>                           
-                        </div>
-                    }
-
+                    @Html.DisplayFor(modelItem => seccion.Item.TextoPregunta)
                 </div>
             </div>
         </div>
     </div>
+    id_counter++;
 }
 
 
