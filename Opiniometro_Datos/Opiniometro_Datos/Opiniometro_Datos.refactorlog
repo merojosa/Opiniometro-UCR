@@ -98,4 +98,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="SiglaCurso" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="adde2c06-ec82-4144-a8a7-63fed8e78a2f" ChangeDateTime="06/02/2019 02:30:24">
+    <Property Name="ElementName" Value="[dbo].[Tiene_Usuario_Perfil_Enfasis].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Tiene_Usuario_Perfil_Enfasis]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Cedula" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d4814905-e9b2-4f8b-bb0e-1d22bccf5ab4" ChangeDateTime="06/02/2019 02:30:48">
+    <Property Name="ElementName" Value="[dbo].[Tiene_Usuario_Perfil_Enfasis].[Cedula]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Tiene_Usuario_Perfil_Enfasis]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CedulaPersona" />
+  </Operation>
 </Operations>

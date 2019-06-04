@@ -44,7 +44,46 @@ namespace Opiniometro_WebApp.Controllers
             
         }
 
-       public ActionResult Borrar(string id)
+        public ActionResult Editar(string id)
+        {
+            try
+            {
+                using (db)
+                {
+                    Persona persona = db.Persona.Find(id);
+                    return View(persona);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+            
+        }
+
+        [HttpPost]
+        public ActionResult Editar(Persona per)
+        {
+            try
+            {
+                using (db)
+                {
+                    db.SP_ModificarPersona(per.Cedula, per.Cedula, per.Nombre, per.Apellido1, per.Apellido2, per.Direccion);
+                    return RedirectToAction("VerPersonas");
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+        }
+
+
+        public ActionResult Borrar(string id)
         {
            // db.SP_EliminarPersona(id);
             return RedirectToAction("VerPersonas");

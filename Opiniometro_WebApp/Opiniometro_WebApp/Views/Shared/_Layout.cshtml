@@ -1,16 +1,15 @@
 ﻿<!DOCTYPE html>
 <html>
-
-
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opiniómetro@UCR</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
 </head>
 <body>
+
     <!--Barra-->
     @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
 
@@ -43,19 +42,18 @@
                     </button>
                     <div class="dropdown-contentt">
                         @Html.ActionLink("Insertar formulario", "Index", "Formulario")
-                        @Html.ActionLink("Asignar formulario", "Index", "AsignarFomularios")
+                        @Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")
                         @Html.ActionLink("Visualizar resultados de evaluaciones", "Index", "Responde")
                         @Html.ActionLink("Sección", "Index", "Seccion")
-                        @Html.ActionLink("Ítem", "Index", "Item")   
+                        @Html.ActionLink("Ítem", "Index", "Item")
                     </div>
                 </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Salir", "CerrarSesion", "Auth")</li>
+                </ul>
             </div>
         </div>
     </nav>
-
-
-
-
 
     <div class="container body-content">
         @RenderBody()

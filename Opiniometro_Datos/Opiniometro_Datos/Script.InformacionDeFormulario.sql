@@ -10,18 +10,27 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
--- Eliminar Persona
-IF OBJECT_ID('SP_DesactivarUsuario') IS NOT NULL
-	DROP PROCEDURE SP_DesactivarUsuario
 GO
-CREATE PROCEDURE SP_DesactivarUsuario
-	@CedulaBusqueda		VARCHAR(9)
+CREATE PROCEDURE [dbo].[Obtener_Secciones_Por_Formulario]
+	@ForCod CHAR(6)
 AS
 BEGIN
-	Update Usuario
-	SET Activo = 0
-	WHERE Cedula = @CedulaBusqueda;
+	SET NOCOUNT ON
+	SELECT DISTINCT C.TituloSeccion
+	FROM Conformado_Item_Sec_Form C
+	WHERE C.CodigoFormulario = @ForCod
 END
 GO
 
-EXEC SP_DesactivarUsuario @CedulaBusqueda = '987654321';
+GO
+CREATE PROCEDURE [dbo].[Obtener_Items_Por_Seccion]
+	@ForCod CHAR(6),
+	@TitSec NVARCHAR(120)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT DISTINCT C.ItemId
+	FROM Conformado_Item_Sec_Form C
+	WHERE C.TituloSeccion = @TitSec AND C.CodigoFormulario = @ForCod
+END
+GO
