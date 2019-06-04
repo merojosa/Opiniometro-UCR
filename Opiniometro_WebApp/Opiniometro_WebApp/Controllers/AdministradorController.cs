@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Data;
@@ -36,16 +36,25 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public ActionResult CargarArchivo(HttpPostedFileBase postedFile)
         {
-            if (postedFile != null)
+            if (postedFile != null && postedFile.ContentLength > 0)
             {
-                string path = Server.MapPath("~/App_Data/ArchivosCargados/");
-                if (!Directory.Exists(path))
+                if (postedFile.FileName.EndsWith(".csv"))
                 {
-                    Directory.CreateDirectory(path);
-                }
+                    string path = Server.MapPath("~/App_Data/ArchivosCargados/");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
 
-                postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
-                ViewBag.Message = "File uploaded successfully.";
+                    postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
+                    ViewBag.Message = "File uploaded successfully.";
+                    
+                }
+                else
+                {
+                    ViewBag.Message = "Error, este formato de archivo no es compatible";
+                }
+                
             }
 
 
