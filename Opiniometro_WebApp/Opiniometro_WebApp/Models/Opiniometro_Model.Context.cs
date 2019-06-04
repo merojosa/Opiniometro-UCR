@@ -27,7 +27,6 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Administrativo> Administrativo { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Ciclo_Lectivo> Ciclo_Lectivo { get; set; }
@@ -55,6 +54,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<TelefonoPersona> TelefonoPersona { get; set; }
         public virtual DbSet<Texto_Libre> Texto_Libre { get; set; }
         public virtual DbSet<Tiene_Grupo_Formulario> Tiene_Grupo_Formulario { get; set; }
+        public virtual DbSet<Tiene_Usuario_Perfil_Enfasis> Tiene_Usuario_Perfil_Enfasis { get; set; }
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     
@@ -259,6 +259,15 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Direccion", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, direccionParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<byte>> SP_ObtenerPermisosUsuario(string correo)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<byte>>("SP_ObtenerPermisosUsuario", correoParameter);
         }
     }
 }

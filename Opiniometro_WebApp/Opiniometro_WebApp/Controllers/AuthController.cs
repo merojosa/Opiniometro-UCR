@@ -13,6 +13,7 @@ using System.Net;
 using System.Text;
 using System.Security.Cryptography;
 using System.Threading;
+using Opiniometro_WebApp.Controllers.Servicios;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -51,6 +52,7 @@ namespace Opiniometro_WebApp.Controllers
          *  Basado en:
          *  SigIn: https://stackoverflow.com/questions/31584506/how-to-implement-custom-authentication-in-asp-net-mvc-5,
          *  Obtener la identidad desde otro sitio: https://stackoverflow.com/questions/22246538/access-claim-values-in-controller-in-mvc-5
+         *  Manejar cookies: https://stackoverflow.com/questions/3140341/how-to-create-persistent-cookies-in-asp-net
          */
         [HttpPost]
         public ActionResult Login(Usuario usuario)
@@ -73,15 +75,18 @@ namespace Opiniometro_WebApp.Controllers
                     new Claim(ClaimTypes.Email, usuario.CorreoInstitucional)
 
                     /*
-                    // optionally you could add roles if any
+                    // Agregar roles.
                     new Claim(ClaimTypes.Role, "RoleName"),
                     new Claim(ClaimTypes.Role, "AnotherRole"),
                     */
                     },
                     DefaultAuthenticationTypes.ApplicationCookie);
-                Thread.CurrentPrincipal = new ClaimsPrincipal(identidad);
 
+                Thread.CurrentPrincipal = new ClaimsPrincipal(identidad);
                 HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, identidad);
+
+                PermisosUsuario.cargar_permisos();
+
                 return RedirectToAction("Index", "LogInPerfiles");
             }
             else    // Si hay error en la autenticacion
@@ -94,13 +99,16 @@ namespace Opiniometro_WebApp.Controllers
 
         }
 
+         /*  
+         *  EFECTO: cierra la sesion actual.
+         *  REQUIERE: n/a
+         *  MODIFICA: las cookies eliminandolas
+         */
         public ActionResult CerrarSesion()
         {
-            // Obtener identidad actual.
-            var identidad = (ClaimsPrincipal)Thread.CurrentPrincipal;
-
             // Elimino cookies
             Request.GetOwinContext().Authentication.SignOut(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie);
+            PermisosUsuario.limpiar_permisos();
 
             // Como no esta loggeado, se tiene que redigir a login para volver a hacerlo.
             return RedirectToAction("Login");

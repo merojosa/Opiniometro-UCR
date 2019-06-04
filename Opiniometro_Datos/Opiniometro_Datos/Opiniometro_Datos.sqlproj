@@ -101,6 +101,7 @@
     <None Include="ScriptNuevaPersonaUsuario.sql" />
     <None Include="FiltrarUsuarios.sql" />
     <None Include="Script.EliminarPersona.sql" />
+    <Build Include="Tiene_Usuario_Perfil_Enfasis.sql" />
     <Build Include="UsuariosStaging.sql" />
   </ItemGroup>
   <ItemGroup>
