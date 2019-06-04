@@ -26,19 +26,27 @@
                         <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
                         @using (Html.BeginForm())
                         {
-                            
+
                             <!-- Buscador -->
-                            <p>
-                                <label>Unidad Academica:</label> @Html.DropDownList("unidadAcademica", null, "<Seleccione Unidad Académica>",new { @class = "form-control"})
+                        <p>
+                            <!--Toman el valor del dropdown list seleccionado-->
+                            @Html.Hidden("changeUnidad", null)
+                            @Html.Hidden("changeCarrera", null)
 
-                                <label> Carreras: </label> @Html.DropDownList("nombreCarrera", null, "<Seleccione Carrera>", new { @class = "form-control" })
-                                <label> Cursos: </label> @Html.DropDownList("nombreCurso", null, "<Seleccione Curso>", new { @class = "form-control" })
-                                @* <label> Semestre: </label> @Html.DropDownList("semestre", null, "<Seleccione Semestre>", new { @class = "form-control" })*@
-                                @* <label> Año: </label> @Html.DropDownList("ano", null, "<Seleccione Año>", new { @class = "form-control" })<br />*@
-                                @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
+                            <label>Unidad Academica:</label> @Html.DropDownList("unidadAcademica", null, "<Seleccione Unidad Académica>",
+                           new { @class = "form-control", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" })
 
-                                <input type="submit" value="Buscar" />
-                            </p>
+
+                            <label> Carreras: </label> @Html.DropDownList("nombreCarrera", null, "<Seleccione Carrera>", new { @class = "form-control",
+                                                      @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" })
+
+                            <label> Cursos: </label> @Html.DropDownList("nombreCurso", null, "<Seleccione Curso>", new { @class = "form-control" })
+                            @* <label> Semestre: </label> @Html.DropDownList("semestre", null, "<Seleccione Semestre>", new { @class = "form-control" })*@
+                            @* <label> Año: </label> @Html.DropDownList("ano", null, "<Seleccione Año>", new { @class = "form-control" })<br />*@
+                            @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
+
+                            <input type="submit" value="Buscar" />
+                        </p>
                         }
 
                     </div>

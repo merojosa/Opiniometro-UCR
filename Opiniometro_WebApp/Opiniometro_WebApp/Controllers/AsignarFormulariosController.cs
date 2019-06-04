@@ -20,9 +20,9 @@ namespace Opiniometro_WebApp.Controllers
             {
                 Ciclos = ObtenerCiclos(""),
                 Unidad = ObtenerUnidadAcademica(0, 0, ""),
-                Carreras = ObtenerCarreras(0, 0, ""),
+                Carreras = ObtenerCarreras(0, 0, "", ""),
                 //Enfasis = ObtenerEnfasis(0, 0, "", ""),
-                Cursos = ObtenerCursos(0, 0, "", "", null),
+                Cursos = ObtenerCursos(0, 0, "", "", null, "", ""),
                 Grupos = ObtenerGrupos(0, 0, "","", "", "", 255, "", "" ,""),
                 Formularios = ObtenerFormularios()
             };
@@ -36,9 +36,9 @@ namespace Opiniometro_WebApp.Controllers
             var modelo = new AsignarFormulariosModel
             {
                 Unidad = ObtenerUnidadAcademica(0, 0, ""),
-                Carreras = ObtenerCarreras(0, 0, ""),
+                Carreras = ObtenerCarreras(0, 0, "", Request.Form["changeUnidad"]),
                 Grupos = ObtenerGrupos(0, 0, "", unidadAcademica, "", nombreCarrera, 255, "",nombreCurso, searchString),
-                Cursos = ObtenerCursos(0, 0, "", "", null),
+                Cursos = ObtenerCursos(0, 0, "", "", null, Request.Form["changeUnidad"], Request.Form["changeCarrera"]),
                 Formularios = ObtenerFormularios()
 
             };
@@ -58,30 +58,31 @@ namespace Opiniometro_WebApp.Controllers
         public IQueryable<Unidad_Academica> ObtenerUnidadAcademica(short anno, byte semestre, String codigoUnidadAcadem)
         {
             IQueryable<Unidad_Academica> unidadAcademica = from u in db.Unidad_Academica select u;
-            ViewBag.unidadAcademica = new SelectList(unidadAcademica, "Nombre", "Nombre");
+            ViewBag.unidadAcademica = new SelectList(unidadAcademica, "Codigo", "Nombre");
             return unidadAcademica;
         }
 
         // Para el filtro por carreras
-        public IQueryable<Carrera> ObtenerCarreras(short anno, byte semestre, String codigoUnidadAcadem){
-                    
-            IQueryable < Carrera > nombreCarrera = from car in db.Carrera select car;
+        public IQueryable<Carrera> ObtenerCarreras(short anno, byte semestre, String codigoUnidadAcadem, String changeUnidad)
+        {
 
-            if (!String.IsNullOrEmpty(codigoUnidadAcadem))
+            IQueryable<Carrera> nombreCarrera = from car in db.Carrera select car;
+
+            if (!String.IsNullOrEmpty(changeUnidad))
             {
-                nombreCarrera = nombreCarrera.Where(c => c.CodigoUnidadAcademica.Equals(codigoUnidadAcadem));
+                nombreCarrera = nombreCarrera.Where(c => c.CodigoUnidadAcademica.Equals(changeUnidad));
             }
 
-            ViewBag.nombreCarrera = new SelectList(nombreCarrera, "Nombre", "Nombre");
+            ViewBag.nombreCarrera = new SelectList(nombreCarrera, "Sigla", "Nombre");
             return nombreCarrera;
         }
 
 
         // Para el filtro por énfasis
-        public IQueryable<Enfasis> ObtenerEnfasis(short anno, byte semestre, String codigoUnidadAcadem, String siglaCarrera)
-        {
-            return new List<Enfasis>().AsQueryable();
-        }
+        //public IQueryable<Enfasis> ObtenerEnfasis(short anno, byte semestre, String codigoUnidadAcadem, String siglaCarrera)
+        //{
+        //    return new List<Enfasis>().AsQueryable();
+        //}
 
 
         // Para el filtro por cursos
@@ -96,9 +97,20 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="searchString">Frase usada para buscar el nombre o código de un grupo.</param>
         /// <returns>Lista de los cursos que satisfacen los filtros utilizados como parámetros.</returns>
         public IQueryable<Curso> ObtenerCursos(short anno, byte semestre,
-            String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis)
+            String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis, string changeUnidad, string changeCarrera)
         {
             IQueryable<Curso> nombreCurso = from cur in db.Curso select cur;
+
+            if (!String.IsNullOrEmpty(changeUnidad))
+            {
+                nombreCurso = nombreCurso.Where(c => c.CodigoUnidad.Equals(changeUnidad));
+            }
+
+            if (!String.IsNullOrEmpty(changeCarrera))
+            {
+               // nombreCurso = nombreCurso.Where(c => c.Enfasis.Codigo.Equals(changeCarrera));
+            }
+
             ViewBag.nombreCurso = new SelectList(nombreCurso, "Nombre", "Nombre");
             return nombreCurso;
         }
