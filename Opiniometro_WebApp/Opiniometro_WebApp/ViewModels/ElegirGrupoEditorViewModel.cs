@@ -22,5 +22,9 @@ namespace Opiniometro_WebApp.Models
         {
             Profesores = new List<Profesor>();
         }
+
+        // Atributos que no se muestran pero se utilizan para consultar y filtrar
+        public string NombreUnidadAcademica { get; set; }
+        public string NombreCarrera { get; set; }
     }
 }

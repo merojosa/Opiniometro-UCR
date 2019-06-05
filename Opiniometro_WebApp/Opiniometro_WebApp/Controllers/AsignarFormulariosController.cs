@@ -19,11 +19,11 @@ namespace Opiniometro_WebApp.Controllers
             var modelo = new AsignarFormulariosViewModel
             {
                 Ciclos = ObtenerCiclos(""),
-                Unidad = ObtenerUnidadAcademica(0, 0, ""),
+                UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
                 Carreras = ObtenerCarreras(0, 0, ""),
                 //Enfasis = ObtenerEnfasis(0, 0, "", ""),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
-                Grupos = ObtenerGrupos(0, 0, "","", "", "", 255, "", "" ,""),
+                Grupos = ObtenerGrupos(0, 0, "", "", "", "", 255, "", "" ,""),
                 Formularios = ObtenerFormularios()
             };
 
@@ -33,9 +33,9 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public ActionResult Index(string unidadAcademica, string nombreCarrera, string nombreCurso, string searchString)
         {
-            var modelo = new AsignarFormulariosModel
+            var modelo = new AsignarFormulariosViewModel
             {
-                Unidad = ObtenerUnidadAcademica(0, 0, ""),
+                UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
                 Carreras = ObtenerCarreras(0, 0, ""),
                 Grupos = ObtenerGrupos(0, 0, "", unidadAcademica, "", nombreCarrera, 255, "",nombreCurso, searchString),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
@@ -124,7 +124,7 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="siglaCurso">Sigla del curso al que pertenecen los grupos</param>
         /// <returns>Lista de los grupos que satisfacen los filtros utilizados como parámetros.</returns>
         public IQueryable<ElegirGrupoEditorViewModel> ObtenerGrupos(short anno, byte semestre, String codigoUnidadAcadem,
-            String siglaCarrera, byte? numEnfasis, String siglaCurso, String searchString)
+             string nomUnidadAcad, String siglaCarrera, String nombCarrera, byte? numEnfasis, String siglaCurso, string nombreCurso, String searchString)
         {
             // En la base, cuando este query se transforme en un proc. almacenado, se deberá usar join con la tabla curso
             IQueryable<ElegirGrupoEditorViewModel> grupos = 
@@ -155,7 +155,7 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="nombCarrera"> podria contener el nombre de la carrera</param>
         /// <param name="grupos"> lista de grupos que se envia desde el metodo ObtenerGrupos</param>
         /// <returns> los grupos filtrados</returns>
-        public IQueryable<GrupoConInfoExtra> filtreGrupos(string searchString, byte semestre, string nomUnidadAcad, string nombCarrera, string nombCurso ,IQueryable<GrupoConInfoExtra> grupos)
+        public IQueryable<ElegirGrupoEditorViewModel> filtreGrupos(string searchString, byte semestre, string nomUnidadAcad, string nombCarrera, string nombCurso ,IQueryable<ElegirGrupoEditorViewModel> grupos)
         {
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -164,17 +164,17 @@ namespace Opiniometro_WebApp.Controllers
 
             if (!String.IsNullOrEmpty(nomUnidadAcad))
             {
-                grupos = grupos.Where(c => c.nombreUnidadAcademica.Contains(nomUnidadAcad));
+                grupos = grupos.Where(c => c.NombreUnidadAcademica.Contains(nomUnidadAcad));
             }
 
             if (!String.IsNullOrEmpty(nombCarrera))
             {
-                grupos = grupos.Where(c => c.carrera.Contains(nombCarrera));
+                grupos = grupos.Where(c => c.NombreCarrera.Contains(nombCarrera));
             }
 
             if (!String.IsNullOrEmpty(nombCurso))
             {
-                grupos = grupos.Where(c => c.nombreCurso.Contains(nombCurso));
+                grupos = grupos.Where(c => c.NombreCurso.Contains(nombCurso));
             }
 
             //if (semestre != null){

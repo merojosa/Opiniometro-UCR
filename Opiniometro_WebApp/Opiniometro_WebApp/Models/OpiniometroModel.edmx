@@ -167,7 +167,7 @@
             <PropertyRef Name="ItemId" />
           </Key>
           <Property Name="ItemId" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="TextoPregunta" Type="varchar" MaxLength="120" Nullable="false" />
+          <Property Name="TextoPregunta" Type="nvarchar" MaxLength="120" Nullable="false" />
           <Property Name="TieneObservacion" Type="bit" />
           <Property Name="TipoPregunta" Type="tinyint" Nullable="false" />
           <Property Name="NombreCategoria" Type="nvarchar" MaxLength="20" Nullable="false" />
@@ -1252,7 +1252,7 @@
             <PropertyRef Name="ItemId" />
           </Key>
           <Property Name="ItemId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TextoPregunta" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TextoPregunta" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TieneObservacion" Type="Boolean" />
           <Property Name="TipoPregunta" Type="Byte" Nullable="false" />
           <Property Name="NombreCategoria" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
@@ -1872,7 +1872,8 @@
           <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
           <End Role="Profesor" Type="Self.Profesor" Multiplicity="*" />
         </Association>
-        <Association Name="Se_Encuentra_Unidad_Enfasis">
+        <Association Name="Se_Encuentra_Curso_Enfasis">
+          <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
         </Association>
         <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
@@ -2043,7 +2044,8 @@
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Profesor" EntitySet="Profesor" />
           </AssociationSet>
-          <AssociationSet Name="Se_Encuentra_Unidad_Enfasis" Association="Self.Se_Encuentra_Unidad_Enfasis">
+          <AssociationSet Name="Se_Encuentra_Curso_Enfasis" Association="Self.Se_Encuentra_Curso_Enfasis">
+            <End Role="Curso" EntitySet="Curso" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
           <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_DatosModel.DatosEstudiante_Result)">
@@ -2427,7 +2429,10 @@
               <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Se_Encuentra_Unidad_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Unidad_Enfasis" StoreEntitySet="Se_Encuentra_Unidad_Enfasis">
+          <AssociationSetMapping Name="Se_Encuentra_Curso_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Curso_Enfasis" StoreEntitySet="Se_Encuentra_Curso_Enfasis">
+            <EndProperty Name="Curso">
+              <ScalarProperty Name="Sigla" ColumnName="SiglaCurso" />
+            </EndProperty>
             <EndProperty Name="Enfasis">
               <ScalarProperty Name="Numero" ColumnName="CodigoEnfasis" />
               <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
