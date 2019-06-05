@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Conformado_Item_Sec_Form]
 (
-	[ItemId] INT NOT NULL,
+	[ItemId] NVARCHAR(10) NOT NULL,
 	[CodigoFormulario] CHAR(6) NOT NULL,
 	TituloSeccion NVARCHAR(120) NOT NULL, 
 	NombreFormulario VARCHAR(30),
