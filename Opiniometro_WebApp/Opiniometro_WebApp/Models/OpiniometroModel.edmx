@@ -159,7 +159,7 @@
           <Property Name="CedulaProfesor" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Numero" Type="tinyint" Nullable="false" />
           <Property Name="Sigla" Type="char" MaxLength="6" Nullable="false" />
-          <Property Name="Anno" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="Anno" Type="smallint" Nullable="false" />
           <Property Name="Semestre" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Item">
@@ -559,6 +559,24 @@
             </Principal>
             <Dependent Role="Grupo">
               <PropertyRef Name="SiglaCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Imparte_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="Imparte" Type="Self.Imparte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="SiglaCurso" />
+              <PropertyRef Name="Numero" />
+              <PropertyRef Name="AnnoGrupo" />
+              <PropertyRef Name="SemestreGrupo" />
+            </Principal>
+            <Dependent Role="Imparte">
+              <PropertyRef Name="Sigla" />
+              <PropertyRef Name="Numero" />
+              <PropertyRef Name="Anno" />
+              <PropertyRef Name="Semestre" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -974,6 +992,10 @@
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Grupo" EntitySet="Grupo" />
           </AssociationSet>
+          <AssociationSet Name="FK_Imparte_Grupo" Association="Self.FK_Imparte_Grupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Imparte" EntitySet="Imparte" />
+          </AssociationSet>
           <AssociationSet Name="FK_Imparte_Profesor" Association="Self.FK_Imparte_Profesor">
             <End Role="Profesor" EntitySet="Profesor" />
             <End Role="Imparte" EntitySet="Imparte" />
@@ -1223,21 +1245,7 @@
           <NavigationProperty Name="Curso" Relationship="Self.FK_Gru_Cur" FromRole="Grupo" ToRole="Curso" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Gru" FromRole="Grupo" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Tiene_Grupo_Formulario" Relationship="Self.FK_Tie_Gru" FromRole="Grupo" ToRole="Tiene_Grupo_Formulario" />
-        </EntityType>
-        <EntityType Name="Imparte">
-          <Key>
-            <PropertyRef Name="CedulaProfesor" />
-            <PropertyRef Name="Numero" />
-            <PropertyRef Name="Sigla" />
-            <PropertyRef Name="Anno" />
-            <PropertyRef Name="Semestre" />
-          </Key>
-          <Property Name="CedulaProfesor" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Numero" Type="Byte" Nullable="false" />
-          <Property Name="Sigla" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Anno" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Semestre" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Profesor" Relationship="Self.FK_Imparte_Profesor" FromRole="Imparte" ToRole="Profesor" />
+          <NavigationProperty Name="Profesor" Relationship="Self.Imparte" FromRole="Grupo" ToRole="Profesor" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -1332,8 +1340,8 @@
           </Key>
           <Property Name="CedulaProfesor" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Pro" FromRole="Profesor" ToRole="Formulario_Respuesta" />
-          <NavigationProperty Name="Imparte" Relationship="Self.FK_Imparte_Profesor" FromRole="Profesor" ToRole="Imparte" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Pro_Per" FromRole="Profesor" ToRole="Persona" />
+          <NavigationProperty Name="Grupo" Relationship="Self.Imparte" FromRole="Profesor" ToRole="Grupo" />
         </EntityType>
         <EntityType Name="Responde">
           <Key>
@@ -1736,18 +1744,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Imparte_Profesor">
-          <End Role="Profesor" Type="Self.Profesor" Multiplicity="1" />
-          <End Role="Imparte" Type="Self.Imparte" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Profesor">
-              <PropertyRef Name="CedulaProfesor" />
-            </Principal>
-            <Dependent Role="Imparte">
-              <PropertyRef Name="CedulaProfesor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Res_Ite">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
           <End Role="Responde" Type="Self.Responde" Multiplicity="*" />
@@ -1872,8 +1868,11 @@
           <End Role="Facultad" Type="Self.Facultad" Multiplicity="0..1" />
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
         </Association>
-        <Association Name="Se_Encuentra_Curso_Enfasis">
-          <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
+        <Association Name="Imparte">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="*" />
+        </Association>
+        <Association Name="Se_Encuentra_Unidad_Enfasis">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
         </Association>
         <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
@@ -1892,7 +1891,6 @@
           <EntitySet Name="Formulario" EntityType="Self.Formulario" />
           <EntitySet Name="Formulario_Respuesta" EntityType="Self.Formulario_Respuesta" />
           <EntitySet Name="Grupo" EntityType="Self.Grupo" />
-          <EntitySet Name="Imparte" EntityType="Self.Imparte" />
           <EntitySet Name="Item" EntityType="Self.Item" />
           <EntitySet Name="Matricula" EntityType="Self.Matricula" />
           <EntitySet Name="Opciones_De_Respuestas_Seleccion_Unica" EntityType="Self.Opciones_De_Respuestas_Seleccion_Unica" />
@@ -1997,10 +1995,6 @@
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
           </AssociationSet>
-          <AssociationSet Name="FK_Imparte_Profesor" Association="Self.FK_Imparte_Profesor">
-            <End Role="Profesor" EntitySet="Profesor" />
-            <End Role="Imparte" EntitySet="Imparte" />
-          </AssociationSet>
           <AssociationSet Name="FK_Res_Ite" Association="Self.FK_Res_Ite">
             <End Role="Item" EntitySet="Item" />
             <End Role="Responde" EntitySet="Responde" />
@@ -2045,8 +2039,11 @@
             <End Role="Facultad" EntitySet="Facultad" />
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
           </AssociationSet>
-          <AssociationSet Name="Se_Encuentra_Curso_Enfasis" Association="Self.Se_Encuentra_Curso_Enfasis">
-            <End Role="Curso" EntitySet="Curso" />
+          <AssociationSet Name="Imparte" Association="Self.Imparte">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Profesor" EntitySet="Profesor" />
+          </AssociationSet>
+          <AssociationSet Name="Se_Encuentra_Unidad_Enfasis" Association="Self.Se_Encuentra_Unidad_Enfasis">
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
           <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_DatosModel.DatosEstudiante_Result)">
@@ -2254,17 +2251,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Imparte">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Imparte">
-              <MappingFragment StoreEntitySet="Imparte">
-                <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
-                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
-                <ScalarProperty Name="Anno" ColumnName="Anno" />
-                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Item">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Item">
               <MappingFragment StoreEntitySet="Item">
@@ -2430,10 +2416,18 @@
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Se_Encuentra_Curso_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Curso_Enfasis" StoreEntitySet="Se_Encuentra_Curso_Enfasis">
-            <EndProperty Name="Curso">
-              <ScalarProperty Name="Sigla" ColumnName="SiglaCurso" />
+          <AssociationSetMapping Name="Imparte" TypeName="Opiniometro_DatosModel.Imparte" StoreEntitySet="Imparte">
+            <EndProperty Name="Grupo">
+              <ScalarProperty Name="SiglaCurso" ColumnName="Sigla" />
+              <ScalarProperty Name="Numero" ColumnName="Numero" />
+              <ScalarProperty Name="AnnoGrupo" ColumnName="Anno" />
+              <ScalarProperty Name="SemestreGrupo" ColumnName="Semestre" />
             </EndProperty>
+            <EndProperty Name="Profesor">
+              <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Se_Encuentra_Unidad_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Unidad_Enfasis" StoreEntitySet="Se_Encuentra_Unidad_Enfasis">
             <EndProperty Name="Enfasis">
               <ScalarProperty Name="Numero" ColumnName="CodigoEnfasis" />
               <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
