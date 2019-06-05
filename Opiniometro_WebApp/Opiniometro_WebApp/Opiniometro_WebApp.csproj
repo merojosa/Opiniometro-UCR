@@ -173,6 +173,7 @@
     <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\AsignarFormulariosController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
+    <Compile Include="Controllers\Conformado_Item_Sec_FormController.cs" />
     <Compile Include="Controllers\FormularioController.cs" />
     <Compile Include="Controllers\Formulario_RespuestaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -424,6 +425,11 @@
     <Content Include="Views\Categoria\Details.cshtml" />
     <Content Include="Views\Categoria\Edit.cshtml" />
     <Content Include="Views\Categoria\Index.cshtml" />
+    <Content Include="Views\Conformado_Item_Sec_Form\Create.cshtml" />
+    <Content Include="Views\Conformado_Item_Sec_Form\Delete.cshtml" />
+    <Content Include="Views\Conformado_Item_Sec_Form\Details.cshtml" />
+    <Content Include="Views\Conformado_Item_Sec_Form\Edit.cshtml" />
+    <Content Include="Views\Conformado_Item_Sec_Form\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
