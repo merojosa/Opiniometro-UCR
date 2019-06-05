@@ -17,7 +17,7 @@ namespace Opiniometro_WebApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Enfasis()
         {
-            this.Unidad_Academica = new HashSet<Unidad_Academica>();
+            this.Curso = new HashSet<Curso>();
         }
     
         public byte Numero { get; set; }
@@ -25,6 +25,6 @@ namespace Opiniometro_WebApp.Models
     
         public virtual Carrera Carrera { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Unidad_Academica> Unidad_Academica { get; set; }
+        public virtual ICollection<Curso> Curso { get; set; }
     }
 }

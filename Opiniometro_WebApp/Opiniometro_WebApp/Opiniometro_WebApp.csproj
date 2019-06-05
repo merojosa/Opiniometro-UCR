@@ -331,6 +331,7 @@
       <DependentUpon>OpiniometroModel.edmx</DependentUpon>
       <LastGenOutput>OpiniometroModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\AsignarFormularios.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\OpiniometroModel.edmx">

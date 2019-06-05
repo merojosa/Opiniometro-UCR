@@ -229,6 +229,9 @@ INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-01234', 'Ciencias de la Computación e Informática','UC-023874')
 
 INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
+VALUES ('SC-01235', 'Computación con varios Énfasis','UC-023874')
+
+INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-89457', 'Derecho','UC-485648')
 
 --Cursos
@@ -278,7 +281,24 @@ values
 
 	((select c.Sigla from Curso c where c.Sigla = 'DE2001'), 1, 2018, 2);
 
---Script C.X. Solutions NO TOCAR
+----Enfasis
+INSERT INTO Enfasis(Numero, SiglaCarrera)
+VALUES (100, 'SC-01234'), 
+	   (101, 'SC-01234'),
+	   (12, 'SC-89457');
+
+----Curso-Enfasis
+INSERT INTO Se_Encuentra_Curso_Enfasis(SiglaCurso, CodigoEnfasis, SiglaCarrera)
+VALUES ('CI1330', 100, 'SC-01234'), 
+	   ('CI1331', 100, 'SC-01234'),
+	   ('CI1327', 101, 'SC-01234'),
+	   ('CI1328', 101, 'SC-01234'),
+	   ('DE1001', 12, 'SC-89457'),
+	   ('DE2001', 12, 'SC-89457');
+
+
+
+--Script C.X. Solutions
 
 --Ciclo Lectivo
 INSERT INTO Ciclo_Lectivo (Anno, Semestre)
