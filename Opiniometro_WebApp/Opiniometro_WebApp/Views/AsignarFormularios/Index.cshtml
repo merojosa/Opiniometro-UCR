@@ -102,11 +102,12 @@
                     <div class="panel-heading"><h3>Formularios</h3></div>
                     <div class="panel-body">
 
+                        @Html.TextBox("SearchStringFor", "", new { placeholder = "Nombre del formulario" })
+                        <input type="submit" value="Buscar" />
+
                         <table class="table">
                             <!-- Tabla para mostrar los formularios -->
-                            @Html.TextBox("SearchString", "", new { placeholder = "Nombre del formulario" })
 
-                            <input type="submit" value="Buscar" />
                             <tr></tr>
                             @foreach (var item in Model.Formularios)
                             {
@@ -126,8 +127,8 @@
             </div>
         </div>
 
-        <div align='center'>
-            <input type="submit" name="Asignar" id="Asignar" value="Asignar" />
-        </div>
+        @*<div align='center'>
+            <input type="submit" name="AsignarFor" id="AsignarFor" value="AsignarFor"/>
+        </div>*@
     }
 </div>

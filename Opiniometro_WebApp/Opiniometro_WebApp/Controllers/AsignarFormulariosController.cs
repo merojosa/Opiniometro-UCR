@@ -24,7 +24,9 @@ namespace Opiniometro_WebApp.Controllers
                 //Enfasis = ObtenerEnfasis(0, 0, "", ""),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
                 Grupos = ObtenerGrupos(0, 0, "", "", "", "", 255, "", "" ,""),
-                Formularios = ObtenerFormularios()
+                Formularios = BuscarFormularios("", null)
+                //Formularios = ObtenerFormularios()
+
             };
 
             return View(modelo);
@@ -39,8 +41,7 @@ namespace Opiniometro_WebApp.Controllers
                 Carreras = ObtenerCarreras(0, 0, ""),
                 Grupos = ObtenerGrupos(0, 0, "", unidadAcademica, "", nombreCarrera, 255, "",nombreCurso, searchString),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
-                Formularios = ObtenerFormularios()
-
+                Formularios = BuscarFormularios("", null)
             };
             return View(modelo);
         }
@@ -187,6 +188,15 @@ namespace Opiniometro_WebApp.Controllers
         // Para la vista de los formularios
         public List<Formulario> ObtenerFormularios()
         {
+            return db.Formulario.ToList();
+        }
+
+        public List<Formulario> BuscarFormularios(string SearchStringFor, IEnumerable<Formulario> Formularios)
+        {
+            if (!String.IsNullOrEmpty(SearchStringFor))
+            {
+                Formularios = Formularios.Where(c => c.Nombre.Contains(SearchStringFor));
+            }
             return db.Formulario.ToList();
         }
     }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace Opiniometro_WebApp.Models
 {
@@ -22,7 +19,7 @@ namespace Opiniometro_WebApp.Models
         public IQueryable<ElegirGrupoEditorViewModel> Grupos { get; set; }
 
         // Lista de formularios
-        public List<Formulario> Formularios { get; set; }
+        public IEnumerable<Formulario> Formularios { get; set; }
 
         // Lista asignaciones hechas
         //public IEnumerable<SelectListItem> Asignaciones { get; set; }
