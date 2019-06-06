@@ -4,52 +4,89 @@
     ViewBag.Title = "Details";
 }
 
-
 @foreach (var title in Model.Formulario_Respuesta.Take(1))
 {
     <td>
-        @Html.DisplayFor(modelItem => title.CodigoFormulario)
+        <h3 style="text-align:left;">
+            @Html.DisplayFor(modelItem => title.Grupo.SiglaCurso)
+            @Html.DisplayFor(modelItem => title.Grupo.Curso.Nombre)
+            <span style="float:right;">
+                @Html.DisplayFor(modelItem => title.Profesor.Persona.Nombre)
+                @Html.DisplayFor(modelItem => title.Profesor.Persona.Apellido1)
+                @Html.DisplayFor(modelItem => title.Profesor.Persona.Apellido2)
+            </span>
+        </h3>
     </td>
+
     <td>
-        @Html.DisplayFor(modelItem => title.Formulario.Nombre)
+        <h3>
+            @Html.DisplayFor(modelItem => title.CodigoFormulario)
+            @Html.DisplayFor(modelItem => title.Formulario.Nombre)
+        </h3>
     </td>
+
     <td>
-        @Html.DisplayFor(modelItem => title.Grupo.SiglaCurso)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => title.Grupo.Curso.Nombre)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => title.Grupo.SemestreGrupo)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => title.Grupo.AnnoGrupo)
+        <h3 style="text-align:left;">
+            Año: @Html.DisplayFor(modelItem => title.Grupo.AnnoGrupo)
+            Semestre: @Html.DisplayFor(modelItem => title.Grupo.SemestreGrupo)
+            <span style="float:right;">
+                Grupo: @Html.DisplayFor(modelItem => title.Grupo.Numero)
+            </span>
+        </h3>
     </td>
 }
 
+@{int id_counter = 0; int seccion_counter = 0;}
 
+    <div class="panel-group" id="accordion1">
 
-@{int id_counter = 0; }}
-@foreach (var seccion in Model.Conformado_Item_Sec_Form)
-{
-    <div class="panel-group" id="accordion_@id_counter">
-        <div class="panel panel-default" id="panel_@id_counter">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-target="#collapseOne_@id_counter" href="#collapseOne_@id_counter">
-                        @Html.DisplayFor(modelItem => seccion.TituloSeccion)
-                    </a>
-                </h4>
-            </div>
+        @foreach (var formulario in Model.Conformado_Item_Sec_Form.Take(2))
+        {
 
-            <div id="collapseOne_@id_counter" class="panel-collapse collapse in">
-                <div class="panel-body">
-                    @Html.DisplayFor(modelItem => seccion.Item.TextoPregunta)
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="accordion1" href="#collapseOne_@id_counter">
+                            @Html.DisplayFor(modelItem => formulario.NombreFormulario)
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne_@id_counter" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        
+                        <div class="panel-group" id="accordion2_@id_counter">
+
+                            @foreach (var seccion in Model.Conformado_Item_Sec_Form)
+                            {
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="accordion2_@id_counter" href="#collapseTwo_@seccion_counter">
+                                                @Html.DisplayFor(modelItem => seccion.TituloSeccion)
+                                            </a>
+                                        </h4>
+                                    </div>
+
+                                    <div id="#collapseTwo_@seccion_counter" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            @Html.DisplayFor(modelItem => seccion.Item.TextoPregunta)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                seccion_counter++;
+                            }
+
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            id_counter++;
+        }
+
     </div>
-    id_counter++;
-}
+
+
 
 
