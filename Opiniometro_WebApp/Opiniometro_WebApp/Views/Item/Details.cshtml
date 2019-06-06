@@ -18,14 +18,14 @@
             @Html.DisplayFor(model => model.TextoPregunta)
         </dd>
         <dd>
-            <input type="checkbox" name="Si" value='Si'> Sí<br>
-            <input type="checkbox" name="No" value='No'> No<br>
-            <input type="checkbox" name="NoSe" value='NoSe'> No sé/ No respondo/ No aplica<br>
+            <input type="checkbox" name="Si" value='Si' disabled> Sí<br>
+            <input type="checkbox" name="No" value='No' disabled> No<br>
+            <input type="checkbox" name="NoSe" value='NoSe' disabled> No sé/ No respondo/ No aplica<br>
         </dd>
         @if (Model.TieneObservacion == true)
         {
             <dd>
-                <textarea name="comentarioAdicional" rows="5" cols="40">Escriba su comentario aqui</textarea>
+                <textarea name="comentarioAdicional" rows="5" cols="40" disabled>Escriba su comentario aqui</textarea>
             </dd>
         }
 
@@ -38,14 +38,14 @@
     </dd>
 
     <dd>
-        <textarea name="comentarioAdicional" rows="5" cols="40">Escriba su respuesta aquí</textarea>
+        <textarea name="comentarioAdicional" rows="5" cols="40" disabled>Escriba su respuesta aquí</textarea>
     </dd>
     <br>
     @if (Model.TieneObservacion == true)
     {
         @Html.Label("Comentario Adicional")
         <dd>
-            <textarea name="comentarioAdicional" rows="5" cols="40">Escriba su comentario aqui</textarea>
+            <textarea name="comentarioAdicional" rows="5" cols="40" disabled>Escriba su comentario aqui</textarea>
         </dd>
     }
 </dl>   
