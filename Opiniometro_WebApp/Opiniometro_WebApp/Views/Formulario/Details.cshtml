@@ -36,18 +36,18 @@
     </td>
 }
 
-@{int id_counter = 0; int seccion_counter = 0;}
+@{int id_counter = 0; int seccion_counter = 0; bool? observation = true;}
 
     <div class="panel-group" id="accordion1">
 
-        @foreach (var formulario in Model.Conformado_Item_Sec_Form.Take(1))
+        @foreach (var formulario in Model.Conformado_Item_Sec_Form)
         {
 
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion1" href="#collapseThree_@id_counter">
-                            @Html.DisplayFor(model => formulario.NombreFormulario)
+                            @Html.DisplayFor(model => formulario.TituloSeccion) @*Despliega las secciones de un formulario en especifico*@
                         </a>
                     </h4>
                 </div>
@@ -56,23 +56,59 @@
 
                         <div class="panel-group" id="accordion2_@id_counter">
 
-                            @foreach (var seccion in Model.Conformado_Item_Sec_Form)
+                            @foreach (var seccion in Model.Conformado_Item_Sec_Form.Take(2))
                             {
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2_@id_counter" href="#collapseThreeOne_@seccion_counter">
-                                                @Html.DisplayFor(model => seccion.TituloSeccion)
-                                            </a>
-                                        </h4>
+                                @*Poner condicion para mostrar unicamente las preguntas correspondientes a una seccion en especifico*@
+
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion2_@id_counter" href="#collapseThreeOne_@seccion_counter">
+                                                    @Html.DisplayFor(model => seccion.Item.TextoPregunta) @*Despliega las preguntas de una seccion en especifico*@
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseThreeOne_@seccion_counter" class="panel-collapse collapse">
+                                            <div class="panel-body">
+
+                                                @if (seccion.Item.TipoPregunta != 1)
+                                                {
+                                                    <a>Resultados</a> @*Aqui se ingresa el grafico y desde aqui se mostrarian las observaciones posteriormente, acordarse de ponder una condicion si el tipo de pregunta posee grafico o no*@
+                                                }
+
+                                                    <div class="panel-group" id="accordion3_@seccion_counter">
+
+                                                        @if (seccion.Item.TieneObservacion == observation)
+                                                        {
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-heading">
+                                                                    <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" data-parent="#accordion3_@seccion_counter" href="#collapseThreeTwo_@seccion_counter">
+                                                                            Observaciones @*Aqui se muestran las observaciones relacionadas a una pregunta, si la pregunta es tipo texto estas cuentas como las respuestas*@
+                                                                        </a>
+                                                                    </h4>
+                                                                </div>
+                                                                <div id="collapseThreeTwo_@seccion_counter" class="panel-collapse collapse">
+                                                                    <div class="panel-body">
+
+                                                                        @foreach (var item in Model.Conformado_Item_Sec_Form)
+                                                                        {
+                                                                            @Html.DisplayFor(model => item.Item.Categoria) @*Se ocupa encontrar la forma de devolver las observaciones por pregunta*@
+                                                                        }
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div id="collapseThreeOne_@seccion_counter" class="panel-collapse collapse">
-                                        <div class="panel-body">@Html.DisplayFor(model => seccion.Item.TextoPregunta)</div>
-                                    </div>
-                                </div>                              
-                                seccion_counter++;
+
+                                    seccion_counter++;
+                               
                             }
-                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -84,56 +120,5 @@
     </div>
 
 
-@*
-    @{int id_counter = 0; int seccion_counter = 0;}
 
-        <div class="panel-group" id="accordion1">
-
-            @foreach (var formulario in Model.Conformado_Item_Sec_Form.Take(2))
-            {
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="accordion1" href="#collapseOne_@id_counter">
-                                @Html.DisplayFor(modelItem => formulario.NombreFormulario)
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseOne_@id_counter" class="panel-collapse collapse">
-                        <div class="panel-body">
-
-                            <div class="panel-group" id="accordion2_@id_counter">
-
-                                @foreach (var seccion in Model.Conformado_Item_Sec_Form)
-                                {
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="accordion2_@id_counter" href="#collapseTwo_@seccion_counter">
-                                                    @Html.DisplayFor(modelItem => seccion.TituloSeccion)
-                                                </a>
-                                            </h4>
-                                        </div>
-
-                                        <div id="#collapseTwo_@seccion_counter" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                @Html.DisplayFor(modelItem => seccion.Item.TextoPregunta)
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    seccion_counter++;
-                                }
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                id_counter++;
-            }
-
-        </div>
-*@
 
