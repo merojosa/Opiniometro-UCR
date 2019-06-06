@@ -33,8 +33,8 @@ namespace Opiniometro_WebApp.Controllers
         // Necesito de este action method para inicializar atributos (cuando no pasa por el login).
         public ActionResult Inicio()
         {
-            PermisosUsuario permisos_usuario = new PermisosUsuario();
-            Session[PermisosUsuario.obtener_correo_actual()] = permisos_usuario;
+            IdentidadManager permisos_usuario = new IdentidadManager();
+            Session[IdentidadManager.obtener_correo_actual()] = permisos_usuario;
 
             return RedirectToAction("Index");
         }

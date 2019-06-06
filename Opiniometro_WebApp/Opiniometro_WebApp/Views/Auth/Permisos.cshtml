@@ -8,20 +8,19 @@
 
 @{
     // Obtengo los permisos del correo actual.
-    var permisos_usuario = (PermisosUsuario)Session[PermisosUsuario.obtener_correo_actual()];
+    var permisos_usuario = (IdentidadManager)Session[IdentidadManager.obtener_correo_actual()];
 
     // Si el usuario tiene permisos en el sistema.
     if (permisos_usuario != null)
     {
-        if (permisos_usuario.verificar_permiso(Permiso.CALIFICAR_CURSOS))
+        if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.CALIFICAR_CURSOS))
         {
-            Html.Label("Puedo usar razor incluso");
-            <b>Este html se inserta si el usuario es un estudiante que puede calificar un curso</b>
+            <b>Este html se inserta si el usuario puede calificar un curso</b>
         }
 
-        if(permisos_usuario.verificar_permiso(Permiso.ASIGNAR_FORMUALRIO))
+        if (permisos_usuario.verificar_permiso("SC-01234", 1, IdPermiso.ASIGNAR_FORMUALRIO))
         {
-            <b>Esto es un html de un administrativo para cuando se quiere asignar un formulario</b>
+            <b>Esto es un html de un usuario que puede asignar un formulario</b>
         }
     }
 }

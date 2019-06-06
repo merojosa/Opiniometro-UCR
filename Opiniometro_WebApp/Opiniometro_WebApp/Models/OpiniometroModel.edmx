@@ -185,7 +185,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="tinyint" Nullable="false" />
+          <Property Name="Id" Type="smallint" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="Persona">
@@ -208,7 +208,7 @@
           <Property Name="NumeroEnfasis" Type="tinyint" Nullable="false" />
           <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="IdPerfil" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="IdPermiso" Type="tinyint" Nullable="false" />
+          <Property Name="IdPermiso" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="Preguntas">
           <Key>
@@ -1287,7 +1287,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Byte" Nullable="false" />
+          <Property Name="Id" Type="Int16" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Posee_Enfasis_Perfil_Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Permiso" FromRole="Permiso" ToRole="Posee_Enfasis_Perfil_Permiso" />
         </EntityType>
@@ -1317,7 +1317,7 @@
           <Property Name="NumeroEnfasis" Type="Byte" Nullable="false" />
           <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdPerfil" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdPermiso" Type="Byte" Nullable="false" />
+          <Property Name="IdPermiso" Type="Int16" Nullable="false" />
           <NavigationProperty Name="Perfil" Relationship="Self.FK_PoseeEnfasisPerfil_Perfil" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Perfil" />
           <NavigationProperty Name="Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Permiso" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Permiso" />
         </EntityType>
@@ -2139,7 +2139,7 @@
             <Parameter Name="Apellido2" Mode="In" Type="String" />
             <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(Byte)">
+          <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(Opiniometro_DatosModel.SP_ObtenerPermisosUsuario_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -2153,6 +2153,11 @@
           <Property Type="String" Name="Apellido1" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Apellido2" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Carne" Nullable="false" MaxLength="6" />
+        </ComplexType>
+        <ComplexType Name="SP_ObtenerPermisosUsuario_Result">
+          <Property Type="String" Name="SiglaCarrera" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="NumeroEnfasis" Nullable="false" />
+          <Property Type="Int16" Name="IdPermiso" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2503,7 +2508,15 @@
           <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_DatosModel.Store.SP_ExistenciaCorreo" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />
           <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_DatosModel.Store.SP_ModificarPersona" />
-          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_ObtenerPermisosUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_ObtenerPermisosUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.SP_ObtenerPermisosUsuario_Result">
+                <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
+                <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
+                <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

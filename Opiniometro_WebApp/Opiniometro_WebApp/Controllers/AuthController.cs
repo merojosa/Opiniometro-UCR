@@ -85,11 +85,8 @@ namespace Opiniometro_WebApp.Controllers
                 Thread.CurrentPrincipal = new ClaimsPrincipal(identidad);
                 HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, identidad);
 
-                PermisosUsuario permisos_usuario = new PermisosUsuario();
-
-                // Guardar permisos_usuario, la llave seria el correo, el cual es unico para cada usuario.
-                Session[usuario.CorreoInstitucional] = permisos_usuario;
-
+                // Guardar el objeto IdentidadManager, la llave seria el correo, el cual es unico para cada usuario.
+                Session[usuario.CorreoInstitucional] = new IdentidadManager();
 
                 return RedirectToAction("Index", "LogInPerfiles");
             }
@@ -114,7 +111,7 @@ namespace Opiniometro_WebApp.Controllers
             Request.GetOwinContext().Authentication.SignOut(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie);
 
             // Obtengo los permisos del correo actual.
-            var permisos_usuario = (PermisosUsuario)Session[PermisosUsuario.obtener_correo_actual()];
+            var permisos_usuario = (IdentidadManager)Session[IdentidadManager.obtener_correo_actual()];
 
             if(permisos_usuario != null)
                 permisos_usuario.limpiar_permisos();    // Elimino los permisos.
