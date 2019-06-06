@@ -102,5 +102,9 @@
     <None Include="FiltrarUsuarios.sql" />
     <None Include="Script.EliminarPersona.sql" />
     <Build Include="Tiene_Usuario_Perfil_Enfasis.sql" />
+    <Build Include="UsuariosStaging.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ScriptGenerarContrasena.sql" />
   </ItemGroup>
 </Project>
