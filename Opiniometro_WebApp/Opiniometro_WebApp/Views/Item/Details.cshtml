@@ -8,21 +8,51 @@
 
 
 
+
+
+@if(Model.TipoPregunta == 3)
+{
 <div>
     <dl class="dl-horizontal">
         <dd>
             @Html.DisplayFor(model => model.TextoPregunta)
         </dd>
         <dd>
-            <input type="checkbox" name="Si" value='Si'> Si<br>
+            <input type="checkbox" name="Si" value='Si'> Sí<br>
             <input type="checkbox" name="No" value='No'> No<br>
-            <input type="checkbox" name="NoSe" value='NoSe'> No se/No respondo/No aplica<br>
+            <input type="checkbox" name="NoSe" value='NoSe'> No sé/ No respondo/ No aplica<br>
         </dd>
+        @if (Model.TieneObservacion == true)
+        {
+            <dd>
+                <textarea name="comentarioAdicional" rows="5" cols="40">Escriba su comentario aqui</textarea>
+            </dd>
+        }
+
+    </dl>
+</div>    
+}else{
+<dl class="dl-horizontal">
+    <dd>
+        @Html.DisplayFor(model => model.TextoPregunta)
+    </dd>
+
+    <dd>
+        <textarea name="comentarioAdicional" rows="5" cols="40">Escriba su respuesta aquí</textarea>
+    </dd>
+    <br>
+    @if (Model.TieneObservacion == true)
+    {
+        @Html.Label("Comentario Adicional")
         <dd>
             <textarea name="comentarioAdicional" rows="5" cols="40">Escriba su comentario aqui</textarea>
         </dd>
-    </dl>
-</div>
+    }
+</dl>   
+}
+
+
+
 
 
 <script language="javascript">
