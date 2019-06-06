@@ -127,10 +127,11 @@ GO
 CREATE PROCEDURE SP_ObtenerPermisosUsuario
 	@Correo		NVARCHAR(50)
 AS
-	SELECT PER.Id
+	-- Hay 3 JOINS ya que entity framework solo puede iterar por grupos de tuplas de una sola columna.
+
+	SELECT TU.SiglaCarrera, PE.NumeroEnfasis, PE.IdPermiso
 	FROM Tiene_Usuario_Perfil_Enfasis TU	JOIN Perfil ON TU.IdPerfil = Perfil.Id
 											JOIN Posee_Enfasis_Perfil_Permiso PE ON Perfil.Id = PE.IdPerfil
-											JOIN Permiso PER ON PER.Id = PE.IdPermiso
 	WHERE TU.CorreoInstitucional=@Correo
 GO
 
@@ -439,7 +440,7 @@ VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
 
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
-		(0, 'SC-01234', 'Estudiante', 4),
+		(1, 'SC-01234', 'Estudiante', 4),
 		(0, 'SC-01234', 'Admin', 1),
 		(0, 'SC-01234', 'Admin', 2)
 
