@@ -9,8 +9,8 @@ using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
-using Microsoft.SqlServer.Dts;
-using Microsoft.SqlServer.Dts.Runtime;
+//using Microsoft.SqlServer.Dts;
+//using Microsoft.SqlServer.Dts.Runtime;
 
 
 namespace Opiniometro_WebApp.Controllers
