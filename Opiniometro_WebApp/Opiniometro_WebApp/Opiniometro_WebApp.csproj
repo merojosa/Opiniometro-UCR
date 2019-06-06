@@ -390,11 +390,6 @@
     <Content Include="Views\Seccion\Details.cshtml" />
     <Content Include="Views\Seccion\Edit.cshtml" />
     <Content Include="Views\Seccion\Index.cshtml" />
-    <Content Include="Views\Texto_Libre\Create.cshtml" />
-    <Content Include="Views\Texto_Libre\Delete.cshtml" />
-    <Content Include="Views\Texto_Libre\Details.cshtml" />
-    <Content Include="Views\Texto_Libre\Edit.cshtml" />
-    <Content Include="Views\Texto_Libre\Index.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Create.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Delete.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Details.cshtml" />
@@ -407,11 +402,6 @@
     <Content Include="Views\Shared\_Collapsible.cshtml" />
     <Content Include="Views\Auth\Recuperar.cshtml" />
     <Content Include="Views\Shared\Auth\BarraLogin.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
     <Content Include="Views\Admin\VerPersonas.cshtml" />
     <Content Include="Views\Admin\CrearUsuario.cshtml" />
     <Content Include="Views\LogInPerfiles\Index.cshtml" />
