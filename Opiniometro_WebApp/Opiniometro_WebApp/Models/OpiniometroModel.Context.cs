@@ -231,5 +231,18 @@ namespace Opiniometro_WebApp.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, direccionParameter);
         }
+    
+        public virtual ObjectResult<string> CursosSegunEnfasis(string codigoUnidad, string siglaCarrera)
+        {
+            var codigoUnidadParameter = codigoUnidad != null ?
+                new ObjectParameter("codigoUnidad", codigoUnidad) :
+                new ObjectParameter("codigoUnidad", typeof(string));
+    
+            var siglaCarreraParameter = siglaCarrera != null ?
+                new ObjectParameter("siglaCarrera", siglaCarrera) :
+                new ObjectParameter("siglaCarrera", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("CursosSegunEnfasis", codigoUnidadParameter, siglaCarreraParameter);
+        }
     }
 }

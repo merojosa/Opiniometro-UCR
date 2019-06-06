@@ -23,6 +23,7 @@ namespace Opiniometro_WebApp.Models
         public string nombreCurso;
         public string codigoUnidad;
         public string nombreUnidadAcademica;
+        public string codigoCarrera;
         public string carrera;
         //public byte enfasis;
         

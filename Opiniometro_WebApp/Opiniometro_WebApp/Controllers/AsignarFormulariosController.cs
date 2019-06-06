@@ -99,20 +99,10 @@ namespace Opiniometro_WebApp.Controllers
         public IQueryable<Curso> ObtenerCursos(short anno, byte semestre,
             String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis, string changeUnidad, string changeCarrera)
         {
-            IQueryable<Curso> nombreCurso = from cur in db.Curso select cur;
+            IQueryable<Curso> cursos = from cur in db.Curso
+                                       select cur;
 
-            if (!String.IsNullOrEmpty(changeUnidad))
-            {
-                nombreCurso = nombreCurso.Where(c => c.CodigoUnidad.Equals(changeUnidad));
-            }
-
-            if (!String.IsNullOrEmpty(changeCarrera))
-            {
-               // nombreCurso = nombreCurso.Where(c => c.Enfasis.Codigo.Equals(changeCarrera));
-            }
-
-            ViewBag.nombreCurso = new SelectList(nombreCurso, "Nombre", "Nombre");
-            return nombreCurso;
+            return cursos;
         }
 
         /// <summary>
@@ -125,7 +115,7 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="siglaCurso">Sigla del curso al que pertenecen los grupos</param>
         /// <returns>Lista de los grupos que satisfacen los filtros utilizados como parámetros.</returns>
         public IEnumerable<GrupoConInfoExtra> ObtenerGrupos(short anno, byte semestre, String codigoUnidadAcadem,
-             string nomUnidadAcad, String siglaCarrera, String nombCarrera, byte? numEnfasis, String siglaCurso, string nombreCurso, String searchString)
+             string codigoUnidadAcad, String siglaCarrera, String codigoCarreraa, byte? numEnfasis, String siglaCurso, string nombreCurso, String searchString)
         {
             IQueryable<GrupoConInfoExtra> grupos =
                  from cur in db.Curso
@@ -141,10 +131,11 @@ namespace Opiniometro_WebApp.Controllers
                     nombreCurso = cur.Nombre,
                     codigoUnidad = cur.CodigoUnidad,
                     nombreUnidadAcademica = uni.Nombre,
+                    codigoCarrera = car.Sigla,
                     carrera = car.Nombre
                 };
 
-            grupos = filtreGrupos(searchString, semestre, nomUnidadAcad, nombCarrera, nombreCurso, grupos);
+            grupos = filtreGrupos(searchString, semestre, codigoUnidadAcad, codigoCarreraa, nombreCurso, grupos);
 
             return grupos;
 
@@ -155,25 +146,25 @@ namespace Opiniometro_WebApp.Controllers
         /// </summary>
         /// <param name="searchString"> string que podria contener el nombre del curso que se ingreso para buscar</param>
         /// <param name="semestre"> semestre podria contener el semestre que se indico en el filtro </param>
-        /// <param name="nomUnidadAcad"> podria contener el nombre de la unidad academica</param>
-        /// <param name="nombCarrera"> podria contener el nombre de la carrera</param>
+        /// <param name="codigoUnidadAcad"> podria contener el nombre de la unidad academica</param>
+        /// <param name="codigoCarrera"> podria contener el nombre de la carrera</param>
         /// <param name="grupos"> lista de grupos que se envia desde el metodo ObtenerGrupos</param>
         /// <returns> los grupos filtrados</returns>
-        public IQueryable<GrupoConInfoExtra> filtreGrupos(string searchString, byte semestre, string nomUnidadAcad, string nombCarrera, string nombCurso ,IQueryable<GrupoConInfoExtra> grupos)
+        public IQueryable<GrupoConInfoExtra> filtreGrupos(string searchString, byte semestre, string codigoUnidadAcad, string codigoCarrera, string nombCurso ,IQueryable<GrupoConInfoExtra> grupos)
         {
             if (!String.IsNullOrEmpty(searchString))
             {
                 grupos = grupos.Where(c => c.nombreCurso.Contains(searchString));
             }
 
-            if (!String.IsNullOrEmpty(nomUnidadAcad))
+            if (!String.IsNullOrEmpty(codigoUnidadAcad))
             {
-                grupos = grupos.Where(c => c.nombreUnidadAcademica.Contains(nomUnidadAcad));
+                grupos = grupos.Where(c => c.codigoUnidad.Equals(codigoUnidadAcad));
             }
 
-            if (!String.IsNullOrEmpty(nombCarrera))
+            if (!String.IsNullOrEmpty(codigoCarrera))
             {
-                grupos = grupos.Where(c => c.carrera.Contains(nombCarrera));
+                grupos = grupos.Where(c => c.codigoCarrera.Equals(codigoCarrera));
             }
 
             if (!String.IsNullOrEmpty(nombCurso))

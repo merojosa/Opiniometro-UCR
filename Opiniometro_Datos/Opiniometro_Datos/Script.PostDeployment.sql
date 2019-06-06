@@ -296,6 +296,25 @@ VALUES ('CI1330', 100, 'SC-01234'),
 	   ('DE1001', 12, 'SC-89457'),
 	   ('DE2001', 12, 'SC-89457');
 
+GO
+CREATE PROCEDURE CursosSegunEnfasis
+@codigoUnidad NVARCHAR(10),
+@siglaCarrera NVARCHAR(10)
+AS
+BEGIN
+IF @codigoUnidad IS NOT NULL
+SELECT S.SiglaCurso
+FROM Se_Encuentra_Curso_Enfasis S JOIN Enfasis E ON S.SiglaCarrera = E.SiglaCarrera
+	 JOIN Carrera C ON E.SiglaCarrera = C.Sigla
+WHERE C.CodigoUnidadAcademica = @codigoUnidad
+
+IF @siglaCarrera IS NOT NULL
+SELECT S.SiglaCurso
+FROM Se_Encuentra_Curso_Enfasis S JOIN Enfasis E ON S.SiglaCarrera = E.SiglaCarrera
+	 JOIN Carrera C ON E.SiglaCarrera = C.Sigla
+WHERE E.SiglaCarrera = @siglaCarrera
+END
+GO
 
 
 --Script C.X. Solutions
