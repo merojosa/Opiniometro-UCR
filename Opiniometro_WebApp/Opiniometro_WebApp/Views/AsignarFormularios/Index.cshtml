@@ -12,16 +12,15 @@
 
 
 <div class="container">
-    <div class="row">
-        <div class="col-sm-8">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h3>Buscar grupos</h3></div>
-                <div class="panel-body">
-                    
-                    <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
-                   @using (Html.BeginForm())
-                    {
-                            
+   @using (Html.BeginForm())
+    {
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3>Buscar grupos</h3></div>
+                    <div class="panel-body">
+
+                        <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
                         <!-- Buscador -->
                         <p>
                             <div>
@@ -34,97 +33,106 @@
                                 <label> Cursos: </label> @Html.DropDownList("nombreCurso", null, "<Seleccione Curso>", new { @class = "form-control" })
                             </div>
                             @*<div>
-                                <label> Semestre: </label> @Html.DropDownList("semestre", null, "<Seleccione Semestre>", new { @class = "form-control" })
-                            </div>*@
+                                    <label> Semestre: </label> @Html.DropDownList("semestre", null, "<Seleccione Semestre>", new { @class = "form-control" })
+                                </div>*@
                             @*<div>
-                                <label> Año: </label> @Html.DropDownList("ano", null, "<Seleccione Año>", new { @class = "form-control" })<br />
-                            </div>*@
+                                    <label> Año: </label> @Html.DropDownList("ano", null, "<Seleccione Año>", new { @class = "form-control" })<br />
+                                </div>*@
                             <div>
                                 @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
-                                <input type="submit" value="Buscar" />
+                                <input type="submit" value="Buscar grupos" />
                             </div>
                         </p>
-                    }
+                        
 
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <span>Búsqueda de formularios</span>
-        </div>
-    </div>
-
-   @using (Html.BeginForm("Asignar", "AsignarFormularios", FormMethod.Post))
-    {
-        <div class="row">
-            <div class="col-sm-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3>Resultados:</h3></div>
-                    <div class="panel-body">
-
-                        @*Tabla de grupos*@
-
-                        <table class="fixed_header">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <div align='center'>Selec. para asignar</div>
-                                    </th>
-                                    <th>
-                                        <div align='center'>Sigla</div>
-                                    </th>
-                                    <th>
-                                        <div align='center'>Curso</div>
-                                    </th>
-                                    <th>
-                                        <div align='center'>Grupo</div>
-                                    </th>
-                                    <th>
-                                        <div align='center'>Profesor</div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Despliega los datos de los grupos usando un modelo personalizado: ElegirGrupoEditorTemplate -->
-                                @Html.EditorFor(model => Model.Grupos)
-                            </tbody>
-                        </table>
                     </div>
-
                 </div>
             </div>
-
-
-
             <div class="col-sm-4">
-
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h3>Tus formularios</h3></div>
+                    <div class="panel-heading">
+                        <h3>Buscar formularios</h3>
+                    </div>
                     <div class="panel-body">
-
-                        <table class="table">
-                            <!-- Tabla para mostrar los formularios -->
-                            <tr></tr>
-                            @foreach (var item in Model.Formularios)
-                            {
-                                <tr>
-
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Nombre)
-
-                                    <td>
-                                        <!-- checkbox para elegir formulario-->
-                                        <div align='center'><input type="checkbox" name="Formulario" value="Formulario"></div><br>
-                                </tr>
-                            }
-                        </table>
+                        @Html.TextBox("FormSearchString", "", new { placeholder = "Nombre del formulario" })
+                        <input type="submit" value="Buscar formularios" />
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div align='center'>
-            <input type="submit" name="Asignar" id="Asignar" value="Asignar" />
         </div>
     }
-</div>
+
+        @using (Html.BeginForm("Asignar", "AsignarFormularios", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3>Grupos</h3></div>
+                        <div class="panel-body">
+
+                            @*Tabla de grupos*@
+
+                            <table class="fixed_header">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div align='center'>Selec. para asignar</div>
+                                        </th>
+                                        <th>
+                                            <div align='center'>Sigla</div>
+                                        </th>
+                                        <th>
+                                            <div align='center'>Curso</div>
+                                        </th>
+                                        <th>
+                                            <div align='center'>Grupo</div>
+                                        </th>
+                                        <th>
+                                            <div align='center'>Profesor</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Despliega los datos de los grupos usando un modelo personalizado: ElegirGrupoEditorTemplate -->
+                                    @Html.EditorFor(model => Model.Grupos)
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <div class="col-sm-4">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3>Tus formularios</h3></div>
+                        <div class="panel-body">
+
+                            <table class="table">
+                                <!-- Tabla para mostrar los formularios -->
+                                <tr></tr>
+                                @foreach (var item in Model.Formularios)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nombre)
+
+                                        <td>
+                                            <!-- checkbox para elegir formulario-->
+                                            <div align='center'><input type="checkbox" name="Formulario" value="Formulario"></div><br>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div align='center'>
+                <input type="submit" name="Asignar" id="Asignar" value="Asignar" />
+            </div>
+        }
+    </div>

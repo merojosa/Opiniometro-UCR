@@ -24,14 +24,14 @@ namespace Opiniometro_WebApp.Controllers
                 //Enfasis = ObtenerEnfasis(0, 0, "", ""),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
                 Grupos = ObtenerGrupos(0, 0, "", "", "", "", 255, "", "" ,""),
-                Formularios = ObtenerFormularios()
+                Formularios = ObtenerFormularios("")
             };
 
             return View(modelo);
         }
 
         [HttpPost]
-        public ActionResult Index(string unidadAcademica, string nombreCarrera, string nombreCurso, string searchString)
+        public ActionResult Index(string unidadAcademica, string nombreCarrera, string nombreCurso, string searchString, string formSearchString)
         {
             var modelo = new AsignarFormulariosViewModel
             {
@@ -39,8 +39,7 @@ namespace Opiniometro_WebApp.Controllers
                 Carreras = ObtenerCarreras(0, 0, ""),
                 Grupos = ObtenerGrupos(0, 0, "", unidadAcademica, "", nombreCarrera, 255, "",nombreCurso, searchString),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
-                Formularios = ObtenerFormularios()
-
+                Formularios = ObtenerFormularios(formSearchString)
             };
             return View(modelo);
         }
@@ -189,9 +188,9 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // Para la vista de los formularios
-        public List<Formulario> ObtenerFormularios()
+        public List<Formulario> ObtenerFormularios(string searchString)
         {
-            return db.Formulario.ToList();
+            return db.Formulario.Where(f => f.Nombre.Contains(searchString) || f.CodigoFormulario.Contains(searchString)).ToList();
         }
     }
 }
