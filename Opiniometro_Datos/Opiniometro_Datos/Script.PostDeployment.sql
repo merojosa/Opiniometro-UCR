@@ -121,7 +121,76 @@ BEGIN
 END
 GO
 
+IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
+	DROP PROCEDURE SP_ObtenerPermisosUsuario
+GO
+CREATE PROCEDURE SP_ObtenerPermisosUsuario
+	@Correo		NVARCHAR(50)
+AS
+	-- Hay 3 JOINS ya que entity framework solo puede iterar por grupos de tuplas de una sola columna.
+
+	SELECT TU.SiglaCarrera, PE.NumeroEnfasis, PE.IdPermiso
+	FROM Tiene_Usuario_Perfil_Enfasis TU	JOIN Perfil ON TU.IdPerfil = Perfil.Id
+											JOIN Posee_Enfasis_Perfil_Permiso PE ON Perfil.Id = PE.IdPerfil
+	WHERE TU.CorreoInstitucional=@Correo
+GO
+
 EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
+
+IF OBJECT_ID('ValorRandom') IS NOT NULL
+	DROP VIEW ValorRandom
+GO
+CREATE VIEW ValorRandom
+AS
+SELECT randomvalue = CRYPT_GEN_RANDOM(10)
+GO
+
+IF OBJECT_ID('SF_GenerarContrasena') IS NOT NULL
+	DROP FUNCTION SF_GenerarContrasena
+GO
+CREATE FUNCTION SF_GenerarContrasena()
+RETURNS NVARCHAR(10)
+AS
+BEGIN
+	DECLARE @Resultado NVARCHAR(10);
+	DECLARE @InfoBinario VARBINARY(10);
+	DECLARE @DatosCaracteres NVARCHAR(10);
+
+	SELECT @InfoBinario = randomvalue FROM ValorRandom;
+
+	SET @DatosCaracteres = CAST ('' as xml).value('xs:base64Binary(sql:variable("@InfoBinario"))', 'varchar (max)');
+
+	SET @Resultado = @DatosCaracteres;
+
+	RETURN @Resultado;
+
+END
+GO
+
+IF OBJECT_ID('SP_AgregarPersonaUsuario') IS NOT NULL
+	DROP PROCEDURE SP_AgregarPersonaUsuario
+GO
+CREATE PROCEDURE SP_AgregarPersonaUsuario
+	@Cedula			CHAR(9),
+	@Nombre			NVARCHAR(50),
+	@Apellido1		NVARCHAR(50),
+	@Apellido2		NVARCHAR(50),
+	@Correo			NVARCHAR(50),
+	@Direccion		NVARCHAR(200)
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
+	DECLARE @Contrasenna NVARCHAR(10)
+
+	INSERT INTO Persona
+	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2, @Direccion)
+	SET @Contrasenna = (SELECT dbo.SF_GenerarContrasena());
+	INSERT INTO Usuario
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+END
+GO
+
 
 --JJAPH
 IF OBJECT_ID('MostrarEstudiantes', 'P') IS NOT NULL 
@@ -227,6 +296,9 @@ VALUES ('UC-485648')
 --Carrera
 INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-01234', 'Ciencias de la Computación e Informática','UC-023874')
+
+INSERT INTO Enfasis
+VALUES (0, 'SC-01234')
 
 INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-01235', 'Computación con varios Énfasis','UC-023874')
@@ -426,6 +498,28 @@ BEGIN
 	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
 END
 GO
+
+
+--Permisos
+INSERT INTO Permiso
+VALUES	(1, 'Hacer todo'),
+		(2, 'Asignar formulario'),
+		(3, 'Calificar cursos'),
+		(4, 'Ver cursos')
+
+INSERT INTO Perfil
+VALUES	('Estudiante', 'Default'),
+		('Admin', 'Default')
+
+INSERT INTO Tiene_Usuario_Perfil_Enfasis
+VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
+		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin')
+
+INSERT INTO Posee_Enfasis_Perfil_Permiso
+VALUES	(0, 'SC-01234', 'Estudiante', 3),
+		(1, 'SC-01234', 'Estudiante', 4),
+		(0, 'SC-01234', 'Admin', 1),
+		(0, 'SC-01234', 'Admin', 2)
 
 --select de prueba para la cnt de respuestas
 --SELECT e.Respuesta, COUNT(e.Respuesta) as cantidadRespuestas
