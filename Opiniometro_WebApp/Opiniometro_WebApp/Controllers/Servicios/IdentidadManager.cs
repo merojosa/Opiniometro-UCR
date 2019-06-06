@@ -50,7 +50,6 @@ namespace Opiniometro_WebApp.Controllers.Servicios
 
                 string llave_hash = null;
 
-                // Sigla
                 foreach (var tupla in tuplas_resultantes)
                 {
                     // Creo la llave unica y la agrego a los permisos de usuario.
@@ -75,19 +74,6 @@ namespace Opiniometro_WebApp.Controllers.Servicios
                                .Select(c => c.Value).SingleOrDefault();
 
             return correo;
-        }
-
-        // Retornar los enfasis con sus respectivas siglas de carrera del usuario loggeado
-        // INCOMPLETO
-        public List<Enfasis> obtener_enfasis_actuales()
-        {
-            // Obtengo las tuplas con los enfasis disponibles para el usuario.
-
-            Enfasis enfasis1 = new Enfasis();
-
-            List<Enfasis> enfasis = new List<Enfasis>();
-
-            return enfasis;            
         }
 
         public static string obtener_perfil_actual()

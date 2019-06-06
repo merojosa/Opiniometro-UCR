@@ -64,6 +64,8 @@ namespace Opiniometro_WebApp.Controllers
             string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email)
                                                 .Select(c => c.Value).SingleOrDefault();
 
+            // Recibir el perfil por default
+
             if (correo_autenticado != null)      // Si esta autenticado
             {
                 return RedirectToAction("Index", "Home");
@@ -76,7 +78,7 @@ namespace Opiniometro_WebApp.Controllers
 
                     /*
                     // Agregar roles.
-                    new Claim(ClaimTypes.Role, "RoleName"),
+                    new Claim(ClaimTypes.Role, "Estudiante"),
                     new Claim(ClaimTypes.Role, "AnotherRole"),
                     */
                     },
