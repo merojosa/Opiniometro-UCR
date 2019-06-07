@@ -180,6 +180,7 @@
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\Seleccion_UnicaController.cs" />
     <Compile Include="Controllers\Texto_LibreController.cs" />
+    <Compile Include="Controllers\VisualizarFormularioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -411,6 +412,11 @@
     <Content Include="Views\Seleccion_Unica\Details.cshtml" />
     <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
     <Content Include="Views\Seleccion_Unica\Index.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Create.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Delete.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Details.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Edit.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
