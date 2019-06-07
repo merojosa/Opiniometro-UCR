@@ -3,7 +3,7 @@
 	[NumeroEnfasis]	TINYINT			NOT NULL,
 	[SiglaCarrera]	NVARCHAR(10)	NOT NULL,
 	[IdPerfil]		VARCHAR(10)		NOT NULL,
-	[IdPermiso]		TINYINT			NOT NULL,
+	[IdPermiso]		SMALLINT			NOT NULL,
 	CONSTRAINT PK_PoseeEnfasisPerfil
 		PRIMARY KEY (NumeroEnfasis, SiglaCarrera, IdPerfil, IdPermiso),
 	CONSTRAINT FK_PoseeEnfasisPerfil_Perfil

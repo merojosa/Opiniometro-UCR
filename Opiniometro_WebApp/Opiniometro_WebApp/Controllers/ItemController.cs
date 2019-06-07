@@ -23,7 +23,7 @@ namespace Opiniometro_WebApp.Controllers
         }
 
          //GET: Item/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
@@ -52,12 +52,6 @@ namespace Opiniometro_WebApp.Controllers
             };
 
             ViewBag.NombreCategoria = new SelectList(db.Categoria, "NombreCategoria", "NombreCategoria");
-            //ViewBag.CategoriaItems = new List<ListItem>
-            //{
-            //      new ListItem { Text = "Profesor", Value="Profesor" },
-            //      new ListItem { Text = "Infraestructura", Value="Infraestructura" },
-            //      new ListItem { Text = "Curso", Value="Curso" }
-            //};
             ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID");
             ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId");
             return View();
