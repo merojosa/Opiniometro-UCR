@@ -6,8 +6,14 @@
     <tbody>
     <tr>
         <td>
-            @Html.Action("preguntasVParcial")
-            @Html.Action("seccionesVParcial")
+            <div style="display: inline-block;">
+                @Html.Action("preguntasVParcial")
+            </div>
+            <div style="float:left;">
+                @Html.Action("seccionesVParcial")
+                
+            </div>
+            <div style="clear: both;"></div>
         </td>
 
     </tr>
