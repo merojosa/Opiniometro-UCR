@@ -15,10 +15,10 @@ namespace Opiniometro_WebApp.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class OpiniometroDatosEntities : DbContext
+    public partial class Opiniometro_DatosEntities : DbContext
     {
-        public OpiniometroDatosEntities()
-            : base("name=OpiniometroDatosEntities")
+        public Opiniometro_DatosEntities()
+            : base("name=Opiniometro_DatosEntities")
         {
         }
     
@@ -27,7 +27,6 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Administrativo> Administrativo { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
