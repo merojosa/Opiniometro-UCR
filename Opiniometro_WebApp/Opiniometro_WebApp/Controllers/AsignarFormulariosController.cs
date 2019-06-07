@@ -171,10 +171,13 @@ namespace Opiniometro_WebApp.Controllers
                 grupos = grupos.Where(c => c.NombreUnidadAcademica.Contains(nomUnidadAcad));
             }
 
-            /*if (!String.IsNullOrEmpty(nombCarrera))
+            if (!String.IsNullOrEmpty(nombCarrera))
             {
-                grupos = grupos.Where(c => c.NombreCarrera.Contains(nombCarrera));
-            }*/
+                var carrera = (from c in db.Carrera
+                               select new { Sigla = c.Sigla, Nombre = c.Nombre }
+                                ).Where(c => c.Nombre == nombCarrera);
+                string SiglaCarr = carrera.First().Sigla;
+            }
 
             if (!String.IsNullOrEmpty(nombCurso))
             {
