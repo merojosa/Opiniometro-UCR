@@ -16,17 +16,20 @@
 
     @foreach (var item in Model)
      {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TextoPregunta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoPregunta)
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TextoPregunta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoPregunta)
+        </td>
+        <td>
+            <input type="checkbox" class="chcktbl" />
+        </td>
+    </tr>
      }
 
 </table>
