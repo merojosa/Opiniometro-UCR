@@ -51,35 +51,6 @@
 </dl>   
 }
 
-
-
-
-
-<script language="javascript">
-    if (model.TipoPregunta == 1) {
-        <textarea name="descripcion" rows="5" cols="40">Escriba su respuesta aqui</textarea>
-    }
-    if (model.TipoPregunta == 3) {
-        <textarea name="descripcion" rows="5" cols="40">Si/No</textarea>
-    }
-    if (model.TieneObservacion == 1) {
-        <textarea name="descripcion" rows="5" cols="40">Escriba su respuesta aqui</textarea>
-    }
-</script>
-
-<script>
-    function seleccionarTieneObservacion()
-    {
-        if (model.TieneObservacion == 1) {
-            <textarea name="descripcion" rows="5" cols="40">Escriba su respuesta aqui</textarea>
-        }
-    }
-</script>
-
-
-
-
-
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.ItemID }) |*@
     @Html.ActionLink("Volver", "Index")
