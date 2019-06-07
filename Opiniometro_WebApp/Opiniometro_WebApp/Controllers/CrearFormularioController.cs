@@ -10,10 +10,24 @@ namespace Opiniometro_WebApp.Controllers
 {
     public class CrearFormularioController : Controller
     {
+        Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
         // GET: CrearFormulario
-        public ActionResult Index()
+        public ActionResult AsignarPreguntas()
         {
-            return View();
+            List<Conformado_Item_Sec_Form> todo = db.Conformado_Item_Sec_Form.ToList();
+            return View(todo);
+        }
+
+        public ActionResult SeccionesAsignadas(string CodForm)
+        {
+            List<Conformado_Item_Sec_Form> SeccionesAsig = db.Conformado_Item_Sec_Form.Where(m => m.CodigoFormulario == CodForm).Distinct().ToList();
+            return PartialView(SeccionesAsig);
+        }
+
+        public ActionResult PreguntasAsignadas(string CodForm, string TituloSecc)
+        {
+            List<Conformado_Item_Sec_Form> PreguntasAsig = db.Conformado_Item_Sec_Form.Where(m => m.CodigoFormulario == CodForm).Where(m => m.TituloSeccion == TituloSecc).ToList();
+            return PartialView(PreguntasAsig);
         }
     }
 }

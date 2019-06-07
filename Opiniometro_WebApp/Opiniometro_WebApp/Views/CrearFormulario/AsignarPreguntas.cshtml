@@ -1,5 +1,33 @@
-﻿@{
+﻿@model List<Opiniometro_WebApp.Models.Conformado_Item_Sec_Form>
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
+
+<table class=" table table-bordered">
+    <thead>
+       
+    </thead>
+
+    <tbody>
+        <tr>
+            <td colspan="5">
+                @Html.Action("SeccionesAsignadas", new { CodForm = "131313"@*item.CodigoFormulario*@})
+            </td>
+           
+        </tr>
+
+    </tbody>
+
+
+</table>
+
+
+
+
+
+
 
 
