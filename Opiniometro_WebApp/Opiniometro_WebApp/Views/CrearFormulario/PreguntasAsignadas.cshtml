@@ -1,0 +1,37 @@
+﻿@model List<Opiniometro_WebApp.Models.Conformado_Item_Sec_Form>
+
+
+<table class=" table table-bordered">
+<thead>
+    <tr>
+        <th>
+            @Html.Label("Orden")
+        </th>
+        <th>
+            @Html.Label("Planteamiento")
+        </th>
+
+
+    </tr>
+
+</thead>
+
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.Orden_Item)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Item.TextoPregunta)
+            </td>
+
+
+        </tr>
+    }
+
+</tbody>
+
+
+</table>
