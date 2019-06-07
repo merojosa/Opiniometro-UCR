@@ -67,7 +67,11 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><h3>Grupos</h3></div>
+
+                        <div class="panel-heading">
+                            <h3>Grupos</h3>
+                        </div>
+
                         <div class="panel-body">
 
                             @*Tabla de grupos*@
@@ -75,23 +79,25 @@
                             <table class="fixed_header">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            <div align='center'>Selec. para asignar</div>
+                                        <th align='center'>
+                                            <div align='center'></div>
                                         </th>
-                                        <th>
+                                        <th align='center'>
                                             <div align='center'>Sigla</div>
                                         </th>
-                                        <th>
+                                        <th align='center'>
                                             <div align='center'>Curso</div>
                                         </th>
-                                        <th>
+                                        <th align='center'>
                                             <div align='center'>Grupo</div>
                                         </th>
-                                        <th>
+                                        <th align='center'>
                                             <div align='center'>Profesor</div>
                                         </th>
                                     </tr>
                                 </thead>
+
+
                                 <tbody>
                                     <!-- Despliega los datos de los grupos usando un modelo personalizado: ElegirGrupoEditorTemplate -->
                                     @Html.EditorFor(model => Model.Grupos)
@@ -107,24 +113,28 @@
                 <div class="col-sm-4">
 
                     <div class="panel panel-default">
-                        <div class="panel-heading"><h3>Tus formularios</h3></div>
+                        <div class="panel-heading"><h3>Formularios</h3></div>
                         <div class="panel-body">
 
-                            <table class="table">
-                                <!-- Tabla para mostrar los formularios -->
-                                <tr></tr>
-                                @foreach (var item in Model.Formularios)
-                                {
+                            <table class="fixed_header">
+                                <thead>
                                     <tr>
-
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Nombre)
-
-                                        <td>
-                                            <!-- checkbox para elegir formulario-->
-                                            <div align='center'><input type="checkbox" name="Formulario" value="Formulario"></div><br>
+                                        <th align='center'>
+                                            <div align='center'></div>
+                                        </th>
+                                        <th align='center'>
+                                            <div align='center'>Sigla</div>
+                                        </th>
+                                        <th align='center'>
+                                            <div align='center'>Nombre</div>
+                                        </th>
                                     </tr>
-                                }
+                                </thead>
+
+                                <tbody>
+                                    <!-- Despliega los datos de los grupos usando un modelo personalizado: ElegirGrupoEditorTemplate -->
+                                    @Html.EditorFor(model => Model.Formularios)
+                                </tbody>
                             </table>
                         </div>
                     </div>

@@ -4,27 +4,27 @@
 <!-- Table row (fila) de elementos -->
 <tr>
     @*Checkbox para asignar*@
-    <td>
+    <td align='center'>
         <div align='center'>@Html.CheckBoxFor(model => model.Seleccionado)</div>
     </td>
 
     @*Sigla de curso*@
-    <td>
+    <td align='center'>
         <div align='center'>@Html.DisplayFor(model => model.SiglaCurso)</div>
     </td>
 
     @*Nombre de curso*@
-    <td>
+    <td align='center'>
         <div align='center'>@Html.DisplayFor(model => model.NombreCurso)</div>
     </td>
 
     @*Numero de grupo*@
-    <td>
+    <td align='center'>
         <div align='center'>@Html.DisplayFor(model => model.Numero)</div>
     </td>
 
     @*Profesores*@
-    <td>
+    <td align='center'>
         @foreach (var profe in Model.Profesores)
         {
         <div align='center'>
@@ -35,11 +35,13 @@
         }
     </td>
 
-    @*Año (escondido)*@
+    @Html.HiddenFor(model => model.Anno)
+    @Html.HiddenFor(model => model.Semestre)
+
+    @*Año (escondido)@
     <td style="display: none;">@Html.DisplayFor(model => model.Anno)</td>
     
-
-    @*Semestre (escondido)*@
-    <td style="display: none;">@Html.DisplayFor(model => model.Semestre)</td>
+    @*Semestre (escondido)@
+    <td style="display: none;">@Html.DisplayFor(model => model.Semestre)</td>*@
     
 </tr>

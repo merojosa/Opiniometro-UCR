@@ -47,10 +47,26 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public ActionResult Asignar(AsignarFormulariosViewModel model)
         {
+            System.Diagnostics.Debug.WriteLine("linea diagnostico");
             var GruposSeleccionados = model.gruposSeleccionados();
-            //var FormulariosSeleccionados = model.FormulariosSeleccionados();
+            var FormulariosSeleccionados = model.formulariosSeleccionados();
 
+            System.Diagnostics.Debug.WriteLine(GruposSeleccionados.Count());
+            /*foreach (Grupo grupo in GruposSeleccionados)
+            {
+                System.Diagnostics.Debug.WriteLine("1");
+                System.Diagnostics.Debug.WriteLine(grupo.Curso.Nombre);
+            }*/
 
+            System.Diagnostics.Debug.WriteLine(FormulariosSeleccionados.Count());
+            foreach (String formulario in FormulariosSeleccionados)
+            {
+                System.Diagnostics.Debug.WriteLine(formulario);
+            }
+
+           // System.Diagnostics.Debug.WriteLine();
+
+            //return EmptyResult();
             return RedirectToAction("Index", "Home");
         }
 
@@ -188,9 +204,17 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // Para la vista de los formularios
-        public List<Formulario> ObtenerFormularios(string searchString)
+        public List<ElegirFormularioEditorViewModel> ObtenerFormularios(string searchString)
         {
-            return db.Formulario.Where(f => f.Nombre.Contains(searchString) || f.CodigoFormulario.Contains(searchString)).ToList();
+            IQueryable<ElegirFormularioEditorViewModel> formularios =
+                from formul in db.Formulario
+                select new ElegirFormularioEditorViewModel
+                {
+                    Seleccionado = false,
+                    CodigoFormulario = formul.CodigoFormulario,
+                    NombreFormulario = formul.Nombre
+                };
+            return formularios.ToList();
         }
     }
 }
