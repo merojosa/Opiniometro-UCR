@@ -41,7 +41,7 @@
 
     <div class="panel-group" id="accordion1">
 
-        @foreach (var formulario in Model.Conformado_Item_Sec_Form)
+        @foreach (var formulario in Model.Conformado_Item_Sec_Form.Take(2))
         {
             seccion_actual = formulario.TituloSeccion;
 

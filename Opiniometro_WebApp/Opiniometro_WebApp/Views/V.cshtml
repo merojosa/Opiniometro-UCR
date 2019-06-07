@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.VModel>
+@{
+    ViewBag.Title = "V";
+}
+
+<h2>V</h2>
+
+<div class="row">
+    <div class="col-lg-4">
+    <label title="Profesores" for="prof">Profesor:</label>
+    @Html.DropDownList("ddlDropDownList", , null,
+        new { @class = "form-control", id = "cursos", placeholder = "Curso", data_width = "100%"
+       })
+    </div>
+</div>
