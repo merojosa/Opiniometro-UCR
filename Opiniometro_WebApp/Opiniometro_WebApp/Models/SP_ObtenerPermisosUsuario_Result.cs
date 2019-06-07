@@ -10,16 +10,11 @@
 namespace Opiniometro_WebApp.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Posee_Enfasis_Perfil_Permiso
+    public partial class SP_ObtenerPermisosUsuario_Result
     {
-        public byte NumeroEnfasis { get; set; }
         public string SiglaCarrera { get; set; }
-        public string IdPerfil { get; set; }
+        public byte NumeroEnfasis { get; set; }
         public short IdPermiso { get; set; }
-    
-        public virtual Perfil Perfil { get; set; }
-        public virtual Permiso Permiso { get; set; }
     }
 }

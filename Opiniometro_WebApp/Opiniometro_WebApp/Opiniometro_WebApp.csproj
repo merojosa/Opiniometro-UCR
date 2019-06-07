@@ -200,6 +200,9 @@
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Categoria.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Ciclo_Lectivo.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
@@ -208,6 +211,9 @@
     </Compile>
     <Compile Include="Models\CrearFormularioModel.cs" />
     <Compile Include="Models\Curso.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C__RefactorLog.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DatosEstudiante_Result.cs">
@@ -250,6 +256,9 @@
     <Compile Include="Models\MostrarEstudiantes_Result.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Opciones_De_Respuestas_Seleccion_Unica.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OpiniometroModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -289,6 +298,9 @@
     <Compile Include="Models\Seleccion_Unica.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TelefonoPersona.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
@@ -296,6 +308,9 @@
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tiene_Grupo_Formulario.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tiene_Usuario_Perfil_Enfasis.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Unidad_Academica.cs">
