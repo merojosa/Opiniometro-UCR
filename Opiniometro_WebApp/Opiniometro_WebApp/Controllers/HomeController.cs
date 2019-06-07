@@ -18,7 +18,7 @@ namespace Opiniometro_WebApp.Controllers
         
         public ActionResult Index(string perfilActual)
         {
-            return View();
+            return View("Index");
         }
 
         public ActionResult About()
