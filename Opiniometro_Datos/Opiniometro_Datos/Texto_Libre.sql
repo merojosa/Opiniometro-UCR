@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Texto_Libre]
 (
-	[ItemId] NVARCHAR(10) NOT NULL,
+	[ItemId] INT NOT NULL,
 	CONSTRAINT FK_Tex_Ite FOREIGN KEY (ItemId) REFERENCES Item(ItemId),
 	CONSTRAINT PK_Texto_Libre PRIMARY KEY(ItemId)
 )

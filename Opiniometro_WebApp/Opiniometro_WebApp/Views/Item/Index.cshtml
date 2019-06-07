@@ -42,7 +42,7 @@
             @Html.DisplayFor(modelItem => item.TextoPregunta)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.NombreCategoria )
+            @Html.DisplayFor(modelItem => item.Categoria )
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TieneObservacion )
@@ -51,7 +51,7 @@
 
         <td>
            @* @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }) |*@
-            @*@Html.ActionLink("Vista Previa", "Details", new { id = item.ItemId })*@ 
+            @Html.ActionLink("Vista Previa", "Details", new { id = item.ItemId }) 
            @* @Html.ActionLink("Delete", "Delete", new { id = item.ItemId })*@
         </td>
     </tr>

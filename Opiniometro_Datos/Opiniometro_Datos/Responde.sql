@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Responde]
 (
-	[ItemId] NVARCHAR(10) NOT NULL,
+	[ItemId] INT NOT NULL,
 	[TituloSeccion] NVARCHAR(120) NOT NULL, 
     [FechaRespuesta] DATE NOT NULL, 
     [CodigoFormularioResp] CHAR(6) NOT NULL, 

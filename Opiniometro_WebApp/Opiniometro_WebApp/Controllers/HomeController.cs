@@ -1,5 +1,4 @@
-﻿using Opiniometro_WebApp.Controllers.Servicios;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -50,13 +49,6 @@ namespace Opiniometro_WebApp.Controllers
             return perfiles;
         }
 
-        // Necesito de este action method para inicializar atributos (cuando no pasa por el login).
-        public ActionResult Inicio()
-        {
-            IdentidadManager permisos_usuario = new IdentidadManager();
-            Session[IdentidadManager.obtener_correo_actual()] = permisos_usuario;
 
-            return RedirectToAction("Index");
-        }
     }
 }

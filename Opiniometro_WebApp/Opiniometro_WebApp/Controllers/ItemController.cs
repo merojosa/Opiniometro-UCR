@@ -50,14 +50,12 @@ namespace Opiniometro_WebApp.Controllers
                   new ListItem { Text = "Sí", Value="true" },
                   new ListItem { Text = "No", Value="false" }
             };
-
-            ViewBag.NombreCategoria = new SelectList(db.Categoria, "NombreCategoria", "NombreCategoria");
-            //ViewBag.CategoriaItems = new List<ListItem>
-            //{
-            //      new ListItem { Text = "Profesor", Value="Profesor" },
-            //      new ListItem { Text = "Infraestructura", Value="Infraestructura" },
-            //      new ListItem { Text = "Curso", Value="Curso" }
-            //};
+            ViewBag.CategoriaItems = new List<ListItem>
+            {
+                  new ListItem { Text = "Profesor", Value="Profesor" },
+                  new ListItem { Text = "Infraestructura", Value="Infraestructura" },
+                  new ListItem { Text = "Curso", Value="Curso" }
+            };
             ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID");
             ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId");
             return View();
@@ -68,7 +66,7 @@ namespace Opiniometro_WebApp.Controllers
          //more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria")] Item item)
+        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,Categoria,TieneObservacion,TipoPregunta")] Item item)
         {
 
 
