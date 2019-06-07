@@ -1,54 +1,94 @@
 ﻿@model IEnumerable<Opiniometro_WebApp.Models.Formulario_Respuesta>
 
-@{
-    ViewBag.Title = "Formulario Responde";
-}
+<div class="panel-group" id="accordion1">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+                    Collapsible Group Item #1
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">Panel 1</div>
+        </div>
+    </div>
 
-<h2>Formulario Responde</h2>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion1" href="#collapseTwo">
+                    Collapsible Group Item #2
+                </a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="panel-body">
+                    <h2>Heading</h2>
+                    <div class="panel-group" id="accordion21">
+                        <div class="panel">
+                            <a data-toggle="collapse" data-parent="#accordion21" href="#collapseTwoOne">
+                                View details 2.1 &raquo;
+                            </a>
+                            <div id="collapseTwoOne" class="panel-collapse collapse">
+                                <div class="panel-body">Details 1</div>
+                            </div>
+                        </div>
+                        <div class="panel ">
+                            <a data-toggle="collapse" data-parent="#accordion21" href="#collapseTwoTwo">
+                                View details 2.2 &raquo;
+                            </a>
+                            <div id="collapseTwoTwo" class="panel-collapse collapse">
+                                <div class="panel-body">Details 2</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Completado)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Formulario.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Grupo.SiglaCurso)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Persona.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Profesor.CedulaProfesor)
-        </th>
-        <th></th>
-    </tr>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion1" href="#collapseThree">
+                    Collapsible Group Item #3
+                </a>
+            </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse">
+            <div class="panel-body">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Completado)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Formulario.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Grupo.SiglaCurso)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Persona.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Profesor.CedulaProfesor)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+                <div class="panel-group" id="accordion2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion2" href="#collapseThreeOne">
+                                    Collapsible Group Item #3.1
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThreeOne" class="panel-collapse collapse in">
+                            <div class="panel-body">Panel 3.1</div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion2" href="#collapseThreeTwo">
+                                    Collapsible Group Item #3.2
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThreeTwo" class="panel-collapse collapse">
+                            <div class="panel-body">Panel 3.2</div>
+                        </div>
+                    </div>
+                </div>
 
-</table>
+            </div>
+        </div>
+    </div>
+
+</div>

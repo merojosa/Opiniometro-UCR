@@ -1,48 +1,28 @@
 ﻿@model IEnumerable<Opiniometro_WebApp.Models.Formulario>
 
 @{
-    ViewBag.Title = "Formularios";
+    ViewBag.Title = "Index";
 }
 
-<h2>Formularios</h2>
+<h2>Index</h2>
 
-<p>
-    <input type="button" value="Crear Nuevo Formulario" class="btn btn-secondary" id="botonNuevaSeccion" onclick="accionBotonCrearNueva()" />
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Código Formulario")
-        </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
+            Formularios
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodigoFormulario)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.CodigoFormulario }) |
-                @*@Html.ActionLink("Details", "Details", new { id=item.CodigoFormulario }) |*@
-                @*@Html.ActionLink("Delete", "Delete", new { id=item.CodigoFormulario })*@
-            </td>
-        </tr>
-    }
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>   
+            @Html.ActionLink("Details", "Details", new { id=item.CodigoFormulario }) 
+        </td>
+    </tr>
+}
 
 </table>
-
-<script>
-        function accionBotonCrearNueva() {
-            document.location = '@Url.Action("Create")';
-        }
-</script>
