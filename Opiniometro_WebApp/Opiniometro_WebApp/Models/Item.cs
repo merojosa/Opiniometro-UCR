@@ -26,7 +26,7 @@ namespace Opiniometro_WebApp.Models
         public string Categoria { get; set; }
         public Nullable<bool> TieneObservacion { get; set; }
         public byte TipoPregunta { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
