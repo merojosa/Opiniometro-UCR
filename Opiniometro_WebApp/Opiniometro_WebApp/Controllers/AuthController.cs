@@ -40,7 +40,7 @@ namespace Opiniometro_WebApp.Controllers
             }
             else                                 // Si no, retorne la vista para el login.
             {
-                return PartialView();
+                return View();
             }
         }
 
@@ -97,7 +97,7 @@ namespace Opiniometro_WebApp.Controllers
                 ModelState.AddModelError(string.Empty, "");
 
                 // Devolverse a la misma pagina de Login informando de que hay un error de autenticacion.
-                return PartialView(usuario);
+                return View(usuario);
             }
 
         }
@@ -130,7 +130,7 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult Recuperar()
         {
-            return PartialView();
+            return View();
         }
 
         /*
@@ -161,7 +161,7 @@ namespace Opiniometro_WebApp.Controllers
                 EnviarCorreo(usuario.CorreoInstitucional, "Cambio de contraseña - Opiniómetro@UCR", contenido);
             }
             ModelState.AddModelError(string.Empty, "");
-            return PartialView(usuario);
+            return View(usuario);
         }
 
         /*

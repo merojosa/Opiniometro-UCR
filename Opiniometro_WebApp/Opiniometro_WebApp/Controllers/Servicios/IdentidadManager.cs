@@ -87,5 +87,13 @@ namespace Opiniometro_WebApp.Controllers.Servicios
             return perfil_actual;
 
         }
+
+        public static bool usuario_loggeado()
+        {
+            if (obtener_correo_actual() == null)
+                return false;
+            else
+                return true;
+        }
     }
 }
