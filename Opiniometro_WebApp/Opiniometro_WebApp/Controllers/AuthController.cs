@@ -36,7 +36,7 @@ namespace Opiniometro_WebApp.Controllers
 
             if (correo_autenticado != null)      // Si esta autenticado, redireccione a Home.
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home","");
             }
             else                                 // Si no, retorne la vista para el login.
             {
@@ -87,7 +87,7 @@ namespace Opiniometro_WebApp.Controllers
 
                 PermisosUsuario.cargar_permisos();
 
-                return RedirectToAction("Index", "LogInPerfiles");
+                return RedirectToAction("Index", "Home");
             }
             else    // Si hay error en la autenticacion
             {
@@ -203,5 +203,7 @@ namespace Opiniometro_WebApp.Controllers
             }
             return contrasenna.ToString();
         }
+
+
     }
 }

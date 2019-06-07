@@ -9,6 +9,7 @@
 
 </head>
 <body>
+    @using Opiniometro_WebApp.Controllers
 
     <!--Barra-->
     @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
@@ -25,6 +26,24 @@
                 @Html.ActionLink("Opiniómetro@UCR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
+
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        Seleccione un perfil
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-contentt">
+                        @{
+                            ICollection<String> perfiles = HomeController.ObtenerPerfiles();
+                            foreach (var perfil in perfiles)
+                            {                         
+                                @Html.ActionLink(perfil, "Index", "Home", new { perfilActual = perfil })
+                            }
+
+                        }
+                    </div>
+                </div>
+
                 <div class="dropdown">
                     <button class="dropbtn">
                         Usuario
@@ -35,6 +54,8 @@
                         @Html.ActionLink("Insertar usuario", "CrearUsuario", "Admin")
                     </div>
                 </div>
+
+
                 <div class="dropdown">
                     <button class="dropbtn">
                         Evaluaciones
