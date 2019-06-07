@@ -127,14 +127,70 @@ GO
 CREATE PROCEDURE SP_ObtenerPermisosUsuario
 	@Correo		NVARCHAR(50)
 AS
-	SELECT PER.Id
+	-- Hay 3 JOINS ya que entity framework solo puede iterar por grupos de tuplas de una sola columna.
+
+	SELECT TU.SiglaCarrera, PE.NumeroEnfasis, PE.IdPermiso
 	FROM Tiene_Usuario_Perfil_Enfasis TU	JOIN Perfil ON TU.IdPerfil = Perfil.Id
 											JOIN Posee_Enfasis_Perfil_Permiso PE ON Perfil.Id = PE.IdPerfil
-											JOIN Permiso PER ON PER.Id = PE.IdPermiso
 	WHERE TU.CorreoInstitucional=@Correo
 GO
 
 EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
+
+IF OBJECT_ID('ValorRandom') IS NOT NULL
+	DROP VIEW ValorRandom
+GO
+CREATE VIEW ValorRandom
+AS
+SELECT randomvalue = CRYPT_GEN_RANDOM(10)
+GO
+
+IF OBJECT_ID('SF_GenerarContrasena') IS NOT NULL
+	DROP FUNCTION SF_GenerarContrasena
+GO
+CREATE FUNCTION SF_GenerarContrasena()
+RETURNS NVARCHAR(10)
+AS
+BEGIN
+	DECLARE @Resultado NVARCHAR(10);
+	DECLARE @InfoBinario VARBINARY(10);
+	DECLARE @DatosCaracteres NVARCHAR(10);
+
+	SELECT @InfoBinario = randomvalue FROM ValorRandom;
+
+	SET @DatosCaracteres = CAST ('' as xml).value('xs:base64Binary(sql:variable("@InfoBinario"))', 'varchar (max)');
+
+	SET @Resultado = @DatosCaracteres;
+
+	RETURN @Resultado;
+
+END
+GO
+
+IF OBJECT_ID('SP_AgregarPersonaUsuario') IS NOT NULL
+	DROP PROCEDURE SP_AgregarPersonaUsuario
+GO
+CREATE PROCEDURE SP_AgregarPersonaUsuario
+	@Cedula			CHAR(9),
+	@Nombre			NVARCHAR(50),
+	@Apellido1		NVARCHAR(50),
+	@Apellido2		NVARCHAR(50),
+	@Correo			NVARCHAR(50),
+	@Direccion		NVARCHAR(200)
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
+	DECLARE @Contrasenna NVARCHAR(10)
+
+	INSERT INTO Persona
+	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2, @Direccion)
+	SET @Contrasenna = (SELECT dbo.SF_GenerarContrasena());
+	INSERT INTO Usuario
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+END
+GO
+
 
 --JJAPH
 IF OBJECT_ID('MostrarEstudiantes', 'P') IS NOT NULL 
@@ -245,6 +301,9 @@ INSERT INTO Enfasis
 VALUES (0, 'SC-01234')
 
 INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
+VALUES ('SC-01235', 'Computación con varios Énfasis','UC-023874')
+
+INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-89457', 'Derecho','UC-485648')
 
 --Cursos
@@ -294,6 +353,23 @@ values
 
 	((select c.Sigla from Curso c where c.Sigla = 'DE2001'), 1, 2018, 2);
 
+----Enfasis
+INSERT INTO Enfasis(Numero, SiglaCarrera)
+VALUES (100, 'SC-01234'), 
+	   (101, 'SC-01234'),
+	   (12, 'SC-89457');
+
+----Curso-Enfasis
+INSERT INTO Se_Encuentra_Curso_Enfasis(SiglaCurso, CodigoEnfasis, SiglaCarrera)
+VALUES ('CI1330', 100, 'SC-01234'), 
+	   ('CI1331', 100, 'SC-01234'),
+	   ('CI1327', 101, 'SC-01234'),
+	   ('CI1328', 101, 'SC-01234'),
+	   ('DE1001', 12, 'SC-89457'),
+	   ('DE2001', 12, 'SC-89457');
+
+
+
 --Script C.X. Solutions
 
 --Ciclo Lectivo
@@ -304,25 +380,28 @@ VALUES  (2017, 2);
 INSERT INTO Grupo(SiglaCurso, Numero, AnnoGrupo, SemestreGrupo)
 VALUES ('CI1330', 1, 2017, 2);
 
---Item
-DELETE FROM Item;
-DBCC CHECKIDENT ('Item', RESEED, 0);
+--Categoria
+INSERT INTO Categoria
+VALUES  ('Reglamento'),
+		('Curso'),
+		('Opinion');
 
-INSERT INTO Item(TextoPregunta, Categoria, TieneObservacion, TipoPregunta)
-VALUES  ('¿El profesor repuso clases cuando fue necesario?', 'Curso', 1, 3),
-		('¿El profesor entrego la carta del estudiante en las fechas indicadas por el reglamento?', 'Responsabilidades', 1, 3),
-		('¿Que opina del curso?', 'Opinion', 0, 1),
-		('¿Que opina del profesor?', 'Opinion', 0, 1);
+--Item
+INSERT INTO Item(ItemId, TextoPregunta, TieneObservacion, TipoPregunta, NombreCategoria)
+VALUES  ('PRE303', '¿El profesor repuso clases cuando fue necesario?', 1, 3, 'Reglamento'),
+		('PRE404', '¿El profesor entrego la carta del estudiante en las fechas indicadas por el reglamento?', 1, 3, 'Reglamento'),
+		('PRE101', '¿Que opina del curso?', 0, 1, 'Opinion'),
+		('PRE202', '¿Que opina del profesor?', 0, 1, 'Opinion');
 
 --Item-Texto Libre
 INSERT INTO Texto_Libre (ItemId)
-VALUES  (3),
-		(4);
+VALUES  ('PRE101'),
+		('PRE202');
 
 --Item-Si/no
 INSERT INTO Seleccion_Unica (ItemId, IsaLikeDislike)
-VALUES  (1, 1),
-		(2, 1);
+VALUES  ('PRE303', 1),
+		('PRE404', 1);
 
 --Seccion
 INSERT INTO Seccion (Titulo, Descripcion)
@@ -345,28 +424,27 @@ VALUES  ('2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 1
 
  --Conformado_Item_Sec_Form
 INSERT INTO Conformado_Item_Sec_Form (ItemId, CodigoFormulario, TituloSeccion, NombreFormulario)
-VALUES	(1, '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
-		(3, '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
-		(2, '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores'),	
-		(4, '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores');
-
+VALUES	('PRE101', '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
+		('PRE202', '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
+		('PRE303', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores'),	
+		('PRE404', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores');
 
 --Responde
 INSERT INTO Responde (ItemId, TituloSeccion, FechaRespuesta, CodigoFormularioResp, CedulaPersona, CedulaProfesor, AnnoGrupoResp, SemestreGrupoResp, NumeroGrupoResp, SiglaGrupoResp, Respuesta, Observacion)
-VALUES  (1, 'Evaluación de aspectos reglamentarios del profesor', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '3', 'Nunca tuvimos que reponer clases'),
-		(2, 'Evaluación de aspectos reglamentarios del profesor', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '2', 'La profesora olvido enviar la carta del estudiante pero si la revisamos en la primera semana de clases'),
-		(3, 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '', 'La materia estuvo muy interesante y espero poder aplicarla en el futuro en el trabajo'),
-		(4, 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '', 'La profesora tardo mucho para devolver las evaluaciones'),
+VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '3', 'Nunca tuvimos que reponer clases'),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '2', 'La profesora olvido enviar la carta del estudiante pero si la revisamos en la primera semana de clases'),
+		('PRE101', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '', 'La materia estuvo muy interesante y espero poder aplicarla en el futuro en el trabajo'),
+		('PRE202', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '', 'La profesora tardo mucho para devolver las evaluaciones'),
 		--Segunda evaluacion
-		(1, 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '2', 'No fue necesario reponer clases'),
-		(2, 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '1', 'Revisamos la carta del estudiante en la primera semana'),
-		(3, 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '', 'No estoy seguro de si en el ambiente laboral me servira la materia'),
-		(4, 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '', 'La profesora logro que las clases fueran muy entretenidas y dinámicas'),
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '2', 'No fue necesario reponer clases'),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '1', 'Revisamos la carta del estudiante en la primera semana'),
+		('PRE101', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '', 'No estoy seguro de si en el ambiente laboral me servira la materia'),
+		('PRE202', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '', 'La profesora logro que las clases fueran muy entretenidas y dinámicas'),
 		--Tercera evaluacion
-		(1, 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '1', 'Me repuso una clase a la que falte'),
-		(2, 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '1', 'Sí se reviso'),
-		(3, 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Entretenido'),
-		(4, 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Muy buena profesora');
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '1', 'Me repuso una clase a la que falte'),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '1', 'Sí se reviso'),
+		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Entretenido'),
+		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Muy buena profesora');
 
 GO
 IF OBJECT_ID('SP_ContarRespuestasPorGrupo') IS NOT NULL
@@ -383,7 +461,7 @@ CREATE PROCEDURE SP_ContarRespuestasPorGrupo
 	@semestreGrupo		TINYINT,
 	@numeroGrupo		TINYINT,
 	@siglaCurso			CHAR(6),
-	@itemId				INT,
+	@itemId				NVARCHAR(10),
 	@respuesta			NVARCHAR(500),
 	@cntResp			INT OUTPUT
 AS
@@ -411,7 +489,7 @@ CREATE PROCEDURE SP_DevolverObservacionesPorGrupo
 	@semestreGrupo TINYINT,
 	@numeroGrupo TINYINT,
 	@siglaCurso CHAR(6),
-	@itemId INT
+	@itemId NVARCHAR(10)
 AS
 BEGIN
 	SET NOCOUNT ON
@@ -439,8 +517,9 @@ VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
 
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
-		(0, 'SC-01234', 'Estudiante', 4),
-		(0, 'SC-01234', 'Admin', 1)
+		(1, 'SC-01234', 'Estudiante', 4),
+		(0, 'SC-01234', 'Admin', 1),
+		(0, 'SC-01234', 'Admin', 2)
 
 --select de prueba para la cnt de respuestas
 --SELECT e.Respuesta, COUNT(e.Respuesta) as cantidadRespuestas
