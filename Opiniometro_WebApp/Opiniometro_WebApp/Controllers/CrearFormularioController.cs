@@ -14,19 +14,32 @@ namespace Opiniometro_WebApp.Controllers
     
     public class CrearFormularioController : Controller
     {
-        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
         // GET: CrearFormulario
-        public ActionResult asignarPreguntas()
+        public ActionResult AsignarPreguntas()
         {
-            return View();
+            List<Conformado_Item_Sec_Form> todo = db.Conformado_Item_Sec_Form.ToList();
+            return View(todo);
         }
-        public ActionResult preguntasVParcial()
+
+        public ActionResult SeccionesAsignadas(string CodForm)
+        {
+            List<Conformado_Item_Sec_Form> SeccionesAsig = db.Conformado_Item_Sec_Form.Where(m => m.CodigoFormulario == CodForm).Distinct().ToList();
+            return PartialView(SeccionesAsig);
+        }
+
+        public ActionResult PreguntasAsignadas(string CodForm, string TituloSecc)
+        {
+            List<Conformado_Item_Sec_Form> PreguntasAsig = db.Conformado_Item_Sec_Form.Where(m => m.CodigoFormulario == CodForm).Where(m => m.TituloSeccion == TituloSecc).ToList();
+            return PartialView(PreguntasAsig);
+        }
+        public ActionResult PreguntasVParcial()
         {
            List<Item> preguntas = db.Item.ToList();
 
             return PartialView(preguntas);
         }
-        public ActionResult seccionesVParcial()
+        public ActionResult SeccionesVParcial()
         {
             List<Seccion> secciones = db.Seccion.ToList();
             return PartialView(secciones);
