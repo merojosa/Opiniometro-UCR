@@ -8,40 +8,27 @@
     <tbody>
     <tr>
         <td>
-            <div style="float: left; width: 500px; padding: 10px;">
+
+            <div style="float: right; width: 500px; padding: 10px;">
                 @Html.Action("preguntasVParcial")
             </div>
-            <div style = "width: 500px; padding:  10px;">
+
+            <div style=" width: 500px; padding:  10px;">
                 @Html.Action("seccionesVParcial")
-                
-            </div="float:>
-            <div style="clear: both;"></div>
+
+            </div>
+
+            <div style="float: left; width: 500px; padding: 5px;">
+                @Html.Action("SeccionesAsignadas", new { CodForm = "131313"@*item.CodigoFormulario*@})
+            </div>
+
+
+            <div style="clear: both;"></div>    
         </td>
-
     </tr>
-
     </tbody>
-
 </thead>
 
-
-<table class=" table table-bordered">
-    <thead>
-       
-    </thead>
-
-    <tbody>
-        <tr>
-            <td colspan="5">
-                @Html.Action("SeccionesAsignadas", new { CodForm = "131313"@*item.CodigoFormulario*@})
-            </td>
-           
-        </tr>
-
-    </tbody>
-
-
-</table>
 
 
 
