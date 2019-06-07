@@ -49,24 +49,29 @@ namespace Opiniometro_WebApp.Controllers
         //REQ: Que exista la conexion a la base de datos.
         //MOD:--
         [HttpGet]
-        private int ObtenerCantidadRespuestasPorPregunta(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId, string respuesta)
+        private ObjectResult<SP_ContarRespuestasPorGrupo_Result> ObtenerCantidadRespuestasPorPregunta(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
         {
-            ObjectParameter cntRespuestas = new ObjectParameter("cntResp", typeof(int));
-            db.SP_ContarRespuestasPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId, respuesta, cntRespuestas);
-            if (DBNull.Value.Equals(cntRespuestas.Value))
-                return 0;
-            return Convert.ToInt32(cntRespuestas.Value);
+            var result = db.SP_ContarRespuestasPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
+            return result;
         }
 
         //EFE:Crea un gráfico con la información de los resultados en la base de datos.
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--
-        public ActionResult GraficoPie()
+        public ActionResult GraficoPie(string itemId)
         {
-            decimal x = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", "PRE303", "1");
-            decimal y = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", "PRE303", "2");
-            decimal z = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", "PRE303", "3");
 
+            var result = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", itemId);
+            int tamanio = result.Count();
+            string[] leyenda = new string[tamanio];
+            int?[] cntResps = new int?[tamanio];
+            int iter = 0;
+            foreach(var item in result.ToList())
+            {
+                leyenda[iter] = item.Respuesta;
+                cntResps[iter] = item.cntResp;
+                iter++;
+            }
             string myGraf =
                 @"<Chart BackColor=""Transparent"" >
                                 <ChartAreas>
@@ -76,9 +81,10 @@ namespace Opiniometro_WebApp.Controllers
             new Chart(width: 350, height: 350, theme: myGraf)
                 .AddSeries(
                     chartType: "pie",
-                    xValue: new[] { "Sí", "No", "No Se/No Aplica" },
-                    yValues: new[] { x, y, z })
+                    xValue: leyenda,
+                    yValues: cntResps)
                 .Write("png");
+            result.Dispose();
             return null;
         }
 
@@ -90,7 +96,7 @@ namespace Opiniometro_WebApp.Controllers
 
             //Invoca el metodo
             //db.ProcObtenerPromedioCurso(cursoId, resultado);
-            var result = db.SP_DevolverObservacionesPorGrupo("131313", "100000002", 2017, 2, 1, "CI1330", 1);
+            var result = db.SP_DevolverObservacionesPorGrupo("131313", "100000002", 2017, 2, 1, "CI1330", "1");
             foreach (var valor in result)
             {
                 Console.WriteLine("1. " + valor.ToString());
