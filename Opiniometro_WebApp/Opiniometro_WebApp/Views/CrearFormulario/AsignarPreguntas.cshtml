@@ -8,17 +8,22 @@
     <tbody>
     <tr>
         <td>
+            Codigo: <input type="text" name="inputname" value="ABC123" readonly>
+            Nombre: <input type="text" name="inputname" value="FormularioEnfasis1" readonly>
 
-            <div style="float: right; width: 500px; padding: 10px;">
+            <div style="float: right; width: 500px; padding: 15px;">
                 @Html.Action("preguntasVParcial")
             </div>
 
             <div style=" width: 500px; padding:  10px;">
                 @Html.Action("seccionesVParcial")
-
             </div>
 
-            <div style="float: left; width: 500px; padding: 5px;">
+            <button>
+                Añadir pregunta al formulario. 
+            </button>
+
+            <div style="float: left; width: 1000px; padding: 50px;">
                 @Html.Action("SeccionesAsignadas", new { CodForm = "131313"@*item.CodigoFormulario*@})
             </div>
 
