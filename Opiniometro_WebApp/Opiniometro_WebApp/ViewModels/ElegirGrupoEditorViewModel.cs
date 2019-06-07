@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Models
@@ -18,13 +19,23 @@ namespace Opiniometro_WebApp.Models
         public List<Profesor> Profesores { get; set; }
         public string NombreCurso { get; set; }
 
+        // Atributos que no se muestran pero se utilizan para consultar y filtrar
+        public string NombreUnidadAcademica { get; set; }
+        public IQueryable<string> NombresCarreras { get; set; }
+
         public ElegirGrupoEditorViewModel()
         {
             Profesores = new List<Profesor>();
         }
 
-        // Atributos que no se muestran pero se utilizan para consultar y filtrar
-        public string NombreUnidadAcademica { get; set; }
-        public string NombreCarrera { get; set; }
+        public bool PerteneceAUA (string NombreUAPorBuscar)
+        {
+            return NombreUnidadAcademica.Contains(NombreUAPorBuscar);
+        }
+
+        public bool EstaEnCarrera (string NombreCarreraPorBuscar)
+        {
+            return NombresCarreras.Contains(NombreCarreraPorBuscar);
+        }
     }
 }

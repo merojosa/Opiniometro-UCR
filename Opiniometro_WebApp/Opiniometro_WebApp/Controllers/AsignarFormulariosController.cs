@@ -128,18 +128,22 @@ namespace Opiniometro_WebApp.Controllers
              string nomUnidadAcad, String siglaCarrera, String nombCarrera, byte? numEnfasis, String siglaCurso, string nombreCurso, String searchString)
         {
             // En la base, cuando este query se transforme en un proc. almacenado, se deberá usar join con la tabla curso
-            IQueryable<ElegirGrupoEditorViewModel> grupos = 
-                from gru in db.Grupo
-                select new ElegirGrupoEditorViewModel
-                {
-                    Seleccionado = false,
-                    SiglaCurso = gru.SiglaCurso,
-                    Numero = gru.Numero,
-                    Anno = gru.AnnoGrupo,
-                    Semestre = gru.SemestreGrupo,
-                    Profesores = gru.Profesor.ToList(),
-                    NombreCurso = gru.Curso.Nombre
-                };
+            IQueryable<ElegirGrupoEditorViewModel> grupos =
+                from cur in db.Curso
+                join gru in db.Grupo on cur.Sigla equals gru.SiglaCurso
+                join uni in db.Unidad_Academica on cur.CodigoUnidad equals uni.Codigo
+            select new ElegirGrupoEditorViewModel
+            {
+                Seleccionado = false,
+                SiglaCurso = cur.Sigla,
+                Numero = gru.Numero,
+                Anno = gru.AnnoGrupo,
+                Semestre = gru.SemestreGrupo,
+                Profesores = gru.Profesor.ToList(),
+                NombreCurso = gru.Curso.Nombre,
+                NombreUnidadAcademica = gru.Curso.Unidad_Academica.Nombre,
+                //NombresCarreras =  cur.Enfasis.
+            };
 
             grupos = filtreGrupos(searchString, semestre, nomUnidadAcad, nombCarrera, nombreCurso, grupos);
 
@@ -168,10 +172,10 @@ namespace Opiniometro_WebApp.Controllers
                 grupos = grupos.Where(c => c.NombreUnidadAcademica.Contains(nomUnidadAcad));
             }
 
-            if (!String.IsNullOrEmpty(nombCarrera))
+            /*if (!String.IsNullOrEmpty(nombCarrera))
             {
                 grupos = grupos.Where(c => c.NombreCarrera.Contains(nombCarrera));
-            }
+            }*/
 
             if (!String.IsNullOrEmpty(nombCurso))
             {
