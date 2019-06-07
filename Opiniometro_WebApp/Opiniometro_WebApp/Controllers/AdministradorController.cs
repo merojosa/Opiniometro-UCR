@@ -34,7 +34,7 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult CargarArchivo(HttpPostedFileBase archivoCargado)
+        public ActionResult CargarArchivo(HttpPostedFileBase postedFile)
         {
             if (postedFile != null)
             {
