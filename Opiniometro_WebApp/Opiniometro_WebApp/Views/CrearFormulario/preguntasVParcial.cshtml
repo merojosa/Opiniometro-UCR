@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Item>
+
+<table class = "table-bordered">
+    <tr>
+        <td>
+            @Html.Label("Código")
+        </td>
+        <td>
+            @Html.Label("Planteamiento")
+        </td>
+        <td>
+            @Html.Label("Tipo")
+        </td>
+    </tr>
+    
+
+    @foreach (var item in Model)
+     {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TextoPregunta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoPregunta)
+            </td>
+        </tr>
+     }
+
+</table>

@@ -426,6 +426,7 @@
     <Content Include="Views\Categoria\Index.cshtml" />
     <Content Include="Views\Auth\Permisos.cshtml" />
     <Content Include="Views\CrearFormulario\AsignarPreguntas.cshtml" />
+    <Content Include="Views\CrearFormulario\preguntasVParcial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
