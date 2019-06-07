@@ -18,6 +18,7 @@ namespace Opiniometro_WebApp.Models
         public Enfasis()
         {
             this.Curso = new HashSet<Curso>();
+            this.Unidad_Academica = new HashSet<Unidad_Academica>();
         }
     
         public byte Numero { get; set; }
@@ -26,5 +27,7 @@ namespace Opiniometro_WebApp.Models
         public virtual Carrera Carrera { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Curso> Curso { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Unidad_Academica> Unidad_Academica { get; set; }
     }
 }

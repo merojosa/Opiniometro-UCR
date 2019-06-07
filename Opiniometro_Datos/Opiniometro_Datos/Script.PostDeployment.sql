@@ -303,19 +303,16 @@ CREATE PROCEDURE CursosSegunEnfasis
 AS
 BEGIN
 IF @codigoUnidad IS NOT NULL
-SELECT S.SiglaCurso
-FROM Se_Encuentra_Curso_Enfasis S JOIN Enfasis E ON S.SiglaCarrera = E.SiglaCarrera
-	 JOIN Carrera C ON E.SiglaCarrera = C.Sigla
-WHERE C.CodigoUnidadAcademica = @codigoUnidad
+SELECT C.Nombre, C.Sigla, C.Tipo, C.CodigoUnidad
+FROM Curso C JOIN Unidad_Academica U ON C.CodigoUnidad = U.Codigo
+WHERE C.CodigoUnidad = @codigoUnidad
 
 IF @siglaCarrera IS NOT NULL
-SELECT S.SiglaCurso
-FROM Se_Encuentra_Curso_Enfasis S JOIN Enfasis E ON S.SiglaCarrera = E.SiglaCarrera
-	 JOIN Carrera C ON E.SiglaCarrera = C.Sigla
-WHERE E.SiglaCarrera = @siglaCarrera
+SELECT C.Nombre, C.Sigla, C.Tipo, C.CodigoUnidad
+FROM Curso C JOIN Se_Encuentra_Curso_Enfasis S ON C.Sigla = S.SiglaCurso 
+WHERE S.SiglaCarrera = @siglaCarrera
 END
 GO
-
 
 --Script C.X. Solutions
 

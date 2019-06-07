@@ -58,6 +58,19 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     
+        public virtual ObjectResult<CursosSegunEnfasis_Result> CursosSegunEnfasis(string codigoUnidad, string siglaCarrera)
+        {
+            var codigoUnidadParameter = codigoUnidad != null ?
+                new ObjectParameter("codigoUnidad", codigoUnidad) :
+                new ObjectParameter("codigoUnidad", typeof(string));
+    
+            var siglaCarreraParameter = siglaCarrera != null ?
+                new ObjectParameter("siglaCarrera", siglaCarrera) :
+                new ObjectParameter("siglaCarrera", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CursosSegunEnfasis_Result>("CursosSegunEnfasis", codigoUnidadParameter, siglaCarreraParameter);
+        }
+    
         public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)
         {
             var cedulaParameter = cedula != null ?
@@ -230,19 +243,6 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Direccion", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, direccionParameter);
-        }
-    
-        public virtual ObjectResult<string> CursosSegunEnfasis(string codigoUnidad, string siglaCarrera)
-        {
-            var codigoUnidadParameter = codigoUnidad != null ?
-                new ObjectParameter("codigoUnidad", codigoUnidad) :
-                new ObjectParameter("codigoUnidad", typeof(string));
-    
-            var siglaCarreraParameter = siglaCarrera != null ?
-                new ObjectParameter("siglaCarrera", siglaCarrera) :
-                new ObjectParameter("siglaCarrera", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("CursosSegunEnfasis", codigoUnidadParameter, siglaCarreraParameter);
         }
     }
 }

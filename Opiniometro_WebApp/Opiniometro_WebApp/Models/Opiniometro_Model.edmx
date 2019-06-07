@@ -44,8 +44,6 @@
           <Property Name="CodigoFormulario" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="TituloSeccion" Type="nvarchar" MaxLength="120" Nullable="false" />
           <Property Name="NombreFormulario" Type="varchar" MaxLength="30" />
-          <Property Name="Orden_Item" Type="int" />
-          <Property Name="Orden_Seccion" Type="int" />
         </EntityType>
         <EntityType Name="Curso">
           <Key>
@@ -248,16 +246,6 @@
           <Property Name="Observacion" Type="nvarchar" MaxLength="500" />
           <Property Name="Respuesta" Type="nvarchar" MaxLength="500" />
           <Property Name="RespuestaProfesor" Type="nvarchar" MaxLength="500" />
-        </EntityType>
-        <EntityType Name="Se_Encuentra_Curso_Enfasis">
-          <Key>
-            <PropertyRef Name="SiglaCurso" />
-            <PropertyRef Name="CodigoEnfasis" />
-            <PropertyRef Name="SiglaCarrera" />
-          </Key>
-          <Property Name="SiglaCurso" Type="char" MaxLength="6" Nullable="false" />
-          <Property Name="CodigoEnfasis" Type="tinyint" Nullable="false" />
-          <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="Se_Encuentra_Unidad_Enfasis">
           <Key>
@@ -692,32 +680,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SeE_Cur">
-          <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
-          <End Role="Se_Encuentra_Curso_Enfasis" Type="Self.Se_Encuentra_Curso_Enfasis" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Curso">
-              <PropertyRef Name="Sigla" />
-            </Principal>
-            <Dependent Role="Se_Encuentra_Curso_Enfasis">
-              <PropertyRef Name="SiglaCurso" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SeE_Enf">
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
-          <End Role="Se_Encuentra_Curso_Enfasis" Type="Self.Se_Encuentra_Curso_Enfasis" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Enfasis">
-              <PropertyRef Name="Numero" />
-              <PropertyRef Name="SiglaCarrera" />
-            </Principal>
-            <Dependent Role="Se_Encuentra_Curso_Enfasis">
-              <PropertyRef Name="CodigoEnfasis" />
-              <PropertyRef Name="SiglaCarrera" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Sel_Uni_Ite">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
           <End Role="Seleccion_Unica" Type="Self.Seleccion_Unica" Multiplicity="0..1" />
@@ -810,10 +772,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="CursosSegunEnfasis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigoUnidad" Type="nvarchar" Mode="In" />
-          <Parameter Name="siglaCarrera" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="DatosEstudiante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
@@ -826,46 +784,10 @@
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
         </Function>
-        <Function Name="SP_CambiarContrasenna" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
-          <Parameter Name="Contrasenna_Nueva" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="SP_ContarRespuestasPorGrupo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigoFormulario" Type="char" Mode="In" />
-          <Parameter Name="cedulaProfesor" Type="char" Mode="In" />
-          <Parameter Name="annoGrupo" Type="smallint" Mode="In" />
-          <Parameter Name="semestreGrupo" Type="tinyint" Mode="In" />
-          <Parameter Name="numeroGrupo" Type="tinyint" Mode="In" />
-          <Parameter Name="siglaCurso" Type="char" Mode="In" />
-          <Parameter Name="itemId" Type="int" Mode="In" />
-          <Parameter Name="respuesta" Type="nvarchar" Mode="In" />
-          <Parameter Name="cntResp" Type="int" Mode="InOut" />
-        </Function>
-        <Function Name="SP_DevolverObservacionesPorGrupo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigoFormulario" Type="char" Mode="In" />
-          <Parameter Name="cedulaProfesor" Type="char" Mode="In" />
-          <Parameter Name="annoGrupo" Type="smallint" Mode="In" />
-          <Parameter Name="semestreGrupo" Type="tinyint" Mode="In" />
-          <Parameter Name="numeroGrupo" Type="tinyint" Mode="In" />
-          <Parameter Name="siglaCurso" Type="char" Mode="In" />
-          <Parameter Name="itemId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="SP_ExistenciaCorreo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
-          <Parameter Name="Resultado" Type="bit" Mode="InOut" />
-        </Function>
         <Function Name="SP_LoginUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
-        </Function>
-        <Function Name="SP_ModificarPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CedulaBusqueda" Type="varchar" Mode="In" />
-          <Parameter Name="Cedula" Type="char" Mode="In" />
-          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
-          <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
-          <Parameter Name="Apellido2" Type="nvarchar" Mode="In" />
-          <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="Opiniometro_DatosModelStoreContainer">
           <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
@@ -892,7 +814,6 @@
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responde" EntityType="Self.Responde" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Se_Encuentra_Curso_Enfasis" EntityType="Self.Se_Encuentra_Curso_Enfasis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Se_Encuentra_Unidad_Enfasis" EntityType="Self.Se_Encuentra_Unidad_Enfasis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seleccion_Unica" EntityType="Self.Seleccion_Unica" Schema="dbo" store:Type="Tables" />
@@ -1013,14 +934,6 @@
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
             <End Role="Se_Encuentra_Unidad_Enfasis" EntitySet="Se_Encuentra_Unidad_Enfasis" />
           </AssociationSet>
-          <AssociationSet Name="FK_SeE_Cur" Association="Self.FK_SeE_Cur">
-            <End Role="Curso" EntitySet="Curso" />
-            <End Role="Se_Encuentra_Curso_Enfasis" EntitySet="Se_Encuentra_Curso_Enfasis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SeE_Enf" Association="Self.FK_SeE_Enf">
-            <End Role="Enfasis" EntitySet="Enfasis" />
-            <End Role="Se_Encuentra_Curso_Enfasis" EntitySet="Se_Encuentra_Curso_Enfasis" />
-          </AssociationSet>
           <AssociationSet Name="FK_Sel_Uni_Ite" Association="Self.FK_Sel_Uni_Ite">
             <End Role="Item" EntitySet="Item" />
             <End Role="Seleccion_Unica" EntitySet="Seleccion_Unica" />
@@ -1098,8 +1011,6 @@
           <Property Name="CodigoFormulario" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="TituloSeccion" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NombreFormulario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Orden_Item" Type="Int32" />
-          <Property Name="Orden_Seccion" Type="Int32" />
           <NavigationProperty Name="Formulario" Relationship="Self.FK_Con_For" FromRole="Conformado_Item_Sec_Form" ToRole="Formulario" />
           <NavigationProperty Name="Item" Relationship="Self.FK_Con_Ite" FromRole="Conformado_Item_Sec_Form" ToRole="Item" />
           <NavigationProperty Name="Seccion" Relationship="Self.FK_Con_Sec" FromRole="Conformado_Item_Sec_Form" ToRole="Seccion" />
@@ -1114,7 +1025,6 @@
           <Property Name="CodigoUnidad" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Unidad_Academica" Relationship="Self.FK_Cur_Uni" FromRole="Curso" ToRole="Unidad_Academica" />
           <NavigationProperty Name="Grupo" Relationship="Self.FK_Gru_Cur" FromRole="Curso" ToRole="Grupo" />
-          <NavigationProperty Name="Enfasis" Relationship="Self.Se_Encuentra_Curso_Enfasis" FromRole="Curso" ToRole="Enfasis" />
         </EntityType>
         <EntityType Name="Empadronado">
           <Key>
@@ -1135,7 +1045,6 @@
           <Property Name="Numero" Type="Byte" Nullable="false" />
           <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Carrera" Relationship="Self.FK_Enf_Car" FromRole="Enfasis" ToRole="Carrera" />
-          <NavigationProperty Name="Curso" Relationship="Self.Se_Encuentra_Curso_Enfasis" FromRole="Enfasis" ToRole="Curso" />
           <NavigationProperty Name="Unidad_Academica" Relationship="Self.Se_Encuentra_Unidad_Enfasis" FromRole="Enfasis" ToRole="Unidad_Academica" />
         </EntityType>
         <EntityType Name="Estudiante">
@@ -1829,10 +1738,6 @@
           <End Role="Facultad" Type="Self.Facultad" Multiplicity="0..1" />
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
         </Association>
-        <Association Name="Se_Encuentra_Curso_Enfasis">
-          <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
-        </Association>
         <Association Name="Se_Encuentra_Unidad_Enfasis">
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
@@ -1996,22 +1901,14 @@
             <End Role="Facultad" EntitySet="Facultad" />
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
           </AssociationSet>
-          <AssociationSet Name="Se_Encuentra_Curso_Enfasis" Association="Self.Se_Encuentra_Curso_Enfasis">
-            <End Role="Curso" EntitySet="Curso" />
-            <End Role="Enfasis" EntitySet="Enfasis" />
-          </AssociationSet>
           <AssociationSet Name="Se_Encuentra_Unidad_Enfasis" Association="Self.Se_Encuentra_Unidad_Enfasis">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
           </AssociationSet>
-          <FunctionImport Name="CursosSegunEnfasis" ReturnType="Collection(Opiniometro_DatosModel.CursosSegunEnfasis_Result)">
-            <Parameter Name="codigoUnidad" Mode="In" Type="String" />
-            <Parameter Name="siglaCarrera" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_DatosModel.DatosEstudiante_Result)">
+          <FunctionImport Name="DatosEstudiante">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_DatosModel.MostrarEstudiantes_Result)" />
+          <FunctionImport Name="MostrarEstudiantes" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
@@ -2020,65 +1917,12 @@
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_CambiarContrasenna">
-            <Parameter Name="Correo" Mode="In" Type="String" />
-            <Parameter Name="Contrasenna_Nueva" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ContarRespuestasPorGrupo">
-            <Parameter Name="codigoFormulario" Mode="In" Type="String" />
-            <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
-            <Parameter Name="annoGrupo" Mode="In" Type="Int16" />
-            <Parameter Name="semestreGrupo" Mode="In" Type="Byte" />
-            <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
-            <Parameter Name="siglaCurso" Mode="In" Type="String" />
-            <Parameter Name="itemId" Mode="In" Type="Int32" />
-            <Parameter Name="respuesta" Mode="In" Type="String" />
-            <Parameter Name="cntResp" Mode="InOut" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SP_DevolverObservacionesPorGrupo" ReturnType="Collection(String)">
-            <Parameter Name="codigoFormulario" Mode="In" Type="String" />
-            <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
-            <Parameter Name="annoGrupo" Mode="In" Type="Int16" />
-            <Parameter Name="semestreGrupo" Mode="In" Type="Byte" />
-            <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
-            <Parameter Name="siglaCurso" Mode="In" Type="String" />
-            <Parameter Name="itemId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ExistenciaCorreo">
-            <Parameter Name="Correo" Mode="In" Type="String" />
-            <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
-          </FunctionImport>
           <FunctionImport Name="SP_LoginUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="SP_ModificarPersona">
-            <Parameter Name="CedulaBusqueda" Mode="In" Type="String" />
-            <Parameter Name="Cedula" Mode="In" Type="String" />
-            <Parameter Name="Nombre" Mode="In" Type="String" />
-            <Parameter Name="Apellido1" Mode="In" Type="String" />
-            <Parameter Name="Apellido2" Mode="In" Type="String" />
-            <Parameter Name="Direccion" Mode="In" Type="String" />
-          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="CursosSegunEnfasis_Result">
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="75" />
-          <Property Type="String" Name="Sigla" Nullable="false" MaxLength="6" />
-          <Property Type="Byte" Name="Tipo" Nullable="false" />
-          <Property Type="String" Name="CodigoUnidad" Nullable="false" MaxLength="10" />
-        </ComplexType>
-        <ComplexType Name="DatosEstudiante_Result">
-          <Property Type="String" Name="Nombre_Completo" Nullable="false" MaxLength="152" />
-          <Property Type="String" Name="Carne" Nullable="false" MaxLength="6" />
-          <Property Type="String" Name="Cedula" Nullable="false" MaxLength="9" />
-        </ComplexType>
-        <ComplexType Name="MostrarEstudiantes_Result">
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Apellido1" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Apellido2" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Carne" Nullable="false" MaxLength="6" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2124,8 +1968,6 @@
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
                 <ScalarProperty Name="TituloSeccion" ColumnName="TituloSeccion" />
                 <ScalarProperty Name="NombreFormulario" ColumnName="NombreFormulario" />
-                <ScalarProperty Name="Orden_Item" ColumnName="Orden_Item" />
-                <ScalarProperty Name="Orden_Seccion" ColumnName="Orden_Seccion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2379,15 +2221,6 @@
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Se_Encuentra_Curso_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Curso_Enfasis" StoreEntitySet="Se_Encuentra_Curso_Enfasis">
-            <EndProperty Name="Curso">
-              <ScalarProperty Name="Sigla" ColumnName="SiglaCurso" />
-            </EndProperty>
-            <EndProperty Name="Enfasis">
-              <ScalarProperty Name="Numero" ColumnName="CodigoEnfasis" />
-              <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="Se_Encuentra_Unidad_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Unidad_Enfasis" StoreEntitySet="Se_Encuentra_Unidad_Enfasis">
             <EndProperty Name="Enfasis">
               <ScalarProperty Name="Numero" ColumnName="NumeroEnfasis" />
@@ -2397,43 +2230,11 @@
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="CursosSegunEnfasis" FunctionName="Opiniometro_DatosModel.Store.CursosSegunEnfasis">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.CursosSegunEnfasis_Result">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="CodigoUnidad" ColumnName="CodigoUnidad" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_DatosModel.Store.DatosEstudiante">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.DatosEstudiante_Result">
-                <ScalarProperty Name="Nombre_Completo" ColumnName="Nombre Completo" />
-                <ScalarProperty Name="Carne" ColumnName="Carne" />
-                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_DatosModel.Store.MostrarEstudiantes">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.MostrarEstudiantes_Result">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
-                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
-                <ScalarProperty Name="Carne" ColumnName="Carne" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_DatosModel.Store.DatosEstudiante" />
+          <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_DatosModel.Store.MostrarEstudiantes" />
           <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="Opiniometro_DatosModel.Store.NombrePersona" />
           <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="Opiniometro_DatosModel.Store.SP_CambiarContrasenna" />
-          <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_ContarRespuestasPorGrupo" />
-          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_DevolverObservacionesPorGrupo" />
-          <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_DatosModel.Store.SP_ExistenciaCorreo" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_DatosModel.Store.SP_ModificarPersona" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
