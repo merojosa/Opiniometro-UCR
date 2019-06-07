@@ -59,10 +59,8 @@ namespace Opiniometro_WebApp.Controllers
         {
             ObjectParameter exito = new ObjectParameter("Resultado", 0);
             db.SP_LoginUsuario(usuario.CorreoInstitucional, usuario.Contrasena, exito);
-            var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
 
-            string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email)
-                                                .Select(c => c.Value).SingleOrDefault();
+            string correo_autenticado = IdentidadManager.obtener_correo_actual();
 
             // Recibir el perfil por default
 
@@ -78,8 +76,7 @@ namespace Opiniometro_WebApp.Controllers
 
                     /*
                     // Agregar roles.
-                    new Claim(ClaimTypes.Role, "Estudiante"),
-                    new Claim(ClaimTypes.Role, "AnotherRole"),
+                    new Claim(ClaimTypes.Role, "Estudiante")
                     */
                     },
                     DefaultAuthenticationTypes.ApplicationCookie);
@@ -109,14 +106,16 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult CerrarSesion()
         {
-            // Elimino datos de la sesion.
+            // En caso de que no exista sesion, no tiene por que hacer algo.
+            if(IdentidadManager.verificar_sesion(this))
+            {
+                string correo = IdentidadManager.obtener_correo_actual();   // Obtengo el correo para obtener la sesion.
+                ((IdentidadManager)Session[correo]).limpiar_permisos();     // Limpio los permisos.
+                Session.Remove(correo);                                     // Remuevo la sesion.
+            }
+
+            // Elimino cookies.
             Request.GetOwinContext().Authentication.SignOut(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie);
-
-            // Obtengo los permisos del correo actual.
-            var permisos_usuario = (IdentidadManager)Session[IdentidadManager.obtener_correo_actual()];
-
-            if(permisos_usuario != null)
-                permisos_usuario.limpiar_permisos();    // Elimino los permisos.
 
             // Como no esta loggeado, se tiene que redigir a login para volver a hacerlo.
             return RedirectToAction("Login");
@@ -212,9 +211,12 @@ namespace Opiniometro_WebApp.Controllers
             return contrasenna.ToString();
         }
 
-        public ActionResult Permisos()
+        public ActionResult PruebaHtml()
         {
-            return View();
+            if (IdentidadManager.verificar_sesion(this))
+                return View();
+            else
+                return RedirectToAction("Login");
         }
     }
 }

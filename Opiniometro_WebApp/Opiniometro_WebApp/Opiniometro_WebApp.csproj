@@ -424,7 +424,7 @@
     <Content Include="Views\Categoria\Details.cshtml" />
     <Content Include="Views\Categoria\Edit.cshtml" />
     <Content Include="Views\Categoria\Index.cshtml" />
-    <Content Include="Views\Auth\Permisos.cshtml" />
+    <Content Include="Views\Auth\PruebaHtml.cshtml" />
     <Content Include="Views\CrearFormulario\AsignarPreguntas.cshtml" />
   </ItemGroup>
   <ItemGroup>

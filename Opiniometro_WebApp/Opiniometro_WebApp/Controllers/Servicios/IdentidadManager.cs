@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
+using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers.Servicios
@@ -36,7 +37,7 @@ namespace Opiniometro_WebApp.Controllers.Servicios
 
             string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email).Select(c => c.Value).SingleOrDefault();
 
-            if(correo_autenticado != null)
+            if (correo_autenticado != null)
             {
                 limpiar_permisos();
 
@@ -94,6 +95,19 @@ namespace Opiniometro_WebApp.Controllers.Servicios
                 return false;
             else
                 return true;
+        }
+
+        public static bool verificar_sesion(Controller controller)
+        {
+            // Si no tiene permisos, el usuario tiene que loggearse nuevamente para obtenerlos.
+            if(controller.Session[obtener_correo_actual()] != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
