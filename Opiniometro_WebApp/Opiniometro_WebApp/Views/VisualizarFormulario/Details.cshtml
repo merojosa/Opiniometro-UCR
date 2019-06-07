@@ -84,33 +84,43 @@
                                                 <a>Resultados</a> @*Aqui se ingresa el grafico y desde aqui se mostrarian las observaciones posteriormente, acordarse de ponder una condicion si el tipo de pregunta posee grafico o no*@
                                             }
 
-                                            <div class="panel-group" id="accordion3_@seccion_counter">
+                                                <div class="panel-group" id="accordion3_@seccion_counter">
 
-                                                @if (seccion.Item.TieneObservacion == observation)
-                                                {
-                                                    <div class="panel panel-default">
-                                                        <div class="panel-heading">
-                                                            <h4 class="panel-title">
-                                                                <a data-toggle="collapse" data-parent="#accordion3_@seccion_counter" href="#collapseThreeTwo_@seccion_counter">
-                                                                    Observaciones @*Aqui se muestran las observaciones relacionadas a una pregunta, si la pregunta es tipo texto estas cuentas como las respuestas*@
-                                                                </a>
-                                                            </h4>
-                                                        </div>
-                                                        <div id="collapseThreeTwo_@seccion_counter" class="panel-collapse collapse">
-                                                            <div class="panel-body">
+                                                    @if (seccion.Item.TieneObservacion == observation)
+                                                    {
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading">
+                                                                <h4 class="panel-title">
+                                                                    <a data-toggle="collapse" data-parent="#accordion3_@seccion_counter" href="#collapseThreeTwo_@seccion_counter">
+                                                                        Observaciones @*Aqui se muestran las observaciones relacionadas a una preguntas*@
+                                                                    </a>
+                                                                </h4>
+                                                            </div>
+                                                            <div id="collapseThreeTwo_@seccion_counter" class="panel-collapse collapse">
+                                                                <div class="panel-body">
 
-                                                                @foreach (var item in Model.Conformado_Item_Sec_Form)
-                                                                {
-                                                                    @Html.DisplayFor(model => item.Item.Responde)
+                                                                    @foreach (var item in Model.Conformado_Item_Sec_Form)
+                                                                    {
+                                                                        @Html.DisplayFor(model => item.Item.Responde)
 
-                                                                    @*Se ocupa encontrar la forma de devolver las observaciones por pregunta*@
-                                                                }
+                                                                        @*Se ocupa encontrar la forma de devolver las observaciones por pregunta*@
+                                                                    }
 
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                }
-                                            </div>
+                                                    }
+
+                                                    else
+                                                    {
+                                                        @foreach (var item in Model.Conformado_Item_Sec_Form)
+                                                        {
+                                                            @Html.DisplayFor(model => item.Item.Responde)
+
+                                                            @*Se ocupa encontrar la forma de devolver las respuetas para una pregunta tipo texto*@
+                                                        }
+                                                    }
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
