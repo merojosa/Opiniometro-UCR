@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Opiniometro_WebApp.Models.Formulario>
+@using Opiniometro_WebApp.Controllers
 
 @{
     ViewBag.Title = "Formularios";
@@ -32,7 +33,8 @@
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.CodigoFormulario }) |
+                <input type="button" value="Asignar preguntas" class="btn btn-secondary" id="botonNuevaSeccion" onclick="accionBotonAsignarPregunta()" />
+                @*@Html.ActionLink("Asignar Preguntas", "AsignarPreguntas", "CrearFormulario",null, new { CodForm=item.CodigoFormulario }) |*@
                 @*@Html.ActionLink("Details", "Details", new { id=item.CodigoFormulario }) |*@
                 @*@Html.ActionLink("Delete", "Delete", new { id=item.CodigoFormulario })*@
             </td>
@@ -44,5 +46,8 @@
 <script>
         function accionBotonCrearNueva() {
             document.location = '@Url.Action("Create")';
+        }
+        function accionBotonAsignarPregunta() {
+            document.location = '@Url.Action("AsignarPreguntas", "CrearFormulario")';
         }
 </script>
