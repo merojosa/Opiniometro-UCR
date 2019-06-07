@@ -14,7 +14,7 @@ namespace Opiniometro_WebApp.Models
     
     public partial class Texto_Libre
     {
-        public int ItemId { get; set; }
+        public string ItemId { get; set; }
     
         public virtual Item Item { get; set; }
     }
