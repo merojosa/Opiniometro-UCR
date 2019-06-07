@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Item>
+
+@{
+    ViewBag.Title = "Banco de Preguntas";
+}
+
+<h2>Banco de Preguntas</h2>
+
+<p>
+    <input type="submit" value="Crear Nueva Pregunta" class="btn btn-secondary"  id="botonNuevaPregunta" onclick="location.href = 'http://localhost:51103/Item/create'" />
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Número")
+            @*@Html.DisplayNameFor(model => model.ItemId)*@
+        </th>
+        <th>
+            @Html.Label("Planteamiento de la pregunta")
+            @*@Html.DisplayNameFor(model => model.TextoPregunta)*@
+        </th>
+        <th>
+            @Html.Label("Categoría")
+            @*@Html.DisplayNameFor(model => model.Categoria)*@
+        </th>
+        <th>
+            @Html.Label("Tiene Observación")
+            @*@Html.DisplayNameFor(model => model.TieneObservacion)*@
+        </th>
+
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TextoPregunta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Categoria )
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TieneObservacion )
+        </td>
+
+
+        <td>
+           @* @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }) |*@
+            @Html.ActionLink("Vista Previa", "Details", new { id = item.ItemId }) 
+           @* @Html.ActionLink("Delete", "Delete", new { id = item.ItemId })*@
+        </td>
+    </tr>
+}
+
+</table>

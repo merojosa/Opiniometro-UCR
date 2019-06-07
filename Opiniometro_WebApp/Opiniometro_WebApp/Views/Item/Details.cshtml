@@ -1,0 +1,57 @@
+﻿@model Opiniometro_WebApp.Models.Item
+
+@{
+    ViewBag.Title = "Vista Previa";
+}
+
+<h2>Vista Previa</h2>
+
+
+
+<div>
+    <dl class="dl-horizontal">
+        <dd>
+            @Html.DisplayFor(model => model.TextoPregunta)
+        </dd>
+        <dd>
+            <input type="checkbox" name="Si" value='Si'> Si<br>
+            <input type="checkbox" name="No" value='No'> No<br>
+            <input type="checkbox" name="NoSe" value='NoSe'> No se/No respondo/No aplica<br>
+        </dd>
+        <dd>
+            <textarea name="comentarioAdicional" rows="5" cols="40">Escriba su comentario aqui</textarea>
+        </dd>
+    </dl>
+</div>
+
+
+<script language="javascript">
+    if (model.TipoPregunta == 1) {
+        <textarea name="descripcion" rows="5" cols="40">Escriba su respuesta aqui</textarea>
+    }
+    if (model.TipoPregunta == 3) {
+        <textarea name="descripcion" rows="5" cols="40">Si/No</textarea>
+    }
+    if (model.TieneObservacion == 1) {
+        <textarea name="descripcion" rows="5" cols="40">Escriba su respuesta aqui</textarea>
+    }
+</script>
+
+<script>
+    function seleccionarTieneObservacion()
+    {
+        if (model.TieneObservacion == 1) {
+            <textarea name="descripcion" rows="5" cols="40">Escriba su respuesta aqui</textarea>
+        }
+    }
+</script>
+
+
+
+
+
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.ItemID }) |*@
+    @Html.ActionLink("Volver", "Index")
+</p>
+
