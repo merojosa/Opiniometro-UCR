@@ -299,7 +299,7 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tiene_Usuario_Perfil_Enfasis.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Unidad_Academica.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
