@@ -27,8 +27,8 @@
     <div class="form-group">
         @Html.Label("Tipo Pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-
             @Html.DropDownListFor(model => model.TipoPregunta, new SelectList(ViewBag.TipoPreguntaItems, "Value", "Text"), "Seleccione")
+            @Html.ValidationMessageFor(model => model.TipoPregunta, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -55,6 +55,7 @@
         @Html.Label("Tiene Observación", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.TieneObservacion, new SelectList(ViewBag.BooleanItems, "Value", "Text"), "Seleccione")
+            @Html.ValidationMessageFor(model => model.TieneObservacion, "", new { @class = "text-danger" })
         </div>
     </div>
 
