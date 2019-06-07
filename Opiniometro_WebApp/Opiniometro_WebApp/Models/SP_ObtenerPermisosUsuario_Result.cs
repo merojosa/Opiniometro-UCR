@@ -10,10 +10,11 @@
 namespace Opiniometro_WebApp.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class C__RefactorLog
+    public partial class SP_ObtenerPermisosUsuario_Result
     {
-        public System.Guid OperationKey { get; set; }
+        public string SiglaCarrera { get; set; }
+        public byte NumeroEnfasis { get; set; }
+        public short IdPermiso { get; set; }
     }
 }
