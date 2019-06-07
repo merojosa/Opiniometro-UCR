@@ -9,8 +9,8 @@ using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
-using Microsoft.SqlServer.Dts;
-using Microsoft.SqlServer.Dts.Runtime;
+//using Microsoft.SqlServer.Dts;
+//using Microsoft.SqlServer.Dts.Runtime;
 
 
 namespace Opiniometro_WebApp.Controllers
@@ -36,9 +36,10 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public ActionResult CargarArchivo(HttpPostedFileBase postedFile)
         {
-            if (postedFile != null && postedFile.ContentLength > 0)
+            if (postedFile != null)
             {
-                if (postedFile.FileName.EndsWith(".csv"))
+                string path = Server.MapPath("~/App_Data/ArchivosCargados/");
+                if (!Directory.Exists(path))
                 {
                     try
                     {
@@ -60,20 +61,10 @@ namespace Opiniometro_WebApp.Controllers
                     }
                     
                 }
-                else
-                {
-                    ViewBag.Message = "Error, este formato de archivo no es compatible";
-                }
-                
+
+                postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
+                ViewBag.Message = "File uploaded successfully.";
             }
-
-
-            //Codigo para procesamiento de archivo por ssis
-
-            //Invocar paquete de intregracion, pasar como parametro el nombre del archivo cargado.
-
-            //Application app = new Application()
-            
 
             return View();
         }
