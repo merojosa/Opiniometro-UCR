@@ -15,10 +15,10 @@ namespace Opiniometro_WebApp.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class Opiniometro_DatosEntities : DbContext
+    public partial class OpiniometroDatosEntities : DbContext
     {
-        public Opiniometro_DatosEntities()
-            : base("name=Opiniometro_DatosEntities")
+        public OpiniometroDatosEntities()
+            : base("name=OpiniometroDatosEntities")
         {
         }
     
@@ -27,6 +27,7 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Administrativo> Administrativo { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
@@ -59,19 +60,6 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Tiene_Usuario_Perfil_Enfasis> Tiene_Usuario_Perfil_Enfasis { get; set; }
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<Administrativo> Administrativo { get; set; }
-        public virtual DbSet<Estudiante> Estudiante { get; set; }
-        public virtual DbSet<Perfil> Perfil { get; set; }
-        public virtual DbSet<Permiso> Permiso { get; set; }
-        public virtual DbSet<Persona> Persona { get; set; }
-        public virtual DbSet<Profesor> Profesor { get; set; }
-        public virtual DbSet<TelefonoPersona> TelefonoPersona { get; set; }
-        public virtual DbSet<Empadronado> Empadronado { get; set; }
-        public virtual DbSet<Formulario_Respuesta> Formulario_Respuesta { get; set; }
-        public virtual DbSet<Imparte> Imparte { get; set; }
-        public virtual DbSet<Matricula> Matricula { get; set; }
-        public virtual DbSet<Posee_Enfasis_Perfil_Permiso> Posee_Enfasis_Perfil_Permiso { get; set; }
-        public virtual DbSet<Responde> Responde { get; set; }
     
         public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)
         {
