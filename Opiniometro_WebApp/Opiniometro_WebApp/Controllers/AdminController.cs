@@ -101,7 +101,7 @@ namespace Opiniometro_WebApp.Controllers
             // Autogenero una contrasenna generica.
             string contrasenna_generada = GenerarContrasenna(10);
 
-            ObjectParameter exito = new ObjectParameter("Resultado", 0);
+            //ObjectParameter exito = new ObjectParameter("Resultado", 0);
             db.SP_AgregarPersonaUsuario(info.CorreoInstitucional, contrasenna_generada, info.Cedula, info.Nombre, info.PrimerApellido, info.SegundoApellido, info.Direccion);
             //EXEC SP_AgregarPersonaUsuario @Correo @Contrasenna @Cedula @Nombre @Apellido1 @Apellido2 @Direccion
 
