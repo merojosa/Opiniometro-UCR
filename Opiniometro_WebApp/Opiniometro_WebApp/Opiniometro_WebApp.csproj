@@ -19,8 +19,10 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressAnonymousAuthentication>
+    </IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>
+    </IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
@@ -46,6 +48,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.SqlServer.ManagedDTS, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicrosoftSqlServerManagedDTS.4.0.12\lib\net45\Microsoft.SqlServer.ManagedDTS.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -170,21 +175,20 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\AsignarFormulariosController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
-    <Compile Include="Controllers\Conformado_Item_Sec_FormController.cs" />
+    <Compile Include="Controllers\CrearFormularioController.cs" />
     <Compile Include="Controllers\FormularioController.cs" />
     <Compile Include="Controllers\Formulario_RespuestaController.cs" />
+    <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
-    <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\Servicios\IdPermiso.cs" />
+    <Compile Include="Controllers\Servicios\IdentidadManager.cs" />
     <Compile Include="Controllers\RespondeController.cs" />
     <Compile Include="Controllers\LogInPerfilesController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
-    <Compile Include="Controllers\Seleccion_UnicaController.cs" />
-    <Compile Include="Controllers\Texto_LibreController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -204,10 +208,8 @@
     <Compile Include="Models\Conformado_Item_Sec_Form.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CrearFormularioModel.cs" />
     <Compile Include="Models\Curso.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\C__RefactorLog.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DatosEstudiante_Result.cs">
@@ -294,6 +296,9 @@
     <Compile Include="Models\Seleccion_Unica.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TelefonoPersona.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
@@ -301,6 +306,9 @@
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tiene_Grupo_Formulario.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tiene_Usuario_Perfil_Enfasis.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Unidad_Academica.cs">
@@ -334,6 +342,7 @@
       <DependentUpon>OpiniometroModel.edmx</DependentUpon>
       <LastGenOutput>OpiniometroModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\AsignarFormularios.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\OpiniometroModel.edmx">
@@ -392,11 +401,6 @@
     <Content Include="Views\Seccion\Details.cshtml" />
     <Content Include="Views\Seccion\Edit.cshtml" />
     <Content Include="Views\Seccion\Index.cshtml" />
-    <Content Include="Views\Texto_Libre\Create.cshtml" />
-    <Content Include="Views\Texto_Libre\Delete.cshtml" />
-    <Content Include="Views\Texto_Libre\Details.cshtml" />
-    <Content Include="Views\Texto_Libre\Edit.cshtml" />
-    <Content Include="Views\Texto_Libre\Index.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Create.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Delete.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Details.cshtml" />
@@ -409,11 +413,6 @@
     <Content Include="Views\Shared\_Collapsible.cshtml" />
     <Content Include="Views\Auth\Recuperar.cshtml" />
     <Content Include="Views\Shared\Auth\BarraLogin.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
     <Content Include="Views\Admin\VerPersonas.cshtml" />
     <Content Include="Views\Admin\CrearUsuario.cshtml" />
     <Content Include="Views\LogInPerfiles\Index.cshtml" />
@@ -425,11 +424,8 @@
     <Content Include="Views\Categoria\Details.cshtml" />
     <Content Include="Views\Categoria\Edit.cshtml" />
     <Content Include="Views\Categoria\Index.cshtml" />
-    <Content Include="Views\Conformado_Item_Sec_Form\Create.cshtml" />
-    <Content Include="Views\Conformado_Item_Sec_Form\Delete.cshtml" />
-    <Content Include="Views\Conformado_Item_Sec_Form\Details.cshtml" />
-    <Content Include="Views\Conformado_Item_Sec_Form\Edit.cshtml" />
-    <Content Include="Views\Conformado_Item_Sec_Form\Index.cshtml" />
+    <Content Include="Views\Auth\Permisos.cshtml" />
+    <Content Include="Views\CrearFormulario\AsignarPreguntas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
@@ -451,6 +447,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

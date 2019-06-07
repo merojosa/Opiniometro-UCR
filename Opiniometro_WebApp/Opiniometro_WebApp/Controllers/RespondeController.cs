@@ -1,4 +1,4 @@
-﻿/*
+﻿
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -27,7 +27,7 @@ namespace Opiniometro_WebApp.Controllers
 
         //public void ObtenerSeccionesFormulario(string CodigoFormulario)
         //{
-        //    //System.Data.Entity.Core.Objects.ObjectResult<string> Secciones = db.Obtener_Secciones_Por_Formulario(CodigoFormulario);
+        //    System.Data.Entity.Core.Objects.ObjectResult<string> Secciones = db.Obtener_Secciones_Por_Formulario(CodigoFormulario);
         //}
 
         //GET: Responde/Details/5
@@ -49,7 +49,7 @@ namespace Opiniometro_WebApp.Controllers
         //REQ: Que exista la conexion a la base de datos.
         //MOD:--
         [HttpGet]
-        private int ObtenerCantidadRespuestasPorPregunta(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, int itemId, string respuesta)
+        private int ObtenerCantidadRespuestasPorPregunta(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId, string respuesta)
         {
             ObjectParameter cntRespuestas = new ObjectParameter("cntResp", typeof(int));
             db.SP_ContarRespuestasPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId, respuesta, cntRespuestas);
@@ -63,9 +63,9 @@ namespace Opiniometro_WebApp.Controllers
         //MOD:--
         public ActionResult GraficoPie()
         {
-            decimal x = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", 1, "1");
-            decimal y = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", 1, "2");
-            decimal z = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", 1, "3");
+            decimal x = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", "PRE303", "1");
+            decimal y = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", "PRE303", "2");
+            decimal z = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", "PRE303", "3");
 
             string myGraf =
                 @"<Chart BackColor=""Transparent"" >
@@ -85,13 +85,13 @@ namespace Opiniometro_WebApp.Controllers
         //[HttpGet]
         //private int ObtenerObservaciones(int cursoId)
         //{
-        //    //Parametro para que se guarde el resultado
+        //    Parametro para que se guarde el resultado
         //    ObjectParameter resultado = new ObjectParameter("resultado", typeof(Double));
 
-        //    //Invoca el metodo
+        //    Invoca el metodo
         //    db.ProcObtenerPromedioCurso(cursoId, resultado);
 
-        //    //Devuelve el resultado
+        //    Devuelve el resultado
         //    return Convert.ToDouble(resultado.Value);
 
         //}
@@ -105,4 +105,4 @@ namespace Opiniometro_WebApp.Controllers
             base.Dispose(disposing);
         }
     }
-}*/
+}
