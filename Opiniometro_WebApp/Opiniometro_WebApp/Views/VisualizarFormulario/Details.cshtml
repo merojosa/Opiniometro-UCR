@@ -10,30 +10,38 @@
 {
     <td>
         <h3 style="text-align:left;">
-            @Html.DisplayFor(modelItem => title.Grupo.SiglaCurso)
-            @Html.DisplayFor(modelItem => title.Grupo.Curso.Nombre)
+            Sigla: @Html.DisplayFor(modelItem => title.Grupo.SiglaCurso)
+
             <span style="float:right;">
+                Profesor:
                 @Html.DisplayFor(modelItem => title.Profesor.Persona.Nombre)
                 @Html.DisplayFor(modelItem => title.Profesor.Persona.Apellido1)
                 @Html.DisplayFor(modelItem => title.Profesor.Persona.Apellido2)
             </span>
-        </h3>
-    </td>
 
-    <td>
-        <h3>
-            @Html.DisplayFor(modelItem => title.CodigoFormulario)
-            @Html.DisplayFor(modelItem => title.Formulario.Nombre)
-        </h3>
-    </td>
+            <br><br>
 
-    <td>
-        <h3 style="text-align:left;">
-            Año: @Html.DisplayFor(modelItem => title.Grupo.AnnoGrupo)
-            Semestre: @Html.DisplayFor(modelItem => title.Grupo.SemestreGrupo)
+            Curso: @Html.DisplayFor(modelItem => title.Grupo.Curso.Nombre)
+
             <span style="float:right;">
-                Grupo: @Html.DisplayFor(modelItem => title.Grupo.Numero)
+                Semestre:
+                @Html.DisplayFor(modelItem => title.Grupo.SemestreGrupo)
+                Año:
+                @Html.DisplayFor(modelItem => title.Grupo.AnnoGrupo)
             </span>
+
+            <br><br>
+
+            Formulario:
+            @Html.DisplayFor(modelItem => title.CodigoFormulario)
+
+            @Html.DisplayFor(modelItem => title.Formulario.Nombre)
+
+            <span style="float:right;">
+                Grupo:
+                @Html.DisplayFor(modelItem => title.Grupo.Numero)
+            </span>
+
         </h3>
     </td>
 }
@@ -92,7 +100,7 @@
                                                         <div class="panel-heading">
                                                             <h4 class="panel-title">
                                                                 <a data-toggle="collapse" data-parent="#accordion3_@seccion_counter" href="#collapseThreeTwo_@seccion_counter">
-                                                                    Observaciones @*Aqui se muestran las observaciones relacionadas a una pregunta, si la pregunta es tipo texto estas cuentas como las respuestas*@
+                                                                    Observaciones @*Aqui se muestran las observaciones relacionadas a una preguntas*@
                                                                 </a>
                                                             </h4>
                                                         </div>
@@ -110,6 +118,8 @@
                                                         </div>
                                                     </div>
                                                 }
+
+
                                             </div>
                                         </div>
                                     </div>
