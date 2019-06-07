@@ -3,22 +3,75 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>Opiniómetro@UCR</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+    <!--Barra-->
+    @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
-</html>
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-top:145px" ;>
+        <div class="container">
+            <div class="navbar-header">
+
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Opiniómetro@UCR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        Usuario
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-contentt">
+                        @Html.ActionLink("Ver información de personas", "VerPersonas", "Admin")
+                        @Html.ActionLink("Insertar usuario", "CrearUsuario", "Admin")
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        Evaluaciones
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-contentt">
+                        @Html.ActionLink("Insertar formulario", "Index", "Formulario")
+                        @Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")
+                        @Html.ActionLink("Visualizar resultados de evaluaciones", "Index", "Responde")
+                        @Html.ActionLink("Sección", "Index", "Seccion")
+                        @Html.ActionLink("Ítem", "Index", "Item")   
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+
+
+
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Opiniometro@UCR</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>
+
+    <script>
+        function redirect()
+        {
+            alert("Javasript");
+
+        }
+    </script>

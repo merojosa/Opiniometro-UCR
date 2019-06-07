@@ -10,14 +10,27 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-MERGE INTO Preguntas AS Target
-USING (VALUES
-(1,'Pregunta1', 'SiNo', 'Profesor'),
-(2,'Pregunta2', 'SeleccionUnica', 'Profesor'),
-(3,'Pregunta3', 'SeleccionMultiple', 'Curso')
-)
-AS Source (Numero, [Planteamiento], TipoPregunta, Categoria)
-ON Target.Planteamiento = Source.Planteamiento
-WHEN NOT MATCHED BY TARGET THEN
-INSERT(Numero, Planteamiento, TipoPregunta, Categoria)
-VALUES(Numero, Planteamiento, TipoPregunta, Categoria);
+GO
+CREATE PROCEDURE [dbo].[Obtener_Secciones_Por_Formulario]
+	@ForCod CHAR(6)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT DISTINCT C.TituloSeccion
+	FROM Conformado_Item_Sec_Form C
+	WHERE C.CodigoFormulario = @ForCod
+END
+GO
+
+GO
+CREATE PROCEDURE [dbo].[Obtener_Items_Por_Seccion]
+	@ForCod CHAR(6),
+	@TitSec NVARCHAR(120)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT DISTINCT C.ItemId
+	FROM Conformado_Item_Sec_Form C
+	WHERE C.TituloSeccion = @TitSec AND C.CodigoFormulario = @ForCod
+END
+GO

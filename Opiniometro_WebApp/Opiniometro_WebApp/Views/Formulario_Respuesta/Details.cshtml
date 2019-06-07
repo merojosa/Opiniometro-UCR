@@ -1,0 +1,58 @@
+﻿@model Opiniometro_WebApp.Models.Formulario_Respuesta
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Formulario_Respuesta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Completado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Completado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Formulario.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Formulario.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Grupo.SiglaCurso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Grupo.SiglaCurso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Persona.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Persona.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Profesor.CedulaProfesor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Profesor.CedulaProfesor)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
