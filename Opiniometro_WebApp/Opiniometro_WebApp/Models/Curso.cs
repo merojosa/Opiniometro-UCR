@@ -18,7 +18,6 @@ namespace Opiniometro_WebApp.Models
         public Curso()
         {
             this.Grupo = new HashSet<Grupo>();
-            this.Enfasis = new HashSet<Enfasis>();
         }
     
         public string Sigla { get; set; }
@@ -29,7 +28,5 @@ namespace Opiniometro_WebApp.Models
         public virtual Unidad_Academica Unidad_Academica { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grupo> Grupo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Enfasis> Enfasis { get; set; }
     }
 }
