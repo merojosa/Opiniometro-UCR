@@ -1,0 +1,43 @@
+﻿@model List<Opiniometro_WebApp.Models.Conformado_Item_Sec_Form>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<thead>
+    <tbody>
+        <tr>
+            <td>
+                Codigo: <input type="text" name="inputname" value="ABC123" readonly>
+                Nombre: <input type="text" name="inputname" value="FormularioEnfasis1" readonly>
+
+                <div style="float: right; width: 500px; padding: 15px;">
+                    @Html.Action("preguntasVParcial")
+                </div>
+
+                <div style=" width: 500px; padding:  10px;">
+                    @Html.Action("seccionesVParcial")
+                </div>
+
+                <button>
+                    Añadir pregunta al formulario.
+                </button>
+
+                <div style="float: left; width: 1000px; padding: 50px;">
+                    @Html.Action("SeccionesAsignadas", new { CodForm = "131313"@*item.CodigoFormulario*@})
+                </div>
+
+
+                <div style="clear: both;"></div>
+            </td>
+        </tr>
+    </tbody>
+</thead>
+
+
+
+
+
+
+
+

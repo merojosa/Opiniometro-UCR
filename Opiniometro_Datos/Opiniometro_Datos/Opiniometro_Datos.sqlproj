@@ -88,7 +88,6 @@
     <Build Include="Enfasis.sql" />
     <Build Include="Grupo.sql" />
     <Build Include="Escuela.sql" />
-    <Build Include="Se_Encuentra_Unidad_Enfasis.sql" />
     <Build Include="Fecha_Corte.sql" />
     <Build Include="Tiene_Grupo_Formulario.sql" />
     <Build Include="Formulario.sql" />
@@ -101,7 +100,13 @@
     <None Include="ScriptNuevaPersonaUsuario.sql" />
     <None Include="FiltrarUsuarios.sql" />
     <None Include="Script.EliminarPersona.sql" />
+    <Build Include="Tiene_Usuario_Perfil_Enfasis.sql" />
+    <Build Include="UsuariosStaging.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ScriptGenerarContrasena.sql" />
     <Build Include="Categoria.sql" />
     <Build Include="Opciones_De_Respuestas_Seleccion_Multiple.sql" />
+    <Build Include="Se_Encuentra_Curso_Enfasis.sql" />
   </ItemGroup>
 </Project>

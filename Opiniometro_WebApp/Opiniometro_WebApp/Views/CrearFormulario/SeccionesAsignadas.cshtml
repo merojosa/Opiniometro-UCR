@@ -1,0 +1,46 @@
+﻿@model List<Opiniometro_WebApp.Models.Conformado_Item_Sec_Form>
+
+
+<table class=" table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.Label("Orden")
+            </th>
+            <th>
+                @Html.Label("Título")
+            </th>
+
+
+        </tr>
+        
+    </thead>
+
+    <tbody>
+    @foreach (var seccion in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => seccion.Orden_Seccion)
+            </td>
+            <td>
+                @Html.DisplayFor(model => seccion.TituloSeccion)
+            </td>
+
+
+        </tr>
+
+        <tr>
+            <td></td>
+            <td>
+                @Html.Action("PreguntasAsignadas", new { CodForm = seccion.CodigoFormulario, TituloSecc = seccion.TituloSeccion })
+            </td>
+            
+        </tr>
+    }
+
+    </tbody>
+
+
+</table>
+       

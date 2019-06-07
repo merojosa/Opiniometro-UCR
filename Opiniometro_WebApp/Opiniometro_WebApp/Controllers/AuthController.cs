@@ -13,6 +13,7 @@ using System.Net;
 using System.Text;
 using System.Security.Cryptography;
 using System.Threading;
+using Opiniometro_WebApp.Controllers.Servicios;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -28,7 +29,19 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult Login()
         {
-            return PartialView();
+            var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+            string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email)
+                                                .Select(c => c.Value).SingleOrDefault();
+
+            if (correo_autenticado != null)      // Si esta autenticado, redireccione a Home.
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else                                 // Si no, retorne la vista para el login.
+            {
+                return PartialView();
+            }
         }
 
         /*  
@@ -39,40 +52,76 @@ namespace Opiniometro_WebApp.Controllers
          *  Basado en:
          *  SigIn: https://stackoverflow.com/questions/31584506/how-to-implement-custom-authentication-in-asp-net-mvc-5,
          *  Obtener la identidad desde otro sitio: https://stackoverflow.com/questions/22246538/access-claim-values-in-controller-in-mvc-5
+         *  Manejar cookies: https://stackoverflow.com/questions/3140341/how-to-create-persistent-cookies-in-asp-net
          */
         [HttpPost]
         public ActionResult Login(Usuario usuario)
         {
             ObjectParameter exito = new ObjectParameter("Resultado", 0);
             db.SP_LoginUsuario(usuario.CorreoInstitucional, usuario.Contrasena, exito);
+            var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
 
-            // Si se pudo autenticar.
-            if ((bool)exito.Value == true)
+            string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email)
+                                                .Select(c => c.Value).SingleOrDefault();
+
+            // Recibir el perfil por default
+
+            if (correo_autenticado != null)      // Si esta autenticado
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else if ((bool)exito.Value == true) // Si se pudo autenticar.
             {
                 var identidad = new ClaimsIdentity(
                     new[] {
                     new Claim(ClaimTypes.Email, usuario.CorreoInstitucional)
 
                     /*
-                    // optionally you could add roles if any
-                    new Claim(ClaimTypes.Role, "RoleName"),
+                    // Agregar roles.
+                    new Claim(ClaimTypes.Role, "Estudiante"),
                     new Claim(ClaimTypes.Role, "AnotherRole"),
                     */
                     },
                     DefaultAuthenticationTypes.ApplicationCookie);
-                Thread.CurrentPrincipal = new ClaimsPrincipal(identidad);
 
+                Thread.CurrentPrincipal = new ClaimsPrincipal(identidad);
                 HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, identidad);
+
+                // Guardar el objeto IdentidadManager, la llave seria el correo, el cual es unico para cada usuario.
+                Session[usuario.CorreoInstitucional] = new IdentidadManager();
+
                 return RedirectToAction("Index", "LogInPerfiles");
             }
-            else
+            else    // Si hay error en la autenticacion
             {
                 ModelState.AddModelError(string.Empty, "");
+
                 // Devolverse a la misma pagina de Login informando de que hay un error de autenticacion.
                 return PartialView(usuario);
             }
 
         }
+
+         /*  
+         *  EFECTO: cierra la sesion actual.
+         *  REQUIERE: n/a
+         *  MODIFICA: las cookies eliminandolas
+         */
+        public ActionResult CerrarSesion()
+        {
+            // Elimino datos de la sesion.
+            Request.GetOwinContext().Authentication.SignOut(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie);
+
+            // Obtengo los permisos del correo actual.
+            var permisos_usuario = (IdentidadManager)Session[IdentidadManager.obtener_correo_actual()];
+
+            if(permisos_usuario != null)
+                permisos_usuario.limpiar_permisos();    // Elimino los permisos.
+
+            // Como no esta loggeado, se tiene que redigir a login para volver a hacerlo.
+            return RedirectToAction("Login");
+        }
+
         /*
          * GET: Auth/Recuperar
          * EFECTO: retornar vista parcial, la cual implica que no se despliega _Layout de la carpeta Shared.
@@ -161,6 +210,11 @@ namespace Opiniometro_WebApp.Controllers
                 contrasenna.Append(caracteres_aleatorios[byte_aleatorio % (caracteres_aleatorios.Length)]);
             }
             return contrasenna.ToString();
+        }
+
+        public ActionResult Permisos()
+        {
+            return View();
         }
     }
 }
