@@ -7,7 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-
+using Opiniometro_WebApp.Models;
+using Moq;
 
 namespace Opiniometro_WebAppTest.Controllers
 {
@@ -15,11 +16,29 @@ namespace Opiniometro_WebAppTest.Controllers
     public class Formulario_RespuestaControllerTest
     {
         [TestMethod]
-        public void TestIndex1()
+        public void TestIndexViewDataMock()
         {
             //ARRANGE
-            var mockDb = new Mock<Opiniometro_WebApp>
+            var formularios = new List<Formulario_Respuesta>
+            {
+                new Formulario_Respuesta()
+                    { Fecha = DateTime.Now, CodigoFormulario = , CedulaPersona = , CedulaProfesor =,AnnoGrupo =,SemestreGrupo =, NumeroGrupo=, SiglaGrupo =, Completado= },
+                new Formulario_Respuesta()
+                    { Fecha = DateTime.Now, CodigoFormulario = , CedulaPersona = , CedulaProfesor =,AnnoGrupo =,SemestreGrupo =, NumeroGrupo=, SiglaGrupo =, Completado= },
+                new Formulario_Respuesta()
+                    { Fecha = DateTime.Now, CodigoFormulario = , CedulaPersona = , CedulaProfesor =,AnnoGrupo =,SemestreGrupo =, NumeroGrupo=, SiglaGrupo =, Completado= },
+                new Formulario_Respuesta()
+                    { Fecha = DateTime.Now, CodigoFormulario = , CedulaPersona = , CedulaProfesor =,AnnoGrupo =,SemestreGrupo =, NumeroGrupo=, SiglaGrupo =, Completado= },
+                new Formulario_Respuesta()
+                    { Fecha = DateTime.Now, CodigoFormulario = , CedulaPersona = , CedulaProfesor =,AnnoGrupo =,SemestreGrupo =, NumeroGrupo=, SiglaGrupo =, Completado= }
+            }.AsQueryable();
+            var mockDbSet = new Mock<DbSet<Formulario_Respuesta>>();
+
+            var mockDb = new Mock<Opiniometro_DatosEntities>();
+
+            //mockDb.Setup(m => m.Formulario_Respuesta.Find()).Returns(Formulario_Respuesta);
             //Act
+
             //ASSERT
         }
     }
