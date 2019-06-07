@@ -25,7 +25,6 @@
         <EntityTypeShape EntityType="Opiniometro_DatosModel.Permiso" Width="1.5" PointX="9" PointY="24.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Opiniometro_DatosModel.Persona" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Opiniometro_DatosModel.Posee_Enfasis_Perfil_Permiso" Width="1.5" PointX="11.25" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Opiniometro_DatosModel.Preguntas" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Opiniometro_DatosModel.Profesor" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Opiniometro_DatosModel.Responde" Width="1.5" PointX="10.5" PointY="12.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Opiniometro_DatosModel.Seccion" Width="1.5" PointX="8.25" PointY="17.375" IsExpanded="true" />

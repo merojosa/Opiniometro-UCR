@@ -37,7 +37,7 @@
                             ICollection<String> perfiles = HomeController.ObtenerPerfiles();
                             foreach (var perfil in perfiles)
                             {                         
-                                @Html.ActionLink(perfil, "Index", "Home", new { perfilActual = perfil })
+                                @Html.ActionLink(perfil, "Index", "Home", new { perfilActual = "Estudiante" })
                             }
 
                         }

@@ -216,15 +216,6 @@
           <Property Name="IdPerfil" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="IdPermiso" Type="tinyint" Nullable="false" />
         </EntityType>
-        <EntityType Name="Preguntas">
-          <Key>
-            <PropertyRef Name="Numero" />
-          </Key>
-          <Property Name="Numero" Type="int" Nullable="false" />
-          <Property Name="Planteamiento" Type="nvarchar" MaxLength="120" Nullable="false" />
-          <Property Name="TipoPregunta" Type="nchar" MaxLength="30" />
-          <Property Name="Categoria" Type="nchar" MaxLength="30" />
-        </EntityType>
         <EntityType Name="Profesor">
           <Key>
             <PropertyRef Name="CedulaProfesor" />
@@ -840,6 +831,9 @@
         <Function Name="NombrePersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ObtenerPerfilPorDefecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correo" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="ObtenerPerfilUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correo" Type="nvarchar" Mode="In" />
         </Function>
@@ -915,7 +909,6 @@
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responde" EntityType="Self.Responde" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Se_Encuentra_Unidad_Enfasis" EntityType="Self.Se_Encuentra_Unidad_Enfasis" Schema="dbo" store:Type="Tables" />
@@ -1329,15 +1322,6 @@
           <Property Name="IdPermiso" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Perfil" Relationship="Self.FK_PoseeEnfasisPerfil_Perfil" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Perfil" />
           <NavigationProperty Name="Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Permiso" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Permiso" />
-        </EntityType>
-        <EntityType Name="Preguntas">
-          <Key>
-            <PropertyRef Name="Numero" />
-          </Key>
-          <Property Name="Numero" Type="Int32" Nullable="false" />
-          <Property Name="Planteamiento" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TipoPregunta" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
-          <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="Profesor">
           <Key>
@@ -1940,7 +1924,6 @@
           <EntitySet Name="Permiso" EntityType="Self.Permiso" />
           <EntitySet Name="Persona" EntityType="Self.Persona" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" />
-          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" />
           <EntitySet Name="Responde" EntityType="Self.Responde" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" />
@@ -2153,7 +2136,10 @@
           </FunctionImport>
           <EntitySet Name="C__RefactorLog" EntityType="Opiniometro_DatosModel.C__RefactorLog" />
           <FunctionImport Name="ObtenerPerfilUsuario" ReturnType="Collection(String)">
-            <Parameter Name="correo" Mode="In" Type="String" />
+          <Parameter Name="correo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerPerfilPorDefecto" ReturnType="Collection(String)">
+          <Parameter Name="correo" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DatosEstudiante_Result">
@@ -2369,16 +2355,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Preguntas">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Preguntas">
-              <MappingFragment StoreEntitySet="Preguntas">
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
-                <ScalarProperty Name="Planteamiento" ColumnName="Planteamiento" />
-                <ScalarProperty Name="TipoPregunta" ColumnName="TipoPregunta" />
-                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Profesor">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Profesor">
               <MappingFragment StoreEntitySet="Profesor">
@@ -2531,6 +2507,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="ObtenerPerfilUsuario" FunctionName="Opiniometro_DatosModel.Store.ObtenerPerfilUsuario" />
+          <FunctionImportMapping FunctionImportName="ObtenerPerfilPorDefecto" FunctionName="Opiniometro_DatosModel.Store.ObtenerPerfilPorDefecto" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
