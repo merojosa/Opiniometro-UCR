@@ -18,6 +18,7 @@ namespace Opiniometro_WebApp.Controllers
          //GET: Item
         public ActionResult Index()
         {
+           
             var item = db.Item.Include(i => i.Seleccion_Unica).Include(i => i.Texto_Libre);
             return View(item.ToList());
         }
