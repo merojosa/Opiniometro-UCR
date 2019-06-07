@@ -11,17 +11,17 @@ Post-Deployment Script Template
 */
 
 -- Eliminar Persona
-IF OBJECT_ID('SP_EliminarPersona') IS NOT NULL
-	DROP PROCEDURE SP_EliminarPersona
+IF OBJECT_ID('SP_DesactivarUsuario') IS NOT NULL
+	DROP PROCEDURE SP_DesactivarUsuario
 GO
-CREATE PROCEDURE SP_EliminarPersona
+CREATE PROCEDURE SP_DesactivarUsuario
 	@CedulaBusqueda		VARCHAR(9)
 AS
 BEGIN
-	DELETE
-	FROM Persona
+	Update Usuario
+	SET Activo = 0
 	WHERE Cedula = @CedulaBusqueda;
 END
 GO
 
-EXEC SP_EliminarPersona @CedulaBusqueda = '987654321';
+EXEC SP_DesactivarUsuario @CedulaBusqueda = '987654321';

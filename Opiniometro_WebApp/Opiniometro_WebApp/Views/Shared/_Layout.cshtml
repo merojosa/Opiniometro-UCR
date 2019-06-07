@@ -1,16 +1,15 @@
 ﻿<!DOCTYPE html>
 <html>
-
-
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opiniómetro@UCR</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
 </head>
 <body>
+
     <!--Barra-->
     @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
 
@@ -32,9 +31,9 @@
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-contentt">
-                        <a onclick="location.href='@Url.Action("VerPersonas", "Admin")';return false;">Ver información de Personas</a>
-                        <a onclick="location.href='@Url.Action("CrearUsuario", "Admin")';return false;">Insertar Usuario</a>
-                        <!--<a onclick="location.href='@Url.Action("Index", "LogInPerfiles")';return false;">orueba perfiles Usuario</a>-->
+                        @Html.ActionLink("Ver información de personas", "VerPersonas", "Admin")
+                        @Html.ActionLink("Insertar usuario", "CrearUsuario", "Admin")
+                        @Html.ActionLink("Cargar archivo", "CargarArchivo", "Administrador")
                     </div>
                 </div>
                 <div class="dropdown">
@@ -43,40 +42,38 @@
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-contentt">
-                        <a onclick="location.href='@Url.Action("Index", "Formulario")';return false;"> Insertar Formulario </a>
-                        @Html.ActionLink("Asignar Formulario", "Index", "AsignarFormularios")
-                        <!--<a onclick="location.href='@Url.Action("Index", "AsignarFomularios")';return false;">Asignar Formulario</a>-->
-                        <a onclick="location.href='@Url.Action("Index", "Responde")';return false;">Visualizar resultados evaluaciones</a>
-                        <a onclick="location.href='@Url.Action("Index", "Seccion")';return false;"> Seccion </a>
-                        <a onclick="location.href='@Url.Action("Index", "Item")';return false;">Item </a>
-                    </div>
+                        @Html.ActionLink("Insertar formulario", "Index", "Formulario")
+                        @Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")
+                        @Html.ActionLink("Visualizar resultados de evaluaciones", "Index", "Responde")
+                        @Html.ActionLink("Sección", "Index", "Seccion")
+                        @Html.ActionLink("Ítem", "Index", "Item")
                     </div>
                 </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Cerrar sesión", "CerrarSesion", "Auth")</li>
+                </ul>
             </div>
-        </nav>
-
-
-
-
-
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - Opiniometro@UCR</p>
-            </footer>
         </div>
+    </nav>
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-    </body>
-    </html>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Opiniometro@UCR</p>
+        </footer>
+    </div>
 
-    <script>
-        function redirect()
-        {
-            alert("Javasript");
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
 
-        }
-    </script>
+<script>
+    function redirect()
+    {
+        alert("Javasript");
+
+    }
+</script>
