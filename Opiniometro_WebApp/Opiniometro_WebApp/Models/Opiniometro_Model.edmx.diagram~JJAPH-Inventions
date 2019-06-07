@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="302a93cb6d8f42eab3c11f8440196707" Name="Diagram1">
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.C__RefactorLog" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Administrativo" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Carrera" Width="1.5" PointX="1.5" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Ciclo_Lectivo" Width="1.5" PointX="3.75" PointY="25.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Conformado_Item_Sec_Form" Width="1.5" PointX="13.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Curso" Width="1.5" PointX="3.75" PointY="28.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Empadronado" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Enfasis" Width="1.5" PointX="1.5" PointY="25.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Estudiante" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Facultad" Width="1.5" PointX="1.5" PointY="35.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Fecha_Corte" Width="1.5" PointX="6" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Formulario" Width="1.5" PointX="6" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Formulario_Respuesta" Width="1.5" PointX="8.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Grupo" Width="1.5" PointX="6" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Imparte" Width="1.5" PointX="5.25" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Item" Width="1.5" PointX="8.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Matricula" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Perfil" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Permiso" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Persona" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Posee_Enfasis_Perfil_Permiso" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Preguntas" Width="1.5" PointX="5.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Profesor" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Responde" Width="1.5" PointX="10.5" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Seccion" Width="1.5" PointX="8.25" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Seleccion_Unica" Width="1.5" PointX="10.5" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.TelefonoPersona" Width="1.5" PointX="3" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Texto_Libre" Width="1.5" PointX="10.5" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Tiene_Grupo_Formulario" Width="1.5" PointX="8.25" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Unidad_Academica" Width="1.5" PointX="1.5" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Usuario" Width="1.5" PointX="3" PointY="21.75" IsExpanded="true" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Adm_Per" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Car_Uni" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Enf_Car" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Gru_Cic" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Con_For" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Con_Ite" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Con_Sec" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Cur_Uni" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Gru_Cur" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Empadronado_Estudiante" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Est_Per" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Matricula_Profesor" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Fac_Uni" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Tie_Fec" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_ForRes_For" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Tie_For" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_ForRes_Gru" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_ForRes_Per" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_ForRes_Pro" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Res_ForRes" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Tie_Gru" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Imparte_Profesor" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Res_Ite" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Sel_Uni_Ite" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Tex_Ite" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_PoseeEnfasisPerfil_Perfil" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_PoseeEnfasisPerfil_Permiso" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Pro_Per" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Tel_Per" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Usu_Per" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Res_Sec" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.Escuela" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.Se_Encuentra_Unidad_Enfasis" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
