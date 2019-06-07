@@ -40,14 +40,24 @@ namespace Opiniometro_WebApp.Controllers
             {
                 if (postedFile.FileName.EndsWith(".csv"))
                 {
-                    string path = Server.MapPath("~/App_Data/ArchivosCargados/");
-                    if (!Directory.Exists(path))
+                    try
                     {
-                        Directory.CreateDirectory(path);
-                    }
+                        string path = Server.MapPath("~/App_Data/ArchivosCargados/");
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
 
-                    postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
-                    ViewBag.Message = "File uploaded successfully.";
+                        postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
+                        ViewBag.Message = "Archivo cargado con exito.";
+                    }
+                    catch (Exception e)
+                    {
+
+                        ViewBag.Message = "Error al cargar el archivo. Intente de nuevo mas tarde.";
+                        Console.WriteLine(e);
+                        throw;
+                    }
                     
                 }
                 else
@@ -67,5 +77,47 @@ namespace Opiniometro_WebApp.Controllers
 
             return View();
         }
+
+        private DataTable ProcesarArchivo(string path)
+        {
+            DataTable filasValidas = crearTablaUsuarios();
+            DataTable filasInvalidas = crearTablaUsuarios();
+            string fila = String.Empty;
+
+
+
+            using (StreamReader streamCsv = new StreamReader(path))
+            {
+                
+            }
+
+            return filasInvalidas;
+        }
+
+        private DataTable crearTablaUsuarios()
+        {
+            DataTable dt = new DataTable();
+
+            //dt.Columns.Add("cedula", System.Type.GetType("System.Data.SqlTypes.SqlChars"));
+            dt.Columns.Add("cedula", typeof(System.Data.SqlTypes.SqlChars));
+            dt.Columns.Add("perfil", typeof(System.Data.SqlTypes.SqlChars));
+            dt.Columns.Add("carne", typeof(SystemException));
+            dt.Columns.Add("nombre1", typeof(string));
+            dt.Columns.Add("nombre2", typeof(string));
+            dt.Columns.Add("apellido1", typeof(string));
+            dt.Columns.Add("apellido2", typeof(string));
+            dt.Columns.Add("correo", typeof(string));
+            dt.Columns.Add("provincia", typeof(string));
+            dt.Columns.Add("canton", typeof(string));
+            dt.Columns.Add("distrito", typeof(string));
+            dt.Columns.Add("direccion_exacta", typeof(string));
+            dt.Columns.Add("sigla_carrera", typeof(string));
+            dt.Columns.Add("enfasis", typeof(string));
+
+            return dt;
+        }
+
     }
+
+    
 }
