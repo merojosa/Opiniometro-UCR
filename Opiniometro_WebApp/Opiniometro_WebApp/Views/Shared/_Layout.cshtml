@@ -9,10 +9,9 @@
 
 </head>
 <body>
-    @using Opiniometro_WebApp.Controllers
-
     <!--Barra-->
     @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
+    @using Opiniometro_WebApp.Controllers;
 
     <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-top:145px" ;>
         <div class="container">
@@ -35,9 +34,10 @@
                     <div class="dropdown-contentt">
                         @{
                             ICollection<String> perfiles = HomeController.ObtenerPerfiles();
-                            foreach (var perfil in perfiles)
-                            {                         
-                                @Html.ActionLink(perfil, "Index", "Home", new { perfilActual = "Estudiante" })
+                            ViewBag.perfiles = perfiles;
+                            for (int contador = 0; contador < perfiles.Count; contador++)
+                            {
+                                <a onclick="location.href='@Url.Action("Index", "Home", new { perfilActual = @ViewBag.perfiles[contador] })'">@ViewBag.perfiles[contador]</a>
                             }
 
                         }
