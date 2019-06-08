@@ -529,17 +529,20 @@ VALUES	(1, 'Hacer todo'),
 
 INSERT INTO Perfil
 VALUES	('Estudiante', 'Default'),
-		('Admin', 'Default')
+		('Admin', 'Default'),
+		('Profesor', 'Default')
 
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
-		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin')
+		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
+		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor')
 
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
 		(1, 'SC-01234', 'Estudiante', 4),
 		(0, 'SC-01234', 'Admin', 1),
-		(0, 'SC-01234', 'Admin', 2)
+		(0, 'SC-01234', 'Admin', 2),
+		(0, 'SC-01234', 'Profesor', 2)
 
 --select de prueba para la cnt de respuestas
 --SELECT e.Respuesta, COUNT(e.Respuesta) as cantidadRespuestas
