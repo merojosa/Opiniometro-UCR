@@ -1,16 +1,17 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
-using System.IO;
-using System.Threading.Tasks;
 //using Microsoft.SqlServer.Dts;
 //using Microsoft.SqlServer.Dts.Runtime;
+
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -21,9 +22,10 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Administrador
         public ActionResult Index()
         {
-            
+
             return View();
         }
+
 
         [HttpGet]
         public ActionResult CargarArchivo()
@@ -41,7 +43,6 @@ namespace Opiniometro_WebApp.Controllers
                 {
                     try
                     {
-                        string path = Server.MapPath("~/App_Data/ArchivosCargados/");
                         if (!Directory.Exists(path))
                         {
                             Directory.CreateDirectory(path);
@@ -57,7 +58,7 @@ namespace Opiniometro_WebApp.Controllers
                         Console.WriteLine(e);
                         throw;
                     }
-                    
+
                 }
 
                 postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
@@ -72,10 +73,14 @@ namespace Opiniometro_WebApp.Controllers
             DataTable filasValidas = crearTablaUsuarios();
             DataTable filasInvalidas = crearTablaUsuarios();
             string fila = String.Empty;
+
+
+
             using (StreamReader streamCsv = new StreamReader(path))
             {
-                
+
             }
+
             return filasInvalidas;
         }
 
@@ -98,7 +103,11 @@ namespace Opiniometro_WebApp.Controllers
             dt.Columns.Add("direccion_exacta", typeof(string));
             dt.Columns.Add("sigla_carrera", typeof(string));
             dt.Columns.Add("enfasis", typeof(string));
+
             return dt;
         }
-    } 
+
+    }
+
+
 }

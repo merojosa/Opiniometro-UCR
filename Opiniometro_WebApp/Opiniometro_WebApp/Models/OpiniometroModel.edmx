@@ -4,7 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OpiniometroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Opiniometro_DatosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="Administrativo">
           <Key>
             <PropertyRef Name="CedulaAdministrativo" />
@@ -20,6 +26,12 @@
           <Property Name="Nombre" Type="nvarchar" MaxLength="125" Nullable="false" />
           <Property Name="CodigoUnidadAcademica" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="NombreCategoria" />
+          </Key>
+          <Property Name="NombreCategoria" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <EntityType Name="Ciclo_Lectivo">
           <Key>
             <PropertyRef Name="Anno" />
@@ -34,7 +46,7 @@
             <PropertyRef Name="CodigoFormulario" />
             <PropertyRef Name="TituloSeccion" />
           </Key>
-          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="ItemId" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="CodigoFormulario" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="TituloSeccion" Type="nvarchar" MaxLength="120" Nullable="false" />
           <Property Name="NombreFormulario" Type="varchar" MaxLength="30" />
@@ -154,11 +166,11 @@
           <Key>
             <PropertyRef Name="ItemId" />
           </Key>
-          <Property Name="ItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TextoPregunta" Type="varchar" MaxLength="120" Nullable="false" />
-          <Property Name="Categoria" Type="varchar" MaxLength="30" />
+          <Property Name="ItemId" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="TextoPregunta" Type="nvarchar" MaxLength="120" Nullable="false" />
           <Property Name="TieneObservacion" Type="bit" />
           <Property Name="TipoPregunta" Type="tinyint" Nullable="false" />
+          <Property Name="NombreCategoria" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Matricula">
           <Key>
@@ -174,6 +186,16 @@
           <Property Name="Anno" Type="char" MaxLength="4" Nullable="false" />
           <Property Name="Semestre" Type="tinyint" Nullable="false" />
         </EntityType>
+        <EntityType Name="Opciones_De_Respuestas_Seleccion_Unica">
+          <Key>
+            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="Orden" />
+            <PropertyRef Name="OpcionRespuesta" />
+          </Key>
+          <Property Name="ItemId" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="OpcionRespuesta" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
         <EntityType Name="Perfil">
           <Key>
             <PropertyRef Name="Id" />
@@ -185,7 +207,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="tinyint" Nullable="false" />
+          <Property Name="Id" Type="smallint" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="Persona">
@@ -208,7 +230,7 @@
           <Property Name="NumeroEnfasis" Type="tinyint" Nullable="false" />
           <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="IdPerfil" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="IdPermiso" Type="tinyint" Nullable="false" />
+          <Property Name="IdPermiso" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="Profesor">
           <Key>
@@ -229,7 +251,7 @@
             <PropertyRef Name="NumeroGrupoResp" />
             <PropertyRef Name="SiglaGrupoResp" />
           </Key>
-          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="ItemId" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="TituloSeccion" Type="nvarchar" MaxLength="120" Nullable="false" />
           <Property Name="FechaRespuesta" Type="date" Nullable="false" />
           <Property Name="CodigoFormularioResp" Type="char" MaxLength="6" Nullable="false" />
@@ -264,7 +286,7 @@
           <Key>
             <PropertyRef Name="ItemId" />
           </Key>
-          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="ItemId" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="IsaLikeDislike" Type="bit" />
         </EntityType>
         <EntityType Name="TelefonoPersona">
@@ -279,7 +301,7 @@
           <Key>
             <PropertyRef Name="ItemId" />
           </Key>
-          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="ItemId" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="Tiene_Grupo_Formulario">
           <Key>
@@ -328,11 +350,6 @@
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ValorRandom">
-          <Property Name="randomvalue" Type="varbinary" MaxLength="8000" />
-        </EntityType>-->
         <Association Name="FK_Adm_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Administrativo" Type="Self.Administrativo" Multiplicity="0..1" />
@@ -593,6 +610,18 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Ite_Cat">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="NombreCategoria" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="NombreCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Matricula_Profesor">
           <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="1" />
           <End Role="Matricula" Type="Self.Matricula" Multiplicity="*" />
@@ -616,6 +645,18 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Dependent Role="Tiene_Usuario_Perfil_Enfasis">
               <PropertyRef Name="NumeroEnfasis" />
               <PropertyRef Name="SiglaCarrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpcResMul_Ite">
+          <End Role="Seleccion_Unica" Type="Self.Seleccion_Unica" Multiplicity="1" />
+          <End Role="Opciones_De_Respuestas_Seleccion_Unica" Type="Self.Opciones_De_Respuestas_Seleccion_Unica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seleccion_Unica">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Opciones_De_Respuestas_Seleccion_Unica">
+              <PropertyRef Name="ItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -836,6 +877,15 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
         <Function Name="ObtenerPerfilUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correo" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="SF_GenerarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
+        <Function Name="SP_AgregarPersonaUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cedula" Type="char" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
+          <Parameter Name="Apellido2" Type="nvarchar" Mode="In" />
+          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SP_AgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
@@ -852,7 +902,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Parameter Name="semestreGrupo" Type="tinyint" Mode="In" />
           <Parameter Name="numeroGrupo" Type="tinyint" Mode="In" />
           <Parameter Name="siglaCurso" Type="char" Mode="In" />
-          <Parameter Name="itemId" Type="int" Mode="In" />
+          <Parameter Name="itemId" Type="nvarchar" Mode="In" />
           <Parameter Name="respuesta" Type="nvarchar" Mode="In" />
           <Parameter Name="cntResp" Type="int" Mode="InOut" />
         </Function>
@@ -863,7 +913,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Parameter Name="semestreGrupo" Type="tinyint" Mode="In" />
           <Parameter Name="numeroGrupo" Type="tinyint" Mode="In" />
           <Parameter Name="siglaCurso" Type="char" Mode="In" />
-          <Parameter Name="itemId" Type="int" Mode="In" />
+          <Parameter Name="itemId" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SP_ExistenciaCorreo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
@@ -885,9 +935,11 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
         <Function Name="SP_ObtenerPermisosUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
         </Function>
-        <EntityContainer Name="OpiniometroModelStoreContainer">
+        <EntityContainer Name="Opiniometro_DatosModelStoreContainer">
+          <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ciclo_Lectivo" EntityType="Self.Ciclo_Lectivo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Conformado_Item_Sec_Form" EntityType="Self.Conformado_Item_Sec_Form" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
@@ -903,6 +955,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <EntitySet Name="Imparte" EntityType="Self.Imparte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Matricula" EntityType="Self.Matricula" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Opciones_De_Respuestas_Seleccion_Unica" EntityType="Self.Opciones_De_Respuestas_Seleccion_Unica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Perfil" EntityType="Self.Perfil" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
@@ -1002,6 +1055,10 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <End Role="Profesor" EntitySet="Profesor" />
             <End Role="Imparte" EntitySet="Imparte" />
           </AssociationSet>
+          <AssociationSet Name="FK_Ite_Cat" Association="Self.FK_Ite_Cat">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
           <AssociationSet Name="FK_Matricula_Profesor" Association="Self.FK_Matricula_Profesor">
             <End Role="Estudiante" EntitySet="Estudiante" />
             <End Role="Matricula" EntitySet="Matricula" />
@@ -1009,6 +1066,10 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <AssociationSet Name="FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" Association="Self.FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpcResMul_Ite" Association="Self.FK_OpcResMul_Ite">
+            <End Role="Seleccion_Unica" EntitySet="Seleccion_Unica" />
+            <End Role="Opciones_De_Respuestas_Seleccion_Unica" EntitySet="Opciones_De_Respuestas_Seleccion_Unica" />
           </AssociationSet>
           <AssociationSet Name="FK_PoseeEnfasisPerfil_Perfil" Association="Self.FK_PoseeEnfasisPerfil_Perfil">
             <End Role="Perfil" EntitySet="Perfil" />
@@ -1074,7 +1135,13 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="OpiniometroModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Opiniometro_DatosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="Guid" Nullable="false" />
+        </EntityType>
         <EntityType Name="Administrativo">
           <Key>
             <PropertyRef Name="CedulaAdministrativo" />
@@ -1093,6 +1160,13 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <NavigationProperty Name="Unidad_Academica" Relationship="Self.FK_Car_Uni" FromRole="Carrera" ToRole="Unidad_Academica" />
           <NavigationProperty Name="Enfasis" Relationship="Self.FK_Enf_Car" FromRole="Carrera" ToRole="Enfasis" />
         </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="NombreCategoria" />
+          </Key>
+          <Property Name="NombreCategoria" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Ite_Cat" FromRole="Categoria" ToRole="Item" />
+        </EntityType>
         <EntityType Name="Ciclo_Lectivo">
           <Key>
             <PropertyRef Name="Anno" />
@@ -1108,7 +1182,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <PropertyRef Name="CodigoFormulario" />
             <PropertyRef Name="TituloSeccion" />
           </Key>
-          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="ItemId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CodigoFormulario" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="TituloSeccion" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NombreFormulario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
@@ -1128,6 +1202,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Property Name="CodigoUnidad" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Unidad_Academica" Relationship="Self.FK_Cur_Uni" FromRole="Curso" ToRole="Unidad_Academica" />
           <NavigationProperty Name="Grupo" Relationship="Self.FK_Gru_Cur" FromRole="Curso" ToRole="Grupo" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.Se_Encuentra_Curso_Enfasis" FromRole="Curso" ToRole="Enfasis" />
         </EntityType>
         <EntityType Name="Empadronado">
           <Key>
@@ -1249,11 +1324,12 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Key>
             <PropertyRef Name="ItemId" />
           </Key>
-          <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TextoPregunta" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ItemId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TextoPregunta" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TieneObservacion" Type="Boolean" />
           <Property Name="TipoPregunta" Type="Byte" Nullable="false" />
+          <Property Name="NombreCategoria" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Categoria" Relationship="Self.FK_Ite_Cat" FromRole="Item" ToRole="Categoria" />
           <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_Ite" FromRole="Item" ToRole="Conformado_Item_Sec_Form" />
           <NavigationProperty Name="Responde" Relationship="Self.FK_Res_Ite" FromRole="Item" ToRole="Responde" />
           <NavigationProperty Name="Seleccion_Unica" Relationship="Self.FK_Sel_Uni_Ite" FromRole="Item" ToRole="Seleccion_Unica" />
@@ -1274,6 +1350,17 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Property Name="Semestre" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Estudiante" Relationship="Self.FK_Matricula_Profesor" FromRole="Matricula" ToRole="Estudiante" />
         </EntityType>
+        <EntityType Name="Opciones_De_Respuestas_Seleccion_Unica">
+          <Key>
+            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="Orden" />
+            <PropertyRef Name="OpcionRespuesta" />
+          </Key>
+          <Property Name="ItemId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Orden" Type="Int16" Nullable="false" />
+          <Property Name="OpcionRespuesta" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Seleccion_Unica" Relationship="Self.FK_OpcResMul_Ite" FromRole="Opciones_De_Respuestas_Seleccion_Unica" ToRole="Seleccion_Unica" />
+        </EntityType>
         <EntityType Name="Perfil">
           <Key>
             <PropertyRef Name="Id" />
@@ -1287,7 +1374,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Byte" Nullable="false" />
+          <Property Name="Id" Type="Int16" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Posee_Enfasis_Perfil_Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Permiso" FromRole="Permiso" ToRole="Posee_Enfasis_Perfil_Permiso" />
         </EntityType>
@@ -1317,7 +1404,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Property Name="NumeroEnfasis" Type="Byte" Nullable="false" />
           <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdPerfil" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdPermiso" Type="Byte" Nullable="false" />
+          <Property Name="IdPermiso" Type="Int16" Nullable="false" />
           <NavigationProperty Name="Perfil" Relationship="Self.FK_PoseeEnfasisPerfil_Perfil" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Perfil" />
           <NavigationProperty Name="Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Permiso" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Permiso" />
         </EntityType>
@@ -1343,7 +1430,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <PropertyRef Name="NumeroGrupoResp" />
             <PropertyRef Name="SiglaGrupoResp" />
           </Key>
-          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="ItemId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TituloSeccion" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="FechaRespuesta" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="CodigoFormularioResp" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
@@ -1373,9 +1460,10 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Key>
             <PropertyRef Name="ItemId" />
           </Key>
-          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="ItemId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsaLikeDislike" Type="Boolean" />
           <NavigationProperty Name="Item" Relationship="Self.FK_Sel_Uni_Ite" FromRole="Seleccion_Unica" ToRole="Item" />
+          <NavigationProperty Name="Opciones_De_Respuestas_Seleccion_Unica" Relationship="Self.FK_OpcResMul_Ite" FromRole="Seleccion_Unica" ToRole="Opciones_De_Respuestas_Seleccion_Unica" />
         </EntityType>
         <EntityType Name="TelefonoPersona">
           <Key>
@@ -1390,7 +1478,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Key>
             <PropertyRef Name="ItemId" />
           </Key>
-          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="ItemId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Item" Relationship="Self.FK_Tex_Ite" FromRole="Texto_Libre" ToRole="Item" />
         </EntityType>
         <EntityType Name="Tiene_Grupo_Formulario">
@@ -1485,6 +1573,18 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </Principal>
             <Dependent Role="Enfasis">
               <PropertyRef Name="SiglaCarrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ite_Cat">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="NombreCategoria" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="NombreCategoria" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1796,6 +1896,18 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OpcResMul_Ite">
+          <End Role="Seleccion_Unica" Type="Self.Seleccion_Unica" Multiplicity="1" />
+          <End Role="Opciones_De_Respuestas_Seleccion_Unica" Type="Self.Opciones_De_Respuestas_Seleccion_Unica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seleccion_Unica">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Opciones_De_Respuestas_Seleccion_Unica">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
           <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
           <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
@@ -1904,6 +2016,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" />
           <EntitySet Name="Ciclo_Lectivo" EntityType="Self.Ciclo_Lectivo" />
           <EntitySet Name="Conformado_Item_Sec_Form" EntityType="Self.Conformado_Item_Sec_Form" />
           <EntitySet Name="Curso" EntityType="Self.Curso" />
@@ -1918,6 +2031,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <EntitySet Name="Imparte" EntityType="Self.Imparte" />
           <EntitySet Name="Item" EntityType="Self.Item" />
           <EntitySet Name="Matricula" EntityType="Self.Matricula" />
+          <EntitySet Name="Opciones_De_Respuestas_Seleccion_Unica" EntityType="Self.Opciones_De_Respuestas_Seleccion_Unica" />
           <EntitySet Name="Perfil" EntityType="Self.Perfil" />
           <EntitySet Name="Permiso" EntityType="Self.Permiso" />
           <EntitySet Name="Persona" EntityType="Self.Persona" />
@@ -1943,6 +2057,10 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <AssociationSet Name="FK_Enf_Car" Association="Self.FK_Enf_Car">
             <End Role="Carrera" EntitySet="Carrera" />
             <End Role="Enfasis" EntitySet="Enfasis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ite_Cat" Association="Self.FK_Ite_Cat">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Item" EntitySet="Item" />
           </AssociationSet>
           <AssociationSet Name="FK_Gru_Cic" Association="Self.FK_Gru_Cic">
             <End Role="Ciclo_Lectivo" EntitySet="Ciclo_Lectivo" />
@@ -2036,6 +2154,10 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <End Role="Item" EntitySet="Item" />
             <End Role="Texto_Libre" EntitySet="Texto_Libre" />
           </AssociationSet>
+          <AssociationSet Name="FK_OpcResMul_Ite" Association="Self.FK_OpcResMul_Ite">
+            <End Role="Seleccion_Unica" EntitySet="Seleccion_Unica" />
+            <End Role="Opciones_De_Respuestas_Seleccion_Unica" EntitySet="Opciones_De_Respuestas_Seleccion_Unica" />
+          </AssociationSet>
           <AssociationSet Name="FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" Association="Self.FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
@@ -2076,12 +2198,20 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
-          <FunctionImport Name="DatosEstudiante" ReturnType="Collection(OpiniometroModel.DatosEstudiante_Result)">
-            <Parameter Name="Cedula" Mode="In" Type="String" />
+          <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_DatosModel.DatosEstudiante_Result)">
+          <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(OpiniometroModel.MostrarEstudiantes_Result)" />
+          <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_DatosModel.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
           <Parameter Name="Cedula" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_AgregarPersonaUsuario">
+            <Parameter Name="Cedula" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Apellido1" Mode="In" Type="String" />
+            <Parameter Name="Apellido2" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_AgregarUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -2099,7 +2229,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="semestreGrupo" Mode="In" Type="Byte" />
             <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
             <Parameter Name="siglaCurso" Mode="In" Type="String" />
-            <Parameter Name="itemId" Mode="In" Type="Int32" />
+            <Parameter Name="itemId" Mode="In" Type="String" />
             <Parameter Name="respuesta" Mode="In" Type="String" />
             <Parameter Name="cntResp" Mode="InOut" Type="Int32" />
           </FunctionImport>
@@ -2110,7 +2240,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="semestreGrupo" Mode="In" Type="Byte" />
             <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
             <Parameter Name="siglaCurso" Mode="In" Type="String" />
-            <Parameter Name="itemId" Mode="In" Type="Int32" />
+            <Parameter Name="itemId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ExistenciaCorreo">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -2129,15 +2259,14 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="Apellido2" Mode="In" Type="String" />
             <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(Byte)">
+          <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(Opiniometro_DatosModel.SP_ObtenerPermisosUsuario_Result)">
           <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="C__RefactorLog" EntityType="Opiniometro_DatosModel.C__RefactorLog" />
-          <FunctionImport Name="ObtenerPerfilUsuario" ReturnType="Collection(String)">
-          <Parameter Name="correo" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="ObtenerPerfilPorDefecto" ReturnType="Collection(String)">
-          <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerPerfilUsuario" ReturnType="Collection(String)">
+            <Parameter Name="correo" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DatosEstudiante_Result">
@@ -2151,20 +2280,26 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Property Type="String" Name="Apellido2" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Carne" Nullable="false" MaxLength="6" />
         </ComplexType>
-        <EntityType Name="C__RefactorLog">
-          <Key>
-            <PropertyRef Name="OperationKey" />
-          </Key>
-          <Property Name="OperationKey" Type="Guid" Nullable="false" />
-        </EntityType>
+        <ComplexType Name="SP_ObtenerPermisosUsuario_Result">
+          <Property Type="String" Name="SiglaCarrera" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="NumeroEnfasis" Nullable="false" />
+          <Property Type="Int16" Name="IdPermiso" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="OpiniometroModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities">
+        <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities">
+          <EntitySetMapping Name="C__RefactorLog">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.C__RefactorLog">
+              <MappingFragment StoreEntitySet="__RefactorLog">
+                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Administrativo">
-            <EntityTypeMapping TypeName="OpiniometroModel.Administrativo">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Administrativo">
               <MappingFragment StoreEntitySet="Administrativo">
                 <ScalarProperty Name="CedulaAdministrativo" ColumnName="CedulaAdministrativo" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
@@ -2172,7 +2307,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Carrera">
-            <EntityTypeMapping TypeName="OpiniometroModel.Carrera">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Carrera">
               <MappingFragment StoreEntitySet="Carrera">
                 <ScalarProperty Name="Sigla" ColumnName="Sigla" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2181,14 +2316,14 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Categoria">
-            <EntityTypeMapping TypeName="OpiniometroModel.Categoria">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Categoria">
               <MappingFragment StoreEntitySet="Categoria">
                 <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ciclo_Lectivo">
-            <EntityTypeMapping TypeName="OpiniometroModel.Ciclo_Lectivo">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Ciclo_Lectivo">
               <MappingFragment StoreEntitySet="Ciclo_Lectivo">
                 <ScalarProperty Name="Anno" ColumnName="Anno" />
                 <ScalarProperty Name="Semestre" ColumnName="Semestre" />
@@ -2196,7 +2331,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Conformado_Item_Sec_Form">
-            <EntityTypeMapping TypeName="OpiniometroModel.Conformado_Item_Sec_Form">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Conformado_Item_Sec_Form">
               <MappingFragment StoreEntitySet="Conformado_Item_Sec_Form">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
@@ -2208,7 +2343,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Curso">
-            <EntityTypeMapping TypeName="OpiniometroModel.Curso">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Curso">
               <MappingFragment StoreEntitySet="Curso">
                 <ScalarProperty Name="Sigla" ColumnName="Sigla" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2218,7 +2353,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Empadronado">
-            <EntityTypeMapping TypeName="OpiniometroModel.Empadronado">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Empadronado">
               <MappingFragment StoreEntitySet="Empadronado">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
@@ -2227,7 +2362,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Enfasis">
-            <EntityTypeMapping TypeName="OpiniometroModel.Enfasis">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Enfasis">
               <MappingFragment StoreEntitySet="Enfasis">
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
@@ -2235,7 +2370,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Estudiante">
-            <EntityTypeMapping TypeName="OpiniometroModel.Estudiante">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Estudiante">
               <MappingFragment StoreEntitySet="Estudiante">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
                 <ScalarProperty Name="Carne" ColumnName="Carne" />
@@ -2243,14 +2378,14 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Facultad">
-            <EntityTypeMapping TypeName="OpiniometroModel.Facultad">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Facultad">
               <MappingFragment StoreEntitySet="Facultad">
                 <ScalarProperty Name="CodigoUnidadAcademica" ColumnName="CodigoUnidadAcademica" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Fecha_Corte">
-            <EntityTypeMapping TypeName="OpiniometroModel.Fecha_Corte">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Fecha_Corte">
               <MappingFragment StoreEntitySet="Fecha_Corte">
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
                 <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
@@ -2258,7 +2393,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Formulario">
-            <EntityTypeMapping TypeName="OpiniometroModel.Formulario">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Formulario">
               <MappingFragment StoreEntitySet="Formulario">
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2266,7 +2401,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Formulario_Respuesta">
-            <EntityTypeMapping TypeName="OpiniometroModel.Formulario_Respuesta">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Formulario_Respuesta">
               <MappingFragment StoreEntitySet="Formulario_Respuesta">
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
@@ -2281,7 +2416,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Grupo">
-            <EntityTypeMapping TypeName="OpiniometroModel.Grupo">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Grupo">
               <MappingFragment StoreEntitySet="Grupo">
                 <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -2291,7 +2426,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Imparte">
-            <EntityTypeMapping TypeName="OpiniometroModel.Imparte">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Imparte">
               <MappingFragment StoreEntitySet="Imparte">
                 <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -2302,18 +2437,18 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Item">
-            <EntityTypeMapping TypeName="OpiniometroModel.Item">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Item">
               <MappingFragment StoreEntitySet="Item">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="TextoPregunta" ColumnName="TextoPregunta" />
-                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
                 <ScalarProperty Name="TieneObservacion" ColumnName="TieneObservacion" />
                 <ScalarProperty Name="TipoPregunta" ColumnName="TipoPregunta" />
+                <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Matricula">
-            <EntityTypeMapping TypeName="OpiniometroModel.Matricula">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Matricula">
               <MappingFragment StoreEntitySet="Matricula">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -2324,7 +2459,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Opciones_De_Respuestas_Seleccion_Unica">
-            <EntityTypeMapping TypeName="OpiniometroModel.Opciones_De_Respuestas_Seleccion_Unica">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Opciones_De_Respuestas_Seleccion_Unica">
               <MappingFragment StoreEntitySet="Opciones_De_Respuestas_Seleccion_Unica">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
@@ -2333,7 +2468,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Perfil">
-            <EntityTypeMapping TypeName="OpiniometroModel.Perfil">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Perfil">
               <MappingFragment StoreEntitySet="Perfil">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
@@ -2341,7 +2476,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Permiso">
-            <EntityTypeMapping TypeName="OpiniometroModel.Permiso">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Permiso">
               <MappingFragment StoreEntitySet="Permiso">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -2349,7 +2484,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Persona">
-            <EntityTypeMapping TypeName="OpiniometroModel.Persona">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Persona">
               <MappingFragment StoreEntitySet="Persona">
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2360,7 +2495,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Posee_Enfasis_Perfil_Permiso">
-            <EntityTypeMapping TypeName="OpiniometroModel.Posee_Enfasis_Perfil_Permiso">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Posee_Enfasis_Perfil_Permiso">
               <MappingFragment StoreEntitySet="Posee_Enfasis_Perfil_Permiso">
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
@@ -2370,14 +2505,14 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Profesor">
-            <EntityTypeMapping TypeName="OpiniometroModel.Profesor">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Profesor">
               <MappingFragment StoreEntitySet="Profesor">
                 <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Responde">
-            <EntityTypeMapping TypeName="OpiniometroModel.Responde">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Responde">
               <MappingFragment StoreEntitySet="Responde">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="TituloSeccion" ColumnName="TituloSeccion" />
@@ -2396,7 +2531,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Seccion">
-            <EntityTypeMapping TypeName="OpiniometroModel.Seccion">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Seccion">
               <MappingFragment StoreEntitySet="Seccion">
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -2404,7 +2539,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Seleccion_Unica">
-            <EntityTypeMapping TypeName="OpiniometroModel.Seleccion_Unica">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Seleccion_Unica">
               <MappingFragment StoreEntitySet="Seleccion_Unica">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="IsaLikeDislike" ColumnName="IsaLikeDislike" />
@@ -2412,7 +2547,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TelefonoPersona">
-            <EntityTypeMapping TypeName="OpiniometroModel.TelefonoPersona">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.TelefonoPersona">
               <MappingFragment StoreEntitySet="TelefonoPersona">
                 <ScalarProperty Name="CedulaPersona" ColumnName="CedulaPersona" />
                 <ScalarProperty Name="NumeroTelefono" ColumnName="NumeroTelefono" />
@@ -2420,14 +2555,14 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Texto_Libre">
-            <EntityTypeMapping TypeName="OpiniometroModel.Texto_Libre">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Texto_Libre">
               <MappingFragment StoreEntitySet="Texto_Libre">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tiene_Grupo_Formulario">
-            <EntityTypeMapping TypeName="OpiniometroModel.Tiene_Grupo_Formulario">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Tiene_Grupo_Formulario">
               <MappingFragment StoreEntitySet="Tiene_Grupo_Formulario">
                 <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -2440,7 +2575,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tiene_Usuario_Perfil_Enfasis">
-            <EntityTypeMapping TypeName="OpiniometroModel.Tiene_Usuario_Perfil_Enfasis">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Tiene_Usuario_Perfil_Enfasis">
               <MappingFragment StoreEntitySet="Tiene_Usuario_Perfil_Enfasis">
                 <ScalarProperty Name="CorreoInstitucional" ColumnName="CorreoInstitucional" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
@@ -2450,7 +2585,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Unidad_Academica">
-            <EntityTypeMapping TypeName="OpiniometroModel.Unidad_Academica">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Unidad_Academica">
               <MappingFragment StoreEntitySet="Unidad_Academica">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2458,7 +2593,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="OpiniometroModel.Usuario">
+            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
                 <ScalarProperty Name="CorreoInstitucional" ColumnName="CorreoInstitucional" />
                 <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
@@ -2468,7 +2603,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Escuela" TypeName="OpiniometroModel.Escuela" StoreEntitySet="Escuela">
+          <AssociationSetMapping Name="Escuela" TypeName="Opiniometro_DatosModel.Escuela" StoreEntitySet="Escuela">
             <EndProperty Name="Facultad">
               <ScalarProperty Name="CodigoUnidadAcademica" ColumnName="CodigoFacultad" />
             </EndProperty>
@@ -2476,7 +2611,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Se_Encuentra_Curso_Enfasis" TypeName="OpiniometroModel.Se_Encuentra_Curso_Enfasis" StoreEntitySet="Se_Encuentra_Curso_Enfasis">
+          <AssociationSetMapping Name="Se_Encuentra_Curso_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Curso_Enfasis" StoreEntitySet="Se_Encuentra_Curso_Enfasis">
             <EndProperty Name="Curso">
               <ScalarProperty Name="Sigla" ColumnName="SiglaCurso" />
             </EndProperty>
@@ -2485,18 +2620,18 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="OpiniometroModel.Store.DatosEstudiante">
+          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_DatosModel.Store.DatosEstudiante">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.DatosEstudiante_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.DatosEstudiante_Result">
                 <ScalarProperty Name="Nombre_Completo" ColumnName="Nombre Completo" />
                 <ScalarProperty Name="Carne" ColumnName="Carne" />
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="OpiniometroModel.Store.MostrarEstudiantes">
+          <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_DatosModel.Store.MostrarEstudiantes">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.MostrarEstudiantes_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.MostrarEstudiantes_Result">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
                 <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
@@ -2505,6 +2640,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="Opiniometro_DatosModel.Store.NombrePersona" />
+          <FunctionImportMapping FunctionImportName="SP_AgregarPersonaUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarPersonaUsuario" />
           <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarUsuario" />
           <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="Opiniometro_DatosModel.Store.SP_CambiarContrasenna" />
           <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_ContarRespuestasPorGrupo" />
@@ -2512,16 +2648,17 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_DatosModel.Store.SP_ExistenciaCorreo" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />
           <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_DatosModel.Store.SP_ModificarPersona" />
-          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_ObtenerPermisosUsuario" />
-          <EntitySetMapping Name="C__RefactorLog">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.C__RefactorLog">
-              <MappingFragment StoreEntitySet="__RefactorLog">
-                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="ObtenerPerfilUsuario" FunctionName="Opiniometro_DatosModel.Store.ObtenerPerfilUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_ObtenerPermisosUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.SP_ObtenerPermisosUsuario_Result">
+                <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
+                <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
+                <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ObtenerPerfilPorDefecto" FunctionName="Opiniometro_DatosModel.Store.ObtenerPerfilPorDefecto" />
+          <FunctionImportMapping FunctionImportName="ObtenerPerfilUsuario" FunctionName="Opiniometro_DatosModel.Store.ObtenerPerfilUsuario" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -14,7 +14,7 @@ namespace Opiniometro_WebApp.Models
     
     public partial class Responde
     {
-        public int ItemId { get; set; }
+        public string ItemId { get; set; }
         public string TituloSeccion { get; set; }
         public System.DateTime FechaRespuesta { get; set; }
         public string CodigoFormularioResp { get; set; }

@@ -14,7 +14,7 @@ namespace Opiniometro_WebApp.Models
     
     public partial class Conformado_Item_Sec_Form
     {
-        public int ItemId { get; set; }
+        public string ItemId { get; set; }
         public string CodigoFormulario { get; set; }
         public string TituloSeccion { get; set; }
         public string NombreFormulario { get; set; }
