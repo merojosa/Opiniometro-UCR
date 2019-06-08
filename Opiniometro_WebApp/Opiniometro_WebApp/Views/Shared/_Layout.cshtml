@@ -1,25 +1,57 @@
-﻿@using Opiniometro_WebApp.Controllers.Servicios;
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opiniómetro@UCR</title>
     @Styles.Render("~/Content/css")
-    <!--Para usar la clase login-error del archivo estilos-propios.css-->
-    @Styles.Render("~/Content/estilos-propios.css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
     <!--Barra-->
     @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
+    @using Opiniometro_WebApp.Controllers.Servicios;
     @using Opiniometro_WebApp.Controllers;
 
     @if (IdentidadManager.usuario_loggeado() == true)
     {
-        <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-top:144px" ;>
+        <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-top:190px" ;>
             <div class="container">
+                <nav class="navbar navbar-default-barra-login navbar-fixed-top" style="margin-top:145px">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <div style="width: 870px; overflow: hidden" text-align="center">
+
+                                <ul class="nav navbar-nav navbar" style="margin-left:51px">
+                                    <li>@Html.ActionLink("Bienvenido", "Index", "Home")</li>
+                                </ul>
+
+                                <div class="dropdown">
+                                    <button class="dropbtn">
+                                        Seleccione un perfil
+                                    </button>
+                                    <div class="dropdown-contentt">
+                                        @{
+                                            ICollection<String> perfiles = PerfilController.ObtenerPerfiles();
+                                            ViewBag.perfiles = perfiles;
+                                            for (int contador = 0; contador < perfiles.Count; contador++)
+                                            {
+                                                <a href="@Url.Action("CambioPerfil", "Perfil", new { perfil_elegido = @ViewBag.perfiles[contador] })">@ViewBag.perfiles[contador]</a>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+
+                                <ul class="nav navbar-nav navbar">
+                                    <li>@Html.ActionLink("Cerrar sesión", "CerrarSesion", "Auth")</li>
+                                </ul>
+
+                            </div>
+                        </div> <!--navbar-header-->
+                    </div>
+                </nav>
+
                 <div class="navbar-header">
 
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -32,31 +64,14 @@
                 <div class="navbar-collapse collapse">
                     <div class="dropdown">
                         <button class="dropbtn">
-                            Seleccione un perfil
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                    <div class="dropdown-contentt">
-                        @{
-                            ICollection<String> perfiles = PerfilController.ObtenerPerfiles();
-                            ViewBag.perfiles = perfiles;
-                            for (int contador = 0; contador < perfiles.Count; contador++)
-                            {
-                                <a href="@Url.Action("CambioPerfil", "Perfil", new { perfil_elegido = @ViewBag.perfiles[contador] })">@ViewBag.perfiles[contador]</a>
-                            }
-                        }
-                    </div>
-                    </div>
-
-                    <div class="dropdown">
-                        <button class="dropbtn">
                             Usuario
-                            <i class="fa fa-caret-down"></i>
                         </button>
                         <div class="dropdown-contentt">
                             @Html.ActionLink("Ver información de personas", "VerPersonas", "Admin")
                             @Html.ActionLink("Insertar usuario", "CrearUsuario", "Admin")
                         </div>
                     </div>
+
 
                     <div class="dropdown">
                         <button class="dropbtn">
@@ -71,13 +86,12 @@
                             @Html.ActionLink("Ítem", "Index", "Item")
                         </div>
                     </div>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>@Html.ActionLink("Cerrar sesión", "CerrarSesion", "Auth")</li>
-                    </ul>
-                </div>
+                </div> <!--navbar-collapse collapse-->
             </div>
         </nav>
     }
+
+    <br /><br />
 
     <div class="container body-content">
         @RenderBody()
@@ -94,8 +108,7 @@
 </html>
 
 <script>
-    function redirect()
-    {
+    function redirect() {
         alert("Javasript");
 
     }
