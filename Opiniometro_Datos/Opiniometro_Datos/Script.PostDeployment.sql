@@ -192,6 +192,26 @@ END
 GO
 
 
+IF OBJECT_ID('ObtenerPerfilUsuario') IS NOT NULL
+	DROP PROCEDURE ObtenerPerfilUsuario
+GO
+CREATE PROCEDURE ObtenerPerfilUsuario @correo nvarchar(100)
+as 
+select distinct IdPerfil 
+from Tiene_Usuario_Perfil_Enfasis
+where CorreoInstitucional = @correo;
+go
+
+IF OBJECT_ID('ObtenerPerfilPorDefecto') IS NOT NULL
+	DROP PROCEDURE ObtenerPerfilPorDefecto
+GO
+CREATE PROCEDURE ObtenerPerfilPorDefecto @correo nvarchar(100)
+as 
+select top 1 IdPerfil 
+from Tiene_Usuario_Perfil_Enfasis
+where CorreoInstitucional = @correo;
+go
+
 --JJAPH
 IF OBJECT_ID('MostrarEstudiantes', 'P') IS NOT NULL 
 	DROP PROC MostrarEstudiantes

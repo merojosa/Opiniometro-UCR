@@ -1,17 +1,22 @@
-﻿using Opiniometro_WebApp.Controllers.Servicios;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Opiniometro_WebApp.Models;
+using System.Security.Claims;
+using System.Threading;
 
 namespace Opiniometro_WebApp.Controllers
 {
+    
+
     // Esto hace que se necesite un usuario autenticado para poder hacer uso de los action methods.
     [Authorize]
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        
+        public ActionResult Index(string perfilActual)
         {
             return View("Index");
         }
@@ -30,13 +35,20 @@ namespace Opiniometro_WebApp.Controllers
             return View();
         }
 
-        // Necesito de este action method para inicializar atributos (cuando no pasa por el login).
-        public ActionResult Inicio()
+        //devuelve los perfiles del que está usando el sistema usuario
+        public static ICollection<String> ObtenerPerfiles()
         {
-            IdentidadManager permisos_usuario = new IdentidadManager();
-            Session[IdentidadManager.obtener_correo_actual()] = permisos_usuario;
+            Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
-            return RedirectToAction("Index");
+            var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
+
+            string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email)
+                                                .Select(c => c.Value).SingleOrDefault();
+            ICollection<String> perfiles;
+            perfiles = db.ObtenerPerfilUsuario(correo_autenticado).ToList();
+            return perfiles;
         }
+
+
     }
 }
