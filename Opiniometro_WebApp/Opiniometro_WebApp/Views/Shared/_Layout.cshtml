@@ -13,8 +13,46 @@
     @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
     @using Opiniometro_WebApp.Controllers;
 
-    <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-top:145px" ;>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-top:190px" ;>
         <div class="container">
+
+            <nav class="navbar navbar-default-barra-login navbar-fixed-top" style="margin-top:145px" >
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <div style="width: 870px; overflow: hidden" text-align="center">
+
+                            <ul class="nav navbar-nav navbar" style="margin-left:51px">
+                                <li>@Html.ActionLink("Bienvenido", "Index", "Home")</li>
+                            </ul>
+
+                            <div class="dropdown"  >
+                                <button class="dropbtn">
+                                    Seleccione un perfil
+                                </button>
+                                <div class="dropdown-contentt">
+                                    @{
+                                        ICollection<String> perfiles = HomeController.ObtenerPerfiles();
+                                        ViewBag.perfiles = perfiles;
+                                        for (int contador = 0; contador < perfiles.Count; contador++)
+                                        {
+                                            <a onclick="location.href='@Url.Action("Index", "Home", new { perfilActual = @ViewBag.perfiles[contador] })'">@ViewBag.perfiles[contador]</a>
+                                        }
+
+                                    }
+                                </div>
+                            </div>
+
+                            
+                            <ul class="nav navbar-nav navbar">
+                                <li>@Html.ActionLink("Salir", "CerrarSesion", "Auth")</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
             <div class="navbar-header">
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -26,28 +64,11 @@
             </div>
             <div class="navbar-collapse collapse">
 
-                <div class="dropdown">
-                    <button class="dropbtn">
-                        Seleccione un perfil
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-contentt">
-                        @{
-                            ICollection<String> perfiles = HomeController.ObtenerPerfiles();
-                            ViewBag.perfiles = perfiles;
-                            for (int contador = 0; contador < perfiles.Count; contador++)
-                            {
-                                <a onclick="location.href='@Url.Action("Index", "Home", new { perfilActual = @ViewBag.perfiles[contador] })'">@ViewBag.perfiles[contador]</a>
-                            }
-
-                        }
-                    </div>
-                </div>
+                
 
                 <div class="dropdown">
                     <button class="dropbtn">
                         Usuario
-                        <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-contentt">
                         @Html.ActionLink("Ver información de personas", "VerPersonas", "Admin")
@@ -69,12 +90,11 @@
                         @Html.ActionLink("Ítem", "Index", "Item")
                     </div>
                 </div>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Salir", "CerrarSesion", "Auth")</li>
-                </ul>
             </div>
         </div>
     </nav>
+
+    <br /><br />
 
     <div class="container body-content">
         @RenderBody()
