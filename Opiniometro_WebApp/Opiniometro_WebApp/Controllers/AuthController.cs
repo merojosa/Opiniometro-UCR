@@ -29,16 +29,13 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult Login()
         {
-            var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
-
-            string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email)
-                                                .Select(c => c.Value).SingleOrDefault();
-
-            if (correo_autenticado != null)      // Si esta autenticado, redireccione a Home.
+            // Si esta autenticado, redireccione a Home.
+            if (IdentidadManager.obtener_correo_actual() != null)      
             {
                 return RedirectToAction("Index", "Home");
             }
-            else                                 // Si no, retorne la vista para el login.
+            // Si no, retorne la vista para el login.
+            else
             {
                 return View();
             }
@@ -72,12 +69,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 var identidad = new ClaimsIdentity(
                     new[] {
-                    new Claim(ClaimTypes.Email, usuario.CorreoInstitucional)
-
-                    /*
-                    // Agregar roles.
-                    new Claim(ClaimTypes.Role, "Estudiante")
-                    */
+                    new Claim(ClaimTypes.Email, usuario.CorreoInstitucional),
                     },
                     DefaultAuthenticationTypes.ApplicationCookie);
 
@@ -86,8 +78,8 @@ namespace Opiniometro_WebApp.Controllers
 
                 // Guardar el objeto IdentidadManager, la llave seria el correo, el cual es unico para cada usuario.
                 Session[usuario.CorreoInstitucional] = new IdentidadManager();
-
-                return RedirectToAction("Index", "Home");
+                
+                return RedirectToAction("CambioPerfil", "Perfil", new { perfil_elegido = PerfilController.ObtenerPerfiles().ElementAt(0) });
             }
             else    // Si hay error en la autenticacion
             {
@@ -106,20 +98,26 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult CerrarSesion()
         {
-            // En caso de que no exista sesion, no tiene por que hacer algo.
-            if(IdentidadManager.verificar_sesion(this))
-            {
-                string correo = IdentidadManager.obtener_correo_actual();   // Obtengo el correo para obtener la sesion.
-                ((IdentidadManager)Session[correo]).limpiar_permisos();     // Limpio los permisos.
-                Session.Remove(correo);                                     // Remuevo la sesion.
-            }
-
-            // Elimino cookies.
-            Request.GetOwinContext().Authentication.SignOut(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie);
+            eliminar_privilegios(this);
 
             // Como no esta loggeado, se tiene que redigir a login para volver a hacerlo.
             return RedirectToAction("Login");
         }
+
+        public static void eliminar_privilegios(Controller controlador)
+        {
+            // En caso de que no exista sesion, no tiene por que hacer algo.
+            if (IdentidadManager.verificar_sesion(controlador))
+            {
+                string correo = IdentidadManager.obtener_correo_actual();               // Obtengo el correo para obtener la sesion.
+                ((IdentidadManager)controlador.Session[correo]).limpiar_permisos();     // Limpio los permisos.
+                controlador.Session.Remove(correo);                                     // Remuevo la sesion.
+            }
+
+            // Elimino cookies.
+            controlador.Request.GetOwinContext().Authentication.SignOut(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie);
+        }
+
 
         /*
          * GET: Auth/Recuperar
