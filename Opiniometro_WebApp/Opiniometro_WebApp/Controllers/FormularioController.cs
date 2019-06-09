@@ -17,7 +17,7 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Formulario
         public ActionResult Index()
         {
-            return View(db.Formulario.ToList());
+            return View("Index", db.Formulario.ToList());
         }
 
         // GET: Formulario/Details/5
