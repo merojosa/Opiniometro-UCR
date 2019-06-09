@@ -5,21 +5,26 @@
 }
 
 <thead>
-    <tbody>
+    
         <tr>
             <td>
-                Codigo: <input type="text" name="inputname" value="ABC123" readonly>
-                Nombre: <input type="text" name="inputname" value="FormularioEnfasis1" readonly>
+                <div class="row">
+                    Codigo: <input type="text" name="inputname" value="ABC123" readonly>
+                    Nombre: <input type="text" name="inputname" value="FormularioEnfasis1" readonly>
+                </div>
+                
+                <div>
+                    <div style="float: right; width: 500px; padding: 15px;">
+                        @Html.Action("preguntasVParcial")
+                    </div>
 
-                <div style="float: right; width: 500px; padding: 15px;">
-                    @Html.Action("preguntasVParcial")
+                    <div style=" width: 500px; padding:  15px;">
+                        @Html.Action("seccionesVParcial")
+                    </div>
                 </div>
 
-                <div style=" width: 500px; padding:  10px;">
-                    @Html.Action("seccionesVParcial")
-                </div>
 
-                <button>
+                <button disabled>
                     Añadir pregunta al formulario.
                 </button>
 
@@ -31,7 +36,7 @@
                 <div style="clear: both;"></div>
             </td>
         </tr>
-    </tbody>
+    
 </thead>
 
 
