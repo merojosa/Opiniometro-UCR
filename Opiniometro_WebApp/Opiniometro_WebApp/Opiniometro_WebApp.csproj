@@ -278,6 +278,7 @@
     <Compile Include="Models\Persona.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PersonaPerfilEnfasisModel.cs" />
     <Compile Include="Models\Posee_Enfasis_Perfil_Permiso.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
