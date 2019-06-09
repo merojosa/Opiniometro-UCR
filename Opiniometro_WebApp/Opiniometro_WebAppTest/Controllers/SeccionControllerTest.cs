@@ -1,7 +1,16 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using Moq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Opiniometro_WebApp.Models;
+using Opiniometro_WebApp.Controllers;
+using Opiniometro_WebApp;
 
 namespace Opiniometro_WebAppTest.Controllers
 {
@@ -11,59 +20,85 @@ namespace Opiniometro_WebAppTest.Controllers
     [TestClass]
     public class SeccionControllerTest
     {
-        public SeccionControllerTest()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
+              
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestIndexNotNullAndView()
         {
-            //
-            // TODO: Add test logic here
-            //
+            SeccionController controller = new SeccionController();
+            ViewResult result = controller.Index() as ViewResult;
+            Assert.IsNotNull(result, "Null");
+            Assert.AreEqual("Index", result.ViewName, "ViewName");
+
         }
+
+        [TestMethod]
+        public void TestEditViewDataMock()
+        {
+            // Arrange
+            var mockDb = new Mock<Opiniometro_DatosEntities>();
+            string titulo = "Prueba1";
+            Seccion seccion = new Seccion() { Titulo = "Prueba1", Descripcion = "Programación I" };
+            mockDb.Setup(m => m.Seccion.Find(titulo)).Returns(seccion);
+            SeccionController controller = new SeccionController(mockDb.Object);
+
+            // Act
+            ViewResult result = controller.Edit(titulo) as ViewResult;
+
+            // Assert
+            Assert.AreEqual(result.Model, seccion);
+        }
+
+        [TestMethod]
+        public void TestEditDataMock()
+        {
+            // Arrange
+            var mockDb = new Mock<Opiniometro_DatosEntities>();
+            string titulo = "Prueba1";
+            Seccion seccion = new Seccion() { Titulo = "Prueba1", Descripcion = "Programación I" };
+            mockDb.Setup(m => m.Seccion.Find(titulo)).Returns(seccion);
+            SeccionController controller = new SeccionController(mockDb.Object);
+
+            // Act
+            controller.Edit(seccion);
+            ViewResult result = controller.Edit(titulo) as ViewResult;
+
+            //Assert.IsNull();
+            // Assert
+            Assert.AreEqual(result.Model, seccion);
+        }
+
+        [TestMethod]
+        public void TestCreateView()
+        {
+            // Arrange
+            SeccionController controller = new SeccionController();
+
+            // Act
+            ViewResult result = controller.Create() as ViewResult;
+
+            // Assert
+            Assert.AreEqual(result.ViewName, "Create");
+        }
+
+        [TestMethod]
+        public void TestCreateDataMock()
+        {
+            // Arrange
+            var mockDb = new Mock<Opiniometro_DatosEntities>();
+            string titulo = "Prueba1";
+            Seccion seccion = new Seccion() { Titulo = "Prueba1", Descripcion = "Programación I" };
+            mockDb.Setup(m => m.Seccion.Find(titulo)).Returns(seccion);
+            SeccionController controller = new SeccionController(mockDb.Object);
+
+            // Act
+             controller.Create(seccion) ;
+            ViewResult result = controller.Details(titulo) as ViewResult;
+
+            //Assert.IsNull();
+            // Assert
+            Assert.AreEqual(result.Model, seccion);
+        }
+
     }
 }
