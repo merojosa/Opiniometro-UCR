@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Opiniometro_DatosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Opiniometro_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrativo">
           <Key>
             <PropertyRef Name="CedulaAdministrativo" />
@@ -269,16 +269,6 @@
           <Property Name="CodigoEnfasis" Type="tinyint" Nullable="false" />
           <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <EntityType Name="Se_Encuentra_Unidad_Enfasis">
-          <Key>
-            <PropertyRef Name="CodigoUnidadAcademica" />
-            <PropertyRef Name="NumeroEnfasis" />
-            <PropertyRef Name="SiglaCarrera" />
-          </Key>
-          <Property Name="CodigoUnidadAcademica" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="NumeroEnfasis" Type="tinyint" Nullable="false" />
-          <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
-        </EntityType>
         <EntityType Name="Seccion">
           <Key>
             <PropertyRef Name="Titulo" />
@@ -354,6 +344,11 @@
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="ValorRandom">
+          <Property Name="randomvalue" Type="varbinary" MaxLength="8000" />
+        </EntityType>-->
         <Association Name="FK_Adm_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Administrativo" Type="Self.Administrativo" Multiplicity="0..1" />
@@ -750,32 +745,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Se_Encuentra_Uni_Enf_Endasis">
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
-          <End Role="Se_Encuentra_Unidad_Enfasis" Type="Self.Se_Encuentra_Unidad_Enfasis" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Enfasis">
-              <PropertyRef Name="Numero" />
-              <PropertyRef Name="SiglaCarrera" />
-            </Principal>
-            <Dependent Role="Se_Encuentra_Unidad_Enfasis">
-              <PropertyRef Name="NumeroEnfasis" />
-              <PropertyRef Name="SiglaCarrera" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Se_Encuentra_Uni_Enf_UniAcad">
-          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="1" />
-          <End Role="Se_Encuentra_Unidad_Enfasis" Type="Self.Se_Encuentra_Unidad_Enfasis" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Unidad_Academica">
-              <PropertyRef Name="Codigo" />
-            </Principal>
-            <Dependent Role="Se_Encuentra_Unidad_Enfasis">
-              <PropertyRef Name="CodigoUnidadAcademica" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SeE_Cur">
           <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
           <End Role="Se_Encuentra_Curso_Enfasis" Type="Self.Se_Encuentra_Curso_Enfasis" Multiplicity="*" />
@@ -901,6 +870,12 @@
         <Function Name="NombrePersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ObtenerPerfilPorDefecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ObtenerPerfilUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correo" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SF_GenerarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
         <Function Name="SP_AgregarPersonaUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="char" Mode="In" />
@@ -959,7 +934,7 @@
         <Function Name="SP_ObtenerPermisosUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
         </Function>
-        <EntityContainer Name="Opiniometro_DatosModelStoreContainer">
+        <EntityContainer Name="Opiniometro_ModelStoreContainer">
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
@@ -986,7 +961,6 @@
           <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responde" EntityType="Self.Responde" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Se_Encuentra_Curso_Enfasis" EntityType="Self.Se_Encuentra_Curso_Enfasis" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Se_Encuentra_Unidad_Enfasis" EntityType="Self.Se_Encuentra_Unidad_Enfasis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seleccion_Unica" EntityType="Self.Seleccion_Unica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TelefonoPersona" EntityType="Self.TelefonoPersona" Schema="dbo" store:Type="Tables" />
@@ -1119,14 +1093,6 @@
             <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Responde" EntitySet="Responde" />
           </AssociationSet>
-          <AssociationSet Name="FK_Se_Encuentra_Uni_Enf_Endasis" Association="Self.FK_Se_Encuentra_Uni_Enf_Endasis">
-            <End Role="Enfasis" EntitySet="Enfasis" />
-            <End Role="Se_Encuentra_Unidad_Enfasis" EntitySet="Se_Encuentra_Unidad_Enfasis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Se_Encuentra_Uni_Enf_UniAcad" Association="Self.FK_Se_Encuentra_Uni_Enf_UniAcad">
-            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
-            <End Role="Se_Encuentra_Unidad_Enfasis" EntitySet="Se_Encuentra_Unidad_Enfasis" />
-          </AssociationSet>
           <AssociationSet Name="FK_SeE_Cur" Association="Self.FK_SeE_Cur">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Se_Encuentra_Curso_Enfasis" EntitySet="Se_Encuentra_Curso_Enfasis" />
@@ -1168,7 +1134,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Opiniometro_DatosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Opiniometro_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Administrativo">
           <Key>
             <PropertyRef Name="CedulaAdministrativo" />
@@ -1252,7 +1218,6 @@
           <NavigationProperty Name="Carrera" Relationship="Self.FK_Enf_Car" FromRole="Enfasis" ToRole="Carrera" />
           <NavigationProperty Name="Tiene_Usuario_Perfil_Enfasis" Relationship="Self.FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Enfasis" ToRole="Tiene_Usuario_Perfil_Enfasis" />
           <NavigationProperty Name="Curso" Relationship="Self.Se_Encuentra_Curso_Enfasis" FromRole="Enfasis" ToRole="Curso" />
-          <NavigationProperty Name="Unidad_Academica" Relationship="Self.Se_Encuentra_Unidad_Enfasis" FromRole="Enfasis" ToRole="Unidad_Academica" />
         </EntityType>
         <EntityType Name="Estudiante">
           <Key>
@@ -1555,7 +1520,6 @@
           <NavigationProperty Name="Curso" Relationship="Self.FK_Cur_Uni" FromRole="Unidad_Academica" ToRole="Curso" />
           <NavigationProperty Name="Facultad" Relationship="Self.FK_Fac_Uni" FromRole="Unidad_Academica" ToRole="Facultad" />
           <NavigationProperty Name="Facultad1" Relationship="Self.Escuela" FromRole="Unidad_Academica" ToRole="Facultad" />
-          <NavigationProperty Name="Enfasis" Relationship="Self.Se_Encuentra_Unidad_Enfasis" FromRole="Unidad_Academica" ToRole="Enfasis" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -2041,10 +2005,6 @@
           <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
         </Association>
-        <Association Name="Se_Encuentra_Unidad_Enfasis">
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
-          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" />
@@ -2230,16 +2190,18 @@
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
-          <AssociationSet Name="Se_Encuentra_Unidad_Enfasis" Association="Self.Se_Encuentra_Unidad_Enfasis">
-            <End Role="Enfasis" EntitySet="Enfasis" />
-            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
-          </AssociationSet>
-          <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_DatosModel.DatosEstudiante_Result)">
+          <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_Model.DatosEstudiante_Result)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_DatosModel.MostrarEstudiantes_Result)" />
+          <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_Model.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
-          <Parameter Name="Cedula" Mode="In" Type="String" />
+            <Parameter Name="Cedula" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerPerfilPorDefecto" ReturnType="Collection(String)">
+            <Parameter Name="correo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerPerfilUsuario" ReturnType="Collection(String)">
+            <Parameter Name="correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_AgregarPersonaUsuario">
             <Parameter Name="Cedula" Mode="In" Type="String" />
@@ -2295,8 +2257,8 @@
             <Parameter Name="Apellido2" Mode="In" Type="String" />
             <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(Opiniometro_DatosModel.SP_ObtenerPermisosUsuario_Result)">
-          <Parameter Name="Correo" Mode="In" Type="String" />
+          <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(Opiniometro_Model.SP_ObtenerPermisosUsuario_Result)">
+            <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DatosEstudiante_Result">
@@ -2320,9 +2282,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities">
+        <EntityContainerMapping StorageEntityContainer="Opiniometro_ModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities">
           <EntitySetMapping Name="Administrativo">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Administrativo">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Administrativo">
               <MappingFragment StoreEntitySet="Administrativo">
                 <ScalarProperty Name="CedulaAdministrativo" ColumnName="CedulaAdministrativo" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
@@ -2330,7 +2292,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Carrera">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Carrera">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Carrera">
               <MappingFragment StoreEntitySet="Carrera">
                 <ScalarProperty Name="Sigla" ColumnName="Sigla" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2339,14 +2301,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Categoria">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Categoria">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Categoria">
               <MappingFragment StoreEntitySet="Categoria">
                 <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ciclo_Lectivo">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Ciclo_Lectivo">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Ciclo_Lectivo">
               <MappingFragment StoreEntitySet="Ciclo_Lectivo">
                 <ScalarProperty Name="Anno" ColumnName="Anno" />
                 <ScalarProperty Name="Semestre" ColumnName="Semestre" />
@@ -2354,7 +2316,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Conformado_Item_Sec_Form">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Conformado_Item_Sec_Form">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Conformado_Item_Sec_Form">
               <MappingFragment StoreEntitySet="Conformado_Item_Sec_Form">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
@@ -2366,7 +2328,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Curso">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Curso">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Curso">
               <MappingFragment StoreEntitySet="Curso">
                 <ScalarProperty Name="Sigla" ColumnName="Sigla" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2376,7 +2338,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Empadronado">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Empadronado">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Empadronado">
               <MappingFragment StoreEntitySet="Empadronado">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
@@ -2385,7 +2347,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Enfasis">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Enfasis">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Enfasis">
               <MappingFragment StoreEntitySet="Enfasis">
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
@@ -2393,7 +2355,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Estudiante">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Estudiante">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Estudiante">
               <MappingFragment StoreEntitySet="Estudiante">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
                 <ScalarProperty Name="Carne" ColumnName="Carne" />
@@ -2401,14 +2363,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Facultad">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Facultad">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Facultad">
               <MappingFragment StoreEntitySet="Facultad">
                 <ScalarProperty Name="CodigoUnidadAcademica" ColumnName="CodigoUnidadAcademica" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Fecha_Corte">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Fecha_Corte">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Fecha_Corte">
               <MappingFragment StoreEntitySet="Fecha_Corte">
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
                 <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
@@ -2416,7 +2378,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Formulario">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Formulario">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Formulario">
               <MappingFragment StoreEntitySet="Formulario">
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2424,7 +2386,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Formulario_Respuesta">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Formulario_Respuesta">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Formulario_Respuesta">
               <MappingFragment StoreEntitySet="Formulario_Respuesta">
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
@@ -2439,7 +2401,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Grupo">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Grupo">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Grupo">
               <MappingFragment StoreEntitySet="Grupo">
                 <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -2449,7 +2411,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Imparte">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Imparte">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Imparte">
               <MappingFragment StoreEntitySet="Imparte">
                 <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -2460,7 +2422,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Item">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Item">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Item">
               <MappingFragment StoreEntitySet="Item">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="TextoPregunta" ColumnName="TextoPregunta" />
@@ -2471,7 +2433,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Matricula">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Matricula">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Matricula">
               <MappingFragment StoreEntitySet="Matricula">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -2482,7 +2444,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Opciones_De_Respuestas_Seleccion_Unica">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Opciones_De_Respuestas_Seleccion_Unica">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Opciones_De_Respuestas_Seleccion_Unica">
               <MappingFragment StoreEntitySet="Opciones_De_Respuestas_Seleccion_Unica">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
@@ -2491,7 +2453,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Perfil">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Perfil">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Perfil">
               <MappingFragment StoreEntitySet="Perfil">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
@@ -2499,7 +2461,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Permiso">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Permiso">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Permiso">
               <MappingFragment StoreEntitySet="Permiso">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -2507,7 +2469,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Persona">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Persona">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Persona">
               <MappingFragment StoreEntitySet="Persona">
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2518,7 +2480,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Posee_Enfasis_Perfil_Permiso">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Posee_Enfasis_Perfil_Permiso">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Posee_Enfasis_Perfil_Permiso">
               <MappingFragment StoreEntitySet="Posee_Enfasis_Perfil_Permiso">
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
@@ -2528,14 +2490,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Profesor">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Profesor">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Profesor">
               <MappingFragment StoreEntitySet="Profesor">
                 <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Responde">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Responde">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Responde">
               <MappingFragment StoreEntitySet="Responde">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="TituloSeccion" ColumnName="TituloSeccion" />
@@ -2554,7 +2516,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Seccion">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Seccion">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Seccion">
               <MappingFragment StoreEntitySet="Seccion">
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -2562,7 +2524,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Seleccion_Unica">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Seleccion_Unica">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Seleccion_Unica">
               <MappingFragment StoreEntitySet="Seleccion_Unica">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="IsaLikeDislike" ColumnName="IsaLikeDislike" />
@@ -2570,7 +2532,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TelefonoPersona">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.TelefonoPersona">
+            <EntityTypeMapping TypeName="Opiniometro_Model.TelefonoPersona">
               <MappingFragment StoreEntitySet="TelefonoPersona">
                 <ScalarProperty Name="CedulaPersona" ColumnName="CedulaPersona" />
                 <ScalarProperty Name="NumeroTelefono" ColumnName="NumeroTelefono" />
@@ -2578,14 +2540,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Texto_Libre">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Texto_Libre">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Texto_Libre">
               <MappingFragment StoreEntitySet="Texto_Libre">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tiene_Grupo_Formulario">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Tiene_Grupo_Formulario">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Tiene_Grupo_Formulario">
               <MappingFragment StoreEntitySet="Tiene_Grupo_Formulario">
                 <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -2598,7 +2560,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tiene_Usuario_Perfil_Enfasis">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Tiene_Usuario_Perfil_Enfasis">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Tiene_Usuario_Perfil_Enfasis">
               <MappingFragment StoreEntitySet="Tiene_Usuario_Perfil_Enfasis">
                 <ScalarProperty Name="CorreoInstitucional" ColumnName="CorreoInstitucional" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
@@ -2608,7 +2570,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Unidad_Academica">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Unidad_Academica">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Unidad_Academica">
               <MappingFragment StoreEntitySet="Unidad_Academica">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2616,7 +2578,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Usuario">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
                 <ScalarProperty Name="CorreoInstitucional" ColumnName="CorreoInstitucional" />
                 <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
@@ -2626,7 +2588,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Escuela" TypeName="Opiniometro_DatosModel.Escuela" StoreEntitySet="Escuela">
+          <AssociationSetMapping Name="Escuela" TypeName="Opiniometro_Model.Escuela" StoreEntitySet="Escuela">
             <EndProperty Name="Facultad">
               <ScalarProperty Name="CodigoUnidadAcademica" ColumnName="CodigoFacultad" />
             </EndProperty>
@@ -2634,7 +2596,7 @@
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Se_Encuentra_Curso_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Curso_Enfasis" StoreEntitySet="Se_Encuentra_Curso_Enfasis">
+          <AssociationSetMapping Name="Se_Encuentra_Curso_Enfasis" TypeName="Opiniometro_Model.Se_Encuentra_Curso_Enfasis" StoreEntitySet="Se_Encuentra_Curso_Enfasis">
             <EndProperty Name="Curso">
               <ScalarProperty Name="Sigla" ColumnName="SiglaCurso" />
             </EndProperty>
@@ -2643,27 +2605,18 @@
               <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Se_Encuentra_Unidad_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Unidad_Enfasis" StoreEntitySet="Se_Encuentra_Unidad_Enfasis">
-            <EndProperty Name="Enfasis">
-              <ScalarProperty Name="Numero" ColumnName="NumeroEnfasis" />
-              <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
-            </EndProperty>
-            <EndProperty Name="Unidad_Academica">
-              <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_DatosModel.Store.DatosEstudiante">
+          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_Model.Store.DatosEstudiante">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.DatosEstudiante_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.DatosEstudiante_Result">
                 <ScalarProperty Name="Nombre_Completo" ColumnName="Nombre Completo" />
                 <ScalarProperty Name="Carne" ColumnName="Carne" />
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_DatosModel.Store.MostrarEstudiantes">
+          <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_Model.Store.MostrarEstudiantes">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.MostrarEstudiantes_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.MostrarEstudiantes_Result">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
                 <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
@@ -2671,18 +2624,20 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="Opiniometro_DatosModel.Store.NombrePersona" />
-          <FunctionImportMapping FunctionImportName="SP_AgregarPersonaUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarPersonaUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="Opiniometro_DatosModel.Store.SP_CambiarContrasenna" />
-          <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_ContarRespuestasPorGrupo" />
-          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_DevolverObservacionesPorGrupo" />
-          <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_DatosModel.Store.SP_ExistenciaCorreo" />
-          <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_DatosModel.Store.SP_ModificarPersona" />
-          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_ObtenerPermisosUsuario">
+          <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="Opiniometro_Model.Store.NombrePersona" />
+          <FunctionImportMapping FunctionImportName="ObtenerPerfilPorDefecto" FunctionName="Opiniometro_Model.Store.ObtenerPerfilPorDefecto" />
+          <FunctionImportMapping FunctionImportName="ObtenerPerfilUsuario" FunctionName="Opiniometro_Model.Store.ObtenerPerfilUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_AgregarPersonaUsuario" FunctionName="Opiniometro_Model.Store.SP_AgregarPersonaUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_Model.Store.SP_AgregarUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="Opiniometro_Model.Store.SP_CambiarContrasenna" />
+          <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="Opiniometro_Model.Store.SP_ContarRespuestasPorGrupo" />
+          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_Model.Store.SP_DevolverObservacionesPorGrupo" />
+          <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_Model.Store.SP_ExistenciaCorreo" />
+          <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_Model.Store.SP_LoginUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_Model.Store.SP_ModificarPersona" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_Model.Store.SP_ObtenerPermisosUsuario">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.SP_ObtenerPermisosUsuario_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.SP_ObtenerPermisosUsuario_Result">
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
                 <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />

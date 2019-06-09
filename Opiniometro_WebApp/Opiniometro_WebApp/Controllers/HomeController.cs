@@ -13,7 +13,7 @@ namespace Opiniometro_WebApp.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View("Index");
         }
 
         public ActionResult About()
