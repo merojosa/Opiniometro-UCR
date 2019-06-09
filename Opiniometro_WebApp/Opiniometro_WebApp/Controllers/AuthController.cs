@@ -29,18 +29,15 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult Login()
         {
-            var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
-
-            string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email)
-                                                .Select(c => c.Value).SingleOrDefault();
-
-            if (correo_autenticado != null)      // Si esta autenticado, redireccione a Home.
+            // Si esta autenticado, redireccione a Home.
+            if (IdentidadManager.obtener_correo_actual() != null)      
             {
                 return RedirectToAction("Index", "Home");
             }
-            else                                 // Si no, retorne la vista para el login.
+            // Si no, retorne la vista para el login.
+            else
             {
-                return PartialView();
+                return View();
             }
         }
 
@@ -59,10 +56,8 @@ namespace Opiniometro_WebApp.Controllers
         {
             ObjectParameter exito = new ObjectParameter("Resultado", 0);
             db.SP_LoginUsuario(usuario.CorreoInstitucional, usuario.Contrasena, exito);
-            var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
 
-            string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email)
-                                                .Select(c => c.Value).SingleOrDefault();
+            string correo_autenticado = IdentidadManager.obtener_correo_actual();
 
             // Recibir el perfil por default
 
@@ -74,13 +69,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 var identidad = new ClaimsIdentity(
                     new[] {
-                    new Claim(ClaimTypes.Email, usuario.CorreoInstitucional)
-
-                    /*
-                    // Agregar roles.
-                    new Claim(ClaimTypes.Role, "Estudiante"),
-                    new Claim(ClaimTypes.Role, "AnotherRole"),
-                    */
+                    new Claim(ClaimTypes.Email, usuario.CorreoInstitucional),
                     },
                     DefaultAuthenticationTypes.ApplicationCookie);
 
@@ -89,15 +78,15 @@ namespace Opiniometro_WebApp.Controllers
 
                 // Guardar el objeto IdentidadManager, la llave seria el correo, el cual es unico para cada usuario.
                 Session[usuario.CorreoInstitucional] = new IdentidadManager();
-
-                return RedirectToAction("Index", "Home");
+                
+                return RedirectToAction("CambioPerfil", "Perfil", new { perfil_elegido = PerfilController.ObtenerPerfiles().ElementAt(0) });
             }
             else    // Si hay error en la autenticacion
             {
                 ModelState.AddModelError(string.Empty, "");
 
                 // Devolverse a la misma pagina de Login informando de que hay un error de autenticacion.
-                return PartialView(usuario);
+                return View(usuario);
             }
 
         }
@@ -109,18 +98,26 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult CerrarSesion()
         {
-            // Elimino datos de la sesion.
-            Request.GetOwinContext().Authentication.SignOut(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie);
-
-            // Obtengo los permisos del correo actual.
-            var permisos_usuario = (IdentidadManager)Session[IdentidadManager.obtener_correo_actual()];
-
-            if(permisos_usuario != null)
-                permisos_usuario.limpiar_permisos();    // Elimino los permisos.
+            eliminar_privilegios(this);
 
             // Como no esta loggeado, se tiene que redigir a login para volver a hacerlo.
             return RedirectToAction("Login");
         }
+
+        public static void eliminar_privilegios(Controller controlador)
+        {
+            // En caso de que no exista sesion, no tiene por que hacer algo.
+            if (IdentidadManager.verificar_sesion(controlador))
+            {
+                string correo = IdentidadManager.obtener_correo_actual();               // Obtengo el correo para obtener la sesion.
+                ((IdentidadManager)controlador.Session[correo]).limpiar_permisos();     // Limpio los permisos.
+                controlador.Session.Remove(correo);                                     // Remuevo la sesion.
+            }
+
+            // Elimino cookies.
+            controlador.Request.GetOwinContext().Authentication.SignOut(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie);
+        }
+
 
         /*
          * GET: Auth/Recuperar
@@ -130,7 +127,7 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult Recuperar()
         {
-            return PartialView();
+            return View();
         }
 
         /*
@@ -161,7 +158,7 @@ namespace Opiniometro_WebApp.Controllers
                 EnviarCorreo(usuario.CorreoInstitucional, "Cambio de contraseña - Opiniómetro@UCR", contenido);
             }
             ModelState.AddModelError(string.Empty, "");
-            return PartialView(usuario);
+            return View(usuario);
         }
 
         /*
@@ -212,9 +209,12 @@ namespace Opiniometro_WebApp.Controllers
             return contrasenna.ToString();
         }
 
-        public ActionResult Permisos()
+        public ActionResult PruebaHtml()
         {
-            return View();
+            if (IdentidadManager.verificar_sesion(this))
+                return View();
+            else
+                return RedirectToAction("Login");
         }
     }
 }

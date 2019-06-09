@@ -9,14 +9,13 @@ using System.Threading;
 
 namespace Opiniometro_WebApp.Controllers
 {
-    
 
-    // Esto hace que se necesite un usuario autenticado para poder hacer uso de los action methods.
+
     [Authorize]
     public class HomeController : Controller
     {
         
-        public ActionResult Index(string perfilActual)
+        public ActionResult Index()
         {
             return View("Index");
         }
@@ -34,21 +33,5 @@ namespace Opiniometro_WebApp.Controllers
 
             return View();
         }
-
-        //devuelve los perfiles del que está usando el sistema usuario
-        public static ICollection<String> ObtenerPerfiles()
-        {
-            Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
-
-            var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
-
-            string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email)
-                                                .Select(c => c.Value).SingleOrDefault();
-            ICollection<String> perfiles;
-            perfiles = db.ObtenerPerfilUsuario(correo_autenticado).ToList();
-            return perfiles;
-        }
-
-
     }
 }
