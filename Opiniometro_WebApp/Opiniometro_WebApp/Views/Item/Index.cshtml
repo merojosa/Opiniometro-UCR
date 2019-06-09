@@ -1,55 +1,61 @@
 ﻿@model IEnumerable<Opiniometro_WebApp.Models.Item>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Banco de Preguntas";
 }
 
-<h2>Index</h2>
+<h2>Banco de Preguntas</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <input type="submit" value="Crear Nueva Pregunta" class="btn btn-secondary"  id="botonNuevaPregunta" onclick="location.href = 'http://localhost:51103/Item/create'" />
 </p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.TextoPregunta)
+            @Html.Label("Código")
+            @*@Html.DisplayNameFor(model => model.ItemId)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Categoria)
+            @Html.Label("Planteamiento de la pregunta")
+            @*@Html.DisplayNameFor(model => model.TextoPregunta)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TieneObservacion)
+            @Html.Label("Categoría")
+            @*@Html.DisplayNameFor(model => model.Categoria)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Seleccion_Unica.ItemId)
+            @Html.Label("Tiene Observación")
+            @*@Html.DisplayNameFor(model => model.TieneObservacion)*@
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Texto_Libre.ItemId)
-        </th>
+
+
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.ItemId)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.TextoPregunta)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Categoria)
+            @Html.DisplayFor(modelItem => item.NombreCategoria )
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TieneObservacion)
+            @if (item.TieneObservacion == true)
+            {
+                <input type="checkbox" checked disabled>
+            }
         </td>
+
+
         <td>
-            @Html.DisplayFor(modelItem => item.Seleccion_Unica.ItemId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Texto_Libre.ItemId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ItemId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ItemId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ItemId })
+           @* @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }) |*@
+            @Html.ActionLink("Vista Previa", "Details", new { id = item.ItemId }) 
+           @* @Html.ActionLink("Delete", "Delete", new { id = item.ItemId })*@
         </td>
     </tr>
 }

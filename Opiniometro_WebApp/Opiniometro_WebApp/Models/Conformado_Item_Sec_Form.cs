@@ -14,10 +14,12 @@ namespace Opiniometro_WebApp.Models
     
     public partial class Conformado_Item_Sec_Form
     {
-        public int ItemId { get; set; }
+        public string ItemId { get; set; }
         public string CodigoFormulario { get; set; }
         public string TituloSeccion { get; set; }
         public string NombreFormulario { get; set; }
+        public Nullable<int> Orden_Item { get; set; }
+        public Nullable<int> Orden_Seccion { get; set; }
     
         public virtual Formulario Formulario { get; set; }
         public virtual Item Item { get; set; }

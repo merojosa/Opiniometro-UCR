@@ -1,10 +1,10 @@
 ﻿@model Opiniometro_WebApp.Models.Item
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Crear Pregunta";
 }
 
-<h2>Create</h2>
+<h2>Crear Pregunta</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,94 +12,72 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>Item</h4>
+    @*<h4>Item</h4>*@
     <hr />
+
+    <div class="form-group">
+        @Html.Label("Código", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ItemId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         @Html.Label("Tipo Pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @*<div class="checkbox">
-                    @Html.EditorFor(model => model.TieneObservacion)
-                    @Html.ValidationMessageFor(model => model.TieneObservacion, "", new { @class = "text-danger" })
-                </div>*@
-            @*Combobox *@
-            <select id="tipoPregunta" onchange="seleccionarTipoPregunta()">
-                <option value="Si-No">Si-No</option>
-                <option value="Texto libre">Texto libre</option>
-            </select>
-            <p id="demo"></p>
+
+            @Html.DropDownListFor(model => model.TipoPregunta, new SelectList(ViewBag.TipoPreguntaItems, "Value", "Text"), "Seleccione")
         </div>
     </div>
-    <script>
-@*Aqui capturamos los eventos del combo box. *@
-        function seleccionarTipoPregunta()
-        {
-            var x = document.getElementById("tipoPregunta").value;
-            document.getElementById("demo").innerHTML = "Seleccionaste: " + x;
 
-        }
-    </script>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.TextoPregunta, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Texto Pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.TextoPregunta, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.TextoPregunta, "", new { @class = "text-danger" })
         </div>
     </div>
 
+
     <div class="form-group">
-        @Html.LabelFor(model => model.Categoria, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Categoria, "NombreCategoria", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Categoria, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownList("NombreCategoria", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Categoria, "", new { @class = "text-danger" })
         </div>
     </div>
 
+
     <div class="form-group">
-        @Html.LabelFor(model => model.TieneObservacion, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Tiene Observación", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @*<div class="checkbox">
-                    @Html.EditorFor(model => model.TieneObservacion)
-                    @Html.ValidationMessageFor(model => model.TieneObservacion, "", new { @class = "text-danger" })
-                </div>*@
-            @*Combobox *@
-            <select id="observacion" onchange="seleccionarObservacion()">
-                <option value="Si">Si</option>
-                <option value="No">No</option>
-            </select>
-            <p id="demo1"></p>
+            @Html.DropDownListFor(model => model.TieneObservacion, new SelectList(ViewBag.BooleanItems, "Value", "Text"), "Seleccione")
         </div>
     </div>
-    <script>
-@*Aqui capturamos los eventos del combo box. *@
-        function seleccionarObservacion()
-        {
-            var x = document.getElementById("observacion").value;
-            document.getElementById("demo1").innerHTML = "Seleccionaste: " + x;
 
+
+    @* Creacion de botones en la misma linea y con color gris *@
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Crear" class="btn btn-secondary" p id="botonCrear" onclick="accionBotonCrear()" />
+            @*<input type="submit" value="Vista Previa" disabled class="btn btn-secondary" p id="botonVistaPrevia" onclick="accionBotonVistaPrevia()"/>*@
+            <input type="button" value="Cancelar" class="btn btn-secondary" id="botonCancelar" onclick="accionBotonCancelar()" />
+        </div>
+    </div>
+
+
+    @* La accion que sucede al seleccionar boton Cancelar *@
+    <script>
+        function accionBotonCancelar() {
+            document.location = '@Url.Action("Index")';
         }
     </script>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Crear" class="btn btn-default" />
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Vista Previa" class="btn btn-primary" />
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Cancelar" class="btn btn-default" />
-        </div>
-    </div>
 </div>
-            }
-
-
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
