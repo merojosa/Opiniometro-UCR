@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Data;
@@ -22,11 +22,11 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Administrador
         public ActionResult Index()
         {
-            
+
             return View();
         }
 
-       
+
         [HttpGet]
         public ActionResult CargarArchivo()
         {
@@ -43,7 +43,6 @@ namespace Opiniometro_WebApp.Controllers
                 {
                     try
                     {
-                        string path = Server.MapPath("~/App_Data/ArchivosCargados/");
                         if (!Directory.Exists(path))
                         {
                             Directory.CreateDirectory(path);
@@ -59,7 +58,7 @@ namespace Opiniometro_WebApp.Controllers
                         Console.WriteLine(e);
                         throw;
                     }
-                    
+
                 }
 
                 postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
@@ -79,7 +78,7 @@ namespace Opiniometro_WebApp.Controllers
 
             using (StreamReader streamCsv = new StreamReader(path))
             {
-                
+
             }
 
             return filasInvalidas;
@@ -110,5 +109,5 @@ namespace Opiniometro_WebApp.Controllers
 
     }
 
-    
+
 }

@@ -192,6 +192,26 @@ END
 GO
 
 
+IF OBJECT_ID('ObtenerPerfilUsuario') IS NOT NULL
+	DROP PROCEDURE ObtenerPerfilUsuario
+GO
+CREATE PROCEDURE ObtenerPerfilUsuario @correo nvarchar(100)
+as 
+select distinct IdPerfil 
+from Tiene_Usuario_Perfil_Enfasis
+where CorreoInstitucional = @correo;
+go
+
+IF OBJECT_ID('ObtenerPerfilPorDefecto') IS NOT NULL
+	DROP PROCEDURE ObtenerPerfilPorDefecto
+GO
+CREATE PROCEDURE ObtenerPerfilPorDefecto @correo nvarchar(100)
+as 
+select top 1 IdPerfil 
+from Tiene_Usuario_Perfil_Enfasis
+where CorreoInstitucional = @correo;
+go
+
 --JJAPH
 IF OBJECT_ID('MostrarEstudiantes', 'P') IS NOT NULL 
 	DROP PROC MostrarEstudiantes
@@ -509,17 +529,20 @@ VALUES	(1, 'Hacer todo'),
 
 INSERT INTO Perfil
 VALUES	('Estudiante', 'Default'),
-		('Admin', 'Default')
+		('Admin', 'Default'),
+		('Profesor', 'Default')
 
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
-		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin')
+		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
+		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor')
 
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
 		(1, 'SC-01234', 'Estudiante', 4),
 		(0, 'SC-01234', 'Admin', 1),
-		(0, 'SC-01234', 'Admin', 2)
+		(0, 'SC-01234', 'Admin', 2),
+		(0, 'SC-01234', 'Profesor', 2)
 
 
 INSERT INTO Provincia
