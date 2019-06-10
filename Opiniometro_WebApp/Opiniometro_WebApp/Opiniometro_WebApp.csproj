@@ -445,7 +445,6 @@
     <Content Include="Views\CrearFormulario\PreguntasAsignadas.cshtml" />
     <Content Include="Views\CrearFormulario\preguntasVParcial.cshtml" />
     <Content Include="Views\CrearFormulario\seccionesVParcial.cshtml" />
-    <Content Include="Views\Item\itemVParcial.cshtml" />
     <Content Include="Views\Item\VistaPrevia.cshtml" />
   </ItemGroup>
   <ItemGroup>
