@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Formulario>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
+
+<table class="table">
+    <tr>
+        <th>
+            Formularios
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.ActionLink("Visualizar formulario", "Details", new { id = item.CodigoFormulario })
+            </td>
+        </tr>
+    }
+
+</table>
+
