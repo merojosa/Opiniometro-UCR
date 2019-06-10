@@ -27,21 +27,17 @@
     <td align='center'>
         @foreach (var profe in Model.Profesores)
         {
-        <div align='center'>
-            @Html.DisplayFor(model => profe.Persona.Nombre) <span> </span>
-            @Html.DisplayFor(model => profe.Persona.Apellido1) <span> </span>
-            @Html.DisplayFor(model => profe.Persona.Apellido2) <br>
-        </div>
+            <div align='center'>
+                @Html.DisplayFor(model => profe.Persona.Nombre) <span> </span>
+                @Html.DisplayFor(model => profe.Persona.Apellido1) <span> </span>
+                @Html.DisplayFor(model => profe.Persona.Apellido2) <br>
+            </div>
         }
     </td>
 
     @Html.HiddenFor(model => model.Anno)
     @Html.HiddenFor(model => model.Semestre)
+    @Html.HiddenFor(model => model.Numero)
+    @Html.HiddenFor(model => model.SiglaCurso)
 
-    @*Año (escondido)@
-    <td style="display: none;">@Html.DisplayFor(model => model.Anno)</td>
-    
-    @*Semestre (escondido)@
-    <td style="display: none;">@Html.DisplayFor(model => model.Semestre)</td>*@
-    
 </tr>

@@ -47,26 +47,26 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public ActionResult Asignar(AsignarFormulariosViewModel model)
         {
-            System.Diagnostics.Debug.WriteLine("linea diagnostico");
-            var GruposSeleccionados = model.gruposSeleccionados();
-            var FormulariosSeleccionados = model.formulariosSeleccionados();
+            System.Diagnostics.Debug.WriteLine("\n\nAsignar()\n");
 
-            System.Diagnostics.Debug.WriteLine(GruposSeleccionados.Count());
-            /*foreach (Grupo grupo in GruposSeleccionados)
-            {
-                System.Diagnostics.Debug.WriteLine("1");
-                System.Diagnostics.Debug.WriteLine(grupo.Curso.Nombre);
-            }*/
+            IEnumerable<Grupo> GruposSeleccionados = model.GruposSeleccionados();
+            IEnumerable<Formulario> FormulariosSeleccionados = model.FormulariosSeleccionados();
 
-            System.Diagnostics.Debug.WriteLine(FormulariosSeleccionados.Count());
-            foreach (String formulario in FormulariosSeleccionados)
+            System.Diagnostics.Debug.WriteLine("{0} grupos seleccionados:", GruposSeleccionados.Count());
+            foreach (Grupo grupo in GruposSeleccionados)
             {
-                System.Diagnostics.Debug.WriteLine(formulario);
+                System.Diagnostics.Debug.WriteLine("{0}-{1}: {2}, #{3}", grupo.SemestreGrupo, grupo.AnnoGrupo, grupo.SiglaCurso, grupo.Numero);
             }
 
-           // System.Diagnostics.Debug.WriteLine();
+            System.Diagnostics.Debug.WriteLine("\n{0} formularios seleccionados:", FormulariosSeleccionados.Count());
+            foreach (Formulario formulario in FormulariosSeleccionados)
+            {
+                System.Diagnostics.Debug.WriteLine("{0} - {1}", formulario.CodigoFormulario, formulario.Nombre);
+            }
 
-            //return EmptyResult();
+            System.Diagnostics.Debug.WriteLine("\nFin del reporte.");
+
+            //System.Diagnostics.Debug.WriteLine();
             return RedirectToAction("Index", "Home");
         }
 
@@ -138,12 +138,12 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="numEnfasis">Número del énfasis de la carrera en el que se encuentran los cursos de los grupos.</param>
         /// <param name="siglaCurso">Sigla del curso al que pertenecen los grupos</param>
         /// <returns>Lista de los grupos que satisfacen los filtros utilizados como parámetros.</returns>
-        public IQueryable<ElegirGrupoEditorViewModel> ObtenerGrupos(short anno, byte semestre, String codigoUnidadAcadem,
+        public List<ElegirGrupoEditorViewModel> ObtenerGrupos(short anno, byte semestre, String codigoUnidadAcadem,
              string nomUnidadAcad, String siglaCarrera, String nombCarrera, byte? numEnfasis, String siglaCurso, string nombreCurso, String searchString)
         {
             // En la base, cuando este query se transforme en un proc. almacenado, se deberá usar join con la tabla curso
-            IQueryable<ElegirGrupoEditorViewModel> grupos =
-                from cur in db.Curso
+            List<ElegirGrupoEditorViewModel> grupos =
+                (from cur in db.Curso
                 join gru in db.Grupo on cur.Sigla equals gru.SiglaCurso
                 join uni in db.Unidad_Academica on cur.CodigoUnidad equals uni.Codigo
             select new ElegirGrupoEditorViewModel
@@ -157,9 +157,9 @@ namespace Opiniometro_WebApp.Controllers
                 NombreCurso = gru.Curso.Nombre,
                 NombreUnidadAcademica = gru.Curso.Unidad_Academica.Nombre,
                 //NombresCarreras =  cur.Enfasis.
-            };
+            }).ToList();
 
-            grupos = filtreGrupos(searchString, semestre, nomUnidadAcad, nombCarrera, nombreCurso, grupos);
+            grupos = FiltreGrupos(searchString, semestre, nomUnidadAcad, nombCarrera, nombreCurso, grupos.AsQueryable()).ToList();
 
             return grupos;
 
@@ -174,7 +174,7 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="nombCarrera"> podria contener el nombre de la carrera</param>
         /// <param name="grupos"> lista de grupos que se envia desde el metodo ObtenerGrupos</param>
         /// <returns> los grupos filtrados</returns>
-        public IQueryable<ElegirGrupoEditorViewModel> filtreGrupos(string searchString, byte semestre, string nomUnidadAcad, string nombCarrera, string nombCurso ,IQueryable<ElegirGrupoEditorViewModel> grupos)
+        public IQueryable<ElegirGrupoEditorViewModel> FiltreGrupos(string searchString, byte semestre, string nomUnidadAcad, string nombCarrera, string nombCurso ,IQueryable<ElegirGrupoEditorViewModel> grupos)
         {
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -214,6 +214,7 @@ namespace Opiniometro_WebApp.Controllers
                     CodigoFormulario = formul.CodigoFormulario,
                     NombreFormulario = formul.Nombre
                 };
+
             return formularios.ToList();
         }
     }

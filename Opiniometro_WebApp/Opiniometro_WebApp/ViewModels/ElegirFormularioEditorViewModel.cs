@@ -8,7 +8,10 @@ namespace Opiniometro_WebApp.Models
     {
         // Atributo que salva si un formulario se encuentra seleccionado o no:
         public bool Seleccionado { get; set; }
+
         public string CodigoFormulario { get; set; }
         public string NombreFormulario { get; set; }
+
+        public ElegirFormularioEditorViewModel() { }
     }
 }

@@ -19,7 +19,7 @@ namespace Opiniometro_WebApp.Models
         public IEnumerable<Unidad_Academica> UnidadesAcademicas { get; set; }
 
         // Lista de grupos
-        public IQueryable<ElegirGrupoEditorViewModel> Grupos { get; set; }
+        public List<ElegirGrupoEditorViewModel> Grupos { get; set; }
 
         // Lista de formularios
         public List<ElegirFormularioEditorViewModel> Formularios { get; set; }
@@ -29,21 +29,12 @@ namespace Opiniometro_WebApp.Models
 
         public AsignarFormulariosViewModel()
         {
-            Grupos = new List<ElegirGrupoEditorViewModel>().AsQueryable();
+            Grupos = new List<ElegirGrupoEditorViewModel>();
             Formularios = new List<ElegirFormularioEditorViewModel>();
         }
 
-        public IEnumerable<Grupo> gruposSeleccionados()
+        public IEnumerable<Grupo> GruposSeleccionados()
         {
-            System.Diagnostics.Debug.WriteLine(this.Grupos.Count());
-            foreach (ElegirGrupoEditorViewModel gr in this.Grupos)
-            {
-                if (gr.Seleccionado)
-                    System.Diagnostics.Debug.WriteLine("Grupo seleccionado.");
-                else
-                    System.Diagnostics.Debug.WriteLine("Grupo no seleccionado.");
-
-            }
             return (from gr in this.Grupos
                     where gr.Seleccionado
                     select new Grupo
@@ -55,11 +46,15 @@ namespace Opiniometro_WebApp.Models
                     }).ToList();
         }
 
-        public IEnumerable<string> formulariosSeleccionados()
+        public IEnumerable<Formulario> FormulariosSeleccionados()
         {
             return (from formul in this.Formularios
                     where formul.Seleccionado
-                    select formul.CodigoFormulario).ToList();
+                    select new Formulario
+                    {
+                        CodigoFormulario = formul.CodigoFormulario,
+                        Nombre = formul.NombreFormulario
+                    }).ToList();
         }
     }
 }

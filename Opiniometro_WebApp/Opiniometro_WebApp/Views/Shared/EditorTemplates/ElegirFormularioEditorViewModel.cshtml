@@ -10,4 +10,8 @@
     <td align='center'>
         <div align='center'>@Html.DisplayFor(model => model.NombreFormulario)</div>
     </td>
+
+    @*Averiguar por qué es necesario incluir de nuevo a estos atributos:*@
+    @Html.HiddenFor(model => model.CodigoFormulario)
+    @Html.HiddenFor(model => model.NombreFormulario)
 </tr>
