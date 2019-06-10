@@ -1,4 +1,4 @@
-﻿@model List<Opiniometro_WebApp.Models.Conformado_Item_Sec_Form>
+﻿@model List<Opiniometro_WebApp.Models.Formulario>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,34 +7,40 @@
 <thead>
     
         <tr>
-            <td>
-                <div class="row">
-                    Codigo: <input type="text" name="inputname" value="ABC123" readonly>
-                    Nombre: <input type="text" name="inputname" value="FormularioEnfasis1" readonly>
-                </div>
+            @foreach (var item in Model)
+            {
+                <td>
                 
-                <div>
-                    <div style="float: right; width: 500px; padding: 15px;">
-                        @Html.Action("preguntasVParcial")
+                    <div class="row">
+                        <h4>Codigo: @item.CodigoFormulario </h4>
+                        <h4>Nombre: @item.Nombre</h4>
                     </div>
 
-                    <div style=" width: 500px; padding:  15px;">
-                        @Html.Action("seccionesVParcial")
+                    <div>
+                        <div style="float: right; width: 500px; padding: 15px;">
+                            @Html.Action("preguntasVParcial")
+                        </div>
+
+                        <div style=" width: 500px; padding:  15px;">
+                            @Html.Action("seccionesVParcial")
+                        </div>
                     </div>
-                </div>
 
 
-                <button disabled>
-                    Añadir pregunta al formulario.
-                </button>
+                    <button disabled>
+                        Añadir pregunta al formulario.
+                    </button>
 
-                <div style="float: left; width: 1000px; padding: 50px;">
-                    @Html.Action("SeccionesAsignadas", new { CodForm = "131313"@*item.CodigoFormulario*@})
-                </div>
+                    <div style="float: left; width: 1000px; padding: 50px;">
+                        @Html.Action("SeccionesAsignadas", new
+                   {
+                       CodForm = item.CodigoFormulario})
+                    </div>
 
-
-                <div style="clear: both;"></div>
-            </td>
+                    <input type="submit" value="Generate report" />
+                    <div style="clear: both;"></div>
+                </td>
+            }
         </tr>
     
 </thead>
