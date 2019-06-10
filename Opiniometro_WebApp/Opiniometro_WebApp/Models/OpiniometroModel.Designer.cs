@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\b51558\Source\Repos\ecci_ci0128_i2019\Opiniometro_WebApp\Opiniometro_WebApp\Models\OpiniometroModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Luis\Source\Repos\ecci_ci0128_i2019\Opiniometro_WebApp\Opiniometro_WebApp\Models\OpiniometroModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
