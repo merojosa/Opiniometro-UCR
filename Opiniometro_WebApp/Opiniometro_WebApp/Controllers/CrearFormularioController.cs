@@ -18,8 +18,15 @@ namespace Opiniometro_WebApp.Controllers
         // GET: CrearFormulario
         public ActionResult AsignarPreguntas(string codForm)
         {
-            Formulario form = db.Formulario.Find(codForm);// le pasamos 
-            return View(form);
+            CrearFormularioModel crearFormulario = new CrearFormularioModel
+            {
+                Secciones = db.Seccion.ToList(),
+                Items = db.Item.ToList(),
+                Formulario = db.Formulario.Find(codForm)// le pasamos
+                
+            };
+            
+            return View(crearFormulario);
         }
 
         public ActionResult SeccionesAsignadas(string CodForm)
