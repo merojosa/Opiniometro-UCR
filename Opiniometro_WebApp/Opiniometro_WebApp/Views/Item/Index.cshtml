@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<Opiniometro_WebApp.Models.Item>
-
 @{
     ViewBag.Title = "Banco de Preguntas";
 }
@@ -7,7 +6,7 @@
 <h2>Banco de Preguntas</h2>
 
 <p>
-    <input type="submit" value="Crear Nueva Pregunta" class="btn btn-secondary"  id="botonNuevaPregunta" onclick="location.href = 'http://localhost:51103/Item/create'" />
+    <input type="submit" value="Crear Nueva Pregunta" class="btn btn-secondary" id="botonNuevaPregunta" onclick="location.href = 'http://localhost:51103/Item/create'" />
 </p>
 
 <table class="table">
@@ -33,31 +32,78 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TextoPregunta)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NombreCategoria )
-        </td>
-        <td>
-            @if (item.TieneObservacion == true)
-            {
-                <input type="checkbox" checked disabled>
-            }
-        </td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TextoPregunta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCategoria)
+            </td>
+            <td>
+                @if (item.TieneObservacion == true)
+                {
+                    <input type="checkbox" checked disabled>
+                }
+            </td>
+
+            <td contextmenu="5">
+                @* @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }) |*@
+                <button class="btn btn-primary" data-target="#vista" data-toggle="modal">Vista Previa</button>|
+
+                @Html.ActionLink("Vista Previa", "VistaPrevia", new { id = item.ItemId })
+                @* @Html.ActionLink("Delete", "Delete", new { id = item.ItemId })*@
+            </td>
+        </tr>
 
 
-        <td>
-           @* @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }) |*@
-            @Html.ActionLink("Vista Previa", "VistaPrevia", new { id = item.ItemId }) 
-           @* @Html.ActionLink("Delete", "Delete", new { id = item.ItemId })*@
-        </td>
-    </tr>
-}
+
+    }
 
 </table>
+
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+
+            <div class="modal" id="vista" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <label>Vista Previa</label>
+                        </div>
+                        <div class="modal-body">
+                            
+                            {
+                            <form>
+                                <div class="form-group">
+                                    <label>Pregunta</label>
+                                
+                                </div>
+                            </form>
+                            }
+                            <div class="modal-footer">
+                                <button value="Close" data-dismiss="modal" id="close">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+</body>
+</html>
