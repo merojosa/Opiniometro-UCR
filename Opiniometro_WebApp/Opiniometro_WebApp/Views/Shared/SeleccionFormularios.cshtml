@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Formulario>
+
+}@*
+    @using (Html.BeginForm("SeleccionFormularios", "SeleccionFormularios", FormMethod.Post, new { @class = "form-inline", role = "form" }))
+    {
+        <div class="form-group">
+            <input type="text" class="form-control pull-right" name="DATA">
+        </div>
+        <button type="submit" class="btn btn-primary pull-right">Get Data</button>
+    }@*
+    <div>
+        @using (Html.BeginForm("SeleccionFormularios", "SeleccionFormularios", FormMethod.Post, new { @class = "form-inline", role = "form" }))
+        {
+            @Html.TextBox("searchForm", "", new { placeholder = "Nombre del formulario" })
+            <input type="submit" value="Buscar" />
+        }
+    </div>*@
+
+<table class="table">
+    <!-- Tabla para mostrar los formularios -->
+    <tr></tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+
+            <td>
+                <!-- checkbox para elegir formulario-->
+                <div align='center'><input type="checkbox" name="Formulario" value="Formulario"></div><br>
+        </tr>
+    }
+</table>

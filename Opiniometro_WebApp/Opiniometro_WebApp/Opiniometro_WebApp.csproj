@@ -182,6 +182,7 @@
     <Compile Include="Controllers\RespondeController.cs" />
     <Compile Include="Controllers\LogInPerfilesController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
+    <Compile Include="Controllers\SeleccionFormulariosController.cs" />
     <Compile Include="Controllers\Seleccion_UnicaController.cs" />
     <Compile Include="Controllers\Texto_LibreController.cs" />
     <Compile Include="Global.asax.cs">
@@ -422,9 +423,11 @@
     <Content Include="Views\Categoria\Edit.cshtml" />
     <Content Include="Views\Categoria\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ElegirGrupoEditorViewModel.cshtml" />
+    <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
+    <Folder Include="Views\SeleccionFormularios\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
