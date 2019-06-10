@@ -10,6 +10,11 @@ namespace Opiniometro_WebApp.Models
     public class CrearFormularioModel
     {
 
+        public List<Seccion> Secciones { get; set; }
+
+        public List<Item> Items { get; set; }
+
+        public Formulario Formulario { get; set; }
 
     }
 
