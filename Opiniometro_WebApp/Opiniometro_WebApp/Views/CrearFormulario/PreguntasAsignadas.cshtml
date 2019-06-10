@@ -24,7 +24,6 @@
                 @Html.DisplayFor(model => item.Orden_Item)
             </td>
             <td>
-                @Html.DisplayFor(model => item.Item.TextoPregunta)
                 @Html.Action("itemVParcial", "Item" ,new {codigo = item.ItemId})
             </td>
 
