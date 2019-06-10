@@ -280,10 +280,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\OpiniometroModel.Designer.cs">
+    <Compile Include="Models\Opiniometro_Model.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>OpiniometroModel.edmx</DependentUpon>
+      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Perfil.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
@@ -349,23 +349,23 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\OpiniometroModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OpiniometroModel.edmx</DependentUpon>
+      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
       <LastGenOutput>OpiniometroModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\OpiniometroModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OpiniometroModel.edmx</DependentUpon>
+      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
       <LastGenOutput>OpiniometroModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\AsignarFormularios.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\OpiniometroModel.edmx">
+    <EntityDeploy Include="Models\Opiniometro_Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>OpiniometroModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>Opiniometro_Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\OpiniometroModel.edmx.diagram">
-      <DependentUpon>OpiniometroModel.edmx</DependentUpon>
+    <Content Include="Models\Opiniometro_Model.edmx.diagram">
+      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CollapsibleScript.js" />
