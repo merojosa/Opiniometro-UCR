@@ -158,6 +158,12 @@ namespace Opiniometro_WebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult itemVParcial(String codigo)
+        {
+            Item item = db.Item.Find(codigo);
+            return PartialView(item); 
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -166,6 +172,7 @@ namespace Opiniometro_WebApp.Controllers
             }
             base.Dispose(disposing);
         }
+       
  
 
     }

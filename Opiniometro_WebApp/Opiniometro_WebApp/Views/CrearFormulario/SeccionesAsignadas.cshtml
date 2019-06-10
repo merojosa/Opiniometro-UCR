@@ -1,11 +1,12 @@
 ﻿@model List<Opiniometro_WebApp.Models.Conformado_Item_Sec_Form>
 
 
+
 <table class=" table table-bordered">
     <thead>
         <tr>
             <th>
-                @Html.Label("Orden")
+                @Html.Label("Orden Sección")
             </th>
             <th>
                 @Html.Label("Título")
@@ -20,10 +21,10 @@
     @foreach (var seccion in Model)
     {
         <tr>
-            <td>
+            <td align='center'>
                 @Html.DisplayFor(model => seccion.Orden_Seccion)
             </td>
-            <td>
+            <td align='left'>
                 @Html.DisplayFor(model => seccion.TituloSeccion)
             </td>
 

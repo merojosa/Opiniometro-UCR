@@ -16,9 +16,10 @@ namespace Opiniometro_WebApp.Controllers
     {
         Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
         // GET: CrearFormulario
-        public ActionResult AsignarPreguntas()
+        public ActionResult AsignarPreguntas(string codForm)
         {
-            List<Conformado_Item_Sec_Form> todo = db.Conformado_Item_Sec_Form.ToList();
+            ViewData["Codigo"] = codForm; 
+            List<Formulario> todo = db.Formulario.Where(m => m.CodigoFormulario == codForm).ToList();// le pasamos 
             return View(todo);
         }
 
