@@ -33,8 +33,9 @@
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                <input type="button" value="Asignar preguntas" class="btn btn-secondary" id="botonNuevaSeccion" onclick="accionBotonAsignarPregunta()" />
-                @*@Html.ActionLink("Asignar Preguntas", "AsignarPreguntas", "CrearFormulario",null, new { CodForm=item.CodigoFormulario }) |*@
+                @*<input type="button" value="Asignar preguntas" class="btn btn-secondary" id="botonNuevaSeccion" onclick="accionBotonAsignarPregunta()"/>*@
+              
+                @Html.ActionLink("Asignar Preguntas", "AsignarPreguntas", "CrearFormulario" ,new { codForm = item.CodigoFormulario}, null)
                 @*@Html.ActionLink("Details", "Details", new { id=item.CodigoFormulario }) |*@
                 @*@Html.ActionLink("Delete", "Delete", new { id=item.CodigoFormulario })*@
             </td>
