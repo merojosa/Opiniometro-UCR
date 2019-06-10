@@ -410,7 +410,8 @@ VALUES  ('Evaluación de aspectos reglamentarios del profesor', 'Conteste a las 
 
 --Formulario
 INSERT INTO Formulario (CodigoFormulario, Nombre)
-VALUES  ('131313', 'Evaluación de Profesores');
+VALUES  ('131313', 'Evaluación de Profesores'),
+		('121212', 'Evaluacion del Curso');
 
 --Profesor
 INSERT INTO Profesor (CedulaProfesor)
