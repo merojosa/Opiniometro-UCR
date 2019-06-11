@@ -55,7 +55,8 @@ namespace Opiniometro_WebApp.Controllers
                 try
                 {
                     String correoInstitucional = db.Usuario.Where(m => m.Cedula == id).First().CorreoInstitucional;
-                    modelPersona.Perfil = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
+                    //modelPersona.Perfil = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
+                    modelPersona.Perfil = db.Perfil.Select(n=>n.Id).ToList();
                     return View(modelPersona);
                 }
                 catch(Exception)
