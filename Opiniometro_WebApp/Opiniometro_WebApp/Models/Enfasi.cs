@@ -12,14 +12,13 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Enfasi
+    public partial class Enfasis
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Enfasi()
+        public Enfasis()
         {
             this.Tiene_Usuario_Perfil_Enfasis = new HashSet<Tiene_Usuario_Perfil_Enfasis>();
-            this.Cursoes = new HashSet<Curso>();
-            this.Unidad_Academica = new HashSet<Unidad_Academica>();
+            this.Curso = new HashSet<Curso>();
         }
     
         public byte Numero { get; set; }
@@ -29,8 +28,6 @@ namespace Opiniometro_WebApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tiene_Usuario_Perfil_Enfasis> Tiene_Usuario_Perfil_Enfasis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Curso> Cursoes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Unidad_Academica> Unidad_Academica { get; set; }
+        public virtual ICollection<Curso> Curso { get; set; }
     }
 }
