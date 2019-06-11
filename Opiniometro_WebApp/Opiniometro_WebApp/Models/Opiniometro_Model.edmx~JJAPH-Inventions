@@ -5,12 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="Opiniometro_DatosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="__RefactorLog">
-          <Key>
-            <PropertyRef Name="OperationKey" />
-          </Key>
-          <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
-        </EntityType>
         <EntityType Name="Administrativo">
           <Key>
             <PropertyRef Name="CedulaAdministrativo" />
@@ -789,6 +783,15 @@
         <Function Name="MostrarEstudiantes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="NombrePersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_AgregarPersonaUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
+          <Parameter Name="Cedula" Type="char" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
+          <Parameter Name="Apellido2" Type="nvarchar" Mode="In" />
+          <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SP_AgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
@@ -1970,7 +1973,7 @@
           </FunctionImport>
           <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_DatosModel.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
-            <Parameter Name="Cedula" Mode="In" Type="String" />
+          <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_AgregarUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -2369,6 +2372,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="Opiniometro_DatosModel.Store.NombrePersona" />
+          <FunctionImportMapping FunctionImportName="SP_AgregarPersonaUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarPersonaUsuario" />
           <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarUsuario" />
           <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="Opiniometro_DatosModel.Store.SP_CambiarContrasenna" />
           <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_ContarRespuestasPorGrupo" />
