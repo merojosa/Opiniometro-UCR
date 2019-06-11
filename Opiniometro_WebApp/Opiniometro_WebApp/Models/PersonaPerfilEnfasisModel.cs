@@ -16,7 +16,7 @@ namespace Opiniometro_WebApp.Models
         public Persona Persona { get; set; }
         public virtual ICollection<Enfasis> Enfasis { get; set; }
 
-        public virtual ICollection<Perfil> Perfil { get; set; }
+        public virtual ICollection<String> Perfil { get; set; }
 
     }
 }
