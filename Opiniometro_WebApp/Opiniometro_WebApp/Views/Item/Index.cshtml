@@ -32,24 +32,23 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TextoPregunta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreCategoria)
-            </td>
-            <td>
-                @if (item.TieneObservacion == true)
-                {
-                    <input type="checkbox" checked disabled>
-                }
-            </td>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TextoPregunta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Categoria )
+        </td>
+        <td>
+            @if (item.TieneObservacion == true)
+            {
+                <input type="checkbox" checked disabled>
+            }
+        </td>
 
             <td contextmenu="5">
                 @* @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }) |*@

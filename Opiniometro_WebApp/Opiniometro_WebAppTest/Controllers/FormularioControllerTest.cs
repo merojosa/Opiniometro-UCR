@@ -101,6 +101,24 @@ namespace Opiniometro_WebAppTest.Controllers
         }
 
         [TestMethod]
+        public void TestDeleteViewDataMock2()
+        {
+            // Arrange
+            var mockDb = new Mock<Opiniometro_DatosEntities>();
+            string codigo = "100001";
+            Formulario formulario = new Formulario() { CodigoFormulario = "100001", Nombre = "Programación I" };
+            mockDb.Setup(m => m.Formulario.Find(codigo)).Returns(formulario);
+            FormularioController controller = new FormularioController(mockDb.Object);
+
+            // Act
+            controller.DeleteConfirmed(formulario.CodigoFormulario);
+            ViewResult result = controller.Details(codigo) as ViewResult;
+
+            // Assert
+            Assert.AreEqual(result.Model, formulario);
+        }
+
+        [TestMethod]
         public void TestIndexViewDataMock()
         {
             // Arrange
