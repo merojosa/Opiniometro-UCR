@@ -9,7 +9,10 @@ namespace Opiniometro_WebApp.Models
     {
         public Permiso PermisoModel { get; set; }
         public Perfil PerfilModel { get; set; }
+        public string IdPerfil { get; set; }
         public List<Permiso> ListaPermisos { get; set; }
         public List<Perfil> ListaPerfiles { get; set; }
+
+        public List<String> ListaPerfilesId { get; set; }
     }
 }
