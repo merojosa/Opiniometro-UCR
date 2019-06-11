@@ -19,10 +19,15 @@ using System.Net;
 
 namespace Opiniometro_WebApp.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
         private const string caracteres_aleatorios = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        
+
+        public Persona Persona { get; private set; }
 
         public ActionResult VerPersonas(string cedula)
         {
@@ -48,29 +53,38 @@ namespace Opiniometro_WebApp.Controllers
         {
             try
             {
-                using (db)
+                Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel modelPersona = new Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel();
+                modelPersona.Persona = db.Persona.Find(id);
+
+                try
                 {
-                    Persona persona = db.Persona.Find(id);
-                    return View(persona);
+                    String correoInstitucional = db.Usuario.Where(m => m.Cedula == id).First().CorreoInstitucional;
+                    //modelPersona.Perfil = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
+                    modelPersona.Perfil = db.Perfil.Select(n=>n.Id).ToList();
+                    return View(modelPersona);
                 }
+                catch(Exception)
+                {
+                    return View(modelPersona);
+                }
+
+                
             }
             catch (Exception)
             {
 
                 throw;
-            }
-            
-            
+            }  
         }
 
         [HttpPost]
-        public ActionResult Editar(Persona per)
+        public ActionResult Editar(PersonaPerfilEnfasisModel per)
         {
             try
             {
                 using (db)
                 {
-                    db.SP_ModificarPersona(per.Cedula, per.Cedula, per.Nombre, per.Apellido1, per.Apellido2, per.Direccion);
+                    db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre, per.Persona.Apellido1, per.Persona.Apellido2, per.Persona.Direccion);
                     return RedirectToAction("VerPersonas");
                 }
             }

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
+using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers.Servicios
@@ -36,7 +37,7 @@ namespace Opiniometro_WebApp.Controllers.Servicios
 
             string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email).Select(c => c.Value).SingleOrDefault();
 
-            if(correo_autenticado != null)
+            if (correo_autenticado != null)
             {
                 limpiar_permisos();
 
@@ -45,8 +46,7 @@ namespace Opiniometro_WebApp.Controllers.Servicios
                 List<int> permisos = new List<int>();
 
                 // Guardo las tuplas resultantes del llamado al procedimiento almacenado, orden: Sigla de carrera, numero de enfasis, permiso
-                // ToDo: hacerlo con el enfasis actual.
-                var tuplas_resultantes = db.SP_ObtenerPermisosUsuario(correo_autenticado);
+                var tuplas_resultantes = db.SP_ObtenerPermisosUsuario(correo_autenticado, obtener_perfil_actual());
 
                 string llave_hash = null;
 
@@ -86,6 +86,27 @@ namespace Opiniometro_WebApp.Controllers.Servicios
 
             return perfil_actual;
 
+        }
+
+        public static bool usuario_loggeado()
+        {
+            if (obtener_correo_actual() == null)
+                return false;
+            else
+                return true;
+        }
+
+        public static bool verificar_sesion(Controller controller)
+        {
+            // Si no tiene permisos, el usuario tiene que loggearse nuevamente para obtenerlos.
+            if(controller.Session[obtener_correo_actual()] != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -5,58 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opiniómetro@UCR</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/estilos-propios.css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
-
     <!--Barra-->
     @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
+    @using Opiniometro_WebApp.Controllers.Servicios;
+    @using Opiniometro_WebApp.Controllers;
 
-    <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-top:145px" ;>
-        <div class="container">
-            <div class="navbar-header">
-
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Opiniómetro@UCR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    @if (IdentidadManager.usuario_loggeado() == true)
+    {
+        <nav class="navbar navbar-opiniometro-secundaria navbar-fixed-top" style="margin-top:100px"; z-index:3">
+            <div class="container-fluid" style="margin-left:100px">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Bienvenido", "Index", "Home")</li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@IdentidadManager.obtener_perfil_actual()<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @{
+                                        ICollection<String> perfiles = PerfilController.ObtenerPerfiles();
+                                        ViewBag.perfiles = perfiles;
+                                        for (int contador = 0; contador < perfiles.Count; contador++)
+                                        {
+                                            <a href="@Url.Action("CambioPerfil", "Perfil", new { perfil_elegido = @ViewBag.perfiles[contador] })">@ViewBag.perfiles[contador]</a>
+                                        }
+                                    }
+                                </li>
+                            </ul>
+                        </li>
+                        <li>@Html.ActionLink("Cerrar sesión", "CerrarSesion", "Auth")</li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
             </div>
-            <div class="navbar-collapse collapse">
-                <div class="dropdown">
-                    <button class="dropbtn">
-                        Usuario
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-contentt">
-                        @Html.ActionLink("Ver información de personas", "VerPersonas", "Admin")
-                        @Html.ActionLink("Insertar usuario", "CrearUsuario", "Admin")
-                        @Html.ActionLink("Cargar archivo", "CargarArchivo", "Administrador")
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <button class="dropbtn">
-                        Evaluaciones
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-contentt">
-                        @Html.ActionLink("Insertar formulario", "Index", "Formulario")
-                        @Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")
-                        @Html.ActionLink("Visualizar resultados de evaluaciones", "Index", "Responde")
-                        @Html.ActionLink("Sección", "Index", "Seccion")
-                        @Html.ActionLink("Ítem", "Index", "Item")
-                    </div>
-                </div>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Cerrar sesión", "CerrarSesion", "Auth")</li>
+        </nav>
+
+        <nav class="navbar navbar-opiniometro-ternaria navbar-fixed-top" style="margin-top:150px; z-index:2">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Opiniómetro@UCR", "Index", "Home", new { style = "margin-left:100px" })</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Ver información de personas", "VerPersonas", "Admin")</li>
+                            <li>@Html.ActionLink("Insertar usuario", "CrearUsuario", "Admin")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Evaluaciones<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Insertar formulario", "Index", "Formulario")</li>
+                            <li>@Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")</li>
+                            <li>@Html.ActionLink("Visualizar resultados de evaluaciones", "Index", "Responde")</li>
+                            <li>@Html.ActionLink("Sección", "Index", "Seccion")</li>
+                            <li>@Html.ActionLink("Ítem", "Index", "Item")</li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
-        </div>
-    </nav>
+        </nav>
+    }
 
-    <div class="container body-content">
+    <br /><br /><br /><br />
+
+    <div class="container-fluid" style="margin-left:100px" >
         @RenderBody()
         <hr />
         <footer>
@@ -69,11 +84,3 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
-
-<script>
-    function redirect()
-    {
-        alert("Javasript");
-
-    }
-</script>
