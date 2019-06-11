@@ -117,7 +117,17 @@ namespace Opiniometro_WebApp.Controllers
             {
                 using (db)
                 {
-                    db.SP_AgregarPersonaUsuario(per.persona.Cedula, per.persona.Nombre, per.persona.Apellido1, per.persona.Apellido2, per.usuario.CorreoInstitucional, per.persona.Direccion);
+                    string contrasenna_generada = GenerarContrasenna(10);
+                    db.SP_AgregarPersonaUsuario(per.usuario.CorreoInstitucional, contrasenna_generada, per.persona.Cedula, per.persona.Nombre, per.persona.Apellido1, per.persona.Apellido2, per.persona.Direccion);
+                    
+
+                    string contenido =
+                     "<p>Se le ha creado un usuario en Opiniometro@UCR.</p>" +
+                     "<p>A continuación, su contraseña temporal, ingrésela junto con su correo institucional:</p> <b>"
+                     + contrasenna_generada + "</b>";
+
+                    // Envio correo con la contrasenna autogenerada
+                    EnviarCorreo(per.usuario.CorreoInstitucional, "Usuario creado - Opiniómetro@UCR", contenido);
                     return RedirectToAction("VerPersonas");
                 }
             }
