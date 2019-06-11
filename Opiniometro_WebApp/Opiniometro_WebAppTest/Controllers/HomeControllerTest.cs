@@ -12,18 +12,20 @@ namespace Opiniometro_WebAppTest.Controllers
     public class HomeControllerTest
     {
         [TestMethod]
-        public void TestHomeNotNull()
+        public void TestHomeNotNullLoginFallido()
         {
-            var mockControllerContext = new Mock<ControllerContext>();
-            var mockSession = new Mock<HttpSessionStateBase>();
-            mockSession.SetupGet(s => s["login_fallido"]).Returns(null); //somevalue
-            mockControllerContext.Setup(p => p.HttpContext.Session).Returns(mockSession.Object);
+            // Mocks necesarios para tener una sesion "de mentira".
+            var mock_controller_contexto = new Mock<ControllerContext>();
+            var mock_session = new Mock<HttpSessionStateBase>();
+            mock_session.SetupGet(s => s["login_fallido"]).Returns(null); //somevalue
+            mock_controller_contexto.Setup(p => p.HttpContext.Session).Returns(mock_session.Object);
 
             var controller = new HomeController();
-            controller.ControllerContext = mockControllerContext.Object;
+
+            // Agrego los mocks al contexto del controlador.
+            controller.ControllerContext = mock_controller_contexto.Object;
             var result = controller.Index() as ActionResult;
 
-            // Assert
             Assert.IsNotNull(result);
         }
     }
