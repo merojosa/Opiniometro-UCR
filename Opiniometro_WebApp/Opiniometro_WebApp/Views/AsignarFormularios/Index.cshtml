@@ -5,6 +5,9 @@
 }
 
 @Styles.Render("~/Content/scrollbar-tabla.css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")﻿
+@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")﻿
 
 <div>
     <h1 align="center">Asignación de herramientas de evaluación</h1>
@@ -13,15 +16,15 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-6">
             <div class="panel panel-default">
                 <div class="panel-heading"><h3>Buscar grupos</h3></div>
                 <div class="panel-body">
-                    
+
                     <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
-                   @using (Html.BeginForm())
+                    @using (Html.BeginForm())
                     {
-                            
+
                         <!-- Buscador -->
                         <p>
                             <div>
@@ -34,11 +37,11 @@
                                 <label> Cursos: </label> @Html.DropDownList("nombreCurso", null, "<Seleccione Curso>", new { @class = "form-control" })
                             </div>
                             @*<div>
-                                <label> Semestre: </label> @Html.DropDownList("semestre", null, "<Seleccione Semestre>", new { @class = "form-control" })
-                            </div>*@
+                                    <label> Semestre: </label> @Html.DropDownList("semestre", null, "<Seleccione Semestre>", new { @class = "form-control" })
+                                </div>*@
                             @*<div>
-                                <label> Año: </label> @Html.DropDownList("ano", null, "<Seleccione Año>", new { @class = "form-control" })<br />
-                            </div>*@
+                                    <label> Año: </label> @Html.DropDownList("ano", null, "<Seleccione Año>", new { @class = "form-control" })<br />
+                                </div>*@
                             <div>
                                 @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
                                 <input type="submit" value="Buscar" />
@@ -50,12 +53,12 @@
             </div>
         </div>
         <div class="col-sm-4">
-            <span>Búsqueda de formularios</span>
+            <span></span>
         </div>
     </div>
 
-  
-    <div class="row">
+
+    <div class="row-sm-6">
 
         @using (Html.BeginForm("Asignar", "AsignarFormularios", FormMethod.Post))
         {
@@ -103,35 +106,36 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><h3>Tus formularios</h3></div>
                 <div class="panel-body">
-                    @using (Html.BeginForm("SeleccionFormularios", "SeleccionFormularios", FormMethod.Post, new { @class = "form-inline", role = "form" }))
+
+
+                    @using (Ajax.BeginForm("SeleccionFormularios", "AsignarFormularios", new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "form-content" }))
                     {
-                        <div class="form-group">
-                            <input type="text" class="form-control pull-right" name="DATA">
+                        @Html.TextBox("formulario", "", new { placeholder = "Nombre del formulario" })
+                        <input type="submit" value="Buscar" />
+                        <div id="form-content">
+                            @Html.Partial("SeleccionFormularios", Model.Formularios)
                         </div>
-                        <button type="submit" id="buttonForm" class="btn btn-primary pull-right">Get Data</button>
                     }
-                    <div id="divPartial">
-                        @Html.Partial("SeleccionFormularios", Model.Formularios)
-                    </div>
-                    @*
-        @{
-            Html.RenderPartial("SeleccionFormularios", Model.Formularios);
-        }*@
+
+
+
 
                 </div>
             </div>
         </div>
     </div>
 
-        <div align='center'>
-            <input type="submit" name="Asignar" id="Asignar" value="Asignar" />
-        </div>
-    
+    <div align='center'>
+        <input type="submit" name="Asignar" id="Asignar" value="Asignar" />
+    </div>
+
 </div>
 
-<script type="text/javascript">
-  $("#button").click(function(e){
-    $('#form').submit();
-    $('#divPartial').load('/SeleccionFormularios/POSTSeleccionFormularios');
-  });
-</script>
+@*
+    <script type="text/javascript">
+      $("#button").click(function(e){
+        $('#form').submit();
+        $('#divPartial').load('/SeleccionFormularios/POSTSeleccionFormularios');
+      });
+    </script>
+*@

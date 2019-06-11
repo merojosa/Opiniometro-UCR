@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
+using System.Diagnostics;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -192,6 +193,18 @@ namespace Opiniometro_WebApp.Controllers
         public List<Formulario> ObtenerFormularios()
         {
             return db.Formulario.ToList();
+        }
+        
+        public ActionResult SeleccionFormularios(string formulario)
+        {
+            IQueryable<Formulario> form = from f in db.Formulario select f;
+
+            if (!String.IsNullOrEmpty(formulario))
+            {
+                form = form.Where(f => f.Nombre.Contains(formulario));
+            }
+
+            return PartialView("SeleccionFormularios", form);
         }
     }
 }
