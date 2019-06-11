@@ -60,7 +60,6 @@
         <AssociationConnector Association="Opiniometro_DatosModel.FK_ForRes_Pro" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Res_ForRes" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Tie_Gru" ManuallyRouted="false" />
-        <AssociationConnector Association="Opiniometro_DatosModel.FK_Imparte_Profesor" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Res_Ite" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Sel_Uni_Ite" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Tex_Ite" ManuallyRouted="false" />
@@ -74,6 +73,7 @@
         <AssociationConnector Association="Opiniometro_DatosModel.FK_Res_Sec" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.Escuela" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_DatosModel.Imparte" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.Se_Encuentra_Curso_Enfasis" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.Se_Encuentra_Unidad_Enfasis" ManuallyRouted="false" />
       </Diagram>
