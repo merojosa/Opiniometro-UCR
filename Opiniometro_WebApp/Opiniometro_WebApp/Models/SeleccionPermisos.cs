@@ -13,6 +13,7 @@ namespace Opiniometro_WebApp.Models
         public List<Permiso> ListaPermisos { get; set; }
         public List<Perfil> ListaPerfiles { get; set; }
 
+        public List<Posee_Enfasis_Perfil_Permiso> ListaPosee {get; set;}
         public List<String> ListaPerfilesId { get; set; }
     }
 }

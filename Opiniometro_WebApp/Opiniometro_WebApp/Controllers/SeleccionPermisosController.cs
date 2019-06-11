@@ -20,6 +20,7 @@ namespace Opiniometro_WebApp.Controllers
             SeleccionPermisos model = seleccionPermisos;
             model.ListaPerfiles = db.Perfil.ToList();
             model.ListaPermisos = db.Permiso.ToList();
+            model.ListaPosee = db.Posee_Enfasis_Perfil_Permiso.ToList();
             int tam = model.ListaPerfiles.Count;
 
             model.ListaPerfilesId = new List<string>(new string[tam]);
