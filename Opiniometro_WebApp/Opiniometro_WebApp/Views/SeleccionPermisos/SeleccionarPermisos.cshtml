@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Administrar Permisos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Administrar Permisos</h2>
+
+<br />
+
+@using (Html.BeginForm("Guardar", "SeleccionPermisos"))
+{
+    <table class="table">
+        <tr>
+            <th>@Html.Label("Perfil")</th>
+            <td>@Html.DropDownList("Perfiles", new SelectList(Model.ListaPerfilesId), "Elegir perfil", new { @class = "form-control float-left" }) </td>
+        </tr>
+    </table>
+
+    <p align="right">
+        <button class="btn btn-default" type="submit">Guardar</button>
+
+        <!-- El boton cancelar refresca la pantalla -->
+        <button class="btn btn-default" onclick="location.href='@Url.Action("SeleccionarPermisos", "SeleccionPermisos")'; return false;"> Cancelar</button>
+    </p>
+
+    <br />
+    @Html.Raw(TempData["msg"])
+}
