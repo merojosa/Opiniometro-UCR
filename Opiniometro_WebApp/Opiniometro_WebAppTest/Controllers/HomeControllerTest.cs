@@ -17,7 +17,9 @@ namespace Opiniometro_WebAppTest.Controllers
             // Mocks necesarios para tener una sesion "de mentira".
             var mock_controller_contexto = new Mock<ControllerContext>();
             var mock_session = new Mock<HttpSessionStateBase>();
-            mock_session.SetupGet(s => s["login_fallido"]).Returns(null); //somevalue
+
+            // Tiene que dar null ya que es un login fallido.
+            mock_session.SetupGet(s => s["login_fallido"]).Returns(null);
             mock_controller_contexto.Setup(p => p.HttpContext.Session).Returns(mock_session.Object);
 
             var controller = new HomeController();

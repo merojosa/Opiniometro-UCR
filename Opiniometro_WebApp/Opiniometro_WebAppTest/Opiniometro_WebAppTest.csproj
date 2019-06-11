@@ -150,6 +150,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AuthControllerTest.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Controllers\IdentidadManagerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
