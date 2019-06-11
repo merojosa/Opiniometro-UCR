@@ -76,7 +76,7 @@ namespace Opiniometro_WebApp.Controllers
             
             
         }
-
+        //o
         [HttpPost]
         public ActionResult Editar(ViewModelAdmin per)
         {
