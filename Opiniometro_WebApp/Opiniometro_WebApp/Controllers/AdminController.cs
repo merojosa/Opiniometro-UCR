@@ -14,13 +14,16 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System.Dynamic;
 using System.ComponentModel;
+using System.Security.Cryptography;
+using System.Net.Mail;
+using System.Net;
 
 namespace Opiniometro_WebApp.Controllers
 {
     public class AdminController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
-
+        private const string caracteres_aleatorios = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         public ActionResult VerPersonas(string nom)
         {
@@ -124,6 +127,49 @@ namespace Opiniometro_WebApp.Controllers
                 throw;
             }
 
+        }
+
+        private void EnviarCorreo(string receptor, string asunto, string contenido)
+        {
+            string autor = System.Configuration.ConfigurationManager.AppSettings["CorreoEmisor"].ToString();
+            string contrasenna = System.Configuration.ConfigurationManager.AppSettings["ContrasennaEmisor"].ToString();
+
+            SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587);
+            cliente.EnableSsl = true;
+            cliente.Timeout = 100000;
+            cliente.DeliveryMethod = SmtpDeliveryMethod.Network;
+            cliente.UseDefaultCredentials = false;
+            cliente.Credentials = new NetworkCredential(autor, contrasenna);
+
+            MailMessage correo = new MailMessage(autor, receptor, asunto, contenido);
+            correo.IsBodyHtml = true;
+            correo.BodyEncoding = UTF8Encoding.UTF8;
+            cliente.Send(correo);
+
+        }
+
+        /*
+         * EFECTO:
+         * REQUIERE:
+         * MODIFICA:
+         * 
+         * Basado en: https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings
+         */
+        private string GenerarContrasenna(int tamanno)
+        {
+            byte[] datos = new byte[tamanno];
+            using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider())
+            {
+                crypto.GetBytes(datos);
+            }
+
+            StringBuilder contrasenna = new StringBuilder(tamanno);
+
+            foreach (byte byte_aleatorio in datos)
+            {
+                contrasenna.Append(caracteres_aleatorios[byte_aleatorio % (caracteres_aleatorios.Length)]);
+            }
+            return contrasenna.ToString();
         }
 
         public ActionResult VerPorEnfasis()
