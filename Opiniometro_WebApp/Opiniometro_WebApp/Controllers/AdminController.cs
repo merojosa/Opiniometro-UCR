@@ -182,36 +182,6 @@ namespace Opiniometro_WebApp.Controllers
             return contrasenna.ToString();
         }
 
-        public ActionResult VerPorEnfasis()
-        {
-
-            return View();
-        }
-
-
-        /* public DataSet GetDataSet(string ConnectionString, string SQL)
-         {
-
-                         SqlDataAdapter da = new SqlDataAdapter();
-
-                         cmd.CommandText = SQL;
-                         da.SelectCommand = cmd;
-                         DataSet ds = new DataSet();
-
-                         conn.Open();
-                         da.Fill(ds);
-                         conn.Close();
-
-                         return ds;
-                     }
-             DataTable table = new DataTable();
-             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["DB"].ConnectionString))
-             using (var cmd = new SqlCommand("usp_GetABCD", con))
-             using (var da = new SqlDataAdapter(cmd))
-             {
-                 cmd.CommandType = CommandType.StoredProcedure;
-                 da.Fill(table);
-             }*/
 
     }
     }

@@ -29,12 +29,19 @@
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
-                
+
             <div class="form-horizontal">
                 <h4>Editar Usuario</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.persona.Cedula)
+                
+                <div class="form-group">
+                    @Html.LabelFor(model => model.persona.Cedula, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.Raw(Model.persona.Cedula)
+
+                    </div>
+                </div>
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.persona.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -84,6 +91,9 @@
                     </div>
                 </div>
             </div>
+                <div>
+                    @Html.ActionLink("Volver", "VerPersonas")
+                </div>
             }
         </div>
     </div>

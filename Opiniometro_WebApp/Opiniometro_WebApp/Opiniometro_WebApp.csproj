@@ -438,7 +438,6 @@
     <Content Include="Views\Categoria\Edit.cshtml" />
     <Content Include="Views\Categoria\Index.cshtml" />
     <Content Include="Views\Auth\Permisos.cshtml" />
-    <Content Include="Views\Admin\VerPorEnfasis.cshtml" />
     <Content Include="Views\Admin\VerPersonas.cshtml" />
     <Content Include="Views\Admin\Editar.cshtml" />
     <Content Include="Views\Admin\CrearUsuario.cshtml" />
