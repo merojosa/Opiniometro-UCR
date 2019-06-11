@@ -58,17 +58,13 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     
-        public virtual ObjectResult<CursosSegunEnfasis_Result> CursosSegunEnfasis(string codigoUnidad, string siglaCarrera)
+        public virtual ObjectResult<CursosSegunCarrera_Result> CursosSegunCarrera(string siglaCarrera)
         {
-            var codigoUnidadParameter = codigoUnidad != null ?
-                new ObjectParameter("codigoUnidad", codigoUnidad) :
-                new ObjectParameter("codigoUnidad", typeof(string));
-    
             var siglaCarreraParameter = siglaCarrera != null ?
                 new ObjectParameter("siglaCarrera", siglaCarrera) :
                 new ObjectParameter("siglaCarrera", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CursosSegunEnfasis_Result>("CursosSegunEnfasis", codigoUnidadParameter, siglaCarreraParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CursosSegunCarrera_Result>("CursosSegunCarrera", siglaCarreraParameter);
         }
     
         public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)

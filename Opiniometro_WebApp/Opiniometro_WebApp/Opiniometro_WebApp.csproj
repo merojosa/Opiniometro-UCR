@@ -202,7 +202,7 @@
     <Compile Include="Models\Curso.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CursosSegunEnfasis_Result.cs">
+    <Compile Include="Models\CursosSegunCarrera_Result.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__RefactorLog.cs">

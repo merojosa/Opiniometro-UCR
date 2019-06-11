@@ -810,8 +810,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="CursosSegunEnfasis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigoUnidad" Type="nvarchar" Mode="In" />
+        <Function Name="CursosSegunCarrera" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="siglaCarrera" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="DatosEstudiante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -2004,8 +2003,7 @@
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
           </AssociationSet>
-          <FunctionImport Name="CursosSegunEnfasis" ReturnType="Collection(Opiniometro_DatosModel.CursosSegunEnfasis_Result)">
-            <Parameter Name="codigoUnidad" Mode="In" Type="String" />
+          <FunctionImport Name="CursosSegunCarrera" ReturnType="Collection(Opiniometro_DatosModel.CursosSegunCarrera_Result)">
             <Parameter Name="siglaCarrera" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_DatosModel.DatosEstudiante_Result)">
@@ -2062,7 +2060,7 @@
             <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="CursosSegunEnfasis_Result">
+        <ComplexType Name="CursosSegunCarrera_Result">
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="75" />
           <Property Type="String" Name="Sigla" Nullable="false" MaxLength="6" />
           <Property Type="Byte" Name="Tipo" Nullable="false" />
@@ -2397,9 +2395,9 @@
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="CursosSegunEnfasis" FunctionName="Opiniometro_DatosModel.Store.CursosSegunEnfasis">
+          <FunctionImportMapping FunctionImportName="CursosSegunCarrera" FunctionName="Opiniometro_DatosModel.Store.CursosSegunCarrera">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.CursosSegunEnfasis_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.CursosSegunCarrera_Result">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Sigla" ColumnName="Sigla" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />

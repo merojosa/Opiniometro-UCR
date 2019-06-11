@@ -11,7 +11,7 @@ namespace Opiniometro_WebApp.Models
 {
     using System;
     
-    public partial class CursosSegunEnfasis_Result
+    public partial class CursosSegunCarrera_Result
     {
         public string Nombre { get; set; }
         public string Sigla { get; set; }

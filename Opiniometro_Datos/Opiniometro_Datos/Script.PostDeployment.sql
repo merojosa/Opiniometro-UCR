@@ -296,21 +296,17 @@ VALUES ('CI1330', 100, 'SC-01234'),
 	   ('DE1001', 12, 'SC-89457'),
 	   ('DE2001', 12, 'SC-89457');
 
+--DROP PROCEDURE CursosSegunCarrera
 GO
-CREATE PROCEDURE CursosSegunEnfasis
-@codigoUnidad NVARCHAR(10),
+CREATE PROCEDURE CursosSegunCarrera
 @siglaCarrera NVARCHAR(10)
 AS
 BEGIN
-IF @codigoUnidad IS NOT NULL
 SELECT C.Nombre, C.Sigla, C.Tipo, C.CodigoUnidad
-FROM Curso C JOIN Unidad_Academica U ON C.CodigoUnidad = U.Codigo
-WHERE C.CodigoUnidad = @codigoUnidad
-
-IF @siglaCarrera IS NOT NULL
-SELECT C.Nombre, C.Sigla, C.Tipo, C.CodigoUnidad
-FROM Curso C JOIN Se_Encuentra_Curso_Enfasis S ON C.Sigla = S.SiglaCurso 
-WHERE S.SiglaCarrera = @siglaCarrera
+FROM Curso C
+WHERE C.Sigla IN (SELECT S.SiglaCurso
+				FROM Se_Encuentra_Curso_Enfasis S
+				WHERE S.SiglaCarrera = @siglaCarrera)
 END
 GO
 

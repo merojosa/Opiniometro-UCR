@@ -99,16 +99,34 @@ namespace Opiniometro_WebApp.Controllers
         public IQueryable<Curso> ObtenerCursos(short anno, byte semestre,
             String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis, string changeUnidad, string changeCarrera)
         {
-            List<Curso> cursos = new List<Curso>();
-            Opiniometro_DatosEntities opi = new Opiniometro_DatosEntities();
-            var cur = opi.CursosSegunEnfasis(changeUnidad, changeCarrera);
-            foreach (var c in cur)
+            IQueryable<Curso> nombreCurso = from c in db.Curso
+                                            select c;
+
+            if (!String.IsNullOrEmpty(changeUnidad))
             {
-                cursos.Add(new Curso());
+                nombreCurso = nombreCurso.Where(c => c.CodigoUnidad.Equals(changeUnidad));
             }
 
-            IQueryable<Curso> nombreCurso = cursos.AsQueryable();
-            ViewBag.nombreCurso = new SelectList(nombreCurso, "Sigla", "Nombre");
+            if (!String.IsNullOrEmpty(changeCarrera))
+            {
+                List<Curso> cursos = new List<Curso>();
+                Opiniometro_DatosEntities opi = new Opiniometro_DatosEntities();
+                var cur = opi.CursosSegunCarrera(changeCarrera);
+                foreach (var c in cur)
+                {
+                    Curso nuevo = new Curso();
+
+                    nuevo.CodigoUnidad = c.CodigoUnidad;
+                    nuevo.Tipo = c.Tipo;
+                    nuevo.Sigla = c.Sigla;
+                    nuevo.Nombre = c.Nombre;
+                    cursos.Add(nuevo);
+                }
+
+                nombreCurso = cursos.AsQueryable();
+            }
+
+            ViewBag.nombreCurso = new SelectList(nombreCurso, "Nombre", "Nombre");
             return nombreCurso;
         }
 
