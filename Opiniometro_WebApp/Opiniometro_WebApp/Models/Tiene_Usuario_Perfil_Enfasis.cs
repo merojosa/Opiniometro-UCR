@@ -19,7 +19,7 @@ namespace Opiniometro_WebApp.Models
         public string SiglaCarrera { get; set; }
         public string IdPerfil { get; set; }
     
-        public virtual Enfasis Enfasis { get; set; }
+        public virtual Enfasi Enfasi { get; set; }
         public virtual Perfil Perfil { get; set; }
         public virtual Usuario Usuario { get; set; }
     }

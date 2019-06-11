@@ -4,7 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Opiniometro_DatosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Opiniometro_Datos.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="Administrativo">
           <Key>
             <PropertyRef Name="CedulaAdministrativo" />
@@ -256,6 +262,15 @@
           <Property Name="IdPerfil" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="IdPermiso" Type="smallint" Nullable="false" />
         </EntityType>
+        <EntityType Name="Preguntas">
+          <Key>
+            <PropertyRef Name="Numero" />
+          </Key>
+          <Property Name="Numero" Type="int" Nullable="false" />
+          <Property Name="Planteamiento" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="TipoPregunta" Type="nchar" MaxLength="30" />
+          <Property Name="Categoria" Type="nchar" MaxLength="30" />
+        </EntityType>
         <EntityType Name="Profesor">
           <Key>
             <PropertyRef Name="CedulaProfesor" />
@@ -390,17 +405,6 @@
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'Opiniometro_Datos.dbo.UsuariosStaging' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="UsuariosStaging">
-          <Property Name="Cedula" Type="nvarchar" MaxLength="9" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
-          <Property Name="Apellido1" Type="nvarchar" MaxLength="50" />
-          <Property Name="Apellido2" Type="nvarchar" MaxLength="50" />
-          <Property Name="CorreoInstitucional" Type="nvarchar" MaxLength="50" />
-          <Property Name="Direccion" Type="nvarchar" MaxLength="200" />
-          <Property Name="Activo" Type="bit" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
         <EntityType Name="ValorRandom">
@@ -1072,7 +1076,8 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Perfil" Type="varchar" Mode="In" />
         </Function>
-        <EntityContainer Name="Opiniometro_DatosModelStoreContainer">
+        <EntityContainer Name="Opiniometro_DatosStoreContainer">
+          <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Canton" EntityType="Self.Canton" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
@@ -1099,6 +1104,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Provincia" EntityType="Self.Provincia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responde" EntityType="Self.Responde" Schema="dbo" store:Type="Tables" />
@@ -1301,7 +1307,13 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Opiniometro_DatosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Opiniometro_Datos" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="Guid" Nullable="false" />
+        </EntityType>
         <EntityType Name="Administrativo">
           <Key>
             <PropertyRef Name="CedulaAdministrativo" />
@@ -1318,7 +1330,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <Property Name="NombreProvincia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NombreCanton" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Provincia" Relationship="Self.FK_Can_Pro" FromRole="Canton" ToRole="Provincia" />
-          <NavigationProperty Name="Distrito" Relationship="Self.FK_Dis_Can" FromRole="Canton" ToRole="Distrito" />
+          <NavigationProperty Name="Distritoes" Relationship="Self.FK_Dis_Can" FromRole="Canton" ToRole="Distrito" />
         </EntityType>
         <EntityType Name="Carrera">
           <Key>
@@ -1335,7 +1347,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
             <PropertyRef Name="NombreCategoria" />
           </Key>
           <Property Name="NombreCategoria" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Item" Relationship="Self.FK_Ite_Cat" FromRole="Categoria" ToRole="Item" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_Ite_Cat" FromRole="Categoria" ToRole="Item" />
         </EntityType>
         <EntityType Name="Ciclo_Lectivo">
           <Key>
@@ -1344,7 +1356,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           </Key>
           <Property Name="Anno" Type="Int16" Nullable="false" />
           <Property Name="Semestre" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Grupo" Relationship="Self.FK_Gru_Cic" FromRole="Ciclo_Lectivo" ToRole="Grupo" />
+          <NavigationProperty Name="Grupoes" Relationship="Self.FK_Gru_Cic" FromRole="Ciclo_Lectivo" ToRole="Grupo" />
         </EntityType>
         <EntityType Name="Conformado_Item_Sec_Form">
           <Key>
@@ -1371,7 +1383,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <Property Name="Tipo" Type="Byte" Nullable="false" />
           <Property Name="CodigoUnidad" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Unidad_Academica" Relationship="Self.FK_Cur_Uni" FromRole="Curso" ToRole="Unidad_Academica" />
-          <NavigationProperty Name="Grupo" Relationship="Self.FK_Gru_Cur" FromRole="Curso" ToRole="Grupo" />
+          <NavigationProperty Name="Grupoes" Relationship="Self.FK_Gru_Cur" FromRole="Curso" ToRole="Grupo" />
           <NavigationProperty Name="Enfasis" Relationship="Self.Se_Encuentra_Curso_Enfasis" FromRole="Curso" ToRole="Enfasis" />
         </EntityType>
         <EntityType Name="Distrito">
@@ -1384,7 +1396,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <Property Name="NombreCanton" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NombreDistrito" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Canton" Relationship="Self.FK_Dis_Can" FromRole="Distrito" ToRole="Canton" />
-          <NavigationProperty Name="Persona" Relationship="Self.Direccion_Persona" FromRole="Distrito" ToRole="Persona" />
+          <NavigationProperty Name="Personas" Relationship="Self.Direccion_Persona" FromRole="Distrito" ToRole="Persona" />
         </EntityType>
         <EntityType Name="Empadronado">
           <Key>
@@ -1397,7 +1409,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Estudiante" Relationship="Self.FK_Empadronado_Estudiante" FromRole="Empadronado" ToRole="Estudiante" />
         </EntityType>
-        <EntityType Name="Enfasis">
+        <EntityType Name="Enfasi">
           <Key>
             <PropertyRef Name="Numero" />
             <PropertyRef Name="SiglaCarrera" />
@@ -1406,7 +1418,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Carrera" Relationship="Self.FK_Enf_Car" FromRole="Enfasis" ToRole="Carrera" />
           <NavigationProperty Name="Tiene_Usuario_Perfil_Enfasis" Relationship="Self.FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Enfasis" ToRole="Tiene_Usuario_Perfil_Enfasis" />
-          <NavigationProperty Name="Curso" Relationship="Self.Se_Encuentra_Curso_Enfasis" FromRole="Enfasis" ToRole="Curso" />
+          <NavigationProperty Name="Cursoes" Relationship="Self.Se_Encuentra_Curso_Enfasis" FromRole="Enfasis" ToRole="Curso" />
           <NavigationProperty Name="Unidad_Academica" Relationship="Self.Se_Encuentra_Unidad_Enfasis" FromRole="Enfasis" ToRole="Unidad_Academica" />
         </EntityType>
         <EntityType Name="Estudiante">
@@ -1415,9 +1427,9 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           </Key>
           <Property Name="CedulaEstudiante" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Carne" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Empadronado" Relationship="Self.FK_Empadronado_Estudiante" FromRole="Estudiante" ToRole="Empadronado" />
+          <NavigationProperty Name="Empadronadoes" Relationship="Self.FK_Empadronado_Estudiante" FromRole="Estudiante" ToRole="Empadronado" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Est_Per" FromRole="Estudiante" ToRole="Persona" />
-          <NavigationProperty Name="Matricula" Relationship="Self.FK_Matricula_Profesor" FromRole="Estudiante" ToRole="Matricula" />
+          <NavigationProperty Name="Matriculas" Relationship="Self.FK_Matricula_Profesor" FromRole="Estudiante" ToRole="Matricula" />
         </EntityType>
         <EntityType Name="Facultad">
           <Key>
@@ -1470,7 +1482,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <NavigationProperty Name="Grupo" Relationship="Self.FK_ForRes_Gru" FromRole="Formulario_Respuesta" ToRole="Grupo" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_ForRes_Per" FromRole="Formulario_Respuesta" ToRole="Persona" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK_ForRes_Pro" FromRole="Formulario_Respuesta" ToRole="Profesor" />
-          <NavigationProperty Name="Responde" Relationship="Self.FK_Res_ForRes" FromRole="Formulario_Respuesta" ToRole="Responde" />
+          <NavigationProperty Name="Respondes" Relationship="Self.FK_Res_ForRes" FromRole="Formulario_Respuesta" ToRole="Responde" />
         </EntityType>
         <EntityType Name="Grupo">
           <Key>
@@ -1514,7 +1526,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <Property Name="NombreCategoria" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Categoria" Relationship="Self.FK_Ite_Cat" FromRole="Item" ToRole="Categoria" />
           <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_Ite" FromRole="Item" ToRole="Conformado_Item_Sec_Form" />
-          <NavigationProperty Name="Responde" Relationship="Self.FK_Res_Ite" FromRole="Item" ToRole="Responde" />
+          <NavigationProperty Name="Respondes" Relationship="Self.FK_Res_Ite" FromRole="Item" ToRole="Responde" />
           <NavigationProperty Name="Seleccion_Unica" Relationship="Self.FK_Sel_Uni_Ite" FromRole="Item" ToRole="Seleccion_Unica" />
           <NavigationProperty Name="Texto_Libre" Relationship="Self.FK_Tex_Ite" FromRole="Item" ToRole="Texto_Libre" />
         </EntityType>
@@ -1574,9 +1586,9 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <NavigationProperty Name="Estudiante" Relationship="Self.FK_Est_Per" FromRole="Persona" ToRole="Estudiante" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Per" FromRole="Persona" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK_Pro_Per" FromRole="Persona" ToRole="Profesor" />
-          <NavigationProperty Name="TelefonoPersona" Relationship="Self.FK_Tel_Per" FromRole="Persona" ToRole="TelefonoPersona" />
-          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usu_Per" FromRole="Persona" ToRole="Usuario" />
-          <NavigationProperty Name="Distrito" Relationship="Self.Direccion_Persona" FromRole="Persona" ToRole="Distrito" />
+          <NavigationProperty Name="TelefonoPersonas" Relationship="Self.FK_Tel_Per" FromRole="Persona" ToRole="TelefonoPersona" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usu_Per" FromRole="Persona" ToRole="Usuario" />
+          <NavigationProperty Name="Distritoes" Relationship="Self.Direccion_Persona" FromRole="Persona" ToRole="Distrito" />
         </EntityType>
         <EntityType Name="Posee_Enfasis_Perfil_Permiso">
           <Key>
@@ -1592,13 +1604,22 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <NavigationProperty Name="Perfil" Relationship="Self.FK_PoseeEnfasisPerfil_Perfil" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Perfil" />
           <NavigationProperty Name="Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Permiso" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Permiso" />
         </EntityType>
+        <EntityType Name="Pregunta">
+          <Key>
+            <PropertyRef Name="Numero" />
+          </Key>
+          <Property Name="Numero" Type="Int32" Nullable="false" />
+          <Property Name="Planteamiento" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TipoPregunta" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+        </EntityType>
         <EntityType Name="Profesor">
           <Key>
             <PropertyRef Name="CedulaProfesor" />
           </Key>
           <Property Name="CedulaProfesor" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Pro" FromRole="Profesor" ToRole="Formulario_Respuesta" />
-          <NavigationProperty Name="Imparte" Relationship="Self.FK_Imparte_Profesor" FromRole="Profesor" ToRole="Imparte" />
+          <NavigationProperty Name="Impartes" Relationship="Self.FK_Imparte_Profesor" FromRole="Profesor" ToRole="Imparte" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Pro_Per" FromRole="Profesor" ToRole="Persona" />
         </EntityType>
         <EntityType Name="Provincia">
@@ -1606,7 +1627,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
             <PropertyRef Name="NombreProvincia" />
           </Key>
           <Property Name="NombreProvincia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Canton" Relationship="Self.FK_Can_Pro" FromRole="Provincia" ToRole="Canton" />
+          <NavigationProperty Name="Cantons" Relationship="Self.FK_Can_Pro" FromRole="Provincia" ToRole="Canton" />
         </EntityType>
         <EntityType Name="Responde">
           <Key>
@@ -1645,7 +1666,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <Property Name="Titulo" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_Sec" FromRole="Seccion" ToRole="Conformado_Item_Sec_Form" />
-          <NavigationProperty Name="Responde" Relationship="Self.FK_Res_Sec" FromRole="Seccion" ToRole="Responde" />
+          <NavigationProperty Name="Respondes" Relationship="Self.FK_Res_Sec" FromRole="Seccion" ToRole="Responde" />
         </EntityType>
         <EntityType Name="Seleccion_Unica">
           <Key>
@@ -1704,7 +1725,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <Property Name="NumeroEnfasis" Type="Byte" Nullable="false" />
           <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdPerfil" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Enfasis" Relationship="Self.FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Tiene_Usuario_Perfil_Enfasis" ToRole="Enfasis" />
+          <NavigationProperty Name="Enfasi" Relationship="Self.FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Tiene_Usuario_Perfil_Enfasis" ToRole="Enfasis" />
           <NavigationProperty Name="Perfil" Relationship="Self.FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Tiene_Usuario_Perfil_Enfasis" ToRole="Perfil" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" FromRole="Tiene_Usuario_Perfil_Enfasis" ToRole="Usuario" />
         </EntityType>
@@ -1714,8 +1735,8 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           </Key>
           <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Carrera" Relationship="Self.FK_Car_Uni" FromRole="Unidad_Academica" ToRole="Carrera" />
-          <NavigationProperty Name="Curso" Relationship="Self.FK_Cur_Uni" FromRole="Unidad_Academica" ToRole="Curso" />
+          <NavigationProperty Name="Carreras" Relationship="Self.FK_Car_Uni" FromRole="Unidad_Academica" ToRole="Carrera" />
+          <NavigationProperty Name="Cursoes" Relationship="Self.FK_Cur_Uni" FromRole="Unidad_Academica" ToRole="Curso" />
           <NavigationProperty Name="Facultad" Relationship="Self.FK_Fac_Uni" FromRole="Unidad_Academica" ToRole="Facultad" />
           <NavigationProperty Name="Facultad1" Relationship="Self.Escuela" FromRole="Unidad_Academica" ToRole="Facultad" />
           <NavigationProperty Name="Enfasis" Relationship="Self.Se_Encuentra_Unidad_Enfasis" FromRole="Unidad_Academica" ToRole="Enfasis" />
@@ -1784,7 +1805,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
         </Association>
         <Association Name="FK_Enf_Car">
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
+          <End Role="Enfasis" Type="Self.Enfasi" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Carrera">
               <PropertyRef Name="Sigla" />
@@ -1893,7 +1914,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+          <End Role="Enfasis" Type="Self.Enfasi" Multiplicity="1" />
           <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Enfasis">
@@ -2232,162 +2253,164 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
         </Association>
         <Association Name="Se_Encuentra_Curso_Enfasis">
           <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
+          <End Role="Enfasis" Type="Self.Enfasi" Multiplicity="*" />
         </Association>
         <Association Name="Se_Encuentra_Unidad_Enfasis">
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
+          <End Role="Enfasis" Type="Self.Enfasi" Multiplicity="*" />
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
         </Association>
         <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Administrativo" EntityType="Self.Administrativo" />
-          <EntitySet Name="Canton" EntityType="Self.Canton" />
-          <EntitySet Name="Carrera" EntityType="Self.Carrera" />
-          <EntitySet Name="Categoria" EntityType="Self.Categoria" />
+          <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
+          <EntitySet Name="Administrativoes" EntityType="Self.Administrativo" />
+          <EntitySet Name="Cantons" EntityType="Self.Canton" />
+          <EntitySet Name="Carreras" EntityType="Self.Carrera" />
+          <EntitySet Name="Categorias" EntityType="Self.Categoria" />
           <EntitySet Name="Ciclo_Lectivo" EntityType="Self.Ciclo_Lectivo" />
           <EntitySet Name="Conformado_Item_Sec_Form" EntityType="Self.Conformado_Item_Sec_Form" />
-          <EntitySet Name="Curso" EntityType="Self.Curso" />
-          <EntitySet Name="Distrito" EntityType="Self.Distrito" />
-          <EntitySet Name="Empadronado" EntityType="Self.Empadronado" />
-          <EntitySet Name="Enfasis" EntityType="Self.Enfasis" />
-          <EntitySet Name="Estudiante" EntityType="Self.Estudiante" />
-          <EntitySet Name="Facultad" EntityType="Self.Facultad" />
+          <EntitySet Name="Cursoes" EntityType="Self.Curso" />
+          <EntitySet Name="Distritoes" EntityType="Self.Distrito" />
+          <EntitySet Name="Empadronadoes" EntityType="Self.Empadronado" />
+          <EntitySet Name="Enfasis" EntityType="Self.Enfasi" />
+          <EntitySet Name="Estudiantes" EntityType="Self.Estudiante" />
+          <EntitySet Name="Facultads" EntityType="Self.Facultad" />
           <EntitySet Name="Fecha_Corte" EntityType="Self.Fecha_Corte" />
-          <EntitySet Name="Formulario" EntityType="Self.Formulario" />
+          <EntitySet Name="Formularios" EntityType="Self.Formulario" />
           <EntitySet Name="Formulario_Respuesta" EntityType="Self.Formulario_Respuesta" />
-          <EntitySet Name="Grupo" EntityType="Self.Grupo" />
-          <EntitySet Name="Imparte" EntityType="Self.Imparte" />
-          <EntitySet Name="Item" EntityType="Self.Item" />
-          <EntitySet Name="Matricula" EntityType="Self.Matricula" />
+          <EntitySet Name="Grupoes" EntityType="Self.Grupo" />
+          <EntitySet Name="Impartes" EntityType="Self.Imparte" />
+          <EntitySet Name="Items" EntityType="Self.Item" />
+          <EntitySet Name="Matriculas" EntityType="Self.Matricula" />
           <EntitySet Name="Opciones_De_Respuestas_Seleccion_Unica" EntityType="Self.Opciones_De_Respuestas_Seleccion_Unica" />
-          <EntitySet Name="Perfil" EntityType="Self.Perfil" />
-          <EntitySet Name="Permiso" EntityType="Self.Permiso" />
-          <EntitySet Name="Persona" EntityType="Self.Persona" />
+          <EntitySet Name="Perfils" EntityType="Self.Perfil" />
+          <EntitySet Name="Permisoes" EntityType="Self.Permiso" />
+          <EntitySet Name="Personas" EntityType="Self.Persona" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" />
-          <EntitySet Name="Profesor" EntityType="Self.Profesor" />
-          <EntitySet Name="Provincia" EntityType="Self.Provincia" />
-          <EntitySet Name="Responde" EntityType="Self.Responde" />
-          <EntitySet Name="Seccion" EntityType="Self.Seccion" />
+          <EntitySet Name="Preguntas" EntityType="Self.Pregunta" />
+          <EntitySet Name="Profesors" EntityType="Self.Profesor" />
+          <EntitySet Name="Provincias" EntityType="Self.Provincia" />
+          <EntitySet Name="Respondes" EntityType="Self.Responde" />
+          <EntitySet Name="Seccions" EntityType="Self.Seccion" />
           <EntitySet Name="Seleccion_Unica" EntityType="Self.Seleccion_Unica" />
-          <EntitySet Name="TelefonoPersona" EntityType="Self.TelefonoPersona" />
+          <EntitySet Name="TelefonoPersonas" EntityType="Self.TelefonoPersona" />
           <EntitySet Name="Texto_Libre" EntityType="Self.Texto_Libre" />
           <EntitySet Name="Tiene_Grupo_Formulario" EntityType="Self.Tiene_Grupo_Formulario" />
           <EntitySet Name="Tiene_Usuario_Perfil_Enfasis" EntityType="Self.Tiene_Usuario_Perfil_Enfasis" />
           <EntitySet Name="Unidad_Academica" EntityType="Self.Unidad_Academica" />
-          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
           <AssociationSet Name="FK_Adm_Per" Association="Self.FK_Adm_Per">
-            <End Role="Persona" EntitySet="Persona" />
-            <End Role="Administrativo" EntitySet="Administrativo" />
+            <End Role="Persona" EntitySet="Personas" />
+            <End Role="Administrativo" EntitySet="Administrativoes" />
           </AssociationSet>
           <AssociationSet Name="FK_Can_Pro" Association="Self.FK_Can_Pro">
-            <End Role="Provincia" EntitySet="Provincia" />
-            <End Role="Canton" EntitySet="Canton" />
+            <End Role="Provincia" EntitySet="Provincias" />
+            <End Role="Canton" EntitySet="Cantons" />
           </AssociationSet>
           <AssociationSet Name="FK_Dis_Can" Association="Self.FK_Dis_Can">
-            <End Role="Canton" EntitySet="Canton" />
-            <End Role="Distrito" EntitySet="Distrito" />
+            <End Role="Canton" EntitySet="Cantons" />
+            <End Role="Distrito" EntitySet="Distritoes" />
           </AssociationSet>
           <AssociationSet Name="FK_Car_Uni" Association="Self.FK_Car_Uni">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
-            <End Role="Carrera" EntitySet="Carrera" />
+            <End Role="Carrera" EntitySet="Carreras" />
           </AssociationSet>
           <AssociationSet Name="FK_Enf_Car" Association="Self.FK_Enf_Car">
-            <End Role="Carrera" EntitySet="Carrera" />
+            <End Role="Carrera" EntitySet="Carreras" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
           <AssociationSet Name="FK_Ite_Cat" Association="Self.FK_Ite_Cat">
-            <End Role="Categoria" EntitySet="Categoria" />
-            <End Role="Item" EntitySet="Item" />
+            <End Role="Categoria" EntitySet="Categorias" />
+            <End Role="Item" EntitySet="Items" />
           </AssociationSet>
           <AssociationSet Name="FK_Gru_Cic" Association="Self.FK_Gru_Cic">
             <End Role="Ciclo_Lectivo" EntitySet="Ciclo_Lectivo" />
-            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Grupo" EntitySet="Grupoes" />
           </AssociationSet>
           <AssociationSet Name="FK_Con_For" Association="Self.FK_Con_For">
-            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Formulario" EntitySet="Formularios" />
             <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
           </AssociationSet>
           <AssociationSet Name="FK_Con_Ite" Association="Self.FK_Con_Ite">
-            <End Role="Item" EntitySet="Item" />
+            <End Role="Item" EntitySet="Items" />
             <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
           </AssociationSet>
           <AssociationSet Name="FK_Con_Sec" Association="Self.FK_Con_Sec">
-            <End Role="Seccion" EntitySet="Seccion" />
+            <End Role="Seccion" EntitySet="Seccions" />
             <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
           </AssociationSet>
           <AssociationSet Name="FK_Cur_Uni" Association="Self.FK_Cur_Uni">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
-            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Curso" EntitySet="Cursoes" />
           </AssociationSet>
           <AssociationSet Name="FK_Gru_Cur" Association="Self.FK_Gru_Cur">
-            <End Role="Curso" EntitySet="Curso" />
-            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Curso" EntitySet="Cursoes" />
+            <End Role="Grupo" EntitySet="Grupoes" />
           </AssociationSet>
           <AssociationSet Name="FK_Empadronado_Estudiante" Association="Self.FK_Empadronado_Estudiante">
-            <End Role="Estudiante" EntitySet="Estudiante" />
-            <End Role="Empadronado" EntitySet="Empadronado" />
+            <End Role="Estudiante" EntitySet="Estudiantes" />
+            <End Role="Empadronado" EntitySet="Empadronadoes" />
           </AssociationSet>
           <AssociationSet Name="FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" Association="Self.FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
           </AssociationSet>
           <AssociationSet Name="FK_Est_Per" Association="Self.FK_Est_Per">
-            <End Role="Persona" EntitySet="Persona" />
-            <End Role="Estudiante" EntitySet="Estudiante" />
+            <End Role="Persona" EntitySet="Personas" />
+            <End Role="Estudiante" EntitySet="Estudiantes" />
           </AssociationSet>
           <AssociationSet Name="FK_Matricula_Profesor" Association="Self.FK_Matricula_Profesor">
-            <End Role="Estudiante" EntitySet="Estudiante" />
-            <End Role="Matricula" EntitySet="Matricula" />
+            <End Role="Estudiante" EntitySet="Estudiantes" />
+            <End Role="Matricula" EntitySet="Matriculas" />
           </AssociationSet>
           <AssociationSet Name="FK_Fac_Uni" Association="Self.FK_Fac_Uni">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
-            <End Role="Facultad" EntitySet="Facultad" />
+            <End Role="Facultad" EntitySet="Facultads" />
           </AssociationSet>
           <AssociationSet Name="FK_Tie_Fec" Association="Self.FK_Tie_Fec">
             <End Role="Fecha_Corte" EntitySet="Fecha_Corte" />
             <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
           </AssociationSet>
           <AssociationSet Name="FK_ForRes_For" Association="Self.FK_ForRes_For">
-            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Formulario" EntitySet="Formularios" />
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
           </AssociationSet>
           <AssociationSet Name="FK_Tie_For" Association="Self.FK_Tie_For">
-            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Formulario" EntitySet="Formularios" />
             <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
           </AssociationSet>
           <AssociationSet Name="FK_ForRes_Gru" Association="Self.FK_ForRes_Gru">
-            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Grupo" EntitySet="Grupoes" />
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
           </AssociationSet>
           <AssociationSet Name="FK_ForRes_Per" Association="Self.FK_ForRes_Per">
-            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Persona" EntitySet="Personas" />
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
           </AssociationSet>
           <AssociationSet Name="FK_ForRes_Pro" Association="Self.FK_ForRes_Pro">
-            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Profesor" EntitySet="Profesors" />
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
           </AssociationSet>
           <AssociationSet Name="FK_Res_ForRes" Association="Self.FK_Res_ForRes">
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
-            <End Role="Responde" EntitySet="Responde" />
+            <End Role="Responde" EntitySet="Respondes" />
           </AssociationSet>
           <AssociationSet Name="FK_Tie_Gru" Association="Self.FK_Tie_Gru">
-            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Grupo" EntitySet="Grupoes" />
             <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
           </AssociationSet>
           <AssociationSet Name="FK_Imparte_Profesor" Association="Self.FK_Imparte_Profesor">
-            <End Role="Profesor" EntitySet="Profesor" />
-            <End Role="Imparte" EntitySet="Imparte" />
+            <End Role="Profesor" EntitySet="Profesors" />
+            <End Role="Imparte" EntitySet="Impartes" />
           </AssociationSet>
           <AssociationSet Name="FK_Res_Ite" Association="Self.FK_Res_Ite">
-            <End Role="Item" EntitySet="Item" />
-            <End Role="Responde" EntitySet="Responde" />
+            <End Role="Item" EntitySet="Items" />
+            <End Role="Responde" EntitySet="Respondes" />
           </AssociationSet>
           <AssociationSet Name="FK_Sel_Uni_Ite" Association="Self.FK_Sel_Uni_Ite">
-            <End Role="Item" EntitySet="Item" />
+            <End Role="Item" EntitySet="Items" />
             <End Role="Seleccion_Unica" EntitySet="Seleccion_Unica" />
           </AssociationSet>
           <AssociationSet Name="FK_Tex_Ite" Association="Self.FK_Tex_Ite">
-            <End Role="Item" EntitySet="Item" />
+            <End Role="Item" EntitySet="Items" />
             <End Role="Texto_Libre" EntitySet="Texto_Libre" />
           </AssociationSet>
           <AssociationSet Name="FK_OpcResMul_Ite" Association="Self.FK_OpcResMul_Ite">
@@ -2395,57 +2418,57 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
             <End Role="Opciones_De_Respuestas_Seleccion_Unica" EntitySet="Opciones_De_Respuestas_Seleccion_Unica" />
           </AssociationSet>
           <AssociationSet Name="FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" Association="Self.FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
-            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="Perfil" EntitySet="Perfils" />
             <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
           </AssociationSet>
           <AssociationSet Name="FK_PoseeEnfasisPerfil_Perfil" Association="Self.FK_PoseeEnfasisPerfil_Perfil">
-            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="Perfil" EntitySet="Perfils" />
             <End Role="Posee_Enfasis_Perfil_Permiso" EntitySet="Posee_Enfasis_Perfil_Permiso" />
           </AssociationSet>
           <AssociationSet Name="FK_PoseeEnfasisPerfil_Permiso" Association="Self.FK_PoseeEnfasisPerfil_Permiso">
-            <End Role="Permiso" EntitySet="Permiso" />
+            <End Role="Permiso" EntitySet="Permisoes" />
             <End Role="Posee_Enfasis_Perfil_Permiso" EntitySet="Posee_Enfasis_Perfil_Permiso" />
           </AssociationSet>
           <AssociationSet Name="FK_Pro_Per" Association="Self.FK_Pro_Per">
-            <End Role="Persona" EntitySet="Persona" />
-            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Persona" EntitySet="Personas" />
+            <End Role="Profesor" EntitySet="Profesors" />
           </AssociationSet>
           <AssociationSet Name="FK_Tel_Per" Association="Self.FK_Tel_Per">
-            <End Role="Persona" EntitySet="Persona" />
-            <End Role="TelefonoPersona" EntitySet="TelefonoPersona" />
+            <End Role="Persona" EntitySet="Personas" />
+            <End Role="TelefonoPersona" EntitySet="TelefonoPersonas" />
           </AssociationSet>
           <AssociationSet Name="FK_Usu_Per" Association="Self.FK_Usu_Per">
-            <End Role="Persona" EntitySet="Persona" />
-            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Persona" EntitySet="Personas" />
+            <End Role="Usuario" EntitySet="Usuarios" />
           </AssociationSet>
           <AssociationSet Name="FK_Res_Sec" Association="Self.FK_Res_Sec">
-            <End Role="Seccion" EntitySet="Seccion" />
-            <End Role="Responde" EntitySet="Responde" />
+            <End Role="Seccion" EntitySet="Seccions" />
+            <End Role="Responde" EntitySet="Respondes" />
           </AssociationSet>
           <AssociationSet Name="FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" Association="Self.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis">
-            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Usuario" EntitySet="Usuarios" />
             <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
           </AssociationSet>
           <AssociationSet Name="Direccion_Persona" Association="Self.Direccion_Persona">
-            <End Role="Distrito" EntitySet="Distrito" />
-            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Distrito" EntitySet="Distritoes" />
+            <End Role="Persona" EntitySet="Personas" />
           </AssociationSet>
           <AssociationSet Name="Escuela" Association="Self.Escuela">
-            <End Role="Facultad" EntitySet="Facultad" />
+            <End Role="Facultad" EntitySet="Facultads" />
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
           </AssociationSet>
           <AssociationSet Name="Se_Encuentra_Curso_Enfasis" Association="Self.Se_Encuentra_Curso_Enfasis">
-            <End Role="Curso" EntitySet="Curso" />
+            <End Role="Curso" EntitySet="Cursoes" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
           <AssociationSet Name="Se_Encuentra_Unidad_Enfasis" Association="Self.Se_Encuentra_Unidad_Enfasis">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
           </AssociationSet>
-          <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_DatosModel.DatosEstudiante_Result)">
+          <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_Datos.DatosEstudiante_Result)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_DatosModel.MostrarEstudiantes_Result)" />
+          <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_Datos.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
@@ -2509,7 +2532,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
             <Parameter Name="Apellido2" Mode="In" Type="String" />
             <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(Opiniometro_DatosModel.SP_ObtenerPermisosUsuario_Result)">
+          <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(Opiniometro_Datos.SP_ObtenerPermisosUsuario_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Perfil" Mode="In" Type="String" />
           </FunctionImport>
@@ -2535,25 +2558,32 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities">
-          <EntitySetMapping Name="Administrativo">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Administrativo">
+        <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities">
+          <EntitySetMapping Name="C__RefactorLog">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.C__RefactorLog">
+              <MappingFragment StoreEntitySet="__RefactorLog">
+                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Administrativoes">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Administrativo">
               <MappingFragment StoreEntitySet="Administrativo">
                 <ScalarProperty Name="CedulaAdministrativo" ColumnName="CedulaAdministrativo" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Canton">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Canton">
+          <EntitySetMapping Name="Cantons">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Canton">
               <MappingFragment StoreEntitySet="Canton">
                 <ScalarProperty Name="NombreProvincia" ColumnName="NombreProvincia" />
                 <ScalarProperty Name="NombreCanton" ColumnName="NombreCanton" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Carrera">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Carrera">
+          <EntitySetMapping Name="Carreras">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Carrera">
               <MappingFragment StoreEntitySet="Carrera">
                 <ScalarProperty Name="Sigla" ColumnName="Sigla" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2561,15 +2591,15 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Categoria">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Categoria">
+          <EntitySetMapping Name="Categorias">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Categoria">
               <MappingFragment StoreEntitySet="Categoria">
                 <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ciclo_Lectivo">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Ciclo_Lectivo">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Ciclo_Lectivo">
               <MappingFragment StoreEntitySet="Ciclo_Lectivo">
                 <ScalarProperty Name="Anno" ColumnName="Anno" />
                 <ScalarProperty Name="Semestre" ColumnName="Semestre" />
@@ -2577,7 +2607,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Conformado_Item_Sec_Form">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Conformado_Item_Sec_Form">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Conformado_Item_Sec_Form">
               <MappingFragment StoreEntitySet="Conformado_Item_Sec_Form">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
@@ -2588,8 +2618,8 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Curso">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Curso">
+          <EntitySetMapping Name="Cursoes">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Curso">
               <MappingFragment StoreEntitySet="Curso">
                 <ScalarProperty Name="Sigla" ColumnName="Sigla" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2598,8 +2628,8 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Distrito">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Distrito">
+          <EntitySetMapping Name="Distritoes">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Distrito">
               <MappingFragment StoreEntitySet="Distrito">
                 <ScalarProperty Name="NombreProvincia" ColumnName="NombreProvincia" />
                 <ScalarProperty Name="NombreCanton" ColumnName="NombreCanton" />
@@ -2607,8 +2637,8 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Empadronado">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Empadronado">
+          <EntitySetMapping Name="Empadronadoes">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Empadronado">
               <MappingFragment StoreEntitySet="Empadronado">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
@@ -2617,38 +2647,38 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Enfasis">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Enfasis">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Enfasi">
               <MappingFragment StoreEntitySet="Enfasis">
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Estudiante">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Estudiante">
+          <EntitySetMapping Name="Estudiantes">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Estudiante">
               <MappingFragment StoreEntitySet="Estudiante">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
                 <ScalarProperty Name="Carne" ColumnName="Carne" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Facultad">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Facultad">
+          <EntitySetMapping Name="Facultads">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Facultad">
               <MappingFragment StoreEntitySet="Facultad">
                 <ScalarProperty Name="CodigoUnidadAcademica" ColumnName="CodigoUnidadAcademica" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Fecha_Corte">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Fecha_Corte">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Fecha_Corte">
               <MappingFragment StoreEntitySet="Fecha_Corte">
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
                 <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Formulario">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Formulario">
+          <EntitySetMapping Name="Formularios">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Formulario">
               <MappingFragment StoreEntitySet="Formulario">
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2656,7 +2686,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Formulario_Respuesta">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Formulario_Respuesta">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Formulario_Respuesta">
               <MappingFragment StoreEntitySet="Formulario_Respuesta">
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
@@ -2670,8 +2700,8 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Grupo">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Grupo">
+          <EntitySetMapping Name="Grupoes">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Grupo">
               <MappingFragment StoreEntitySet="Grupo">
                 <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -2680,8 +2710,8 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Imparte">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Imparte">
+          <EntitySetMapping Name="Impartes">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Imparte">
               <MappingFragment StoreEntitySet="Imparte">
                 <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -2691,8 +2721,8 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Item">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Item">
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Item">
               <MappingFragment StoreEntitySet="Item">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="TextoPregunta" ColumnName="TextoPregunta" />
@@ -2702,8 +2732,8 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Matricula">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Matricula">
+          <EntitySetMapping Name="Matriculas">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Matricula">
               <MappingFragment StoreEntitySet="Matricula">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -2714,7 +2744,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Opciones_De_Respuestas_Seleccion_Unica">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Opciones_De_Respuestas_Seleccion_Unica">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Opciones_De_Respuestas_Seleccion_Unica">
               <MappingFragment StoreEntitySet="Opciones_De_Respuestas_Seleccion_Unica">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
@@ -2722,24 +2752,24 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Perfil">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Perfil">
+          <EntitySetMapping Name="Perfils">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Perfil">
               <MappingFragment StoreEntitySet="Perfil">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Permiso">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Permiso">
+          <EntitySetMapping Name="Permisoes">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Permiso">
               <MappingFragment StoreEntitySet="Permiso">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Persona">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Persona">
+          <EntitySetMapping Name="Personas">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Persona">
               <MappingFragment StoreEntitySet="Persona">
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2750,7 +2780,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Posee_Enfasis_Perfil_Permiso">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Posee_Enfasis_Perfil_Permiso">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Posee_Enfasis_Perfil_Permiso">
               <MappingFragment StoreEntitySet="Posee_Enfasis_Perfil_Permiso">
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
@@ -2759,22 +2789,32 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Profesor">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Profesor">
+          <EntitySetMapping Name="Preguntas">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Pregunta">
+              <MappingFragment StoreEntitySet="Preguntas">
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Planteamiento" ColumnName="Planteamiento" />
+                <ScalarProperty Name="TipoPregunta" ColumnName="TipoPregunta" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profesors">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Profesor">
               <MappingFragment StoreEntitySet="Profesor">
                 <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Provincia">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Provincia">
+          <EntitySetMapping Name="Provincias">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Provincia">
               <MappingFragment StoreEntitySet="Provincia">
                 <ScalarProperty Name="NombreProvincia" ColumnName="NombreProvincia" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Responde">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Responde">
+          <EntitySetMapping Name="Respondes">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Responde">
               <MappingFragment StoreEntitySet="Responde">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="TituloSeccion" ColumnName="TituloSeccion" />
@@ -2792,8 +2832,8 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Seccion">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Seccion">
+          <EntitySetMapping Name="Seccions">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Seccion">
               <MappingFragment StoreEntitySet="Seccion">
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -2801,15 +2841,15 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Seleccion_Unica">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Seleccion_Unica">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Seleccion_Unica">
               <MappingFragment StoreEntitySet="Seleccion_Unica">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="IsaLikeDislike" ColumnName="IsaLikeDislike" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TelefonoPersona">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.TelefonoPersona">
+          <EntitySetMapping Name="TelefonoPersonas">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.TelefonoPersona">
               <MappingFragment StoreEntitySet="TelefonoPersona">
                 <ScalarProperty Name="CedulaPersona" ColumnName="CedulaPersona" />
                 <ScalarProperty Name="NumeroTelefono" ColumnName="NumeroTelefono" />
@@ -2817,14 +2857,14 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Texto_Libre">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Texto_Libre">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Texto_Libre">
               <MappingFragment StoreEntitySet="Texto_Libre">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tiene_Grupo_Formulario">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Tiene_Grupo_Formulario">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Tiene_Grupo_Formulario">
               <MappingFragment StoreEntitySet="Tiene_Grupo_Formulario">
                 <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -2837,7 +2877,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tiene_Usuario_Perfil_Enfasis">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Tiene_Usuario_Perfil_Enfasis">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Tiene_Usuario_Perfil_Enfasis">
               <MappingFragment StoreEntitySet="Tiene_Usuario_Perfil_Enfasis">
                 <ScalarProperty Name="CorreoInstitucional" ColumnName="CorreoInstitucional" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
@@ -2847,15 +2887,15 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Unidad_Academica">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Unidad_Academica">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Unidad_Academica">
               <MappingFragment StoreEntitySet="Unidad_Academica">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Usuario">
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="Opiniometro_Datos.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
                 <ScalarProperty Name="CorreoInstitucional" ColumnName="CorreoInstitucional" />
                 <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
@@ -2865,7 +2905,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Direccion_Persona" TypeName="Opiniometro_DatosModel.Direccion_Persona" StoreEntitySet="Direccion_Persona">
+          <AssociationSetMapping Name="Direccion_Persona" TypeName="Opiniometro_Datos.Direccion_Persona" StoreEntitySet="Direccion_Persona">
             <EndProperty Name="Distrito">
               <ScalarProperty Name="NombreProvincia" ColumnName="Provincia" />
               <ScalarProperty Name="NombreCanton" ColumnName="Canton" />
@@ -2875,7 +2915,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               <ScalarProperty Name="Cedula" ColumnName="Cedula" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Escuela" TypeName="Opiniometro_DatosModel.Escuela" StoreEntitySet="Escuela">
+          <AssociationSetMapping Name="Escuela" TypeName="Opiniometro_Datos.Escuela" StoreEntitySet="Escuela">
             <EndProperty Name="Facultad">
               <ScalarProperty Name="CodigoUnidadAcademica" ColumnName="CodigoFacultad" />
             </EndProperty>
@@ -2883,7 +2923,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Se_Encuentra_Curso_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Curso_Enfasis" StoreEntitySet="Se_Encuentra_Curso_Enfasis">
+          <AssociationSetMapping Name="Se_Encuentra_Curso_Enfasis" TypeName="Opiniometro_Datos.Se_Encuentra_Curso_Enfasis" StoreEntitySet="Se_Encuentra_Curso_Enfasis">
             <EndProperty Name="Curso">
               <ScalarProperty Name="Sigla" ColumnName="SiglaCurso" />
             </EndProperty>
@@ -2892,7 +2932,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Se_Encuentra_Unidad_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Unidad_Enfasis" StoreEntitySet="Se_Encuentra_Unidad_Enfasis">
+          <AssociationSetMapping Name="Se_Encuentra_Unidad_Enfasis" TypeName="Opiniometro_Datos.Se_Encuentra_Unidad_Enfasis" StoreEntitySet="Se_Encuentra_Unidad_Enfasis">
             <EndProperty Name="Enfasis">
               <ScalarProperty Name="Numero" ColumnName="NumeroEnfasis" />
               <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
@@ -2901,18 +2941,18 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_DatosModel.Store.DatosEstudiante">
+          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_Datos.Store.DatosEstudiante">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.DatosEstudiante_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Datos.DatosEstudiante_Result">
                 <ScalarProperty Name="Nombre_Completo" ColumnName="Nombre Completo" />
                 <ScalarProperty Name="Carne" ColumnName="Carne" />
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_DatosModel.Store.MostrarEstudiantes">
+          <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_Datos.Store.MostrarEstudiantes">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.MostrarEstudiantes_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Datos.MostrarEstudiantes_Result">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
                 <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
@@ -2920,20 +2960,20 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="Opiniometro_DatosModel.Store.NombrePersona" />
-          <FunctionImportMapping FunctionImportName="ObtenerPerfilPorDefecto" FunctionName="Opiniometro_DatosModel.Store.ObtenerPerfilPorDefecto" />
-          <FunctionImportMapping FunctionImportName="ObtenerPerfilUsuario" FunctionName="Opiniometro_DatosModel.Store.ObtenerPerfilUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_AgregarPersonaUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarPersonaUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="Opiniometro_DatosModel.Store.SP_CambiarContrasenna" />
-          <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_ContarRespuestasPorGrupo" />
-          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_DevolverObservacionesPorGrupo" />
-          <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_DatosModel.Store.SP_ExistenciaCorreo" />
-          <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_DatosModel.Store.SP_ModificarPersona" />
-          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_ObtenerPermisosUsuario">
+          <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="Opiniometro_Datos.Store.NombrePersona" />
+          <FunctionImportMapping FunctionImportName="ObtenerPerfilPorDefecto" FunctionName="Opiniometro_Datos.Store.ObtenerPerfilPorDefecto" />
+          <FunctionImportMapping FunctionImportName="ObtenerPerfilUsuario" FunctionName="Opiniometro_Datos.Store.ObtenerPerfilUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_AgregarPersonaUsuario" FunctionName="Opiniometro_Datos.Store.SP_AgregarPersonaUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_Datos.Store.SP_AgregarUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="Opiniometro_Datos.Store.SP_CambiarContrasenna" />
+          <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="Opiniometro_Datos.Store.SP_ContarRespuestasPorGrupo" />
+          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_Datos.Store.SP_DevolverObservacionesPorGrupo" />
+          <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_Datos.Store.SP_ExistenciaCorreo" />
+          <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_Datos.Store.SP_LoginUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_Datos.Store.SP_ModificarPersona" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_Datos.Store.SP_ObtenerPermisosUsuario">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.SP_ObtenerPermisosUsuario_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Datos.SP_ObtenerPermisosUsuario_Result">
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
                 <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
@@ -2954,7 +2994,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
