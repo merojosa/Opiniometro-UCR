@@ -933,6 +933,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
         </Function>
         <Function Name="SP_ObtenerPermisosUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Perfil" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="OpiniometroModelStoreContainer">
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" Schema="dbo" store:Type="Tables" />
@@ -2259,6 +2260,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           </FunctionImport>
           <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(OpiniometroModel.SP_ObtenerPermisosUsuario_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Perfil" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DatosEstudiante_Result">
