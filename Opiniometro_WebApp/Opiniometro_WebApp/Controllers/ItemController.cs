@@ -80,7 +80,24 @@ namespace Opiniometro_WebApp.Controllers
             return View(item);
         }
 
-         //GET: Item/Edit/5
+        //EFE:
+        //REQ:
+        //MOD:
+        public ActionResult VistaPrevia(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Item item = db.Item.Find(id);
+            if (item == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(item);
+        }
+
+        //GET: Item/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
