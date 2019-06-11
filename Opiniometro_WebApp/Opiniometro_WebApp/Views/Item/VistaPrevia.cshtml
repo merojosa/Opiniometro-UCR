@@ -1,16 +1,5 @@
 ﻿@model Opiniometro_WebApp.Models.Item
 
-@{
-    ViewBag.Title = "Vista Previa";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h2>Vista Previa</h2>
-
-
-
-
-
 @if (Model.TipoPregunta == 3)
 {
     <div>
@@ -53,10 +42,3 @@ else
         }
     </dl>
 }
-
-<p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.ItemID }) |*@
-    @Html.ActionLink("Volver", "Index")
-</p>
-
-
