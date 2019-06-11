@@ -125,14 +125,13 @@ IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
 GO
 CREATE PROCEDURE SP_ObtenerPermisosUsuario
-	@Correo		NVARCHAR(50)
+	@Correo		NVARCHAR(50),
+	@Perfil		VARCHAR(10)
 AS
-	-- Hay 3 JOINS ya que entity framework solo puede iterar por grupos de tuplas de una sola columna.
-
 	SELECT TU.SiglaCarrera, PE.NumeroEnfasis, PE.IdPermiso
 	FROM Tiene_Usuario_Perfil_Enfasis TU	JOIN Perfil ON TU.IdPerfil = Perfil.Id
 											JOIN Posee_Enfasis_Perfil_Permiso PE ON Perfil.Id = PE.IdPerfil
-	WHERE TU.CorreoInstitucional=@Correo
+	WHERE TU.CorreoInstitucional=@Correo AND TU.IdPerfil = @Perfil
 GO
 
 EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
