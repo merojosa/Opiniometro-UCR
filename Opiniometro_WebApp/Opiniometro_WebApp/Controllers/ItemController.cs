@@ -51,7 +51,6 @@ namespace Opiniometro_WebApp.Controllers
                   new ListItem { Text = "Sí", Value="true" },
                   new ListItem { Text = "No", Value="false" }
             };
-
             ViewBag.NombreCategoria = new SelectList(db.Categoria, "NombreCategoria", "NombreCategoria");
             ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID");
             ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId");
@@ -63,7 +62,7 @@ namespace Opiniometro_WebApp.Controllers
          //more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria")] Item item)
+        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,Categoria,TieneObservacion,TipoPregunta")] Item item)
         {
 
 
@@ -158,12 +157,6 @@ namespace Opiniometro_WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult itemVParcial(String codigo)
-        {
-            Item item = db.Item.Find(codigo);
-            return PartialView(item); 
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -172,7 +165,6 @@ namespace Opiniometro_WebApp.Controllers
             }
             base.Dispose(disposing);
         }
-       
  
 
     }
