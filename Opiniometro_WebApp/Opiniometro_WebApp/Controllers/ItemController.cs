@@ -62,7 +62,7 @@ namespace Opiniometro_WebApp.Controllers
          //more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,Categoria,TieneObservacion,TipoPregunta")] Item item)
+        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria")] Item item)
         {
 
 
@@ -155,6 +155,12 @@ namespace Opiniometro_WebApp.Controllers
             db.Item.Remove(item);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult itemVParcial(String codigo)
+        {
+            Item item = db.Item.Find(codigo);
+            return PartialView(item);
         }
 
         protected override void Dispose(bool disposing)
