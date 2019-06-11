@@ -45,29 +45,29 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Asignar(AsignarFormulariosViewModel model)
+        public ActionResult Asignar(AsignarFormulariosViewModel modelo)
         {
             System.Diagnostics.Debug.WriteLine("\n\nAsignar()\n");
 
-            IEnumerable<Grupo> GruposSeleccionados = model.GruposSeleccionados();
-            IEnumerable<Formulario> FormulariosSeleccionados = model.FormulariosSeleccionados();
+            var GruposSeleccionados = modelo.ActualizarGruposSeleccionados();
+            var FormulariosSeleccionados = modelo.ActualizarFormulariosSeleccionados();
 
             System.Diagnostics.Debug.WriteLine("{0} grupos seleccionados:", GruposSeleccionados.Count());
-            foreach (Grupo grupo in GruposSeleccionados)
+            foreach (var grupo in GruposSeleccionados)
             {
-                System.Diagnostics.Debug.WriteLine("{0}-{1}: {2}, #{3}", grupo.SemestreGrupo, grupo.AnnoGrupo, grupo.SiglaCurso, grupo.Numero);
+                System.Diagnostics.Debug.WriteLine("{0}-{1}: {2}, #{3}", grupo.Semestre, grupo.Anno, grupo.SiglaCurso, grupo.Numero);
             }
 
             System.Diagnostics.Debug.WriteLine("\n{0} formularios seleccionados:", FormulariosSeleccionados.Count());
-            foreach (Formulario formulario in FormulariosSeleccionados)
+            foreach (var formulario in FormulariosSeleccionados)
             {
-                System.Diagnostics.Debug.WriteLine("{0} - {1}", formulario.CodigoFormulario, formulario.Nombre);
+                System.Diagnostics.Debug.WriteLine("{0} - {1}", formulario.CodigoFormulario, formulario.NombreFormulario);
             }
 
             System.Diagnostics.Debug.WriteLine("\nFin del reporte.");
 
             //System.Diagnostics.Debug.WriteLine();
-            return RedirectToAction("Index", "Home");
+            return View(modelo);
         }
 
 

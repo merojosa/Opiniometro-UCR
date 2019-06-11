@@ -12,7 +12,7 @@
 
 
 <div class="container">
-   @using (Html.BeginForm())
+    @using (Html.BeginForm())
     {
         <div class="row">
             <div class="col-sm-8">
@@ -43,7 +43,7 @@
                                 <input type="submit" value="Buscar grupos" />
                             </div>
                         </p>
-                        
+
 
                     </div>
                 </div>
@@ -62,87 +62,173 @@
         </div>
     }
 
-        @using (Html.BeginForm("Asignar", "AsignarFormularios", FormMethod.Post))
-        {
-            <div class="row">
-                <div class="col-sm-8">
-                    <div class="panel panel-default">
+    @using (Html.BeginForm("Asignar", "AsignarFormularios", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="panel panel-default">
 
-                        <div class="panel-heading">
-                            <h3>Grupos</h3>
-                        </div>
-
-                        <div class="panel-body">
-
-                            @*Tabla de grupos*@
-
-                            <table class="fixed_header">
-                                <thead>
-                                    <tr>
-                                        <th align='center'>
-                                            <div align='center'></div>
-                                        </th>
-                                        <th align='center'>
-                                            <div align='center'>Sigla</div>
-                                        </th>
-                                        <th align='center'>
-                                            <div align='center'>Curso</div>
-                                        </th>
-                                        <th align='center'>
-                                            <div align='center'>Grupo</div>
-                                        </th>
-                                        <th align='center'>
-                                            <div align='center'>Profesor</div>
-                                        </th>
-                                    </tr>
-                                </thead>
-
-
-                                <tbody>
-                                    <!-- Despliega los datos de los grupos usando un modelo personalizado: ElegirGrupoEditorTemplate -->
-                                    @Html.EditorFor(model => Model.Grupos)
-                                </tbody>
-                            </table>
-                        </div>
-
+                    <div class="panel-heading">
+                        <h3>Grupos</h3>
                     </div>
-                </div>
+
+                    <div class="panel-body">
+
+                        @*Tabla de grupos*@
+
+                        <table class="fixed_header">
+                            <thead>
+                                <tr>
+                                    <th align='center'>
+                                        <div align='center'></div>
+                                    </th>
+                                    <th align='center'>
+                                        <div align='center'>Sigla</div>
+                                    </th>
+                                    <th align='center'>
+                                        <div align='center'>Curso</div>
+                                    </th>
+                                    <th align='center'>
+                                        <div align='center'>Grupo</div>
+                                    </th>
+                                    <th align='center'>
+                                        <div align='center'>Profesor</div>
+                                    </th>
+                                </tr>
+                            </thead>
 
 
-
-                <div class="col-sm-4">
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><h3>Formularios</h3></div>
-                        <div class="panel-body">
-
-                            <table class="fixed_header">
-                                <thead>
-                                    <tr>
-                                        <th align='center'>
-                                            <div align='center'></div>
-                                        </th>
-                                        <th align='center'>
-                                            <div align='center'>Sigla</div>
-                                        </th>
-                                        <th align='center'>
-                                            <div align='center'>Nombre</div>
-                                        </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <!-- Despliega los datos de los grupos usando un modelo personalizado: ElegirGrupoEditorTemplate -->
-                                    @Html.EditorFor(model => Model.Formularios)
-                                </tbody>
-                            </table>
-                        </div>
+                            <tbody>
+                                <!-- Despliega los datos de los grupos usando un modelo personalizado: ElegirGrupoEditorTemplate -->
+                                @Html.EditorFor(model => Model.Grupos)
+                            </tbody>
+                        </table>
                     </div>
+
                 </div>
             </div>
 
-            <div align='center'>
-                <input type="submit" name="Asignar" id="Asignar" value="Asignar" />
+
+
+            <div class="col-sm-4">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3>Formularios</h3></div>
+                    <div class="panel-body">
+
+                        <table class="fixed_header">
+                            <thead>
+                                <tr>
+                                    <th align='center'>
+                                        <div align='center'></div>
+                                    </th>
+                                    <th align='center'>
+                                        <div align='center'>Sigla</div>
+                                    </th>
+                                    <th align='center'>
+                                        <div align='center'>Nombre</div>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <!-- Despliega los datos de los grupos usando un modelo personalizado: ElegirGrupoEditorTemplate -->
+                                @Html.EditorFor(model => Model.Formularios)
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        }
+        </div>
+
+        @*<div align='center'>
+            <input type="submit" name="Asignar" id="Asignar" value="Asignar" />
+        </div>*@
+
+        <div align='center'>
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalReporte">Reporte de asignaciones</button>
+        </div>
+    }
+</div>
+
+
+<!-- Modal -->
+<div id="modalReporte" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Asignaciones de formularios realizadas para el SEMESTRE-AÑO</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Mostrar aquí los grupos y los formularios.</p>
+
+                <table class="fixed_header">
+                    <thead>
+                        <tr>
+                            <th align='center'>
+                                <div align='center'>Curso</div>
+                            </th>
+                            <th align='center'>
+                                <div align='center'>Grupo</div>
+                            </th>
+                            <th align='center'>
+                                <div align='center'>Profesor</div>
+                            </th>
+                            <th align='center'>
+                                <div align='center'>Formularios asignados</div>
+                            </th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                       @foreach(var gr in Model.GruposSeleccionados)
+                        {
+                        <tr>
+                            <td align='center'>
+                                <div align='center'>
+                                    @Html.DisplayFor(ModelItem => gr.SiglaCurso)<span> </span>@Html.DisplayFor(ModelItem => gr.NombreCurso)
+                                </div>
+                            </td>
+                            <td align='center'>
+                                <div align='center'>@Html.DisplayFor(ModelItem => gr.Numero)</div>
+                            </td>
+                            <td align='center'>
+                               @foreach (var profe in gr.Profesores)
+                                {
+                                <div align='center'>
+                                    @Html.DisplayFor(ModelItem => profe.Persona.Nombre) <span> </span>
+                                    @Html.DisplayFor(ModelItem => profe.Persona.Apellido1) <span> </span>
+                                    @Html.DisplayFor(ModelItem => profe.Persona.Apellido2) <br>
+                                </div>
+                                }
+                            </td>
+                            <td align='center'>
+                               @foreach (var form in Model.FormulariosSeleccionados)
+                                {
+                                <div align='center'>
+                                    @Html.DisplayFor(ModelItem => form.CodigoFormulario) <span> </span>
+                                    @Html.DisplayFor(ModelItem => form.NombreFormulario) <br>
+                                </div>
+                                }
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+
+        </div>
+
     </div>
+</div>
