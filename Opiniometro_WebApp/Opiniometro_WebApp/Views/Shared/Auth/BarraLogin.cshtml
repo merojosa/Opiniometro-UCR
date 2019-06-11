@@ -9,4 +9,12 @@
         </div>
     </div>
 </nav>
-<br /><br /><br /><br /><br /><br /><br /><br />
+
+<br /> <br /> <br /> <br /> <br />
+
+@if (ViewBag.Title != "Recuperar contraseña" && ViewBag.Title != "Inicio de sesión")
+{
+    // Si es otra pantalla que no sea recuperar contrasenna o inicio de sesion, se agregan dos espacios
+    // ya que esta la barra gris.
+    <br /> <br /> <br />
+}
