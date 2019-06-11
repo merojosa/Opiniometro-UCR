@@ -101,6 +101,10 @@
     <None Include="FiltrarUsuarios.sql" />
     <None Include="Script.EliminarPersona.sql" />
     <Build Include="Tiene_Usuario_Perfil_Enfasis.sql" />
+    <Build Include="Canton.sql" />
+    <Build Include="Distrito.sql" />
+    <Build Include="Provincia.sql" />
+    <Build Include="Direccion_Persona.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ScriptGenerarContrasena.sql" />
