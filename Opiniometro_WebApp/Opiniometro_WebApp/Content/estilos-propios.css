@@ -2,3 +2,39 @@
 {
     color:red;
 }
+
+/*Navbar del logo ucr*/
+.navbar-principal {
+    background-color: #8ed8f8;
+    border-color: #8ed8f8;
+}
+
+.navbar-opiniometro-secundaria {
+    background-color: #8ed8f8;
+    border-color: #8ed8f8;
+}
+
+.navbar-opiniometro-ternaria {
+    background-color: rgb(230,230,230);
+    border-color: rgb(230,230,230);
+}
+
+.navbar-brand-barra-login {
+    float: left;
+    height: 145px;
+    padding: 20px 20px;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+/*Dropdown*/
+ul.nav li a:hover, ul.nav li a:active {
+    color: white !important;
+    background-color: rgb(102,102,102) !important;
+}
+
+/*Opiniometro link para cerrar sesion*/
+ul.nav li a, ul.nav li a:visited {
+    color: rgb(102,102,102);
+    font-size: 16px;
+}
