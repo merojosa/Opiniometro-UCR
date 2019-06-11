@@ -30,11 +30,15 @@ namespace Opiniometro_WebApp.Controllers
         }
 
 
+
+
         [HttpGet]
         public ActionResult CargarArchivo()
         {
             return View();
         }
+
+
 
         [HttpPost]
         public ActionResult CargarArchivo(HttpPostedFileBase postedFile)
@@ -71,6 +75,8 @@ namespace Opiniometro_WebApp.Controllers
             return View();
         }
 
+
+
         private DataTable ProcesarArchivo(string path)
         {
             DataTable filasValidas = crearTablaUsuarios();
@@ -98,7 +104,7 @@ namespace Opiniometro_WebApp.Controllers
                         }
                         else
                         {
-                            throw;
+                            AgregarTuplaValida(filaLeida, filasValidas, numeroFilasLeidas);
                         }
 
                         
@@ -109,10 +115,24 @@ namespace Opiniometro_WebApp.Controllers
             return filasInvalidas;
         }
 
+
+        private void AgregarTuplaValida(string filaLeida, DataTable filasValidas, long numeroFilasLeidas)
+        {
+            DataRow tupla;
+            tupla = filasValidas.NewRow();
+            tupla.ItemArray = filaLeida.Split(',');
+            int Tamano = tupla.ItemArray.Count();
+            filasValidas.Rows.Add(tupla); 
+        }
+
+
         private void AgregarTuplaInvalida(string filaLeida, Exception exception, DataTable filasInvalidas, long numeroFilasLeidas)
         {
             throw new NotImplementedException();
         }
+
+
+
 
         private DataTable crearTablaUsuarios()
         {
@@ -160,6 +180,9 @@ namespace Opiniometro_WebApp.Controllers
             return dt;
         }
 
+
+
+
         private DataTable crearTablaUsuariosInvalidos()
         {
             DataTable dt = new DataTable();
@@ -178,7 +201,7 @@ namespace Opiniometro_WebApp.Controllers
             dt.Columns.Add("direccion_exacta", typeof(string));
             dt.Columns.Add("sigla_carrera", typeof(string));
             dt.Columns.Add("enfasis", typeof(string));
-
+            
             return dt;
         }
     }
