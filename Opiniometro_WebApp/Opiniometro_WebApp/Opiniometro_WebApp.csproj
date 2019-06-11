@@ -191,9 +191,6 @@
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AsignarFormulariosModel.cs" />
-    <Compile Include="Models\Canton.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
@@ -210,10 +207,10 @@
     <Compile Include="Models\Curso.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DatosEstudiante_Result.cs">
+    <Compile Include="Models\C__RefactorLog.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Distrito.cs">
+    <Compile Include="Models\DatosEstudiante_Result.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Empadronado.cs">
@@ -286,9 +283,6 @@
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Profesor.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Provincia.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Responde.cs">

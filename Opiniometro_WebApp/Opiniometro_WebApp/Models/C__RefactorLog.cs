@@ -12,17 +12,8 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Provincia
+    public partial class C__RefactorLog
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Provincia()
-        {
-            this.Canton = new HashSet<Canton>();
-        }
-    
-        public string NombreProvincia { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Canton> Canton { get; set; }
+        public System.Guid OperationKey { get; set; }
     }
 }
