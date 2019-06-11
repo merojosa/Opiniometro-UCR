@@ -12,21 +12,17 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Profesor
+    public partial class Provincia
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Profesor()
+        public Provincia()
         {
-            this.Formulario_Respuesta = new HashSet<Formulario_Respuesta>();
-            this.Imparte = new HashSet<Imparte>();
+            this.Canton = new HashSet<Canton>();
         }
     
-        public string CedulaProfesor { get; set; }
+        public string NombreProvincia { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Formulario_Respuesta> Formulario_Respuesta { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Imparte> Imparte { get; set; }
-        public virtual Persona Persona { get; set; }
+        public virtual ICollection<Canton> Canton { get; set; }
     }
 }

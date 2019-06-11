@@ -27,12 +27,15 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Administrativo> Administrativo { get; set; }
+        public virtual DbSet<Canton> Canton { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
         public virtual DbSet<Ciclo_Lectivo> Ciclo_Lectivo { get; set; }
         public virtual DbSet<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
         public virtual DbSet<Curso> Curso { get; set; }
+        public virtual DbSet<Distrito> Distrito { get; set; }
         public virtual DbSet<Empadronado> Empadronado { get; set; }
         public virtual DbSet<Enfasis> Enfasis { get; set; }
         public virtual DbSet<Estudiante> Estudiante { get; set; }
@@ -49,7 +52,9 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Permiso> Permiso { get; set; }
         public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<Posee_Enfasis_Perfil_Permiso> Posee_Enfasis_Perfil_Permiso { get; set; }
+        public virtual DbSet<Preguntas> Preguntas { get; set; }
         public virtual DbSet<Profesor> Profesor { get; set; }
+        public virtual DbSet<Provincia> Provincia { get; set; }
         public virtual DbSet<Responde> Responde { get; set; }
         public virtual DbSet<Seccion> Seccion { get; set; }
         public virtual DbSet<Seleccion_Unica> Seleccion_Unica { get; set; }
