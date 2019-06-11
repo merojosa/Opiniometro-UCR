@@ -13,7 +13,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.Label("Número")
+            @Html.Label("Código")
             @*@Html.DisplayNameFor(model => model.ItemId)*@
         </th>
         <th>
@@ -42,16 +42,19 @@
             @Html.DisplayFor(modelItem => item.TextoPregunta)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.NombreCategoria )
+            @Html.DisplayFor(modelItem => item.Categoria )
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TieneObservacion )
+            @if (item.TieneObservacion == true)
+            {
+                <input type="checkbox" checked disabled>
+            }
         </td>
 
 
         <td>
            @* @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }) |*@
-            @*@Html.ActionLink("Vista Previa", "Details", new { id = item.ItemId })*@ 
+            @Html.ActionLink("Vista Previa", "Details", new { id = item.ItemId }) 
            @* @Html.ActionLink("Delete", "Delete", new { id = item.ItemId })*@
         </td>
     </tr>
