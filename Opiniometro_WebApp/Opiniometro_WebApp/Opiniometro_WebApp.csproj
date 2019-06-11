@@ -429,11 +429,6 @@
     <Content Include="Views\Administrador\CargarArchivo.cshtml" />
     <Content Include="Views\Administrador\Index.cshtml" />
     <Content Include="Views\Admin\Editar.cshtml" />
-    <Content Include="Views\Categoria\Create.cshtml" />
-    <Content Include="Views\Categoria\Delete.cshtml" />
-    <Content Include="Views\Categoria\Details.cshtml" />
-    <Content Include="Views\Categoria\Edit.cshtml" />
-    <Content Include="Views\Categoria\Index.cshtml" />
     <Content Include="Views\Auth\PruebaHtml.cshtml" />
     <Content Include="Views\CrearFormulario\AsignarPreguntas.cshtml" />
     <Content Include="Views\CrearFormulario\SeccionesAsignadas.cshtml" />
@@ -441,6 +436,11 @@
     <Content Include="Views\CrearFormulario\preguntasVParcial.cshtml" />
     <Content Include="Views\CrearFormulario\seccionesVParcial.cshtml" />
     <Content Include="Views\Item\itemVParcial.cshtml" />
+    <Content Include="Views\Categoria\Create.cshtml" />
+    <Content Include="Views\Categoria\Delete.cshtml" />
+    <Content Include="Views\Categoria\Details.cshtml" />
+    <Content Include="Views\Categoria\Edit.cshtml" />
+    <Content Include="Views\Categoria\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

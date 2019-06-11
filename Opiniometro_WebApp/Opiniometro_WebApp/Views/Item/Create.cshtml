@@ -14,6 +14,17 @@
 <div class="form-horizontal">
     @*<h4>Item</h4>*@
     <hr />
+
+        <div class="form-group">
+            @Html.Label("Código", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                 @Html.EditorFor(model => model.ItemId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "text-danger" })
+     
+            </div>
+    
+        </div>
+
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         @Html.Label("Tipo Pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -22,7 +33,7 @@
             @Html.ValidationMessageFor(model => model.TipoPregunta, "", new { @class = "text-danger" })
         </div>
     </div>
-    
+
 
     <div class="form-group">
         @Html.Label("Texto Pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -33,13 +44,13 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Categoria, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Categoria, "NombreCategoria", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Categoria, new SelectList(ViewBag.CategoriaItems, "Value", "Text"), "Seleccione")
-
+            @Html.DropDownList("NombreCategoria", null, htmlAttributes: new { @class = "form-control" })
+            -            @Html.ValidationMessageFor(model => model.Categoria, "", new { @class = "text-danger" })
         </div>
     </div>
-    
+
 
     <div class="form-group">
         @Html.Label("Tiene Observación", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -51,12 +62,12 @@
 
 
     @* Creacion de botones en la misma linea y con color gris *@
- <div class="form-group">
-     <div class="col-md-offset-2 col-md-10">
-     <input type="submit" value="Crear"  class="btn btn-secondary" p id="botonCrear" onclick="accionBotonCrear()"/>
-         @*<input type="submit" value="Vista Previa" disabled class="btn btn-secondary" p id="botonVistaPrevia" onclick="accionBotonVistaPrevia()"/>*@
-         <input type="button" value="Cancelar" class="btn btn-secondary"  id="botonCancelar" onclick="accionBotonCancelar()" />
-     </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Crear" class="btn btn-secondary" p id="botonCrear" onclick="accionBotonCrear()" />
+            @*<input type="submit" value="Vista Previa" disabled class="btn btn-secondary" p id="botonVistaPrevia" onclick="accionBotonVistaPrevia()"/>*@
+            <input type="button" value="Cancelar" class="btn btn-secondary" id="botonCancelar" onclick="accionBotonCancelar()" />
+        </div>
     </div>
 
 
