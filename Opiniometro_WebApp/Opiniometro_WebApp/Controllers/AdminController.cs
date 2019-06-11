@@ -16,9 +16,14 @@ using Microsoft.Owin.Security;
 
 namespace Opiniometro_WebApp.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+
+        private Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel modelPersona = new Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel();
+
+        public Persona Persona { get; private set; }
 
         public ActionResult VerPersonas(string cedula)
         {
@@ -44,11 +49,9 @@ namespace Opiniometro_WebApp.Controllers
         {
             try
             {
-                using (db)
-                {
-                    Persona persona = db.Persona.Find(id);
-                    return View(persona);
-                }
+                    modelPersona.Persona = db.Persona.Find(id);
+                    return View(modelPersona);
+                
             }
             catch (Exception)
             {
@@ -60,13 +63,13 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Editar(Persona per)
+        public ActionResult Editar(PersonaPerfilEnfasisModel per)
         {
             try
             {
                 using (db)
                 {
-                    db.SP_ModificarPersona(per.Cedula, per.Cedula, per.Nombre, per.Apellido1, per.Apellido2, per.Direccion);
+                    db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre, per.Persona.Apellido1, per.Persona.Apellido2, per.Persona.Direccion);
                     return RedirectToAction("VerPersonas");
                 }
             }

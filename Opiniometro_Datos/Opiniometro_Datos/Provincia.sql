@@ -1,4 +1,6 @@
 ﻿CREATE TABLE [dbo].[Provincia]
 (
-	[Id] INT NOT NULL PRIMARY KEY
+	[NombreProvincia]	VARCHAR(50) NOT NULL 
+	CONSTRAINT PK_Provincia
+		PRIMARY KEY (NombreProvincia)
 )
