@@ -429,6 +429,10 @@
     <Content Include="Views\Categoria\Index.cshtml" />
     <Content Include="Views\Auth\PruebaHtml.cshtml" />
     <Content Include="Views\CrearFormulario\AsignarPreguntas.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_Collapsible.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
