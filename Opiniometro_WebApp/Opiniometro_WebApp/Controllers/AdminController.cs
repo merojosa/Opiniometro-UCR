@@ -21,7 +21,7 @@ namespace Opiniometro_WebApp.Controllers
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
-        private Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel modelPersona = new Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel();
+        
 
         public Persona Persona { get; private set; }
 
@@ -49,17 +49,28 @@ namespace Opiniometro_WebApp.Controllers
         {
             try
             {
-                    modelPersona.Persona = db.Persona.Find(id);
+                Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel modelPersona = new Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel();
+                modelPersona.Persona = db.Persona.Find(id);
+
+                try
+                {
+                    String correoInstitucional = db.Usuario.Where(m => m.Cedula == id).First().CorreoInstitucional;
+                    //modelPersona.Perfil = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
+                    modelPersona.Perfil = db.Perfil.Select(n=>n.Id).ToList();
                     return View(modelPersona);
+                }
+                catch(Exception)
+                {
+                    return View(modelPersona);
+                }
+
                 
             }
             catch (Exception)
             {
 
                 throw;
-            }
-            
-            
+            }  
         }
 
         [HttpPost]
