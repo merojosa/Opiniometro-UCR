@@ -13,27 +13,25 @@ namespace Opiniometro_WebApp.Controllers
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
         // Para la vista completa
-        [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(/*short anno, byte semestre, String codigoUnidadAcadem, 
+            String siglaCarrera, byte? numEnfasis, String siglaCurso,*/ string searchString)
         {
             var modelo = new AsignarFormulariosViewModel
             {
                 Ciclos = ObtenerCiclos(""),
                 UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
                 Carreras = ObtenerCarreras(0, 0, ""),
-                //Enfasis = ObtenerEnfasis(0, 0, "", ""),
+                Enfasis = ObtenerEnfasis(0, 0, "", ""),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
                 Grupos = ObtenerGrupos(0, 0, "", "", "", "", 255, "", "" ,""),
-                Formularios = BuscarFormularios("", null)
-                //Formularios = ObtenerFormularios()
-
+                Formularios = ObtenerFormularios("")
             };
 
             return View(modelo);
         }
 
         [HttpPost]
-        public ActionResult Index(string unidadAcademica, string nombreCarrera, string nombreCurso, string searchString)
+        public ActionResult Index(string unidadAcademica, string nombreCarrera, string nombreCurso, string searchString, string formSearchString)
         {
             var modelo = new AsignarFormulariosViewModel
             {
@@ -41,7 +39,7 @@ namespace Opiniometro_WebApp.Controllers
                 Carreras = ObtenerCarreras(0, 0, ""),
                 Grupos = ObtenerGrupos(0, 0, "", unidadAcademica, "", nombreCarrera, 255, "",nombreCurso, searchString),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
-                Formularios = BuscarFormularios("", null)
+                Formularios = ObtenerFormularios(formSearchString)
             };
             return View(modelo);
         }
@@ -60,34 +58,14 @@ namespace Opiniometro_WebApp.Controllers
         // Para el filtro por ciclos
         public IQueryable<Ciclo_Lectivo> ObtenerCiclos(String codigoUnidadAcadem)
         {
-            IQueryable<Ciclo_Lectivo> ciclo = (from c in db.Ciclo_Lectivo select c);
-            //ViewBag.semestre = new SelectList(ciclo, "Semestre", "Semestre");
-           // ViewBag.ano = new SelectList(ciclo, "Anno", "Anno");
-            return ciclo;
-        }
-
-        // Para el filtro por Unidad Academica
-        public IQueryable<Unidad_Academica> ObtenerUnidadAcademica(short anno, byte semestre, String codigoUnidadAcadem)
-        {
-            IQueryable<Unidad_Academica> unidadAcademica = from u in db.Unidad_Academica select u;
-            ViewBag.unidadAcademica = new SelectList(unidadAcademica, "Nombre", "Nombre");
-            return unidadAcademica;
+            return new List<Ciclo_Lectivo>().AsQueryable();
         }
 
         // Para el filtro por carreras
-        public IQueryable<Carrera> ObtenerCarreras(short anno, byte semestre, String codigoUnidadAcadem){
-                    
-            IQueryable < Carrera > nombreCarrera = from car in db.Carrera select car;
-
-            if (!String.IsNullOrEmpty(codigoUnidadAcadem))
-            {
-                nombreCarrera = nombreCarrera.Where(c => c.CodigoUnidadAcademica.Equals(codigoUnidadAcadem));
-            }
-
-            ViewBag.nombreCarrera = new SelectList(nombreCarrera, "Nombre", "Nombre");
-            return nombreCarrera;
+        public IQueryable<Carrera> ObtenerCarreras(short anno, byte semestre, String codigoUnidadAcadem)
+        {
+            return new List<Carrera>().AsQueryable();
         }
-
 
         // Para el filtro por énfasis
         public IQueryable<Enfasis> ObtenerEnfasis(short anno, byte semestre, String codigoUnidadAcadem, String siglaCarrera)
@@ -110,9 +88,7 @@ namespace Opiniometro_WebApp.Controllers
         public IQueryable<Curso> ObtenerCursos(short anno, byte semestre,
             String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis)
         {
-            IQueryable<Curso> nombreCurso = from cur in db.Curso select cur;
-            ViewBag.nombreCurso = new SelectList(nombreCurso, "Nombre", "Nombre");
-            return nombreCurso;
+            return new List<Curso>().AsQueryable();
         }
 
         /// <summary>
@@ -190,18 +166,9 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // Para la vista de los formularios
-        public List<Formulario> ObtenerFormularios()
+        public List<Formulario> ObtenerFormularios(string searchString)
         {
-            return db.Formulario.ToList();
-        }
-
-        public List<Formulario> BuscarFormularios(string SearchStringFor, IEnumerable<Formulario> Formularios)
-        {
-            if (!String.IsNullOrEmpty(SearchStringFor))
-            {
-                Formularios = Formularios.Where(c => c.Nombre.Contains(SearchStringFor));
-            }
-            return db.Formulario.ToList();
+            return db.Formulario.Where(f => f.Nombre.Contains(searchString) || f.CodigoFormulario.Contains(searchString)).ToList();
         }
     }
 }

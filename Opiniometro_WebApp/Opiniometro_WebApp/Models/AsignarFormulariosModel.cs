@@ -22,10 +22,8 @@ namespace Opiniometro_WebApp.Models
         // Atributos extra obtenidos de otras clases
         public string nombreCurso;
         public string codigoUnidad;
-        public string nombreUnidadAcademica;
-        public string carrera;
+        //public string carrera;
         //public byte enfasis;
-        
     }
 
     /// <summary>
@@ -37,18 +35,15 @@ namespace Opiniometro_WebApp.Models
         public IEnumerable<Ciclo_Lectivo> Ciclos { get; set; }
         public IEnumerable<Carrera> Carreras { get; set; }
         public IEnumerable<Enfasis> Enfasis { get; set; }
-        public IEnumerable<Curso> Cursos { get; set; }       
+        public IEnumerable<Curso> Cursos { get; set; }
+
         // Lista de grupos
         public IEnumerable<GrupoConInfoExtra> Grupos { get; set; }
-        public IEnumerable<Unidad_Academica> Unidad { get; set; }
+
         // Lista de formularios
         public IEnumerable<Formulario> Formularios { get; set; }
 
         // Lista signaciones hechas
         //public IEnumerable<SelectListItem> Asignaciones { get; set; }
-
     }
-
-   
-
 }
