@@ -16,6 +16,8 @@ namespace Opiniometro_WebApp.Models
 
         public Formulario Formulario { get; set; }
 
+        public List<Conformado_Item_Sec_Form> Conformados { get; set; }
+
     }
 
 
