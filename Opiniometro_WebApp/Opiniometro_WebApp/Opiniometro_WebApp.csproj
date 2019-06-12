@@ -282,9 +282,6 @@
     <Compile Include="Models\Posee_Enfasis_Perfil_Permiso.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Preguntas.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Profesor.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -420,11 +417,6 @@
     <Content Include="Views\Items\Details.cshtml" />
     <Content Include="Views\Items\Edit.cshtml" />
     <Content Include="Views\Items\Index.cshtml" />
-    <Content Include="Views\Preguntas\Create.cshtml" />
-    <Content Include="Views\Preguntas\Delete.cshtml" />
-    <Content Include="Views\Preguntas\Details.cshtml" />
-    <Content Include="Views\Preguntas\Edit.cshtml" />
-    <Content Include="Views\Preguntas\Index.cshtml" />
     <Content Include="Views\Seleccion_Unica\Create.cshtml" />
     <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
     <Content Include="Views\Seleccion_Unica\Details.cshtml" />

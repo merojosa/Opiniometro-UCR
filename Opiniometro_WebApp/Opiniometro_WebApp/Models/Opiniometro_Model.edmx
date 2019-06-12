@@ -226,15 +226,6 @@
           <Property Name="IdPerfil" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="IdPermiso" Type="smallint" Nullable="false" />
         </EntityType>
-        <EntityType Name="Preguntas">
-          <Key>
-            <PropertyRef Name="Numero" />
-          </Key>
-          <Property Name="Numero" Type="int" Nullable="false" />
-          <Property Name="Planteamiento" Type="nvarchar" MaxLength="120" Nullable="false" />
-          <Property Name="TipoPregunta" Type="nchar" MaxLength="30" />
-          <Property Name="Categoria" Type="nchar" MaxLength="30" />
-        </EntityType>
         <EntityType Name="Profesor">
           <Key>
             <PropertyRef Name="CedulaProfesor" />
@@ -363,11 +354,6 @@
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ValorRandom">
-          <Property Name="randomvalue" Type="varbinary" MaxLength="8000" />
-        </EntityType>-->
         <Association Name="FK_Adm_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Administrativo" Type="Self.Administrativo" Multiplicity="0..1" />
@@ -1000,7 +986,6 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Preguntas" EntityType="Self.Preguntas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responde" EntityType="Self.Responde" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Se_Encuentra_Curso_Enfasis" EntityType="Self.Se_Encuentra_Curso_Enfasis" Schema="dbo" store:Type="Tables" />
@@ -2307,13 +2292,12 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(OpiniometroModel.SP_ObtenerPermisosUsuario_Result)">
           <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Preguntas" EntityType="OpiniometroModel.Preguntas" />
           <AssociationSet Name="Se_Encuentra_Unidad_Enfasis" Association="OpiniometroModel.Se_Encuentra_Unidad_Enfasis">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
           </AssociationSet>
           <FunctionImport Name="Secciones_Por_Formulario" ReturnType="Collection(String)">
-            <Parameter Name="ForCod" Mode="In" Type="String" />
+          <Parameter Name="ForCod" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DatosEstudiante_Result">
@@ -2332,15 +2316,6 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <Property Type="Byte" Name="NumeroEnfasis" Nullable="false" />
           <Property Type="Int16" Name="IdPermiso" Nullable="false" />
         </ComplexType>
-        <EntityType Name="Preguntas">
-          <Key>
-            <PropertyRef Name="Numero" />
-          </Key>
-          <Property Name="Numero" Type="Int32" Nullable="false" />
-          <Property Name="Planteamiento" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
-          <Property Name="TipoPregunta" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
-          <Property Name="Categoria" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
-        </EntityType>
         <Association Name="Se_Encuentra_Unidad_Enfasis">
           <End Type="OpiniometroModel.Enfasis" Role="Enfasis" Multiplicity="*" />
           <End Type="OpiniometroModel.Unidad_Academica" Role="Unidad_Academica" Multiplicity="*" />
@@ -2710,16 +2685,6 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Preguntas">
-            <EntityTypeMapping TypeName="OpiniometroModel.Preguntas">
-              <MappingFragment StoreEntitySet="Preguntas">
-                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
-                <ScalarProperty Name="TipoPregunta" ColumnName="TipoPregunta" />
-                <ScalarProperty Name="Planteamiento" ColumnName="Planteamiento" />
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="Se_Encuentra_Unidad_Enfasis" TypeName="OpiniometroModel.Se_Encuentra_Unidad_Enfasis" StoreEntitySet="Se_Encuentra_Unidad_Enfasis">
             <EndProperty Name="Unidad_Academica">
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />

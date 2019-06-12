@@ -59,7 +59,6 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Tiene_Usuario_Perfil_Enfasis> Tiene_Usuario_Perfil_Enfasis { get; set; }
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<Preguntas> Preguntas { get; set; }
     
         public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)
         {
