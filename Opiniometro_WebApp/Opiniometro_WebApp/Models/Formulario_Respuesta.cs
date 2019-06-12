@@ -19,7 +19,8 @@ namespace Opiniometro_WebApp.Models
         {
             this.Responde = new HashSet<Responde>();
         }
-      
+    
+        public System.DateTime Fecha { get; set; }
         public string CodigoFormulario { get; set; }
         public string CedulaPersona { get; set; }
         public string CedulaProfesor { get; set; }
@@ -28,8 +29,7 @@ namespace Opiniometro_WebApp.Models
         public byte NumeroGrupo { get; set; }
         public string SiglaGrupo { get; set; }
         public Nullable<bool> Completado { get; set; }
-        public System.DateTime Fecha { get; set; }
-
+    
         public virtual Formulario Formulario { get; set; }
         public virtual Grupo Grupo { get; set; }
         public virtual Persona Persona { get; set; }

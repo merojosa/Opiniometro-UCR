@@ -141,7 +141,6 @@ namespace Opiniometro_WebApp.Controllers
         //MOD:--
         public ActionResult GraficoPie(string itemId)
         {
-
             var result = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", itemId);
             int tamanio = result.Count();
             string[] leyenda = new string[tamanio];

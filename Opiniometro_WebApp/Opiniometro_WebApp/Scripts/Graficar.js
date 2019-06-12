@@ -1,4 +1,4 @@
 ﻿function graficarResultados(itemId) {
-    alert($(this).attr(itemId));
-    $.get("/VisualizarFormulario/GraficoPie", itemId);
+    alert(itemId);
+    $.get("/VisualizarFormulario/GraficoPie", {itemId});
 }

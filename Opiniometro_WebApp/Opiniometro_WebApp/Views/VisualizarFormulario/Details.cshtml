@@ -82,7 +82,7 @@
                                             <a data-toggle="collapse" data-parent="#accordion2_@id_counter" href="#collapseThreeOne_@seccion_counter">
                                                 @Html.DisplayFor(model => seccion.Item.TextoPregunta) @*Despliega las preguntas de una seccion en especifico*@
                                             </a>
-                                            <button type="button" onclick = "graficarResultados(this.itemId)" >Click Me!</button>
+                                            <button type="button" onclick = "graficarResultados('@seccion.Item.ItemId')" >Click Me!</button>
                                             <a> "@item_actual"</a>
                                         </h4>
                                     </div>
@@ -141,8 +141,8 @@
 
 </div>
 
-@*<script src="~/Scripts/Graficar.js"></script>*@
-<script>function graficarResultados(itemId) {
+<script src="~/Scripts/Graficar.js"></script>
+@*<script>function graficarResultados(itemId) {
     alert(itemId);
-    $.get("/VisualizarFormulario/GraficoPie", itemId);
-}</script> 
+    $.get("/VisualizarFormulario/GraficoPie", { itemId });
+}</script>*@ 

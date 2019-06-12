@@ -295,7 +295,7 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_ContarRespuestasPorGrupo_Result.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
@@ -411,11 +411,6 @@
     <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
     <Content Include="Views\Auth\Recuperar.cshtml" />
     <Content Include="Views\Shared\Auth\BarraLogin.cshtml" />
-    <Content Include="Views\Preguntas\Create.cshtml" />
-    <Content Include="Views\Preguntas\Delete.cshtml" />
-    <Content Include="Views\Preguntas\Details.cshtml" />
-    <Content Include="Views\Preguntas\Edit.cshtml" />
-    <Content Include="Views\Preguntas\Index.cshtml" />
     <Content Include="Views\VisualizarFormulario\Create.cshtml" />
     <Content Include="Views\VisualizarFormulario\Delete.cshtml" />
     <Content Include="Views\VisualizarFormulario\Details.cshtml" />
