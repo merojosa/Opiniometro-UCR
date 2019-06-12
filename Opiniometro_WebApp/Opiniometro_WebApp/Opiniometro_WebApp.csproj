@@ -411,6 +411,16 @@
     <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
     <Content Include="Views\Auth\Recuperar.cshtml" />
     <Content Include="Views\Shared\Auth\BarraLogin.cshtml" />
+    <Content Include="Views\Items\Create.cshtml" />
+    <Content Include="Views\Items\Delete.cshtml" />
+    <Content Include="Views\Items\Details.cshtml" />
+    <Content Include="Views\Items\Edit.cshtml" />
+    <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
     <Content Include="Views\VisualizarFormulario\Create.cshtml" />
     <Content Include="Views\VisualizarFormulario\Delete.cshtml" />
     <Content Include="Views\VisualizarFormulario\Details.cshtml" />
