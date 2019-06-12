@@ -20,10 +20,15 @@ using System.Net;
 
 namespace Opiniometro_WebApp.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
         private const string caracteres_aleatorios = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        
+
+        public Persona Persona { get; private set; }
 
         public ActionResult VerPersonas(string nom)
         {
@@ -72,9 +77,7 @@ namespace Opiniometro_WebApp.Controllers
             {
 
                 throw;
-            }
-            
-            
+            }  
         }
 
         [HttpPost]
