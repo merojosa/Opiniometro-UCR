@@ -12,12 +12,28 @@ namespace Opiniometro_WebApp.Controllers
 {
     public class SeccionController : Controller
     {
-        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        private Opiniometro_DatosEntities db;
+
+        public SeccionController()
+        {
+            db = new Opiniometro_DatosEntities();
+        }
+
+        public SeccionController(Opiniometro_DatosEntities db)
+        {
+            this.db = db;
+        }
+
+        //Method used to know if a Titulo is already in use
+        public JsonResult IsTituloAvailable(string Titulo)
+        {
+            return Json(!db.Seccion.Any(seccion => seccion.Titulo == Titulo), JsonRequestBehavior.AllowGet);
+        }
 
         // GET: Seccion
         public ActionResult Index()
         {
-            return View(db.Seccion.ToList());
+            return View("Index",db.Seccion.ToList());
         }
 
         // GET: Seccion/Details/5
@@ -32,13 +48,13 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(seccion);
+            return View("Details",seccion);
         }
 
         // GET: Seccion/Create
         public ActionResult Create()
         {
-            return View();
+            return View("Create");
         }
 
         // POST: Seccion/Create
@@ -55,7 +71,7 @@ namespace Opiniometro_WebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(seccion);
+            return View("Create",seccion);
         }
 
         // GET: Seccion/Edit/5
@@ -70,7 +86,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(seccion);
+            return View("Edit",seccion);
         }
 
         // POST: Seccion/Edit/5

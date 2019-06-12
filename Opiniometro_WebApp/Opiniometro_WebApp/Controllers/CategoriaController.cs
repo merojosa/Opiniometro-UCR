@@ -12,22 +12,12 @@ namespace Opiniometro_WebApp.Controllers
 {
     public class CategoriaController : Controller
     {
-        private Opiniometro_DatosEntities db;
-
-        public CategoriaController()
-        {
-            db = new Opiniometro_DatosEntities();
-        }
-
-        public CategoriaController(Opiniometro_DatosEntities db)
-        {
-            this.db = db;
-        }
+        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
         // GET: Categoria
         public ActionResult Index()
         {
-            return View("Index", db.Categoria.ToList());
+            return View(db.Categoria.ToList());
         }
 
         // GET: Categoria/Details/5
@@ -42,13 +32,13 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View("Details", categoria);
+            return View(categoria);
         }
 
         // GET: Categoria/Create
         public ActionResult Create()
         {
-            return View("Create");
+            return View();
         }
 
         // POST: Categoria/Create
@@ -65,7 +55,7 @@ namespace Opiniometro_WebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View("Create", categoria);
+            return View(categoria);
         }
 
         // GET: Categoria/Edit/5
@@ -80,7 +70,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View("Edit", categoria);
+            return View(categoria);
         }
 
         // POST: Categoria/Edit/5
@@ -96,7 +86,7 @@ namespace Opiniometro_WebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View("Edit", categoria);
+            return View(categoria);
         }
 
         // GET: Categoria/Delete/5
@@ -111,7 +101,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View("Delete", categoria);
+            return View(categoria);
         }
 
         // POST: Categoria/Delete/5
