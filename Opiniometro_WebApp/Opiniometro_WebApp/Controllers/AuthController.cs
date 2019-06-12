@@ -207,15 +207,6 @@ namespace Opiniometro_WebApp.Controllers
                 contrasenna.Append(caracteres_aleatorios[byte_aleatorio % (caracteres_aleatorios.Length)]);
             }
             return contrasenna.ToString();
-        }
-     
-        public ActionResult PruebaHtml()
-        {
-            if (IdentidadManager.verificar_sesion(this))
-                return View();
-            else
-                return RedirectToAction("Login");
-        }
-        
+        }        
     }
 }
