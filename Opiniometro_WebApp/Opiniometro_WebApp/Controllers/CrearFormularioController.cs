@@ -22,11 +22,35 @@ namespace Opiniometro_WebApp.Controllers
             {
                 Secciones = db.Seccion.ToList(),
                 Items = db.Item.ToList(),
-                Formulario = db.Formulario.Find(codForm)// le pasamos
-                
-            };
+                Formulario = db.Formulario.Find(codForm),// le pasamos
+                Conformados = new List<Conformado_Item_Sec_Form>()
+
+        };
             
             return View(crearFormulario);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public PartialViewResult AgregarConformado(Conformado_Item_Sec_Form conformado)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Conformado_Item_Sec_Form.Add(conformado);
+                db.SaveChanges();             
+            }
+            List<Conformado_Item_Sec_Form> conformados =
+                    db.Conformado_Item_Sec_Form
+                    .Where(m => m.CodigoFormulario == conformado.CodigoFormulario && m.Seccion == conformado.Seccion)
+                    .ToList();
+            return PartialView("ConformadoVParcial", conformados);
+
+        }
+
+        [HttpGet]
+        public JsonResult GetConformados()
+        {
+            return Json(db.Conformado_Item_Sec_Form.First().Seccion, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SeccionesAsignadas(string CodForm)
