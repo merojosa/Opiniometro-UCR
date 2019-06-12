@@ -15,16 +15,15 @@
 
 
 <div class="container">
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h3>Buscar grupos</h3></div>
-                <div class="panel-body">
+   @using (Html.BeginForm())
+    {
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3>Buscar grupos</h3></div>
+                    <div class="panel-body">
 
-                    <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
-                    @using (Html.BeginForm())
-                    {
-
+                        <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
                         <!-- Buscador -->
                         <p>
                             <div>
@@ -44,64 +43,126 @@
                                 </div>*@
                             <div>
                                 @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
-                                <input type="submit" value="Buscar" />
+                                <input type="submit" value="Buscar grupos" />
                             </div>
                         </p>
-                    }
+                        
 
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>Buscar formularios</h3>
+                    </div>
+                    <div class="panel-body">
+                        @Html.TextBox("FormSearchString", "", new { placeholder = "Nombre del formulario" })
+                        <input type="submit" value="Buscar formularios" />
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
-            <span></span>
-        </div>
-    </div>
-
-
-    <div class="row-sm-6">
+    }
 
         @using (Html.BeginForm("Asignar", "AsignarFormularios", FormMethod.Post))
         {
-            <div class="col-sm-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3>Resultados:</h3></div>
-                    <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3>Grupos</h3></div>
+                        <div class="panel-body">
 
-                        @*Tabla de grupos*@
+                            @*Tabla de grupos*@
 
-                        <table class="fixed_header">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <div align='center'>Selec. para asignar</div>
-                                    </th>
-                                    <th>
-                                        <div align='center'>Sigla</div>
-                                    </th>
-                                    <th>
-                                        <div align='center'>Curso</div>
-                                    </th>
-                                    <th>
-                                        <div align='center'>Grupo</div>
-                                    </th>
-                                    <th>
-                                        <div align='center'>Profesor</div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Despliega los datos de los grupos usando un modelo personalizado: ElegirGrupoEditorTemplate -->
-                                @Html.EditorFor(model => Model.Grupos)
-                            </tbody>
-                        </table>
+                            <table class="fixed_header">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div align='center'>Selec. para asignar</div>
+                                        </th>
+                                        <th>
+                                            <div align='center'>Sigla</div>
+                                        </th>
+                                        <th>
+                                            <div align='center'>Curso</div>
+                                        </th>
+                                        <th>
+                                            <div align='center'>Grupo</div>
+                                        </th>
+                                        <th>
+                                            <div align='center'>Profesor</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Despliega los datos de los grupos usando un modelo personalizado: ElegirGrupoEditorTemplate -->
+                                    @Html.EditorFor(model => Model.Grupos)
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
-
                 </div>
-            </div>
 
         }
 
-        <div class="col-sm-4">
+
+                <div class="col-sm-4">
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3>Resultados:</h3></div>
+                    <div class="panel-body">
+                        <!-- Tabla de grupos -->
+                        <table class="fixed_header">
+                            <!-- Table row (fila) de encabezados. -->
+                            <thead>
+                                <!-- Table header -->
+                                <th>
+                                    <div align='center'>Curso</div>
+                                </th>
+                                <th>
+                                    <div align='center'>Ciclo</div>
+                                </th>
+                                <th>
+                                    <div align='center'> Numero de grupo</div>
+                                </th>
+                                <th>
+                                    <div align='center'>Seleccionar para asignar</div>
+                                </th>
+                            </thead>
+                            <tbody>
+                                <!-- Para cada item en Model::Grupos... -->
+                                @foreach (var item in Model.Grupos)
+                                {
+                                    <!-- Table row (fila) de elementos -->
+                                    <tr>
+                                        <!-- Nombre de curso -->
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.nombreCurso)
+                                        </td>
+                                        <!-- Año -->
+                                        <td>
+                                            <div align='center'>@Html.DisplayFor(modelItem => item.anno) - @Html.DisplayFor(modelItem => item.semestre)</div>
+                                        </td>
+                                        <!-- Numero de grupo -->
+                                        <td>
+                                            <div align='center'>@Html.DisplayFor(modelItem => item.numero)</div>
+                                        </td>
+                                        <!-- Checkbox para asignar (por el momento no tiene funcionalidad) -->
+                                        <td>
+                                            <div align='center'><input type="checkbox" name="Curso" value="Curso"></div><br>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                                
+                        </table>
+                    </div>
+                </div>                  
+            </div>                       
+            <div class="col-sm-4">
 
             <div class="panel panel-default">
                 <div class="panel-heading"><h3>Tus formularios</h3></div>

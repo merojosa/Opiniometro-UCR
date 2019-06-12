@@ -278,20 +278,20 @@ th {
 
 }
 
-    .dropdown .dropbtn {
-        font-size: 16px;
-        border: none;
-        outline: none;
-        color: rgb(102,102,102);
-        padding: 14px 16px;
-        background-color: inherit;
-        font-family: inherit;
-        margin: 0;
-    }
+.dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: rgb(102,102,102);
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
 
-    .navbar b:hover, .dropdown:hover .dropbtn {
-        background-color: rgb(230,230,230);
-    }
+.navbar b:hover, .dropdown:hover .dropbtn {
+    background-color: rgb(230,230,230);
+}
 
 .dropdown-contentt {
     display: none;
@@ -314,19 +314,27 @@ th {
   text-align: left;
 }
 
-
-
 .dropdown:hover .dropdown-contentt {
   display: block;
 }
 
+/*Opiniometro boton del dropdown*/
 .navbar-inverse .dropbtn:hover, .navbar-inverse .dropbtn:focus
 {
     color: rgb(102,102,102);
 }
 
+/*Opiniometro link para cerrar sesion*/
+ul.nav li a, ul.nav li a:visited {
+    color: rgb(102,102,102) !important;
+    font-size: 16px;
+}
 
-
+/*Opiniometro link para cerrar sesion focus*/
+ul.nav li a:hover, ul.nav li a:active {
+    color: white !important;
+    background-color: rgb(102,102,102) !important;
+}
 
 .glyphicon {
   position: relative;

@@ -121,7 +121,95 @@ BEGIN
 END
 GO
 
+IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
+	DROP PROCEDURE SP_ObtenerPermisosUsuario
+GO
+CREATE PROCEDURE SP_ObtenerPermisosUsuario
+	@Correo		NVARCHAR(50),
+	@Perfil		VARCHAR(10)
+AS
+	SELECT TU.SiglaCarrera, PE.NumeroEnfasis, PE.IdPermiso
+	FROM Tiene_Usuario_Perfil_Enfasis TU	JOIN Perfil ON TU.IdPerfil = Perfil.Id
+											JOIN Posee_Enfasis_Perfil_Permiso PE ON Perfil.Id = PE.IdPerfil
+	WHERE TU.CorreoInstitucional=@Correo AND TU.IdPerfil = @Perfil
+GO
+
 EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
+
+IF OBJECT_ID('ValorRandom') IS NOT NULL
+	DROP VIEW ValorRandom
+GO
+CREATE VIEW ValorRandom
+AS
+SELECT randomvalue = CRYPT_GEN_RANDOM(10)
+GO
+
+IF OBJECT_ID('SF_GenerarContrasena') IS NOT NULL
+	DROP FUNCTION SF_GenerarContrasena
+GO
+CREATE FUNCTION SF_GenerarContrasena()
+RETURNS NVARCHAR(10)
+AS
+BEGIN
+	DECLARE @Resultado NVARCHAR(10);
+	DECLARE @InfoBinario VARBINARY(10);
+	DECLARE @DatosCaracteres NVARCHAR(10);
+
+	SELECT @InfoBinario = randomvalue FROM ValorRandom;
+
+	SET @DatosCaracteres = CAST ('' as xml).value('xs:base64Binary(sql:variable("@InfoBinario"))', 'varchar (max)');
+
+	SET @Resultado = @DatosCaracteres;
+
+	RETURN @Resultado;
+
+END
+GO
+
+IF OBJECT_ID('SP_AgregarPersonaUsuario') IS NOT NULL
+	DROP PROCEDURE SP_AgregarPersonaUsuario
+GO
+CREATE PROCEDURE SP_AgregarPersonaUsuario
+	@Cedula			CHAR(9),
+	@Nombre			NVARCHAR(50),
+	@Apellido1		NVARCHAR(50),
+	@Apellido2		NVARCHAR(50),
+	@Correo			NVARCHAR(50),
+	@Direccion		NVARCHAR(200)
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
+	DECLARE @Contrasenna NVARCHAR(10)
+
+	INSERT INTO Persona
+	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2, @Direccion)
+	SET @Contrasenna = (SELECT dbo.SF_GenerarContrasena());
+	INSERT INTO Usuario
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+END
+GO
+
+
+IF OBJECT_ID('ObtenerPerfilUsuario') IS NOT NULL
+	DROP PROCEDURE ObtenerPerfilUsuario
+GO
+CREATE PROCEDURE ObtenerPerfilUsuario @correo nvarchar(100)
+as 
+select distinct IdPerfil 
+from Tiene_Usuario_Perfil_Enfasis
+where CorreoInstitucional = @correo;
+go
+
+IF OBJECT_ID('ObtenerPerfilPorDefecto') IS NOT NULL
+	DROP PROCEDURE ObtenerPerfilPorDefecto
+GO
+CREATE PROCEDURE ObtenerPerfilPorDefecto @correo nvarchar(100)
+as 
+select top 1 IdPerfil 
+from Tiene_Usuario_Perfil_Enfasis
+where CorreoInstitucional = @correo;
+go
 
 --JJAPH
 IF OBJECT_ID('MostrarEstudiantes', 'P') IS NOT NULL 
@@ -227,6 +315,9 @@ VALUES ('UC-485648')
 --Carrera
 INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-01234', 'Ciencias de la Computación e Informática','UC-023874')
+
+INSERT INTO Enfasis
+VALUES (0, 'SC-01234')
 
 INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-01235', 'Computación con varios Énfasis','UC-023874')
@@ -426,6 +517,148 @@ BEGIN
 	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
 END
 GO
+
+
+--Permisos
+INSERT INTO Permiso
+VALUES	(1, 'Hacer todo'),
+		(2, 'Asignar formulario'),
+		(3, 'Calificar cursos'),
+		(4, 'Ver cursos')
+
+INSERT INTO Perfil
+VALUES	('Estudiante', 'Default'),
+		('Admin', 'Default'),
+		('Profesor', 'Default')
+
+INSERT INTO Tiene_Usuario_Perfil_Enfasis
+VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
+		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
+		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor')
+
+INSERT INTO Posee_Enfasis_Perfil_Permiso
+VALUES	(0, 'SC-01234', 'Estudiante', 3),
+		(1, 'SC-01234', 'Estudiante', 4),
+		(0, 'SC-01234', 'Admin', 1),
+		(0, 'SC-01234', 'Admin', 2),
+		(0, 'SC-01234', 'Profesor', 2)
+
+
+INSERT INTO Provincia
+VALUES	('San José'),
+		('Cartago'),
+		('Heredia'),
+		('Alajuela'),
+		('Puntarenas'),
+		('Guanacaste'),
+		('Limón');
+
+INSERT INTO Canton
+VALUES	('San José', 'Acosta'),
+		('San José', 'Alajuelita'),
+		('San José', 'Aserrí'),
+		('San José', 'Desamparados'),
+		('San José', 'Curridabat'),
+		('San José', 'Dota'),
+		('San José', 'Escazú'),
+		('San José', 'Goicoechea'),
+		('San José', 'León Cortés Castro'),
+		('San José', 'Montes de Oca'),
+		('San José', 'Mora'),
+		('San José', 'Moravia'),
+		('San José', 'Puriscal'),
+		('San José', 'San José'),
+		('San José', 'Tarrazú'),
+		('San José', 'Turrubares'),
+		('San José', 'Vazquez de Coronado'),
+		('Cartago', 'Cartago'),
+		('Cartago', 'Paraíso'),
+		('Cartago', 'La Unión'),
+		('Cartago', 'Jiménez'),
+		('Cartago', 'Turrialba'),
+		('Cartago', 'Alvarado'),
+		('Cartago', 'Oreamuno'),
+		('Cartago', 'El Guarco')
+
+INSERT INTO Distrito
+VALUES	('San José', 'San José', 'Carmen'),
+		('San José', 'San José', 'Merced'),
+		('San José', 'San José', 'Hospital'),
+		('San José', 'San José', 'Catedral'),
+		('San José', 'San José', 'Zapote'),
+		('San José', 'San José', 'San Francisco de Dos Ríos'),
+		('San José', 'San José', 'Uruca'),
+		('San José', 'San José', 'Mata Redonda'),
+		('San José', 'San José', 'Pavas'),
+		('San José', 'San José', 'Hatillo'),
+		('San José', 'San José', 'San Sebastián'),
+		('San José', 'Escazú', 'Escazú'),
+		('San José', 'Escazú', 'San Antonio'),
+		('San José', 'Escazú', 'San Rafael'),
+		('San José', 'Desamparados', 'Desamparados'),
+		('San José', 'Desamparados', 'San Miguel'),
+		('San José', 'Desamparados', 'San Juan de Dios'),
+		('San José', 'Desamparados', 'San Rafael Arriba'),
+		('San José', 'Desamparados', 'San Rafael Abajo'),
+		('San José', 'Desamparados', 'San Antonio'),
+		('San José', 'Desamparados', 'Frailes'),
+		('San José', 'Desamparados', 'Patarrá'),
+		('San José', 'Desamparados', 'San Cristóbal'),
+		('San José', 'Desamparados', 'Rosario'),
+		('San José', 'Desamparados', 'Damas'),
+		('San José', 'Desamparados', 'Gravilias'),
+		('Cartago', 'Cartago', 'Oriental'),
+		('Cartago', 'Cartago', 'Occidental'),
+		('Cartago', 'Cartago', 'Carmen'),
+		('Cartago', 'Cartago', 'San Nicilás'),
+		('Cartago', 'Cartago', 'Agua Caliente'),
+		('Cartago', 'Cartago', 'Guadalupe'),
+		('Cartago', 'Cartago', 'Corralillo'),
+		('Cartago', 'Cartago', 'Tierra Blanca'),
+		('Cartago', 'Cartago', 'Dulce Nombre'),
+		('Cartago', 'Cartago', 'Llano Grande'),
+		('Cartago', 'Cartago', 'Quebradilla'),
+		('Cartago', 'Paraíso', 'Paraíso'),
+		('Cartago', 'Paraíso', 'Santiago'),
+		('Cartago', 'Paraíso', 'Orosi'),
+		('Cartago', 'Paraíso', 'Cachí'),
+		('Cartago', 'Paraíso', 'Llanps de Santa Lucía'),
+		('Cartago', 'La Unión', 'Tres Ríos'),
+		('Cartago', 'La Unión', 'San Diego'),
+		('Cartago', 'La Unión', 'San Juan'),
+		('Cartago', 'La Unión', 'San Rafael'),
+		('Cartago', 'La Unión', 'Concepción'),
+		('Cartago', 'La Unión', 'Dulce Nombre'),
+		('Cartago', 'La Unión', 'San Ramón'),
+		('Cartago', 'La Unión', 'Río Azul'),
+		('Cartago', 'Jiménez', 'Juan Viñas'),
+		('Cartago', 'Jiménez', 'Tucurrique'),
+		('Cartago', 'Jiménez', 'Pejibaye'),
+		('Cartago', 'Turrialba', 'Turrialba'),
+		('Cartago', 'Turrialba', 'La Suiza'),
+		('Cartago', 'Turrialba', 'Peralta'),
+		('Cartago', 'Turrialba', 'San Cruz'),
+		('Cartago', 'Turrialba', 'Santa Teresita'),
+		('Cartago', 'Turrialba', 'Pavones'),
+		('Cartago', 'Turrialba', 'Tuis'),
+		('Cartago', 'Turrialba', 'Tayitic'),
+		('Cartago', 'Turrialba', 'Santa Rosa'),
+		('Cartago', 'Turrialba', 'Tres Equis'),
+		('Cartago', 'Turrialba', 'La Isabel'),
+		('Cartago', 'Turrialba', 'Chirripó'),
+		('Cartago', 'Alvarado', 'Pacayas'),
+		('Cartago', 'Alvarado', 'Cervantes'),
+		('Cartago', 'Alvarado', 'Capellades'),
+		('Cartago', 'Oreamuno', 'San Rafael'),
+		('Cartago', 'Oreamuno', 'Cot'),
+		('Cartago', 'Oreamuno', 'Potrero Cerrado'),
+		('Cartago', 'Oreamuno', 'Cipreses'),
+		('Cartago', 'Oreamuno', 'Santa Rosa'),
+		('Cartago', 'El Guarco', 'El Tejar'),
+		('Cartago', 'El Guarco', 'San Isidro'),
+		('Cartago', 'El Guarco', 'Tobosi'),
+		('Cartago', 'El Guarco', 'Patio de Agua')
+		
 
 --select de prueba para la cnt de respuestas
 --SELECT e.Respuesta, COUNT(e.Respuesta) as cantidadRespuestas

@@ -6,72 +6,110 @@
     <title>Opiniómetro@UCR</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
 </head>
 <body>
     <!--Barra-->
     @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
+    @using Opiniometro_WebApp.Controllers.Servicios;
+    @using Opiniometro_WebApp.Controllers;
 
-    <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-top:145px" ;>
-        <div class="container">
-            <div class="navbar-header">
+    @if (IdentidadManager.usuario_loggeado() == true)
+    {
+        <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-top:190px" ;>
+            <div class="container">
+                <nav class="navbar navbar-default-barra-login navbar-fixed-top" style="margin-top:145px">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <div style="width: 870px; overflow: hidden" text-align="center">
 
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Opiniómetro@UCR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <div class="dropdown">
-                    <button class="dropbtn">
-                        Usuario
-                        <i class="fa fa-caret-down"></i>
+                                <ul class="nav navbar-nav navbar" style="margin-left:51px">
+                                    <li>@Html.ActionLink("Bienvenido", "Index", "Home")</li>
+                                </ul>
+
+                                <div class="dropdown">
+                                    <button class="dropbtn">
+                                        Seleccione un perfil
+                                    </button>
+                                    <div class="dropdown-contentt">
+                                        @{
+                                            ICollection<String> perfiles = PerfilController.ObtenerPerfiles();
+                                            ViewBag.perfiles = perfiles;
+                                            for (int contador = 0; contador < perfiles.Count; contador++)
+                                            {
+                                                <a href="@Url.Action("CambioPerfil", "Perfil", new { perfil_elegido = @ViewBag.perfiles[contador] })">@ViewBag.perfiles[contador]</a>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+
+                                <ul class="nav navbar-nav navbar">
+                                    <li>@Html.ActionLink("Cerrar sesión", "CerrarSesion", "Auth")</li>
+                                </ul>
+
+                            </div>
+                        </div> <!--navbar-header-->
+                    </div>
+                </nav>
+
+                <div class="navbar-header">
+
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
-                    <div class="dropdown-contentt">
-                        @Html.ActionLink("Ver información de personas", "VerPersonas", "Admin")
-                        @Html.ActionLink("Insertar usuario", "CrearUsuario", "Admin")
-                    </div>
+                    @Html.ActionLink("Opiniómetro@UCR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 </div>
-                <div class="dropdown">
-                    <button class="dropbtn">
-                        Evaluaciones
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-contentt">
-                        @Html.ActionLink("Insertar formulario", "Index", "Formulario")
-                        @Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")
-                        @Html.ActionLink("Visualizar resultados de evaluaciones", "Index", "Responde")
-                        @Html.ActionLink("Sección", "Index", "Seccion")
-                        @Html.ActionLink("Ítem", "Index", "Item")   
+                <div class="navbar-collapse collapse">
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            Usuario
+                        </button>
+                        <div class="dropdown-contentt">
+                            @Html.ActionLink("Ver información de personas", "VerPersonas", "Admin")
+                            @Html.ActionLink("Insertar usuario", "CrearUsuario", "Admin")
+                        </div>
                     </div>
+
+
+                    <div class="dropdown">
+                        <button class="dropbtn">
+                            Evaluaciones
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-contentt">
+                            @Html.ActionLink("Insertar formulario", "Index", "Formulario")
+                            @Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")
+                            @Html.ActionLink("Visualizar resultados de evaluaciones", "Index", "Responde")
+                            @Html.ActionLink("Sección", "Index", "Seccion")
+                            @Html.ActionLink("Ítem", "Index", "Item")
+                        </div>
                     </div>
-                </div>
+                </div> <!--navbar-collapse collapse-->
             </div>
         </nav>
+    }
 
+    <br /><br />
 
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Opiniometro@UCR</p>
+        </footer>
+    </div>
 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
 
+<script>
+    function redirect() {
+        alert("Javasript");
 
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - Opiniometro@UCR</p>
-            </footer>
-        </div>
-
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-    </body>
-    </html>
-
-    <script>
-        function redirect()
-        {
-            alert("Javasript");
-
-        }
-    </script>
+    }
+</script>
