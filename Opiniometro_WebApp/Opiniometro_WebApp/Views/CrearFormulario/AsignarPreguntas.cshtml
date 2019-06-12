@@ -1,5 +1,115 @@
-﻿@{
+﻿@model Opiniometro_WebApp.Models.CrearFormularioModel
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<thead>
+    
+        <tr>
+          
+            
+                <td>
+                
+                    <div class="row">
+                        <h4>Codigo: @Model.Formulario.CodigoFormulario </h4>
+                        <h4>Nombre: @Model.Formulario.Nombre</h4>
+                    </div>
+
+                    <div>
+                        <div style="float: right; width: 500px; padding: 15px;">
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td>
+                                        @Html.Label("Código")
+                                    </td>
+                                    <td>
+                                        @Html.Label("Planteamiento")
+                                    </td>
+                                    <td>
+                                        @Html.Label("Tipo")
+                                    </td>
+                                </tr>
+
+
+                                @foreach (var item in Model.Items)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ItemId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TextoPregunta)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TipoPregunta)
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" class="chcktbl" id="@item.ItemId"/>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </table>
+
+                        </div>
+
+                        <div style=" width: 500px; padding:  15px;">
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td>
+                                        @Html.Label("Titulo")
+                                    </td>
+                                    <td>
+                                        @Html.Label("Descripción")
+                                    </td>
+                                </tr>
+
+
+                                @foreach (var seccion in Model.Secciones)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(model => seccion.Titulo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => seccion.Descripcion)
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" class="chcktbl" id="@seccion.Titulo" />
+                                        </td>
+                                    </tr>
+                                }
+
+                            </table>
+
+                        </div>
+                    </div>
+
+
+                    <button disabled>
+                        Añadir pregunta al formulario.
+                    </button>
+
+                    <div style="float: left; width: 1000px; padding: 50px;">
+                        @*@Html.Action("SeccionesAsignadas", new
+                                    {CodForm = Model.Formulario.CodigoFormulario})*@
+                    </div>
+
+                    <input type="submit" value="Generate report" />
+                    <div style="clear: both;"></div>
+                </td>
+            
+        </tr>
+    
+</thead>
+
+
+
+
+
+
 
 
