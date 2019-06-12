@@ -271,14 +271,5 @@ namespace Opiniometro_WebApp.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ObtenerPermisosUsuario_Result>("SP_ObtenerPermisosUsuario", correoParameter);
         }
-    
-        public virtual ObjectResult<string> Secciones_Por_Formulario(string forCod)
-        {
-            var forCodParameter = forCod != null ?
-                new ObjectParameter("ForCod", forCod) :
-                new ObjectParameter("ForCod", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Secciones_Por_Formulario", forCodParameter);
-        }
     }
 }
