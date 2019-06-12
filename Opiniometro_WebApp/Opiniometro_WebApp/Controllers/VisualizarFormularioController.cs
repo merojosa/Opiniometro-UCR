@@ -12,7 +12,19 @@ namespace Opiniometro_WebApp.Controllers
 {
     public class VisualizarFormularioController : Controller
     {
-        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+
+
+        private Opiniometro_DatosEntities db;
+
+        public VisualizarFormularioController()
+        {
+            db = new Opiniometro_DatosEntities();
+        }
+
+        public VisualizarFormularioController(Opiniometro_DatosEntities db)
+        {
+            this.db = db;
+        }
 
         // GET: VisualizarFormulario
         public ActionResult Index()

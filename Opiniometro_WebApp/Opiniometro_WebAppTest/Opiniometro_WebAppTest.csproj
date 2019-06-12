@@ -148,7 +148,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Formulario_RespuestaControllerTest.cs" />
+    <Compile Include="Controllers\VisualizarFormularioControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
