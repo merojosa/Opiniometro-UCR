@@ -37,7 +37,7 @@
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Perfiles<span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Perfiles<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Cambiar perfil actual", "Falta", "Falta")</li>
                             <li>@Html.ActionLink("Asignar/Revocar permisos", "Falta", "Falta")</li>
@@ -66,7 +66,7 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Cerrar sesión", "CerrarSesion", "Auth", new { style = "margin-right:90px" })</li>
+                    <li style="margin-right:90px">@Html.ActionLink("Cerrar sesión", "CerrarSesion", "Auth")</li>
                 </ul>
             </div>
         </nav>

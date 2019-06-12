@@ -5,18 +5,3 @@
 @using Opiniometro_WebApp.Controllers.Servicios
 
 <h1>Home</h1>
-
-@{
-    // Obtengo los permisos del correo actual.
-    var permisos_usuario = (IdentidadManager)Session[IdentidadManager.obtener_correo_actual()];
-
-    if (permisos_usuario.verificar_permiso("SC-01234", 1, IdPermiso.VER_CURSOS))
-    {
-        <b>Este html se inserta si el usuario puede ver cursos</b>
-    }
-
-    if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.ASIGNAR_FORMUALRIO))
-    {
-        <b>Esto es un html de un usuario que puede asignar un formulario</b>
-    }
-}
