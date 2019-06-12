@@ -13,7 +13,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.Label("Número")
+            @Html.Label("Código")
             @*@Html.DisplayNameFor(model => model.ItemId)*@
         </th>
         <th>
@@ -45,7 +45,10 @@
             @Html.DisplayFor(modelItem => item.Categoria )
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TieneObservacion )
+            @if (item.TieneObservacion == true)
+            {
+                <input type="checkbox" checked disabled>
+            }
         </td>
 
 
