@@ -130,7 +130,7 @@ namespace Opiniometro_WebApp.Controllers
         //REQ: Que exista la conexion a la base de datos.
         //MOD:--
         [HttpGet]
-        private ObjectResult<SP_ContarRespuestasPorGrupo_Result> ObtenerCantidadRespuestasPorPregunta(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
+        private ObjectResult<SP_ContarRespuestasPorGrupo_Result> ObtenerCantidadRespuestasPorPregunta(string codigoFormulario, string cedulaProfesor, short? annoGrupo, byte? semestreGrupo, byte? numeroGrupo, string siglaCurso, string itemId)
         {
             var result = db.SP_ContarRespuestasPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
             return result;
@@ -141,15 +141,15 @@ namespace Opiniometro_WebApp.Controllers
         //MOD:--
         public ActionResult GraficoPie(string itemId)
         {
-            var result = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", itemId);
-            int tamanio = result.Count();
+            var result = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", itemId).ToList();//ObtenerCantidadRespuestasPorPregunta
+            int tamanio = result.Count;
             string[] leyenda = new string[tamanio];
             int?[] cntResps = new int?[tamanio];
             int iter = 0;
-            foreach (var item in result.ToList())
-            {
-                leyenda[iter] = item.Respuesta;
-                cntResps[iter] = item.cntResp;
+            foreach (var itemR in result)
+            { 
+                leyenda[iter] = itemR.Respuesta;
+                cntResps[iter] = itemR.cntResp;
                 iter++;
             }
             string myGraf =
@@ -164,7 +164,6 @@ namespace Opiniometro_WebApp.Controllers
                     xValue: leyenda,
                     yValues: cntResps)
                 .Write("png");
-            result.Dispose();
             return null;
         }
     }
