@@ -15,6 +15,12 @@ namespace Opiniometro_WebApp.Controllers
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
+        //Method used to know if an ItemId is already in use
+        public JsonResult IsItemIdAvailable(string ItemId)
+        {
+            return Json(!db.Item.Any(item => item.ItemId == ItemId), JsonRequestBehavior.AllowGet);
+        }
+
          //GET: Item
         public ActionResult Index()
         {
