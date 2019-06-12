@@ -1,0 +1,56 @@
+﻿@model Opiniometro_WebApp.Models.GruposYFormsSeleccionados
+
+<table class="fixed_header">
+    <thead>
+        <tr>
+            <th align='center'>
+                <div align='center'>Curso</div>
+            </th>
+            <th align='center'>
+                <div align='center'>Grupo</div>
+            </th>
+            <th align='center'>
+                <div align='center'>Profesor</div>
+            </th>
+            <th align='center'>
+                <div align='center'>Formularios asignados</div>
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var gr in Model.GruposSeleccionados)
+        {
+            <tr>
+                <td align='center'>
+                    <div align='center'>
+                        @Html.DisplayFor(ModelItem => gr.SiglaCurso)<span> </span>@Html.DisplayFor(ModelItem => gr.NombreCurso)
+                    </div>
+                </td>
+                <td align='center'>
+                    <div align='center'>@Html.DisplayFor(ModelItem => gr.Numero)</div>
+                </td>
+                <td align='center'>
+                    @foreach (var profe in gr.Profesores)
+                    {
+                        <div align='center'>
+                            @Html.DisplayFor(ModelItem => profe.Persona.Nombre) <span> </span>
+                            @Html.DisplayFor(ModelItem => profe.Persona.Apellido1) <span> </span>
+                            @Html.DisplayFor(ModelItem => profe.Persona.Apellido2) <br>
+                        </div>
+                    }
+                </td>
+                <td align='center'>
+                    @foreach (var form in Model.FormulariosSeleccionados)
+                    {
+                        <div align='center'>
+                            @Html.DisplayFor(ModelItem => form.CodigoFormulario) <span> </span>
+                            @Html.DisplayFor(ModelItem => form.NombreFormulario) <br>
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

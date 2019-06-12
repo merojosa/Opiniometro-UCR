@@ -424,6 +424,7 @@
     <Content Include="Views\Categoria\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ElegirGrupoEditorViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ElegirFormularioEditorViewModel.cshtml" />
+    <Content Include="Views\Shared\AsignacionFormularioGrupo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

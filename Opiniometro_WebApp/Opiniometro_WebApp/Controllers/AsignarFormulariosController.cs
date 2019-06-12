@@ -43,11 +43,10 @@ namespace Opiniometro_WebApp.Controllers
             };
             return View(modelo);
         }
-
-        [HttpPost]
-        public ActionResult Asignar(AsignarFormulariosViewModel modelo)
+        
+        public void Asignar(GruposYFormsSeleccionados gruFormsSeleccionados)
         {
-            System.Diagnostics.Debug.WriteLine("\n\nAsignar()\n");
+            /*System.Diagnostics.Debug.WriteLine("\n\nAsignar()\n");
 
             var GruposSeleccionados = modelo.ActualizarGruposSeleccionados();
             var FormulariosSeleccionados = modelo.ActualizarFormulariosSeleccionados();
@@ -64,12 +63,18 @@ namespace Opiniometro_WebApp.Controllers
                 System.Diagnostics.Debug.WriteLine("{0} - {1}", formulario.CodigoFormulario, formulario.NombreFormulario);
             }
 
-            System.Diagnostics.Debug.WriteLine("\nFin del reporte.");
+            System.Diagnostics.Debug.WriteLine("\nFin del reporte.");*/
 
             //System.Diagnostics.Debug.WriteLine();
-            return View(modelo);
         }
 
+        public ActionResult AsignacionFormularioGrupo (List<ElegirGrupoEditorViewModel> grupos, List<ElegirFormularioEditorViewModel> formularios)
+        {
+            GruposYFormsSeleccionados gruFormsSeleccionados
+                = new GruposYFormsSeleccionados(grupos, formularios);
+            Asignar(gruFormsSeleccionados);
+            return PartialView("AsignacionFormularioGrupo", gruFormsSeleccionados);
+        }
 
         // Para el filtro por ciclos
         public IQueryable<Ciclo_Lectivo> ObtenerCiclos(String codigoUnidadAcadem)

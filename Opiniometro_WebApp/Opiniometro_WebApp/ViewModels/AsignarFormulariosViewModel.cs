@@ -6,6 +6,20 @@ using System.Web.Mvc;
 
 namespace Opiniometro_WebApp.Models
 {
+    public class GruposYFormsSeleccionados
+    {
+
+        public List<ElegirGrupoEditorViewModel> GruposSeleccionados { get; set; }
+        public List<ElegirFormularioEditorViewModel> FormulariosSeleccionados { get; set; }
+
+        public GruposYFormsSeleccionados(List<ElegirGrupoEditorViewModel> todosGrupos,
+            List<ElegirFormularioEditorViewModel> todosFormularios)
+        {
+            GruposSeleccionados = (from gr in todosGrupos where gr.Seleccionado select gr).ToList();
+            FormulariosSeleccionados = (from form in todosFormularios where form.Seleccionado select form).ToList();
+        }
+    }
+
     /// <summary>
     /// Modelo para Asignación de Formularios
     /// </summary>
@@ -25,21 +39,22 @@ namespace Opiniometro_WebApp.Models
         public List<ElegirFormularioEditorViewModel> Formularios { get; set; }
 
         // Listas de grupos y formularios seleccionados para hacer las asignaciones
-        public List<ElegirGrupoEditorViewModel> GruposSeleccionados { get; set; }
-        public List<ElegirFormularioEditorViewModel> FormulariosSeleccionados { get; set; }
+        public GruposYFormsSeleccionados GruFormsSeleccionados { get; set; }
 
         // Lista asignaciones hechas
         //public IEnumerable<SelectListItem> Asignaciones { get; set; }
 
         public AsignarFormulariosViewModel()
         {
+            // Vacía por default
             Grupos = new List<ElegirGrupoEditorViewModel>();
+            // Vacía por default
             Formularios = new List<ElegirFormularioEditorViewModel>();
-            GruposSeleccionados = new List<ElegirGrupoEditorViewModel>();
-            FormulariosSeleccionados = new List<ElegirFormularioEditorViewModel>();
-
-
-#if true    // Datos de prueba
+            // (Por ende,) Vacía por default
+            GruFormsSeleccionados = new GruposYFormsSeleccionados (Grupos, Formularios);
+            
+#if false    
+            // Datos de prueba
 
             GruposSeleccionados.Add(new ElegirGrupoEditorViewModel { NombreCurso = "Prueba1", SiglaCurso = "PBA0001", Numero = 1, Profesores = new List<Profesor>() });
             GruposSeleccionados.Add(new ElegirGrupoEditorViewModel { NombreCurso = "Prueba2", SiglaCurso = "PBA0002", Numero = 1, Profesores = new List<Profesor>() });
@@ -58,40 +73,6 @@ namespace Opiniometro_WebApp.Models
             FormulariosSeleccionados.Add(new ElegirFormularioEditorViewModel { CodigoFormulario = "FM92.3", NombreFormulario = "Prueba F" });
             FormulariosSeleccionados.Add(new ElegirFormularioEditorViewModel { CodigoFormulario = "AM100", NombreFormulario = "Prueba A" });
 #endif
-        }
-
-        // Actualiza la lista de grupos que han sido seleccionados por el usuario y los retorna.
-        public IEnumerable<ElegirGrupoEditorViewModel> ActualizarGruposSeleccionados()
-        {
-            this.GruposSeleccionados.Clear();
-            this.GruposSeleccionados = (from gr in this.Grupos where gr.Seleccionado select gr).ToList();
-               /*(from gr in this.Grupos
-                where gr.Seleccionado
-                select new Grupo
-                {
-                    SiglaCurso = gr.SiglaCurso,
-                    Numero = gr.Numero,
-                    AnnoGrupo = gr.Anno,
-                    SemestreGrupo = gr.Semestre
-                }).ToList();*/
-
-            return this.GruposSeleccionados;
-        }
-
-        // Actualiza la lista de formularios que han sido seleccionados por el usuario y los retorna.
-        public IEnumerable<ElegirFormularioEditorViewModel> ActualizarFormulariosSeleccionados()
-        {
-            this.FormulariosSeleccionados.Clear();
-            this.FormulariosSeleccionados = (from form in this.Formularios where form.Seleccionado select form).ToList();
-               /*(from formul in this.Formularios
-                where formul.Seleccionado
-                select new Formulario
-                {
-                    CodigoFormulario = formul.CodigoFormulario,
-                    Nombre = formul.NombreFormulario
-                }).ToList();*/
-
-            return this.FormulariosSeleccionados;
         }
     }
 }
