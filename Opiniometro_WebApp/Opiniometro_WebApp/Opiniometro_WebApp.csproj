@@ -188,118 +188,118 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Administrativo.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Carrera.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Categoria.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Ciclo_Lectivo.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Conformado_Item_Sec_Form.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Curso.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__RefactorLog.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DatosEstudiante_Result.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Empadronado.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Enfasis.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Estudiante.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Facultad.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Fecha_Corte.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Formulario.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Formulario_Respuesta.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Grupo.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Item.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Matricula.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MostrarEstudiantes_Result.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Opciones_De_Respuestas_Seleccion_Unica.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\OpiniometroModel.Context.cs">
+    <Compile Include="Models\Opiniometro_Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>OpiniometroModel.Context.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\OpiniometroModel.cs">
+    <Compile Include="Models\Opiniometro_Model.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\OpiniometroModel.Designer.cs">
+    <Compile Include="Models\Opiniometro_Model.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>OpiniometroModel.edmx</DependentUpon>
+      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Perfil.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Permiso.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Persona.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Posee_Enfasis_Perfil_Permiso.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Profesor.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Responde.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Seccion.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Seleccion_Unica.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TelefonoPersona.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Texto_Libre.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tiene_Grupo_Formulario.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Unidad_Academica.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Usuario.cs">
-      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AsignarFormulariosViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -313,31 +313,32 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\filtroAsig.css" />
     <Content Include="Content\firma-ucr-c.svg" />
     <Content Include="Content\scrollbar-tabla.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\OpiniometroModel.Context.tt">
+    <Content Include="Models\Opiniometro_Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OpiniometroModel.edmx</DependentUpon>
-      <LastGenOutput>OpiniometroModel.Context.cs</LastGenOutput>
+      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
+      <LastGenOutput>Opiniometro_Model.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\OpiniometroModel.tt">
+    <Content Include="Models\Opiniometro_Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OpiniometroModel.edmx</DependentUpon>
-      <LastGenOutput>OpiniometroModel.cs</LastGenOutput>
+      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
+      <LastGenOutput>Opiniometro_Model.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\AsignarFormularios.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\OpiniometroModel.edmx">
+    <EntityDeploy Include="Models\Opiniometro_Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>OpiniometroModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>Opiniometro_Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\OpiniometroModel.edmx.diagram">
-      <DependentUpon>OpiniometroModel.edmx</DependentUpon>
+    <Content Include="Models\Opiniometro_Model.edmx.diagram">
+      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CollapsibleScript.js" />

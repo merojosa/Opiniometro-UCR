@@ -43,30 +43,30 @@
                         @Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")
                         @Html.ActionLink("Visualizar resultados de evaluaciones", "Index", "Responde")
                         @Html.ActionLink("Sección", "Index", "Seccion")
-                        @Html.ActionLink("Ítem", "Index", "Item")   
-                    </div>
+                        @Html.ActionLink("Ítem", "Index", "Item")
                     </div>
                 </div>
             </div>
-        </nav>
-
-
-
-
-
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - Opiniometro@UCR</p>
-            </footer>
         </div>
+    </nav>
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-    </body>
-    </html>
+
+
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Opiniometro@UCR</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
 
     <script>
         function redirect()
