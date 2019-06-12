@@ -59,6 +59,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Tiene_Usuario_Perfil_Enfasis> Tiene_Usuario_Perfil_Enfasis { get; set; }
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<Preguntas> Preguntas { get; set; }
     
         public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)
         {
@@ -270,6 +271,15 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Correo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ObtenerPermisosUsuario_Result>("SP_ObtenerPermisosUsuario", correoParameter);
+        }
+    
+        public virtual ObjectResult<string> Secciones_Por_Formulario(string forCod)
+        {
+            var forCodParameter = forCod != null ?
+                new ObjectParameter("ForCod", forCod) :
+                new ObjectParameter("ForCod", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Secciones_Por_Formulario", forCodParameter);
         }
     }
 }

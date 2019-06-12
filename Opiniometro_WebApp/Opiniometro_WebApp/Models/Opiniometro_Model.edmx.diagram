@@ -75,6 +75,8 @@
         <AssociationConnector Association="OpiniometroModel.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" ManuallyRouted="false" />
         <AssociationConnector Association="OpiniometroModel.Escuela" ManuallyRouted="false" />
         <AssociationConnector Association="OpiniometroModel.Se_Encuentra_Curso_Enfasis" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OpiniometroModel.Preguntas" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="OpiniometroModel.Se_Encuentra_Unidad_Enfasis" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
