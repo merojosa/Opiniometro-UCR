@@ -661,8 +661,8 @@ VALUES	('San José', 'San José', 'Carmen'),
 		('Cartago', 'El Guarco', 'Tobosi'),
 		('Cartago', 'El Guarco', 'Patio de Agua')
 		
-		--Función:
-		--Retorna Unique Identifier [Ver SP_agregarPersonaUsuario]
+--Función:
+--Retorna Unique Identifier [Ver SP_agregarPersonaUsuario]
 IF OBJECT_ID('SP_GenerarContrasena') IS NOT NULL
 	DROP PROCEDURE SP_GenerarContrasena
 GO
