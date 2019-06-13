@@ -31,13 +31,21 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public PartialViewResult AgregarConformado(Conformado_Item_Sec_Form conformado)
         {
+           
+           
             if (ModelState.IsValid)
             {
+                var conf = db.Conformado_Item_Sec_Form.Where(m => m.ItemId == conformado.ItemId && m.TituloSeccion == conformado.TituloSeccion && m.CodigoFormulario == conformado.CodigoFormulario);
+                if (conf == null)
+                {              
                 db.Conformado_Item_Sec_Form.Add(conformado);
-                db.SaveChanges();             
+                db.SaveChanges();
+                }
+                else
+                    return null;
             }
             List<Conformado_Item_Sec_Form> conformados =
                     db.Conformado_Item_Sec_Form
