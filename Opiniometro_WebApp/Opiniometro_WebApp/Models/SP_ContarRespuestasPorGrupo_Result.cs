@@ -10,10 +10,10 @@
 namespace Opiniometro_WebApp.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class C__RefactorLog
+    public partial class SP_ContarRespuestasPorGrupo_Result
     {
-        public System.Guid OperationKey { get; set; }
+        public string Respuesta { get; set; }
+        public Nullable<int> cntResp { get; set; }
     }
 }
