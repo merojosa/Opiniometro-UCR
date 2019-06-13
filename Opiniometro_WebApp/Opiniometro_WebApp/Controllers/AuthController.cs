@@ -37,7 +37,7 @@ namespace Opiniometro_WebApp.Controllers
             // Si no, retorne la vista para el login.
             else
             {
-                return View();
+                return View("Login");
             }
         }
 
@@ -107,7 +107,7 @@ namespace Opiniometro_WebApp.Controllers
         public static void eliminar_privilegios(Controller controlador)
         {
             // En caso de que no exista sesion, no tiene por que hacer algo.
-            if (IdentidadManager.verificar_sesion(controlador))
+           // if (IdentidadManager.verificar_sesion(controlador))
             {
                 string correo = IdentidadManager.obtener_correo_actual();               // Obtengo el correo para obtener la sesion.
                 ((IdentidadManager)controlador.Session[correo]).limpiar_permisos();     // Limpio los permisos.
@@ -127,7 +127,7 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult Recuperar()
         {
-            return View();
+            return View("Recuperar");
         }
 
         /*
@@ -207,14 +207,6 @@ namespace Opiniometro_WebApp.Controllers
                 contrasenna.Append(caracteres_aleatorios[byte_aleatorio % (caracteres_aleatorios.Length)]);
             }
             return contrasenna.ToString();
-        }
-
-        public ActionResult PruebaHtml()
-        {
-            if (IdentidadManager.verificar_sesion(this))
-                return View();
-            else
-                return RedirectToAction("Login");
-        }
+        }        
     }
 }
