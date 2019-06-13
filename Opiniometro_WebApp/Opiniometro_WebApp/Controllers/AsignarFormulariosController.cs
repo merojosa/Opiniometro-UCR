@@ -19,7 +19,7 @@ namespace Opiniometro_WebApp.Controllers
             var modelo = new AsignarFormulariosViewModel
             {
                 Ciclos = ObtenerCiclos(""),
-                UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
+                //UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
                 Carreras = ObtenerCarreras(0, 0, ""),
                 Enfasis = ObtenerEnfasis(0, 0, "", ""),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
@@ -35,7 +35,7 @@ namespace Opiniometro_WebApp.Controllers
         {
             var modelo = new AsignarFormulariosViewModel
             {
-                UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
+                //UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
                 Carreras = ObtenerCarreras(0, 0, ""),
                 Grupos = ObtenerGrupos(0, 0, "", unidadAcademica, "", nombreCarrera, 255, "",nombreCurso, searchString),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
@@ -115,7 +115,7 @@ namespace Opiniometro_WebApp.Controllers
                 Numero = gru.Numero,
                 Anno = gru.AnnoGrupo,
                 Semestre = gru.SemestreGrupo,
-                Profesores = gru.Profesor.ToList(),
+                //Profesores = gru.Profesor.ToList(),
                 NombreCurso = gru.Curso.Nombre,
                 NombreUnidadAcademica = gru.Curso.Unidad_Academica.Nombre,
                 //NombresCarreras =  cur.Enfasis.
