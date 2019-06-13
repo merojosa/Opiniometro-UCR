@@ -191,6 +191,8 @@ END
 GO
 
 
+
+
 IF OBJECT_ID('ObtenerPerfilUsuario') IS NOT NULL
 	DROP PROCEDURE ObtenerPerfilUsuario
 GO
@@ -659,6 +661,55 @@ VALUES	('San José', 'San José', 'Carmen'),
 		('Cartago', 'El Guarco', 'Tobosi'),
 		('Cartago', 'El Guarco', 'Patio de Agua')
 		
+		--Función:
+		--Retorna Unique Identifier [Ver SP_agregarPersonaUsuario]
+IF OBJECT_ID('SP_GenerarContrasena') IS NOT NULL
+	DROP PROCEDURE SP_GenerarContrasena
+GO
+CREATE PROCEDURE SP_GenerarContrasena
+@resultado	NVARCHAR(10) OUTPUT 
+AS
+BEGIN
+	DECLARE @Resultado NVARCHAR(10);
+	DECLARE @InfoBinario VARBINARY(10);
+	DECLARE @DatosCaracteres NVARCHAR(10);
+
+	SELECT @InfoBinario = randomvalue FROM ValorRandom;
+
+	SET @DatosCaracteres = CAST ('' as xml).value('xs:base64Binary(sql:variable("@InfoBinario"))', 'varchar (max)');
+
+	SET @Resultado = @DatosCaracteres;
+
+	--RETURN @Resultado;
+
+END
+GO
+
+--Genera un Id único
+IF OBJECT_ID('SP_GenerarIdUnico') IS NOT NULL
+	DROP PROCEDURE SP_GenerarIdUnico
+GO
+CREATE PROCEDURE SP_GenerarIdUnico
+@id	UNIQUEIDENTIFIER OUTPUT
+AS
+BEGIN
+	SET @id = NEWID()
+END
+GO
+
+--Devuelve un GUID generado por la base
+IF OBJECT_ID('SP_GenerarContrasenaHash') IS NOT NULL
+	DROP PROCEDURE SP_GenerarContrasenaHash
+GO
+CREATE PROCEDURE SP_GenerarContrasenaHashxxx
+@id	UNIQUEIDENTIFIER,
+@contrasena	NVARCHAR(10),
+@contrasenaHash NVARCHAR(50) OUTPUT
+AS
+BEGIN
+	SET @contrasenaHash = HASHBYTES('SHA2_512', @contrasena+CAST(@id AS NVARCHAR(36)))
+END
+GO
 
 --select de prueba para la cnt de respuestas
 --SELECT e.Respuesta, COUNT(e.Respuesta) as cantidadRespuestas
