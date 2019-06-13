@@ -6,25 +6,74 @@
 
 @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
 
-<table class="table">
-    <tr>
-        <th>
-            Formularios
-        </th>
-        <th></th>
-    </tr>
+<div class="container">
+    <div class="row col-sm-100% panel panel-default">
+        <table class="table">
+            <tr>
+                <th>
+                    <label>Curso&nbsp;</label> @Html.DropDownList("CursoID", null, "<Seleccione Curso>", new { @class = "form-control", @onChange = "document.getElementById('selectcurso').value = this.value; this.form.submit();" })
+                </th>
+                <th>
+                    <label>Ciclo&nbsp;</label>@Html.DropDownList("SemestreId", null, "<Seleccione el Semestre>", htmlAttributes: new { @class = "form-control", @onChange = "document.getElementsByName('selectsemestre').value = this.value; this.form.submit();" })
+                    <label>&nbsp;</label>@Html.DropDownList("AnnoId", null, "<Seleccione Año>", htmlAttributes: new { @class = "form-control", @onChange = "document.getElementsByName('selectanno').value = this.value; this.form.submit();" })
+                </th>
+                <th>
+                    <label>Grupo&nbsp;</label>@Html.DropDownList("GrupoID", null, "<Seleccione Grupo>", htmlAttributes: new { @class = "form-control", @onChange = "document.getElementsByName('selecgrupo').value = this.value; this.form.submit();" })
+                </th>
+                @using (Html.BeginForm())
+                {
+                    @Html.Hidden("selectcurso", null)
+                    @Html.Hidden("selectsemestre", null)
+                    @Html.Hidden("selectanno", null)
+                    @Html.Hidden("selecgrupo", null)
+                    <th>
+                        <label>&nbsp;</label><br />
+                        <input type="submit" value="Filtrar" class="btn btn-default" />
+                    </th>
+                }
+            </tr>            
+        </table>
+    </div>
+</div>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.ActionLink("Visualizar formulario", "Details", new { id = item.CodigoFormulario })
-            </td>
-        </tr>
-    }
+<br />
 
-</table>
+<div class="container">
+    <div class="row col-sm-100% panel panel-default">
+        <table class="table">
+            <tr>
+                <th>
+                    Formularios
+                </th>
+                <th></th>
+            </tr>
 
+            @{string formulario_actual = ""; List<string> formularios = new List<string>(); bool formulario_repetido = false;}
+
+            @foreach (var item in Model)
+            {
+                formulario_actual = item.CodigoFormulario;
+
+                if (formularios.Contains(formulario_actual))
+                { formulario_repetido = true; }
+                else
+                {
+                    formularios.Add(formulario_actual);
+                    formulario_repetido = false;
+                }
+
+                if (formulario_repetido == false)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Visualizar formulario", "Details", new { id = item.CodigoFormulario })
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
