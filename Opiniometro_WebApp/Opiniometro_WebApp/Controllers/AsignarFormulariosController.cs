@@ -20,9 +20,9 @@ namespace Opiniometro_WebApp.Controllers
             {
                 Ciclos = ObtenerCiclos(""),
                 UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
-                Carreras = ObtenerCarreras(0, 0, ""),
+                Carreras = ObtenerCarreras(0, 0, "", ""),
                 Enfasis = ObtenerEnfasis(0, 0, "", ""),
-                Cursos = ObtenerCursos(0, 0, "", "", null),
+                Cursos = ObtenerCursos(0, 0, "", "", null, "", ""),
                 Grupos = ObtenerGrupos(0, 0, "", "", "", "", 255, "", "" ,""),
                 Formularios = ObtenerFormularios("")
             };
@@ -154,6 +154,8 @@ namespace Opiniometro_WebApp.Controllers
                 from cur in db.Curso
                 join gru in db.Grupo on cur.Sigla equals gru.SiglaCurso
                 join uni in db.Unidad_Academica on cur.CodigoUnidad equals uni.Codigo
+                join car in db.Carrera on uni.Codigo equals car.CodigoUnidadAcademica
+
             select new ElegirGrupoEditorViewModel
             {
                 Seleccionado = false,
@@ -161,13 +163,15 @@ namespace Opiniometro_WebApp.Controllers
                 Numero = gru.Numero,
                 Anno = gru.AnnoGrupo,
                 Semestre = gru.SemestreGrupo,
-                Profesores = gru.Profesor.ToList(),
+                //Profesores = gru.Profesor.ToList(),
                 NombreCurso = gru.Curso.Nombre,
                 NombreUnidadAcademica = gru.Curso.Unidad_Academica.Nombre,
+                CodigoUnidadAcademica = cur.CodigoUnidad,
+                SiglaCarrera = car.Sigla
                 //NombresCarreras =  cur.Enfasis.
             };
 
-            grupos = filtreGrupos(searchString, semestre, codigoUnidadAcad, codigoCarreraa, nombreCurso, grupos);
+            grupos = filtreGrupos(searchString, semestre, codigoUnidadAcadem, siglaCarrera, nombreCurso, grupos);
 
             return grupos;
 
@@ -182,21 +186,21 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="codigoCarrera"> podria contener el nombre de la carrera</param>
         /// <param name="grupos"> lista de grupos que se envia desde el metodo ObtenerGrupos</param>
         /// <returns> los grupos filtrados</returns>
-        public IQueryable<ElegirGrupoEditorViewModel> filtreGrupos(string searchString, byte semestre, string nomUnidadAcad, string nombCarrera, string nombCurso ,IQueryable<ElegirGrupoEditorViewModel> grupos)
+        public IQueryable<ElegirGrupoEditorViewModel> filtreGrupos(string searchString, byte semestre, string CodigoUnidadAcad, string siglaCarrera, string nombCurso ,IQueryable<ElegirGrupoEditorViewModel> grupos)
         {
             if (!String.IsNullOrEmpty(searchString))
             {
                 grupos = grupos.Where(c => c.NombreCurso.Contains(searchString));
             }
 
-            if (!String.IsNullOrEmpty(nomUnidadAcad))
+            if (!String.IsNullOrEmpty(CodigoUnidadAcad))
             {
-                grupos = grupos.Where(c => c.NombreUnidadAcademica.Contains(nomUnidadAcad));
+                grupos = grupos.Where(c => c.CodigoUnidadAcademica.Equals(CodigoUnidadAcad));
             }
 
-            /*if (!String.IsNullOrEmpty(nombCarrera))
+            /*if (!String.IsNullOrEmpty(siglaCarrera))
             {
-                grupos = grupos.Where(c => c.NombreCarrera.Contains(nombCarrera));
+                grupos = grupos.Where(c => c.SiglaCarrera.Equals(siglaCarrera));
             }*/
 
             if (!String.IsNullOrEmpty(nombCurso))

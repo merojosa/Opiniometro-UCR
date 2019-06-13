@@ -19,7 +19,6 @@ namespace Opiniometro_WebApp.Models
         {
             this.Formulario_Respuesta = new HashSet<Formulario_Respuesta>();
             this.Tiene_Grupo_Formulario = new HashSet<Tiene_Grupo_Formulario>();
-            this.Profesor = new HashSet<Profesor>();
         }
     
         public string SiglaCurso { get; set; }
@@ -33,7 +32,5 @@ namespace Opiniometro_WebApp.Models
         public virtual ICollection<Formulario_Respuesta> Formulario_Respuesta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tiene_Grupo_Formulario> Tiene_Grupo_Formulario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profesor> Profesor { get; set; }
     }
 }

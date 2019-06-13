@@ -22,6 +22,8 @@ namespace Opiniometro_WebApp.Models
         // Atributos que no se muestran pero se utilizan para consultar y filtrar
         public string NombreUnidadAcademica { get; set; }
         public IQueryable<string> NombresCarreras { get; set; }
+        public string CodigoUnidadAcademica { get; set; }
+        public string SiglaCarrera { get; set; }
 
         public ElegirGrupoEditorViewModel()
         {

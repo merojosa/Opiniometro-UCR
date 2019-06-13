@@ -23,35 +23,25 @@
 
 
                     <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
-                    @using (Html.BeginForm())
-                    {
-
                     <!-- Buscador -->
                     <p>
+                        <div>
                         <!--Toman el valor del dropdown list seleccionado-->
                         @Html.Hidden("changeUnidad", null)
                         @Html.Hidden("changeCarrera", null)
                         @Html.Hidden("changeCurso", null)
 
-                        <label>Unidad Academica:</label> @Html.DropDownList("unidadAcademica", null, "<Seleccione Unidad Académica>
-                            ",
-                            new { @class = "form-control", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" })
+                        <!--Desplegables para los filtros-->
+                        <label>Unidad Academica:</label> @Html.DropDownList("unidadAcademica", null, "<Seleccione Unidad Académica>", new { @class = "form-control", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" })
+                        <label> Carreras: </label> @Html.DropDownList("nombreCarrera", null, "<Seleccione Carrera>", new { @class = "form-control", @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" })
+                        <label> Cursos: </label> @Html.DropDownList("nombreCurso", null, "<Seleccione Curso>", new { @class = "form-control", })
+                        @* <label> Semestre: </label> @Html.DropDownList("semestre", null, "<Seleccione Semestre>", new { @class = "form-control" })*@
+                        @* <label> Año: </label> @Html.DropDownList("ano", null, "<Seleccione Año> ", new { @class = "form-control" })<br />*@
 
-
-                            <label> Carreras: </label> @Html.DropDownList("nombreCarrera", null, "<Seleccione Carrera>
-                                ", new { @class = "form-control",
-                                @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" })
-
-                                <label> Cursos: </label> @Html.DropDownList("nombreCurso", null, "<Seleccione Curso>
-                                    ", new { @class = "form-control", })
-                                    @* <label> Semestre: </label> @Html.DropDownList("semestre", null, "<Seleccione Semestre>
-                                        ", new { @class = "form-control" })*@
-                                        @* <label> Año: </label> @Html.DropDownList("ano", null, "<Seleccione Año>
-                                            ", new { @class = "form-control" })<br />*@
-                                            @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
-
-                                            <input type="submit" value="Buscar" />
-                </div>
+                        <!--Campo de busqueda-->
+                        @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
+                        <input type="submit" value="Buscar" />
+                        </div>
                 </p>
 
 
@@ -147,15 +137,15 @@
                         <tr>
                             <!-- Nombre de curso -->
                             <td>
-                                @Html.DisplayFor(modelItem => item.nombreCurso)
+                                @Html.DisplayFor(modelItem => item.NombreCurso)
                             </td>
                             <!-- Año -->
                             <td>
-                                <div align='center'>@Html.DisplayFor(modelItem => item.anno) - @Html.DisplayFor(modelItem => item.semestre)</div>
+                                <div align='center'>@Html.DisplayFor(modelItem => item.Anno) - @Html.DisplayFor(modelItem => item.Semestre)</div>
                             </td>
                             <!-- Numero de grupo -->
                             <td>
-                                <div align='center'>@Html.DisplayFor(modelItem => item.numero)</div>
+                                <div align='center'>@Html.DisplayFor(modelItem => item.Numero)</div>
                             </td>
                             <!-- Checkbox para asignar (por el momento no tiene funcionalidad) -->
                             <td>
