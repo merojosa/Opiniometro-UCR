@@ -49,6 +49,9 @@
       <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Moq, Version=4.11.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.11.0\lib\net45\Moq.dll</HintPath>
     </Reference>
@@ -357,7 +360,6 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Models\cs.cshtml" />
     <EntityDeploy Include="Models\Opiniometro_Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Opiniometro_Model.Designer.cs</LastGenOutput>
@@ -365,6 +367,7 @@
     <Content Include="Models\Opiniometro_Model.edmx.diagram">
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Content>
+    <Fakes Include="Fakes\Microsoft.SqlServer.ManagedDTS.fakes" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CollapsibleScript.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -438,7 +441,12 @@
     <Content Include="Views\Categoria\Edit.cshtml" />
     <Content Include="Views\Categoria\Index.cshtml" />
     <Content Include="Views\CrearFormulario\AsignarPreguntas.cshtml" />
-    <Content Include="Views\Auth\Permisos.cshtml" />
+    <Content Include="Views\CrearFormulario\SeccionesAsignadas.cshtml" />
+    <Content Include="Views\CrearFormulario\PreguntasAsignadas.cshtml" />
+    <Content Include="Views\CrearFormulario\preguntasVParcial.cshtml" />
+    <Content Include="Views\CrearFormulario\seccionesVParcial.cshtml" />
+    <Content Include="Views\Item\VistaPrevia.cshtml" />
+    <Content Include="Views\Item\itemVParcial.cshtml" />
     <Content Include="Views\Admin\Editar.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
