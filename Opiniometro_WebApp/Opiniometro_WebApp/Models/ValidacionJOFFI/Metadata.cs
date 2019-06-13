@@ -52,4 +52,14 @@ namespace Opiniometro_WebApp.Models
         [Required(ErrorMessage = "Campo obligatorio: Seleccione el Nombre de la Categoría.")]
         public string NombreCategoria { get; set; }
     }
+
+    public class CrearFormularioMetadata
+    {
+        [Remote("estaNumeroDePreguntaDisponble", "CrearFormulario", ErrorMessage = "Este numero de pregunta ya esta ocupado.")]
+        [Range(1, 1000, ErrorMessage = "Ese numero no es valido. ")]
+        public int Orden_Item { get; set; }
+        public int Orden_Seccion { get; set; }
+    }
+
+    
 }
