@@ -57,8 +57,11 @@ namespace Opiniometro_WebApp.Models
     {
         [Remote("estaNumeroDePreguntaDisponble", "CrearFormulario", ErrorMessage = "Este numero de pregunta ya esta ocupado.")]
         [Range(1, 1000, ErrorMessage = "Ese numero no es valido. ")]
-        public int Orden_Item { get; set; }
-        public int Orden_Seccion { get; set; }
+        public Nullable<int> Orden_Item { get; set; }
+
+        [Remote("estaNumeroDeSeccionDisponble", "CrearFormulario", ErrorMessage = "Este numero de Seccion ya esta ocupado.")]
+        [Range(1, 1000, ErrorMessage = "Ese numero no es valido. ")]
+        public Nullable<int> Orden_Seccion { get; set; }
     }
 
     
