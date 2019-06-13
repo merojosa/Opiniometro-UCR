@@ -10,117 +10,107 @@ using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
 {
-    public class SeccionController : Controller
+    public class CategoriaController : Controller
     {
-        private Opiniometro_DatosEntities db;
+        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
-        public SeccionController()
-        {
-            db = new Opiniometro_DatosEntities();
-        }
-
-        public SeccionController(Opiniometro_DatosEntities db)
-        {
-            this.db = db;
-        }
-
-        // GET: Seccion
+        // GET: Categoria
         public ActionResult Index()
         {
-            return View("Index",db.Seccion.ToList());
+            return View(db.Categoria.ToList());
         }
 
-        // GET: Seccion/Details/5
+        // GET: Categoria/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Seccion seccion = db.Seccion.Find(id);
-            if (seccion == null)
+            Categoria categoria = db.Categoria.Find(id);
+            if (categoria == null)
             {
                 return HttpNotFound();
             }
-            return View("Details",seccion);
+            return View(categoria);
         }
 
-        // GET: Seccion/Create
+        // GET: Categoria/Create
         public ActionResult Create()
         {
-            return View("Create");
+            return View();
         }
 
-        // POST: Seccion/Create
+        // POST: Categoria/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Titulo,Descripcion")] Seccion seccion)
+        public ActionResult Create([Bind(Include = "NombreCategoria")] Categoria categoria)
         {
             if (ModelState.IsValid)
             {
-                db.Seccion.Add(seccion);
+                db.Categoria.Add(categoria);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View("Create",seccion);
+            return View(categoria);
         }
 
-        // GET: Seccion/Edit/5
+        // GET: Categoria/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Seccion seccion = db.Seccion.Find(id);
-            if (seccion == null)
+            Categoria categoria = db.Categoria.Find(id);
+            if (categoria == null)
             {
                 return HttpNotFound();
             }
-            return View("Edit",seccion);
+            return View(categoria);
         }
 
-        // POST: Seccion/Edit/5
+        // POST: Categoria/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Titulo,Descripcion")] Seccion seccion)
+        public ActionResult Edit([Bind(Include = "NombreCategoria")] Categoria categoria)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(seccion).State = EntityState.Modified;
+                db.Entry(categoria).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(seccion);
+            return View(categoria);
         }
 
-        // GET: Seccion/Delete/5
+        // GET: Categoria/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Seccion seccion = db.Seccion.Find(id);
-            if (seccion == null)
+            Categoria categoria = db.Categoria.Find(id);
+            if (categoria == null)
             {
                 return HttpNotFound();
             }
-            return View(seccion);
+            return View(categoria);
         }
 
-        // POST: Seccion/Delete/5
+        // POST: Categoria/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Seccion seccion = db.Seccion.Find(id);
-            db.Seccion.Remove(seccion);
+            Categoria categoria = db.Categoria.Find(id);
+            db.Categoria.Remove(categoria);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
