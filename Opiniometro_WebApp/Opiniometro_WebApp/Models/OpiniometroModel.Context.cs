@@ -27,15 +27,12 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Administrativo> Administrativo { get; set; }
-        public virtual DbSet<Canton> Canton { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
         public virtual DbSet<Ciclo_Lectivo> Ciclo_Lectivo { get; set; }
         public virtual DbSet<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
         public virtual DbSet<Curso> Curso { get; set; }
-        public virtual DbSet<Distrito> Distrito { get; set; }
         public virtual DbSet<Empadronado> Empadronado { get; set; }
         public virtual DbSet<Enfasis> Enfasis { get; set; }
         public virtual DbSet<Estudiante> Estudiante { get; set; }
@@ -53,7 +50,6 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<Posee_Enfasis_Perfil_Permiso> Posee_Enfasis_Perfil_Permiso { get; set; }
         public virtual DbSet<Profesor> Profesor { get; set; }
-        public virtual DbSet<Provincia> Provincia { get; set; }
         public virtual DbSet<Responde> Responde { get; set; }
         public virtual DbSet<Seccion> Seccion { get; set; }
         public virtual DbSet<Seleccion_Unica> Seleccion_Unica { get; set; }
@@ -105,19 +101,15 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerPerfilUsuario", correoParameter);
         }
     
-        public virtual int SP_AgregarPersonaUsuario(string cedula, string nombre1, string nombre2, string apellido1, string apellido2, string correo, string direccion)
+        public virtual int SP_AgregarPersonaUsuario(string cedula, string nombre, string apellido1, string apellido2, string correo, string direccion)
         {
             var cedulaParameter = cedula != null ?
                 new ObjectParameter("Cedula", cedula) :
                 new ObjectParameter("Cedula", typeof(string));
     
-            var nombre1Parameter = nombre1 != null ?
-                new ObjectParameter("Nombre1", nombre1) :
-                new ObjectParameter("Nombre1", typeof(string));
-    
-            var nombre2Parameter = nombre2 != null ?
-                new ObjectParameter("Nombre2", nombre2) :
-                new ObjectParameter("Nombre2", typeof(string));
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
     
             var apellido1Parameter = apellido1 != null ?
                 new ObjectParameter("Apellido1", apellido1) :
@@ -135,7 +127,7 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Direccion", direccion) :
                 new ObjectParameter("Direccion", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AgregarPersonaUsuario", cedulaParameter, nombre1Parameter, nombre2Parameter, apellido1Parameter, apellido2Parameter, correoParameter, direccionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AgregarPersonaUsuario", cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, correoParameter, direccionParameter);
         }
     
         public virtual int SP_AgregarUsuario(string correo, string contrasenna, string cedula)
@@ -247,29 +239,6 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ExistenciaCorreo", correoParameter, resultado);
         }
     
-        public virtual int SP_GenerarContrasena(ObjectParameter resultado)
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_GenerarContrasena", resultado);
-        }
-    
-        public virtual int SP_GenerarContrasenaHash(Nullable<System.Guid> id, string contrasena, ObjectParameter contrasenaHash)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(System.Guid));
-    
-            var contrasenaParameter = contrasena != null ?
-                new ObjectParameter("contrasena", contrasena) :
-                new ObjectParameter("contrasena", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_GenerarContrasenaHash", idParameter, contrasenaParameter, contrasenaHash);
-        }
-    
-        public virtual int SP_GenerarIdUnico(ObjectParameter id)
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_GenerarIdUnico", id);
-        }
-    
         public virtual int SP_LoginUsuario(string correo, string contrasenna, ObjectParameter resultado)
         {
             var correoParameter = correo != null ?
@@ -283,7 +252,7 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_LoginUsuario", correoParameter, contrasennaParameter, resultado);
         }
     
-        public virtual int SP_ModificarPersona(string cedulaBusqueda, string cedula, string nombre1, string nombre2, string apellido1, string apellido2, string direccionDetallada)
+        public virtual int SP_ModificarPersona(string cedulaBusqueda, string cedula, string nombre, string apellido1, string apellido2, string direccion)
         {
             var cedulaBusquedaParameter = cedulaBusqueda != null ?
                 new ObjectParameter("CedulaBusqueda", cedulaBusqueda) :
@@ -293,13 +262,9 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Cedula", cedula) :
                 new ObjectParameter("Cedula", typeof(string));
     
-            var nombre1Parameter = nombre1 != null ?
-                new ObjectParameter("Nombre1", nombre1) :
-                new ObjectParameter("Nombre1", typeof(string));
-    
-            var nombre2Parameter = nombre2 != null ?
-                new ObjectParameter("Nombre2", nombre2) :
-                new ObjectParameter("Nombre2", typeof(string));
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
     
             var apellido1Parameter = apellido1 != null ?
                 new ObjectParameter("Apellido1", apellido1) :
@@ -309,11 +274,11 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Apellido2", apellido2) :
                 new ObjectParameter("Apellido2", typeof(string));
     
-            var direccionDetalladaParameter = direccionDetallada != null ?
-                new ObjectParameter("DireccionDetallada", direccionDetallada) :
-                new ObjectParameter("DireccionDetallada", typeof(string));
+            var direccionParameter = direccion != null ?
+                new ObjectParameter("Direccion", direccion) :
+                new ObjectParameter("Direccion", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombre1Parameter, nombre2Parameter, apellido1Parameter, apellido2Parameter, direccionDetalladaParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, direccionParameter);
         }
     
         public virtual ObjectResult<SP_ObtenerPermisosUsuario_Result> SP_ObtenerPermisosUsuario(string correo, string perfil)

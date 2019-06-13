@@ -1,0 +1,29 @@
+﻿@model List<Opiniometro_WebApp.Models.Seccion>
+
+<table class="table table-bordered">
+    <tr>
+        <td>
+            @Html.Label("Titulo")
+        </td>
+        <td>
+            @Html.Label("Descripción")
+        </td>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            <input type="checkbox" class="chcktbl" />
+        </td>
+    </tr>
+    }
+
+</table>
