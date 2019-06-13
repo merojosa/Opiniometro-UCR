@@ -109,14 +109,15 @@ GO
 CREATE PROCEDURE SP_ModificarPersona
 	@CedulaBusqueda		VARCHAR(9),
 	@Cedula				CHAR(9),
-	@Nombre				NVARCHAR(50),
+	@Nombre1			NVARCHAR(50),
+	@Nombre2			NVARCHAR(50),
 	@Apellido1			NVARCHAR(50),
 	@Apellido2			NVARCHAR(50),
-	@Direccion			NVARCHAR(256)
+	@DireccionDetallada	NVARCHAR(256)
 AS
 BEGIN
 	UPDATE Persona
-	SET Cedula = @Cedula, Nombre = @Nombre, Apellido1 = @Apellido1, Apellido2 = @Apellido2, Direccion = @Direccion
+	SET Cedula = @Cedula, Nombre1 = @Nombre1, Nombre2 = @Nombre2, Apellido1 = @Apellido1, Apellido2 = @Apellido2, DireccionDetallada = @DireccionDetallada
 	WHERE Cedula = @CedulaBusqueda;
 END
 GO
@@ -134,7 +135,7 @@ AS
 	WHERE TU.CorreoInstitucional=@Correo AND TU.IdPerfil = @Perfil
 GO
 
-EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
+EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre1='Barry2', @Nombre2='', @Apellido1='Allen2', @Apellido2='Garcia2', @DireccionDetallada='Central City2';
 
 IF OBJECT_ID('ValorRandom') IS NOT NULL
 	DROP VIEW ValorRandom
@@ -171,7 +172,8 @@ IF OBJECT_ID('SP_AgregarPersonaUsuario') IS NOT NULL
 GO
 CREATE PROCEDURE SP_AgregarPersonaUsuario
 	@Cedula			CHAR(9),
-	@Nombre			NVARCHAR(50),
+	@Nombre1		NVARCHAR(50),
+	@Nombre2		NVARCHAR(50),
 	@Apellido1		NVARCHAR(50),
 	@Apellido2		NVARCHAR(50),
 	@Correo			NVARCHAR(50),
@@ -183,7 +185,7 @@ BEGIN
 	DECLARE @Contrasenna NVARCHAR(10)
 
 	INSERT INTO Persona
-	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2, @Direccion)
+	VALUES (@Cedula, @Nombre1, @Nombre2, @Apellido1, @Apellido2, @Direccion)
 	SET @Contrasenna = (SELECT dbo.SF_GenerarContrasena());
 	INSERT INTO Usuario
 	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
@@ -227,7 +229,7 @@ GO
 --Pantalla 1, Home
 CREATE PROCEDURE MostrarEstudiantes
 AS 
-	SELECT Nombre, Apellido1, Apellido2, Carne
+	SELECT Nombre1, Apellido1, Apellido2, Carne
 	FROM Persona P JOIN Estudiante E ON P.Cedula = E.CedulaEstudiante;
 GO
 
@@ -236,7 +238,7 @@ GO
 CREATE PROCEDURE NombrePersona 
 @Cedula VARCHAR(9)
 AS
-	SELECT Nombre
+	SELECT Nombre1
 	FROM Persona
 	WHERE Cedula = @Cedula;
 
@@ -245,7 +247,7 @@ GO
 CREATE PROCEDURE DatosEstudiante
 @Cedula VARCHAR(9)
 AS
-	SELECT CONCAT(Nombre, ' ' ,Apellido1, ' ', Apellido2) as 'Nombre Completo', Carne, Cedula
+	SELECT CONCAT(Nombre1, ' ' ,Apellido1, ' ', Apellido2) as 'Nombre Completo', Carne, Cedula
 	FROM Persona P JOIN Estudiante E ON P.Cedula = E.CedulaEstudiante
 	WHERE Cedula = @Cedula;
 GO
@@ -253,20 +255,20 @@ GO
 --Inserciones
 
 INSERT INTO Persona
-VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajuela.'),
-		('115003456', 'Daniel', 'Escalante', 'Perez', 'Desamparados de San José.'),
-		('117720910', 'Jose Andrés', 'Mejías', 'Rojas', 'La Fortuna de San Carlos.'),
-		('236724507', 'Jose Andrés', 'Mejías', 'Rojas', 'Sarchí, Alajuela.'),
+VALUES	('116720500', 'Jose Andrés', NULL,'Mejías', 'Rojas', 'Desamparados de Alajuela.'),
+		('115003456', 'Daniel', NULL, 'Escalante', 'Perez', 'Desamparados de San José.'),
+		('117720910', 'Jose Andrés', NULL, 'Mejías', 'Rojas', 'La Fortuna de San Carlos.'),
+		('236724507', 'Jose Andrés', NULL, 'Mejías', 'Rojas', 'Sarchí, Alajuela.'),
 		--Agregado de datos para visualizacion a cargo de CX Solutions
-		('100000001', 'CX', 'Solutions', 'S.A.', 'San Pedro Montes de Oca'),
-		('100000002', 'Marta', 'Rojas', 'Sanches', '300 metros norte de Pulmitan'),--Profesora
+		('100000001', 'CX', NULL, 'Solutions', 'S.A.', 'San Pedro Montes de Oca'),
+		('100000002', 'Marta', NULL, 'Rojas', 'Sanches', '300 metros norte de Pulmitan'),--Profesora
 		--Estudiantes
-		('100000003', 'Juan', 'Briceño', 'Lupon', '400 metros norte del Heraldo de la Grieta'),
-		('100000005', 'Pepito', 'Fonsi', 'Monge', '20 metros norte del Blue del lado Rojo'),
-		('100000004', 'Maria', 'Fallas', 'Merdi', 'Costado este del estandarte de top'),
-		('117720912', 'Jorge', 'Solano', 'Carrillo', 'La Fortuna de San Carlos.'),
-		('236724501', 'Carolina', 'Gutierrez', 'Lozano', 'Sarchí, Alajuela.'),
-		('123456789', 'Ortencia', 'Cañas', 'Griezman', 'San Pedro de Montes de Oca');
+		('100000003', 'Juan', NULL, 'Briceño', 'Lupon', '400 metros norte del Heraldo de la Grieta'),
+		('100000005', 'Pepito', NULL, 'Fonsi', 'Monge', '20 metros norte del Blue del lado Rojo'),
+		('100000004', 'Maria', NULL, 'Fallas', 'Merdi', 'Costado este del estandarte de top'),
+		('117720912', 'Jorge', NULL, 'Solano', 'Carrillo', 'La Fortuna de San Carlos.'),
+		('236724501', 'Carolina', NULL, 'Gutierrez', 'Lozano', 'Sarchí, Alajuela.'),
+		('123456789', 'Ortencia', NULL, 'Cañas', 'Griezman', 'San Pedro de Montes de Oca');
 
 INSERT INTO Estudiante VALUES 
  ('116720500', 'B11111')
