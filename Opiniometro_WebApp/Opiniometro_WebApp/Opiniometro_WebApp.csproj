@@ -185,8 +185,6 @@
     <Compile Include="Controllers\RespondeController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\SeleccionFormulariosController.cs" />
-    <Compile Include="Controllers\Seleccion_UnicaController.cs" />
-    <Compile Include="Controllers\Texto_LibreController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

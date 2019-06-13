@@ -9,7 +9,7 @@ namespace Opiniometro_WebApp.Controllers
 {
     public class SeleccionFormulariosController : Controller
     {
-        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        //private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
         /*
         // GET: SeleccionFormularios
         public ActionResult SeleccionFormularios()
