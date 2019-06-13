@@ -245,10 +245,11 @@
             <PropertyRef Name="Cedula" />
           </Key>
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre2" Type="nvarchar" MaxLength="50" />
           <Property Name="Apellido1" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Apellido2" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Direccion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="DireccionDetallada" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="Posee_Enfasis_Perfil_Permiso">
           <Key>
@@ -967,10 +968,10 @@
         <Function Name="ObtenerPerfilUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correo" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="SF_GenerarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
         <Function Name="SP_AgregarPersonaUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="char" Mode="In" />
-          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Nombre1" Type="nvarchar" Mode="In" />
+          <Parameter Name="Nombre2" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido2" Type="nvarchar" Mode="In" />
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
@@ -1028,10 +1029,11 @@
         <Function Name="SP_ModificarPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CedulaBusqueda" Type="varchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
-          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Nombre1" Type="nvarchar" Mode="In" />
+          <Parameter Name="Nombre2" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido2" Type="nvarchar" Mode="In" />
-          <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
+          <Parameter Name="DireccionDetallada" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SP_ObtenerPermisosUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
@@ -1528,10 +1530,11 @@
             <PropertyRef Name="Cedula" />
           </Key>
           <Property Name="Cedula" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombre1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombre2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Apellido1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Apellido2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DireccionDetallada" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Administrativo" Relationship="Self.FK_Adm_Per" FromRole="Persona" ToRole="Administrativo" />
           <NavigationProperty Name="Estudiante" Relationship="Self.FK_Est_Per" FromRole="Persona" ToRole="Estudiante" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Per" FromRole="Persona" ToRole="Formulario_Respuesta" />
@@ -2411,7 +2414,8 @@
           </FunctionImport>
           <FunctionImport Name="SP_AgregarPersonaUsuario">
             <Parameter Name="Cedula" Mode="In" Type="String" />
-            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Nombre1" Mode="In" Type="String" />
+            <Parameter Name="Nombre2" Mode="In" Type="String" />
             <Parameter Name="Apellido1" Mode="In" Type="String" />
             <Parameter Name="Apellido2" Mode="In" Type="String" />
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -2469,10 +2473,11 @@
           <FunctionImport Name="SP_ModificarPersona">
             <Parameter Name="CedulaBusqueda" Mode="In" Type="String" />
             <Parameter Name="Cedula" Mode="In" Type="String" />
-            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Nombre1" Mode="In" Type="String" />
+            <Parameter Name="Nombre2" Mode="In" Type="String" />
             <Parameter Name="Apellido1" Mode="In" Type="String" />
             <Parameter Name="Apellido2" Mode="In" Type="String" />
-            <Parameter Name="Direccion" Mode="In" Type="String" />
+            <Parameter Name="DireccionDetallada" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(Opiniometro_DatosModel.SP_ObtenerPermisosUsuario_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -2485,7 +2490,7 @@
           <Property Type="String" Name="Cedula" Nullable="false" MaxLength="9" />
         </ComplexType>
         <ComplexType Name="MostrarEstudiantes_Result">
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Nombre1" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Apellido1" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Apellido2" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Carne" Nullable="false" MaxLength="6" />
@@ -2714,10 +2719,11 @@
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Persona">
               <MappingFragment StoreEntitySet="Persona">
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
+                <ScalarProperty Name="Nombre2" ColumnName="Nombre2" />
                 <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
                 <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="DireccionDetallada" ColumnName="DireccionDetallada" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2876,7 +2882,7 @@
           <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_DatosModel.Store.MostrarEstudiantes">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Opiniometro_DatosModel.MostrarEstudiantes_Result">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
                 <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
                 <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
                 <ScalarProperty Name="Carne" ColumnName="Carne" />

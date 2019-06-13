@@ -80,7 +80,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 using (db)
                 {
-                    db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre, per.Persona.Apellido1, per.Persona.Apellido2, per.Persona.Direccion);
+                    db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre1, "",per.Persona.Apellido1, per.Persona.Apellido2, per.Persona.DireccionDetallada);
                     return RedirectToAction("VerPersonas");
                 }
             }
