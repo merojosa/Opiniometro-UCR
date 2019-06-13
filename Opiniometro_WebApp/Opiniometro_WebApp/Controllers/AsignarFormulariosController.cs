@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
+using System.Diagnostics;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -23,23 +24,24 @@ namespace Opiniometro_WebApp.Controllers
                 Carreras = ObtenerCarreras(0, 0, ""),
                 //Enfasis = ObtenerEnfasis(0, 0, "", ""),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
-                Grupos = ObtenerGrupos(0, 0, "", "", "", "", 255, "", "" ,""),
-                Formularios = ObtenerFormularios("")
+                Grupos = ObtenerGrupos(0, 0, "", "", "", "", 255, "", "", ""),
+                Formularios = ObtenerFormularios()
             };
 
-            return View(modelo);
+            return View("Index", modelo);
         }
 
         [HttpPost]
-        public ActionResult Index(string unidadAcademica, string nombreCarrera, string nombreCurso, string searchString, string formSearchString)
+        public ActionResult Index(string unidadAcademica, string nombreCarrera, string nombreCurso, string searchString)
         {
             var modelo = new AsignarFormulariosViewModel
             {
                 UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
                 Carreras = ObtenerCarreras(0, 0, ""),
-                Grupos = ObtenerGrupos(0, 0, "", unidadAcademica, "", nombreCarrera, 255, "",nombreCurso, searchString),
+                Grupos = ObtenerGrupos(0, 0, "", unidadAcademica, "", nombreCarrera, 255, "", nombreCurso, searchString),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
-                Formularios = ObtenerFormularios(formSearchString)
+                Formularios = ObtenerFormularios()
+
             };
             return View(modelo);
         }
@@ -81,7 +83,7 @@ namespace Opiniometro_WebApp.Controllers
         {
             IQueryable<Ciclo_Lectivo> ciclo = (from c in db.Ciclo_Lectivo select c);
             //ViewBag.semestre = new SelectList(ciclo, "Semestre", "Semestre");
-           // ViewBag.ano = new SelectList(ciclo, "Anno", "Anno");
+            // ViewBag.ano = new SelectList(ciclo, "Anno", "Anno");
             return ciclo;
         }
 
@@ -94,9 +96,10 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // Para el filtro por carreras
-        public IQueryable<Carrera> ObtenerCarreras(short anno, byte semestre, String codigoUnidadAcadem){
-                    
-            IQueryable < Carrera > nombreCarrera = from car in db.Carrera select car;
+        public IQueryable<Carrera> ObtenerCarreras(short anno, byte semestre, String codigoUnidadAcadem)
+        {
+
+            IQueryable<Carrera> nombreCarrera = from car in db.Carrera select car;
 
             if (!String.IsNullOrEmpty(codigoUnidadAcadem))
             {
@@ -221,6 +224,18 @@ namespace Opiniometro_WebApp.Controllers
                 };
 
             return formularios.ToList();
+        }
+
+        public ActionResult SeleccionFormularios(string formulario)
+        {
+            IQueryable<Formulario> form = from f in db.Formulario select f;
+
+            if (!String.IsNullOrEmpty(formulario))
+            {
+                form = form.Where(f => f.Nombre.Contains(formulario));
+            }
+
+            return PartialView("SeleccionFormularios", form);
         }
     }
 }
