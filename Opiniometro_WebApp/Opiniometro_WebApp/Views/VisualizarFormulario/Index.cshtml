@@ -11,30 +11,30 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.Hidden("selectcurso", null)
                     <label>Curso&nbsp;</label> @Html.DropDownList("CursoID", null, "<Seleccione Curso>", new { @class = "form-control", @onChange = "document.getElementById('selectcurso').value = this.value; this.form.submit();" })
                 </th>
                 <th>
-                    @Html.Hidden("selectsemestre", null)
-                    @Html.Hidden("selectanno", null)
                     <label>Ciclo&nbsp;</label>@Html.DropDownList("SemestreId", null, "<Seleccione el Semestre>", htmlAttributes: new { @class = "form-control", @onChange = "document.getElementsByName('selectsemestre').value = this.value; this.form.submit();" })
                     <label>&nbsp;</label>@Html.DropDownList("AnnoId", null, "<Seleccione Año>", htmlAttributes: new { @class = "form-control", @onChange = "document.getElementsByName('selectanno').value = this.value; this.form.submit();" })
                 </th>
                 <th>
-                    @Html.Hidden("selecgrupo", null)
                     <label>Grupo&nbsp;</label>@Html.DropDownList("GrupoID", null, "<Seleccione Grupo>", htmlAttributes: new { @class = "form-control", @onChange = "document.getElementsByName('selecgrupo').value = this.value; this.form.submit();" })
                 </th>
-                <th>
-                    <label>&nbsp;</label><br />
-                    @using (Html.BeginForm())
-                    {
+                @using (Html.BeginForm())
+                {
+                    @Html.Hidden("selectcurso", null)
+                    @Html.Hidden("selectsemestre", null)
+                    @Html.Hidden("selectanno", null)
+                    @Html.Hidden("selecgrupo", null)
+                    <th>
+                        <label>&nbsp;</label><br />
                         <input type="submit" value="Filtrar" class="btn btn-default" />
-                    }
-                </th>
-            </tr>
+                    </th>
+                }
+            </tr>            
         </table>
     </div>
- </div>
+</div>
 
 <br />
 
@@ -55,8 +55,9 @@
                 formulario_actual = item.CodigoFormulario;
 
                 if (formularios.Contains(formulario_actual))
-                    { formulario_repetido = true; }
-                else {
+                { formulario_repetido = true; }
+                else
+                {
                     formularios.Add(formulario_actual);
                     formulario_repetido = false;
                 }

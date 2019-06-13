@@ -22,7 +22,7 @@ namespace Opiniometro_WebApp.Controllers
             ViewBag.SemestreId = new SelectList(semestres);
             var annos = (from ann in db.Ciclo_Lectivo select ann.Anno).AsEnumerable().Distinct();
             ViewBag.AnnoId = new SelectList(annos);
-
+            
             var grupos = (from grup in db.Grupo select grup.Numero).AsEnumerable().Distinct();
             ViewBag.GrupoID = new SelectList(grupos);
 
@@ -31,7 +31,7 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(String selectcurso, String selectsemestre, String selectanno, String selecgrupo)
+        public ActionResult Index(int? x)
         {
             ViewBag.CursoID = new SelectList(db.Curso, "Sigla", "Nombre");
             var semestres = (from sem in db.Ciclo_Lectivo select sem.Semestre).AsEnumerable().Distinct();
@@ -43,6 +43,10 @@ namespace Opiniometro_WebApp.Controllers
 
             IQueryable<Formulario> formulariosO = from form in db.Formulario select form;
 
+            String selectcurso = Request.Form["selectcurso"];
+            String selectsemestre = Request.Form["selectsemestre"];
+            String selectanno = Request.Form["selectanno"];
+            String selecgrupo = Request.Form["selecgrupo"];
             if (!String.IsNullOrEmpty(selectsemestre) || !String.IsNullOrEmpty(selectcurso) || !String.IsNullOrEmpty(selectanno) || !String.IsNullOrEmpty(selecgrupo))
             {
                 IQueryable<Responde> formularios = from form in db.Responde select form;
@@ -90,6 +94,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(formulario);
         }
 
