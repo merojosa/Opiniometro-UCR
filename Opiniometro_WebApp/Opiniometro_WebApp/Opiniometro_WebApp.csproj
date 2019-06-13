@@ -348,6 +348,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\firma-ucr-c.svg" />
+    <Content Include="Content\img\minus.png" />
+    <Content Include="Content\img\plus.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\scrollbar-tabla.css" />
     <Content Include="favicon.ico" />
@@ -447,6 +449,7 @@
     <Content Include="Views\CrearFormulario\seccionesVParcial.cshtml" />
     <Content Include="Views\Item\VistaPrevia.cshtml" />
     <Content Include="Views\Item\itemVParcial.cshtml" />
+    <Content Include="Views\CrearFormulario\ConformadoVParcial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

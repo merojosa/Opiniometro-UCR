@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Conformado_Item_Sec_Form>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NombreFormulario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Orden_Item)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Orden_Seccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Formulario.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Item.TextoPregunta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Seccion.Descripcion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NombreFormulario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Orden_Item)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Orden_Seccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Formulario.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Item.TextoPregunta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Seccion.Descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

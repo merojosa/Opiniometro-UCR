@@ -14,6 +14,7 @@ namespace Opiniometro_WebApp.Controllers
     {
         private Opiniometro_DatosEntities db;
 
+        // GET: Categoria
         public CategoriaController()
         {
             db = new Opiniometro_DatosEntities();
@@ -23,8 +24,6 @@ namespace Opiniometro_WebApp.Controllers
         {
             this.db = db;
         }
-
-        // GET: Categoria
         public ActionResult Index()
         {
             return View("Index", db.Categoria.ToList());
