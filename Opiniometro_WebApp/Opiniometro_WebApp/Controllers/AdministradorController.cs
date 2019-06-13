@@ -164,7 +164,8 @@ namespace Opiniometro_WebApp.Controllers
                     nuevoUsuario["cedula"] = filasValidas.Rows[indexFilasValidas]["cedula"];
                     //nuevoUsuario["id"]
                 }
-                
+                return 1;//}por modificar
+
             }
             
             using (SqlConnection conexionBD = new SqlConnection(hileraConexion))
