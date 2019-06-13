@@ -51,15 +51,15 @@
                 }
             </td>
 
+            <td style="text-align:center"> <img src="~/Content/img/plus.png" identificador="@item.ItemId" /> </td>
 
-
-            <td>
+            @*<td>*@
                 @* @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }) |*@
-                <button class="btn btn-primary" identificador="@item.ItemId">Vista Previa</button>
+                
 
-                |@Html.ActionLink("Vista Previa", "VistaPrevia", new { id = item.ItemId })
+                @*|@Html.ActionLink("Vista Previa", "VistaPrevia", new { id = item.ItemId })*@
                 @* @Html.ActionLink("Delete", "Delete", new { id = item.ItemId })*@
-            </td>
+            @*</td>*@
 
         </tr>
         <tr id="detalle-@item.ItemId" style="display:none">
@@ -77,13 +77,15 @@
 @section scripts{
     <script type="text/javascript">
         $(function () {
-            $("#vistaitem tr button").click(function () {
+            $("#vistaitem tr img").click(function () {
                 var identificador = $(this).attr("identificador");
                 var detalle = $("#detalle-" + identificador);
                 if (detalle.css("display") == "none") {
                     detalle.css("display", "table-row");
+                    $(this).attr("src", "@Url.Content("~/Content/img/minus.png")");
                 } else {
                     detalle.css("display", "none");
+                    $(this).attr("src", "@Url.Content("~/Content/img/plus.png")");
                 }
             });
         });
