@@ -7,7 +7,7 @@
 @Styles.Render("~/Content/scrollbar-tabla.css")
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-@*<script>
+<script>
 
 
 
@@ -20,16 +20,16 @@
                 data: { //Passing data
                       codigoFormulario:  @Html.Raw(Json.Encode(Model.Formulario.CodigoFormulario))
                     },
-                    success(function(data) {
-                        $('#ConformadosID').html(result);
-                    }),
+                    //success(function(data) {
+                    //    $('#ConformadosID').html(result);
+                    //})
 
             });
 
         });
     });
 
-</script>*@
+</script>
 
 <div id="content">
     <div class="row">
