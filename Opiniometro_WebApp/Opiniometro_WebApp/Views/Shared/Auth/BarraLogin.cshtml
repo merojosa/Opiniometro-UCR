@@ -1,7 +1,7 @@
-﻿<nav class="navbar navbar-principal navbar-fixed-top" style="z-index:1">
+﻿<nav class="navbar navbar-principal navbar-fixed-top" style="z-index:999">
     <div class="container-fluid">
         <div class="navbar-header">
-            <div style="height:105px; width: 570px; margin-left:100px ;overflow: hidden" text-align="center">
+            <div style="height:105px; width: 570px; margin-left:80px ;overflow: hidden" text-align="center">
                 <a class="navbar-brand-barra-login" href="/">
                     <img src="~/Content/firma-ucr-c.svg" width="1100">
                 </a>
@@ -10,9 +10,11 @@
     </div>
 </nav>
 
+<br /><br /><br />
+
 @if (ViewBag.Title != "Recuperar contraseña" && ViewBag.Title != "Inicio de sesión")
 {
     // Si es otra pantalla que no sea recuperar contrasenna o inicio de sesion, se agregan dos espacios
     // ya que esta la barra gris.
-    <br /> <br /> <br /> <br />
+    <br /><br /><br />
 }
