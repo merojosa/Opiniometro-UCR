@@ -8,9 +8,9 @@
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <style>
         #contenedorGrafo{
-            width: 400px;
-            height: 400px;
-            border: 1px solid #ddd;
+            width: 450px;
+            height: 500px;
+            border: 0px solid #ddd;
             padding: 1px;
             border-radius: 4px;
         }
@@ -118,6 +118,7 @@
                                                 {
                                                     <p>Resultados</p> @*Aqui se ingresa el grafico y desde aqui se mostrarian las observaciones posteriormente, acordarse de ponder una condicion si el tipo de pregunta posee grafico o no*@
                                                     //<p>@("graficarResultados('@seccion.Item.ItemId')")</p>
+                                                    <p id="info_@item_actual" style="float:right"></p>
                                                     <div id="contenedorGrafo">
                                                         <canvas id="pie_chart_@item_actual"></canvas>
                                                     </div>
@@ -132,10 +133,17 @@
                                                                 var aData = chData;
                                                                 var aLabels = aData[0];
                                                                 var aDatasets1 = aData[1];
+                                                                var tamanio = 0;
+                                                                for (var size in aLabels)
+                                                                    tamanio++;
+                                                                for (var i = 0; i < tamanio; i++)
+                                                                    document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + aLabels[i];
+                                                                @*var iter = aLabels;
+                                                                <p>@seccion.Item.ItemId</p>*@
                                                                 var dataT = {
                                                                     labels: aLabels,
                                                                     datasets: [{
-                                                                        label: "Prueba",
+                                                                    label: "Prueba",
                                                                         data: aDatasets1,
                                                                         fill: false,
                                                                         backgroundColor: [
@@ -164,8 +172,8 @@
                                                                     options: {
                                                                         responsive: true,
                                                                         maintainAspectRatio: false,
-                                                                        scales: { xAxes: [{ ticks: { beginAtZero: true } }] },
-                                                                        legend: { display: false },
+                                                                        scales: { xaxes: [{ ticks: { beginAtZero: true } }] },
+                                                                        legend: { display: true },
                                                                     },
                                                                 })
                                                             }
@@ -185,7 +193,7 @@
                                                         }
                                                     </div>
                                                 }
-
+                                                <br />
                                                 <div class="panel-group" id="accordion3_@seccion_counter">
 
                                                     @if (seccion.Item.TieneObservacion == observation)

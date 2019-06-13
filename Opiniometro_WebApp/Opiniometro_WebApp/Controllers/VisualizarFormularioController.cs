@@ -142,7 +142,7 @@ namespace Opiniometro_WebApp.Controllers
         public JsonResult GraficoPie(string itemId)
         {
             var result = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", itemId).ToList();//ObtenerCantidadRespuestasPorPregunta  "PRE303"
-            int tamanio = result.Count;
+            //int tamanio = result.Count;
             List<object> x = new List<object>();
             List<object> y = new List<object>();
             //string[] leyenda = new string[tamanio];
@@ -157,18 +157,6 @@ namespace Opiniometro_WebApp.Controllers
                 y.Add(itemR.cntResp);
             }
             List<object> lista = new List<object> { x, y };
-            //string myGraf =
-            //    @"<Chart BackColor=""Transparent"" >
-            //                    <ChartAreas>
-            //                        <ChartArea Name=""Default"" BackColor=""Transparent""></ChartArea>
-            //                    </ChartAreas>
-            //                </Chart>";
-            //new Chart(width: 350, height: 350, theme: myGraf)
-            //    .AddSeries(
-            //        chartType: "pie",
-            //        xValue: leyenda,
-            //        yValues: cntResps)
-            //    .Write("png");
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
     }
