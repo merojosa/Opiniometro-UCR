@@ -34,9 +34,6 @@ namespace Opiniometro_WebApp.Controllers
             return View();
         }
 
-
-
-
         [HttpGet]
         public ActionResult CargarArchivo()
         {
@@ -75,6 +72,9 @@ namespace Opiniometro_WebApp.Controllers
 
                 postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
                 ViewBag.Message = "File uploaded successfully.";
+                DataTable filasInvalidas = ProcesarArchivo(path + Path.GetFileName(postedFile.FileName));
+
+                
             }
 
             return View();
@@ -88,7 +88,7 @@ namespace Opiniometro_WebApp.Controllers
             DataTable filasInvalidas = crearTablaUsuariosInvalidos();
             string filaLeida = String.Empty;
             DataRow tupla;
-            long numeroFilasLeidas = 0;
+            int numeroFilasLeidas = 0;
             using (StreamReader streamCsv = new StreamReader(path))
             {
                 while ((filaLeida = streamCsv.ReadLine()) != null)
@@ -116,9 +116,38 @@ namespace Opiniometro_WebApp.Controllers
                 }
                 //fin de chequeos de formato
             }
-            //chequeos de contenido
-            verificacionContenidoTuplasValidas(filasValidas, filasInvalidas, numeroFilasLeidas);
+
+            //verificacionContenidoTuplasValidas(filasValidas, filasInvalidas, numeroFilasLeidas);
             filasValidas.AcceptChanges();
+
+            //Tablas en memoria con que poseen el mismo esquema que las tablas en la base de datos.
+            DataTable personaBD = crearTablaPersonaBD();
+            DataTable usuarioBD = crearTablaUsuarioBD();
+            
+            //Multicast
+            multicastDatosProvisionados(filasValidas, personaBD, usuarioBD);
+            filasValidas.Dispose();
+
+            if (personaBD.Rows.Count > 0)
+            {
+                insercionEnBloque(personaBD);
+            }
+            else
+            {
+                ViewBag.InsercionPersona = "No hubo inserciones en la tabla Persona";
+            }
+
+            if (usuarioBD.Rows.Count > 0)
+            {
+                insercionEnBloque(usuarioBD);
+            }
+            else
+            {
+                ViewBag.InsercionPersona = "No hubo inserciones en la tabla Usuario";
+            }
+
+            personaBD.Dispose();
+            usuarioBD.Dispose();
             filasInvalidas.AcceptChanges();
             return filasInvalidas;
         }
@@ -126,25 +155,34 @@ namespace Opiniometro_WebApp.Controllers
 
         private void verificacionContenidoTuplasValidas(DataTable filasValidas, DataTable filasInvalidas,long numeroFilasLeidas)
         {
+            throw new NotImplementedException();
             //Chequeos relacionados con el contenido proveido en el archivo csv
 
             //Fin de chequeos de contenido
-            //Insercion en bloque
-            DataTable personaBD = crearTablaPersonaBD();
-            DataTable usuarioBD = crearTablaUsuarioBD();
-            multicastDatosProvisionados(filasValidas, personaBD, usuarioBD);
-            insercionEnBloque(personaBD);
-        }
 
-        
+        }
 
         private int multicastDatosProvisionados(DataTable filasValidas, DataTable personaBD, DataTable usuarioBD)
         {
-            string hileraConexion = ConfigurationManager.ConnectionStrings["Opiniometro_DatosEntities"].ConnectionString;
-            
             DataRow rd = filasValidas.NewRow();
-            
-            for(int indexFilasValidas = 0; indexFilasValidas < filasValidas.Rows.Count; ++indexFilasValidas)
+
+            /*
+                 * Orden de insercion
+                 *
+                 * Verificar en tabla persona si persona con cedula provisionada en archivo csv ya existe.
+                 *      -> Persona no existe, hay que insertarlo en tabla Persona.
+                 *      -> Persona sí existe con cedula provisionada
+                 *
+                 * Persona existe como usuario con correo electrónico provisionado?
+                 *      -> Persona no existe como usuario con el correo provisionado, hay que insertarlo en Usuario con una contraseña generada.
+                 *      -> Persona sí existe como usuario con el correo provisionado.
+                 *
+                 * Persona existe con perfil provisionado?
+                 *      -> Si existe con perfil provisionado reportar error.
+                 *      -> No existe con perfil provisionado, insertar con ese perfil.
+                 *
+                 */
+            for (int indexFilasValidas = 0; indexFilasValidas < filasValidas.Rows.Count; ++indexFilasValidas)
             {
                 Persona existePersona = null;
                 Usuario existeUsuario = null;
@@ -179,33 +217,14 @@ namespace Opiniometro_WebApp.Controllers
                     nuevoUsuario["activo"] = true;
                     nuevoUsuario["cedula"] = filasValidas.Rows[indexFilasValidas]["cedula"];
                     nuevoUsuario["id"] = guidGenerado.ToString();
-
+                    usuarioBD.AcceptChanges();
                 }
 
                 
             }
             
-            using (SqlConnection conexionBD = new SqlConnection(hileraConexion))
-            {
-                /*
-                 * Orden de insercion
-                 *
-                 * Verificar en tabla persona si persona con cedula provisionada en archivo csv ya existe.
-                 *      -> Persona no existe, hay que insertarlo en tabla Persona.
-                 *      -> Persona sí existe con cedula provisionada
-                 *
-                 * Persona existe como usuario con correo electrónico provisionado?
-                 *      -> Persona no existe como usuario con el correo provisionado, hay que insertarlo en Usuario con una contraseña generada.
-                 *      -> Persona sí existe como usuario con el correo provisionado.
-                 *
-                 * Persona existe con perfil provisionado?
-                 *      -> Si existe con perfil provisionado reportar error.
-                 *      -> No existe con perfil provisionado, insertar con ese perfil.
-                 *
-                 */
-
-            }
-
+            personaBD.AcceptChanges();
+            usuarioBD.AcceptChanges();
             return 1;
 
         }
@@ -218,26 +237,43 @@ namespace Opiniometro_WebApp.Controllers
                 {
                     insercionEnBloque.DestinationTableName = tablaAInsertar.TableName;
                     mapearColumnasATablaDeDestino(tablaAInsertar.TableName, insercionEnBloque);
+                    insercionEnBloque.BatchSize = tablaAInsertar.Rows.Count;
+                    try
+                    {
+                        insercionEnBloque.WriteToServer(tablaAInsertar);
+                        ponerMensajeExito(tablaAInsertar.TableName);
+                        
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
                 }
-                /*
-                 * Orden de insercion
-                 *
-                 * Verificar en tabla persona si persona con cedula provisionada en archivo csv ya existe.
-                 *      -> Persona no existe, hay que insertarlo en tabla Persona.
-                 *      -> Persona sí existe con cedula provisionada
-                 *
-                 * Persona existe como usuario con correo electrónico provisionado?
-                 *      -> Persona no existe como usuario con el correo provisionado, hay que insertarlo en Usuario con una contraseña generada.
-                 *      -> Persona sí existe como usuario con el correo provisionado.
-                 *
-                 * Persona existe con perfil provisionado?
-                 *      -> Si existe con perfil provisionado reportar error.
-                 *      -> No existe con perfil provisionado, insertar con ese perfil.
-                 *
-                 */
+                
 
             }
         }
+
+        private void ponerMensajeExito(string nombreTabla)
+        {
+            string hileraBase = "Insercion exitosa en tabla " + nombreTabla;
+
+            switch (nombreTabla)
+            {
+                case "Persona":
+                {
+                    ViewBag.InsercionPersona = hileraBase;
+                }
+                break;
+                case "Usuario":
+                {
+                    ViewBag.InsercionUsuario = hileraBase;
+                }
+                break;
+            }
+        }
+        
 
         private void mapearColumnasATablaDeDestino(string tableName, SqlBulkCopy insercionEnBloque)
         {
@@ -246,19 +282,45 @@ namespace Opiniometro_WebApp.Controllers
                 case "Persona":
                 {
                     insercionEnBloque.ColumnMappings.Add("cedula", "Cedula");
-                    insercionEnBloque.ColumnMappings.Add("nombre1", "Nombre");
+                    insercionEnBloque.ColumnMappings.Add("nombre1", "Nombre1");
+                    insercionEnBloque.ColumnMappings.Add("nombre2", "Nombre2");
                     insercionEnBloque.ColumnMappings.Add("apellido1", "Apellido1");
                     insercionEnBloque.ColumnMappings.Add("apellido2", "Apellido2");
-                    insercionEnBloque.ColumnMappings.Add("direccion_exacta", "Direccion");
+                    insercionEnBloque.ColumnMappings.Add("direccion_exacta", "DireccionDetallada");
+                }
+                break;
+                case "Usuario":
+                {
+                        insercionEnBloque.ColumnMappings.Add("correo", "CorreoInstitucional");
+                        insercionEnBloque.ColumnMappings.Add("contrasena", "Contrasena");
+                        insercionEnBloque.ColumnMappings.Add("activo", "Activo");
+                        insercionEnBloque.ColumnMappings.Add("cedula", "Cedula");
+                        insercionEnBloque.ColumnMappings.Add("id", "Id");
                 }
                 break;
             }
         }
 
 
-        private void AgregarTuplaInvalida(string filaLeida, Exception exception, DataTable filasInvalidas, long numeroFilasLeidas)
+        private void AgregarTuplaInvalida(string filaLeida, Exception exception, DataTable filasInvalidas, int numeroFilasLeidas)
         {
-            throw new NotImplementedException();
+            DataRow filaInvalida = filasInvalidas.NewRow();
+            filaInvalida["fila"] = numeroFilasLeidas;
+            filaInvalida["error"] = exception.Message;
+            filaInvalida["cedula"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["cedula"];
+            filaInvalida["perfil"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["perfil"];
+            filaInvalida["carne"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["carne"];
+            filaInvalida["nombre1"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["nombre1"];
+            filaInvalida["nombre2"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["nombre2"];
+            filaInvalida["apellido1"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["apellido1"];
+            filaInvalida["apellido2"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["apellido2"];
+            filaInvalida["correo"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["correo"];
+            filaInvalida["provincia"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["provincia"];
+            filaInvalida["canton"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["canton"];
+            filaInvalida["distrito"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["distrito"];
+            filaInvalida["direccion_exacta"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["direccion_exacta"];
+            filaInvalida["sigla_carrera"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["sigla_carrera"];
+            filaInvalida["enfasis"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["enfasis"];
         }
 
         private DataTable crearTablaUsuarios()
@@ -329,7 +391,9 @@ namespace Opiniometro_WebApp.Controllers
         {
             DataTable dt = new DataTable();
             dt.TableName = "usuarios_invalidos";
-            dt.Columns.Add("Error", typeof(string));
+
+            dt.Columns.Add("fila", typeof(int));
+            dt.Columns.Add("error", typeof(string));
             dt.Columns.Add("cedula", typeof(string));
             dt.Columns.Add("perfil", typeof(string));
             dt.Columns.Add("carne", typeof(string));
@@ -380,6 +444,5 @@ namespace Opiniometro_WebApp.Controllers
             return dt;
         }
     }
-
-
+ 
 }
