@@ -5,31 +5,35 @@
 }
 
 @Styles.Render("~/Content/scrollbar-tabla.css")
-
+@* Inclusiones necesarias para poder hacer validaciones *@
+<link href="~/Content/Site.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 @*<script>
 
 
 
-    $(document).ready(function () {
-        $("#btnSave").click(function () {
-            $.ajax(
-            {
-                type: "POST", //HTTP POST Method
-                    url: "AgregarConformado", // Controller/View
-                data: { //Passing data
-                      codigoFormulario:  @Html.Raw(Json.Encode(Model.Formulario.CodigoFormulario))
-                    },
-                    success(function(data) {
-                        $('#ConformadosID').html(result);
-                    }),
+        $(document).ready(function () {
+            $("#btnSave").click(function () {
+                $.ajax(
+                {
+                    type: "POST", //HTTP POST Method
+                        url: "AgregarConformado", // Controller/View
+                    data: { //Passing data
+                          codigoFormulario:  @Html.Raw(Json.Encode(Model.Formulario.CodigoFormulario))
+                        },
+                        success(function(data) {
+                            $('#ConformadosID').html(result);
+                        }),
+
+                });
 
             });
-
         });
-    });
 
-</script>*@
+    </script>*@
 
 <div id="content">
     <div class="row">
@@ -39,40 +43,40 @@
     <button id="btnSave" name="btnSave">GUARDAR</button><br />
     <div class="row">
         <div class="col-sm-5">
-            <h4  align='center'><strong>@Html.Label("Secciones")</strong></h4>
-                <table class="table table-bordered table-striped fixed_header">
+            <h4 align='center'><strong>@Html.Label("Secciones")</strong></h4>
+            <table class="table table-bordered table-striped fixed_header">
+                <tr>
+                    <td></td>
+                    <td>
+                        @Html.Label("Titulo")
+                    </td>
+                    <td>
+                        @Html.Label("Descripción")
+                    </td>
+                </tr>
+
+
+                @foreach (var seccion in Model.Secciones)
+                {
                     <tr>
-                        <td></td>
                         <td>
-                            @Html.Label("Titulo")
+                            <input type="radio" id="seccion" name="seccion" value="@seccion.Titulo" />
                         </td>
                         <td>
-                            @Html.Label("Descripción")
+                            @Html.DisplayFor(model => seccion.Titulo)
                         </td>
+                        <td>
+                            @Html.DisplayFor(model => seccion.Descripcion)
+                        </td>
+
                     </tr>
+                }
 
+            </table>
 
-                    @foreach (var seccion in Model.Secciones)
-                    {
-                        <tr>
-                            <td>
-                                <input type="radio" id="seccion" name="seccion" value="@seccion.Titulo" />
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => seccion.Titulo)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => seccion.Descripcion)
-                            </td>
-
-                        </tr>
-                    }
-
-                </table>
-            
         </div>
-            @*</div>
-        <div class="row">*@
+        @*</div>
+            <div class="row">*@
         <div class="col-sm-7">
             <h4 align='center'><strong>@Html.Label("Banco de Preguntas")</strong></h4>
             <table class="table table-bordered table-striped fixed_header">
@@ -110,7 +114,7 @@
 
             </table>
         </div>
-        </div>
+    </div>
     <div class="row" id="ConformadosID">
 
         @Html.Partial("ConformadoVParcial", Model.Conformados)
