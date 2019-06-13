@@ -13,6 +13,11 @@ namespace Opiniometro_WebApp.Controllers
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
+        public AsignarFormulariosController(Opiniometro_DatosEntities db)
+        {
+            db = db;
+        }
+
         // Para la vista completa
         [HttpGet]
         public ActionResult Index()
@@ -28,7 +33,7 @@ namespace Opiniometro_WebApp.Controllers
                 Formularios = ObtenerFormularios()
             };
 
-            return View(modelo);
+            return View("Index", modelo);
         }
 
         [HttpPost]

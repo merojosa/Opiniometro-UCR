@@ -16,7 +16,7 @@ namespace Opiniometro_WebApp.Controllers
         {
             return PartialView(db.Formulario.ToList());
         }*/
-        
+
         [HttpPost]
         public ActionResult SeleccionFormularios(Formulario forms)
         {
