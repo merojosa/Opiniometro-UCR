@@ -61,14 +61,6 @@ namespace Opiniometro_WebApp.Controllers
             return new List<Ciclo_Lectivo>().AsQueryable();
         }
 
-        // Para el filtro por Unidad Academica
-        public IQueryable<Unidad_Academica> ObtenerUnidadAcademica(short anno, byte semestre, String codigoUnidadAcadem)
-        {
-            IQueryable<Unidad_Academica> unidadAcademica = from u in db.Unidad_Academica select u;
-            ViewBag.unidadAcademica = new SelectList(unidadAcademica, "Nombre", "Nombre");
-            return unidadAcademica;
-        }
-
         // Para el filtro por carreras
         public IQueryable<Carrera> ObtenerCarreras(short anno, byte semestre, String codigoUnidadAcadem)
         {
