@@ -5,7 +5,6 @@ using Opiniometro_WebApp.Controllers;
 using Opiniometro_WebApp.Models;
 using Moq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 

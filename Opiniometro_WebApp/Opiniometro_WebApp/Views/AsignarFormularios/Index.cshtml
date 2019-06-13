@@ -33,15 +33,15 @@
                                 @Html.Hidden("changeCurso", null)
 
                                 <!--Desplegables para los filtros-->
-                                <a> @Html.DropDownList("unidadAcademica", null, "Unidad Academica", new { @class = "btn btn-info dropdown-toggle", style = "width:130px; @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();"" }) </a>
-                                <a> @Html.DropDownList("nombreCarrera", null, "Carrera", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;  @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" }) </a>
-                                <a> @Html.DropDownList("nombreCurso", null, "Curso", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </a>
+                                <a> @Html.DropDownList("unidadAcademica", null, "Unidad Academica", new { @class = "btn btn-info dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" }) </a>
+                                <a> @Html.DropDownList("nombreCarrera", null, "Carrera", new { @class = "btn btn-info dropdown-toggle", style = "width:130px",  @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" }) </a>
+                                <a> @Html.DropDownList("nombreCurso", null, "Curso", new { @class = "btn btn-info dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCurso').value = this.value; this.form.submit();" }) </a>
                                 <a> @Html.DropDownList("semestre", null, "Semestre", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </a>
                                 <a> @Html.DropDownList("ano", null, "Año", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </a>
                                 @*<b> @Html.DropDownList("profe", null, "Profesor", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </b>*@
                                 @*<b> @Html.DropDownList("enfasis", null, "Énfasis", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </b>*@
 
-                            </div>         
+                            </div>
 
                             <div>
                                 <!--Campo de busqueda-->
@@ -96,28 +96,28 @@
 
                 </div>
             </div>
-            }
-
-            
-
-            <div class="col-sm-4">
-
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3>Formularios</h3></div>
-                    <div class="panel-body">
+        }
 
 
-                        @using (Ajax.BeginForm("SeleccionFormularios", "AsignarFormularios", new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "form-content" }))
-                        {
-                            @Html.TextBox("formulario", "", new { placeholder = "Nombre del formulario" })
-                            <input type="submit" value="Buscar" />
-                            <div id="form-content">
-                                @Html.Partial("SeleccionFormularios", Model.Formularios)
-                            </div>
-                        }
 
-                    </div>
+        <div class="col-sm-4">
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3>Formularios</h3></div>
+                <div class="panel-body">
+
+
+                    @using (Ajax.BeginForm("SeleccionFormularios", "AsignarFormularios", new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "form-content" }))
+                    {
+                        @Html.TextBox("formulario", "", new { placeholder = "Nombre del formulario" })
+                        <input type="submit" value="Buscar" />
+                        <div id="form-content">
+                            @Html.Partial("SeleccionFormularios", Model.Formularios)
+                        </div>
+                    }
+
                 </div>
             </div>
         </div>
-    
+    </div>
+</div>  

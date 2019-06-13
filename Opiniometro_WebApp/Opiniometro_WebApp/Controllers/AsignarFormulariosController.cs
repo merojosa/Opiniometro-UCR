@@ -21,7 +21,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 Ciclos = ObtenerCiclos(""),
                 UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
-                Enfasis = ObtEnfasis(),
+                Enfasis = ObtenerEnfasis(0, 0, "", ""),
                 Carreras = ObtenerCarreras(0, 0, "", ""),
                 //Enfasis = ObtenerEnfasis(0, 0, "", ""),
                 Cursos = ObtenerCursos(0, 0, "", "", null, "", ""),
@@ -40,10 +40,10 @@ namespace Opiniometro_WebApp.Controllers
                 Ciclos = ObtenerCiclos(""),
                 UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
                 Carreras = ObtenerCarreras(0, 0, "", Request.Form["changeUnidad"]),
-                Grupos = ObtenerGrupos(0, 0, "", unidadAcademica, "", nombreCarrera, 255, "",nombreCurso, searchString),
-                Cursos = ObtenerCursos(0, 0, "", "", null, Request.Form["changeUnidad"], Request.Form["changeCarrera"]),
+                Grupos = ObtenerGrupos(ano, semestre, unidadAcademica, "", "", nombreCarrera, 255, "", Request.Form["changeCurso"], searchString),
+                Cursos = ObtenerCursos(ano, semestre, "", "", null, Request.Form["changeUnidad"], Request.Form["changeCarrera"]),
                 Formularios = ObtenerFormularios(),
-                Enfasis = ObtEnfasis()
+                Enfasis = ObtenerEnfasis(0,0, "", "")
 
             };
 
@@ -103,15 +103,11 @@ namespace Opiniometro_WebApp.Controllers
         // Para el filtro por énfasis
         public IQueryable<Enfasis> ObtenerEnfasis(short anno, byte semestre, String codigoUnidadAcadem, String siglaCarrera)
         {
-            return new List<Enfasis>().AsQueryable();
-        }
-
-        // Para el filtro por Unidad Academica
-        public IQueryable<Enfasis> ObtEnfasis(){
             IQueryable<Enfasis> enfasis = from u in db.Enfasis select u;
             ViewBag.enfasis = new SelectList(enfasis, "Numero", "SiglaCarrera");
             return enfasis;
         }
+
         // Para el filtro por cursos
         /// <summary>
         /// Retorna la lista de cursos que pueden ser elegido en el filtro de curso.
@@ -123,7 +119,7 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="numEnfasis">Número del énfasis de la carrera en el que se encuentran los cursos.</param>
         /// <param name="searchString">Frase usada para buscar el nombre o código de un grupo.</param>
         /// <returns>Lista de los cursos que satisfacen los filtros utilizados como parámetros.</returns>
-        public IQueryable<Curso> ObtenerCursos(short anno, byte semestre,
+        public IQueryable<Curso> ObtenerCursos(short? anno, byte? semestre,
             String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis, string changeUnidad, string changeCarrera)
         {
             IQueryable<Curso> nombreCurso = from c in db.Curso
@@ -191,7 +187,7 @@ namespace Opiniometro_WebApp.Controllers
                 //NombresCarreras =  cur.Enfasis.
             };
 
-            grupos = filtreGrupos(searchString, semestre, codigoUnidadAcadem, siglaCarrera, nombreCurso, grupos);
+            grupos = filtreGrupos(searchString, semestre, anno, codigoUnidadAcadem, siglaCarrera, nombreCurso, grupos);
 
             return grupos;
 
@@ -206,7 +202,7 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="codigoCarrera"> podria contener el nombre de la carrera</param>
         /// <param name="grupos"> lista de grupos que se envia desde el metodo ObtenerGrupos</param>
         /// <returns> los grupos filtrados</returns>
-        public IQueryable<ElegirGrupoEditorViewModel> filtreGrupos(string searchString, byte semestre, string CodigoUnidadAcad, string siglaCarrera, string nombCurso ,IQueryable<ElegirGrupoEditorViewModel> grupos)
+        public IQueryable<ElegirGrupoEditorViewModel> filtreGrupos(string searchString, byte? semestre, short? anno, string CodigoUnidadAcad, string siglaCarrera, string nombCurso ,IQueryable<ElegirGrupoEditorViewModel> grupos)
         {
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -220,7 +216,7 @@ namespace Opiniometro_WebApp.Controllers
 
             if (!String.IsNullOrEmpty(siglaCarrera))
             {
-                grupos = grupos.Where(c => c.NombresCarreras.Equals(siglaCarrera));
+                grupos = grupos.Where(c => c.SiglaCarrera.Equals(siglaCarrera));
             }
 
             //if (!String.IsNullOrEmpty(nombCarrera))
