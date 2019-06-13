@@ -31,7 +31,7 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public PartialViewResult AgregarConformado(Conformado_Item_Sec_Form conformado)
         {
             if (ModelState.IsValid)
