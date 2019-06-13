@@ -46,6 +46,7 @@ namespace Opiniometro_WebApp.Controllers.Servicios
                 List<int> permisos = new List<int>();
 
                 // Guardo las tuplas resultantes del llamado al procedimiento almacenado, orden: Sigla de carrera, numero de enfasis, permiso
+                // ToDo: hacerlo con el enfasis actual.
                 var tuplas_resultantes = db.SP_ObtenerPermisosUsuario(correo_autenticado, obtener_perfil_actual());
 
                 string llave_hash = null;
