@@ -75,5 +75,11 @@ namespace Opiniometro_WebApp.Controllers
             List<Seccion> secciones = db.Seccion.ToList();
             return PartialView(secciones);
         }
+        // Metodo para poder validar si un numero esta disponible. 
+        public JsonResult estaNumeroDePreguntaDisponble(int numero)
+        {
+            return Json(!db.Conformado_Item_Sec_Form.Any(pregunta => pregunta.Orden_Item == numero), JsonRequestBehavior.AllowGet);
+
+        }
     }
 }
