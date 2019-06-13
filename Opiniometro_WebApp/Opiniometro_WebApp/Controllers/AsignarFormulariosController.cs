@@ -25,7 +25,7 @@ namespace Opiniometro_WebApp.Controllers
                 //Enfasis = ObtenerEnfasis(0, 0, "", ""),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
                 Grupos = ObtenerGrupos(0, 0, "", "", "", "", 255, "", "", ""),
-                Formularios = ObtenerFormularios()
+                Formularios = ObtenerFormularios("")
             };
 
             return View("Index", modelo);
@@ -40,7 +40,7 @@ namespace Opiniometro_WebApp.Controllers
                 Carreras = ObtenerCarreras(0, 0, ""),
                 Grupos = ObtenerGrupos(0, 0, "", unidadAcademica, "", nombreCarrera, 255, "", nombreCurso, searchString),
                 Cursos = ObtenerCursos(0, 0, "", "", null),
-                Formularios = ObtenerFormularios()
+                Formularios = ObtenerFormularios("")
 
             };
             return View(modelo);
@@ -154,7 +154,10 @@ namespace Opiniometro_WebApp.Controllers
                 (from cur in db.Curso
                 join gru in db.Grupo on cur.Sigla equals gru.SiglaCurso
                 join uni in db.Unidad_Academica on cur.CodigoUnidad equals uni.Codigo
-            select new ElegirGrupoEditorViewModel
+                /*join imp in db.Imparte on 
+                    new { anno = gru.AnnoGrupo, sem = gru.SemestreGrupo, sigla = gru.SiglaCurso, num = gru.Numero }
+                    equals new { anno = imp.Anno, sem = imp.Semestre, sigla = imp.Sigla, num = imp.Numero }*/
+                 select new ElegirGrupoEditorViewModel
             {
                 Seleccionado = false,
                 SiglaCurso = cur.Sigla,
