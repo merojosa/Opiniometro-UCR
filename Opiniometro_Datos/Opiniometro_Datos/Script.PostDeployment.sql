@@ -324,7 +324,8 @@ INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-01234', 'Ciencias de la Computación e Informática','UC-023874')
 
 INSERT INTO Enfasis
-VALUES (0, 'SC-01234')
+VALUES	(0, 'SC-01234'),
+		(1, 'SC-01234')
 
 INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-01235', 'Computación con varios Énfasis','UC-023874')
