@@ -34,7 +34,14 @@
                         alert("Se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
                             + $("input:radio[name=seccion]:checked").val()),
                         $('#ConformadosID').html(result);
+                    },
+                    error: function () {
+                        alert("No se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
+                            + $("input:radio[name=seccion]:checked").val()
+                            + "porque la pregunta ya se asigno a esa sección")
                     }
+
+
                 });
 
             });
