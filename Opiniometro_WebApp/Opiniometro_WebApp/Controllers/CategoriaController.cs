@@ -12,9 +12,18 @@ namespace Opiniometro_WebApp.Controllers
 {
     public class CategoriaController : Controller
     {
-        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        private Opiniometro_DatosEntities db;
 
         // GET: Categoria
+        public CategoriaController()
+        {
+            db = new Opiniometro_DatosEntities();
+        }
+
+        public CategoriaController(Opiniometro_DatosEntities db)
+        {
+            this.db = db;
+        }
         public ActionResult Index()
         {
             return View(db.Categoria.ToList());
