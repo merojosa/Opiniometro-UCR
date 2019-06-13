@@ -26,7 +26,7 @@ namespace Opiniometro_WebApp.Controllers
         }
         public ActionResult Index()
         {
-            return View(db.Categoria.ToList());
+            return View("Index", db.Categoria.ToList());
         }
 
         // GET: Categoria/Details/5
@@ -47,7 +47,7 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Categoria/Create
         public ActionResult Create()
         {
-            return View();
+            return View("Create");
         }
 
         // POST: Categoria/Create
@@ -64,7 +64,7 @@ namespace Opiniometro_WebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(categoria);
+            return View("Create", categoria);
         }
 
         // GET: Categoria/Edit/5
@@ -79,7 +79,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(categoria);
+            return View("Edit", categoria);
         }
 
         // POST: Categoria/Edit/5
@@ -95,7 +95,7 @@ namespace Opiniometro_WebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(categoria);
+            return View("Edit", categoria);
         }
 
         // GET: Categoria/Delete/5
@@ -110,7 +110,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(categoria);
+            return View("Delete", categoria);
         }
 
         // POST: Categoria/Delete/5
