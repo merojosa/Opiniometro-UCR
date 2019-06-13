@@ -10,18 +10,18 @@
 
 </head>
 <body>
-    <!--Barra-->    
+    <!--Barra-->
     @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
     @using Opiniometro_WebApp.Controllers.Servicios;
 
 
-    
+
 
     @if (IdentidadManager.usuario_loggeado() == true)
     {
         var permisos_usuario = (IdentidadManager)Session[IdentidadManager.obtener_correo_actual()];
 
-        <nav class="navbar navbar-opiniometro-ternaria navbar-fixed-top" style="margin-top:100px; z-index:999">
+        <nav class="navbar navbar-opiniometro-ternaria navbar-fixed-top" style="margin-top:90px; z-index:999">
             <div class="container-fluid">
                 <ul class="nav navbar-nav">
                     <li>
@@ -32,10 +32,10 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Perfiles<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li >@Html.ActionLink("Cambiar perfil actual", "Index", "Perfil")</li>
-                            <li class="disabled"><a>Asignar/Revocar permisos</a></li>
-                            <li class="disabled"><a>Crear perfi</a></li>
-                            <li class="disabled"><a>Eliminar perfil</a></li>
+                            <li>@Html.ActionLink("Cambiar perfil actual", "Index", "Perfil")</li>
+                            <li class="disabled"><a id="link_deshabilitado">Asignar/Revocar permisos</a></li>
+                            <li class="disabled"><a id="link_deshabilitado">Crear perfi</a></li>
+                            <li class="disabled"><a id="link_deshabilitado">Eliminar perfil</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -48,7 +48,7 @@
                                 }
                                 else
                                 {
-                                    <li class="disabled"><a>Ver información de personas</a></li>
+                                    <li class="disabled"><a id="link_deshabilitado">Ver información de personas</a></li>
                                 }
 
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.INSERTAR_USUARIO))
@@ -57,7 +57,7 @@
                                 }
                                 else
                                 {
-                                    <li class="disabled"><a>Insertar usuario</a></li>
+                                    <li class="disabled"><a id="link_deshabilitado">Insertar usuario</a></li>
                                 }
 
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.INSERTAR_USUARIO))
@@ -65,8 +65,8 @@
                                     <li>@Html.ActionLink("Cargar Archivo", "CargarArchivo", "Administrador")</li>
                                 }
                                 else
-                                {                                    
-                                    <li class="disabled"><a>Cargar Archivo</a></li>
+                                {
+                                    <li class="disabled"><a id="link_deshabilitado">Cargar Archivo</a></li>
                                 }
                             }
                         </ul>
@@ -81,7 +81,7 @@
                                 }
                                 else
                                 {
-                                    <li class="disabled"><a>Insertar formulario</a></li>
+                                    <li class="disabled"><a id="link_deshabilitado">Insertar formulario</a></li>
                                 }
 
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.ASIGNAR_FORMUALRIO))
@@ -90,7 +90,7 @@
                                 }
                                 else
                                 {
-                                    <li class="disabled"><a>Asignar formulario</a></li>
+                                    <li class="disabled"><a id="link_deshabilitado">Asignar formulario</a></li>
                                 }
 
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VISUALIZAR_RESULTADOS_DE_EVALUACIONES))
@@ -99,16 +99,16 @@
                                 }
                                 else
                                 {
-                                    <li class="disabled"><a>Visualizar resultados de evaluaciones</a></li>
+                                    <li class="disabled"><a id="link_deshabilitado">Visualizar resultados de evaluaciones</a></li>
                                 }
-      
+
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VER_SECCIONES))
                                 {
                                     <li>@Html.ActionLink("Sección", "Index", "Seccion")</li>
                                 }
                                 else
                                 {
-                                    <li class="disabled"><a>Sección</a></li>
+                                    <li class="disabled"><a id="link_deshabilitado">Sección</a></li>
                                 }
 
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VER_ITEMS))
@@ -117,11 +117,11 @@
                                 }
                                 else
                                 {
-                                    <li class="disabled"><a>Ítem</a></li>
+                                    <li class="disabled"><a id="link_deshabilitado">Ítem</a></li>
                                 }
                             }
                         </ul>
-                    </li>                    
+                    </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -131,7 +131,7 @@
         </nav>
     }
 
-    <div class="container-fluid" style="margin-left:100px" >
+    <div class="container-fluid" style="margin-left:100px">
         @RenderBody()
         <hr />
         <footer>
