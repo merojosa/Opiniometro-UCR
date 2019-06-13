@@ -134,6 +134,27 @@ AS
 	WHERE TU.CorreoInstitucional=@Correo AND TU.IdPerfil = @Perfil
 GO
 
+IF OBJECT_ID('SP_ObtenerNombre') IS NOT NULL
+	DROP PROCEDURE SP_ObtenerNombre
+GO
+CREATE PROCEDURE SP_ObtenerNombre
+	@Correo			NVARCHAR(50),
+	@Nombre			NVARCHAR(50) OUT,
+	@Apellido		NVARCHAR(50) OUT
+AS
+BEGIN
+	SET NOCOUNT ON
+	
+	SET @Nombre = (SELECT Nombre
+	FROM Usuario U	JOIN Persona P ON U.Cedula = p.Cedula
+	WHERE U.CorreoInstitucional=@Correo)
+
+	SET @Apellido = (SELECT Apellido1
+	FROM Usuario U	JOIN Persona P ON U.Cedula = p.Cedula
+	WHERE U.CorreoInstitucional=@Correo)
+END
+GO
+
 EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
 
 IF OBJECT_ID('ValorRandom') IS NOT NULL
@@ -527,7 +548,14 @@ INSERT INTO Permiso
 VALUES	(1, 'Hacer todo'),
 		(2, 'Asignar formulario'),
 		(3, 'Calificar cursos'),
-		(4, 'Ver cursos')
+		(4, 'Ver cursos'),
+		(202, 'VerInformacionPersonas'),
+		(203, 'InsertarUsuario'),
+		(204, 'AsignarFormulario'),
+		(205, 'VisualizarResultadosDeEvaluaciones'),
+		(206, 'VerSecciones'),
+		(207, 'VerItems'),
+		(208, 'InsertarFormulario');
 
 INSERT INTO Perfil
 VALUES	('Estudiante', 'Default'),
@@ -545,6 +573,7 @@ VALUES	(0, 'SC-01234', 'Estudiante', 3),
 		(0, 'SC-01234', 'Admin', 2),
 		(0, 'SC-01234', 'Profesor', 2)
 
+
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','202')
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','203')
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','204')
@@ -556,7 +585,6 @@ insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdP
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Estudiante','205')
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','208')
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','208')
-insert into Permiso (Id, Descripcion) values (208, 'InsertarFormulario')
 
 INSERT INTO Provincia
 VALUES	('San José'),

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
@@ -107,6 +108,18 @@ namespace Opiniometro_WebApp.Controllers.Servicios
             {
                 return false;
             }
+        }
+
+        public static string obtener_nombre_actual()
+        {
+            Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+
+            ObjectParameter nombre = new ObjectParameter("Nombre", "");
+            ObjectParameter apellido = new ObjectParameter("Apellido", "");
+            db.SP_ObtenerNombre(obtener_correo_actual(), nombre, apellido);
+
+
+            return (string)nombre.Value + " " + (string)apellido.Value;
         }
     }
 }
