@@ -59,35 +59,45 @@ namespace Opiniometro_WebApp.Controllers
 
         }
 
-        
+
         public ActionResult Editar(string id)
         {
             try
             {
-               
-                    ViewModelAdmin model = new ViewModelAdmin();
-                model.persona = db.Persona.SingleOrDefault(u => u.Cedula == id);
-                model.usuario = db.Usuario.SingleOrDefault(u => u.Cedula == id);
+                Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel modelPersona = new Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel();
+                modelPersona.Persona = db.Persona.Find(id);
+
+                try
+                {
+                    String correoInstitucional = db.Usuario.Where(m => m.Cedula == id).First().CorreoInstitucional;
+                    //modelPersona.Perfil = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
+                    modelPersona.Persona = db.Persona.SingleOrDefault(u => u.Cedula == id);
+                    modelPersona.usuario = db.Usuario.SingleOrDefault(u => u.Cedula == id);
+                    modelPersona.Perfil = db.Perfil.Select(n => n.Id).ToList();
+                    return View(modelPersona);
+                }
+                catch (Exception)
+                {
+                    return View(modelPersona);
+                }
 
 
-                return View(model);
-                
             }
             catch (Exception)
             {
 
                 throw;
-            }  
+            }
         }
 
         [HttpPost]
-        public ActionResult Editar(ViewModelAdmin per)
+        public ActionResult Editar(PersonaPerfilEnfasisModel per)
         {
             try
             {
                 using (db)
                 {
-                    db.SP_ModificarPersona(per.persona.Cedula, per.persona.Cedula, per.persona.Nombre, per.persona.Apellido1, per.persona.Apellido2, per.usuario.CorreoInstitucional,per.persona.Direccion);
+                    db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre, per.Persona.Apellido1, per.Persona.Apellido2, per.usuario.CorreoInstitucional, per.Persona.Direccion);
                     return RedirectToAction("VerPersonas");
                 }
             }
@@ -96,9 +106,9 @@ namespace Opiniometro_WebApp.Controllers
 
                 throw;
             }
-           
+
         }
-    
+
 
         public ActionResult Borrar(string id)
         {
@@ -121,8 +131,7 @@ namespace Opiniometro_WebApp.Controllers
                 using (db)
                 {
                     string contrasenna_generada = GenerarContrasenna(10);
-                    db.SP_AgregarPersonaUsuario(per.usuario.CorreoInstitucional, contrasenna_generada, per.persona.Cedula, per.persona.Nombre, per.persona.Apellido1, per.persona.Apellido2, per.persona.Direccion);
-                    
+                    db.SP_AgregarPersonaUsuario(per.usuario.CorreoInstitucional, contrasenna_generada, per.persona.Cedula, per.persona.Nombre, per.persona.Apellido1, per.persona.Apellido2, per.persona.Direccion);             
 
                     string contenido =
                      "<p>Se le ha creado un usuario en Opiniometro@UCR.</p>" +
