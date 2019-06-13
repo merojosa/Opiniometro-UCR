@@ -139,32 +139,37 @@ namespace Opiniometro_WebApp.Controllers
         //EFE:Crea un gráfico con la información de los resultados en la base de datos.
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--
-        public ActionResult GraficoPie(string itemId)
+        public JsonResult GraficoPie(string itemId)
         {
-            var result = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", itemId).ToList();//ObtenerCantidadRespuestasPorPregunta
+            var result = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", itemId).ToList();//ObtenerCantidadRespuestasPorPregunta  "PRE303"
             int tamanio = result.Count;
-            string[] leyenda = new string[tamanio];
-            int?[] cntResps = new int?[tamanio];
-            int iter = 0;
+            List<object> x = new List<object>();
+            List<object> y = new List<object>();
+            //string[] leyenda = new string[tamanio];
+            //int?[] cntResps = new int?[tamanio];
+            //int iter = 0;
             foreach (var itemR in result)
-            { 
-                leyenda[iter] = itemR.Respuesta;
-                cntResps[iter] = itemR.cntResp;
-                iter++;
+            {
+                //leyenda[iter] = itemR.Respuesta;
+                //cntResps[iter] = itemR.cntResp;
+                //iter++;
+                x.Add(itemR.Respuesta);
+                y.Add(itemR.cntResp);
             }
-            string myGraf =
-                @"<Chart BackColor=""Transparent"" >
-                                <ChartAreas>
-                                    <ChartArea Name=""Default"" BackColor=""Transparent""></ChartArea>
-                                </ChartAreas>
-                            </Chart>";
-            new Chart(width: 350, height: 350, theme: myGraf)
-                .AddSeries(
-                    chartType: "pie",
-                    xValue: leyenda,
-                    yValues: cntResps)
-                .Write("png");
-            return null;
+            List<object> lista = new List<object> { x, y };
+            //string myGraf =
+            //    @"<Chart BackColor=""Transparent"" >
+            //                    <ChartAreas>
+            //                        <ChartArea Name=""Default"" BackColor=""Transparent""></ChartArea>
+            //                    </ChartAreas>
+            //                </Chart>";
+            //new Chart(width: 350, height: 350, theme: myGraf)
+            //    .AddSeries(
+            //        chartType: "pie",
+            //        xValue: leyenda,
+            //        yValues: cntResps)
+            //    .Write("png");
+            return Json(lista, JsonRequestBehavior.AllowGet);
         }
     }
 }
