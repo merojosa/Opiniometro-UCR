@@ -4,23 +4,23 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@Styles.Render("~/Content/scrollbar-tabla.css")
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>
+@*<script>
 
-    var datos = {
-        codigoFormulari = Model.Formulario.codigoFormulario
-    };
 
-    $(document).ready(function () {       
+
+    $(document).ready(function () {
         $("#btnSave").click(function () {
             $.ajax(
             {
                 type: "POST", //HTTP POST Method
                     url: "AgregarConformado", // Controller/View
                 data: { //Passing data
-                    
+                      codigoFormulario:  @Html.Raw(Json.Encode(Model.Formulario.CodigoFormulario))
                     },
-                    success(function() {
+                    success(function(data) {
                         $('#ConformadosID').html(result);
                     }),
 
@@ -29,85 +29,92 @@
         });
     });
 
-</script>
+</script>*@
 
 <div id="content">
     <div class="row">
-        <div class="col-sm-4" ><h4><strong >Codigo:</strong> @Model.Formulario.CodigoFormulario </h4></div>
-        <div class="col-sm-8"><h4><strong>Nombre:</strong> @Model.Formulario.Nombre</h4></div>
+        <div class="col-sm-4"><h3><strong>Codigo:</strong> @Model.Formulario.CodigoFormulario </h3></div>
+        <div class="col-sm-8"><h3><strong>Nombre:</strong> @Model.Formulario.Nombre</h3></div>
     </div>
-    <button id="btnSave" name="btnSave" >GUARDAR</button>
+    <button id="btnSave" name="btnSave">GUARDAR</button><br />
     <div class="row">
-        <table class="table table-bordered table-striped">
-            <tr>
-                <td></td>
-                <td>
-                    @Html.Label("Titulo")
-                </td>
-                <td>
-                    @Html.Label("Descripción")
-                </td>
-            </tr>
+        <div class="col-sm-5">
+            <h4  align='center'><strong>@Html.Label("Secciones")</strong></h4>
+                <table class="table table-bordered table-striped fixed_header">
+                    <tr>
+                        <td></td>
+                        <td>
+                            @Html.Label("Titulo")
+                        </td>
+                        <td>
+                            @Html.Label("Descripción")
+                        </td>
+                    </tr>
 
 
-            @foreach (var seccion in Model.Secciones)
-            {
+                    @foreach (var seccion in Model.Secciones)
+                    {
+                        <tr>
+                            <td>
+                                <input type="radio" id="seccion" name="seccion" value="@seccion.Titulo" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => seccion.Titulo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => seccion.Descripcion)
+                            </td>
+
+                        </tr>
+                    }
+
+                </table>
+            
+        </div>
+            @*</div>
+        <div class="row">*@
+        <div class="col-sm-7">
+            <h4 align='center'><strong>@Html.Label("Banco de Preguntas")</strong></h4>
+            <table class="table table-bordered table-striped fixed_header">
                 <tr>
+                    <td></td>
                     <td>
-                        <input type="radio" id="seccion" name="seccion" value="@seccion.Titulo" />
+                        @Html.Label("Código")
                     </td>
                     <td>
-                        @Html.DisplayFor(model => seccion.Titulo)
+                        @Html.Label("Planteamiento")
                     </td>
                     <td>
-                        @Html.DisplayFor(model => seccion.Descripcion)
-                    </td>
-
-                </tr>
-            }
-
-        </table>
-    </div>
-    <div class="row">
-        <table class="table table-bordered">
-            <tr>
-                <td></td>
-                <td>
-                    @Html.Label("Código")
-                </td>
-                <td>
-                    @Html.Label("Planteamiento")
-                </td>
-                <td>
-                    @Html.Label("Tipo")
-                </td>
-            </tr>
-
-
-            @foreach (var item in Model.Items)
-            {
-                <tr>
-                    <td>
-                        <input type="checkbox" class="chcktbl"  name="item" id="item" value="@item.ItemId" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ItemId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TextoPregunta)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TipoPregunta)
+                        @Html.Label("Tipo")
                     </td>
                 </tr>
-            }
 
-        </table>
-    </div>
+
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="chcktbl" name="item" id="item" value="@item.ItemId" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TextoPregunta)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TipoPregunta)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        </div>
     <div class="row" id="ConformadosID">
-        
+
         @Html.Partial("ConformadoVParcial", Model.Conformados)
-        
+
     </div>
 </div>
 
