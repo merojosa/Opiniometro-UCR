@@ -17,7 +17,67 @@ namespace Opiniometro_WebApp.Controllers
         // GET: VisualizarFormulario
         public ActionResult Index()
         {
-            return View(db.Formulario.ToList());
+            ViewBag.CursoID = new SelectList(db.Curso, "Sigla", "Nombre");
+            var semestres = (from sem in db.Ciclo_Lectivo select sem.Semestre).AsEnumerable().Distinct();
+            ViewBag.SemestreId = new SelectList(semestres);
+            var annos = (from ann in db.Ciclo_Lectivo select ann.Anno).AsEnumerable().Distinct();
+            ViewBag.AnnoId = new SelectList(annos);
+
+            var grupos = (from grup in db.Grupo select grup.Numero).AsEnumerable().Distinct();
+            ViewBag.GrupoID = new SelectList(grupos);
+
+            IQueryable<Formulario> formularios = from form in db.Formulario select form;
+            return View(formularios);
+        }
+
+        [HttpPost]
+        public ActionResult Index(string selectcurso, string selectsemestre, string selectanno, string selecgrupo)
+        {
+            ViewBag.CursoID = new SelectList(db.Curso, "Sigla", "Nombre");
+            var semestres = (from sem in db.Ciclo_Lectivo select sem.Semestre).AsEnumerable().Distinct();
+            ViewBag.SemestreId = new SelectList(semestres);
+            var annos = (from ann in db.Ciclo_Lectivo select ann.Anno).AsEnumerable().Distinct();
+            ViewBag.AnnoId = new SelectList(annos);
+            var grupos = (from grup in db.Grupo select grup.Numero).AsEnumerable().Distinct();
+            ViewBag.GrupoID = new SelectList(grupos);
+
+            IQueryable<Formulario> formulariosO = from form in db.Formulario select form;
+
+            if (!String.IsNullOrEmpty(selectsemestre) || !String.IsNullOrEmpty(selectcurso) || !String.IsNullOrEmpty(selectanno) || !String.IsNullOrEmpty(selecgrupo))
+            {
+                IQueryable<Responde> formularios = from form in db.Responde select form;
+
+                if (!String.IsNullOrEmpty(selectcurso))
+                {
+                    formularios = formularios.Where(f => f.SiglaGrupoResp.Equals(selectcurso));
+                }
+                if (!String.IsNullOrEmpty(selectsemestre))
+                {
+                    formularios = formularios.Where(f => f.SemestreGrupoResp.Equals(Int32.Parse(selectsemestre)));
+                }
+                if (!String.IsNullOrEmpty(selectanno))
+                {
+                    formularios = formularios.Where(f => f.AnnoGrupoResp.Equals(Int32.Parse(selectanno)));
+                }
+                if (!String.IsNullOrEmpty(selecgrupo))
+                {
+                    formularios = formularios.Where(f => f.NumeroGrupoResp.Equals(Int32.Parse(selecgrupo)));
+                }
+                List<Formulario> formulariosfiltrados = new List<Formulario>();
+                foreach (var f in formulariosfiltrados)
+                {
+                    Formulario nuevo = new Formulario();
+                    nuevo.CodigoFormulario = f.CodigoFormulario;
+                    nuevo.Nombre = (db.SP_ObtenerFormulario(f.CodigoFormulario)).ToString();
+
+                    formulariosfiltrados.Add(nuevo);
+                }
+                return View(formulariosfiltrados);
+            }
+            else
+            {
+                return View(formulariosO);
+            }
         }
 
         // GET: VisualizarFormulario/Details/5
