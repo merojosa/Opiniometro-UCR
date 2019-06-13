@@ -130,14 +130,18 @@ namespace Opiniometro_WebApp.Controllers
 
             //Fin de chequeos de contenido
             //Insercion en bloque
-            insercionUsuariosEnBloque(filasValidas);
-        }
-
-        private int insercionUsuariosEnBloque(DataTable filasValidas)
-        {
-            string hileraConexion = ConfigurationManager.ConnectionStrings["Opiniometro_DatosEntities"].ConnectionString;
             DataTable personaBD = crearTablaPersonaBD();
             DataTable usuarioBD = crearTablaUsuarioBD();
+            multicastDatosProvisionados(filasValidas, personaBD, usuarioBD);
+            insercionEnBloque(personaBD);
+        }
+
+        
+
+        private int multicastDatosProvisionados(DataTable filasValidas, DataTable personaBD, DataTable usuarioBD)
+        {
+            string hileraConexion = ConfigurationManager.ConnectionStrings["Opiniometro_DatosEntities"].ConnectionString;
+            
             DataRow rd = filasValidas.NewRow();
             
             for(int indexFilasValidas = 0; indexFilasValidas < filasValidas.Rows.Count; ++indexFilasValidas)
@@ -159,22 +163,23 @@ namespace Opiniometro_WebApp.Controllers
                 if ((existeUsuario = db.Usuario.Find(filasValidas.Rows[indexFilasValidas]["cedula"])) == null)
                 {
                     DataRow nuevoUsuario = usuarioBD.NewRow();
+                    
                     nuevoUsuario["correo"] = filasValidas.Rows[indexFilasValidas]["correo"];
+
+                    //Insercion de un usuario requiere que tenga un contrasena cifrada con un guid
                     ObjectParameter contrasenaGenerada = new ObjectParameter("contrasenaGenerada", typeof(System.Data.SqlTypes.SqlChars));
                     db.SP_GenerarContrasena(contrasenaGenerada);
                     ObjectParameter guidGenerado = new ObjectParameter("guidGenerado", typeof(System.Data.SqlTypes.SqlGuid));
                     db.SP_GenerarIdUnico(guidGenerado);
-
                     System.Guid guid = new Guid(guidGenerado.Value.ToString()); //!HAY QUE REVISAR ESTA LINEA.
                     ObjectParameter contrasenaHash = new ObjectParameter("contrasenaHash", typeof(System.Data.SqlTypes.SqlChars));
                     db.SP_GenerarContrasenaHash(guid, contrasenaGenerada.ToString(), contrasenaHash);
-                    //System.Data.SqlTypes guid = db.SF
-                    //nuevoUsuario["contrasena"]
-                    
+
+                    nuevoUsuario["contrasena"] = contrasenaHash.ToString();
                     nuevoUsuario["activo"] = true;
                     nuevoUsuario["cedula"] = filasValidas.Rows[indexFilasValidas]["cedula"];
-                    //nuevoUsuario["id"]
-                    
+                    nuevoUsuario["id"] = guidGenerado.ToString();
+
                 }
 
                 
@@ -204,6 +209,52 @@ namespace Opiniometro_WebApp.Controllers
             return 1;
 
         }
+        private void insercionEnBloque(DataTable tablaAInsertar)
+        {
+            string hileraConexion = ConfigurationManager.ConnectionStrings["Opiniometro_DatosEntities"].ConnectionString;
+            using (SqlConnection conexionBD = new SqlConnection(hileraConexion))
+            {
+                using (SqlBulkCopy insercionEnBloque = new SqlBulkCopy(conexionBD))
+                {
+                    insercionEnBloque.DestinationTableName = tablaAInsertar.TableName;
+                    mapearColumnasATablaDeDestino(tablaAInsertar.TableName, insercionEnBloque);
+                }
+                /*
+                 * Orden de insercion
+                 *
+                 * Verificar en tabla persona si persona con cedula provisionada en archivo csv ya existe.
+                 *      -> Persona no existe, hay que insertarlo en tabla Persona.
+                 *      -> Persona sí existe con cedula provisionada
+                 *
+                 * Persona existe como usuario con correo electrónico provisionado?
+                 *      -> Persona no existe como usuario con el correo provisionado, hay que insertarlo en Usuario con una contraseña generada.
+                 *      -> Persona sí existe como usuario con el correo provisionado.
+                 *
+                 * Persona existe con perfil provisionado?
+                 *      -> Si existe con perfil provisionado reportar error.
+                 *      -> No existe con perfil provisionado, insertar con ese perfil.
+                 *
+                 */
+
+            }
+        }
+
+        private void mapearColumnasATablaDeDestino(string tableName, SqlBulkCopy insercionEnBloque)
+        {
+            switch (tableName)
+            {
+                case "Persona":
+                {
+                    insercionEnBloque.ColumnMappings.Add("cedula", "Cedula");
+                    insercionEnBloque.ColumnMappings.Add("nombre1", "Nombre");
+                    insercionEnBloque.ColumnMappings.Add("apellido1", "Apellido1");
+                    insercionEnBloque.ColumnMappings.Add("apellido2", "Apellido2");
+                    insercionEnBloque.ColumnMappings.Add("direccion_exacta", "Direccion");
+                }
+                break;
+            }
+        }
+
 
         private void AgregarTuplaInvalida(string filaLeida, Exception exception, DataTable filasInvalidas, long numeroFilasLeidas)
         {
@@ -213,7 +264,7 @@ namespace Opiniometro_WebApp.Controllers
         private DataTable crearTablaUsuarios()
         {
             DataTable dt = new DataTable();
-
+            dt.TableName = "usuarios_validos";
             // Ver documentacion sobre los tipos en https://docs.microsoft.com/en-us/dotnet/api/system.data.sqltypes?view=netframework-4.6.1
             //dt.Columns.Add("cedula", System.Type.GetType("System.Data.SqlTypes.SqlChars"));
             dt.Columns.Add("cedula", typeof(System.Data.SqlTypes.SqlChars));            //0
@@ -277,6 +328,7 @@ namespace Opiniometro_WebApp.Controllers
         private DataTable crearTablaUsuariosInvalidos()
         {
             DataTable dt = new DataTable();
+            dt.TableName = "usuarios_invalidos"
             dt.Columns.Add("Error", typeof(string));
             dt.Columns.Add("cedula", typeof(string));
             dt.Columns.Add("perfil", typeof(string));
@@ -299,6 +351,7 @@ namespace Opiniometro_WebApp.Controllers
         private DataTable crearTablaPersonaBD()
         {
             DataTable dt = new DataTable();
+            dt.TableName = "Persona";
             dt.Columns.Add("cedula", typeof(System.Data.SqlTypes.SqlChars));
             dt.Columns.Add("nombre1", typeof(System.Data.SqlTypes.SqlChars));           
             dt.Columns.Add("nombre2", typeof(System.Data.SqlTypes.SqlChars));           
@@ -318,6 +371,7 @@ namespace Opiniometro_WebApp.Controllers
         private DataTable crearTablaUsuarioBD()
         {
             DataTable dt = new DataTable();
+            dt.TableName = "Usuario";
             dt.Columns.Add("correo", typeof(System.Data.SqlTypes.SqlChars));
             dt.Columns.Add("contrasena", typeof(System.Data.SqlTypes.SqlChars));
             dt.Columns.Add("activo", typeof(System.Data.SqlTypes.SqlBoolean));
