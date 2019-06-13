@@ -8,6 +8,7 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")﻿
 @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")﻿
+@Scripts.Render("~/Scripts/AsignarFormularios.js")
 
 <div>
     <h1 align="center">Asignación de herramientas de evaluación</h1>
@@ -149,8 +150,8 @@
             </div>*@
 
         <div align='center'>
-            <input type="submit" value="Asignar" />
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalReporte">Reporte de asignaciones</button>
+            <input type="submit" id="boton-asignar" value="Asignar" />
+            <button type="button" style="display:none" id ="boton-abrir-modal" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalReporte">Reporte de asignaciones</button>
         </div>
 
 
@@ -167,8 +168,6 @@
                     </div>
 
                     <div class="modal-body">
-                        <p>Mostrar aquí los grupos y los formularios.</p>
-
                         <div id="asign-content">
                             @Html.Partial("AsignacionFormularioGrupo", Model.GruFormsSeleccionados)
                         </div>
