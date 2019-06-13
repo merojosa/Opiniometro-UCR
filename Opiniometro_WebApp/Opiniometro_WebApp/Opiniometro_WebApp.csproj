@@ -19,8 +19,8 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
@@ -191,6 +191,9 @@
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AsignarFormulariosModel.cs" />
+    <Compile Include="Models\Canton.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
@@ -207,7 +210,13 @@
     <Compile Include="Models\Curso.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\C__RefactorLog.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DatosEstudiante_Result.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Distrito.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Empadronado.cs">
@@ -280,6 +289,9 @@
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Profesor.cs">
+      <DependentUpon>OpiniometroModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Provincia.cs">
       <DependentUpon>OpiniometroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Responde.cs">

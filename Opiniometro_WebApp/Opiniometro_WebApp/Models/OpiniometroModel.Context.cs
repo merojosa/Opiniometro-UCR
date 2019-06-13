@@ -27,12 +27,15 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Administrativo> Administrativo { get; set; }
+        public virtual DbSet<Canton> Canton { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
         public virtual DbSet<Ciclo_Lectivo> Ciclo_Lectivo { get; set; }
         public virtual DbSet<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
         public virtual DbSet<Curso> Curso { get; set; }
+        public virtual DbSet<Distrito> Distrito { get; set; }
         public virtual DbSet<Empadronado> Empadronado { get; set; }
         public virtual DbSet<Enfasis> Enfasis { get; set; }
         public virtual DbSet<Estudiante> Estudiante { get; set; }
@@ -50,6 +53,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<Posee_Enfasis_Perfil_Permiso> Posee_Enfasis_Perfil_Permiso { get; set; }
         public virtual DbSet<Profesor> Profesor { get; set; }
+        public virtual DbSet<Provincia> Provincia { get; set; }
         public virtual DbSet<Responde> Responde { get; set; }
         public virtual DbSet<Seccion> Seccion { get; set; }
         public virtual DbSet<Seleccion_Unica> Seleccion_Unica { get; set; }
@@ -237,6 +241,29 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Correo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ExistenciaCorreo", correoParameter, resultado);
+        }
+    
+        public virtual int SP_GenerarContrasena(ObjectParameter resultado)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_GenerarContrasena", resultado);
+        }
+    
+        public virtual int SP_GenerarContrasenaHash(Nullable<System.Guid> id, string contrasena, ObjectParameter contrasenaHash)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(System.Guid));
+    
+            var contrasenaParameter = contrasena != null ?
+                new ObjectParameter("contrasena", contrasena) :
+                new ObjectParameter("contrasena", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_GenerarContrasenaHash", idParameter, contrasenaParameter, contrasenaHash);
+        }
+    
+        public virtual int SP_GenerarIdUnico(ObjectParameter id)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_GenerarIdUnico", id);
         }
     
         public virtual int SP_LoginUsuario(string correo, string contrasenna, ObjectParameter resultado)

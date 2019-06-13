@@ -670,17 +670,15 @@ CREATE PROCEDURE SP_GenerarContrasena
 @resultado	NVARCHAR(10) OUTPUT 
 AS
 BEGIN
-	DECLARE @Resultado NVARCHAR(10);
-	DECLARE @InfoBinario VARBINARY(10);
-	DECLARE @DatosCaracteres NVARCHAR(10);
+	DECLARE @contrasenaRandom NVARCHAR(10);
+	DECLARE @infoBinario VARBINARY(10);
+	DECLARE @datosCaracteres NVARCHAR(10);
 
-	SELECT @InfoBinario = randomvalue FROM ValorRandom;
+	SELECT @infoBinario = randomvalue FROM ValorRandom;
 
-	SET @DatosCaracteres = CAST ('' as xml).value('xs:base64Binary(sql:variable("@InfoBinario"))', 'varchar (max)');
+	SET @datosCaracteres = CAST ('' as xml).value('xs:base64Binary(sql:variable("@InfoBinario"))', 'varchar (max)');
 
-	SET @Resultado = @DatosCaracteres;
-
-	--RETURN @Resultado;
+	SET @contrasenaRandom = @datosCaracteres;
 
 END
 GO
@@ -701,7 +699,7 @@ GO
 IF OBJECT_ID('SP_GenerarContrasenaHash') IS NOT NULL
 	DROP PROCEDURE SP_GenerarContrasenaHash
 GO
-CREATE PROCEDURE SP_GenerarContrasenaHashxxx
+CREATE PROCEDURE SP_GenerarContrasenaHash
 @id	UNIQUEIDENTIFIER,
 @contrasena	NVARCHAR(10),
 @contrasenaHash NVARCHAR(50) OUTPUT
