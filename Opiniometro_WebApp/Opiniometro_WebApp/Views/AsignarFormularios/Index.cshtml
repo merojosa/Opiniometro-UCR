@@ -5,12 +5,14 @@
 }
 
 @Styles.Render("~/Content/scrollbar-tabla.css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")﻿
+@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")﻿
 <link href="~/Content/filtroAsig.css" rel="stylesheet" />
 
 <div>
     <h1 align="center">Asignación de herramientas de evaluación</h1>
 </div>
-
 
 <div class="container">
     <div class="row">
@@ -20,7 +22,7 @@
                 <div class="panel-body">
 
                     <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
-                   @using (Html.BeginForm())
+                    @using (Html.BeginForm())
                     {
                         <!-- Buscador -->
                         <p>
@@ -47,19 +49,13 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
-            <span>Búsqueda de formularios</span>
-        </div>
     </div>
-
-
-
-    @using (Html.BeginForm("Asignar", "AsignarFormularios", FormMethod.Post))
-    {
-        <div class="row">
+    <div class="row">
+        @using (Html.BeginForm("Asignar", "AsignarFormularios", FormMethod.Post))
+        {
             <div class="col-sm-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h3>Resultados:</h3></div>
+                    <div class="panel-heading"><h3>Grupos</h3></div>
                     <div class="panel-body">
 
                         @*Tabla de grupos*@
@@ -93,38 +89,28 @@
 
                 </div>
             </div>
+        }
+
+        <div class="col-sm-4">
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3>Formularios</h3></div>
+                <div class="panel-body">
 
 
+                    @using (Ajax.BeginForm("SeleccionFormularios", "AsignarFormularios", new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "form-content" }))
+                    {
+                        @Html.TextBox("formulario", "", new { placeholder = "Nombre del formulario" })
+                        <input type="submit" value="Buscar" />
+                        <div id="form-content">
+                            @Html.Partial("SeleccionFormularios", Model.Formularios)
+                        </div>
+                    }
 
-            <div class="col-sm-4">
-
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h3>Tus formularios</h3></div>
-                    <div class="panel-body">
-
-                        <table class="table">
-                            <!-- Tabla para mostrar los formularios -->
-                            <tr></tr>
-                            @foreach (var item in Model.Formularios)
-                            {
-                                <tr>
-
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Nombre)
-
-                                    <td>
-                                        <!-- checkbox para elegir formulario-->
-                                        <div align='center'><input type="checkbox" name="Formulario" value="Formulario"></div><br>
-                                </tr>
-                            }
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
+        
 
-        <div align='center'>
-            <input type="submit" name="Asignar" id="Asignar" value="Asignar" />
-        </div>
-    }
 </div>
