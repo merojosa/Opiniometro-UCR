@@ -26,9 +26,9 @@ namespace Opiniometro_WebApp.Models
     {
     }
 
-    //[MetadataType(typeof(CrearFormularioMetadata))]
-    //public partial class CrearFormulario
-    //{
+    [MetadataType(typeof(CrearFormularioMetadata))]
+    public partial class CrearFormulario
+    {
 
-    //}
+    }
 }
