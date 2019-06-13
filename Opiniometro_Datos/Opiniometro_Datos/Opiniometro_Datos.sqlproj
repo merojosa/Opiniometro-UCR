@@ -101,7 +101,9 @@
     <None Include="FiltrarUsuarios.sql" />
     <None Include="Script.EliminarPersona.sql" />
     <Build Include="Tiene_Usuario_Perfil_Enfasis.sql" />
-    <Build Include="UsuariosStaging.sql" />
+    <Build Include="SP_SelectAnno.sql" />
+    <Build Include="SP_SelectSemestre.sql" />
+    <Build Include="SP_ObtenerFormulario.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ScriptGenerarContrasena.sql" />
