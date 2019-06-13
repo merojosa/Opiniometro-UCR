@@ -26,7 +26,7 @@
                     Orden_Seccion: $("#Orden_Seccion").val(),
                     Orden_Item: $("#Orden_Item").val(),
                     Titulo: $("input:radio[name=seccion]:checked").val(),
-                    ItemId: $("#item").val()
+                    ItemId: $("input:radio[name=item]:checked").val()
                     },
                     //success(function(data) {
                     //    $('#ConformadosID').html(result);
@@ -124,7 +124,7 @@
                         {
                             <tr>
                                 <td>
-                                    <input type="checkbox" class="chcktbl" name="item" id="item" value="@item.ItemId" />
+                                    <input type="radio"  name="item" id="item" value="@item.ItemId" />
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ItemId)
