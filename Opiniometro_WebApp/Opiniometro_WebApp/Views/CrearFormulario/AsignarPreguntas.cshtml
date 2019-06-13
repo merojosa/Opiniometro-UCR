@@ -23,9 +23,10 @@
                     url: "AgregarConformado", // Controller/View
                 data: { //Passing data
                     codigoFormulario:  @Html.Raw(Json.Encode(Model.Formulario.CodigoFormulario)),
+                    nombreFormulario:  @Html.Raw(Json.Encode(Model.Formulario.Nombre)),
                     Orden_Seccion: $("#Orden_Seccion").val(),
                     Orden_Item: $("#Orden_Item").val(),
-                    Titulo: $("input:radio[name=seccion]:checked").val(),
+                    TituloSeccion: $("input:radio[name=seccion]:checked").val(),
                     ItemId: $("input:radio[name=item]:checked").val()
                     },
                     //success(function(data) {
