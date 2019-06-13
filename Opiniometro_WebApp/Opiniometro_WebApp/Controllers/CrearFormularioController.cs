@@ -76,12 +76,12 @@ namespace Opiniometro_WebApp.Controllers
             return PartialView(secciones);
         }
         // Metodo para poder validar si un numero esta disponible. 
-        public JsonResult IsOrden_ItemAvaible(int Orden_Item)
+        public JsonResult IsOrden_ItemAvailable(int Orden_Item)
         {
             return Json(!db.Conformado_Item_Sec_Form.Any(pregunta => pregunta.Orden_Item == Orden_Item), JsonRequestBehavior.AllowGet);
 
         }
-        public JsonResult IsOrden_SeccionAvaible(int Orden_Seccion)
+        public JsonResult IsOrden_SeccionAvailable(int Orden_Seccion)
         {
             return Json(!db.Conformado_Item_Sec_Form.Any(pregunta => pregunta.Orden_Seccion == Orden_Seccion), JsonRequestBehavior.AllowGet);
 
