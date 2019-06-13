@@ -184,6 +184,7 @@
     <Compile Include="Controllers\Servicios\IdentidadManager.cs" />
     <Compile Include="Controllers\RespondeController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
+    <Compile Include="Controllers\SeleccionFormulariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -204,9 +205,6 @@
     </Compile>
     <Compile Include="Models\CrearFormularioModel.cs" />
     <Compile Include="Models\Curso.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CursosSegunCarrera_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__RefactorLog.cs">
@@ -365,6 +363,8 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -433,9 +433,11 @@
     <Content Include="Views\CrearFormulario\AsignarPreguntas.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ElegirGrupoEditorViewModel.cshtml" />
     <Content Include="Views\Auth\Permisos.cshtml" />
+    <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
+    <Folder Include="Views\SeleccionFormularios\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>

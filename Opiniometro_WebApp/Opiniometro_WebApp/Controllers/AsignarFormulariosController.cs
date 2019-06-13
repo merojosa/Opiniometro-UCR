@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
+using System.Diagnostics;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -13,8 +14,8 @@ namespace Opiniometro_WebApp.Controllers
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
         // Para la vista completa
-        public ActionResult Index(/*short anno, byte semestre, String codigoUnidadAcadem, 
-            String siglaCarrera, byte? numEnfasis, String siglaCurso,*/ string searchString)
+        [HttpGet]
+        public ActionResult Index()
         {
             var modelo = new AsignarFormulariosViewModel
             {
@@ -27,11 +28,11 @@ namespace Opiniometro_WebApp.Controllers
                 Formularios = ObtenerFormularios("")
             };
 
-            return View(modelo);
+            return View("Index", modelo);
         }
 
         [HttpPost]
-        public ActionResult Index(string unidadAcademica, string nombreCarrera, string nombreCurso, string searchString, string formSearchString)
+        public ActionResult Index(string unidadAcademica, string nombreCarrera, string nombreCurso, string searchString)
         {
             var modelo = new AsignarFormulariosViewModel
             {
@@ -59,7 +60,10 @@ namespace Opiniometro_WebApp.Controllers
         // Para el filtro por ciclos
         public IQueryable<Ciclo_Lectivo> ObtenerCiclos(String codigoUnidadAcadem)
         {
-            return new List<Ciclo_Lectivo>().AsQueryable();
+            IQueryable<Ciclo_Lectivo> ciclo = (from c in db.Ciclo_Lectivo select c);
+            //ViewBag.semestre = new SelectList(ciclo, "Semestre", "Semestre");
+            // ViewBag.ano = new SelectList(ciclo, "Anno", "Anno");
+            return ciclo;
         }
 
         public IQueryable<Unidad_Academica> ObtenerUnidadAcademica(short anno, byte semestre, String codigoUnidadAcadem)
@@ -216,9 +220,21 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // Para la vista de los formularios
-        public List<Formulario> ObtenerFormularios(string searchString)
+        public List<Formulario> ObtenerFormularios()
         {
-            return db.Formulario.Where(f => f.Nombre.Contains(searchString) || f.CodigoFormulario.Contains(searchString)).ToList();
+            return db.Formulario.ToList();
+        }
+
+        public ActionResult SeleccionFormularios(string formulario)
+        {
+            IQueryable<Formulario> form = from f in db.Formulario select f;
+
+            if (!String.IsNullOrEmpty(formulario))
+            {
+                form = form.Where(f => f.Nombre.Contains(formulario));
+            }
+
+            return PartialView("SeleccionFormularios", form);
         }
     }
 }
