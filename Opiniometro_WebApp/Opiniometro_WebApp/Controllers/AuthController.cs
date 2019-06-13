@@ -59,24 +59,27 @@ namespace Opiniometro_WebApp.Controllers
 
             string correo_autenticado = IdentidadManager.obtener_correo_actual();
 
-            // Recibir el perfil por default
-
             if (correo_autenticado != null)      // Si esta autenticado
             {
                 return RedirectToAction("Index", "Home");
             }
-            else if ((bool)exito.Value == true) // Si se pudo autenticar.
+            else if ((bool)exito.Value == true) // Si se pudo autenticar (correo y contrasenna validos).
             {
+                // Creo una entidad solo con el correo, falta elegir perfil.
                 var identidad = new ClaimsIdentity(
                     new[] {
                     new Claim(ClaimTypes.Email, usuario.CorreoInstitucional),
                     },
                     DefaultAuthenticationTypes.ApplicationCookie);
 
+                // Elimino cualquier cookie o session para no retener nada que no se va usar (preventivo).
+                eliminar_privilegios(this);
+
+                // Guardo la identidad para poder accederla desde cualquier otro sitio.
                 Thread.CurrentPrincipal = new ClaimsPrincipal(identidad);
                 HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, identidad);
 
-                // Guardar el objeto IdentidadManager, la llave seria el correo, el cual es unico para cada usuario.
+                // Creo objeto IdentidadManager, la llave (para acceder al objeto) seria el correo, el cual es unico para cada usuario.
                 Session[usuario.CorreoInstitucional] = new IdentidadManager();
                 
                 return RedirectToAction("Index", "Perfil");
@@ -107,7 +110,7 @@ namespace Opiniometro_WebApp.Controllers
         public static void eliminar_privilegios(Controller controlador)
         {
             // En caso de que no exista sesion, no tiene por que hacer algo.
-           // if (IdentidadManager.verificar_sesion(controlador))
+            if (IdentidadManager.verificar_sesion(controlador))
             {
                 string correo = IdentidadManager.obtener_correo_actual();               // Obtengo el correo para obtener la sesion.
                 ((IdentidadManager)controlador.Session[correo]).limpiar_permisos();     // Limpio los permisos.
