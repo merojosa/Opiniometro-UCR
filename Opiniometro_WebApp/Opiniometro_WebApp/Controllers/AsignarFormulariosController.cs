@@ -25,7 +25,7 @@ namespace Opiniometro_WebApp.Controllers
                 Enfasis = ObtenerEnfasis(0, 0, "", ""),
                 Cursos = ObtenerCursos(0, 0, "", "", null, "", ""),
                 Grupos = ObtenerGrupos(0, 0, "", "", "", "", 255, "", "" ,""),
-                Formularios = ObtenerFormularios("")
+                Formularios = ObtenerFormularios()
             };
 
             return View("Index", modelo);
@@ -40,7 +40,7 @@ namespace Opiniometro_WebApp.Controllers
                 Carreras = ObtenerCarreras(0, 0, "", Request.Form["changeUnidad"]),
                 Grupos = ObtenerGrupos(0, 0, "", unidadAcademica, "", nombreCarrera, 255, "",nombreCurso, searchString),
                 Cursos = ObtenerCursos(0, 0, "", "", null, Request.Form["changeUnidad"], Request.Form["changeCarrera"]),
-                Formularios = ObtenerFormularios(formSearchString)
+                Formularios = ObtenerFormularios()
                
             };
             return View(modelo);

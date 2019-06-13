@@ -14,70 +14,65 @@
 </div>
 
 <div class="container">
-   
-    <div class="row">
-        <div class="col-sm-8">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h3>Buscar grupos</h3></div>
-                <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3>Buscar grupos</h3></div>
+                    <div class="panel-body">
 
 
 
-                    <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
-                    @using (Html.BeginForm())
-                    {
-                    <!-- Buscador -->
-                    <p>
-                        <div>
-                            <!--Toman el valor del dropdown list seleccionado-->
-                            @Html.Hidden("changeUnidad", null)
-                            @Html.Hidden("changeCarrera", null)
-                            @Html.Hidden("changeCurso", null)
-
-                            <!--Desplegables para los filtros-->
-                            <label>Unidad Academica:</label> @Html.DropDownList("unidadAcademica", null, "<Seleccione Unidad Académica>
-                                ", new { @class = "form-control", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" })
-                                <label> Carreras: </label> @Html.DropDownList("nombreCarrera", null, "<Seleccione Carrera>
-                                    ", new { @class = "form-control", @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" })
-                                    <label> Cursos: </label> @Html.DropDownList("nombreCurso", null, "<Seleccione Curso>
-                                        ", new { @class = "form-control", })
-                                        @* <label> Semestre: </label> @Html.DropDownList("semestre", null, "<Seleccione Semestre>
-                                            ", new { @class = "form-control" })*@
-                                            @* <label> Año: </label> @Html.DropDownList("ano", null, "<Seleccione Año>
-                                                ", new { @class = "form-control" })<br />*@
-
-                                                <!--Campo de busqueda-->
-                                                @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
-                                                <input type="submit" value="Buscar" />
-                        </div>
-                    </p>
-
-
-                </div>
-        </div>
-    </div>
-    <div class="col-sm-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3>Buscar formularios</h3>
-            </div>
-            <div class="panel-body">
-                @Html.TextBox("FormSearchString", "", new { placeholder = "Nombre del formulario" })
-                <input type="submit" value="Buscar formularios" />
-            </div>
-        </div>
-    </div>
-</div>
-    }
-
-
-                        @using (Html.BeginForm("Asignar", "AsignarFormularios", FormMethod.Post))
+                        <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
+                        <!-- Buscador -->
+                        @using (Html.BeginForm())
                         {
-<div class="row">
-    <div class="col-sm-8">
-        <div class="panel panel-default">
-            <div class="panel-heading"><h3>Grupos</h3></div>
-            <div class="panel-body">
+                            <p>
+                                <div>
+                                    <!--Toman el valor del dropdown list seleccionado-->
+                                    @Html.Hidden("changeUnidad", null)
+                                    @Html.Hidden("changeCarrera", null)
+                                    @Html.Hidden("changeCurso", null)
+
+                                    <!--Desplegables para los filtros-->
+                                    <label>Unidad Academica:</label> @Html.DropDownList("unidadAcademica", null, "<Seleccione Unidad Académica>", new { @class = "form-control", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" })
+                                    <label> Carreras: </label> @Html.DropDownList("nombreCarrera", null, "<Seleccione Carrera>", new { @class = "form-control", @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" })
+                                    <label> Cursos: </label> @Html.DropDownList("nombreCurso", null, "<Seleccione Curso>", new { @class = "form-control", })
+                                    @* <label> Semestre: </label> @Html.DropDownList("semestre", null, "<Seleccione Semestre> ", new { @class = "form-control" })*@
+                                    @* <label> Año: </label> @Html.DropDownList("ano", null, "<Seleccione Año>", new { @class = "form-control" })<br />*@
+
+                                    <!--Campo de busqueda-->
+                                    @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
+                                    <input type="submit" value="Buscar" />
+
+                                </div>
+                            </p>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>Buscar formularios</h3>
+                    </div>
+                    <div class="panel-body">
+                        @Html.TextBox("FormSearchString", "", new { placeholder = "Nombre del formulario" })
+                        <input type="submit" value="Buscar formularios" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+
+    @using (Html.BeginForm("Asignar", "AsignarFormularios", FormMethod.Post))
+    {
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3>Grupos</h3></div>
+                    <div class="panel-body">
 
                         @*Tabla de grupos*@
 
@@ -110,28 +105,28 @@
 
                 </div>
             </div>
-        }
+            }
 
-        <div class="col-sm-4">
+            
 
-            <div class="panel panel-default">
-                <div class="panel-heading"><h3>Formularios</h3></div>
-                <div class="panel-body">
+            <div class="col-sm-4">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3>Formularios</h3></div>
+                    <div class="panel-body">
 
 
-                    @using (Ajax.BeginForm("SeleccionFormularios", "AsignarFormularios", new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "form-content" }))
-                    {
-                        @Html.TextBox("formulario", "", new { placeholder = "Nombre del formulario" })
-                        <input type="submit" value="Buscar" />
-                        <div id="form-content">
-                            @Html.Partial("SeleccionFormularios", Model.Formularios)
-                        </div>
-                    }
+                        @using (Ajax.BeginForm("SeleccionFormularios", "AsignarFormularios", new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "form-content" }))
+                        {
+                            @Html.TextBox("formulario", "", new { placeholder = "Nombre del formulario" })
+                            <input type="submit" value="Buscar" />
+                            <div id="form-content">
+                                @Html.Partial("SeleccionFormularios", Model.Formularios)
+                            </div>
+                        }
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-        
-
-</div>
+    

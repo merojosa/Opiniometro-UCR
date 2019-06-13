@@ -42,7 +42,6 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Formulario> Formulario { get; set; }
         public virtual DbSet<Formulario_Respuesta> Formulario_Respuesta { get; set; }
         public virtual DbSet<Grupo> Grupo { get; set; }
-        public virtual DbSet<Imparte> Imparte { get; set; }
         public virtual DbSet<Item> Item { get; set; }
         public virtual DbSet<Matricula> Matricula { get; set; }
         public virtual DbSet<Opciones_De_Respuestas_Seleccion_Unica> Opciones_De_Respuestas_Seleccion_Unica { get; set; }
@@ -60,6 +59,15 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Tiene_Usuario_Perfil_Enfasis> Tiene_Usuario_Perfil_Enfasis { get; set; }
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+    
+        public virtual ObjectResult<CursosSegunCarrera_Result> CursosSegunCarrera(string siglaCarrera)
+        {
+            var siglaCarreraParameter = siglaCarrera != null ?
+                new ObjectParameter("siglaCarrera", siglaCarrera) :
+                new ObjectParameter("siglaCarrera", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CursosSegunCarrera_Result>("CursosSegunCarrera", siglaCarreraParameter);
+        }
     
         public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)
         {
@@ -297,15 +305,6 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Perfil", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ObtenerPermisosUsuario_Result>("SP_ObtenerPermisosUsuario", correoParameter, perfilParameter);
-        }
-    
-        public virtual ObjectResult<CursosSegunCarrera_Result> CursosSegunCarrera(string siglaCarrera)
-        {
-            var siglaCarreraParameter = siglaCarrera != null ?
-                new ObjectParameter("siglaCarrera", siglaCarrera) :
-                new ObjectParameter("siglaCarrera", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CursosSegunCarrera_Result>("CursosSegunCarrera", siglaCarreraParameter);
         }
     }
 }
