@@ -14,6 +14,26 @@ namespace Opiniometro_WebApp.Controllers
 {
     public class PerfilController : Controller
     {
+        [Authorize]
+        public ActionResult Index()
+        {
+            Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+            string correo_autenticado = IdentidadManager.obtener_correo_actual();
+            //ICollection<String> perfiles;
+            //perfiles = db.ObtenerPerfilUsuario(correo_autenticado).ToList();
+            PerfilesUsuario model = new PerfilesUsuario();
+            model.ListaPerfiles = db.ObtenerPerfilUsuario(correo_autenticado).ToList();
+            return View(model);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult Index(PerfilesUsuario model)
+        {
+            return CambioPerfil(model.perfilSeleccionado);
+        }
+
         // GET: Perfil
         public ActionResult CambioPerfil(string perfil_elegido)
         {
@@ -45,7 +65,6 @@ namespace Opiniometro_WebApp.Controllers
         public static ICollection<String> ObtenerPerfiles()
         {
             Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
-
             string correo_autenticado = IdentidadManager.obtener_correo_actual();
             ICollection<String> perfiles;
             perfiles = db.ObtenerPerfilUsuario(correo_autenticado).ToList();
