@@ -41,7 +41,11 @@ namespace Opiniometro_WebApp.Controllers
         }
 
 
-
+        /*
+         * EFECTO:
+         * REQUIERE:
+         * MODIFICA:
+         */
         [HttpPost]
         public ActionResult CargarArchivo(HttpPostedFileBase postedFile)
         {
@@ -81,7 +85,11 @@ namespace Opiniometro_WebApp.Controllers
         }
 
 
-
+        /*
+         * EFECTO: Lee y procesa archivo csv subido por el usuario.
+         * REQUIERE: Un archivo subido por el usuario.
+         * MODIFICA: 
+         */
         private DataTable ProcesarArchivo(string path)
         {
             DataTable filasValidas = crearTablaUsuarios();
@@ -152,7 +160,11 @@ namespace Opiniometro_WebApp.Controllers
             return filasInvalidas;
         }
 
-
+        /*
+         * EFECTO: Revisa el contenido de los datos provisionados en el archivo csv.
+         * REQUIERE:
+         * MODIFICA:
+         */
         private void verificacionContenidoTuplasValidas(DataTable filasValidas, DataTable filasInvalidas,long numeroFilasLeidas)
         {
             throw new NotImplementedException();
@@ -162,10 +174,13 @@ namespace Opiniometro_WebApp.Controllers
 
         }
 
+        /*
+         * EFECTO: Clasifica y dispersa los datos de la tabla en memoria filasValidas. 
+         * REQUIERE: Tabla en memoria que contiene los datos provisionados en el archivo csv,
+         * MODIFICA: n/a
+         */
         private int multicastDatosProvisionados(DataTable filasValidas, DataTable personaBD, DataTable usuarioBD)
         {
-            DataRow rd = filasValidas.NewRow();
-
             /*
                  * Orden de insercion
                  *
@@ -228,11 +243,18 @@ namespace Opiniometro_WebApp.Controllers
             return 1;
 
         }
+
+        /*
+         * EFECTO: Realiza una insercion en bloque en una tabla de base de datos.
+         * REQUIERE: Conexion instanciada y abierta hacia la base de datos. Una tabla en memoria que previamente haya sido llenada con los nuevos valores a guardar en la base de datos.
+         * MODIFICA: Agrega tuplas en una tabla en la base de datos. 
+         */
         private void insercionEnBloque(DataTable tablaAInsertar)
         {
             string hileraConexion = ConfigurationManager.ConnectionStrings["Opiniometro_DatosEntities"].ConnectionString;
             using (SqlConnection conexionBD = new SqlConnection(hileraConexion))
             {
+                conexionBD.Open();
                 using (SqlBulkCopy insercionEnBloque = new SqlBulkCopy(conexionBD))
                 {
                     insercionEnBloque.DestinationTableName = tablaAInsertar.TableName;
@@ -273,8 +295,13 @@ namespace Opiniometro_WebApp.Controllers
                 break;
             }
         }
-        
 
+
+        /*
+         * EFECTO: Realiza un mapeo de las columnas de las tablas en memoria con las columnas de las tablas en la base de datos. 
+         * REQUIERE: Conexion instanciada y abierta hacia la base de datos.
+         * MODIFICA: n/a
+         */
         private void mapearColumnasATablaDeDestino(string tableName, SqlBulkCopy insercionEnBloque)
         {
             switch (tableName)
@@ -302,6 +329,11 @@ namespace Opiniometro_WebApp.Controllers
         }
 
 
+        /*
+         * EFECTO: Agrega una fila incorrecta en la tabla de filas invalidas.
+         * REQUIERE: n/a
+         * MODIFICA: n/a
+         */
         private void AgregarTuplaInvalida(string filaLeida, Exception exception, DataTable filasInvalidas, int numeroFilasLeidas)
         {
             DataRow filaInvalida = filasInvalidas.NewRow();
@@ -323,6 +355,11 @@ namespace Opiniometro_WebApp.Controllers
             filaInvalida["enfasis"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["enfasis"];
         }
 
+        /*
+         * EFECTO: Retorna tabla en memoria con un esquema basico. Utilizado para almacenar filas del archivo que preeliminarmente estan correctas.
+         * REQUIERE: n/a
+         * MODIFICA: n/a
+         */
         private DataTable crearTablaUsuarios()
         {
             DataTable dt = new DataTable();
@@ -386,7 +423,11 @@ namespace Opiniometro_WebApp.Controllers
 
 
 
-
+        /*
+         * EFECTO: Retorna una tabla en memoria sin esquema para guardar las filas incorrectas provisionadas en el archivo csv.
+         * REQUIERE: n/a
+         * MODIFICA: n/a
+         */
         private DataTable crearTablaUsuariosInvalidos()
         {
             DataTable dt = new DataTable();
@@ -412,6 +453,12 @@ namespace Opiniometro_WebApp.Controllers
             return dt;
         }
 
+
+        /*
+         * EFECTO: Retorna una tabla en memoria con el esquema de la tabla Persona de la base de datos.
+         * REQUIERE: n/a
+         * MODIFICA: n/a
+         */
         private DataTable crearTablaPersonaBD()
         {
             DataTable dt = new DataTable();
@@ -432,6 +479,13 @@ namespace Opiniometro_WebApp.Controllers
             return dt;
         }
 
+
+
+        /*
+         * EFECTO: retorna una tabla en memoria con el esquema de la tabla Usuario de la base de datos.
+         * REQUIERE: n/a
+         * MODIFICA: n/a
+         */
         private DataTable crearTablaUsuarioBD()
         {
             DataTable dt = new DataTable();
@@ -441,6 +495,13 @@ namespace Opiniometro_WebApp.Controllers
             dt.Columns.Add("activo", typeof(System.Data.SqlTypes.SqlBoolean));
             dt.Columns.Add("cedula", typeof(System.Data.SqlTypes.SqlChars));
             dt.Columns.Add("id", typeof(System.Data.SqlTypes.SqlGuid));
+
+            dt.Columns[0].AllowDBNull = false;
+            dt.Columns[1].AllowDBNull = false;
+            dt.Columns[2].AllowDBNull = false;
+            dt.Columns[3].AllowDBNull = false;
+            dt.Columns[4].AllowDBNull = false;
+
             return dt;
         }
     }

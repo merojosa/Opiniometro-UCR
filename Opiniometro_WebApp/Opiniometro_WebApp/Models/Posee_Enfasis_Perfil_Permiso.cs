@@ -19,7 +19,6 @@ namespace Opiniometro_WebApp.Models
         public string IdPerfil { get; set; }
         public short IdPermiso { get; set; }
     
-        public virtual Enfasis Enfasis { get; set; }
         public virtual Perfil Perfil { get; set; }
         public virtual Permiso Permiso { get; set; }
     }
