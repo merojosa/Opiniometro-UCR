@@ -31,7 +31,7 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string selectcurso, string selectsemestre, string selectanno, string selecgrupo)
+        public ActionResult Index(String selectcurso, String selectsemestre, String selectanno, String selecgrupo)
         {
             ViewBag.CursoID = new SelectList(db.Curso, "Sigla", "Nombre");
             var semestres = (from sem in db.Ciclo_Lectivo select sem.Semestre).AsEnumerable().Distinct();
@@ -64,11 +64,9 @@ namespace Opiniometro_WebApp.Controllers
                     formularios = formularios.Where(f => f.NumeroGrupoResp.Equals(Int32.Parse(selecgrupo)));
                 }
                 List<Formulario> formulariosfiltrados = new List<Formulario>();
-                foreach (var f in formulariosfiltrados)
+                foreach (var f in formularios)
                 {
-                    Formulario nuevo = new Formulario();
-                    nuevo.CodigoFormulario = f.CodigoFormulario;
-                    nuevo.Nombre = (db.SP_ObtenerFormulario(f.CodigoFormulario)).ToString();
+                    Formulario nuevo = db.Formulario.Find(f.CodigoFormularioResp);
 
                     formulariosfiltrados.Add(nuevo);
                 }
