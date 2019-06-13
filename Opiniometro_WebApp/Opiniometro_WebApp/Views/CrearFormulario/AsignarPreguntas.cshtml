@@ -3,6 +3,11 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@* Inclusiones necesarias para poder hacer validaciones *@
+<link href="~/Content/Site.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
@@ -11,14 +16,14 @@
         codigoFormulari = Model.Formulario.codigoFormulario
     };
 
-    $(document).ready(function () {       
+    $(document).ready(function () {
         $("#btnSave").click(function () {
             $.ajax(
-            {
-                type: "POST", //HTTP POST Method
+                {
+                    type: "POST", //HTTP POST Method
                     url: "AgregarConformado", // Controller/View
-                data: { //Passing data
-                    
+                    data: { //Passing data
+
                     },
                     success(function() {
                         $('#ConformadosID').html(result);
@@ -26,17 +31,38 @@
 
             });
 
-        });
+    });
     });
 
 </script>
 
 <div id="content">
+
     <div class="row">
-        <div class="col-sm-4" ><h4><strong >Codigo:</strong> @Model.Formulario.CodigoFormulario </h4></div>
+        <div class="col-sm-4"><h4><strong>Codigo:</strong> @Model.Formulario.CodigoFormulario </h4></div>
         <div class="col-sm-8"><h4><strong>Nombre:</strong> @Model.Formulario.Nombre</h4></div>
     </div>
-    <button id="btnSave" name="btnSave" >GUARDAR</button>
+    @*Caja para colocar el numero.*@
+    <div class="row">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Orden_Item, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Orden_Item, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Orden_Item, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Orden_Seccion, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-20">
+                    @Html.EditorFor(model => model.Orden_Seccion, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Orden_Seccion, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="btnSave" name="btnSave">GUARDAR</button>
     <div class="row">
         <table class="table table-bordered table-striped">
             <tr>
@@ -88,7 +114,7 @@
             {
                 <tr>
                     <td>
-                        <input type="checkbox" class="chcktbl"  name="item" id="item" value="@item.ItemId" />
+                        <input type="checkbox" class="chcktbl" name="item" id="item" value="@item.ItemId" />
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ItemId)
@@ -105,20 +131,15 @@
         </table>
     </div>
     <div class="row" id="ConformadosID">
-        
+
         @Html.Partial("ConformadoVParcial", Model.Conformados)
-        
+
     </div>
 </div>
 
 <thead>
-
     <tr>
-
-
         <td>
-
-
 
             <div>
                 <div style="float: right; width: 500px; padding: 15px;">
@@ -127,9 +148,6 @@
                 </div>
 
                 <div style=" width: 500px; padding:  15px;">
-
-
-
                 </div>
             </div>
 
