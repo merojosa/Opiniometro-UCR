@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Drawing.Drawing2D;
+using System.Dynamic;
 using System.EnterpriseServices;
 using System.Linq;
 using System.Net;
@@ -158,14 +160,24 @@ namespace Opiniometro_WebApp.Controllers
                 {
                     DataRow nuevoUsuario = usuarioBD.NewRow();
                     nuevoUsuario["correo"] = filasValidas.Rows[indexFilasValidas]["correo"];
+                    ObjectParameter contrasenaGenerada = new ObjectParameter("contrasenaGenerada", typeof(System.Data.SqlTypes.SqlChars));
+                    db.SP_GenerarContrasena(contrasenaGenerada);
+                    ObjectParameter guidGenerado = new ObjectParameter("guidGenerado", typeof(System.Data.SqlTypes.SqlGuid));
+                    db.SP_GenerarIdUnico(guidGenerado);
+
+                    System.Guid guid = new Guid(guidGenerado.Value.ToString()); //!HAY QUE REVISAR ESTA LINEA.
+                    ObjectParameter contrasenaHash = new ObjectParameter("contrasenaHash", typeof(System.Data.SqlTypes.SqlChars));
+                    db.SP_GenerarContrasenaHash(guid, contrasenaGenerada.ToString(), contrasenaHash);
                     //System.Data.SqlTypes guid = db.SF
                     //nuevoUsuario["contrasena"]
+                    
                     nuevoUsuario["activo"] = true;
                     nuevoUsuario["cedula"] = filasValidas.Rows[indexFilasValidas]["cedula"];
                     //nuevoUsuario["id"]
+                    
                 }
-                return 1;//}por modificar
 
+                
             }
             
             using (SqlConnection conexionBD = new SqlConnection(hileraConexion))
@@ -188,7 +200,8 @@ namespace Opiniometro_WebApp.Controllers
                  */
 
             }
-            
+
+            return 1;
 
         }
 
