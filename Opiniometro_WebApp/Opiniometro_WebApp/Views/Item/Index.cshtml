@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Opiniometro_WebApp.Models.Item>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<Opiniometro_WebApp.Models.Item>
 @{
     ViewBag.Title = "Banco de Preguntas";
 }
@@ -13,23 +16,23 @@
     <tr>
         <th>
             @Html.Label("Código")
-            @*@Html.DisplayNameFor(model => model.ItemId)*@
+            @*@Html.DisplayNameFor(model => model.First().ItemId)*@
         </th>
         <th>
             @Html.Label("Planteamiento de la pregunta")
-            @*@Html.DisplayNameFor(model => model.TextoPregunta)*@
+            @*@Html.DisplayNameFor(model => model.First().TextoPregunta)*@
         </th>
         <th>
             @Html.Label("Categoría")
-            @*@Html.DisplayNameFor(model => model.Categoria)*@
+            @*@Html.DisplayNameFor(model => model.First().Categoria)*@
         </th>
         <th>
             @Html.Label("Tiene Observación")
-            @*@Html.DisplayNameFor(model => model.TieneObservacion)*@
+            @*@Html.DisplayNameFor(model => model.First().TieneObservacion)*@
         </th>
-
-
-        <th></th>
+        <th>
+            Adicionales
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -73,6 +76,11 @@
     }
 
 </table>
+
+@* This code is used to navigate on the pages *@
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+    new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded,
+        DisplayPageCountAndCurrentLocation = true })
 
 @section scripts{
     <script type="text/javascript">
