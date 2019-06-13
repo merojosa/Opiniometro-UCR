@@ -13,6 +13,17 @@ namespace Opiniometro_WebApp.Controllers
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
+        //prueba para mocking tests
+        public AsignarFormulariosController()
+        {
+            db = new Opiniometro_DatosEntities();
+        }
+
+        public AsignarFormulariosController(Opiniometro_DatosEntities db)
+        {
+            this.db = db;
+        }
+
         // Para la vista completa
         [HttpGet]
         public ActionResult Index()
