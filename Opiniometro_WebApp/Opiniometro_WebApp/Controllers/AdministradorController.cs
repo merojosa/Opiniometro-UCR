@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Drawing.Drawing2D;
 using System.Dynamic;
 using System.EnterpriseServices;
@@ -203,12 +204,13 @@ namespace Opiniometro_WebApp.Controllers
                 Usuario existeUsuario = null;
                 if ((existePersona = db.Persona.Find(filasValidas.Rows[indexFilasValidas]["cedula"])) == null)
                 {
+                    
                     DataRow nuevaPersona = personaBD.NewRow();
-                    nuevaPersona["cedula"] = filasValidas.Rows[indexFilasValidas]["cedula"];
-                    nuevaPersona["nombre1"] = filasValidas.Rows[indexFilasValidas]["nombre1"];
-                    nuevaPersona["apellido1"] = filasValidas.Rows[indexFilasValidas]["apellido1"];
-                    nuevaPersona["apellido2"] = filasValidas.Rows[indexFilasValidas]["apellido2"];
-                    nuevaPersona["direccion_exacta"] = filasValidas.Rows[indexFilasValidas]["direccion_exacta"];
+                    nuevaPersona["cedula"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["cedula"].ToString().ToCharArray());
+                    nuevaPersona["nombre1"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["nombre1"].ToString().ToCharArray());
+                    nuevaPersona["apellido1"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["apellido1"].ToString().ToCharArray());
+                    nuevaPersona["apellido2"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["apellido2"].ToString().ToCharArray());
+                    nuevaPersona["direccion_exacta"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["direccion_exacta"].ToString().ToCharArray());
                     personaBD.Rows.Add(nuevaPersona);
                     personaBD.AcceptChanges();
                 }
@@ -217,7 +219,7 @@ namespace Opiniometro_WebApp.Controllers
                 {
                     DataRow nuevoUsuario = usuarioBD.NewRow();
                     
-                    nuevoUsuario["correo"] = filasValidas.Rows[indexFilasValidas]["correo"];
+                    nuevoUsuario["correo"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["correo"].ToString().ToCharArray());
 
                     //Insercion de un usuario requiere que tenga un contrasena cifrada con un guid
                     ObjectParameter contrasenaGenerada = new ObjectParameter("contrasenaGenerada", typeof(System.Data.SqlTypes.SqlChars));
@@ -228,11 +230,13 @@ namespace Opiniometro_WebApp.Controllers
                     ObjectParameter contrasenaHash = new ObjectParameter("contrasenaHash", typeof(System.Data.SqlTypes.SqlChars));
                     db.SP_GenerarContrasenaHash(guid, contrasenaGenerada.ToString(), contrasenaHash);
 
-                    nuevoUsuario["contrasena"] = contrasenaHash.ToString();
-                    nuevoUsuario["activo"] = true;
-                    nuevoUsuario["cedula"] = filasValidas.Rows[indexFilasValidas]["cedula"];
-                    nuevoUsuario["id"] = guidGenerado.ToString();
+                    nuevoUsuario["contrasena"] = new SqlChars(contrasenaHash.ToString().ToCharArray());
+                    nuevoUsuario["activo"] = new SqlBoolean(true);
+                    nuevoUsuario["cedula"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["cedula"].ToString().ToCharArray());
+                    nuevoUsuario["id"] = new SqlGuid(guidGenerado.ToString());
                     usuarioBD.AcceptChanges();
+
+                    
                 }
 
                 
@@ -254,6 +258,7 @@ namespace Opiniometro_WebApp.Controllers
             string hileraConexion = ConfigurationManager.ConnectionStrings["Opiniometro_DatosEntities"].ConnectionString;
             using (SqlConnection conexionBD = new SqlConnection(hileraConexion))
             {
+                
                 conexionBD.Open();
                 using (SqlBulkCopy insercionEnBloque = new SqlBulkCopy(conexionBD))
                 {
@@ -366,20 +371,20 @@ namespace Opiniometro_WebApp.Controllers
             dt.TableName = "usuarios_validos";
             // Ver documentacion sobre los tipos en https://docs.microsoft.com/en-us/dotnet/api/system.data.sqltypes?view=netframework-4.6.1
             //dt.Columns.Add("cedula", System.Type.GetType("System.Data.SqlTypes.SqlChars"));
-            dt.Columns.Add("cedula", typeof(System.Data.SqlTypes.SqlChars));            //0
-            dt.Columns.Add("perfil", typeof(System.Data.SqlTypes.SqlChars));            //1
-            dt.Columns.Add("carne", typeof(System.Data.SqlTypes.SqlChars));             //2
-            dt.Columns.Add("nombre1", typeof(System.Data.SqlTypes.SqlChars));           //3
-            dt.Columns.Add("nombre2", typeof(System.Data.SqlTypes.SqlChars));           //4
-            dt.Columns.Add("apellido1", typeof(System.Data.SqlTypes.SqlChars));         //5
-            dt.Columns.Add("apellido2", typeof(System.Data.SqlTypes.SqlChars));         //6
-            dt.Columns.Add("correo", typeof(System.Data.SqlTypes.SqlChars));            //7
-            dt.Columns.Add("provincia", typeof(System.Data.SqlTypes.SqlChars));         //8
-            dt.Columns.Add("canton", typeof(System.Data.SqlTypes.SqlChars));            //9
-            dt.Columns.Add("distrito", typeof(System.Data.SqlTypes.SqlChars));          //10
-            dt.Columns.Add("direccion_exacta", typeof(System.Data.SqlTypes.SqlChars));  //11
-            dt.Columns.Add("sigla_carrera", typeof(System.Data.SqlTypes.SqlChars));     //12
-            dt.Columns.Add("enfasis", typeof(System.Data.SqlTypes.SqlByte));            //13
+            dt.Columns.Add("cedula", typeof(string));            //0
+            dt.Columns.Add("perfil", typeof(string));            //1
+            dt.Columns.Add("carne", typeof(string));             //2
+            dt.Columns.Add("nombre1", typeof(string));           //3
+            dt.Columns.Add("nombre2", typeof(string));           //4
+            dt.Columns.Add("apellido1", typeof(string));         //5
+            dt.Columns.Add("apellido2", typeof(string));         //6
+            dt.Columns.Add("correo", typeof(string));            //7
+            dt.Columns.Add("provincia", typeof(string));         //8
+            dt.Columns.Add("canton", typeof(string));            //9
+            dt.Columns.Add("distrito", typeof(string));          //10
+            dt.Columns.Add("direccion_exacta", typeof(string));  //11
+            dt.Columns.Add("sigla_carrera", typeof(string));     //12
+            dt.Columns.Add("enfasis", typeof(byte));            //13
         
             // Estableciendo tamano maximo de las columnas de texto
             dt.Columns[0].MaxLength = 9;
@@ -417,7 +422,7 @@ namespace Opiniometro_WebApp.Controllers
             dt.Columns[11].AllowDBNull = false;
 
             dt.Columns[12].MaxLength = 10;
-            dt.Columns[13].MaxLength = 3; //Need to check if this applies correctly to tiny ints.
+            //dt.Columns[13].MaxLength = 3; //Need to check if this applies correctly to tiny ints.
             return dt;
         }
 
@@ -472,7 +477,7 @@ namespace Opiniometro_WebApp.Controllers
 
             dt.Columns[0].AllowDBNull = false;
             dt.Columns[1].AllowDBNull = false;
-            dt.Columns[2].AllowDBNull = false;
+
             dt.Columns[3].AllowDBNull = false;
             dt.Columns[4].AllowDBNull = false;
             dt.Columns[5].AllowDBNull = false;
