@@ -20,7 +20,6 @@ namespace Opiniometro_WebApp.Models
             this.Formulario_Respuesta = new HashSet<Formulario_Respuesta>();
             this.TelefonoPersona = new HashSet<TelefonoPersona>();
             this.Usuario = new HashSet<Usuario>();
-            this.Distrito = new HashSet<Distrito>();
         }
     
         public string Cedula { get; set; }
@@ -38,7 +37,5 @@ namespace Opiniometro_WebApp.Models
         public virtual ICollection<TelefonoPersona> TelefonoPersona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Distrito> Distrito { get; set; }
     }
 }
