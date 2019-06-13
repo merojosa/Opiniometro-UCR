@@ -1,11 +1,11 @@
 ﻿
-.filtroAsig a {
+.filter a {
     display: inline-block;
     width: 135px;
     height: 30px;
     font-size: 14px;
     color: black;
-    }
+}
 
 input[type=submit] {
     border: 1px  hidden #999;
