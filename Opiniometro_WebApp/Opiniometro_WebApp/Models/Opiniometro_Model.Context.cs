@@ -263,6 +263,15 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, direccionParameter);
         }
     
+        public virtual ObjectResult<string> SP_ObtenerFormulario(string cod)
+        {
+            var codParameter = cod != null ?
+                new ObjectParameter("cod", cod) :
+                new ObjectParameter("cod", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_ObtenerFormulario", codParameter);
+        }
+    
         public virtual ObjectResult<SP_ObtenerPermisosUsuario_Result> SP_ObtenerPermisosUsuario(string correo)
         {
             var correoParameter = correo != null ?
