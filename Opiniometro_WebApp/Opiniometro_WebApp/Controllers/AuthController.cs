@@ -79,7 +79,7 @@ namespace Opiniometro_WebApp.Controllers
                 // Guardar el objeto IdentidadManager, la llave seria el correo, el cual es unico para cada usuario.
                 Session[usuario.CorreoInstitucional] = new IdentidadManager();
                 
-                return RedirectToAction("CambioPerfil", "Perfil", new { perfil_elegido = PerfilController.ObtenerPerfiles().ElementAt(0) });
+                return RedirectToAction("Index", "Perfil");
             }
             else    // Si hay error en la autenticacion
             {
@@ -207,15 +207,6 @@ namespace Opiniometro_WebApp.Controllers
                 contrasenna.Append(caracteres_aleatorios[byte_aleatorio % (caracteres_aleatorios.Length)]);
             }
             return contrasenna.ToString();
-        }
-     
-        public ActionResult PruebaHtml()
-        {
-            if (IdentidadManager.verificar_sesion(this))
-                return View();
-            else
-                return RedirectToAction("Login");
-        }
-        
+        }        
     }
 }

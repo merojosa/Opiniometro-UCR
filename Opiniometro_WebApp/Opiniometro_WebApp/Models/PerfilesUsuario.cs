@@ -9,6 +9,7 @@
         {
 
         }
-        public virtual ICollection<Perfil> ListaPerfiles { get; set; }
+        public virtual ICollection<String> ListaPerfiles { get; set; }
+        public virtual String perfilSeleccionado{ get; set; }
     }
 }

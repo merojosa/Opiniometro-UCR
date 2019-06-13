@@ -289,6 +289,8 @@ EXEC SP_AgregarUsuario @Correo='luis.quesadaborbon@ucr.ac.cr', @Contrasenna='Lig
 EXEC SP_AgregarUsuario @Correo='admin@ucr.ac.cr', @Contrasenna='adminUCR2019', @Cedula='123456789'
 EXEC SP_AgregarUsuario @Correo= 'cx@cx.solutions', @Contrasenna= 'CXSolutions', @Cedula= '100000001'
 
+
+
 --Script JJAPH
 
 --Unidad academica
@@ -543,11 +545,22 @@ VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
 
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
-		(1, 'SC-01234', 'Estudiante', 4),
 		(0, 'SC-01234', 'Admin', 1),
 		(0, 'SC-01234', 'Admin', 2),
 		(0, 'SC-01234', 'Profesor', 2)
 
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','202')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','203')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','204')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','205')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','206')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','207')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','204')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','205')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Estudiante','205')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','208')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','208')
+insert into Permiso (Id, Descripcion) values (208, 'InsertarFormulario')
 
 INSERT INTO Provincia
 VALUES	('San José'),
