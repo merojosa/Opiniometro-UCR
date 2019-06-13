@@ -21,7 +21,7 @@
     {
         var permisos_usuario = (IdentidadManager)Session[IdentidadManager.obtener_correo_actual()];
 
-        <nav class="navbar navbar-opiniometro-ternaria navbar-fixed-top" style="margin-top:100px; z-index:2">
+        <nav class="navbar navbar-opiniometro-ternaria navbar-fixed-top" style="margin-top:100px; z-index:999">
             <div class="container-fluid">
                 <ul class="nav navbar-nav">
                     <li>
@@ -48,40 +48,27 @@
                                 }
                                 else
                                 {
-
-
                                     <li class="disabled"><a>Ver información de personas</a></li>
                                 }
-                            }
 
-                            @{
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.INSERTAR_USUARIO))
                                 {
                                     <li>@Html.ActionLink("Insertar usuario", "CrearUsuario", "Admin")</li>
                                 }
                                 else
                                 {
-
-
                                     <li class="disabled"><a>Insertar usuario</a></li>
                                 }
-                            }
 
-                            @{
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.INSERTAR_USUARIO))
                                 {
                                     <li>@Html.ActionLink("Cargar Archivo", "CargarArchivo", "Administrador")</li>
                                 }
                                 else
-                                {
-
-
+                                {                                    
                                     <li class="disabled"><a>Cargar Archivo</a></li>
                                 }
                             }
-                            
-                            
-                            
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -94,65 +81,45 @@
                                 }
                                 else
                                 {
-
-
                                     <li class="disabled"><a>Insertar formulario</a></li>
                                 }
-                            }
 
-                            @{
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.ASIGNAR_FORMUALRIO))
                                 {
                                     <li>@Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")</li>
                                 }
                                 else
                                 {
-
-
                                     <li class="disabled"><a>Asignar formulario</a></li>
                                 }
-                            }
 
-                            @{
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VISUALIZAR_RESULTADOS_DE_EVALUACIONES))
                                 {
                                     <li>@Html.ActionLink("Visualizar resultados de evaluaciones", "Index", "AsignarFormularios")</li>
                                 }
                                 else
                                 {
-
-
                                     <li class="disabled"><a>Visualizar resultados de evaluaciones</a></li>
                                 }
-                            }
-                            
-                            @{
+      
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VER_SECCIONES))
                                 {
                                     <li>@Html.ActionLink("Sección", "Index", "Seccion")</li>
                                 }
                                 else
                                 {
-
-
                                     <li class="disabled"><a>Sección</a></li>
                                 }
-                            }
 
-                            @{
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VER_ITEMS))
                                 {
                                     <li>@Html.ActionLink("Ítem", "Index", "Item")</li>
                                 }
                                 else
                                 {
-
-
                                     <li class="disabled"><a>Ítem</a></li>
                                 }
                             }
-                            
-                            
                         </ul>
                     </li>                    
                 </ul>
@@ -163,8 +130,6 @@
             </div>
         </nav>
     }
-
-    <br /><br /><br /><br />
 
     <div class="container-fluid" style="margin-left:100px" >
         @RenderBody()
