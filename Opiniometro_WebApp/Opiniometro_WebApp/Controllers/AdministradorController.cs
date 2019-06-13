@@ -328,7 +328,7 @@ namespace Opiniometro_WebApp.Controllers
         private DataTable crearTablaUsuariosInvalidos()
         {
             DataTable dt = new DataTable();
-            dt.TableName = "usuarios_invalidos"
+            dt.TableName = "usuarios_invalidos";
             dt.Columns.Add("Error", typeof(string));
             dt.Columns.Add("cedula", typeof(string));
             dt.Columns.Add("perfil", typeof(string));
