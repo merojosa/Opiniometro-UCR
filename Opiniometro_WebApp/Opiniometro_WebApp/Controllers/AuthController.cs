@@ -79,7 +79,7 @@ namespace Opiniometro_WebApp.Controllers
                 // Guardar el objeto IdentidadManager, la llave seria el correo, el cual es unico para cada usuario.
                 Session[usuario.CorreoInstitucional] = new IdentidadManager();
                 
-                return RedirectToAction("CambioPerfil", "Perfil", new { perfil_elegido = PerfilController.ObtenerPerfiles().ElementAt(0) });
+                return RedirectToAction("Index", "Perfil");
             }
             else    // Si hay error en la autenticacion
             {

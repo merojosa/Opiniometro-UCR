@@ -31,29 +31,7 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public ActionResult Index(PerfilesUsuario model)
         {
-            String perfil_elegido = model.perfilSeleccionado;
-            // Si es un distinto perfil, cambie los permisos.
-            if (IdentidadManager.obtener_perfil_actual() != perfil_elegido)
-            {
-                string correo_actual = IdentidadManager.obtener_correo_actual();
-
-                var identidad = new ClaimsIdentity(
-                        new[] {
-                    new Claim(ClaimTypes.Email, correo_actual),
-
-                    // Nuevo perfil.
-                    new Claim(ClaimTypes.Role, perfil_elegido)
-                        },
-                        DefaultAuthenticationTypes.ApplicationCookie);
-
-                AuthController.eliminar_privilegios(this);
-
-                Thread.CurrentPrincipal = new ClaimsPrincipal(identidad);
-                HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, identidad);
-                Session[correo_actual] = new IdentidadManager();
-            }
-
-            return RedirectToAction("Index", "Home");
+            return CambioPerfil(model.perfilSeleccionado);
         }
 
         // GET: Perfil
