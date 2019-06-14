@@ -197,7 +197,6 @@
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\Servicios\IdPermiso.cs" />
     <Compile Include="Controllers\Servicios\IdentidadManager.cs" />
-    <Compile Include="Controllers\LogInPerfilesController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\VisualizarFormularioController.cs" />
     <Compile Include="Global.asax.cs">
@@ -207,6 +206,9 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AsignarFormulariosModel.cs" />
+    <Compile Include="Models\Canton.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -224,6 +226,9 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DatosEstudiante_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Distrito.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Empadronado.cs">
@@ -298,6 +303,9 @@
     <Compile Include="Models\Profesor.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Provincia.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Responde.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -360,6 +368,7 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Fakes Include="Fakes\Microsoft.SqlServer.ManagedDTS.fakes" />
     <EntityDeploy Include="Models\Opiniometro_Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Opiniometro_Model.Designer.cs</LastGenOutput>
@@ -367,7 +376,6 @@
     <Content Include="Models\Opiniometro_Model.edmx.diagram">
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Content>
-    <Fakes Include="Fakes\Microsoft.SqlServer.ManagedDTS.fakes" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />

@@ -73,15 +73,5 @@ namespace Opiniometro_WebAppTest.Controllers
             //Assert
             Assert.IsNotNull(result, "Null");
         }
-        [TestMethod]
-        public void DetailsIsNotNullFormularioNull()
-        {
-            //Arrange
-            VisualizarFormularioController controller = new VisualizarFormularioController();
-            //Act
-            ViewResult result = controller.Details("131315") as ViewResult;
-            //Assert
-            Assert.IsNull(result, "Null");
-        }
     }
 }

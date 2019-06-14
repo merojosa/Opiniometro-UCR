@@ -526,7 +526,14 @@ INSERT INTO Permiso
 VALUES	(1, 'Hacer todo'),
 		(2, 'Asignar formulario'),
 		(3, 'Calificar cursos'),
-		(4, 'Ver cursos')
+		(4, 'Ver cursos'),
+		(202, 'VerInformacionPersonas'),
+		(203, 'InsertarUsuario'),
+		(204, 'AsignarFormulario'),
+		(205, 'VisualizarResultadosDeEvaluaciones'),
+		(206, 'VerSecciones'),
+		(207, 'VerItems'),
+		(208, 'InsertarFormulario');
 
 INSERT INTO Perfil
 VALUES	('Estudiante', 'Default'),
@@ -544,6 +551,7 @@ VALUES	(0, 'SC-01234', 'Estudiante', 3),
 		(0, 'SC-01234', 'Admin', 2),
 		(0, 'SC-01234', 'Profesor', 2)
 
+
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','202')
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','203')
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','204')
@@ -555,7 +563,6 @@ insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdP
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Estudiante','205')
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','208')
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','208')
-insert into Permiso (Id, Descripcion) values (208, 'InsertarFormulario')
 
 INSERT INTO Provincia
 VALUES	('San José'),
