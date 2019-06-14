@@ -52,7 +52,7 @@ namespace Opiniometro_WebApp.Controllers
         private int ObtenerCantidadRespuestasPorPregunta(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId, string respuesta)
         {
             ObjectParameter cntRespuestas = new ObjectParameter("cntResp", typeof(int));
-            db.SP_ContarRespuestasPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId, respuesta, cntRespuestas);
+            //db.SP_ContarRespuestasPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
             if (DBNull.Value.Equals(cntRespuestas.Value))
                 return 0;
             return Convert.ToInt32(cntRespuestas.Value);
