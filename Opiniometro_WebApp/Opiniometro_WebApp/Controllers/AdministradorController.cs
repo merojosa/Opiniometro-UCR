@@ -259,8 +259,7 @@ namespace Opiniometro_WebApp.Controllers
         private void InsercionEnBloque(DataTable tablaAInsertar)
         {
             //string hileraConexion = ConfigurationManager.ConnectionStrings["Opiniometro_DatosEntities"].ConnectionString;
-            string hileraConexion =
-                "data source=(localdb)\\ProjectsV13;initial catalog=Opiniometro_Datos;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;";
+            string hileraConexion = "data source=10.1.4.55;initial catalog=Opiniometro;persist security info=True;user id=DeveloperOp;password=devop2019;multipleactiveresultsets=True;application name=EntityFramework&quot;";
             using (SqlConnection conexionBD = new SqlConnection(hileraConexion))
             {
                 
