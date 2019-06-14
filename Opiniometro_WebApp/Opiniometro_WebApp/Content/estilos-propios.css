@@ -38,3 +38,13 @@ ul.nav li a, ul.nav li a:visited {
     color: rgb(102,102,102);
     font-size: 16px;
 }
+
+/*Opiniometro link para cerrar sesion*/
+ul.nav li p{
+    color: rgb(102,102,102);
+    font-size: 16px;
+}
+
+#link_deshabilitado {
+    color: #a6a6a6;
+}
