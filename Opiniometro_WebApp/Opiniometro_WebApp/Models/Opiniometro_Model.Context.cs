@@ -333,24 +333,6 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ObtenerNombre", correoParameter, nombre, apellido);
         }
     
-        public virtual ObjectResult<string> SP_ObtenerFormulario(string cod)
-        {
-            var codParameter = cod != null ?
-                new ObjectParameter("cod", cod) :
-                new ObjectParameter("cod", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_ObtenerFormulario", codParameter);
-        }
-    
-        public virtual int SP_ObtenerNombre(string correo, ObjectParameter nombre, ObjectParameter apellido)
-        {
-            var correoParameter = correo != null ?
-                new ObjectParameter("Correo", correo) :
-                new ObjectParameter("Correo", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ObtenerNombre", correoParameter, nombre, apellido);
-        }
-    
         public virtual ObjectResult<SP_ObtenerPermisosUsuario_Result> SP_ObtenerPermisosUsuario(string correo, string perfil)
         {
             var correoParameter = correo != null ?
