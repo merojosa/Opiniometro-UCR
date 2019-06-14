@@ -1,54 +1,23 @@
 ﻿@model IEnumerable<Opiniometro_WebApp.Models.Formulario_Respuesta>
 
-@{
-    ViewBag.Title = "Formulario Responde";
-}
-
-<h2>Formulario Responde</h2>
-
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Completado)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Formulario.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Grupo.SiglaCurso)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Persona.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Profesor.CedulaProfesor)
+            Formularios
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Completado)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Formulario.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Grupo.SiglaCurso)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Persona.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Profesor.CedulaProfesor)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Formulario.Nombre)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Formulario.CodigoFormulario })
+            </td>
+        </tr>
+    }
 
-</table>
+</table>  
