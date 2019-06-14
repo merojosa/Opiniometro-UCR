@@ -197,8 +197,8 @@
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\Servicios\IdPermiso.cs" />
     <Compile Include="Controllers\Servicios\IdentidadManager.cs" />
-    <Compile Include="Controllers\RespondeController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
+    <Compile Include="Controllers\VisualizarFormularioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -265,6 +265,9 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Imparte.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Item.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -375,7 +378,6 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Fakes Include="Fakes\Microsoft.SqlServer.ManagedDTS.fakes" />
     <EntityDeploy Include="Models\Opiniometro_Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Opiniometro_Model.Designer.cs</LastGenOutput>
@@ -384,7 +386,10 @@
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\CollapsibleScript.js" />
+    <Content Include="Scripts\Graficar.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -433,13 +438,23 @@
     <Content Include="Views\Formulario_Respuesta\Delete.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Details.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
-    <Content Include="Views\Responde\Create.cshtml" />
-    <Content Include="Views\Responde\Delete.cshtml" />
-    <Content Include="Views\Responde\Details.cshtml" />
-    <Content Include="Views\Responde\Edit.cshtml" />
-    <Content Include="Views\Responde\Index.cshtml" />
     <Content Include="Views\Auth\Recuperar.cshtml" />
     <Content Include="Views\Shared\Auth\BarraLogin.cshtml" />
+    <Content Include="Views\Items\Create.cshtml" />
+    <Content Include="Views\Items\Delete.cshtml" />
+    <Content Include="Views\Items\Details.cshtml" />
+    <Content Include="Views\Items\Edit.cshtml" />
+    <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Create.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Delete.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Details.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Edit.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Index.cshtml" />
     <Content Include="Views\Admin\VerPersonas.cshtml" />
     <Content Include="Views\Admin\CrearUsuario.cshtml" />
     <Content Include="Views\Seleccion_Unica\Create.cshtml" />

@@ -43,6 +43,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Formulario> Formulario { get; set; }
         public virtual DbSet<Formulario_Respuesta> Formulario_Respuesta { get; set; }
         public virtual DbSet<Grupo> Grupo { get; set; }
+        public virtual DbSet<Imparte> Imparte { get; set; }
         public virtual DbSet<Item> Item { get; set; }
         public virtual DbSet<Matricula> Matricula { get; set; }
         public virtual DbSet<Opciones_De_Respuestas_Seleccion_Unica> Opciones_De_Respuestas_Seleccion_Unica { get; set; }
@@ -312,6 +313,15 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Direccion", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, correoParameter, direccionParameter);
+        }
+    
+        public virtual ObjectResult<string> SP_ObtenerFormulario(string cod)
+        {
+            var codParameter = cod != null ?
+                new ObjectParameter("cod", cod) :
+                new ObjectParameter("cod", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_ObtenerFormulario", codParameter);
         }
     
         public virtual int SP_ObtenerNombre(string correo, ObjectParameter nombre, ObjectParameter apellido)
