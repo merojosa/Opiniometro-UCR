@@ -110,7 +110,7 @@ namespace Opiniometro_WebApp.Controllers
             return View();
         }
 
-        public ActionResult CrearUsuario(InfoPersonaUsuario info)
+        public ActionResult CrearUsuario(InfoPersonaUsuario info) //Antiguo. Se tiene una versión más actualizada
         {
             // Autogenero una contrasenna generica.
             string contrasenna_generada = GenerarContrasenna(10);
