@@ -3,7 +3,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+ 
 @Styles.Render("~/Content/scrollbar-tabla.css")
 @* Inclusiones necesarias para poder hacer validaciones *@
 <link href="~/Content/Site.css" rel="stylesheet" />
@@ -22,6 +22,7 @@
             {
                 type: "POST", //HTTP POST Method
                     url: "AgregarConformado", // Controller/View
+                     
                 data: { //Passing data
                     codigoFormulario:  @Html.Raw(Json.Encode(Model.Formulario.CodigoFormulario)),
                     nombreFormulario:  @Html.Raw(Json.Encode(Model.Formulario.Nombre)),
@@ -30,61 +31,78 @@
                     TituloSeccion: $("input:radio[name=seccion]:checked").val(),
                     ItemId: $("input:radio[name=item]:checked").val()
                     },
-                    //success(function(data) {
-                    //    $('#ConformadosID').html(result);
-                    //})
+                    success: function (result) {
+                        alert("Se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
+                            + $("input:radio[name=seccion]:checked").val()),
+                        $('#ConformadosID').html(result);
+                    },
+                    error: function () {
+                        alert("No se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
+                            + $("input:radio[name=seccion]:checked").val()
+                            + "porque la pregunta ya se asigno a esa sección")
+                    }
+
 
                 });
 
             });
         });
 
+
+
 </script>
 
 
-@using (Html.BeginForm())
-{
-
-
-    @*<div id="content">*@
-    <div class="row">
-        <div class="col-sm-4"><h3><strong>Codigo:</strong> @Model.Formulario.CodigoFormulario </h3></div>
-        <div class="col-sm-8"><h3><strong>Nombre:</strong> @Model.Formulario.Nombre</h3></div>
-    </div>
+@*<div id="content">*@
+<div class="row ">
+    <div class="col-sm-4"><h3><strong>Codigo:</strong> @Model.Formulario.CodigoFormulario </h3></div>
+    <div class="col-sm-8"><h3><strong>Nombre:</strong> @Model.Formulario.Nombre</h3></div>
+</div>
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
 
-           
+<div class="form-group">
 
-            <div class="col-md-4">
-                <input class="form-control text-box single-line" data-val="true" id="Orden_Item" name="Orden_Item" readonly="readonly" type="number" value= @ViewData["OrdenItem"]>
-                         
+    @Html.Label("Orden de la Seccion", htmlAttributes: new { @class = "control-label col-md-2" })
 
-            </div>
+    <div class="col-md-4">
+        @Html.EditorFor(model => model.Orden_Seccion, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Orden_Seccion, "", new { @class = "text-danger" })
+
+    </div>
+    @Html.Label("Orden de la pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
+
+    <div class="col-md-4">
+        @Html.EditorFor(model => model.Orden_Item, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Orden_Item, "", new { @class = "text-danger" })
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-sm-6 right">
+        <input type="button" id="btnSave" value="Asignar pregunta" class="btn btn-secondary"  onclick="accionBotonCrearNueva()" />
+    </div>
+</div>
+
+<div class="row">
 
 
-            <div class="col-md-4">
-                @Html.EditorFor(model => model.Orden_Item, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.Orden_Item, "", new { @class = "text-danger" })
-
-            </div>
-
-        </div>
-    <button id="btnSave" name="btnSave">GUARDAR</button><br />
-    <div class="row">
-        <div class="col-sm-5">
-            <h4 align='center'><strong>@Html.Label("Secciones")</strong></h4>
-            <table class="table table-bordered table-striped fixed_header">
-                <tr>
-                    <td></td>
-                    <td>
-                        @Html.Label("Titulo")
-                    </td>
-                    <td>
-                        @Html.Label("Descripción")
-                    </td>
-                </tr>
+    <div class="col-sm-5">
+        <h4 align='center'><strong>@Html.Label("Secciones")</strong></h4>
+        <table class="table table-bordered table-striped fixed_header">
+            <tr>
+                <td>
+                    @Html.Label("Seleccione la sección")
+                </td>
+                <td>
+                    @Html.Label("Titulo")
+                </td>
+                <td>
+                    @Html.Label("Descripción")
+                </td>
+            </tr>
 
 
                 @foreach (var seccion in Model.Secciones)
@@ -101,99 +119,100 @@
                             @Html.DisplayFor(model => seccion.Descripcion)
                         </td>
 
-                    </tr>
-                }
+                </tr>
+            }
 
-            </table>
+        </table>
 
-        </div>
-        @*</div>
-            <div class="row">*@
-        <div class="col-sm-7">
-            <h4 align='center'><strong>@Html.Label("Banco de Preguntas")</strong></h4>
-            <table class="table table-bordered table-striped fixed_header">
+    </div>
+    @*<input type="button" id="btnSave" value="Asignar pregunta" class="btn btn-secondary" onclick="accionBotonCrearNueva()" />*@
+    @*</div>
+        <div class="row">*@
+    <div class="col-sm-7">
+        <h4 align='center'><strong>@Html.Label("Banco de Preguntas")</strong></h4>
+        <table class="table table-bordered table-striped fixed_header">
+            <tr>
+                <td></td>
+                <td>
+                    @Html.Label("Código")
+                </td>
+                <td>
+                    @Html.Label("Planteamiento")
+                </td>
+                <td>
+                    @Html.Label("Tipo")
+                </td>
+            </tr>
+
+
+            @foreach (var item in Model.Items)
+            {
                 <tr>
-                    <td></td>
                     <td>
-                        @Html.Label("Código")
+                        <input type="radio" name="item" id="item" value="@item.ItemId" />
                     </td>
                     <td>
-                        @Html.Label("Planteamiento")
+                        @Html.DisplayFor(modelItem => item.ItemId)
                     </td>
                     <td>
-                        @Html.Label("Tipo")
+                        @Html.DisplayFor(modelItem => item.TextoPregunta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoPregunta)
                     </td>
                 </tr>
+            }
 
+        </table>
+    </div>
+</div>
+<div class="row" id="ConformadosID">
 
-                @foreach (var item in Model.Items)
-                {
-                    <tr>
-                        <td>
-                            <input type="radio" name="item" id="item" value="@item.ItemId" />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ItemId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TextoPregunta)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TipoPregunta)
-                        </td>
-                    </tr>
-                }
+    @Html.Partial("ConformadoVParcial", Model.Conformados)
 
-            </table>
+</div>
         </div>
-    </div>
-    <div class="row" id="ConformadosID">
 
-        @Html.Partial("ConformadoVParcial", Model.Conformados)
+<thead>
 
-    </div>
+    <tr>
 
 
-    <thead>
-
-        <tr>
-
-
-            <td>
+        <td>
 
 
 
-                <div>
-                    <div style="float: right; width: 500px; padding: 15px;">
+            <div>
+                <div style="float: right; width: 500px; padding: 15px;">
 
 
-                    </div>
-
-                    <div style=" width: 500px; padding:  15px;">
-
-
-
-                    </div>
                 </div>
 
+                <div style=" width: 500px; padding:  15px;">
 
-                <button disabled>
-                    Añadir pregunta al formulario.
-                </button>
 
-                <div style="float: left; width: 1000px; padding: 50px;">
-                    @*@Html.Action("SeccionesAsignadas", new
-                        {CodForm = Model.Formulario.CodigoFormulario})*@
+
                 </div>
+            </div>
 
-                <input type="submit" value="Generate report" />
-                <div style="clear: both;"></div>
-            </td>
 
-        </tr>
+            <button disabled>
+                Añadir pregunta al formulario.
+            </button>
 
-    </thead>
-}
+            <div style="float: left; width: 1000px; padding: 50px;">
+                @*@Html.Action("SeccionesAsignadas", new
+                    {CodForm = Model.Formulario.CodigoFormulario})*@
+            </div>
+
+            <input type="submit" value="Generate report" />
+            <div style="clear: both;"></div>
+        </td>
+
+    </tr>
+
+</thead>
+
 
 <script>
     function prueba() {
