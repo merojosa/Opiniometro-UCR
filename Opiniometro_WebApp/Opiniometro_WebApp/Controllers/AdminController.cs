@@ -70,10 +70,11 @@ namespace Opiniometro_WebApp.Controllers
                 try
                 {
                     String correoInstitucional = db.Usuario.Where(m => m.Cedula == id).First().CorreoInstitucional;
-                    //modelPersona.Perfil = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
                     modelPersona.Persona = db.Persona.SingleOrDefault(u => u.Cedula == id);
                     modelPersona.usuario = db.Usuario.SingleOrDefault(u => u.Cedula == id);
-                    modelPersona.Perfil = db.Perfil.Select(n => n.Id).ToList();
+                    modelPersona.PerfilDeUsuario = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
+                    modelPersona.perfilesAsignados = modelPersona.getAsignarPerfil(modelPersona.PerfilDeUsuario, modelPersona.Perfil);
+                    modelPersona.Perfil = db.Perfil.Select(n=>n.Id).ToList();
                     return View(modelPersona);
                 }
                 catch (Exception)

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public partial class PersonaPerfilEnfasisModel
     {
@@ -11,8 +12,42 @@
 
         }
 
-        
+        public class AsignarPerfil
+        {
+            public AsignarPerfil(String perfil, Boolean asignado)
+            {
+                perfilActual = perfil;
+                asignar = asignado;
+
+            }
+            public String perfilActual;
+            public Boolean asignar;
+        }
+
+        public List<AsignarPerfil> getAsignarPerfil(ICollection<String> perfilDeUsuarioP, ICollection<String> perfilP)
+        {
+            List<AsignarPerfil> listaAsignarPerfil = new List<AsignarPerfil>();
+            for (int contador = 0; contador < perfilP.Count; contador++)
+            {
+                if (perfilDeUsuarioP.Contains(perfilP.ElementAt(contador)))
+                {
+                    listaAsignarPerfil.Add(new AsignarPerfil(perfilP.ElementAt(contador), true));
+                }
+                else
+                {
+                    listaAsignarPerfil.Add(new AsignarPerfil(perfilP.ElementAt(contador), false));
+                }
+            }
+
+
+            return listaAsignarPerfil;
+        }
+
+
+        public virtual List<AsignarPerfil> perfilesAsignados { get; set; }
         public virtual ICollection<Enfasis> Enfasis { get; set; }
+
+        public virtual ICollection<String> PerfilDeUsuario { get; set; }
 
         public virtual ICollection<String> Perfil { get; set; }
 
