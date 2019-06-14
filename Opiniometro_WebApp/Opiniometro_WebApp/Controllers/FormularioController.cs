@@ -62,7 +62,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 db.Formulario.Add(formulario);
                 db.SaveChanges();
-                return RedirectToAction("Index" );
+                return RedirectToAction("Index");
             }
 
             return View("Create", formulario);
