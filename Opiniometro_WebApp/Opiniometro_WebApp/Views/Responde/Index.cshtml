@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Responde>
+
+@{
+    ViewBag.Title = "Formulario";
+}
+
+@Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
+@Html.Partial("_Collapsible")
+
+<h2>Formulario</h2>
+
+@*<div class="row">
+        <img src="@Url.Action(" GraficoPie")" alt="SimpleChart" />
+    </div>*@
+
+<button class="collapsible main"> Evaluación de aspectos reglamentarios del profesor </button>
+<div class="content">
+
+    <button class="collapsible secondary"> ¿El profesor repuso clases cuando fue necesario? </button>
+    <div class="content">
+
+        <button class="collapsible terciary"> Resultados </button>
+        <div class="content">
+            <img src="@Url.Action("GraficoPie")" alt="SimpleChart" />
+        </div>
+
+        <button class="collapsible terciary"> Observaciones </button>
+        <div class="content">
+
+        </div>
+    </div>
+
+    <button class="collapsible secondary"> ¿Que opina del curso? </button>
+    <div class="content">
+
+        <button class="collapsible terciary"> Observaciones </button>
+        <div class="content">
+
+        </div>
+    </div>
+
+</div>
+
+<button class="collapsible main"> Opinión General del Curso </button>
+<div class="content">
+
+    <button class="collapsible secondary"> ¿El profesor entrego la carta del estudiante en las fechas indicadas por el reglamento? </button>
+    <div class="content">
+        <button class="collapsible terciary"> Resultados </button>
+        <div class="content">
+            <img src="@Url.Action("GraficoPie")" alt="SimpleChart" />
+        </div>
+
+        <button class="collapsible terciary"> Observaciones </button>
+        <div class="content">
+
+        </div>
+    </div>
+
+    <button class="collapsible secondary"> ¿Que opina del profesor? </button>
+    <div class="content">
+
+        <button class="collapsible terciary"> Observaciones </button>
+        <div class="content">
+
+        </div>
+    </div>
+
+</div>
+
+
+<script src="~/Scripts/CollapsibleScript.js"></script>
