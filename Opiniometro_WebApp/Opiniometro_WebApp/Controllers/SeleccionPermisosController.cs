@@ -23,12 +23,7 @@ namespace Opiniometro_WebApp.Controllers
             model.ListaPosee = db.Posee_Enfasis_Perfil_Permiso.ToList();
             int tam = model.ListaPerfiles.Count;
 
-            model.ListaPerfilesId = new List<string>(new string[tam]);
-
-            for(int i = 0; i < model.ListaPerfiles.Count; i++)
-            {
-                model.ListaPerfilesId[i] = model.ListaPerfiles[i].Id;
-            }
+            List<String> listaIds = Perfil.ObtenerIds();
 
             return View(model);
         }
@@ -37,6 +32,19 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult Guardar()
         {
             return View();
+        }
+
+        private void InsertarPersona(Persona p)
+        {
+            using (var context = new Opiniometro_DatosEntities())
+            {
+                context.Persona.Add(p);
+            }
+            var persona = new Perfil()
+            {
+                Id = "1234567",
+                Tipo = "Felipe"
+            };
         }
     }
 }
