@@ -14,6 +14,7 @@ using System.EnterpriseServices;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
+using System.Security.Permissions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
@@ -93,8 +94,8 @@ namespace Opiniometro_WebApp.Controllers
          */
         private DataTable ProcesarArchivo(string path)
         {
-            DataTable filasValidas = crearTablaUsuarios();
-            DataTable filasInvalidas = crearTablaUsuariosInvalidos();
+            DataTable filasValidas = CrearTablaUsuarios();
+            DataTable filasInvalidas = CrearTablaUsuariosInvalidos();
             string filaLeida = String.Empty;
             DataRow tupla;
             int numeroFilasLeidas = 0;
@@ -130,16 +131,16 @@ namespace Opiniometro_WebApp.Controllers
             filasValidas.AcceptChanges();
 
             //Tablas en memoria con que poseen el mismo esquema que las tablas en la base de datos.
-            DataTable personaBD = crearTablaPersonaBD();
-            DataTable usuarioBD = crearTablaUsuarioBD();
+            DataTable personaBD = CrearTablaPersonaBD();
+            DataTable usuarioBD = CrearTablaUsuarioBD();
             
             //Multicast
-            multicastDatosProvisionados(filasValidas, personaBD, usuarioBD);
+            MulticastDatosProvisionados(filasValidas, personaBD, usuarioBD);
             filasValidas.Dispose();
 
             if (personaBD.Rows.Count > 0)
             {
-                insercionEnBloque(personaBD);
+                InsercionEnBloque(personaBD);
             }
             else
             {
@@ -148,7 +149,7 @@ namespace Opiniometro_WebApp.Controllers
 
             if (usuarioBD.Rows.Count > 0)
             {
-                insercionEnBloque(usuarioBD);
+                InsercionEnBloque(usuarioBD);
             }
             else
             {
@@ -166,7 +167,7 @@ namespace Opiniometro_WebApp.Controllers
          * REQUIERE:
          * MODIFICA:
          */
-        private void verificacionContenidoTuplasValidas(DataTable filasValidas, DataTable filasInvalidas,long numeroFilasLeidas)
+        private void VerificacionContenidoTuplasValidas(DataTable filasValidas, DataTable filasInvalidas,long numeroFilasLeidas)
         {
             throw new NotImplementedException();
             //Chequeos relacionados con el contenido proveido en el archivo csv
@@ -180,7 +181,7 @@ namespace Opiniometro_WebApp.Controllers
          * REQUIERE: Tabla en memoria que contiene los datos provisionados en el archivo csv,
          * MODIFICA: n/a
          */
-        private int multicastDatosProvisionados(DataTable filasValidas, DataTable personaBD, DataTable usuarioBD)
+        private int MulticastDatosProvisionados(DataTable filasValidas, DataTable personaBD, DataTable usuarioBD)
         {
             /*
                  * Orden de insercion
@@ -222,18 +223,20 @@ namespace Opiniometro_WebApp.Controllers
                     nuevoUsuario["correo"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["correo"].ToString().ToCharArray());
 
                     //Insercion de un usuario requiere que tenga un contrasena cifrada con un guid
-                    ObjectParameter contrasenaGenerada = new ObjectParameter("contrasenaGenerada");
+                    ObjectParameter contrasenaGenerada = new ObjectParameter("resultado", typeof(String));
                     db.SP_GenerarContrasena(contrasenaGenerada);
-                    ObjectParameter guidGenerado = new ObjectParameter("guidGenerado", typeof(System.Data.SqlTypes.SqlGuid));
+                    ObjectParameter guidGenerado = new ObjectParameter("id", typeof(SqlGuid));
                     db.SP_GenerarIdUnico(guidGenerado);
-                    System.Guid guid = new Guid(guidGenerado.Value.ToString()); //!HAY QUE REVISAR ESTA LINEA.
-                    ObjectParameter contrasenaHash = new ObjectParameter("contrasenaHash", typeof(System.Data.SqlTypes.SqlChars));
-                    db.SP_GenerarContrasenaHash(guid, contrasenaGenerada.ToString(), contrasenaHash);
+                   
+                    Guid guid = new Guid(guidGenerado.Value.ToString()); //!HAY QUE REVISAR ESTA LINEA.
+                    ObjectParameter contrasenaHash = new ObjectParameter("contrasenaHash", typeof(SqlBinary));
+                    db.SP_GenerarContrasenaHash(guid.ToString(), (string)contrasenaGenerada.Value, contrasenaHash);
 
                     nuevoUsuario["contrasena"] = new SqlChars(contrasenaHash.ToString().ToCharArray());
                     nuevoUsuario["activo"] = new SqlBoolean(true);
                     nuevoUsuario["cedula"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["cedula"].ToString().ToCharArray());
-                    nuevoUsuario["id"] = new SqlGuid(guidGenerado.ToString());
+                    nuevoUsuario["id"] = new SqlGuid(guidGenerado.Value.ToString());
+                    usuarioBD.Rows.Add(nuevoUsuario);
                     usuarioBD.AcceptChanges();
 
                     
@@ -253,9 +256,11 @@ namespace Opiniometro_WebApp.Controllers
          * REQUIERE: Conexion instanciada y abierta hacia la base de datos. Una tabla en memoria que previamente haya sido llenada con los nuevos valores a guardar en la base de datos.
          * MODIFICA: Agrega tuplas en una tabla en la base de datos. 
          */
-        private void insercionEnBloque(DataTable tablaAInsertar)
+        private void InsercionEnBloque(DataTable tablaAInsertar)
         {
-            string hileraConexion = ConfigurationManager.ConnectionStrings["Opiniometro_DatosEntities"].ConnectionString;
+            //string hileraConexion = ConfigurationManager.ConnectionStrings["Opiniometro_DatosEntities"].ConnectionString;
+            string hileraConexion =
+                "data source=(localdb)\\ProjectsV13;initial catalog=Opiniometro_Datos;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;";
             using (SqlConnection conexionBD = new SqlConnection(hileraConexion))
             {
                 
@@ -263,12 +268,12 @@ namespace Opiniometro_WebApp.Controllers
                 using (SqlBulkCopy insercionEnBloque = new SqlBulkCopy(conexionBD))
                 {
                     insercionEnBloque.DestinationTableName = tablaAInsertar.TableName;
-                    mapearColumnasATablaDeDestino(tablaAInsertar.TableName, insercionEnBloque);
+                    MapearColumnasATablaDeDestino(tablaAInsertar.TableName, insercionEnBloque);
                     insercionEnBloque.BatchSize = tablaAInsertar.Rows.Count;
                     try
                     {
                         insercionEnBloque.WriteToServer(tablaAInsertar);
-                        ponerMensajeExito(tablaAInsertar.TableName);
+                        PonerMensajeExito(tablaAInsertar.TableName);
                         
                     }
                     catch (Exception e)
@@ -282,7 +287,7 @@ namespace Opiniometro_WebApp.Controllers
             }
         }
 
-        private void ponerMensajeExito(string nombreTabla)
+        private void PonerMensajeExito(string nombreTabla)
         {
             string hileraBase = "Insercion exitosa en tabla " + nombreTabla;
 
@@ -307,7 +312,7 @@ namespace Opiniometro_WebApp.Controllers
          * REQUIERE: Conexion instanciada y abierta hacia la base de datos.
          * MODIFICA: n/a
          */
-        private void mapearColumnasATablaDeDestino(string tableName, SqlBulkCopy insercionEnBloque)
+        private void MapearColumnasATablaDeDestino(string tableName, SqlBulkCopy insercionEnBloque)
         {
             switch (tableName)
             {
@@ -365,7 +370,7 @@ namespace Opiniometro_WebApp.Controllers
          * REQUIERE: n/a
          * MODIFICA: n/a
          */
-        private DataTable crearTablaUsuarios()
+        private DataTable CrearTablaUsuarios()
         {
             DataTable dt = new DataTable();
             dt.TableName = "usuarios_validos";
@@ -433,7 +438,7 @@ namespace Opiniometro_WebApp.Controllers
          * REQUIERE: n/a
          * MODIFICA: n/a
          */
-        private DataTable crearTablaUsuariosInvalidos()
+        private DataTable CrearTablaUsuariosInvalidos()
         {
             DataTable dt = new DataTable();
             dt.TableName = "usuarios_invalidos";
@@ -464,7 +469,7 @@ namespace Opiniometro_WebApp.Controllers
          * REQUIERE: n/a
          * MODIFICA: n/a
          */
-        private DataTable crearTablaPersonaBD()
+        private DataTable CrearTablaPersonaBD()
         {
             DataTable dt = new DataTable();
             dt.TableName = "Persona";
@@ -491,7 +496,7 @@ namespace Opiniometro_WebApp.Controllers
          * REQUIERE: n/a
          * MODIFICA: n/a
          */
-        private DataTable crearTablaUsuarioBD()
+        private DataTable CrearTablaUsuarioBD()
         {
             DataTable dt = new DataTable();
             dt.TableName = "Usuario";

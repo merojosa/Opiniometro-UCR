@@ -744,9 +744,9 @@ IF OBJECT_ID('SP_GenerarContrasenaHash') IS NOT NULL
 	DROP PROCEDURE SP_GenerarContrasenaHash
 GO
 CREATE PROCEDURE SP_GenerarContrasenaHash
-@id	UNIQUEIDENTIFIER,
+@id	NVARCHAR(50),
 @contrasena	NVARCHAR(10),
-@contrasenaHash NVARCHAR(50) OUTPUT
+@contrasenaHash VARBINARY(50) OUTPUT
 AS
 BEGIN
 	SET @contrasenaHash = HASHBYTES('SHA2_512', @contrasena+CAST(@id AS NVARCHAR(36)))
