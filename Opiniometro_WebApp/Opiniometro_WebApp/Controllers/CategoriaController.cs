@@ -66,6 +66,7 @@ namespace Opiniometro_WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Categoria categoria = db.Categoria.Find(id);
+
             if (categoria == null)
             {
                 return HttpNotFound();

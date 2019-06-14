@@ -113,11 +113,16 @@ CREATE PROCEDURE SP_ModificarPersona
 	@Nombre2			NVARCHAR(50),
 	@Apellido1			NVARCHAR(50),
 	@Apellido2			NVARCHAR(50),
+	@Correo				NVARCHAR(100),
 	@DireccionDetallada	NVARCHAR(256)
 AS
 BEGIN
 	UPDATE Persona
 	SET Cedula = @Cedula, Nombre1 = @Nombre1, Nombre2 = @Nombre2, Apellido1 = @Apellido1, Apellido2 = @Apellido2, DireccionDetallada = @DireccionDetallada
+	WHERE Cedula = @CedulaBusqueda;
+
+	UPDATE Usuario
+	SET CorreoInstitucional = @Correo
 	WHERE Cedula = @CedulaBusqueda;
 END
 GO

@@ -15,8 +15,6 @@
     @using Opiniometro_WebApp.Controllers.Servicios;
 
 
-
-
     @if (IdentidadManager.usuario_loggeado() == true)
     {
         var permisos_usuario = (IdentidadManager)Session[IdentidadManager.obtener_correo_actual()];
