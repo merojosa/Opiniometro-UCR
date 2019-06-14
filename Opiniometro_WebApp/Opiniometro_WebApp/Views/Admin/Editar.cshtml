@@ -4,11 +4,6 @@
     ViewBag.Title = "Index";
 }
 
-<!--Para usar la clase login-error del archivo estilos-propios.css-->
-<link href="@Url.Content("~/Content/estilos-propios.css")" rel="stylesheet" type="text/css" />
-
-<!--Barra-->
-@Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
 
 <!--Login-->
 <div align="center">
@@ -21,11 +16,26 @@
             <h4>Editar Usuario</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Persona.Cedula)
+
+            @Html.HiddenFor(Model => Model.Persona.Cedula)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Persona.Cedula, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.DisplayTextFor(Model => Model.Persona.Cedula)
+                </div>
+            </div>
+
+            @Html.HiddenFor(Model => Model.usuario.CorreoInstitucional)
+            <div class="form-group">
+                @Html.LabelFor(model => model.usuario.CorreoInstitucional, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.DisplayTextFor(Model => Model.usuario.CorreoInstitucional)
+                </div>
+            </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Persona.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-3">
                     @Html.EditorFor(model => model.Persona.Nombre, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Persona.Nombre, "", new { @class = "text-danger" })
                 </div>
@@ -34,15 +44,16 @@
             <div class="form-group">
                 <!--@Html.LabelFor(model => model.Persona.Apellido1, htmlAttributes: new { @class = "control-label col-md-2" })-->
                 <label for="model.Apellido1" class="control-label col-md-2"> Primer Apellido </label>
-                <div class="col-md-10">
+                <div class="col-md-3">
                     @Html.EditorFor(model => model.Persona.Apellido1, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Persona.Apellido1, "", new { @class = "text-danger" })
                 </div>
             </div>
+
             <div class="form-group">
                 <!--@Html.LabelFor(model => model.Persona.Apellido2, htmlAttributes: new { @class = "control-label col-md-2" })-->
                 <label for="model.Apellido2" class="control-label col-md-2"> Segundo Apellido </label>
-                <div class="col-md-10">
+                <div class="col-md-3">
                     @Html.EditorFor(model => model.Persona.Apellido2, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Persona.Apellido2, "", new { @class = "text-danger" })
                 </div>
@@ -50,43 +61,44 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Persona.Direccion, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-3">
                     @Html.EditorFor(model => model.Persona.Direccion, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Persona.Direccion, "", new { @class = "text-danger" })
                 </div>
-
             </div>
-            <br>                                
+
+
+            <br>
             <div class="form-group">
                 <div class="col-md-10">
                     <div class="col-md-2">
                         <div style="margin-left:80px; width: 200px ">
                             <table class="table">
-                            @{
-                                if (Model.Perfil != null)
-                                {
-                                <tr>
-                                    <th>
-                                        Perfiles
-                                    </th>
-                                    <th></th>
-                                </tr>
-                                    for (int i = 0; i < Model.Perfil.Count; i++)
+                                @{
+                                    if (Model.Perfil != null)
                                     {
                                         <tr>
-                                        <td>@Model.Perfil.ElementAt(i)</td>
-                                            <td><input type="checkbox" name="prueba" value="prueba"> <br></td>
+                                            <th>
+                                                Perfiles
+                                            </th>
+                                            <th></th>
                                         </tr>
-                                            }
+                                        for (int i = 0; i < Model.Perfil.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>@Model.Perfil.ElementAt(i)</td>
+                                                <td><input type="checkbox" name="prueba" value="prueba"> <br></td>
+                                            </tr>
                                         }
-                                }      
-                                          
+                                    }
+                                }
+
                             </table>
                         </div>
 
                     </div>
                 </div>
-            </div>                      
+            </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Guardar" class="btn btn-default" />
