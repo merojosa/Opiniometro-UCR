@@ -112,11 +112,16 @@ CREATE PROCEDURE SP_ModificarPersona
 	@Nombre				NVARCHAR(50),
 	@Apellido1			NVARCHAR(50),
 	@Apellido2			NVARCHAR(50),
+	@Correo				NVARCHAR(100),
 	@Direccion			NVARCHAR(256)
 AS
 BEGIN
 	UPDATE Persona
 	SET Cedula = @Cedula, Nombre = @Nombre, Apellido1 = @Apellido1, Apellido2 = @Apellido2, Direccion = @Direccion
+	WHERE Cedula = @CedulaBusqueda;
+
+	UPDATE Usuario
+	SET CorreoInstitucional = @Correo
 	WHERE Cedula = @CedulaBusqueda;
 END
 GO
@@ -132,6 +137,27 @@ AS
 	FROM Tiene_Usuario_Perfil_Enfasis TU	JOIN Perfil ON TU.IdPerfil = Perfil.Id
 											JOIN Posee_Enfasis_Perfil_Permiso PE ON Perfil.Id = PE.IdPerfil
 	WHERE TU.CorreoInstitucional=@Correo AND TU.IdPerfil = @Perfil
+GO
+
+IF OBJECT_ID('SP_ObtenerNombre') IS NOT NULL
+	DROP PROCEDURE SP_ObtenerNombre
+GO
+CREATE PROCEDURE SP_ObtenerNombre
+	@Correo			NVARCHAR(50),
+	@Nombre			NVARCHAR(50) OUT,
+	@Apellido		NVARCHAR(50) OUT
+AS
+BEGIN
+	SET NOCOUNT ON
+	
+	SET @Nombre = (SELECT Nombre
+	FROM Usuario U	JOIN Persona P ON U.Cedula = p.Cedula
+	WHERE U.CorreoInstitucional=@Correo)
+
+	SET @Apellido = (SELECT Apellido1
+	FROM Usuario U	JOIN Persona P ON U.Cedula = p.Cedula
+	WHERE U.CorreoInstitucional=@Correo)
+END
 GO
 
 EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
