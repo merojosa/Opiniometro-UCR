@@ -3,44 +3,100 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+ 
+@Styles.Render("~/Content/scrollbar-tabla.css")
+@* Inclusiones necesarias para poder hacer validaciones *@
+<link href="~/Content/Site.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
 
-    var datos = {
-        codigoFormulari = Model.Formulario.codigoFormulario
-    };
 
-    $(document).ready(function () {       
+
+    $(document).ready(function () {
         $("#btnSave").click(function () {
             $.ajax(
             {
                 type: "POST", //HTTP POST Method
                     url: "AgregarConformado", // Controller/View
+                     
                 data: { //Passing data
-                    
+                    codigoFormulario:  @Html.Raw(Json.Encode(Model.Formulario.CodigoFormulario)),
+                    nombreFormulario:  @Html.Raw(Json.Encode(Model.Formulario.Nombre)),
+                    Orden_Seccion: $("#Orden_Seccion").val(),
+                    Orden_Item: $("#Orden_Item").val(),
+                    TituloSeccion: $("input:radio[name=seccion]:checked").val(),
+                    ItemId: $("input:radio[name=item]:checked").val()
                     },
-                    success(function() {
-                        $('#ConformadosID').html(result);
-                    }),
+                    success: function (result) {
+                        //console.log(result.console)
+                        if (result) {
+                            alert("Se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
+                                + $("input:radio[name=seccion]:checked").val()),
+                                $('#ConformadosID').html(result);
+                        } else {
+                            alert("No se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
+                                + $("input:radio[name=seccion]:checked").val()
+                                + " porque la pregunta ya se asigno a esa sección.")
+                        }
+                    },
+                    error: function () {
+                        alert("No se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
+                            + $("input:radio[name=seccion]:checked").val()
+                            + "porque la pregunta ya se asigno a esa sección")
+                    }
+
+
+                });
 
             });
-
         });
-    });
+
+
 
 </script>
 
-<div id="content">
-    <div class="row">
-        <div class="col-sm-4" ><h4><strong >Codigo:</strong> @Model.Formulario.CodigoFormulario </h4></div>
-        <div class="col-sm-8"><h4><strong>Nombre:</strong> @Model.Formulario.Nombre</h4></div>
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+@*<div id="content">*@
+<div class="row ">
+    <div class="col-sm-4"><h3><strong>Codigo:</strong> @Model.Formulario.CodigoFormulario </h3></div>
+    <div class="col-sm-8"><h3><strong>Nombre:</strong> @Model.Formulario.Nombre</h3></div>
+</div>
+
+
+<div class="form-group">
+
+    @Html.Label("Orden de la Seccion", htmlAttributes: new { @class = "control-label col-md-2" })
+
+    <div class="col-md-4">
+        @Html.EditorFor(model => model.Orden_Seccion, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Orden_Seccion, "", new { @class = "text-danger" })
+
     </div>
-    <button id="btnSave" name="btnSave" >GUARDAR</button>
-    <div class="row">
-        <table class="table table-bordered table-striped">
+    @Html.Label("Orden de la pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
+
+    <div class="col-md-4">
+        @Html.EditorFor(model => model.Orden_Item, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Orden_Item, "", new { @class = "text-danger" })
+
+    </div>
+
+</div>
+
+
+
+<div class="row">
+    <div class="col-sm-6">
+        <h4 align='center'><strong>@Html.Label("Secciones")</strong></h4>
+        <table class="table table-bordered table-striped fixed_header">
             <tr>
-                <td></td>
+                <td>
+                    @Html.Label("Seleccione la sección")
+                </td>
                 <td>
                     @Html.Label("Titulo")
                 </td>
@@ -67,9 +123,12 @@
             }
 
         </table>
+
     </div>
-    <div class="row">
-        <table class="table table-bordered">
+
+    <div class="col-sm-6">
+        <h4 align='center'><strong>@Html.Label("Banco de Preguntas")</strong></h4>
+        <table class="table table-bordered table-striped fixed_header">
             <tr>
                 <td></td>
                 <td>
@@ -88,7 +147,7 @@
             {
                 <tr>
                     <td>
-                        <input type="checkbox" class="chcktbl"  name="item" id="item" value="@item.ItemId" />
+                        <input type="radio" name="item" id="item" value="@item.ItemId" />
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ItemId)
@@ -97,19 +156,40 @@
                         @Html.DisplayFor(modelItem => item.TextoPregunta)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.TipoPregunta)
+                        @switch (item.TipoPregunta)
+                        {
+                            case 1: @Html.Raw("Texto Libre");
+                            break;
+                            case 3: @Html.Raw("Sí-No");
+                            break;
+                        }
+
+
                     </td>
                 </tr>
             }
 
         </table>
+
     </div>
-    <div class="row" id="ConformadosID">
-        
-        @Html.Partial("ConformadoVParcial", Model.Conformados)
-        
+
+
+
+
+
+
+</div>
+<div class="row form-group">
+    <div class="col-sm-12 text-center">      
+        <button id="btnSave" class="btn btn-secondary m-*-auto"><span class="oi oi-arrow-left"></span> Asignar pregunta</button>
     </div>
 </div>
+<div class="row" id="ConformadosID">
+
+    @Html.Partial("ConformadoVParcial", Model.Conformados)
+
+</div>
+        </div>
 
 <thead>
 
@@ -154,8 +234,8 @@
 
 <script>
     function prueba() {
-            document.location = '@Url.Action("Index")';
-        }
+                            document.location = '@Url.Action("Index")';
+                        }
 </script>
 
 
