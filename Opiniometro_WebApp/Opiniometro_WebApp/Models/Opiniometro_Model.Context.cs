@@ -63,33 +63,6 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     
-        public virtual ObjectResult<CursosSegunAnno_Result> CursosSegunAnno(Nullable<short> anno)
-        {
-            var annoParameter = anno.HasValue ?
-                new ObjectParameter("anno", anno) :
-                new ObjectParameter("anno", typeof(short));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CursosSegunAnno_Result>("CursosSegunAnno", annoParameter);
-        }
-    
-        public virtual ObjectResult<CursosSegunCarrera_Result> CursosSegunCarrera(string siglaCarrera)
-        {
-            var siglaCarreraParameter = siglaCarrera != null ?
-                new ObjectParameter("siglaCarrera", siglaCarrera) :
-                new ObjectParameter("siglaCarrera", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CursosSegunCarrera_Result>("CursosSegunCarrera", siglaCarreraParameter);
-        }
-    
-        public virtual ObjectResult<CursosSegunSemestre_Result> CursosSegunSemestre(Nullable<byte> semestre)
-        {
-            var semestreParameter = semestre.HasValue ?
-                new ObjectParameter("semestre", semestre) :
-                new ObjectParameter("semestre", typeof(byte));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CursosSegunSemestre_Result>("CursosSegunSemestre", semestreParameter);
-        }
-    
         public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)
         {
             var cedulaParameter = cedula != null ?
