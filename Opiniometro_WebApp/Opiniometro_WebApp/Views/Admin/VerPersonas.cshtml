@@ -9,11 +9,17 @@
 @using (Html.BeginForm())
 {
     <p>
+
         <div class="form-group, form-inline">
+
+            Nombre:
             @Html.TextBox("nom")
+            Cédula:
+            @Html.TextBox("ced")
             <input type="submit" value="Buscar" class="btn btn-default" />
         </div>
     </p>
+
 }
 <table class="table">
     <tr>

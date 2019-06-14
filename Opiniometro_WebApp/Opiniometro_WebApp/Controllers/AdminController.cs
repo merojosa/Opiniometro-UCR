@@ -30,9 +30,34 @@ namespace Opiniometro_WebApp.Controllers
 
         public Persona Persona { get; private set; }
 
-        public ActionResult VerPersonas(string nom)
+        public ActionResult VerPersonas(string nom, string ced)
         {
-            if (!String.IsNullOrEmpty(nom))
+            if (!String.IsNullOrEmpty(nom) && !String.IsNullOrEmpty(ced))
+            {
+                ViewModelAdmin model = new ViewModelAdmin();
+                List<Persona> listaPersonas = db.Persona.ToList();
+                List<Usuario> listaUsuarios = db.Usuario.ToList();
+                var query = from p in listaPersonas
+                            join u in listaUsuarios on p.Cedula equals u.Cedula into table1
+                            from u in table1
+                            where p.Nombre.Contains(nom)
+                            where p.Cedula.Contains(ced)
+                            select new ViewModelAdmin { persona = p, usuario = u };
+                return View(query);
+            }
+            else if (!String.IsNullOrEmpty(ced))
+            {
+                ViewModelAdmin model = new ViewModelAdmin();
+                List<Persona> listaPersonas = db.Persona.ToList();
+                List<Usuario> listaUsuarios = db.Usuario.ToList();
+                var query = from p in listaPersonas
+                            join u in listaUsuarios on p.Cedula equals u.Cedula into table1
+                            from u in table1
+                            where p.Cedula.Contains(ced)
+                            select new ViewModelAdmin { persona = p, usuario = u };
+                return View(query);
+            }
+            else if (!String.IsNullOrEmpty(nom))
             {
                 ViewModelAdmin model = new ViewModelAdmin();
                 List<Persona> listaPersonas = db.Persona.ToList();
