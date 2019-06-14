@@ -18,6 +18,7 @@ namespace Opiniometro_WebApp.Controllers
          //GET: Item
         public ActionResult Index()
         {
+           
             var item = db.Item.Include(i => i.Seleccion_Unica).Include(i => i.Texto_Libre);
             return View(item.ToList());
         }
@@ -50,7 +51,6 @@ namespace Opiniometro_WebApp.Controllers
                   new ListItem { Text = "Sí", Value="true" },
                   new ListItem { Text = "No", Value="false" }
             };
-
             ViewBag.NombreCategoria = new SelectList(db.Categoria, "NombreCategoria", "NombreCategoria");
             ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID");
             ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId");
@@ -79,7 +79,24 @@ namespace Opiniometro_WebApp.Controllers
             return View(item);
         }
 
-         //GET: Item/Edit/5
+        //EFE:
+        //REQ:
+        //MOD:
+        public ActionResult VistaPrevia(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Item item = db.Item.Find(id);
+            if (item == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(item);
+        }
+
+        //GET: Item/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -138,6 +155,12 @@ namespace Opiniometro_WebApp.Controllers
             db.Item.Remove(item);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult itemVParcial(String codigo)
+        {
+            Item item = db.Item.Find(codigo);
+            return PartialView(item);
         }
 
         protected override void Dispose(bool disposing)
