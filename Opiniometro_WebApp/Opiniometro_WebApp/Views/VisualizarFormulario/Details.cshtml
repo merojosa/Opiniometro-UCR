@@ -136,8 +136,8 @@
                                                                 var tamanio = 0;
                                                                 for (var size in aLabels)
                                                                     tamanio++;
-                                                                for (var i = 0; i < tamanio; i++)
-                                                                    document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + aLabels[i];
+                                                                //for (var i = 0; i < tamanio; i++)
+                                                                document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: \n" + (tamanio).toString();
                                                                 @*var iter = aLabels;
                                                                 <p>@seccion.Item.ItemId</p>*@
                                                                 var dataT = {
