@@ -23,7 +23,11 @@ namespace Opiniometro_WebApp.Controllers
                 Secciones = db.Seccion.ToList(),
                 Items = db.Item.ToList(),
                 Formulario = db.Formulario.Find(codForm),// le pasamos
-                Conformados = new List<Conformado_Item_Sec_Form>()
+                Conformados = db.Conformado_Item_Sec_Form
+                    .Where(m => m.CodigoFormulario == codForm)
+                    .OrderBy(m => m.TituloSeccion)
+                    .ThenBy(m => m.Orden_Item)
+                    .ToList()
 
         };
             
@@ -38,18 +42,22 @@ namespace Opiniometro_WebApp.Controllers
            
             if (ModelState.IsValid)
             {
-                var conf = db.Conformado_Item_Sec_Form.Where(m => m.ItemId == conformado.ItemId && m.TituloSeccion == conformado.TituloSeccion && m.CodigoFormulario == conformado.CodigoFormulario);
-                if (conf == null)
-                {              
-                db.Conformado_Item_Sec_Form.Add(conformado);
-                db.SaveChanges();
+                List<Conformado_Item_Sec_Form> conf = db.Conformado_Item_Sec_Form.Where(m => m.ItemId == conformado.ItemId && m.TituloSeccion == conformado.TituloSeccion && m.CodigoFormulario == conformado.CodigoFormulario).ToList();
+                if (conf.Count == 0)
+                {
+                    db.Conformado_Item_Sec_Form.Add(conformado);
+                    db.SaveChanges();
                 }
                 else
+                {
                     return null;
+                }                
             }
             List<Conformado_Item_Sec_Form> conformados =
                     db.Conformado_Item_Sec_Form
-                    .Where(m => m.CodigoFormulario == conformado.CodigoFormulario && m.Seccion == conformado.Seccion)
+                    .Include("Item")
+                    .Where(m => m.CodigoFormulario == conformado.CodigoFormulario && m.TituloSeccion == conformado.TituloSeccion)
+                    .OrderBy(m => m.Orden_Item)
                     .ToList();
             return PartialView("ConformadoVParcial", conformados);
 
