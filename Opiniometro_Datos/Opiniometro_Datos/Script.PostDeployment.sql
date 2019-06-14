@@ -113,8 +113,8 @@ CREATE PROCEDURE SP_ModificarPersona
 	@Nombre2			NVARCHAR(50),
 	@Apellido1			NVARCHAR(50),
 	@Apellido2			NVARCHAR(50),
-	@Correo				NVARCHAR(100),
-	@DireccionDetallada	NVARCHAR(256)
+	@Correo				NVARCHAR(50),
+	@DireccionDetallada	NVARCHAR(200)
 AS
 BEGIN
 	UPDATE Persona
@@ -161,7 +161,7 @@ BEGIN
 END
 GO
 
-EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre1='Barry2', @Nombre2='', @Apellido1='Allen2', @Apellido2='Garcia2', @DireccionDetallada='Central City2';
+--EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre1='Barry2', @Nombre2='', @Apellido1='Allen2', @Apellido2='Garcia2', @DireccionDetallada='Central City2';
 
 IF OBJECT_ID('ValorRandom') IS NOT NULL
 	DROP VIEW ValorRandom

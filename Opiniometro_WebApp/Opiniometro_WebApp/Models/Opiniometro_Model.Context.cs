@@ -64,33 +64,6 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     
-        public virtual ObjectResult<CursosSegunAnno_Result> CursosSegunAnno(Nullable<short> anno)
-        {
-            var annoParameter = anno.HasValue ?
-                new ObjectParameter("anno", anno) :
-                new ObjectParameter("anno", typeof(short));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CursosSegunAnno_Result>("CursosSegunAnno", annoParameter);
-        }
-    
-        public virtual ObjectResult<CursosSegunCarrera_Result> CursosSegunCarrera(string siglaCarrera)
-        {
-            var siglaCarreraParameter = siglaCarrera != null ?
-                new ObjectParameter("siglaCarrera", siglaCarrera) :
-                new ObjectParameter("siglaCarrera", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CursosSegunCarrera_Result>("CursosSegunCarrera", siglaCarreraParameter);
-        }
-    
-        public virtual ObjectResult<CursosSegunSemestre_Result> CursosSegunSemestre(Nullable<byte> semestre)
-        {
-            var semestreParameter = semestre.HasValue ?
-                new ObjectParameter("semestre", semestre) :
-                new ObjectParameter("semestre", typeof(byte));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CursosSegunSemestre_Result>("CursosSegunSemestre", semestreParameter);
-        }
-    
         public virtual ObjectResult<DatosEstudiante_Result> DatosEstudiante(string cedula)
         {
             var cedulaParameter = cedula != null ?
@@ -310,7 +283,7 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_LoginUsuario", correoParameter, contrasennaParameter, resultado);
         }
     
-        public virtual int SP_ModificarPersona(string cedulaBusqueda, string cedula, string nombre1, string nombre2, string apellido1, string apellido2, string direccionDetallada)
+        public virtual int SP_ModificarPersona(string cedulaBusqueda, string cedula, string nombre1, string nombre2, string apellido1, string apellido2, string correo, string direccionDetallada)
         {
             var cedulaBusquedaParameter = cedulaBusqueda != null ?
                 new ObjectParameter("CedulaBusqueda", cedulaBusqueda) :
@@ -336,11 +309,15 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Apellido2", apellido2) :
                 new ObjectParameter("Apellido2", typeof(string));
     
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
             var direccionDetalladaParameter = direccionDetallada != null ?
                 new ObjectParameter("DireccionDetallada", direccionDetallada) :
                 new ObjectParameter("DireccionDetallada", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombre1Parameter, nombre2Parameter, apellido1Parameter, apellido2Parameter, direccionDetalladaParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombre1Parameter, nombre2Parameter, apellido1Parameter, apellido2Parameter, correoParameter, direccionDetalladaParameter);
         }
     
         public virtual int SP_ObtenerNombre(string correo, ObjectParameter nombre, ObjectParameter apellido)

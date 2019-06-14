@@ -40,7 +40,7 @@ namespace Opiniometro_WebApp.Controllers
                 var query = from p in listaPersonas
                             join u in listaUsuarios on p.Cedula equals u.Cedula into table1
                             from u in table1
-                            where p.Nombre.Contains(nom)
+                            where p.Nombre1.Contains(nom)
                             select new ViewModelAdmin { persona = p, usuario = u };
                 return View(query);
             }
@@ -98,7 +98,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 using (db)
                 {
-                    db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre, per.Persona.Apellido1, per.Persona.Apellido2, per.usuario.CorreoInstitucional, per.Persona.Direccion);
+                    db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre1, "",per.Persona.Apellido1, per.Persona.Apellido2, per.usuario.CorreoInstitucional, per.Persona.DireccionDetallada);
                     return RedirectToAction("VerPersonas");
                 }
             }
@@ -132,8 +132,9 @@ namespace Opiniometro_WebApp.Controllers
                 using (db)
                 {
                     string contrasenna_generada = GenerarContrasenna(10);
-                    db.SP_AgregarPersonaUsuario(per.usuario.CorreoInstitucional, contrasenna_generada, per.persona.Cedula, per.persona.Nombre, per.persona.Apellido1, per.persona.Apellido2, per.persona.Direccion);             
-
+                    
+                    db.SP_AgregarPersonaUsuario(per.persona.Cedula, per.persona.Nombre1, "", per.persona.Apellido1,
+                        per.persona.Apellido2, per.usuario.CorreoInstitucional, per.persona.DireccionDetallada);
                     string contenido =
                      "<p>Se le ha creado un usuario en Opiniometro@UCR.</p>" +
                      "<p>A continuación, su contraseña temporal, ingrésela junto con su correo institucional:</p> <b>"
