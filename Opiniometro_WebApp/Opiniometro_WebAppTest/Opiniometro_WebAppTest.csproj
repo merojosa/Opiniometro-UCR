@@ -150,6 +150,10 @@
   <ItemGroup>
     <Compile Include="Controllers\AuthControllerTest.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Controllers\VisualizarFormularioControllerTest.cs" />
+    <Compile Include="Controllers\SeccionControllerTest.cs" />
+    <Compile Include="Controllers\FormularioControllerTest.cs" />
+    <Compile Include="Controllers\CategoriaControllerTest.cs" />
     <Compile Include="Controllers\IdentidadManagerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -175,6 +179,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -187,7 +193,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Opiniometro_WebApp\Opiniometro_WebApp.csproj">
       <Project>{dc6d5169-a650-4f81-8b50-9c2b00f39085}</Project>

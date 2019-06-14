@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Data; //Problema de ambiguedad
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -66,6 +66,7 @@ namespace Opiniometro_WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Categoria categoria = db.Categoria.Find(id);
+
             if (categoria == null)
             {
                 return HttpNotFound();

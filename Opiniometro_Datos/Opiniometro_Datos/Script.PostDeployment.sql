@@ -112,11 +112,16 @@ CREATE PROCEDURE SP_ModificarPersona
 	@Nombre				NVARCHAR(50),
 	@Apellido1			NVARCHAR(50),
 	@Apellido2			NVARCHAR(50),
+	@Correo				NVARCHAR(100),
 	@Direccion			NVARCHAR(256)
 AS
 BEGIN
 	UPDATE Persona
 	SET Cedula = @Cedula, Nombre = @Nombre, Apellido1 = @Apellido1, Apellido2 = @Apellido2, Direccion = @Direccion
+	WHERE Cedula = @CedulaBusqueda;
+
+	UPDATE Usuario
+	SET CorreoInstitucional = @Correo
 	WHERE Cedula = @CedulaBusqueda;
 END
 GO
@@ -132,6 +137,27 @@ AS
 	FROM Tiene_Usuario_Perfil_Enfasis TU	JOIN Perfil ON TU.IdPerfil = Perfil.Id
 											JOIN Posee_Enfasis_Perfil_Permiso PE ON Perfil.Id = PE.IdPerfil
 	WHERE TU.CorreoInstitucional=@Correo AND TU.IdPerfil = @Perfil
+GO
+
+IF OBJECT_ID('SP_ObtenerNombre') IS NOT NULL
+	DROP PROCEDURE SP_ObtenerNombre
+GO
+CREATE PROCEDURE SP_ObtenerNombre
+	@Correo			NVARCHAR(50),
+	@Nombre			NVARCHAR(50) OUT,
+	@Apellido		NVARCHAR(50) OUT
+AS
+BEGIN
+	SET NOCOUNT ON
+	
+	SET @Nombre = (SELECT Nombre
+	FROM Usuario U	JOIN Persona P ON U.Cedula = p.Cedula
+	WHERE U.CorreoInstitucional=@Correo)
+
+	SET @Apellido = (SELECT Apellido1
+	FROM Usuario U	JOIN Persona P ON U.Cedula = p.Cedula
+	WHERE U.CorreoInstitucional=@Correo)
+END
 GO
 
 EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
@@ -284,6 +310,8 @@ EXEC SP_AgregarUsuario @Correo='luis.quesadaborbon@ucr.ac.cr', @Contrasenna='Lig
 EXEC SP_AgregarUsuario @Correo='admin@ucr.ac.cr', @Contrasenna='adminUCR2019', @Cedula='123456789'
 EXEC SP_AgregarUsuario @Correo= 'cx@cx.solutions', @Contrasenna= 'CXSolutions', @Cedula= '100000001'
 
+
+
 --Script JJAPH
 
 --Unidad academica
@@ -317,7 +345,8 @@ INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-01234', 'Ciencias de la Computación e Informática','UC-023874')
 
 INSERT INTO Enfasis
-VALUES (0, 'SC-01234')
+VALUES	(0, 'SC-01234'),
+		(1, 'SC-01234')
 
 INSERT INTO Carrera(Sigla, Nombre, CodigoUnidadAcademica)
 VALUES ('SC-01235', 'Computación con varios Énfasis','UC-023874')
@@ -429,7 +458,8 @@ VALUES  ('Evaluación de aspectos reglamentarios del profesor', 'Conteste a las 
 
 --Formulario
 INSERT INTO Formulario (CodigoFormulario, Nombre)
-VALUES  ('131313', 'Evaluación de Profesores');
+VALUES  ('131313', 'Evaluación de Profesores'),
+		('121212', 'Evaluacion del Curso');
 
 --Profesor
 INSERT INTO Profesor (CedulaProfesor)
@@ -480,15 +510,13 @@ CREATE PROCEDURE SP_ContarRespuestasPorGrupo
 	@semestreGrupo		TINYINT,
 	@numeroGrupo		TINYINT,
 	@siglaCurso			CHAR(6),
-	@itemId				NVARCHAR(10),
-	@respuesta			NVARCHAR(500),
-	@cntResp			INT OUTPUT
+	@itemId				NVARCHAR(10)
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT @cntResp= COUNT(e.Respuesta)
+	SELECT e.Respuesta, COUNT(e.Respuesta) AS cntResp
 	FROM Responde as e
-	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId AND e.Respuesta = @respuesta
+	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
 	GROUP BY e.CodigoFormularioResp, e.CedulaProfesor, e.AnnoGrupoResp, e.SemestreGrupoResp, e.NumeroGrupoResp, e.SiglaGrupoResp, e.ItemId, e.Respuesta
 END
 GO
@@ -524,25 +552,45 @@ INSERT INTO Permiso
 VALUES	(1, 'Hacer todo'),
 		(2, 'Asignar formulario'),
 		(3, 'Calificar cursos'),
-		(4, 'Ver cursos')
+		(4, 'Ver cursos'),
+		(202, 'VerInformacionPersonas'),
+		(203, 'InsertarUsuario'),
+		(204, 'AsignarFormulario'),
+		(205, 'VisualizarResultadosDeEvaluaciones'),
+		(206, 'VerSecciones'),
+		(207, 'VerItems'),
+		(208, 'InsertarFormulario');
 
 INSERT INTO Perfil
 VALUES	('Estudiante', 'Default'),
 		('Admin', 'Default'),
 		('Profesor', 'Default')
 
+
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
 		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
-		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor')
+		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor'),
+		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Admin')
 
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
-		(1, 'SC-01234', 'Estudiante', 4),
 		(0, 'SC-01234', 'Admin', 1),
 		(0, 'SC-01234', 'Admin', 2),
 		(0, 'SC-01234', 'Profesor', 2)
 
+
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','202')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','203')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','204')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','205')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','206')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','207')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','204')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','205')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Estudiante','205')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','208')
+insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','208')
 
 INSERT INTO Provincia
 VALUES	('San José'),
