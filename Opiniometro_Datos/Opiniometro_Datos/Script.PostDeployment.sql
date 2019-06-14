@@ -723,7 +723,7 @@ BEGIN
 
 	SET @datosCaracteres = CAST ('' as xml).value('xs:base64Binary(sql:variable("@InfoBinario"))', 'varchar (max)');
 
-	SET @contrasenaRandom = @datosCaracteres;
+	SET @resultado = @datosCaracteres;
 
 END
 GO
