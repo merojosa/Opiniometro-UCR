@@ -112,11 +112,16 @@ CREATE PROCEDURE SP_ModificarPersona
 	@Nombre				NVARCHAR(50),
 	@Apellido1			NVARCHAR(50),
 	@Apellido2			NVARCHAR(50),
+	@Correo				NVARCHAR(100),
 	@Direccion			NVARCHAR(256)
 AS
 BEGIN
 	UPDATE Persona
 	SET Cedula = @Cedula, Nombre = @Nombre, Apellido1 = @Apellido1, Apellido2 = @Apellido2, Direccion = @Direccion
+	WHERE Cedula = @CedulaBusqueda;
+
+	UPDATE Usuario
+	SET CorreoInstitucional = @Correo
 	WHERE Cedula = @CedulaBusqueda;
 END
 GO
@@ -134,7 +139,28 @@ AS
 	WHERE TU.CorreoInstitucional=@Correo AND TU.IdPerfil = @Perfil
 GO
 
-EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
+IF OBJECT_ID('SP_ObtenerNombre') IS NOT NULL
+	DROP PROCEDURE SP_ObtenerNombre
+GO
+CREATE PROCEDURE SP_ObtenerNombre
+	@Correo			NVARCHAR(50),
+	@Nombre			NVARCHAR(50) OUT,
+	@Apellido		NVARCHAR(50) OUT
+AS
+BEGIN
+	SET NOCOUNT ON
+	
+	SET @Nombre = (SELECT Nombre
+	FROM Usuario U	JOIN Persona P ON U.Cedula = p.Cedula
+	WHERE U.CorreoInstitucional=@Correo)
+
+	SET @Apellido = (SELECT Apellido1
+	FROM Usuario U	JOIN Persona P ON U.Cedula = p.Cedula
+	WHERE U.CorreoInstitucional=@Correo)
+END
+GO
+
+--EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
 
 IF OBJECT_ID('ValorRandom') IS NOT NULL
 	DROP VIEW ValorRandom
@@ -265,7 +291,7 @@ VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajue
 		('117720912', 'Jorge', 'Solano', 'Carrillo', 'La Fortuna de San Carlos.'),
 		('236724501', 'Carolina', 'Gutierrez', 'Lozano', 'Sarchí, Alajuela.'),
 		('123456789', 'Ortencia', 'Cañas', 'Griezman', 'San Pedro de Montes de Oca');
-
+		
 INSERT INTO Estudiante VALUES 
  ('116720500', 'B11111')
 ,('115003456', 'B22222')
@@ -413,7 +439,13 @@ INSERT INTO Item(ItemId, TextoPregunta, TieneObservacion, TipoPregunta, NombreCa
 VALUES  ('PRE303', '¿El profesor repuso clases cuando fue necesario?', 1, 3, 'Reglamento'),
 		('PRE404', '¿El profesor entrego la carta del estudiante en las fechas indicadas por el reglamento?', 1, 3, 'Reglamento'),
 		('PRE101', '¿Que opina del curso?', 0, 1, 'Opinion'),
-		('PRE202', '¿Que opina del profesor?', 0, 1, 'Opinion');
+		('PRE202', '¿Que opina del profesor?', 0, 1, 'Opinion'),
+		---Se agregó
+		('PRE505', 'Año de carrera que cursa', 0, 4, 'Opinion'),
+		('PRE606', 'Condicion laboral', 0, 4, 'Opinion'),
+		--Escalar y Escalar Estrella
+		('PRE707', '¿Se prepara adecuadamente para las evaluaciones?', 1, 5, 'Opinion'),
+		('PRE808', '¿Propone actividades que involucren investigacion?', 1, 6, 'Reglamento');
 
 --Item-Texto Libre
 INSERT INTO Texto_Libre (ItemId)
@@ -428,12 +460,15 @@ VALUES  ('PRE303', 1),
 --Seccion
 INSERT INTO Seccion (Titulo, Descripcion)
 VALUES  ('Evaluación de aspectos reglamentarios del profesor', 'Conteste a las preguntas relacionadas a aspectos reglamentarios que el profesor debe cumplir.'),
-		('Opinion general del curso', 'Describa las opiniones que le han generado el profesor con respecto al curso tratado.');
+		('Opinion general del curso', 'Describa las opiniones que le han generado el profesor con respecto al curso tratado.'),
+		--Nueva Seccion
+		('Información del o la estudiante', 'Datos del estudiante'),
+		('Tematicas transversales de la Universidad de Costa Rica', ' '),
+		('Evaluacion de la participacion estudiantil', 'Autoevaluacion estudiantil');
 
 --Formulario
 INSERT INTO Formulario (CodigoFormulario, Nombre)
-VALUES  ('131313', 'Evaluación de Profesores'),
-		('121212', 'Evaluacion del Curso');
+VALUES  ('131313', 'Evaluación de Profesores');
 
 --Profesor
 INSERT INTO Profesor (CedulaProfesor)
@@ -443,14 +478,21 @@ VALUES  ('100000002');
 INSERT INTO Formulario_Respuesta (Fecha, CodigoFormulario, CedulaPersona, CedulaProfesor, AnnoGrupo, SemestreGrupo, NumeroGrupo, SiglaGrupo, Completado)
 VALUES  ('2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 1),
 		('2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 1),
-		('2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 1);
+		('2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 1),
+		('2017-3-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 1),
+		('2017-3-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 1),
+		('2017-3-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 1);
 
  --Conformado_Item_Sec_Form
 INSERT INTO Conformado_Item_Sec_Form (ItemId, CodigoFormulario, TituloSeccion, NombreFormulario)
 VALUES	('PRE101', '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
 		('PRE202', '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
 		('PRE303', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores'),	
-		('PRE404', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores');
+		('PRE404', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores'),
+		('PRE505', '131313', 'Información del o la estudiante', 'Evaluación de Profesores'),
+		('PRE606', '131313', 'Información del o la estudiante', 'Evaluación de Profesores'),
+		('PRE707', '131313', 'Evaluacion de la participacion estudiantil', 'Evaluación de Profesores'),
+		('PRE808', '131313', 'Tematicas transversales de la Universidad de Costa Rica', 'Evaluación de Profesores');
 
 --Responde
 INSERT INTO Responde (ItemId, TituloSeccion, FechaRespuesta, CodigoFormularioResp, CedulaPersona, CedulaProfesor, AnnoGrupoResp, SemestreGrupoResp, NumeroGrupoResp, SiglaGrupoResp, Respuesta, Observacion)
@@ -467,7 +509,28 @@ VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-
 		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '1', 'Me repuso una clase a la que falte'),
 		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '1', 'Sí se reviso'),
 		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Entretenido'),
-		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Muy buena profesora');
+		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Muy buena profesora'),
+
+		--Agregado
+		--Cuarta Multiple
+		('PRE505', 'Información del o la estudiante', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Primero', ''),
+		('PRE606', 'Información del o la estudiante', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'No Trabajo', ''),
+		('PRE505', 'Información del o la estudiante', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Segundo', ''),
+		('PRE505', 'Información del o la estudiante', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Tercero', ''),
+		('PRE606', 'Información del o la estudiante', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Trabajo mas de 20 horas semanales', ''),
+		('PRE606', 'Información del o la estudiante', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Trabajo menos de 20 horas semanales', ''),
+		--Escalar 5 y 10
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Demasiado', 'Soy un sapazo'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Poco', 'Me da pereza estudiar'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'A veces', 'Siempre le pongo'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Poco', 'Sí se reviso'),
+		--1 a 10
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '8', 'Me encanta la materia'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', '4', 'Mucho que investigar'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '3', 'Soy muy vago'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '1', 'Demasiado trabajo'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', '7', 'Me encanta la materia'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', '5', 'Mucho que investigar');
 
 GO
 IF OBJECT_ID('SP_ContarRespuestasPorGrupo') IS NOT NULL
