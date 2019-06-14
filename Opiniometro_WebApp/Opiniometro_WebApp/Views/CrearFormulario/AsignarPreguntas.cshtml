@@ -64,25 +64,22 @@
 
 <div class="form-group">
 
-    @Html.Label("Orden de la Seccion", htmlAttributes: new { @class = "control-label col-md-2" })
-
+        
     <div class="col-md-4">
-        @Html.EditorFor(model => model.Orden_Seccion, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Orden_Seccion, "", new { @class = "text-danger" })
+        <input class="form-control text-box single-line"  id="Orden_Item" name="Orden_Item" type="number" value="@ViewData["OrdenItem"]"/>
 
     </div>
-    @Html.Label("Orden de la pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
+   
 
     <div class="col-md-4">
-        @Html.EditorFor(model => model.Orden_Item, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Orden_Item, "", new { @class = "text-danger" })
+        <input class="form-control text-box single-line" id="Orden_Seccion" name="Orden_Seccion" type="number" value="@ViewData["OrdenSeccion"]" />
 
     </div>
 
 </div>
 <div class="row">
     <div class="col-sm-6 right">
-        <input type="button" id="btnSave" value="Asignar pregunta" class="btn btn-secondary"  onclick="accionBotonCrearNueva()" />
+        <input type="button" id="btnSave" value="Asignar pregunta"  class="btn btn-secondary" onclick="accionBotonCrearNueva() " />
     </div>
 </div>
 
@@ -109,8 +106,8 @@
                 {
                     <tr>
                         <td>
-                            <input type="radio" id="seccion" name="seccion" value="@seccion.Titulo" />
-                            @Html.Action("actualizacionDeOrdenItem", "CrearFormulario", new { listaItemsYSeccion = Model.listaItemYSeccion, titulo = seccion.Titulo})
+                            <input type="radio" id="seccion" name="seccion" value="@seccion.Titulo" onclick="presionaRadio(@Model.ListaItemYSeccion)"/>
+                            
                         </td>
                         <td>
                             @Html.DisplayFor(model => seccion.Titulo)
@@ -221,9 +218,23 @@
 </script>
 
 <script>
-    function presionaRadio()
+    function presionaRadio(ListaItemYSeccion)
     {
-
+        var titulo = $("input:radio[name=seccion]:checked").val();
+        var itemActual = ListaItemYSeccion.Find(s => s.titulo == titulo);//Buscamos un objeto de la lista con respecto al titulo de la seccion. 
+        if (itemActual == null)
+        {
+            var numeroDeSeccion 
+            ViewData["OrdenSeccion"] = 0; // tenemos que recuperar el ultimo numero de la seccion que introducimos. 
+            ViewData["OrdenItem"] = 1;// asignamos que el siguiente item que vamos a añadir es el 1.
+            ListaItemYSeccion.Add(new ItemYSeccion(1, 0, itemsYSeccion.titulo)); // añadimos el objeto a la lista. 
+        }
+        else//ya existe una pregunta en esa seccion.
+        {
+            var ordenItem =  ListaItemYSeccion.Find(s => s.titulo == itemsYSeccion.titulo).aumentarOrdenPregunta();// aumentamos el orden de la pregunta con respecto a la seccion. Entonces actualizamos el valor solamente. 
+            ViewData["OrdenItem"] = ordenItem;// asignamos que el siguiente item que vamos a añadir es el 1.
+            ViewData["OrdenSeccion"] = ListaItemYSeccion.Find(s => s.titulo == itemsYSeccion.titulo).OrdenSeccion;
+        }
     }
 </script>
 
