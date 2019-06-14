@@ -83,6 +83,7 @@
         <AssociationConnector Association="Opiniometro_DatosModel.Escuela" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.Se_Encuentra_Curso_Enfasis" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.Se_Encuentra_Unidad_Enfasis" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.C__RefactorLog" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
