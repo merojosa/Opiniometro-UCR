@@ -432,7 +432,8 @@ VALUES  ('Evaluación de aspectos reglamentarios del profesor', 'Conteste a las 
 
 --Formulario
 INSERT INTO Formulario (CodigoFormulario, Nombre)
-VALUES  ('131313', 'Evaluación de Profesores');
+VALUES  ('131313', 'Evaluación de Profesores'),
+		('121212', 'Evaluacion del Curso');
 
 --Profesor
 INSERT INTO Profesor (CedulaProfesor)
@@ -483,15 +484,13 @@ CREATE PROCEDURE SP_ContarRespuestasPorGrupo
 	@semestreGrupo		TINYINT,
 	@numeroGrupo		TINYINT,
 	@siglaCurso			CHAR(6),
-	@itemId				NVARCHAR(10),
-	@respuesta			NVARCHAR(500),
-	@cntResp			INT OUTPUT
+	@itemId				NVARCHAR(10)
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT @cntResp= COUNT(e.Respuesta)
+	SELECT e.Respuesta, COUNT(e.Respuesta) AS cntResp
 	FROM Responde as e
-	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId AND e.Respuesta = @respuesta
+	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
 	GROUP BY e.CodigoFormularioResp, e.CedulaProfesor, e.AnnoGrupoResp, e.SemestreGrupoResp, e.NumeroGrupoResp, e.SiglaGrupoResp, e.ItemId, e.Respuesta
 END
 GO
@@ -527,7 +526,14 @@ INSERT INTO Permiso
 VALUES	(1, 'Hacer todo'),
 		(2, 'Asignar formulario'),
 		(3, 'Calificar cursos'),
-		(4, 'Ver cursos')
+		(4, 'Ver cursos'),
+		(202, 'VerInformacionPersonas'),
+		(203, 'InsertarUsuario'),
+		(204, 'AsignarFormulario'),
+		(205, 'VisualizarResultadosDeEvaluaciones'),
+		(206, 'VerSecciones'),
+		(207, 'VerItems'),
+		(208, 'InsertarFormulario');
 
 INSERT INTO Perfil
 VALUES	('Estudiante', 'Default'),
@@ -545,6 +551,7 @@ VALUES	(0, 'SC-01234', 'Estudiante', 3),
 		(0, 'SC-01234', 'Admin', 2),
 		(0, 'SC-01234', 'Profesor', 2)
 
+
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','202')
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','203')
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','204')
@@ -556,7 +563,6 @@ insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdP
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Estudiante','205')
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','208')
 insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','208')
-insert into Permiso (Id, Descripcion) values (208, 'InsertarFormulario')
 
 INSERT INTO Provincia
 VALUES	('San José'),

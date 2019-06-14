@@ -12,8 +12,16 @@ namespace Opiniometro_WebApp.Controllers
 {
     public class Formulario_RespuestaController : Controller
     {
-        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        private Opiniometro_DatosEntities db;
+        public Formulario_RespuestaController()
+        {
+            db =  new Opiniometro_DatosEntities();
+        }
 
+        public Formulario_RespuestaController(Opiniometro_DatosEntities db)
+        {
+            this.db = db;
+        }
         // GET: Formulario_Respuesta
         public ActionResult Index()
         {
