@@ -566,10 +566,12 @@ VALUES	('Estudiante', 'Default'),
 		('Admin', 'Default'),
 		('Profesor', 'Default')
 
+
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
 		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
-		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor')
+		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor'),
+		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Admin')
 
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
