@@ -222,6 +222,9 @@
     <Compile Include="Models\Curso.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CursosSegunCarrera_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DatosEstudiante_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -250,9 +253,6 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Imparte.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Item.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -360,6 +360,7 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Fakes Include="Fakes\Microsoft.SqlServer.ManagedDTS.fakes" />
     <EntityDeploy Include="Models\Opiniometro_Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Opiniometro_Model.Designer.cs</LastGenOutput>
@@ -367,7 +368,6 @@
     <Content Include="Models\Opiniometro_Model.edmx.diagram">
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Content>
-    <Fakes Include="Fakes\Microsoft.SqlServer.ManagedDTS.fakes" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CollapsibleScript.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

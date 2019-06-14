@@ -4,39 +4,38 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="587744312b9045dea451730e22733cc0" Name="Diagram1">
-        <EntityTypeShape EntityType="OpiniometroModel.Administrativo" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Carrera" Width="1.5" PointX="0.75" PointY="31.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Categoria" Width="1.5" PointX="6" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Ciclo_Lectivo" Width="1.5" PointX="3.75" PointY="25.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Conformado_Item_Sec_Form" Width="1.5" PointX="10.5" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Curso" Width="1.5" PointX="3.75" PointY="27.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Empadronado" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Enfasis" Width="1.5" PointX="3" PointY="31.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Estudiante" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Facultad" Width="1.5" PointX="1.5" PointY="25.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Fecha_Corte" Width="1.5" PointX="6" PointY="30.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Formulario" Width="1.5" PointX="6" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Formulario_Respuesta" Width="1.5" PointX="8.25" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Grupo" Width="1.5" PointX="6" PointY="26.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Imparte" Width="1.5" PointX="5.25" PointY="16.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Item" Width="1.5" PointX="8.25" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Matricula" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Opciones_De_Respuestas_Seleccion_Unica" Width="1.5" PointX="12.75" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Perfil" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Permiso" Width="1.5" PointX="6" PointY="32.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Persona" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Posee_Enfasis_Perfil_Permiso" Width="1.5" PointX="8.25" PointY="24.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Profesor" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Responde" Width="1.5" PointX="10.5" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Seccion" Width="1.5" PointX="8.25" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Seleccion_Unica" Width="1.5" PointX="10.5" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.TelefonoPersona" Width="1.5" PointX="3" PointY="19.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Texto_Libre" Width="1.5" PointX="10.5" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Tiene_Grupo_Formulario" Width="1.5" PointX="8.25" PointY="20.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Tiene_Usuario_Perfil_Enfasis" Width="1.5" PointX="5.25" PointY="21.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Unidad_Academica" Width="1.5" PointX="1.5" PointY="27.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpiniometroModel.Usuario" Width="1.5" PointX="3" PointY="21.75" IsExpanded="true" />
+      <Diagram DiagramId="e3a4783f9dc548ba917d904a30f9ed05" Name="Diagram1">
+        <EntityTypeShape EntityType="OpiniometroModel.Administrativo" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Carrera" Width="1.5" PointX="0.75" PointY="38.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Categoria" Width="1.5" PointX="3.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Ciclo_Lectivo" Width="1.5" PointX="1.5" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Conformado_Item_Sec_Form" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Curso" Width="1.5" PointX="1.5" PointY="28.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Empadronado" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Enfasis" Width="1.5" PointX="3" PointY="38.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Estudiante" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Facultad" Width="1.5" PointX="1.5" PointY="35.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Fecha_Corte" Width="1.5" PointX="6.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Formulario" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Formulario_Respuesta" Width="1.5" PointX="3" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Grupo" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Item" Width="1.5" PointX="6" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Matricula" Width="1.5" PointX="5.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Opciones_De_Respuestas_Seleccion_Unica" Width="1.5" PointX="10.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Perfil" Width="1.5" PointX="3" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Permiso" Width="1.5" PointX="3" PointY="42.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Persona" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Posee_Enfasis_Perfil_Permiso" Width="1.5" PointX="5.25" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Profesor" Width="1.5" PointX="6" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Responde" Width="1.5" PointX="8.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Seccion" Width="1.5" PointX="6" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Seleccion_Unica" Width="1.5" PointX="8.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.TelefonoPersona" Width="1.5" PointX="3" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Texto_Libre" Width="1.5" PointX="8.25" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Tiene_Grupo_Formulario" Width="1.5" PointX="9" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Tiene_Usuario_Perfil_Enfasis" Width="1.5" PointX="5.25" PointY="22.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Unidad_Academica" Width="1.5" PointX="1.5" PointY="32.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpiniometroModel.Usuario" Width="1.5" PointX="3" PointY="22.625" IsExpanded="true" />
         <AssociationConnector Association="OpiniometroModel.FK_Adm_Per" ManuallyRouted="false" />
         <AssociationConnector Association="OpiniometroModel.FK_Car_Uni" ManuallyRouted="false" />
         <AssociationConnector Association="OpiniometroModel.FK_Enf_Car" ManuallyRouted="false" />
@@ -61,7 +60,6 @@
         <AssociationConnector Association="OpiniometroModel.FK_ForRes_Pro" ManuallyRouted="false" />
         <AssociationConnector Association="OpiniometroModel.FK_Res_ForRes" ManuallyRouted="false" />
         <AssociationConnector Association="OpiniometroModel.FK_Tie_Gru" ManuallyRouted="false" />
-        <AssociationConnector Association="OpiniometroModel.FK_Imparte_Profesor" ManuallyRouted="false" />
         <AssociationConnector Association="OpiniometroModel.FK_Res_Ite" ManuallyRouted="false" />
         <AssociationConnector Association="OpiniometroModel.FK_Sel_Uni_Ite" ManuallyRouted="false" />
         <AssociationConnector Association="OpiniometroModel.FK_Tex_Ite" ManuallyRouted="false" />
@@ -75,6 +73,7 @@
         <AssociationConnector Association="OpiniometroModel.FK_Res_Sec" ManuallyRouted="false" />
         <AssociationConnector Association="OpiniometroModel.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" ManuallyRouted="false" />
         <AssociationConnector Association="OpiniometroModel.Escuela" ManuallyRouted="false" />
+        <AssociationConnector Association="OpiniometroModel.Imparte" ManuallyRouted="false" />
         <AssociationConnector Association="OpiniometroModel.Se_Encuentra_Curso_Enfasis" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
