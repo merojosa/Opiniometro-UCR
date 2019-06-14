@@ -51,11 +51,14 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public ActionResult CargarArchivo(HttpPostedFileBase postedFile)
         {
-            if (postedFile != null)
+            DataTable filasInvalidas = null;
+
+            if (postedFile != null && postedFile.ContentLength > 0)
             {
-                string path = Server.MapPath("~/App_Data/ArchivosCargados/");
-                if (!Directory.Exists(path))
+                if (postedFile.FileName.EndsWith(".csv"))
                 {
+                    string path = Server.MapPath("~/App_Data/ArchivosCargados/");
+                    
                     try
                     {
                         if (!Directory.Exists(path))
@@ -64,6 +67,7 @@ namespace Opiniometro_WebApp.Controllers
                         }
 
                         postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
+                        filasInvalidas = ProcesarArchivo(path + Path.GetFileName(postedFile.FileName));
                         ViewBag.Message = "Archivo cargado con exito.";
                     }
                     catch (Exception e)
@@ -74,12 +78,12 @@ namespace Opiniometro_WebApp.Controllers
                         throw;
                     }
 
+                    
                 }
-
-                postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
-                ViewBag.Message = "File uploaded successfully.";
-                DataTable filasInvalidas = ProcesarArchivo(path + Path.GetFileName(postedFile.FileName));
-
+                else
+                {
+                    ViewBag.Message = "Ha intentado cargar un archivo incompatible";
+                }
                 
             }
 
@@ -259,7 +263,9 @@ namespace Opiniometro_WebApp.Controllers
         private void InsercionEnBloque(DataTable tablaAInsertar)
         {
             //string hileraConexion = ConfigurationManager.ConnectionStrings["Opiniometro_DatosEntities"].ConnectionString;
-            string hileraConexion = "data source=10.1.4.55;initial catalog=Opiniometro;persist security info=True;user id=DeveloperOp;password=devop2019;multipleactiveresultsets=True;application name=EntityFramework&quot;";
+            //string hileraConexion = "data source=10.1.4.55;initial catalog=Opiniometro;persist security info=True;user id=DeveloperOp;password=devop2019;multipleactiveresultsets=True;application name=EntityFramework&quot;";
+            string hileraConexion =
+                "data source=(localdb)\\ProjectsV13;initial catalog=Opiniometro_Datos;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;";
             using (SqlConnection conexionBD = new SqlConnection(hileraConexion))
             {
                 
