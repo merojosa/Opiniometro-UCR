@@ -222,7 +222,7 @@ namespace Opiniometro_WebApp.Controllers
                     nuevoUsuario["correo"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["correo"].ToString().ToCharArray());
 
                     //Insercion de un usuario requiere que tenga un contrasena cifrada con un guid
-                    ObjectParameter contrasenaGenerada = new ObjectParameter("contrasenaGenerada", typeof(System.Data.SqlTypes.SqlChars));
+                    ObjectParameter contrasenaGenerada = new ObjectParameter("contrasenaGenerada");
                     db.SP_GenerarContrasena(contrasenaGenerada);
                     ObjectParameter guidGenerado = new ObjectParameter("guidGenerado", typeof(System.Data.SqlTypes.SqlGuid));
                     db.SP_GenerarIdUnico(guidGenerado);
