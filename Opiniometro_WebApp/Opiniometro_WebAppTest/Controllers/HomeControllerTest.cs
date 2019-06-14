@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using Opiniometro_WebApp.Controllers;
+using Opiniometro_WebApp.Models;
+using Moq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Data.Entity;
+using System.Linq;
 
 namespace Opiniometro_WebAppTest.Controllers
 {
@@ -15,5 +20,6 @@ namespace Opiniometro_WebAppTest.Controllers
             var result = controller.Index() as ViewResult;
             Assert.AreEqual("Index", result.ViewName);
         }
+
     }
 }
