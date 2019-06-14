@@ -12,22 +12,19 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Enfasis
+    public partial class Canton
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Enfasis()
+        public Canton()
         {
-            this.Tiene_Usuario_Perfil_Enfasis = new HashSet<Tiene_Usuario_Perfil_Enfasis>();
-            this.Curso = new HashSet<Curso>();
+            this.Distrito = new HashSet<Distrito>();
         }
     
-        public byte Numero { get; set; }
-        public string SiglaCarrera { get; set; }
+        public string NombreProvincia { get; set; }
+        public string NombreCanton { get; set; }
     
-        public virtual Carrera Carrera { get; set; }
+        public virtual Provincia Provincia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tiene_Usuario_Perfil_Enfasis> Tiene_Usuario_Perfil_Enfasis { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Curso> Curso { get; set; }
+        public virtual ICollection<Distrito> Distrito { get; set; }
     }
 }
