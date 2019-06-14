@@ -24,7 +24,7 @@ namespace Opiniometro_WebApp.Controllers
                 Enfasis = ObtenerEnfasis(0, 0, "", ""),
                 Carreras = ObtenerCarreras(0, 0, "", ""),
                 //Enfasis = ObtenerEnfasis(0, 0, "", ""),
-                Cursos = ObtenerCursos(0, 0, "", "", null, "", ""),
+                Cursos = ObtenerCursos(0, 0, "", "", null),
                 //Grupos = ObtenerGrupos(0, 0, "", "", "", "", 255, "", "" ,""),
                 Formularios = ObtenerFormularios()
             };
@@ -33,15 +33,35 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string unidadAcademica, string nombreCarrera, string nombreCurso, string searchString, byte? semestre, short? ano)
+        public ActionResult Index(string unidadAcademica, string siglaCarrera, string nombreCurso, string searchString, byte? semestre, short? ano)
         {
+            if (!String.IsNullOrEmpty(Request.Form["changeAnno"]))
+            {
+                ano = Convert.ToInt16(Request.Form["changeAnno"]);
+            }
+
+            if (!String.IsNullOrEmpty(Request.Form["changeSemestre"]))
+            {
+                semestre = Convert.ToByte(Request.Form["changeSemestre"]);
+            }
+
+            if (!String.IsNullOrEmpty(Request.Form["changeUnidad"]))
+            {
+                unidadAcademica = Request.Form["changeUnidad"];
+            }
+
+            if (!String.IsNullOrEmpty(Request.Form["changeCarrera"]))
+            {
+                siglaCarrera = Request.Form["changeCarrera"];
+            }
+
             var modelo = new AsignarFormulariosViewModel
             {
                 Ciclos = ObtenerCiclos(""),
                 UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
-                Carreras = ObtenerCarreras(0, 0, "", Request.Form["changeUnidad"]),
-                Grupos = ObtenerGrupos(ano, semestre, unidadAcademica, "", "", nombreCarrera, 255, "", Request.Form["changeCurso"], searchString),
-                Cursos = ObtenerCursos(ano, semestre, "", "", null, Request.Form["changeUnidad"], Request.Form["changeCarrera"]),
+                Carreras = ObtenerCarreras(0, 0, "", unidadAcademica),
+                Grupos = ObtenerGrupos(ano, semestre, unidadAcademica, "", "", siglaCarrera, 255, "", Request.Form["changeCurso"], searchString),
+                Cursos = ObtenerCursos(ano, semestre, unidadAcademica, siglaCarrera, null),
                 Formularios = ObtenerFormularios(),
                 Enfasis = ObtenerEnfasis(0,0, "", "")
 
@@ -82,15 +102,15 @@ namespace Opiniometro_WebApp.Controllers
         public IQueryable<Carrera> ObtenerCarreras(short anno, byte semestre, String codigoUnidadAcadem, String changeUnidad)
         {
 
-            IQueryable<Carrera> nombreCarrera = from car in db.Carrera select car;
+            IQueryable<Carrera> siglaCarrera = from car in db.Carrera select car;
 
             if (!String.IsNullOrEmpty(changeUnidad))
             {
-                nombreCarrera = nombreCarrera.Where(c => c.CodigoUnidadAcademica.Equals(changeUnidad));
+                siglaCarrera = siglaCarrera.Where(c => c.CodigoUnidadAcademica.Equals(changeUnidad));
             }
 
-            ViewBag.nombreCarrera = new SelectList(nombreCarrera, "Sigla", "Nombre");
-            return nombreCarrera;
+            ViewBag.siglaCarrera = new SelectList(siglaCarrera, "Sigla", "Nombre");
+            return siglaCarrera;
         }
 
         //public IQueryable<Profesor> ObtenerProfesores() {
@@ -120,21 +140,21 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="searchString">Frase usada para buscar el nombre o código de un grupo.</param>
         /// <returns>Lista de los cursos que satisfacen los filtros utilizados como parámetros.</returns>
         public IQueryable<Curso> ObtenerCursos(short? anno, byte? semestre,
-            String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis, string changeUnidad, string changeCarrera)
+            String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis)
         {
             IQueryable<Curso> nombreCurso = from c in db.Curso
                                             select c;
 
-            if (!String.IsNullOrEmpty(changeUnidad))
+            if (!String.IsNullOrEmpty(codigoUnidadAcadem))
             {
-                nombreCurso = nombreCurso.Where(c => c.CodigoUnidad.Equals(changeUnidad));
+                nombreCurso = nombreCurso.Where(c => c.CodigoUnidad.Equals(codigoUnidadAcadem));
             }
 
-            if (!String.IsNullOrEmpty(changeCarrera))
+            if (!String.IsNullOrEmpty(siglaCarrera))
             {
                 List<Curso> cursos = new List<Curso>();
                 Opiniometro_DatosEntities opi = new Opiniometro_DatosEntities();
-                var cur = opi.CursosSegunCarrera(changeCarrera);
+                var cur = opi.CursosSegunCarrera(siglaCarrera);
                 foreach (var c in cur)
                 {
                     Curso nuevo = new Curso();
@@ -148,6 +168,44 @@ namespace Opiniometro_WebApp.Controllers
 
                 nombreCurso = cursos.AsQueryable();
             }
+
+            //if (semestre != null)
+            //{
+            //    List<Curso> cursos = new List<Curso>();
+            //    Opiniometro_DatosEntities opi = new Opiniometro_DatosEntities();
+            //    var cur = opi.CursosSegunSemestre(semestre);
+            //    foreach (var c in cur)
+            //    {
+            //        Curso nuevo = new Curso();
+
+            //        nuevo.CodigoUnidad = c.CodigoUnidad;
+            //        nuevo.Tipo = c.Tipo;
+            //        nuevo.Sigla = c.Sigla;
+            //        nuevo.Nombre = c.Nombre;
+            //        cursos.Add(nuevo);
+            //    }
+
+            //    nombreCurso = cursos.AsQueryable();
+            //}
+
+            //if (anno != null)
+            //{
+            //    List<Curso> cursos = new List<Curso>();
+            //    Opiniometro_DatosEntities opi = new Opiniometro_DatosEntities();
+            //    var cur = opi.CursosSegunAnno(anno);
+            //    foreach (var c in cur)
+            //    {
+            //        Curso nuevo = new Curso();
+
+            //        nuevo.CodigoUnidad = c.CodigoUnidad;
+            //        nuevo.Tipo = c.Tipo;
+            //        nuevo.Sigla = c.Sigla;
+            //        nuevo.Nombre = c.Nombre;
+            //        cursos.Add(nuevo);
+            //    }
+
+            //    nombreCurso = cursos.AsQueryable();
+            //}
 
             ViewBag.nombreCurso = new SelectList(nombreCurso, "Nombre", "Nombre");
             return nombreCurso;
