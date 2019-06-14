@@ -12,14 +12,17 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Posee_Enfasis_Perfil_Permiso
+    public partial class Provincia
     {
-        public byte NumeroEnfasis { get; set; }
-        public string SiglaCarrera { get; set; }
-        public string IdPerfil { get; set; }
-        public short IdPermiso { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Provincia()
+        {
+            this.Canton = new HashSet<Canton>();
+        }
     
-        public virtual Perfil Perfil { get; set; }
-        public virtual Permiso Permiso { get; set; }
+        public string NombreProvincia { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Canton> Canton { get; set; }
     }
 }
