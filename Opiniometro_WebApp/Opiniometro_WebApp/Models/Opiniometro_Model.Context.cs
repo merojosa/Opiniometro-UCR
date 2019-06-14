@@ -251,7 +251,7 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_LoginUsuario", correoParameter, contrasennaParameter, resultado);
         }
     
-        public virtual int SP_ModificarPersona(string cedulaBusqueda, string cedula, string nombre, string apellido1, string apellido2, string direccion)
+        public virtual int SP_ModificarPersona(string cedulaBusqueda, string cedula, string nombre, string apellido1, string apellido2, string correo, string direccion)
         {
             var cedulaBusquedaParameter = cedulaBusqueda != null ?
                 new ObjectParameter("CedulaBusqueda", cedulaBusqueda) :
@@ -273,11 +273,15 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Apellido2", apellido2) :
                 new ObjectParameter("Apellido2", typeof(string));
     
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
             var direccionParameter = direccion != null ?
                 new ObjectParameter("Direccion", direccion) :
                 new ObjectParameter("Direccion", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, direccionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, correoParameter, direccionParameter);
         }
     
         public virtual ObjectResult<string> SP_ObtenerFormulario(string cod)
@@ -300,6 +304,42 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Perfil", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ObtenerPermisosUsuario_Result>("SP_ObtenerPermisosUsuario", correoParameter, perfilParameter);
+        }
+    
+        public virtual ObjectResult<CursosSegunAnno_Result> CursosSegunAnno(Nullable<short> anno)
+        {
+            var annoParameter = anno.HasValue ?
+                new ObjectParameter("anno", anno) :
+                new ObjectParameter("anno", typeof(short));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CursosSegunAnno_Result>("CursosSegunAnno", annoParameter);
+        }
+    
+        public virtual ObjectResult<CursosSegunCarrera_Result> CursosSegunCarrera(string siglaCarrera)
+        {
+            var siglaCarreraParameter = siglaCarrera != null ?
+                new ObjectParameter("siglaCarrera", siglaCarrera) :
+                new ObjectParameter("siglaCarrera", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CursosSegunCarrera_Result>("CursosSegunCarrera", siglaCarreraParameter);
+        }
+    
+        public virtual ObjectResult<CursosSegunSemestre_Result> CursosSegunSemestre(Nullable<byte> semestre)
+        {
+            var semestreParameter = semestre.HasValue ?
+                new ObjectParameter("semestre", semestre) :
+                new ObjectParameter("semestre", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CursosSegunSemestre_Result>("CursosSegunSemestre", semestreParameter);
+        }
+    
+        public virtual int SP_ObtenerNombre(string correo, ObjectParameter nombre, ObjectParameter apellido)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ObtenerNombre", correoParameter, nombre, apellido);
         }
     }
 }
