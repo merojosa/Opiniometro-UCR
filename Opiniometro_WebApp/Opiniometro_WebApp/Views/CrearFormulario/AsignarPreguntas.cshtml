@@ -11,6 +11,7 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 <script>
 
 
@@ -40,162 +41,172 @@
 
 </script>
 
-@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-@*<div id="content">*@  
+@using (Html.BeginForm())
+{
+
+
+    @*<div id="content">*@
     <div class="row">
         <div class="col-sm-4"><h3><strong>Codigo:</strong> @Model.Formulario.CodigoFormulario </h3></div>
         <div class="col-sm-8"><h3><strong>Nombre:</strong> @Model.Formulario.Nombre</h3></div>
     </div>
 
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
 
-    <div class="form-group">
+           
 
-        @Html.Label("Orden de la Seccion", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <input class="form-control text-box single-line" data-val="true" id="Orden_Item" name="Orden_Item" readonly="readonly" type="number" value= @ViewData["OrdenItem"]>
+                         
 
-        <div class="col-md-4">
-            @Html.EditorFor(model => model.Orden_Seccion, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Orden_Seccion, "", new { @class = "text-danger" })
+            </div>
+
+
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Orden_Item, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Orden_Item, "", new { @class = "text-danger" })
+
+            </div>
 
         </div>
-        @Html.Label("Orden de la pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
+    <button id="btnSave" name="btnSave">GUARDAR</button><br />
+    <div class="row">
+        <div class="col-sm-5">
+            <h4 align='center'><strong>@Html.Label("Secciones")</strong></h4>
+            <table class="table table-bordered table-striped fixed_header">
+                <tr>
+                    <td></td>
+                    <td>
+                        @Html.Label("Titulo")
+                    </td>
+                    <td>
+                        @Html.Label("Descripción")
+                    </td>
+                </tr>
 
-        <div class="col-md-4">
-            @Html.EditorFor(model => model.Orden_Item, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Orden_Item, "", new { @class = "text-danger" })
+
+                @foreach (var seccion in Model.Secciones)
+                {
+                    <tr>
+                        <td>
+                            <input type="radio" id="seccion" name="seccion" value="@seccion.Titulo" />
+                            @Html.Action("actualizacionDeOrdenItem", "CrearFormulario", new { listaItemsYSeccion = Model.listaItemYSeccion, titulo = seccion.Titulo})
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => seccion.Titulo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => seccion.Descripcion)
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
 
         </div>
+        @*</div>
+            <div class="row">*@
+        <div class="col-sm-7">
+            <h4 align='center'><strong>@Html.Label("Banco de Preguntas")</strong></h4>
+            <table class="table table-bordered table-striped fixed_header">
+                <tr>
+                    <td></td>
+                    <td>
+                        @Html.Label("Código")
+                    </td>
+                    <td>
+                        @Html.Label("Planteamiento")
+                    </td>
+                    <td>
+                        @Html.Label("Tipo")
+                    </td>
+                </tr>
+
+
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>
+                            <input type="radio" name="item" id="item" value="@item.ItemId" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TextoPregunta)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TipoPregunta)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+    <div class="row" id="ConformadosID">
+
+        @Html.Partial("ConformadoVParcial", Model.Conformados)
 
     </div>
-            <button id="btnSave" name="btnSave">GUARDAR</button><br />
-            <div class="row">
-                <div class="col-sm-5">
-                    <h4 align='center'><strong>@Html.Label("Secciones")</strong></h4>
-                    <table class="table table-bordered table-striped fixed_header">
-                        <tr>
-                            <td></td>
-                            <td>
-                                @Html.Label("Titulo")
-                            </td>
-                            <td>
-                                @Html.Label("Descripción")
-                            </td>
-                        </tr>
 
 
-                        @foreach (var seccion in Model.Secciones)
-                        {
-                            <tr>
-                                <td>
-                                    <input type="radio" id="seccion" name="seccion" value="@seccion.Titulo" />
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => seccion.Titulo)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => seccion.Descripcion)
-                                </td>
+    <thead>
 
-                            </tr>
-                        }
-
-                    </table>
-
-                </div>
-                @*</div>
-                    <div class="row">*@
-                <div class="col-sm-7">
-                    <h4 align='center'><strong>@Html.Label("Banco de Preguntas")</strong></h4>
-                    <table class="table table-bordered table-striped fixed_header">
-                        <tr>
-                            <td></td>
-                            <td>
-                                @Html.Label("Código")
-                            </td>
-                            <td>
-                                @Html.Label("Planteamiento")
-                            </td>
-                            <td>
-                                @Html.Label("Tipo")
-                            </td>
-                        </tr>
+        <tr>
 
 
-                        @foreach (var item in Model.Items)
-                        {
-                            <tr>
-                                <td>
-                                    <input type="radio"  name="item" id="item" value="@item.ItemId" />
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ItemId)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TextoPregunta)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TipoPregunta)
-                                </td>
-                            </tr>
-                        }
-
-                    </table>
-                </div>
-            </div>
-            <div class="row" id="ConformadosID">
-
-                @Html.Partial("ConformadoVParcial", Model.Conformados)
-
-            </div>
-        </div>
-
-        <thead>
-
-            <tr>
-
-
-                <td>
+            <td>
 
 
 
-                    <div>
-                        <div style="float: right; width: 500px; padding: 15px;">
+                <div>
+                    <div style="float: right; width: 500px; padding: 15px;">
 
 
-                        </div>
-
-                        <div style=" width: 500px; padding:  15px;">
-
-
-
-                        </div>
                     </div>
 
+                    <div style=" width: 500px; padding:  15px;">
 
-                    <button disabled>
-                        Añadir pregunta al formulario.
-                    </button>
 
-                    <div style="float: left; width: 1000px; padding: 50px;">
-                        @*@Html.Action("SeccionesAsignadas", new
-                            {CodForm = Model.Formulario.CodigoFormulario})*@
+
                     </div>
-
-                    <input type="submit" value="Generate report" />
-                    <div style="clear: both;"></div>
-                </td>
-
-            </tr>
-
-        </thead>
+                </div>
 
 
-        <script>
+                <button disabled>
+                    Añadir pregunta al formulario.
+                </button>
+
+                <div style="float: left; width: 1000px; padding: 50px;">
+                    @*@Html.Action("SeccionesAsignadas", new
+                        {CodForm = Model.Formulario.CodigoFormulario})*@
+                </div>
+
+                <input type="submit" value="Generate report" />
+                <div style="clear: both;"></div>
+            </td>
+
+        </tr>
+
+    </thead>
+}
+
+<script>
     function prueba() {
             document.location = '@Url.Action("Index")';
         }
-        </script>
+</script>
 
+<script>
+    function presionaRadio()
+    {
+
+    }
+</script>
 
 
 

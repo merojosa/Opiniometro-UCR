@@ -8,16 +8,19 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Opiniometro_WebApp.Models;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Opiniometro_WebApp.Controllers
 {
-    
+   
     public class CrearFormularioController : Controller
     {
         Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
         // GET: CrearFormulario
         public ActionResult AsignarPreguntas(string codForm)
-        {
+        {  
+            
             CrearFormularioModel crearFormulario = new CrearFormularioModel
             {
                 Secciones = db.Seccion.ToList(),
@@ -79,12 +82,29 @@ namespace Opiniometro_WebApp.Controllers
         public JsonResult IsOrden_ItemAvailable(int Orden_Item)
         {
             return Json(!db.Conformado_Item_Sec_Form.Any(pregunta => pregunta.Orden_Item == Orden_Item), JsonRequestBehavior.AllowGet);
-
         }
         public JsonResult IsOrden_SeccionAvailable(int Orden_Seccion)
         {
             return Json(!db.Conformado_Item_Sec_Form.Any(pregunta => pregunta.Orden_Seccion == Orden_Seccion), JsonRequestBehavior.AllowGet);
+        }
 
+        public ActionResult actualizacionDeOrdenItem(List<ItemYSeccion> listaItemsYSeccion,String titulo)
+        {
+            var itemYSeccion = listaItemsYSeccion.Find(s => s.titulo == titulo);//Buscamos un objeto de la lista con respecto al titulo de la seccion. 
+            if(itemYSeccion == null)
+            {
+                ViewData["OrdenSeccion"] = 0; // tenemos que recuperar el ultimo numero de la seccion que introducimos. 
+                ViewData["OrdenItem"] = 1;// asignamos que el siguiente item que vamos a añadir es el 1.
+                listaItemsYSeccion.Add(new ItemYSeccion(1, 0, titulo)); // añadimos el objeto a la lista. 
+            }
+            else//ya existe una pregunta en esa seccion.
+            {
+                int ordenItem = listaItemsYSeccion.Find(s => s.titulo == titulo).aumentarOrdenPregunta();// aumentamos el orden de la pregunta.
+                int ultimaSeccion = listaItemsYSeccion.Find(s => s.titulo == titulo).aumentarUltimaSeccion(); //Tambien hay que aumentarla.
+                ViewData["OrdenSeccion"] = ultimaSeccion; // tenemos que recuperar el ultimo numero de la seccion que introducimos. 
+                ViewData["OrdenItem"] = ordenItem;// asignamos que el siguiente item que vamos a añadir es el 1.
+            }
+            return null; //
         }
     }
 }
