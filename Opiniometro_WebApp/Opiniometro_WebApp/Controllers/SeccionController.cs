@@ -24,6 +24,12 @@ namespace Opiniometro_WebApp.Controllers
             this.db = db;
         }
 
+        //Method used to know if a Titulo is already in use
+        public JsonResult IsTituloAvailable(string Titulo)
+        {
+            return Json(!db.Seccion.Any(seccion => seccion.Titulo == Titulo), JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Seccion
         public ActionResult Index()
         {
