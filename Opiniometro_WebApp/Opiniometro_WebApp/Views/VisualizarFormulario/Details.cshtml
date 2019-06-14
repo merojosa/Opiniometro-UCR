@@ -3,6 +3,19 @@
 @{
     ViewBag.Title = "Details";
 }
+<head>
+    <script src="~/Scripts/Chart.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <style>
+        #contenedorGrafo{
+            width: 450px;
+            height: 500px;
+            border: 0px solid #ddd;
+            padding: 1px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
 
 @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
 
@@ -26,7 +39,7 @@
             @Html.DisplayFor(modelItem => title.Grupo.Curso.Nombre)
 
             <span style="float:right;">
-                <b>Semestre:</b> 
+                <b>Semestre:</b>
                 @Html.DisplayFor(modelItem => title.Grupo.SemestreGrupo)
 
                 <b>Año:</b>
@@ -104,6 +117,68 @@
                                                 @if (seccion.Item.TipoPregunta != 1)
                                                 {
                                                     <p>Resultados</p> @*Aqui se ingresa el grafico y desde aqui se mostrarian las observaciones posteriormente, acordarse de ponder una condicion si el tipo de pregunta posee grafico o no*@
+                                                    //<p>@("graficarResultados('@seccion.Item.ItemId')")</p>
+                                                    <p id="info_@item_actual" style="float:right"></p>
+                                                    <div id="contenedorGrafo">
+                                                        <canvas id="pie_chart_@item_actual"></canvas>
+                                                    </div>
+                                                    <script>
+                                                        $.ajax({
+                                                            type: "POST",
+                                                            url: "/VisualizarFormulario/GraficoPie/?itemId=@seccion.Item.ItemId",
+                                                            //data{ itemId: @seccion.Item.ItemId },
+                                                            contentType: "application/json; charset=utf-8",
+                                                            dataType: "json",
+                                                            success: function (chData) {
+                                                                var aData = chData;
+                                                                var aLabels = aData[0];
+                                                                var aDatasets1 = aData[1];
+                                                                var tamanio = 0;
+                                                                for (var size in aLabels)
+                                                                    tamanio++;
+                                                                for (var i = 0; i < tamanio; i++)
+                                                                    document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + aLabels[i];
+                                                                @*var iter = aLabels;
+                                                                <p>@seccion.Item.ItemId</p>*@
+                                                                var dataT = {
+                                                                    labels: aLabels,
+                                                                    datasets: [{
+                                                                    label: "Prueba",
+                                                                        data: aDatasets1,
+                                                                        fill: false,
+                                                                        backgroundColor: [
+                                                                            'rgba(255, 99, 132, 0.2)',
+                                                                            'rgba(54, 162, 235, 0.2)',
+                                                                            'rgba(255, 206, 86, 0.2)',
+                                                                            'rgba(75, 192, 192, 0.2)',
+                                                                            'rgba(153, 102, 255, 0.2)',
+                                                                            'rgba(255, 159, 64, 0.2)'
+                                                                        ],
+                                                                        borderColor: [
+                                                                            'rgba(255, 99, 132, 1)',
+                                                                            'rgba(54, 162, 235, 1)',
+                                                                            'rgba(255, 206, 86, 1)',
+                                                                            'rgba(75, 192, 192, 1)',
+                                                                            'rgba(153, 102, 255, 1)',
+                                                                            'rgba(255, 159, 64, 1)'
+                                                                        ],
+                                                                        borderWidth: 1
+                                                                    }]
+                                                                };
+                                                                var ctx = $("#pie_chart_@item_actual").get(0).getContext("2d");
+                                                                var barChart = new Chart(ctx, {
+                                                                    type: 'pie',
+                                                                    data: dataT,
+                                                                    options: {
+                                                                        responsive: true,
+                                                                        maintainAspectRatio: false,
+                                                                        scales: { xaxes: [{ ticks: { beginAtZero: true } }] },
+                                                                        legend: { display: true },
+                                                                    },
+                                                                })
+                                                            }
+                                                        });
+                                                    </script>
                                                 }
                                                 else
                                                 {
@@ -118,7 +193,7 @@
                                                         }
                                                     </div>
                                                 }
-
+                                                <br />
                                                 <div class="panel-group" id="accordion3_@seccion_counter">
 
                                                     @if (seccion.Item.TieneObservacion == observation)
@@ -136,7 +211,7 @@
                                                                     <div style="height:200px; overflow-y: scroll;">
                                                                         @foreach (var item in Model.Conformado_Item_Sec_Form)
                                                                         {
-                                                                            <p>Respuesta de estudiante, texto para verificar que el tamanno para el cuadro de texto sea apropiado, lo cual indica que se pueda ver la suficiente informacion, a la vez que no se consuma mucho espacio en pantalla y evite al usuario concentrase en la respuesta de una pregunta. Tambien para comprobar con los companneros de equipo que les parece y si creen que el tamanno deber ser mas grande o mas pequenno, ya que se tiene que tomar un promedio del tamanno de una respuesta de un estudiante.</p> 
+                                                                            <p>Respuesta de estudiante, texto para verificar que el tamanno para el cuadro de texto sea apropiado, lo cual indica que se pueda ver la suficiente informacion, a la vez que no se consuma mucho espacio en pantalla y evite al usuario concentrase en la respuesta de una pregunta. Tambien para comprobar con los companneros de equipo que les parece y si creen que el tamanno deber ser mas grande o mas pequenno, ya que se tiene que tomar un promedio del tamanno de una respuesta de un estudiante.</p>
                                                                             <hr>
 
                                                                             @*Se ocupa encontrar la forma de devolver las observaciones por pregunta*@
@@ -169,3 +244,8 @@
 
 </div>
 
+<script src="~/Scripts/Graficar.js"></script>
+@*<script>function graficarResultados(itemId) {
+        alert(itemId);
+        $.get("/VisualizarFormulario/GraficoPie", { itemId });
+    }</script>*@ 
