@@ -11,10 +11,10 @@ namespace Opiniometro_WebApp.Models
 {
     using System;
     
-    public partial class CursosSegunAnno_Result
+    public partial class BuscarCursoPorNombre_Result
     {
-        public string Nombre { get; set; }
         public string Sigla { get; set; }
+        public string Nombre { get; set; }
         public byte Tipo { get; set; }
         public string CodigoUnidad { get; set; }
     }

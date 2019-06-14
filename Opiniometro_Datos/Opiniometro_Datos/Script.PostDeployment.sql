@@ -458,7 +458,8 @@ VALUES  ('Evaluación de aspectos reglamentarios del profesor', 'Conteste a las 
 
 --Formulario
 INSERT INTO Formulario (CodigoFormulario, Nombre)
-VALUES  ('131313', 'Evaluación de Profesores');
+VALUES  ('131313', 'Evaluación de Profesores'),
+		('121212', 'Evaluacion del Curso');
 
 --Profesor
 INSERT INTO Profesor (CedulaProfesor)
@@ -509,15 +510,13 @@ CREATE PROCEDURE SP_ContarRespuestasPorGrupo
 	@semestreGrupo		TINYINT,
 	@numeroGrupo		TINYINT,
 	@siglaCurso			CHAR(6),
-	@itemId				NVARCHAR(10),
-	@respuesta			NVARCHAR(500),
-	@cntResp			INT OUTPUT
+	@itemId				NVARCHAR(10)
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT @cntResp= COUNT(e.Respuesta)
+	SELECT e.Respuesta, COUNT(e.Respuesta) AS cntResp
 	FROM Responde as e
-	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId AND e.Respuesta = @respuesta
+	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
 	GROUP BY e.CodigoFormularioResp, e.CedulaProfesor, e.AnnoGrupoResp, e.SemestreGrupoResp, e.NumeroGrupoResp, e.SiglaGrupoResp, e.ItemId, e.Respuesta
 END
 GO
@@ -567,10 +566,12 @@ VALUES	('Estudiante', 'Default'),
 		('Admin', 'Default'),
 		('Profesor', 'Default')
 
+
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
 		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
-		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor')
+		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor'),
+		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Admin')
 
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
