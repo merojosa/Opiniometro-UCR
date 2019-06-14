@@ -95,12 +95,13 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Item.Find(id);
-            if (item == null)
+            VistaPreviaPreguntaModel vistaPrevia = new VistaPreviaPreguntaModel
             {
-                return HttpNotFound();
-            }
-            return PartialView(item);
+                Item = db.Item.Find(id),
+                Opciones = db.Opciones_De_Respuestas_Seleccion_Unica.Where(m => m.ItemId == id).ToList()
+            };
+            
+            return PartialView(vistaPrevia);
         }
 
         //GET: Item/Edit/5
