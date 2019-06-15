@@ -13,8 +13,7 @@ namespace Opiniometro_WebApp.Models
 
         public byte NumEnfasis { get; set; }
         public string SiglaCarreraEnf { get; set; }
-
-        public 
+ 
         public List<Enfasis> ListaEnfasis { get; set; }
         public List<Permiso> ListaPermisos { get; set; }
         public List<Perfil> ListaPerfiles { get; set; }
