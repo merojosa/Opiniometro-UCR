@@ -259,4 +259,3 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
-/Opiniometro_WebApp/Opiniometro_WebApp/Controllers/SeleccionPermisos.cs

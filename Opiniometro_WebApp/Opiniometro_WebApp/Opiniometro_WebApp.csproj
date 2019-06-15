@@ -188,6 +188,7 @@
     <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\AsignarFormulariosController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
+    <Compile Include="Controllers\Conformado_Item_Sec_FormController.cs" />
     <Compile Include="Controllers\CrearFormularioController.cs" />
     <Compile Include="Controllers\FormularioController.cs" />
     <Compile Include="Controllers\Formulario_RespuestaController.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
+    <Compile Include="Controllers\SeleccionPermisosController.cs" />
     <Compile Include="Controllers\Servicios\IdPermiso.cs" />
     <Compile Include="Controllers\Servicios\IdentidadManager.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
@@ -302,6 +304,7 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PerfilesUsuario.cs" />
+    <Compile Include="Models\Perfil_ext.cs" />
     <Compile Include="Models\Permiso.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -312,6 +315,7 @@
     <Compile Include="Models\Posee_Enfasis_Perfil_Permiso.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Preguntas.cs" />
     <Compile Include="Models\Profesor.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -324,6 +328,7 @@
     <Compile Include="Models\Seccion.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SeleccionPermisos.cs" />
     <Compile Include="Models\Seleccion_Unica.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -486,6 +491,7 @@
     <Content Include="Views\Shared\_Collapsible.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Perfil\Index.cshtml" />
+    <Content Include="Views\SeleccionPermisos\SeleccionarPermisos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

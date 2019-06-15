@@ -2536,13 +2536,13 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           </FunctionImport>
           <EntitySet Name="C__RefactorLog" EntityType="Opiniometro_DatosModel.C__RefactorLog" />
           <FunctionImport Name="CursosSegunAnno" ReturnType="Collection(Opiniometro_DatosModel.CursosSegunAnno_Result)">
-            <Parameter Name="anno" Mode="In" Type="Int16" />
+          <Parameter Name="anno" Mode="In" Type="Int16" />
           </FunctionImport>
           <FunctionImport Name="CursosSegunCarrera" ReturnType="Collection(Opiniometro_DatosModel.CursosSegunCarrera_Result)">
-            <Parameter Name="siglaCarrera" Mode="In" Type="String" />
+          <Parameter Name="siglaCarrera" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="CursosSegunSemestre" ReturnType="Collection(Opiniometro_DatosModel.CursosSegunSemestre_Result)">
-            <Parameter Name="semestre" Mode="In" Type="Byte" />
+          <Parameter Name="semestre" Mode="In" Type="Byte" />
           </FunctionImport>
           <FunctionImport Name="ProcIntroducirSeccion">
             <Parameter Name="titulo" Mode="In" Type="String" />
