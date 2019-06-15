@@ -5,6 +5,8 @@
 }
 
 @Styles.Render("~/Content/scrollbar-tabla.css")
+@*@Styles.Render("~/Content/TablasHTML.css")*@
+
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")﻿
 @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")﻿
@@ -50,9 +52,6 @@
                                 <input type="submit" value="Buscar" />
                             </div>
                         </p>
-                    }
-
-
 
                     </div>
                 </div>
@@ -85,23 +84,20 @@
 
                         @*Tabla de grupos*@
 
-                        <table class="fixed_header">
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <th align='center'>
-                                        <div align='center'></div>
+                                    <th align='left'>
+                                        <div align='left'></div>
                                     </th>
-                                    <th align='center'>
-                                        <div align='center'>Sigla</div>
+                                    <th align='left'>
+                                        <div align='left'>Curso</div>
                                     </th>
-                                    <th align='center'>
-                                        <div align='center'>Curso</div>
+                                    <th align='left'>
+                                        <div align='left'>Grupo</div>
                                     </th>
-                                    <th align='center'>
-                                        <div align='center'>Grupo</div>
-                                    </th>
-                                    <th align='center'>
-                                        <div align='center'>Profesor</div>
+                                    <th align='left'>
+                                        <div align='left'>Profesor</div>
                                     </th>
                                 </tr>
                             </thead>
@@ -125,17 +121,14 @@
                     <div class="panel-heading"><h3>Formularios</h3></div>
                     <div class="panel-body">
 
-                        <table class="fixed_header">
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <th align='center'>
-                                        <div align='center'></div>
+                                    <th align='left'>
+                                        <div align='left'></div>
                                     </th>
-                                    <th align='center'>
-                                        <div align='center'>Sigla</div>
-                                    </th>
-                                    <th align='center'>
-                                        <div align='center'>Nombre</div>
+                                    <th align='left'>
+                                        <div align='left'>Formulario</div>
                                     </th>
                                 </tr>
                             </thead>

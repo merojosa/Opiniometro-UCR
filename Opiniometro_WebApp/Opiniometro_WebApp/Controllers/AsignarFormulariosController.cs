@@ -159,12 +159,13 @@ namespace Opiniometro_WebApp.Controllers
                 var cur = opi.CursosSegunCarrera(changeCarrera);
                 foreach (var c in cur)
                 {
-                    Curso nuevo = new Curso();
-
-                    nuevo.CodigoUnidad = c.CodigoUnidad;
-                    nuevo.Tipo = c.Tipo;
-                    nuevo.Sigla = c.Sigla;
-                    nuevo.Nombre = c.Nombre;
+                    Curso nuevo = new Curso
+                    {
+                        CodigoUnidad = c.CodigoUnidad,
+                        Tipo = c.Tipo,
+                        Sigla = c.Sigla,
+                        Nombre = c.Nombre
+                    };
                     cursos.Add(nuevo);
                 }
 
@@ -184,11 +185,11 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="numEnfasis">Número del énfasis de la carrera en el que se encuentran los cursos de los grupos.</param>
         /// <param name="siglaCurso">Sigla del curso al que pertenecen los grupos</param>
         /// <returns>Lista de los grupos que satisfacen los filtros utilizados como parámetros.</returns>
-        public List<ElegirGrupoEditorViewModel> ObtenerGrupos(short anno, byte semestre, String codigoUnidadAcadem,
-             string nomUnidadAcad, String siglaCarrera, String nombCarrera, byte? numEnfasis, String siglaCurso, string nombreCurso, String searchString)
+        public List<ElegirGrupoEditorViewModel> ObtenerGrupos(short? anno, byte? semestre, string codigoUnidadAcadem,
+             string nomUnidadAcad, string siglaCarrera, string nombCarrera, byte? numEnfasis, string siglaCurso, string nombreCurso, string searchString)
         {
             // En la base, cuando este query se transforme en un proc. almacenado, se deberá usar join con la tabla curso
-            List<ElegirGrupoEditorViewModel> grupos =
+            IQueryable<ElegirGrupoEditorViewModel> grupos =
                 (from cur in db.Curso
                 join gru in db.Grupo on cur.Sigla equals gru.SiglaCurso
                 join uni in db.Unidad_Academica on cur.CodigoUnidad equals uni.Codigo
@@ -207,12 +208,12 @@ namespace Opiniometro_WebApp.Controllers
                 CodigoUnidadAcademica = cur.CodigoUnidad,
                 SiglaCarrera = car.Sigla
                 //NombresCarreras =  cur.Enfasis.
-            }).ToList();
+            });
 
-            grupos = filtreGrupos(searchString, semestre, anno, codigoUnidadAcadem, siglaCarrera, nombreCurso, grupos).TpList();
+            grupos = FiltreGrupos(searchString, semestre, anno, codigoUnidadAcadem, siglaCarrera, nombreCurso, grupos);
             //grupos = FiltreGrupos(searchString, semestre, nomUnidadAcad, nombCarrera, nombreCurso, grupos.AsQueryable()).ToList();
 
-            return grupos;
+            return grupos.ToList();
 
         }
 
@@ -225,7 +226,7 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="codigoCarrera"> podria contener el nombre de la carrera</param>
         /// <param name="grupos"> lista de grupos que se envia desde el metodo ObtenerGrupos</param>
         /// <returns> los grupos filtrados</returns>
-        public IQueryable<ElegirGrupoEditorViewModel> filtreGrupos(string searchString, byte? semestre, short? anno, string CodigoUnidadAcad, string siglaCarrera, string nombCurso ,IQueryable<ElegirGrupoEditorViewModel> grupos)
+        public IQueryable<ElegirGrupoEditorViewModel> FiltreGrupos(string searchString, byte? semestre, short? anno, string CodigoUnidadAcad, string siglaCarrera, string nombCurso ,IQueryable<ElegirGrupoEditorViewModel> grupos)
         {
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -269,7 +270,7 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // Para la vista de los formularios
-        public List<ElegirFormularioEditorViewModel> ObtenerFormularios(string searchString)
+        public List<ElegirFormularioEditorViewModel> ObtenerFormularios()
         {
             IQueryable<ElegirFormularioEditorViewModel> formularios =
                 from formul in db.Formulario

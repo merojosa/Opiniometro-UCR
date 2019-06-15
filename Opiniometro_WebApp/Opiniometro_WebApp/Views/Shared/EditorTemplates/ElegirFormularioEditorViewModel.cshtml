@@ -1,17 +1,17 @@
 ﻿@model Opiniometro_WebApp.Models.ElegirFormularioEditorViewModel
 
 <tr>
-    <td align='center'>
-        <div align='center'>@Html.CheckBoxFor(model => model.Seleccionado)</div>
+    <td align="left">
+        <div align="left">@Html.CheckBoxFor(model => model.Seleccionado)</div>
     </td>
-    <td align='center'>
-        <div align='center'>@Html.DisplayFor(model => model.CodigoFormulario)</div>
-    </td>
-    <td align='center'>
-        <div align='center'>@Html.DisplayFor(model => model.NombreFormulario)</div>
+    <td align="left">
+        <div align="left">
+            @Html.DisplayFor(model => model.CodigoFormulario)
+            <span> </span>
+            @Html.DisplayFor(model => model.NombreFormulario)
+        </div>
     </td>
 
-    @*Averiguar por qué es necesario incluir de nuevo a estos atributos:*@
     @Html.HiddenFor(model => model.CodigoFormulario)
     @Html.HiddenFor(model => model.NombreFormulario)
 </tr>

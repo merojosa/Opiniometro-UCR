@@ -335,6 +335,7 @@
     <Content Include="Content\filter.css" />
     <Content Include="Content\firma-ucr-c.svg" />
     <Content Include="Content\scrollbar-tabla.css" />
+    <Content Include="Content\TablasHTML\FixedHeaderGroupTable.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

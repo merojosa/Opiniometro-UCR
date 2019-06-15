@@ -4,30 +4,29 @@
 <!-- Table row (fila) de elementos -->
 <tr>
     @*Checkbox para asignar*@
-    <td align='center'>
-        <div align='center'>@Html.CheckBoxFor(model => model.Seleccionado)</div>
+    <td align='left'>
+        <div align='left'>@Html.CheckBoxFor(model => model.Seleccionado)</div>
     </td>
 
-    @*Sigla de curso*@
-    <td align='center'>
-        <div align='center'>@Html.DisplayFor(model => model.SiglaCurso)</div>
-    </td>
-
-    @*Nombre de curso*@
-    <td align='center'>
-        <div align='center'>@Html.DisplayFor(model => model.NombreCurso)</div>
+    @*Curso*@
+    <td align='justify'>
+        <div align='justify'>
+            @Html.DisplayFor(model => model.SiglaCurso)
+            <span> </span>
+            @Html.DisplayFor(model => model.NombreCurso)
+        </div>
     </td>
 
     @*Numero de grupo*@
-    <td align='center'>
-        <div align='center'>@Html.DisplayFor(model => model.Numero)</div>
+    <td align='left'>
+        <div align='left'>@Html.DisplayFor(model => model.Numero)</div>
     </td>
 
     @*Profesores*@
-    <td align='center'>
+    <td align='left'>
         @foreach (var profe in Model.Profesores)
         {
-            <div align='center'>
+            <div align='left'>
                 @Html.DisplayFor(model => profe.Persona.Nombre) <span> </span>
                 @Html.DisplayFor(model => profe.Persona.Apellido1) <span> </span>
                 @Html.DisplayFor(model => profe.Persona.Apellido2) <br>
