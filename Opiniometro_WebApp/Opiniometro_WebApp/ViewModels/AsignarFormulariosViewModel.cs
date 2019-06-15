@@ -31,6 +31,8 @@ namespace Opiniometro_WebApp.Models
         public IEnumerable<Enfasis> Enfasis { get; set; }
         public IEnumerable<Curso> Cursos { get; set; }
         public IEnumerable<Unidad_Academica> UnidadesAcademicas { get; set; }
+        public List<Profesor> Profs { get; set; }
+
 
         // Lista de grupos
         public List<ElegirGrupoEditorViewModel> Grupos { get; set; }
