@@ -18,6 +18,12 @@ namespace Opiniometro_WebApp.Models
             GruposSeleccionados = (from gr in todosGrupos where gr.Seleccionado select gr).ToList();
             FormulariosSeleccionados = (from form in todosFormularios where form.Seleccionado select form).ToList();
         }
+
+        public GruposYFormsSeleccionados()
+        {
+            GruposSeleccionados = new List<ElegirGrupoEditorViewModel>();
+            FormulariosSeleccionados = new List<ElegirFormularioEditorViewModel>();
+        }
     }
 
     /// <summary>

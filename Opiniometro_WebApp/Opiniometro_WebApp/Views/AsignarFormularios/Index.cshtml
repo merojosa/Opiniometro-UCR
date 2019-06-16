@@ -4,14 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-@Styles.Render("~/Content/scrollbar-tabla.css")
-@*@Styles.Render("~/Content/TablasHTML.css")*@
+<!-- Your custom styles (optional) -->
+@Styles.Render("~/Content/TablasHTML/FixedHeaderTable.css")
+@*<link href="~/Content/filtroAsig.css" rel="stylesheet" />*@
 
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/jqueryval")﻿
-@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")﻿
-@Scripts.Render("~/Scripts/AsignarFormularios.js")
-<link href="~/Content/filtroAsig.css" rel="stylesheet" />
 
 <div>
     <h1 align="center">Asignación de herramientas de evaluación</h1>
@@ -25,33 +21,35 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><h3>Buscar grupos</h3></div>
                     <div class="panel-body">
+                        <div style="height:17vh; overflow:auto;">
 
-                        <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
-                        <!-- Buscador -->
-                        <p>
-                            <div class="filter">
-                                <!--Toman el valor del dropdown list seleccionado-->
-                                @Html.Hidden("changeUnidad", null)
-                                @Html.Hidden("changeCarrera", null)
-                                @Html.Hidden("changeCurso", null)
+                            <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
+                            <!-- Buscador -->
+                            <p>
+                                <div class="filter">
+                                    <!--Toman el valor del dropdown list seleccionado-->
+                                    @Html.Hidden("changeUnidad", null)
+                                    @Html.Hidden("changeCarrera", null)
+                                    @Html.Hidden("changeCurso", null)
 
-                                <!--Desplegables para los filtros-->
-                                <a> @Html.DropDownList("unidadAcademica", null, "Unidad Academica", new { @class = "btn btn-info dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" }) </a>
-                                <a> @Html.DropDownList("nombreCarrera", null, "Carrera", new { @class = "btn btn-info dropdown-toggle", style = "width:130px",  @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" }) </a>
-                                <a> @Html.DropDownList("nombreCurso", null, "Curso", new { @class = "btn btn-info dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCurso').value = this.value; this.form.submit();" }) </a>
-                                <a> @Html.DropDownList("semestre", null, "Semestre", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </a>
-                                <a> @Html.DropDownList("ano", null, "Año", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </a>
-                                @*<b> @Html.DropDownList("profe", null, "Profesor", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </b>*@
-                                @*<b> @Html.DropDownList("enfasis", null, "Énfasis", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </b>*@
+                                    <!--Desplegables para los filtros-->
+                                    <a> @Html.DropDownList("unidadAcademica", null, "Unidad Academica", new { @class = "btn btn-info dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("nombreCarrera", null, "Carrera", new { @class = "btn btn-info dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("nombreCurso", null, "Curso", new { @class = "btn btn-info dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCurso').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("semestre", null, "Semestre", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </a>
+                                    <a> @Html.DropDownList("ano", null, "Año", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </a>
+                                    @*<b> @Html.DropDownList("profe", null, "Profesor", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </b>*@
+                                    @*<b> @Html.DropDownList("enfasis", null, "Énfasis", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </b>*@
 
-                            </div>
+                                </div>
 
-                            <div>
-                                <!--Campo de busqueda-->
-                                <br> @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
-                                <input type="submit" value="Buscar" />
-                            </div>
-                        </p>
+                                <div>
+                                    <!--Campo de busqueda-->
+                                    <br> @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
+                                    <input type="submit" value="Buscar" />
+                                </div>
+                            </p>
+                        </div>
 
                     </div>
                 </div>
@@ -62,8 +60,10 @@
                         <h3>Buscar formularios</h3>
                     </div>
                     <div class="panel-body">
-                        @Html.TextBox("FormSearchString", "", new { placeholder = "Nombre del formulario" })
-                        <input type="submit" value="Buscar formularios" />
+                        <div style="height:17vh; overflow:auto;">
+                            @Html.TextBox("FormSearchString", "", new { placeholder = "Nombre del formulario" })
+                            <input type="submit" value="Buscar formularios" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,30 +84,30 @@
 
                         @*Tabla de grupos*@
 
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th align='left'>
-                                        <div align='left'></div>
-                                    </th>
-                                    <th align='left'>
-                                        <div align='left'>Curso</div>
-                                    </th>
-                                    <th align='left'>
-                                        <div align='left'>Grupo</div>
-                                    </th>
-                                    <th align='left'>
-                                        <div align='left'>Profesor</div>
-                                    </th>
-                                </tr>
-                            </thead>
+                        <div style="height:40vh; overflow:auto;">
+                            <table id="tabla-grupos" class="table table-sm table-hover" cellspacing="0" width="100">
+                                <thead>
+                                    <tr>
+                                        <th align='left'>
 
-
-                            <tbody>
-                                <!-- Despliega los datos de los grupos usando un modelo personalizado: ElegirGrupoEditorTemplate -->
-                                @Html.EditorFor(model => Model.Grupos)
-                            </tbody>
-                        </table>
+                                        </th>
+                                        <th align='left'>
+                                            Curso
+                                        </th>
+                                        <th align='left'>
+                                            Grupo
+                                        </th>
+                                        <th align='left'>
+                                            Profesor
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Despliega los datos de los grupos usando un template personalizado: ElegirGrupoEditorTemplate -->
+                                    @Html.EditorFor(model => Model.Grupos)
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </div>
@@ -118,26 +118,31 @@
             <div class="col-sm-4">
 
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h3>Formularios</h3></div>
+                    <div class="panel-heading">
+                        <h3>Formularios</h3>
+                    </div>
+
                     <div class="panel-body">
+                        @* Tabla de formularios*@
+                        <div style="height:40vh; overflow:auto;">
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                    <tr>
+                                        <th align='left'>
+                                            <div align='left'></div>
+                                        </th>
+                                        <th align='left'>
+                                            <div align='left'>Formulario</div>
+                                        </th>
+                                    </tr>
+                                </thead>
 
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th align='left'>
-                                        <div align='left'></div>
-                                    </th>
-                                    <th align='left'>
-                                        <div align='left'>Formulario</div>
-                                    </th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <!-- Despliega los datos de los grupos usando un modelo personalizado: ElegirGrupoEditorTemplate -->
-                                @Html.EditorFor(model => Model.Formularios)
-                            </tbody>
-                        </table>
+                                <tbody>
+                                    <!-- Despliega los datos de los formularios usando un template personalizado: ElegirFormularioEditorTemplate -->
+                                    @Html.EditorFor(model => Model.Formularios)
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -149,13 +154,14 @@
 
         <div align='center'>
             <input type="submit" id="boton-asignar" value="Asignar" />
-            <button type="button" style="display:none" id ="boton-abrir-modal" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalReporte">Reporte de asignaciones</button>
+            <button type="button" style="display:none" id="boton-abrir-modal" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalReporte">Reporte de asignaciones</button>
         </div>
+
 
 
         <!-- Modal -->
         <div id="modalReporte" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+            <div class="modal-dialog" style="height:63vh; width:73vw;">
 
                 <!-- Modal content-->
                 <div class="modal-content">
@@ -166,10 +172,9 @@
                     </div>
 
                     <div class="modal-body">
-                        <div id="asign-content">
+                        <div id="asign-content" style="height:60vh; width:70vw; overflow:auto;">
                             @Html.Partial("AsignacionFormularioGrupo", Model.GruFormsSeleccionados)
                         </div>
-
                     </div>
 
                     <div class="modal-footer">
@@ -183,3 +188,9 @@
     }
 
 </div>
+
+<!-- SCRIPTS -->
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")﻿
+@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")﻿
+@Scripts.Render("~/Scripts/AsignarFormularios.js")

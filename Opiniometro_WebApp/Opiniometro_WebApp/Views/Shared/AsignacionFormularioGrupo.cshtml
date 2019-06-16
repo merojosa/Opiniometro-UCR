@@ -3,50 +3,45 @@
 <table class="table">
     <thead>
         <tr>
-            <th align='center'>
-                <div align='center'>Curso</div>
+            <th align='left'>
+                Curso
             </th>
-            <th align='center'>
-                <div align='center'>Grupo</div>
+            <th align='right'>
+                Grupo
             </th>
-            <th align='center'>
-                <div align='center'>Profesor</div>
+            <th align='left'>
+                Profesor
             </th>
-            <th align='center'>
-                <div align='center'>Formularios asignados</div>
+            <th align='left'>
+                Formularios asignados
             </th>
         </tr>
     </thead>
 
     <tbody>
-        @foreach (var gr in Model.GruposSeleccionados)
+       @foreach (var gr in Model.GruposSeleccionados)
         {
             <tr>
-                <td align='center'>
-                    <div align='center'>
-                        @Html.DisplayFor(ModelItem => gr.SiglaCurso)<span> </span>@Html.DisplayFor(ModelItem => gr.NombreCurso)
-                    </div>
+                <td align='left'>
+                    @Html.DisplayFor(ModelItem => gr.SiglaCurso)<span> - </span>@Html.DisplayFor(ModelItem => gr.NombreCurso)
                 </td>
-                <td align='center'>
-                    <div align='center'>@Html.DisplayFor(ModelItem => gr.Numero)</div>
+                <td align='right'>
+                    @Html.DisplayFor(ModelItem => gr.Numero)
                 </td>
-                <td align='center'>
-                    @foreach (var profe in gr.Profesores)
+                <td align='left'>
+                   @foreach (var profe in gr.Profesores)
                     {
-                        <div align='center'>
-                            @Html.DisplayFor(ModelItem => profe.Persona.Nombre) <span> </span>
-                            @Html.DisplayFor(ModelItem => profe.Persona.Apellido1) <span> </span>
-                            @Html.DisplayFor(ModelItem => profe.Persona.Apellido2) <br>
-                        </div>
+                        
+                        @Html.DisplayFor(ModelItem => profe.Persona.Nombre) <span> </span>
+                        @Html.DisplayFor(ModelItem => profe.Persona.Apellido1) <span> </span>
+                        @Html.DisplayFor(ModelItem => profe.Persona.Apellido2) <br>
                     }
                 </td>
-                <td align='center'>
-                    @foreach (var form in Model.FormulariosSeleccionados)
+                <td align='left'>
+                   @foreach (var form in Model.FormulariosSeleccionados)
                     {
-                        <div align='center'>
                             @Html.DisplayFor(ModelItem => form.CodigoFormulario) <span> </span>
                             @Html.DisplayFor(ModelItem => form.NombreFormulario) <br>
-                        </div>
                     }
                 </td>
             </tr>
