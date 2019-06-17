@@ -234,5 +234,27 @@ namespace Opiniometro_WebApp.Controllers
             List<object> lista = new List<object> { x, y };
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
+
+        //EFE:Retorna las observaciones del item.
+        //REQ:Que exista una conexion a la base de datos.
+        //MOD:--
+        public JsonResult ObservacionesPorGrupo(string itemId)
+        {
+            var result = db.SP_DevolverObservacionesPorGrupo("131313", "100000002", 2017, 2, 1, "CI1330", itemId).ToList();//ObtenerCantidadRespuestasPorPregunta  "PRE303"
+            //int tamanio = result.Count;
+            //List<object> x = new List<object>();
+            //string[] leyenda = new string[tamanio];
+            //int?[] cntResps = new int?[tamanio];
+            //int iter = 0;List<object>
+            //foreach (var itemR in result)
+            //{
+            //    //leyenda[iter] = itemR.Respuesta;
+            //    //cntResps[iter] = itemR.cntResp;
+            //    //iter++;
+            //    x.Add(itemR);
+            //}
+            return Json(result, JsonRequestBehavior.AllowGet);
+            //return result;
+        }
     }
 }
