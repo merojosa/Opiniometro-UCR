@@ -962,15 +962,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="CursosSegunAnno" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="anno" Type="smallint" Mode="In" />
-        </Function>
-        <Function Name="CursosSegunCarrera" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="siglaCarrera" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="CursosSegunSemestre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="semestre" Type="tinyint" Mode="In" />
-        </Function>
         <Function Name="DatosEstudiante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
@@ -984,22 +975,13 @@
         <Function Name="ObtenerPerfilUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correo" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="ProcIntroducirSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="titulo" Type="nvarchar" Mode="In" />
-          <Parameter Name="descripcion" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="ProcIntroduFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigo" Type="char" Mode="In" />
-          <Parameter Name="nombre" Type="varchar" Mode="In" />
-        </Function>
         <Function Name="SF_GenerarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
         <Function Name="SP_AgregarPersonaUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
-          <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
           <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido2" Type="nvarchar" Mode="In" />
+          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SP_AgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1039,7 +1021,7 @@
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
         </Function>
         <Function Name="SP_ModificarPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CedulaBusqueda" Type="nvarchar" Mode="In" />
+          <Parameter Name="CedulaBusqueda" Type="varchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
           <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
@@ -2456,12 +2438,11 @@
           <Parameter Name="correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_AgregarPersonaUsuario">
-            <Parameter Name="Correo" Mode="In" Type="String" />
-            <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Cedula" Mode="In" Type="String" />
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="Apellido1" Mode="In" Type="String" />
             <Parameter Name="Apellido2" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_AgregarUsuario">
@@ -2930,36 +2911,6 @@
               <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="CursosSegunAnno" FunctionName="OpiniometroModel.Store.CursosSegunAnno">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.CursosSegunAnno_Result">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="CodigoUnidad" ColumnName="CodigoUnidad" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="CursosSegunCarrera" FunctionName="OpiniometroModel.Store.CursosSegunCarrera">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.CursosSegunCarrera_Result">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="CodigoUnidad" ColumnName="CodigoUnidad" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="CursosSegunSemestre" FunctionName="OpiniometroModel.Store.CursosSegunSemestre">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.CursosSegunSemestre_Result">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="CodigoUnidad" ColumnName="CodigoUnidad" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="OpiniometroModel.Store.DatosEstudiante">
             <ResultMapping>
               <ComplexTypeMapping TypeName="OpiniometroModel.DatosEstudiante_Result">
@@ -3008,9 +2959,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ProcIntroducirSeccion" FunctionName="OpiniometroModel.Store.ProcIntroducirSeccion" />
-          <FunctionImportMapping FunctionImportName="ProcIntroduFormulario" FunctionName="OpiniometroModel.Store.ProcIntroduFormulario" />
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

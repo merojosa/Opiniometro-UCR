@@ -131,16 +131,8 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerPerfilUsuario", correoParameter);
         }
     
-        public virtual int SP_AgregarPersonaUsuario(string correo, string contrasenna, string cedula, string nombre, string apellido1, string apellido2, string direccion)
+        public virtual int SP_AgregarPersonaUsuario(string cedula, string nombre, string apellido1, string apellido2, string correo, string direccion)
         {
-            var correoParameter = correo != null ?
-                new ObjectParameter("Correo", correo) :
-                new ObjectParameter("Correo", typeof(string));
-    
-            var contrasennaParameter = contrasenna != null ?
-                new ObjectParameter("Contrasenna", contrasenna) :
-                new ObjectParameter("Contrasenna", typeof(string));
-    
             var cedulaParameter = cedula != null ?
                 new ObjectParameter("Cedula", cedula) :
                 new ObjectParameter("Cedula", typeof(string));
@@ -157,11 +149,15 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Apellido2", apellido2) :
                 new ObjectParameter("Apellido2", typeof(string));
     
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
             var direccionParameter = direccion != null ?
                 new ObjectParameter("Direccion", direccion) :
                 new ObjectParameter("Direccion", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AgregarPersonaUsuario", correoParameter, contrasennaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, direccionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AgregarPersonaUsuario", cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, correoParameter, direccionParameter);
         }
     
         public virtual int SP_AgregarUsuario(string correo, string contrasenna, string cedula)
