@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OpiniometroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="OpiniometroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrativo">
           <Key>
             <PropertyRef Name="CedulaAdministrativo" />
@@ -984,6 +984,14 @@
         <Function Name="ObtenerPerfilUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correo" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="ProcIntroducirSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="titulo" Type="nvarchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ProcIntroduFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="char" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SF_GenerarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
         <Function Name="SP_AgregarPersonaUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
@@ -1271,8 +1279,7 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OpiniometroModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2427,26 +2434,26 @@
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
           <FunctionImport Name="CursosSegunAnno" ReturnType="Collection(OpiniometroModel.CursosSegunAnno_Result)">
-            <Parameter Name="anno" Mode="In" Type="Int16" />
+          <Parameter Name="anno" Mode="In" Type="Int16" />
           </FunctionImport>
           <FunctionImport Name="CursosSegunCarrera" ReturnType="Collection(OpiniometroModel.CursosSegunCarrera_Result)">
-            <Parameter Name="siglaCarrera" Mode="In" Type="String" />
+          <Parameter Name="siglaCarrera" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="CursosSegunSemestre" ReturnType="Collection(OpiniometroModel.CursosSegunSemestre_Result)">
-            <Parameter Name="semestre" Mode="In" Type="Byte" />
+          <Parameter Name="semestre" Mode="In" Type="Byte" />
           </FunctionImport>
           <FunctionImport Name="DatosEstudiante" ReturnType="Collection(OpiniometroModel.DatosEstudiante_Result)">
-            <Parameter Name="Cedula" Mode="In" Type="String" />
+          <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(OpiniometroModel.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
-            <Parameter Name="Cedula" Mode="In" Type="String" />
+          <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPerfilPorDefecto" ReturnType="Collection(String)">
-            <Parameter Name="correo" Mode="In" Type="String" />
+          <Parameter Name="correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPerfilUsuario" ReturnType="Collection(String)">
-            <Parameter Name="correo" Mode="In" Type="String" />
+          <Parameter Name="correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_AgregarPersonaUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -2503,7 +2510,7 @@
             <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ObtenerFormulario" ReturnType="Collection(String)">
-            <Parameter Name="cod" Mode="In" Type="String" />
+          <Parameter Name="cod" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ObtenerNombre">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -2513,6 +2520,14 @@
           <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(OpiniometroModel.SP_ObtenerPermisosUsuario_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Perfil" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ProcIntroducirSeccion">
+            <Parameter Name="titulo" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ProcIntroduFormulario">
+            <Parameter Name="codigo" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CursosSegunAnno_Result">
@@ -2993,6 +3008,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProcIntroducirSeccion" FunctionName="OpiniometroModel.Store.ProcIntroducirSeccion" />
+          <FunctionImportMapping FunctionImportName="ProcIntroduFormulario" FunctionName="OpiniometroModel.Store.ProcIntroduFormulario" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
