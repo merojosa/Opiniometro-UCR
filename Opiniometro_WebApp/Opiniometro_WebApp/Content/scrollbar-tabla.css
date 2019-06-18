@@ -1,4 +1,5 @@
-﻿.fixed_header {
+﻿
+.fixed_header {
     table-layout: fixed;
     border-collapse: collapse;
 }
@@ -19,5 +20,5 @@
     }
 
     .fixed_header th, .fixed_header td {
-        width: 200px;
+        width: 50px;
     }

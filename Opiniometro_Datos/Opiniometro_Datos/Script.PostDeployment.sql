@@ -387,7 +387,19 @@ VALUES ('CI1330', 100, 'SC-01234'),
 	   ('DE1001', 12, 'SC-89457'),
 	   ('DE2001', 12, 'SC-89457');
 
-
+--DROP PROCEDURE CursosSegunCarrera
+GO
+CREATE PROCEDURE CursosSegunCarrera
+@siglaCarrera NVARCHAR(10)
+AS
+BEGIN
+SELECT C.Nombre, C.Sigla, C.Tipo, C.CodigoUnidad
+FROM Curso C
+WHERE C.Sigla IN (SELECT S.SiglaCurso
+				FROM Se_Encuentra_Curso_Enfasis S
+				WHERE S.SiglaCarrera = @siglaCarrera)
+END
+GO
 
 --Script C.X. Solutions
 

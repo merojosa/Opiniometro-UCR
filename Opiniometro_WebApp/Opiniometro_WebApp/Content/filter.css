@@ -1,0 +1,46 @@
+﻿
+.filter a {
+    display: inline-block;
+    width: 135px;
+    height: 30px;
+    font-size: 14px;
+    color: black;
+}
+
+input[type=submit] {
+    border: 1px  hidden #999;
+    border-radius: 0;
+    -webkit-appearance: push-button;
+}
+
+/*.filtroAsig-default .navbar-nav > .open > a.dropdown-toggle {
+
+}*/
+
+/*filtroAsig li {
+    display: inline-flex;
+    width: 150px;
+    height: 30px;
+    padding: 5px 10px;
+    background-color: #000;
+    border: 1px solid #000;
+    text-align: center;
+    color: #fff;
+    position: relative;
+}*/
+
+    /*filtroAsig li:hover {
+        background-color: #fff;
+        color: #000;
+    }
+
+    filtroAsig li > ul {
+        display: none;
+    }
+
+    filtroAsig li:hover > ul {
+        display: block;
+        position: absolute;
+        top: 30px;
+        left: 0px;
+    }*/
