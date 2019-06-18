@@ -1002,6 +1002,15 @@
           <Parameter Name="siglaCurso" Type="char" Mode="In" />
           <Parameter Name="itemId" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="SP_DevolverObservacionesPorGrupo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigoFormulario" Type="char" Mode="In" />
+          <Parameter Name="cedulaProfesor" Type="char" Mode="In" />
+          <Parameter Name="annoGrupo" Type="smallint" Mode="In" />
+          <Parameter Name="semestreGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="numeroGrupo" Type="tinyint" Mode="In" />
+          <Parameter Name="siglaCurso" Type="char" Mode="In" />
+          <Parameter Name="itemId" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SP_DevolverRespuestasPorGrupo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigoFormulario" Type="char" Mode="In" />
           <Parameter Name="cedulaProfesor" Type="char" Mode="In" />
@@ -2519,6 +2528,15 @@
             <Parameter Name="siglaCurso" Mode="In" Type="String" />
             <Parameter Name="itemId" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_DevolverObservacionesPorGrupo1" ReturnType="Collection(String)">
+            <Parameter Name="codigoFormulario" Mode="In" Type="String" />
+            <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
+            <Parameter Name="annoGrupo" Mode="In" Type="Int16" />
+            <Parameter Name="semestreGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
+            <Parameter Name="siglaCurso" Mode="In" Type="String" />
+            <Parameter Name="itemId" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CursosSegunAnno_Result">
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="75" />
@@ -2968,6 +2986,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_DevolverRespuestasPorGrupo" FunctionName="OpiniometroModel.Store.SP_DevolverRespuestasPorGrupo" />
+          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo1" FunctionName="OpiniometroModel.Store.SP_DevolverObservacionesPorGrupo" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

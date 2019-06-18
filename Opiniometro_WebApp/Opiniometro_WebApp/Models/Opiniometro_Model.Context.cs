@@ -400,5 +400,38 @@ namespace Opiniometro_WebApp.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_DevolverRespuestasPorGrupo", codigoFormularioParameter, cedulaProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numeroGrupoParameter, siglaCursoParameter, itemIdParameter);
         }
+    
+        public virtual ObjectResult<string> SP_DevolverObservacionesPorGrupo1(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, string itemId)
+        {
+            var codigoFormularioParameter = codigoFormulario != null ?
+                new ObjectParameter("codigoFormulario", codigoFormulario) :
+                new ObjectParameter("codigoFormulario", typeof(string));
+    
+            var cedulaProfesorParameter = cedulaProfesor != null ?
+                new ObjectParameter("cedulaProfesor", cedulaProfesor) :
+                new ObjectParameter("cedulaProfesor", typeof(string));
+    
+            var annoGrupoParameter = annoGrupo.HasValue ?
+                new ObjectParameter("annoGrupo", annoGrupo) :
+                new ObjectParameter("annoGrupo", typeof(short));
+    
+            var semestreGrupoParameter = semestreGrupo.HasValue ?
+                new ObjectParameter("semestreGrupo", semestreGrupo) :
+                new ObjectParameter("semestreGrupo", typeof(byte));
+    
+            var numeroGrupoParameter = numeroGrupo.HasValue ?
+                new ObjectParameter("numeroGrupo", numeroGrupo) :
+                new ObjectParameter("numeroGrupo", typeof(byte));
+    
+            var siglaCursoParameter = siglaCurso != null ?
+                new ObjectParameter("siglaCurso", siglaCurso) :
+                new ObjectParameter("siglaCurso", typeof(string));
+    
+            var itemIdParameter = itemId != null ?
+                new ObjectParameter("itemId", itemId) :
+                new ObjectParameter("itemId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_DevolverObservacionesPorGrupo1", codigoFormularioParameter, cedulaProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numeroGrupoParameter, siglaCursoParameter, itemIdParameter);
+        }
     }
 }

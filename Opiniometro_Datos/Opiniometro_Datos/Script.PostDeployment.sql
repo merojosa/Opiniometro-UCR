@@ -585,7 +585,7 @@ GO
 
 GO
 IF OBJECT_ID('SP_DevolverObservacionesPorGrupo') IS NOT NULL
-	DROP PROCEDURE SP_DevolverObservacionesPorGrupo
+	DROP PROCEDURE SP_DevolverRespuestasPorGrupo
 
 --REQ: La base de datos creada.
 --EFE: Retorna las respuestas por pregunta de un grupo especifico.

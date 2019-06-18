@@ -65,8 +65,6 @@
 }
 
 
-
-
 @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string> secciones = new List<string>(); bool seccion_repetida = false;}
 
 <div class="panel-group" id="accordion1">
@@ -183,9 +181,9 @@
                                                 else
                                                 {
                                                     <div style="height:180px; overflow-y: scroll;">
-
-                                                        @foreach (var item in Model.Conformado_Item_Sec_Form)
+                                                        @foreach (var item in Model.Formulario_Respuesta.Take(1))
                                                         {
+
                                                             <p>Respuesta de estudiante, texto para verificar que el tamanno para el cuadro de texto sea apropiado, lo cual indica que se pueda ver la suficiente informacion, a la vez que no se consuma mucho espacio en pantalla y evite al usuario concentrase en la respuesta de una pregunta. Tambien para comprobar con los companneros de equipo que les parece y si creen que el tamanno deber ser mas grande o mas pequenno, ya que se tiene que tomar un promedio del tamanno de una respuesta de un estudiante.</p>
                                                             <hr>
 
