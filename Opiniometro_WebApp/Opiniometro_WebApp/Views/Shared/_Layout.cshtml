@@ -31,7 +31,14 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Perfiles<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Cambiar perfil actual", "Index", "Perfil")</li>
-                            <li class="disabled"><a id="link_deshabilitado">Asignar/Revocar permisos</a></li>
+                            @if (IdentidadManager.obtener_perfil_actual() == "Admin")
+                            {
+                                <li>@Html.ActionLink("Asignar/Revocar permisos", "SeleccionarPermisos", "SeleccionPermisos")</li>
+                            }
+                            else
+                            {
+                                <li class="disabled"><a id="link_deshabilitado">Asignar/Revocar permisos</a></li>
+                            }
                             <li class="disabled"><a id="link_deshabilitado">Crear perfil</a></li>
                             <li class="disabled"><a id="link_deshabilitado">Eliminar perfil</a></li>
                         </ul>

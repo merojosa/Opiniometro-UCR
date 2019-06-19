@@ -7,16 +7,32 @@ namespace Opiniometro_WebApp.Models
 {
     public class SeleccionPermisos
     {
+
+        public class GuardarPerm
+        {
+            public GuardarPerm()
+            {
+            }
+
+            public GuardarPerm(string idPerfil, short idPermiso)
+            {
+                this.Perfil = idPerfil;
+                this.Permiso = idPermiso;
+            }
+            
+            public string Perfil { get; set; }
+            public short Permiso { get; set; }
+            public bool Existe { get; set; }
+        }
+
         public Permiso PermisoModel { get; set; }
         public Perfil PerfilModel { get; set; }
+        //IdPerfil es para la seleccion actual de perfil
         public string IdPerfil { get; set; }
-
-        public byte NumEnfasis { get; set; }
-        public string SiglaCarreraEnf { get; set; }
- 
         public List<Enfasis> ListaEnfasis { get; set; }
         public List<Permiso> ListaPermisos { get; set; }
         public List<Perfil> ListaPerfiles { get; set; }
+        public List<GuardarPerm> ListaGuardar { get; set; }
 
         public List<Posee_Enfasis_Perfil_Permiso> ListaPosee {get; set;}
         public List<String> ListaPerfilesId { get; set; }

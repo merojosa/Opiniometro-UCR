@@ -7,24 +7,41 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
+using Opiniometro_WebApp.Controllers.Servicios;
 
 namespace Opiniometro_WebApp.Controllers
 {
+    [Authorize]
     public class SeleccionPermisosController : Controller
     {
         // GET: SeleccionPermisos
         public ActionResult SeleccionarPermisos()
         {
-            using (var context = new Opiniometro_DatosEntities())
+            if(IdentidadManager.verificar_sesion(this) == true)
             {
-                SeleccionPermisos seleccionPermisos = new SeleccionPermisos();
-                SeleccionPermisos model = seleccionPermisos;
-                model.ListaPerfiles = context.Perfil.ToList();
-                model.ListaPermisos = context.Permiso.ToList();
-                model.ListaPosee = context.Posee_Enfasis_Perfil_Permiso.ToList();
-                model.ListaPerfilesId = Perfil.ObtenerIds();
-                model.ListaEnfasis = context.Enfasis.ToList();
-                return View(model);
+                if(IdentidadManager.obtener_perfil_actual() == "Admin")
+                {
+                    using (var context = new Opiniometro_DatosEntities())
+                    {
+                        SeleccionPermisos seleccionPermisos = new SeleccionPermisos();
+                        SeleccionPermisos model = seleccionPermisos;
+                        model.IdPerfil = "";
+                        model.ListaPerfiles = context.Perfil.ToList();
+                        model.ListaPerfilesId = Perfil.ObtenerIds();
+                        model.ListaPermisos = context.Permiso.ToList();
+                        model.ListaPosee = context.Posee_Enfasis_Perfil_Permiso.ToList();
+                        model.ListaEnfasis = context.Enfasis.ToList();
+                        return View(model);
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Auth");
             }
         }
 

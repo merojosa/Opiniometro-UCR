@@ -1,32 +1,52 @@
-﻿@{
+﻿@model Opiniometro_WebApp.Models.SeleccionPermisos
+
+@{
     ViewBag.Title = "Administrar Permisos";
 }
 
 <h2>Administrar Permisos</h2>
 
-<br/>
+<br />
+
+<script type="text/javascript">
+    function funcion(val) {
+        for (var i = 0; i < @Model.ListaPermisos.Count; i++) {
+            document.getElementById(i).checked = false;
+        }
+    }
+</script>
 
 @using (Html.BeginForm("Guardar", "SeleccionPermisos"))
 {
     <div style="width : 200px;">
         @Html.Label("Perfil")
-        @Html.DropDownList("Perfiles", new SelectList(Model.ListaPerfilesId), "Elegir perfil", new { @class = "form-control" })
+        @*@Html.DropDownListFor(model => Model.IdPerfil, "Perfiles", new SelectList(Model.ListaPerfilesId), "Elegir perfil", new { @id = "perfiles", @class = "form-control" })*@
+        @Html.DropDownListFor(model => Model.IdPerfil, new SelectList(Model.ListaPerfilesId), new { @id = "perfiles", @class = "form-control", @onchange = "funcion(this.value)" })
 
         <br />
 
+        <h3>Permisos</h3>
+
         <table class="table">
-            <tr>
-                <th>Permisos</th>
-            </tr>
+            <tr> </tr>
 
             @for (int i = 0; i < Model.ListaPermisos.Count; i++)
             {
                 <tr>
+                    @* Despliega las descripciones de los permisos *@
                     <td>
-                        @Model.ListaPermisos[i].Descripcion
+                        @Html.DisplayFor(p => Model.ListaPermisos.ElementAt(i).Descripcion)
+                    </td>
+
+                    <td>
+                        @Html.CheckBoxFor(model => Model.ListaGuardar[i].Existe, htmlAttributes: new { @id = i })
+                        @Html.HiddenFor(model => Model.ListaGuardar[i].Permiso, i)
+                        @Html.HiddenFor(model => Model.ListaGuardar[i].Permiso, Model.IdPerfil)
                     </td>
                 </tr>
+
             }
+
         </table>
     </div>
 
