@@ -33,11 +33,11 @@
                                     @Html.Hidden("changeCurso", null)
 
                                     <!--Desplegables para los filtros-->
-                                    <a> @Html.DropDownList("unidadAcademica", null, "Unidad Academica", new { @class = "btn btn-info dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" }) </a>
-                                    <a> @Html.DropDownList("nombreCarrera", null, "Carrera", new { @class = "btn btn-info dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" }) </a>
-                                    <a> @Html.DropDownList("nombreCurso", null, "Curso", new { @class = "btn btn-info dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCurso').value = this.value; this.form.submit();" }) </a>
-                                    <a> @Html.DropDownList("semestre", null, "Semestre", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </a>
-                                    <a> @Html.DropDownList("ano", null, "Año", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </a>
+                                    <a> @Html.DropDownList("unidadAcademica", null, "U. Academica", new { @class = "btn btn-default dropdown-toggle", style = "width:135px", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("nombreCarrera", null, "Carrera", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("nombreCurso", null, "Curso", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCurso').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("semestre", null, "Semestre", new { @class = "btn btn-default dropdown-toggle", style = "width:130px;" }) </a>
+                                    <a> @Html.DropDownList("ano", null, "Año", new { @class = "btn btn-default dropdown-toggle", style = "width:130px;" }) </a>
                                     @*<b> @Html.DropDownList("profe", null, "Profesor", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </b>*@
                                     @*<b> @Html.DropDownList("enfasis", null, "Énfasis", new { @class = "btn btn-info dropdown-toggle", style = "width:130px;" }) </b>*@
 

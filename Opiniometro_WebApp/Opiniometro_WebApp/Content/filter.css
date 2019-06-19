@@ -5,10 +5,11 @@
     height: 30px;
     font-size: 14px;
     color: black;
+    border: medium
 }
 
 input[type=submit] {
-    border: 1px  hidden #999;
+    border: 1px  groove #999;
     border-radius: 0;
     -webkit-appearance: push-button;
 }
