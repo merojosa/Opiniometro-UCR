@@ -24,6 +24,12 @@ namespace Opiniometro_WebApp.Controllers
             this.db = db;
         }
 
+        //Method used to know if a CodigoFormulario is already in use
+        public JsonResult IsCodigoFormularioAvailable(string CodigoFormulario)
+        {
+            return Json(!db.Formulario.Any(formulario => formulario.CodigoFormulario == CodigoFormulario), JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Formulario
         public ActionResult Index()
         {
