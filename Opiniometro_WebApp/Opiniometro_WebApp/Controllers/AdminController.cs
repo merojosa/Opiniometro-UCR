@@ -73,7 +73,7 @@ namespace Opiniometro_WebApp.Controllers
                     modelPersona.Persona = db.Persona.SingleOrDefault(u => u.Cedula == id);
                     modelPersona.usuario = db.Usuario.SingleOrDefault(u => u.Cedula == id);
                     modelPersona.PerfilDeUsuario = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
-                    modelPersona.Perfil = db.Perfil.Select(n => n.Id).ToList();
+                    modelPersona.Perfil = db.Perfil.Select(n => n.Nombre).ToList();
                     modelPersona.perfilesAsignados = modelPersona.getAsignarPerfil(modelPersona.PerfilDeUsuario, modelPersona.Perfil);
                     return View(modelPersona);
                 }

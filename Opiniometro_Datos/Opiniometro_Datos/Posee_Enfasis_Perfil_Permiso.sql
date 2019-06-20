@@ -2,12 +2,12 @@
 (
 	[NumeroEnfasis]	TINYINT			NOT NULL,
 	[SiglaCarrera]	NVARCHAR(10)	NOT NULL,
-	[IdPerfil]		VARCHAR(10)		NOT NULL,
+	[NombrePerfil]	VARCHAR(30)		NOT NULL,
 	[IdPermiso]		SMALLINT			NOT NULL,
 	CONSTRAINT PK_PoseeEnfasisPerfil
-		PRIMARY KEY (NumeroEnfasis, SiglaCarrera, IdPerfil, IdPermiso),
+		PRIMARY KEY (NumeroEnfasis, SiglaCarrera, [NombrePerfil], IdPermiso),
 	CONSTRAINT FK_PoseeEnfasisPerfil_Perfil
-		FOREIGN KEY (IdPerfil) REFERENCES Perfil(Id)
+		FOREIGN KEY ([NombrePerfil]) REFERENCES Perfil([Nombre])
 			ON DELETE NO ACTION
 			ON UPDATE CASCADE,
 	CONSTRAINT FK_PoseeEnfasisPerfil_Permiso
