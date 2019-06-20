@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Data; //Problema de ambiguedad
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -22,6 +22,12 @@ namespace Opiniometro_WebApp.Controllers
         public SeccionController(Opiniometro_DatosEntities db)
         {
             this.db = db;
+        }
+
+        //Method used to know if a Titulo is already in use
+        public JsonResult IsTituloAvailable(string Titulo)
+        {
+            return Json(!db.Seccion.Any(seccion => seccion.Titulo == Titulo), JsonRequestBehavior.AllowGet);
         }
 
         // GET: Seccion
