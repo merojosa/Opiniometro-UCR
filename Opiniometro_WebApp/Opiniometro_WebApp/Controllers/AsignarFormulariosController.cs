@@ -21,10 +21,10 @@ namespace Opiniometro_WebApp.Controllers
             {
                 Ciclos = ObtenerCiclos(""),
                 UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
-                Enfasis = ObtenerEnfasis(0, 0, "", ""),
-                Carreras = ObtenerCarreras(0, 0, "", ""),
+                Enfasis = ObtenerEnfasis(null, null, "", ""),
+                Carreras = ObtenerCarreras(null, null, ""),
                 //Enfasis = ObtenerEnfasis(0, 0, "", ""),
-                Cursos = ObtenerCursos(0, 0, "", "", null),
+                Cursos = ObtenerCursos(null, null, "", "", null),
                 //Grupos = ObtenerGrupos(0, 0, "", "", "", "", 255, "", "" ,""),
                 Formularios = ObtenerFormularios()
             };
@@ -57,13 +57,13 @@ namespace Opiniometro_WebApp.Controllers
 
             var modelo = new AsignarFormulariosViewModel
             {
-                Ciclos = ObtenerCiclos(""),
-                UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
-                Carreras = ObtenerCarreras(0, 0, "", unidadAcademica),
+                Ciclos = ObtenerCiclos(unidadAcademica),
+                UnidadesAcademicas = ObtenerUnidadAcademica(ano, semestre, unidadAcademica),
+                Carreras = ObtenerCarreras(ano, semestre, unidadAcademica),
                 Grupos = ObtenerGrupos(ano, semestre, unidadAcademica, siglaCarrera, 255, Request.Form["changeCurso"], searchString),
                 Cursos = ObtenerCursos(ano, semestre, unidadAcademica, siglaCarrera, null),
                 Formularios = ObtenerFormularios(),
-                Enfasis = ObtenerEnfasis(0,0, "", "")
+                Enfasis = ObtenerEnfasis(ano,semestre, unidadAcademica, siglaCarrera)
             };
 
             return View(modelo);
@@ -89,7 +89,7 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // Para el filtro por Unidad Academica
-        public IQueryable<Unidad_Academica> ObtenerUnidadAcademica(short anno, byte semestre, String codigoUnidadAcadem)
+        public IQueryable<Unidad_Academica> ObtenerUnidadAcademica(short? anno, byte? semestre, String codigoUnidadAcadem)
         {
             IQueryable<Unidad_Academica> unidadAcademica = from u in db.Unidad_Academica select u;
             ViewBag.unidadAcademica = new SelectList(unidadAcademica, "Codigo", "Nombre");
@@ -97,14 +97,14 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // Para el filtro por carreras
-        public IQueryable<Carrera> ObtenerCarreras(short anno, byte semestre, String codigoUnidadAcadem, String changeUnidad)
+        public IQueryable<Carrera> ObtenerCarreras(short? anno, byte? semestre, String codigoUnidadAcadem)
         {
 
             IQueryable<Carrera> siglaCarrera = from car in db.Carrera select car;
 
-            if (!String.IsNullOrEmpty(changeUnidad))
+            if (!String.IsNullOrEmpty(codigoUnidadAcadem))
             {
-                siglaCarrera = siglaCarrera.Where(c => c.CodigoUnidadAcademica.Equals(changeUnidad));
+                siglaCarrera = siglaCarrera.Where(c => c.CodigoUnidadAcademica.Equals(codigoUnidadAcadem));
             }
 
             ViewBag.siglaCarrera = new SelectList(siglaCarrera, "Sigla", "Nombre");
@@ -119,7 +119,7 @@ namespace Opiniometro_WebApp.Controllers
 
 
         // Para el filtro por énfasis
-        public IQueryable<Enfasis> ObtenerEnfasis(short anno, byte semestre, String codigoUnidadAcadem, String siglaCarrera)
+        public IQueryable<Enfasis> ObtenerEnfasis(short? anno, byte? semestre, String codigoUnidadAcadem, String siglaCarrera)
         {
             IQueryable<Enfasis> enfasis = from u in db.Enfasis select u;
             ViewBag.enfasis = new SelectList(enfasis, "Numero", "SiglaCarrera");
@@ -142,7 +142,7 @@ namespace Opiniometro_WebApp.Controllers
                                             select c;
             List<Curso> cursos = new List<Curso>();
 
-            if (semestre != 0)
+            if (semestre != null)
             {
                 List<Curso> cursosSemestre = new List<Curso>();
                 Opiniometro_DatosEntities opi = new Opiniometro_DatosEntities();
@@ -162,7 +162,7 @@ namespace Opiniometro_WebApp.Controllers
                 nombreCurso = cursos.AsQueryable();
             }
 
-            if (anno != 0)
+            if (anno != null)
             {
                 List<Curso> cursosAnno = new List<Curso>();
                 Opiniometro_DatosEntities opi = new Opiniometro_DatosEntities();
@@ -200,14 +200,17 @@ namespace Opiniometro_WebApp.Controllers
             {
                 if(semestre == null && anno == null)
                 {
-                    cursos = nombreCurso.Where(c => c.CodigoUnidad.Equals(codigoUnidadAcadem)).ToList();
+                    var uni = from c in db.Curso
+                              where c.CodigoUnidad.Equals(codigoUnidadAcadem)
+                              select c;
+
+                    cursos = uni.ToList();
                 }
                 //Si ya se seleccionó algún otro filtro, se restringe la lista de cursos de acuerdo al mismo
                 else
                 {
                     cursos = cursos.Where(c => c.CodigoUnidad.Equals(codigoUnidadAcadem)).ToList();
                 }
-
                 nombreCurso = cursos.AsQueryable();
             }
 
