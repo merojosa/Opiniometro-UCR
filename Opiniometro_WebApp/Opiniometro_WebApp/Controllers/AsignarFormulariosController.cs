@@ -60,11 +60,10 @@ namespace Opiniometro_WebApp.Controllers
                 Ciclos = ObtenerCiclos(""),
                 UnidadesAcademicas = ObtenerUnidadAcademica(0, 0, ""),
                 Carreras = ObtenerCarreras(0, 0, "", unidadAcademica),
-                Grupos = ObtenerGrupos(ano, semestre, unidadAcademica, "", "", siglaCarrera, 255, "", Request.Form["changeCurso"], searchString),
+                Grupos = ObtenerGrupos(ano, semestre, unidadAcademica, siglaCarrera, 255, Request.Form["changeCurso"], searchString),
                 Cursos = ObtenerCursos(ano, semestre, unidadAcademica, siglaCarrera, null),
                 Formularios = ObtenerFormularios(),
                 Enfasis = ObtenerEnfasis(0,0, "", "")
-
             };
 
             return View(modelo);
@@ -89,14 +88,13 @@ namespace Opiniometro_WebApp.Controllers
             return ciclo;
         }
 
+        // Para el filtro por Unidad Academica
         public IQueryable<Unidad_Academica> ObtenerUnidadAcademica(short anno, byte semestre, String codigoUnidadAcadem)
         {
             IQueryable<Unidad_Academica> unidadAcademica = from u in db.Unidad_Academica select u;
             ViewBag.unidadAcademica = new SelectList(unidadAcademica, "Codigo", "Nombre");
             return unidadAcademica;
         }
-
-
 
         // Para el filtro por carreras
         public IQueryable<Carrera> ObtenerCarreras(short anno, byte semestre, String codigoUnidadAcadem, String changeUnidad)
@@ -130,82 +128,124 @@ namespace Opiniometro_WebApp.Controllers
 
         // Para el filtro por cursos
         /// <summary>
-        /// Retorna la lista de cursos que pueden ser elegido en el filtro de curso.
+        /// Retorna la lista de cursos que pueden ser elegidos en el filtro de cursos.
         /// </summary>
-        /// <param name="anno">Año del oiclo en los que se imparten los cursos.</param>
+        /// <param name="anno">Año del ciclo en los que se imparten los cursos.</param>
         /// <param name="semestre">Semestre del ciclo en el que se imparten los cursos.</param>
         /// <param name="codigoUnidadAcadem">Código de la unidad academica a la que pertenecen los cursos.</param>
         /// <param name="siglaCarrera">Sigla de la carrera en la que se encuentran los cursos.</param>
         /// <param name="numEnfasis">Número del énfasis de la carrera en el que se encuentran los cursos.</param>
-        /// <param name="searchString">Frase usada para buscar el nombre o código de un grupo.</param>
         /// <returns>Lista de los cursos que satisfacen los filtros utilizados como parámetros.</returns>
-        public IQueryable<Curso> ObtenerCursos(short? anno, byte? semestre,
-            String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis)
+        public IQueryable<Curso> ObtenerCursos(short? anno, byte? semestre, String codigoUnidadAcadem, String siglaCarrera, byte? numEnfasis)
         {
             IQueryable<Curso> nombreCurso = from c in db.Curso
                                             select c;
+            List<Curso> cursos = new List<Curso>();
+
+            if (semestre != 0)
+            {
+                List<Curso> cursosSemestre = new List<Curso>();
+                Opiniometro_DatosEntities opi = new Opiniometro_DatosEntities();
+                var cur = opi.CursosSegunSemestre(semestre);
+                
+                    foreach (var c in cur)
+                    {
+                        Curso nuevo = new Curso();
+                        nuevo.CodigoUnidad = c.CodigoUnidad;
+                        nuevo.Tipo = c.Tipo;
+                        nuevo.Sigla = c.Sigla;
+                        nuevo.Nombre = c.Nombre;
+                        cursosSemestre.Add(nuevo);
+                    }
+
+                cursos = cursosSemestre;
+                nombreCurso = cursos.AsQueryable();
+            }
+
+            if (anno != 0)
+            {
+                List<Curso> cursosAnno = new List<Curso>();
+                Opiniometro_DatosEntities opi = new Opiniometro_DatosEntities();
+                var cur = opi.CursosSegunAnno(anno);
+                if (semestre == null)
+                {               
+                    foreach (var c in cur)
+                    {
+                        Curso nuevo = new Curso();
+                        nuevo.CodigoUnidad = c.CodigoUnidad;
+                        nuevo.Tipo = c.Tipo;
+                        nuevo.Sigla = c.Sigla;
+                        nuevo.Nombre = c.Nombre;
+                        cursosAnno.Add(nuevo);
+                    }
+                }
+                //Si ya se seleccionó algún otro filtro, se restringe la lista de cursos de acuerdo al mismo
+                else
+                {
+                    foreach (var c in cur)
+                    {
+                        Curso nuevo = new Curso();
+                        nuevo = cursos.Find(cu => cu.Sigla.Equals(c.Sigla));
+                        if(nuevo != null)
+                        {
+                            cursosAnno.Add(nuevo);
+                        }
+                    }  
+                }
+                cursos = cursosAnno;
+                nombreCurso = cursos.AsQueryable();
+            }                          
 
             if (!String.IsNullOrEmpty(codigoUnidadAcadem))
             {
-                nombreCurso = nombreCurso.Where(c => c.CodigoUnidad.Equals(codigoUnidadAcadem));
-            }
-
-            if (!String.IsNullOrEmpty(siglaCarrera))
-            {
-                List<Curso> cursos = new List<Curso>();
-                Opiniometro_DatosEntities opi = new Opiniometro_DatosEntities();
-                var cur = opi.CursosSegunCarrera(siglaCarrera);
-                foreach (var c in cur)
+                if(semestre == null && anno == null)
                 {
-                    Curso nuevo = new Curso();
-
-                    nuevo.CodigoUnidad = c.CodigoUnidad;
-                    nuevo.Tipo = c.Tipo;
-                    nuevo.Sigla = c.Sigla;
-                    nuevo.Nombre = c.Nombre;
-                    cursos.Add(nuevo);
+                    cursos = nombreCurso.Where(c => c.CodigoUnidad.Equals(codigoUnidadAcadem)).ToList();
+                }
+                //Si ya se seleccionó algún otro filtro, se restringe la lista de cursos de acuerdo al mismo
+                else
+                {
+                    cursos = cursos.Where(c => c.CodigoUnidad.Equals(codigoUnidadAcadem)).ToList();
                 }
 
                 nombreCurso = cursos.AsQueryable();
             }
 
-            //if (semestre != null)
-            //{
-            //    List<Curso> cursos = new List<Curso>();
-            //    Opiniometro_DatosEntities opi = new Opiniometro_DatosEntities();
-            //    var cur = opi.CursosSegunSemestre(semestre);
-            //    foreach (var c in cur)
-            //    {
-            //        Curso nuevo = new Curso();
+            if (!String.IsNullOrEmpty(siglaCarrera))
+            {
+                List<Curso> cursosCarrera = new List<Curso>();
+                Opiniometro_DatosEntities opi = new Opiniometro_DatosEntities();
+                var cur = opi.CursosSegunCarrera(siglaCarrera);
 
-            //        nuevo.CodigoUnidad = c.CodigoUnidad;
-            //        nuevo.Tipo = c.Tipo;
-            //        nuevo.Sigla = c.Sigla;
-            //        nuevo.Nombre = c.Nombre;
-            //        cursos.Add(nuevo);
-            //    }
+                if(semestre == null && anno == null && String.IsNullOrEmpty(codigoUnidadAcadem))
+                {
+                    foreach (var c in cur)
+                    {
+                        Curso nuevo = new Curso();
+                        nuevo.CodigoUnidad = c.CodigoUnidad;
+                        nuevo.Tipo = c.Tipo;
+                        nuevo.Sigla = c.Sigla;
+                        nuevo.Nombre = c.Nombre;
+                        cursosCarrera.Add(nuevo);
+                    }
+                }
+                //Si ya se seleccionó algún otro filtro, se restringe la lista de cursos de acuerdo al mismo
+                else
+                {
+                    foreach (var c in cur)
+                    {
+                        Curso nuevo = new Curso();
+                        nuevo = cursos.Find(cu => cu.Sigla.Equals(c.Sigla));
+                        if (nuevo != null)
+                        {
+                            cursosCarrera.Add(nuevo);
+                        }
+                    }
+                }
 
-            //    nombreCurso = cursos.AsQueryable();
-            //}
-
-            //if (anno != null)
-            //{
-            //    List<Curso> cursos = new List<Curso>();
-            //    Opiniometro_DatosEntities opi = new Opiniometro_DatosEntities();
-            //    var cur = opi.CursosSegunAnno(anno);
-            //    foreach (var c in cur)
-            //    {
-            //        Curso nuevo = new Curso();
-
-            //        nuevo.CodigoUnidad = c.CodigoUnidad;
-            //        nuevo.Tipo = c.Tipo;
-            //        nuevo.Sigla = c.Sigla;
-            //        nuevo.Nombre = c.Nombre;
-            //        cursos.Add(nuevo);
-            //    }
-
-            //    nombreCurso = cursos.AsQueryable();
-            //}
+                cursos = cursosCarrera;
+                nombreCurso = cursos.AsQueryable();
+            }
 
             ViewBag.nombreCurso = new SelectList(nombreCurso, "Nombre", "Nombre");
             return nombreCurso;
@@ -221,7 +261,7 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="siglaCurso">Sigla del curso al que pertenecen los grupos</param>
         /// <returns>Lista de los grupos que satisfacen los filtros utilizados como parámetros.</returns>
         public IQueryable<ElegirGrupoEditorViewModel> ObtenerGrupos(short? anno, byte? semestre, String codigoUnidadAcadem,
-             string nomUnidadAcad, String siglaCarrera, String nombCarrera, byte? numEnfasis, String siglaCurso, string nombreCurso, String searchString)
+             String siglaCarrera, byte? numEnfasis, string nombreCurso, String searchString)
         {
             // En la base, cuando este query se transforme en un proc. almacenado, se deberá usar join con la tabla curso
             IQueryable<ElegirGrupoEditorViewModel> grupos =
