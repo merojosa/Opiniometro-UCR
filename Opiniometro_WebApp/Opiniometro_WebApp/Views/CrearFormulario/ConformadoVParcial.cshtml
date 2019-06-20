@@ -1,55 +1,40 @@
 ﻿@model IEnumerable<Opiniometro_WebApp.Models.Conformado_Item_Sec_Form>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.NombreFormulario)
+            @Html.DisplayName("Orden Seccion")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Orden_Item)
+            @Html.DisplayName("Titulo Sección")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Orden_Seccion)
+            @Html.DisplayName("Orden Item")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Formulario.Nombre)
-        </th>
+            @Html.DisplayName("Item ID")
+        </th>       
         <th>
-            @Html.DisplayNameFor(model => model.Item.TextoPregunta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Seccion.Descripcion)
-        </th>
-        <th></th>
+            @Html.DisplayName("Planteamiento Pregunta")
+        </th>       
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.NombreFormulario)
+            @Html.DisplayFor(modelItem => item.Orden_Seccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TituloSeccion)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Orden_Item)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Orden_Seccion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Formulario.Nombre)
+            @Html.DisplayFor(modelItem => item.ItemId)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Item.TextoPregunta)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Seccion.Descripcion)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
         </td>
     </tr>
 }
