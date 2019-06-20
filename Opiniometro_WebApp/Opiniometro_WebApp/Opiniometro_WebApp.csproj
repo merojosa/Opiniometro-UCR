@@ -45,12 +45,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Moq, Version=4.11.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.11.0\lib\net45\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -179,11 +200,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\LlenarFormularioController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\Servicios\IdPermiso.cs" />
     <Compile Include="Controllers\Servicios\IdentidadManager.cs" />
-    <Compile Include="Controllers\RespondeController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
+    <Compile Include="Controllers\VisualizarFormularioController.cs" />
     <Compile Include="Controllers\SeleccionFormulariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -191,6 +213,7 @@
     <Compile Include="Models\Administrativo.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AsignarFormulariosModel.cs" />
     <Compile Include="Models\Canton.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -337,11 +360,14 @@
     </Compile>
     <Compile Include="Models\ValidacionJOFFI\Metadata.cs" />
     <Compile Include="Models\ValidacionJOFFI\PartialClasses.cs" />
+    <Compile Include="Models\ViewModelAdmin.cs" />
     <Compile Include="ViewModels\AsignarFormulariosViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ElegirFormularioEditorViewModel.cs" />
     <Compile Include="ViewModels\ElegirGrupoEditorViewModel.cs" />
+    <Compile Include="ViewModels\EstudianteGruposMatriculado.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\estilos-propios.css" />
@@ -351,7 +377,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\filter.css" />
     <Content Include="Content\firma-ucr-c.svg" />
+    <Content Include="Content\img\minus.png" />
+    <Content Include="Content\img\plus.png" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\scrollbar-tabla.css" />
+    <Content Include="Content\TablasHTML\FixedHeaderTable.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -366,6 +396,7 @@
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
       <LastGenOutput>Opiniometro_Model.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\AsignarFormularios.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\Opiniometro_Model.edmx">
@@ -376,7 +407,10 @@
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\CollapsibleScript.js" />
+    <Content Include="Scripts\Graficar.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -403,13 +437,10 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Formulario\Create.cshtml" />
     <Content Include="Views\Formulario\Delete.cshtml" />
@@ -430,29 +461,58 @@
     <Content Include="Views\Formulario_Respuesta\Delete.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Details.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
-    <Content Include="Views\Responde\Create.cshtml" />
-    <Content Include="Views\Responde\Delete.cshtml" />
-    <Content Include="Views\Responde\Details.cshtml" />
-    <Content Include="Views\Responde\Edit.cshtml" />
-    <Content Include="Views\Responde\Index.cshtml" />
-    <Content Include="Views\Shared\_Collapsible.cshtml" />
     <Content Include="Views\Auth\Recuperar.cshtml" />
     <Content Include="Views\Shared\Auth\BarraLogin.cshtml" />
+    <Content Include="Views\Items\Create.cshtml" />
+    <Content Include="Views\Items\Delete.cshtml" />
+    <Content Include="Views\Items\Details.cshtml" />
+    <Content Include="Views\Items\Edit.cshtml" />
+    <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Create.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Delete.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Details.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Edit.cshtml" />
+    <Content Include="Views\VisualizarFormulario\Index.cshtml" />
     <Content Include="Views\Admin\VerPersonas.cshtml" />
     <Content Include="Views\Admin\CrearUsuario.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
+    <Content Include="Views\LogInPerfiles\Index.cshtml" />
     <Content Include="Views\Administrador\CargarArchivo.cshtml" />
     <Content Include="Views\Administrador\Index.cshtml" />
-    <Content Include="Views\Admin\Editar.cshtml" />
     <Content Include="Views\Categoria\Create.cshtml" />
     <Content Include="Views\Categoria\Delete.cshtml" />
     <Content Include="Views\Categoria\Details.cshtml" />
     <Content Include="Views\Categoria\Edit.cshtml" />
     <Content Include="Views\Categoria\Index.cshtml" />
-    <Content Include="Views\Auth\PruebaHtml.cshtml" />
     <Content Include="Views\CrearFormulario\AsignarPreguntas.cshtml" />
+    <Content Include="Views\CrearFormulario\SeccionesAsignadas.cshtml" />
+    <Content Include="Views\CrearFormulario\PreguntasAsignadas.cshtml" />
+    <Content Include="Views\CrearFormulario\preguntasVParcial.cshtml" />
+    <Content Include="Views\CrearFormulario\seccionesVParcial.cshtml" />
+    <Content Include="Views\Item\VistaPrevia.cshtml" />
+    <Content Include="Views\Item\itemVParcial.cshtml" />
+    <Content Include="Views\Admin\Editar.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_Collapsible.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Perfil\Index.cshtml" />
+    <Content Include="Views\CrearFormulario\ConformadoVParcial.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ElegirGrupoEditorViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ElegirFormularioEditorViewModel.cshtml" />
+    <Content Include="Views\Shared\AsignacionFormularioGrupo.cshtml" />
     <Content Include="Views\Auth\Permisos.cshtml" />
     <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
+    <Content Include="Views\LlenarFormulario\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

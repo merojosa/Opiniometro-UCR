@@ -386,11 +386,6 @@
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ValorRandom">
-          <Property Name="randomvalue" Type="varbinary" MaxLength="8000" />
-        </EntityType>-->
         <Association Name="FK_Adm_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Administrativo" Type="Self.Administrativo" Multiplicity="0..1" />
@@ -994,6 +989,14 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
         </Function>
         <Function Name="ObtenerPerfilUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ProcIntroducirSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="titulo" Type="nvarchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ProcIntroduFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="char" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SF_GenerarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
         <Function Name="SP_AgregarPersonaUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -2467,6 +2470,14 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <FunctionImport Name="ObtenerPerfilUsuario" ReturnType="Collection(String)">
             <Parameter Name="correo" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="ProcIntroducirSeccion">
+            <Parameter Name="titulo" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ProcIntroduFormulario">
+            <Parameter Name="codigo" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SP_AgregarPersonaUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
@@ -2993,6 +3004,8 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="OpiniometroModel.Store.NombrePersona" />
           <FunctionImportMapping FunctionImportName="ObtenerPerfilPorDefecto" FunctionName="OpiniometroModel.Store.ObtenerPerfilPorDefecto" />
           <FunctionImportMapping FunctionImportName="ObtenerPerfilUsuario" FunctionName="OpiniometroModel.Store.ObtenerPerfilUsuario" />
+          <FunctionImportMapping FunctionImportName="ProcIntroducirSeccion" FunctionName="OpiniometroModel.Store.ProcIntroducirSeccion" />
+          <FunctionImportMapping FunctionImportName="ProcIntroduFormulario" FunctionName="OpiniometroModel.Store.ProcIntroduFormulario" />
           <FunctionImportMapping FunctionImportName="SP_AgregarPersonaUsuario" FunctionName="OpiniometroModel.Store.SP_AgregarPersonaUsuario" />
           <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="OpiniometroModel.Store.SP_AgregarUsuario" />
           <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="OpiniometroModel.Store.SP_CambiarContrasenna" />

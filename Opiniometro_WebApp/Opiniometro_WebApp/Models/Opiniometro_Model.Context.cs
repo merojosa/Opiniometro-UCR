@@ -26,8 +26,7 @@ namespace Opiniometro_WebApp.Models
         {
             throw new UnintentionalCodeFirstException();
         }
-    
-        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
+
         public virtual DbSet<Administrativo> Administrativo { get; set; }
         public virtual DbSet<Canton> Canton { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }

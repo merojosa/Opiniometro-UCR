@@ -68,16 +68,28 @@ namespace Opiniometro_WebApp.Controllers
 
             return View(modelo);
         }
-
-        [HttpPost]
-        public ActionResult Asignar(AsignarFormulariosViewModel model)
+        
+        public void Asignar(GruposYFormsSeleccionados gruFormsSeleccionados)
         {
-            var GruposSeleccionados = model.gruposSeleccionados();
-            //var FormulariosSeleccionados = model.FormulariosSeleccionados();
-
-            return RedirectToAction("Index", "Home");
+            ;
         }
 
+        public ActionResult AsignacionFormularioGrupo (List<ElegirGrupoEditorViewModel> grupos, List<ElegirFormularioEditorViewModel> formularios)
+        {
+            GruposYFormsSeleccionados gruFormsSeleccionados;
+            if (grupos != null && formularios != null)
+            {
+                gruFormsSeleccionados
+                    = new GruposYFormsSeleccionados(grupos, formularios);
+                Asignar(gruFormsSeleccionados);
+            }
+            else
+            {
+                gruFormsSeleccionados = new GruposYFormsSeleccionados();
+            }
+
+            return PartialView("AsignacionFormularioGrupo", gruFormsSeleccionados);
+        }
 
         // Para el filtro por ciclos
         public IQueryable<Ciclo_Lectivo> ObtenerCiclos(String codigoUnidadAcadem)
@@ -263,12 +275,12 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="numEnfasis">Número del énfasis de la carrera en el que se encuentran los cursos de los grupos.</param>
         /// <param name="siglaCurso">Sigla del curso al que pertenecen los grupos</param>
         /// <returns>Lista de los grupos que satisfacen los filtros utilizados como parámetros.</returns>
-        public IQueryable<ElegirGrupoEditorViewModel> ObtenerGrupos(short? anno, byte? semestre, String codigoUnidadAcadem,
+        public List<ElegirGrupoEditorViewModel> ObtenerGrupos(short? anno, byte? semestre, String codigoUnidadAcadem,
              String siglaCarrera, byte? numEnfasis, string nombreCurso, String searchString)
         {
             // En la base, cuando este query se transforme en un proc. almacenado, se deberá usar join con la tabla curso
             IQueryable<ElegirGrupoEditorViewModel> grupos =
-                from cur in db.Curso
+                (from cur in db.Curso
                 join gru in db.Grupo on cur.Sigla equals gru.SiglaCurso
                 join uni in db.Unidad_Academica on cur.CodigoUnidad equals uni.Codigo
                 join car in db.Carrera on uni.Codigo equals car.CodigoUnidadAcademica
@@ -286,11 +298,12 @@ namespace Opiniometro_WebApp.Controllers
                 CodigoUnidadAcademica = cur.CodigoUnidad,
                 SiglaCarrera = car.Sigla
                 //NombresCarreras =  cur.Enfasis.
-            };
+            });
 
-            grupos = filtreGrupos(searchString, semestre, anno, codigoUnidadAcadem, siglaCarrera, nombreCurso, grupos);
+            grupos = FiltreGrupos(searchString, semestre, anno, codigoUnidadAcadem, siglaCarrera, nombreCurso, grupos);
+            //grupos = FiltreGrupos(searchString, semestre, nomUnidadAcad, nombCarrera, nombreCurso, grupos.AsQueryable()).ToList();
 
-            return grupos;
+            return grupos.ToList();
 
         }
 
@@ -303,7 +316,7 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="codigoCarrera"> podria contener el nombre de la carrera</param>
         /// <param name="grupos"> lista de grupos que se envia desde el metodo ObtenerGrupos</param>
         /// <returns> los grupos filtrados</returns>
-        public IQueryable<ElegirGrupoEditorViewModel> filtreGrupos(string searchString, byte? semestre, short? anno, string CodigoUnidadAcad, string siglaCarrera, string nombCurso ,IQueryable<ElegirGrupoEditorViewModel> grupos)
+        public IQueryable<ElegirGrupoEditorViewModel> FiltreGrupos(string searchString, byte? semestre, short? anno, string CodigoUnidadAcad, string siglaCarrera, string nombCurso ,IQueryable<ElegirGrupoEditorViewModel> grupos)
         {
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -347,9 +360,18 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // Para la vista de los formularios
-        public List<Formulario> ObtenerFormularios()
+        public List<ElegirFormularioEditorViewModel> ObtenerFormularios()
         {
-            return db.Formulario.ToList();
+            IQueryable<ElegirFormularioEditorViewModel> formularios =
+                from formul in db.Formulario
+                select new ElegirFormularioEditorViewModel
+                {
+                    Seleccionado = false,
+                    CodigoFormulario = formul.CodigoFormulario,
+                    NombreFormulario = formul.Nombre
+                };
+
+            return formularios.ToList();
         }
 
         public ActionResult SeleccionFormularios(string formulario)

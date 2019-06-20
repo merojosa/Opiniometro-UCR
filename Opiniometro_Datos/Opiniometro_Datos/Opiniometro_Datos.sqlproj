@@ -105,6 +105,7 @@
     <Build Include="Distrito.sql" />
     <Build Include="Provincia.sql" />
     <Build Include="Direccion_Persona.sql" />
+    <Build Include="SP_ObtenerFormulario.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ScriptGenerarContrasena.sql" />

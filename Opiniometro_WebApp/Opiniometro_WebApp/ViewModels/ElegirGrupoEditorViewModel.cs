@@ -31,15 +31,5 @@ namespace Opiniometro_WebApp.Models
         {
             Profesores = new List<Profesor>();
         }
-
-        public bool PerteneceAUA (string NombreUAPorBuscar)
-        {
-            return NombreUnidadAcademica.Contains(NombreUAPorBuscar);
-        }
-
-        public bool EstaEnCarrera (string NombreCarreraPorBuscar)
-        {
-            return NombresCarreras.Contains(NombreCarreraPorBuscar);
-        }
     }
 }
