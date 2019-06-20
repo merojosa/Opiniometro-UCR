@@ -599,9 +599,9 @@ VALUES	(1, 'Hacer todo'),
 		(208, 'InsertarFormulario');
 
 INSERT INTO Perfil
-VALUES	('Estudiante', 'Default'),
-		('Admin', 'Default'),
-		('Profesor', 'Default')
+VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
+		('Admin', 'Puede hacer cualquier cosa como asignar permisos.'),
+		('Profesor', 'Ver sus evaluaciones.')
 
 
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
@@ -617,7 +617,7 @@ VALUES	(0, 'SC-01234', 'Estudiante', 3),
 		(0, 'SC-01234', 'Profesor', 2)
 
 
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis, SiglaCarrera, NombrePerfil, IdPermiso)
+insert into Posee_Enfasis_Perfil_Permiso
 VALUES	(0,'SC-01234', 'Admin','202'),
 		(0,'SC-01234', 'Admin','203'),
 		(0,'SC-01234', 'Admin','204'),

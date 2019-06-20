@@ -8,14 +8,14 @@
 		PRIMARY KEY (NumeroEnfasis, SiglaCarrera, [NombrePerfil], IdPermiso),
 	CONSTRAINT FK_PoseeEnfasisPerfil_Perfil
 		FOREIGN KEY ([NombrePerfil]) REFERENCES Perfil([Nombre])
-			ON DELETE NO ACTION
+			ON DELETE CASCADE
 			ON UPDATE CASCADE,
 	CONSTRAINT FK_PoseeEnfasisPerfil_Permiso
 		FOREIGN KEY (IdPermiso) REFERENCES Permiso(Id)
-			ON DELETE NO ACTION
+			ON DELETE CASCADE
 			ON UPDATE CASCADE,
 	CONSTRAINT FK_PoseeEnfasisPerfil_Enfasis
 		FOREIGN KEY (NumeroEnfasis, SiglaCarrera) REFERENCES Enfasis(Numero, SiglaCarrera)
-			ON DELETE NO ACTION
+			ON DELETE CASCADE
 			ON UPDATE CASCADE
 )
