@@ -131,6 +131,32 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerPerfilUsuario", correoParameter);
         }
     
+        public virtual int ProcIntroducirSeccion(string titulo, string descripcion)
+        {
+            var tituloParameter = titulo != null ?
+                new ObjectParameter("titulo", titulo) :
+                new ObjectParameter("titulo", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("descripcion", descripcion) :
+                new ObjectParameter("descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProcIntroducirSeccion", tituloParameter, descripcionParameter);
+        }
+    
+        public virtual int ProcIntroduFormulario(string codigo, string nombre)
+        {
+            var codigoParameter = codigo != null ?
+                new ObjectParameter("codigo", codigo) :
+                new ObjectParameter("codigo", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProcIntroduFormulario", codigoParameter, nombreParameter);
+        }
+    
         public virtual int SP_AgregarPersonaUsuario(string correo, string contrasenna, string cedula, string nombre, string apellido1, string apellido2, string direccion)
         {
             var correoParameter = correo != null ?
@@ -344,32 +370,6 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Perfil", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ObtenerPermisosUsuario_Result>("SP_ObtenerPermisosUsuario", correoParameter, perfilParameter);
-        }
-    
-        public virtual int ProcIntroducirSeccion(string titulo, string descripcion)
-        {
-            var tituloParameter = titulo != null ?
-                new ObjectParameter("titulo", titulo) :
-                new ObjectParameter("titulo", typeof(string));
-    
-            var descripcionParameter = descripcion != null ?
-                new ObjectParameter("descripcion", descripcion) :
-                new ObjectParameter("descripcion", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProcIntroducirSeccion", tituloParameter, descripcionParameter);
-        }
-    
-        public virtual int ProcIntroduFormulario(string codigo, string nombre)
-        {
-            var codigoParameter = codigo != null ?
-                new ObjectParameter("codigo", codigo) :
-                new ObjectParameter("codigo", typeof(string));
-    
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("nombre", nombre) :
-                new ObjectParameter("nombre", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProcIntroduFormulario", codigoParameter, nombreParameter);
         }
     }
 }
