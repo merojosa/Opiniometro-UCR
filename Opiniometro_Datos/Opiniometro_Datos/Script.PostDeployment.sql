@@ -600,7 +600,7 @@ VALUES	(1, 'Hacer todo'),
 
 INSERT INTO Perfil
 VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
-		('Admin', 'Puede hacer cualquier cosa como asignar permisos.'),
+		('Administrador', 'Puede hacer cualquier cosa como asignar permisos.'),
 		('Profesor', 'Ver sus evaluaciones.')
 
 
@@ -608,26 +608,26 @@ INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
 		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor'),
-		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Admin')
+		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Administrador')
 
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
-		(0, 'SC-01234', 'Admin', 1),
-		(0, 'SC-01234', 'Admin', 2),
+		(0, 'SC-01234', 'Administrador', 1),
+		(0, 'SC-01234', 'Administrador', 2),
 		(0, 'SC-01234', 'Profesor', 2)
 
 
 insert into Posee_Enfasis_Perfil_Permiso
-VALUES	(0,'SC-01234', 'Admin','202'),
-		(0,'SC-01234', 'Admin','203'),
-		(0,'SC-01234', 'Admin','204'),
-		(0,'SC-01234', 'Admin','205'),
-		(0,'SC-01234', 'Admin','206'),
-		(0,'SC-01234', 'Admin','207'),
+VALUES	(0,'SC-01234', 'Administrador','202'),
+		(0,'SC-01234', 'Administrador','203'),
+		(0,'SC-01234', 'Administrador','204'),
+		(0,'SC-01234', 'Administrador','205'),
+		(0,'SC-01234', 'Administrador','206'),
+		(0,'SC-01234', 'Administrador','207'),
 		(0,'SC-01234', 'Profesor','204'),
 		(0,'SC-01234', 'Profesor','205'),
 		(0,'SC-01234', 'Estudiante','205'),
-		(0,'SC-01234', 'Admin','208'),
+		(0,'SC-01234', 'Administrador','208'),
 		(0,'SC-01234', 'Profesor','208')
 
 INSERT INTO Provincia
