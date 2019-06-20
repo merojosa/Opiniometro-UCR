@@ -37,7 +37,7 @@ namespace Opiniometro_WebApp.Controllers
             // Si no, retorne la vista para el login.
             else
             {
-                return View();
+                return View("Login");
             }
         }
 
@@ -59,27 +59,30 @@ namespace Opiniometro_WebApp.Controllers
 
             string correo_autenticado = IdentidadManager.obtener_correo_actual();
 
-            // Recibir el perfil por default
-
             if (correo_autenticado != null)      // Si esta autenticado
             {
                 return RedirectToAction("Index", "Home");
             }
-            else if ((bool)exito.Value == true) // Si se pudo autenticar.
+            else if ((bool)exito.Value == true) // Si se pudo autenticar (correo y contrasenna validos).
             {
+                // Creo una entidad solo con el correo, falta elegir perfil.
                 var identidad = new ClaimsIdentity(
                     new[] {
                     new Claim(ClaimTypes.Email, usuario.CorreoInstitucional),
                     },
                     DefaultAuthenticationTypes.ApplicationCookie);
 
+                // Elimino cualquier cookie o session para no retener nada que no se va usar (preventivo).
+                eliminar_privilegios(this);
+
+                // Guardo la identidad para poder accederla desde cualquier otro sitio.
                 Thread.CurrentPrincipal = new ClaimsPrincipal(identidad);
                 HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, identidad);
 
-                // Guardar el objeto IdentidadManager, la llave seria el correo, el cual es unico para cada usuario.
+                // Creo objeto IdentidadManager, la llave (para acceder al objeto) seria el correo, el cual es unico para cada usuario.
                 Session[usuario.CorreoInstitucional] = new IdentidadManager();
                 
-                return RedirectToAction("CambioPerfil", "Perfil", new { perfil_elegido = PerfilController.ObtenerPerfiles().ElementAt(0) });
+                return RedirectToAction("Index", "Perfil");
             }
             else    // Si hay error en la autenticacion
             {
@@ -127,7 +130,7 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult Recuperar()
         {
-            return View();
+            return View("Recuperar");
         }
 
         /*
@@ -207,14 +210,6 @@ namespace Opiniometro_WebApp.Controllers
                 contrasenna.Append(caracteres_aleatorios[byte_aleatorio % (caracteres_aleatorios.Length)]);
             }
             return contrasenna.ToString();
-        }
-
-        public ActionResult PruebaHtml()
-        {
-            if (IdentidadManager.verificar_sesion(this))
-                return View();
-            else
-                return RedirectToAction("Login");
-        }
+        }        
     }
 }
