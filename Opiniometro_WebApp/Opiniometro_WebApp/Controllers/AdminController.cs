@@ -12,9 +12,10 @@ using Opiniometro_WebApp.Models;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
-using System.Net.Mail;
+using System.Dynamic;
+using System.ComponentModel;
 using System.Security.Cryptography;
-using System.Text;
+using System.Net.Mail;
 using System.Net;
 
 namespace Opiniometro_WebApp.Controllers
@@ -29,25 +30,35 @@ namespace Opiniometro_WebApp.Controllers
 
         public Persona Persona { get; private set; }
 
-        public ActionResult VerPersonas(string cedula)
+        public ActionResult VerPersonas(string nom)
         {
-            List<Persona> personas = db.Persona.ToList();
-            var persona = from s in db.Persona
-                          select s;
-
-            if (!String.IsNullOrEmpty(cedula))
+            if (!String.IsNullOrEmpty(nom))
             {
-                persona = persona.Where(s => s.Cedula.Contains(cedula)
-                                       );
-                return View(persona);
+                ViewModelAdmin model = new ViewModelAdmin();
+                List<Persona> listaPersonas = db.Persona.ToList();
+                List<Usuario> listaUsuarios = db.Usuario.ToList();
+                var query = from p in listaPersonas
+                            join u in listaUsuarios on p.Cedula equals u.Cedula into table1
+                            from u in table1
+                            where p.Nombre.Contains(nom)
+                            select new ViewModelAdmin { persona = p, usuario = u };
+                return View(query);
             }
             else
             {
-                return View(personas);
+                ViewModelAdmin model = new ViewModelAdmin();
+                List<Persona> listaPersonas = db.Persona.ToList();
+                List<Usuario> listaUsuarios = db.Usuario.ToList();
+                var query = from p in listaPersonas
+                            join u in listaUsuarios on p.Cedula equals u.Cedula into table1
+                            from u in table1
+                            select new ViewModelAdmin { persona = p, usuario = u };
+                return View(query);
             }
 
-            
+
         }
+
 
         public ActionResult Editar(string id)
         {
@@ -59,22 +70,25 @@ namespace Opiniometro_WebApp.Controllers
                 try
                 {
                     String correoInstitucional = db.Usuario.Where(m => m.Cedula == id).First().CorreoInstitucional;
-                    //modelPersona.Perfil = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
-                    modelPersona.Perfil = db.Perfil.Select(n=>n.Id).ToList();
+                    modelPersona.Persona = db.Persona.SingleOrDefault(u => u.Cedula == id);
+                    modelPersona.usuario = db.Usuario.SingleOrDefault(u => u.Cedula == id);
+                    modelPersona.PerfilDeUsuario = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
+                    modelPersona.Perfil = db.Perfil.Select(n => n.Nombre).ToList();
+                    modelPersona.perfilesAsignados = modelPersona.getAsignarPerfil(modelPersona.PerfilDeUsuario, modelPersona.Perfil);
                     return View(modelPersona);
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     return View(modelPersona);
                 }
 
-                
+
             }
             catch (Exception)
             {
 
                 throw;
-            }  
+            }
         }
 
         [HttpPost]
@@ -84,7 +98,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 using (db)
                 {
-                   // db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre, per.Persona.Apellido1, per.Persona.Apellido2, per.Persona.Direccion);
+                    db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre, per.Persona.Apellido1, per.Persona.Apellido2, per.usuario.CorreoInstitucional, per.Persona.Direccion);
                     return RedirectToAction("VerPersonas");
                 }
             }
@@ -93,7 +107,7 @@ namespace Opiniometro_WebApp.Controllers
 
                 throw;
             }
-           
+
         }
 
 
@@ -106,27 +120,36 @@ namespace Opiniometro_WebApp.Controllers
 
         public ActionResult CrearUsuario()
         {
-            
             return View();
+
         }
 
-        public ActionResult CrearUsuario(InfoPersonaUsuario info) //Antiguo. Se tiene una versión más actualizada
+        [HttpPost]
+        public ActionResult CrearUsuario(ViewModelAdmin per)
         {
-            // Autogenero una contrasenna generica.
-            string contrasenna_generada = GenerarContrasenna(10);
+            try
+            {
+                using (db)
+                {
+                    string contrasenna_generada = GenerarContrasenna(10);
+                    db.SP_AgregarPersonaUsuario(per.usuario.CorreoInstitucional, contrasenna_generada, per.persona.Cedula, per.persona.Nombre, per.persona.Apellido1, per.persona.Apellido2, per.persona.Direccion);             
 
-            /*//ObjectParameter exito = new ObjectParameter("Resultado", 0);
-            db.SP_AgregarPersonaUsuario(info.Cedula, info.Nombre, info.PrimerApellido, info.SegundoApellido, info.CorreoInstitucional, info.Direccion);
-            //EXEC SP_AgregarPersonaUsuario @Correo @Contrasenna @Cedula @Nombre @Apellido1 @Apellido2 @Direccion*/
-
-            string contenido =
+                    string contenido =
                      "<p>Se le ha creado un usuario en Opiniometro@UCR.</p>" +
                      "<p>A continuación, su contraseña temporal, ingrésela junto con su correo institucional:</p> <b>"
                      + contrasenna_generada + "</b>";
 
-            // Envio correo con la contrasenna autogenerada
-            EnviarCorreo(info.CorreoInstitucional, "Usuario creado - Opiniómetro@UCR", contenido);
-            return View();
+                    // Envio correo con la contrasenna autogenerada
+                    EnviarCorreo(per.usuario.CorreoInstitucional, "Usuario creado - Opiniómetro@UCR", contenido);
+                    return RedirectToAction("VerPersonas");
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         private void EnviarCorreo(string receptor, string asunto, string contenido)
@@ -171,32 +194,7 @@ namespace Opiniometro_WebApp.Controllers
             }
             return contrasenna.ToString();
         }
+
+
     }
-}
-
-       /* public DataSet GetDataSet(string ConnectionString, string SQL)
-        {
-            
-                        SqlDataAdapter da = new SqlDataAdapter();
-
-                        cmd.CommandText = SQL;
-                        da.SelectCommand = cmd;
-                        DataSet ds = new DataSet();
-
-                        conn.Open();
-                        da.Fill(ds);
-                        conn.Close();
-
-                        return ds;
-                    }
-            DataTable table = new DataTable();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["DB"].ConnectionString))
-            using (var cmd = new SqlCommand("usp_GetABCD", con))
-            using (var da = new SqlDataAdapter(cmd))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                da.Fill(table);
-            }
-
-        }
-    }*/
+    }
