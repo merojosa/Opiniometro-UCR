@@ -12,6 +12,8 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 using System.Security.Cryptography;
+using System.Threading;
+using Opiniometro_WebApp.Controllers.Servicios;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -27,16 +29,27 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult Login()
         {
-            return PartialView();
+            // Si esta autenticado, redireccione a Home.
+            if (IdentidadManager.obtener_correo_actual() != null)      
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            // Si no, retorne la vista para el login.
+            else
+            {
+                return View("Login");
+            }
         }
 
         /*  
-         *  
          *  EFECTO: verificar los datos brindados en la base de datos.
          *  REQUIERE: correo y contrasenna en "empaquetado" en la clase Usuario.
          *  MODIFICA: la identidad para que el usario este loggeado en el sistema.
          *  
-         *  Basado en: https://stackoverflow.com/questions/31584506/how-to-implement-custom-authentication-in-asp-net-mvc-5
+         *  Basado en:
+         *  SigIn: https://stackoverflow.com/questions/31584506/how-to-implement-custom-authentication-in-asp-net-mvc-5,
+         *  Obtener la identidad desde otro sitio: https://stackoverflow.com/questions/22246538/access-claim-values-in-controller-in-mvc-5
+         *  Manejar cookies: https://stackoverflow.com/questions/3140341/how-to-create-persistent-cookies-in-asp-net
          */
         [HttpPost]
         public ActionResult Login(Usuario usuario)
@@ -44,34 +57,71 @@ namespace Opiniometro_WebApp.Controllers
             ObjectParameter exito = new ObjectParameter("Resultado", 0);
             db.SP_LoginUsuario(usuario.CorreoInstitucional, usuario.Contrasena, exito);
 
-            // Si se pudo autenticar.
-            if ((bool)exito.Value == true)
+            string correo_autenticado = IdentidadManager.obtener_correo_actual();
+
+            if (correo_autenticado != null)      // Si esta autenticado
             {
+                return RedirectToAction("Index", "Home");
+            }
+            else if ((bool)exito.Value == true) // Si se pudo autenticar (correo y contrasenna validos).
+            {
+                // Creo una entidad solo con el correo, falta elegir perfil.
                 var identidad = new ClaimsIdentity(
                     new[] {
-                    new Claim(ClaimTypes.NameIdentifier, usuario.CorreoInstitucional),
-                    new Claim(ClaimTypes.Name, usuario.CorreoInstitucional),
-
-                    /*
-                    // optionally you could add roles if any
-                    new Claim(ClaimTypes.Role, "RoleName"),
-                    new Claim(ClaimTypes.Role, "AnotherRole"),
-                    */
+                    new Claim(ClaimTypes.Email, usuario.CorreoInstitucional),
                     },
                     DefaultAuthenticationTypes.ApplicationCookie);
 
-                HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, identidad);
-                return RedirectToAction("Index", "LogInPerfiles");
+                // Elimino cualquier cookie o session para no retener nada que no se va usar (preventivo).
+                eliminar_privilegios(this);
 
+                // Guardo la identidad para poder accederla desde cualquier otro sitio.
+                Thread.CurrentPrincipal = new ClaimsPrincipal(identidad);
+                HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, identidad);
+
+                // Creo objeto IdentidadManager, la llave (para acceder al objeto) seria el correo, el cual es unico para cada usuario.
+                Session[usuario.CorreoInstitucional] = new IdentidadManager();
+                
+                return RedirectToAction("Index", "Perfil");
             }
-            else
+            else    // Si hay error en la autenticacion
             {
                 ModelState.AddModelError(string.Empty, "");
+
                 // Devolverse a la misma pagina de Login informando de que hay un error de autenticacion.
-                return PartialView(usuario);
+                return View(usuario);
             }
 
         }
+
+         /*  
+         *  EFECTO: cierra la sesion actual.
+         *  REQUIERE: n/a
+         *  MODIFICA: las cookies eliminandolas
+         */
+        public ActionResult CerrarSesion()
+        {
+            eliminar_privilegios(this);
+
+            // Como no esta loggeado, se tiene que redigir a login para volver a hacerlo.
+            return RedirectToAction("Login");
+        }
+
+        public static void eliminar_privilegios(Controller controlador)
+        {
+            // En caso de que no exista sesion, no tiene por que hacer algo.
+            if (IdentidadManager.verificar_sesion(controlador))
+            {
+                string correo = IdentidadManager.obtener_correo_actual();               // Obtengo el correo para obtener la sesion.
+                ((IdentidadManager)controlador.Session[correo]).limpiar_permisos();     // Limpio los permisos.
+                controlador.Session.Remove(correo);                                     // Remuevo la sesion.
+            }
+
+            // Elimino cookies.
+            controlador.Request.GetOwinContext().Authentication.SignOut(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ApplicationCookie);
+        }
+
+
         /*
          * GET: Auth/Recuperar
          * EFECTO: retornar vista parcial, la cual implica que no se despliega _Layout de la carpeta Shared.
@@ -80,7 +130,7 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult Recuperar()
         {
-            return PartialView();
+            return View("Recuperar");
         }
 
         /*
@@ -111,7 +161,7 @@ namespace Opiniometro_WebApp.Controllers
                 EnviarCorreo(usuario.CorreoInstitucional, "Cambio de contraseña - Opiniómetro@UCR", contenido);
             }
             ModelState.AddModelError(string.Empty, "");
-            return PartialView(usuario);
+            return View(usuario);
         }
 
         /*
@@ -160,6 +210,6 @@ namespace Opiniometro_WebApp.Controllers
                 contrasenna.Append(caracteres_aleatorios[byte_aleatorio % (caracteres_aleatorios.Length)]);
             }
             return contrasenna.ToString();
-        }
+        }        
     }
 }
