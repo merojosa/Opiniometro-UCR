@@ -33,7 +33,16 @@
                             <li>@Html.ActionLink("Cambiar perfil actual", "Cambiar", "Perfil")</li>
                             <li class="disabled"><a id="link_deshabilitado">Asignar/Revocar permisos</a></li>
                             <li class="disabled"><a id="link_deshabilitado">Crear perfil</a></li>
-                            <li class="disabled"><a id="link_deshabilitado">Eliminar perfil</a></li>
+                            @{
+                                if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.ELIMINAR_PERFILES))
+                                {
+                                    <li>@Html.ActionLink("Eliminar perfiles", "Borrar", "Perfil")</li>
+                                }
+                                else
+                                {
+                                    <li class="disabled"><a id="link_deshabilitado">Eliminar perfil</a></li>
+                                }
+                            }
                         </ul>
                     </li>
                     <li class="dropdown">

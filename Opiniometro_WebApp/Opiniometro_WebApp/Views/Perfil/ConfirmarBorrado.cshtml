@@ -30,8 +30,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Borrar" class="btn btn-default" /> |
-            @Html.ActionLink("Regresar a borrado de perfiles", "Borrar")
+            <input type="submit" value="Borrar" class="btn btn-default" />
+            @Html.ActionLink("Cancelar", "Borrar", new { id = "Borrar" }, new { @class = "btn btn-default" })
         </div>
     }
 </div>
