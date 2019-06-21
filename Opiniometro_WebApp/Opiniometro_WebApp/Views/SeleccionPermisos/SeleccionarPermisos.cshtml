@@ -41,7 +41,7 @@
                     <td>
                         @Html.CheckBoxFor(model => Model.ListaGuardar[i].Existe, htmlAttributes: new { @id = i })
                         @Html.HiddenFor(model => Model.ListaGuardar[i].Permiso, i)
-                        @Html.HiddenFor(model => Model.ListaGuardar[i].Permiso, Model.IdPerfil)
+                        @Html.HiddenFor(model => Model.ListaGuardar[i].Permiso, i)
                     </td>
                 </tr>
 
