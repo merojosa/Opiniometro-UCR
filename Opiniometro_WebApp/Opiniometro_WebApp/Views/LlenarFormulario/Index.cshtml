@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Conformado_Item_Sec_Form>
+
+@{
+    ViewBag.Title = "LlenarFormulario";
+}
+
+<h3>Formulario X</h3>
+
+<table class="fixed_header">
+    <thead>
+        <tr>
+            <th>
+                <div align='center'>Seccion</div>
+            </th>
+            <th>
+                <div align='center'>Item</div>
+            </th>
+            <th>
+                <div align='center'>Tipo</div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Seccion.Titulo)
+            </td>  
+            <td>
+                @Html.DisplayFor(modelItem => item.Item.TextoPregunta)
+            </td>  
+            <td>
+                @Html.DisplayFor(modelItem => item.Item.TipoPregunta)
+            </td>
+        </tr>
+        }
+        </tbody>
+</table>
