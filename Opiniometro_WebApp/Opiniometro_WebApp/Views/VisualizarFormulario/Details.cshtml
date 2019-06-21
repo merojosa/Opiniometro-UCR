@@ -133,9 +133,15 @@
                                                                 var aData = chData;
                                                                 var aLabels = aData[0];
                                                                 var aDatasets1 = aData[1];
+                                                                
                                                                 var tamanio = 0;
-                                                                for (var size in aDatasets1)
-                                                                    tamanio = tamanio + aDatasets1;
+
+                                                                for (var data in aDatasets1) {
+                                                                    var valor = parseInt(data);               
+                                                                    tamanio = tamanio + valor;                     
+                                                                }
+                                                                
+                                                                                             
                                                                 //for (var i = 0; i < tamanio; i++)
                                                                 document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: \n" + (tamanio).toString();
                                                                 @*var iter = aLabels;
