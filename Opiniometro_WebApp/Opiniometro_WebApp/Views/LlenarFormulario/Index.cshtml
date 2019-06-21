@@ -53,7 +53,9 @@
                         @Html.DisplayFor(model => item.nombreProfeCurso)
                         @Html.DisplayFor(model => item.apellidoProfe)
                     </td>
-
+                    <td>
+                       @Html.ActionLink(item.formulario,"","");
+                    </td>
                 </tr>
                
             }

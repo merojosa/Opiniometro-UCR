@@ -416,6 +416,34 @@ VALUES ('CI1330', 100, 'SC-01234'),
 	   ('DE1001', 12, 'SC-89457'),
 	   ('DE2001', 12, 'SC-89457');
 
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('123456', 'Evaluacion Derecho 1')
+
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('987654', 'Historia Der. 1')
+
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('123789', 'Form. Investigacion')
+
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('159753', 'Derecho Priv. 1')
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE1001',1,2019,1,'123456',18-06-19 ,28-06-19 )
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE2001',3,2019,1,'159753',18-06-19 ,28-06-19 )
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE1002',7,2019,1,'987654',18-06-19 ,28-06-19 )
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE1007',4,2019,1,'123789',18-06-19 ,28-06-19 )
+
+insert into Fecha_Corte(FechaInicio,FechaFinal)
+values (18-06-19, 28-06-19)
+
+
 --DROP PROCEDURE CursosSegunCarrera
 --Obtiene la lista de cursos que pertenecen a cierta carrera
 GO
