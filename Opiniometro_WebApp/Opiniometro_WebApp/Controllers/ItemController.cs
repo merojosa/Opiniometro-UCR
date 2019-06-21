@@ -68,7 +68,7 @@ namespace Opiniometro_WebApp.Controllers
             ViewBag.NombreCategoria = new SelectList(db.Categoria, "NombreCategoria", "NombreCategoria");
             ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID");
             ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId");
-            return View();
+            return View("Create");
         }
 
          //POST: Item/Create
@@ -76,7 +76,7 @@ namespace Opiniometro_WebApp.Controllers
          //more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria")] Item item)
+        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria,EtiquetaObservacion")] Item item)
         {
             if (ModelState.IsValid)
             {
@@ -99,12 +99,13 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Item.Find(id);
-            if (item == null)
+            VistaPreviaPreguntaModel vistaPrevia = new VistaPreviaPreguntaModel
             {
-                return HttpNotFound();
-            }
-            return PartialView(item);
+                Item = db.Item.Find(id),
+                Opciones = db.Opciones_De_Respuestas_Seleccion_Unica.Where(m => m.ItemId == id).ToList()
+            };
+            
+            return PartialView(vistaPrevia);
         }
 
         //GET: Item/Edit/5
