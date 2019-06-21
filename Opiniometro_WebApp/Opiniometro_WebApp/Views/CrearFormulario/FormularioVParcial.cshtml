@@ -1,0 +1,64 @@
+﻿
+@model IEnumerable<Opiniometro_WebApp.Models.Conformado_Item_Sec_Form>
+
+<table class="table">
+    <tr>
+        <th>
+            @*@Html.DisplayName("Orden Seccion")*@
+        </th>
+        <th>
+            @*@Html.DisplayName("Titulo Seccion")*@
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        
+        <td>
+            <u>Seccion: </u>
+            @Html.DisplayFor(modelItem => item.Orden_Seccion)
+        </td>
+        <td>
+            <b>@Html.DisplayFor(modelItem => item.TituloSeccion)</b>
+        </td>
+
+    </tr>
+
+        <tr>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+
+        </tr>
+        foreach (var pregunta in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => pregunta.Orden_Item)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => pregunta.Item.TextoPregunta)
+                </td>
+
+                <td>
+                    <tr @*id="detalle-@pregunta.ItemId" style="display:none"*@>
+                        <td></td>
+                        <td colspan="5">
+                            @Html.Action("VistaPreviaPregunta", new { id = pregunta.ItemId })
+                    </td>
+                </td>
+
+            </tr>
+
+        }
+    }
+
+</table>

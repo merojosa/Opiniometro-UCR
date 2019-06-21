@@ -66,5 +66,5 @@ namespace Opiniometro_WebApp.Models
         public Nullable<int> Orden_Seccion { get; set; }
     }
 
-    
+
 }

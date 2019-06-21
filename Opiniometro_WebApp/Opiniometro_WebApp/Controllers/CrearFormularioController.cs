@@ -8,22 +8,27 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Opiniometro_WebApp.Models;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Opiniometro_WebApp.Controllers
 {
-    
+   
     public class CrearFormularioController : Controller
     {
         Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
         // GET: CrearFormulario
         public ActionResult AsignarPreguntas(string codForm)
-        {
+        {  
+            
             CrearFormularioModel crearFormulario = new CrearFormularioModel
             {
+                
                 Secciones = db.Seccion.ToList(),
                 Items = db.Item.ToList(),
                 Formulario = db.Formulario.Find(codForm),// le pasamos
                 Conformados = db.Conformado_Item_Sec_Form
+            
                     .Where(m => m.CodigoFormulario == codForm)
                     .OrderBy(m => m.TituloSeccion)
                     .ThenBy(m => m.Orden_Item)
@@ -95,12 +100,24 @@ namespace Opiniometro_WebApp.Controllers
         public JsonResult IsOrden_ItemAvailable(int Orden_Item)
         {
             return Json(!db.Conformado_Item_Sec_Form.Any(pregunta => pregunta.Orden_Item == Orden_Item), JsonRequestBehavior.AllowGet);
-
         }
         public JsonResult IsOrden_SeccionAvailable(int Orden_Seccion)
         {
             return Json(!db.Conformado_Item_Sec_Form.Any(pregunta => pregunta.Orden_Seccion == Orden_Seccion), JsonRequestBehavior.AllowGet);
 
+        }
+        public ActionResult VistaPreviaPregunta(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Item item = db.Item.Find(id);
+            if (item == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(item);
         }
     }
 }
