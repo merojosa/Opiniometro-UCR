@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Formulario>
+
+<div>
+
+    <table class="fixed_header" ">
+        <!-- Tabla para mostrar los formularios -->
+        <tr></tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+
+                <td>
+                    <!-- checkbox para elegir formulario-->
+                    <div align='center'><input type="checkbox" name="Formulario" value="Formulario"></div><br>
+            </tr>
+        }
+    </table>
+</div>
+
