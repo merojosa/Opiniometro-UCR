@@ -133,8 +133,8 @@ namespace Opiniometro_WebApp.Controllers
                 {
                     string contrasenna_generada = GenerarContrasenna(10);
                     
-                    db.SP_AgregarPersonaUsuario(per.persona.Cedula, per.persona.Nombre1, "", per.persona.Apellido1,
-                        per.persona.Apellido2, per.usuario.CorreoInstitucional, per.persona.DireccionDetallada);
+                    db.SP_AgregarPersonaUsuario(per.usuario.CorreoInstitucional, contrasenna_generada, per.persona.Cedula, per.persona.Nombre1, "", per.persona.Apellido1,
+                        per.persona.Apellido2, per.persona.DireccionDetallada);
                     string contenido =
                      "<p>Se le ha creado un usuario en Opiniometro@UCR.</p>" +
                      "<p>A continuación, su contraseña temporal, ingrésela junto con su correo institucional:</p> <b>"

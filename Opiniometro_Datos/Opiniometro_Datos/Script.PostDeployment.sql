@@ -211,7 +211,7 @@ BEGIN
 	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
 
 	INSERT INTO Persona
-	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2, @Direccion)
+	VALUES (@Cedula, @Nombre1, @Nombre2, @Apellido1, @Apellido2, @Direccion)
 
 	INSERT INTO Usuario
 	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
@@ -610,7 +610,7 @@ VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
 
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
-		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
+		('admin@ucr.ac.cr', 0, 'SC-01234', 'Administrador'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Administrador')
 
