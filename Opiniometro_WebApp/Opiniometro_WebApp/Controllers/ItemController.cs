@@ -30,7 +30,13 @@ namespace Opiniometro_WebApp.Controllers
             return View(item.ToList().ToPagedList(page ?? 1, 5));
         }
 
-         //GET: Item/Details/5
+        //GET: AgregarOpciones
+        public ActionResult AgregarOpciones()
+        {
+            return View();
+        }
+
+        //GET: Item/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -51,7 +57,8 @@ namespace Opiniometro_WebApp.Controllers
             ViewBag.TipoPreguntaItems = new List<ListItem>
             {
                   new ListItem { Text = "Sí-No", Value="3" },
-                  new ListItem { Text = "Texto Libre", Value="1" }
+                  new ListItem { Text = "Texto Libre", Value="1" },
+                  new ListItem { Text = "Selección Única", Value="2" }
             };
             ViewBag.BooleanItems = new List<ListItem>
             {
