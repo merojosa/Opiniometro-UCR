@@ -8,30 +8,7 @@ using System.Web.Mvc;
 namespace Opiniometro_WebApp.Models
 {
 
-    public class ItemYSeccion
-    {
-        public int ordenPregunta { get; set;  }
-        public int ordenSeccion { get; set; }
-        public String titulo { get; set; }
-        //public int ultimaSeccionAñadida { get; set; }
-        public ItemYSeccion()
-        {
-            ordenPregunta = 0;
-            ordenSeccion = 0;
-  
-        }
-        public ItemYSeccion(int ordenPregunta, int ordenSeccion, String titulo)
-        {
-            this.ordenPregunta = ordenPregunta;
-            this.ordenSeccion = ordenSeccion;
-            this.titulo = titulo; 
-        }
-        public int aumentarOrdenPregunta()
-        {
-            ordenPregunta++;
-            return ordenPregunta;
-        }
-    }
+ 
     public class CrearFormularioModel
     {
 
@@ -47,9 +24,9 @@ namespace Opiniometro_WebApp.Models
 
         public Nullable<int> Orden_Seccion { get; set; }
 
-        public List<ItemYSeccion> ListaItemYSeccion { get; set; }
-
         public int ultimaSeccion { get; set; }
+
+        public String plantamiento { get; set; }
          
     }
 

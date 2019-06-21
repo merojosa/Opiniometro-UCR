@@ -28,6 +28,7 @@ namespace Opiniometro_WebApp.Controllers
                 Items = db.Item.ToList(),
                 Formulario = db.Formulario.Find(codForm),// le pasamos
                 Conformados = db.Conformado_Item_Sec_Form
+            
                     .Where(m => m.CodigoFormulario == codForm)
                     .OrderBy(m => m.TituloSeccion)
                     .ThenBy(m => m.Orden_Item)
@@ -104,6 +105,19 @@ namespace Opiniometro_WebApp.Controllers
         {
             return Json(!db.Conformado_Item_Sec_Form.Any(pregunta => pregunta.Orden_Seccion == Orden_Seccion), JsonRequestBehavior.AllowGet);
 
+        }
+        public ActionResult VistaPreviaPregunta(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Item item = db.Item.Find(id);
+            if (item == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(item);
         }
     }
 }
