@@ -308,5 +308,15 @@ namespace Opiniometro_WebApp.Controllers
 
             return PartialView("SeleccionFormularios", form);
         }
+
+        [HttpPost]
+        public ActionResult MetodoPrueba(object[] PeriodosIndicados)
+        {
+            if (PeriodosIndicados == null) return RedirectToAction("Index", "Home");
+            foreach (var pi in PeriodosIndicados)
+            { Debug.WriteLine("\n owo \n"); }
+            
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

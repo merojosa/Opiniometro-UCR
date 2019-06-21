@@ -64,19 +64,19 @@
 
             @foreach (var form in Model.FormulariosSeleccionados)
             {
-                <tr>
+                <tr class="fila-formulario">
                     <td style="width:10vw;"> </td>
                     <td align="left">
-                        @Html.DisplayFor(Model => form.CodigoFormulario)
+                        @Html.DisplayFor(Model => form.CodigoFormulario, new { id = "codigo-form" })
                         <span> </span>
                         @Html.DisplayFor(Model => form.NombreFormulario)
                         <span>: </span>
                     </td>
                     <td align="left">
                         <span> de </span>
-                        @Html.EditorFor(Model => form.FechaDeCorte.FechaInicio)
+                        @Html.EditorFor(Model => form.FechaDeCorte.FechaInicio, new { id = "fecha-inicial" })
                         <span> a </span>
-                        @Html.EditorFor(Model => form.FechaDeCorte.FechaFinal)
+                        @Html.EditorFor(Model => form.FechaDeCorte.FechaFinal, new { id = "fecha-final" })
                         <br />
                     </td>
                     <td style="width:10vw;"> </td>
