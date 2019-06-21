@@ -33,7 +33,7 @@ namespace Opiniometro_WebApp.Controllers
         //GET: AgregarOpciones
         public ActionResult AgregarOpciones()
         {
-            return View();
+            return View("AgregarOpciones");
         }
 
         //GET: Item/Details/5
