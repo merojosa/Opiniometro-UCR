@@ -29,5 +29,18 @@ namespace Opiniometro_WebAppTest.Controllers
             // Assert
             Assert.AreEqual(result.ViewName, "Create");
         }
+
+        [TestMethod]
+        public void TestAgregarOpcionesView()
+        {
+            // Arrange
+            ItemController controller = new ItemController();
+
+            // Act
+            ViewResult result = controller.AgregarOpciones() as ViewResult;
+
+            // Assert
+            Assert.AreEqual(result.ViewName, "AgregarOpciones");
+        }
     }
 }
