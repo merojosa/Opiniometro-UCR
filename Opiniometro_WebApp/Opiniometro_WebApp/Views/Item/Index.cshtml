@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Opiniometro_WebApp.Models.Item>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<Opiniometro_WebApp.Models.Item>
 @{
     ViewBag.Title = "Banco de Preguntas";
 }
@@ -13,23 +16,23 @@
     <tr>
         <th>
             @Html.Label("Código")
-            @*@Html.DisplayNameFor(model => model.ItemId)*@
+            @*@Html.DisplayNameFor(model => model.First().ItemId)*@
         </th>
         <th>
             @Html.Label("Planteamiento de la pregunta")
-            @*@Html.DisplayNameFor(model => model.TextoPregunta)*@
+            @*@Html.DisplayNameFor(model => model.First().TextoPregunta)*@
         </th>
         <th>
             @Html.Label("Categoría")
-            @*@Html.DisplayNameFor(model => model.Categoria)*@
+            @*@Html.DisplayNameFor(model => model.First().Categoria)*@
         </th>
         <th>
             @Html.Label("Tiene Observación")
-            @*@Html.DisplayNameFor(model => model.TieneObservacion)*@
+            @*@Html.DisplayNameFor(model => model.First().TieneObservacion)*@
         </th>
-
-
-        <th></th>
+        <th>
+            Adicionales
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -51,15 +54,15 @@
                 }
             </td>
 
+            <td style="text-align:center"> <img src="~/Content/img/plus.png" identificador="@item.ItemId" /> </td>
 
-
-            <td>
+            @*<td>*@
                 @* @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }) |*@
-                <button class="btn btn-primary" identificador="@item.ItemId">Vista Previa</button>
+                
 
-                |@Html.ActionLink("Vista Previa", "VistaPrevia", new { id = item.ItemId })
+                @*|@Html.ActionLink("Vista Previa", "VistaPrevia", new { id = item.ItemId })*@
                 @* @Html.ActionLink("Delete", "Delete", new { id = item.ItemId })*@
-            </td>
+            @*</td>*@
 
         </tr>
         <tr id="detalle-@item.ItemId" style="display:none">
@@ -74,16 +77,23 @@
 
 </table>
 
+@* This code is used to navigate on the pages *@
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+    new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded,
+        DisplayPageCountAndCurrentLocation = true })
+
 @section scripts{
     <script type="text/javascript">
         $(function () {
-            $("#vistaitem tr button").click(function () {
+            $("#vistaitem tr img").click(function () {
                 var identificador = $(this).attr("identificador");
                 var detalle = $("#detalle-" + identificador);
                 if (detalle.css("display") == "none") {
                     detalle.css("display", "table-row");
+                    $(this).attr("src", "@Url.Content("~/Content/img/minus.png")");
                 } else {
                     detalle.css("display", "none");
+                    $(this).attr("src", "@Url.Content("~/Content/img/plus.png")");
                 }
             });
         });

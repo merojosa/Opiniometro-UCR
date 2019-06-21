@@ -228,10 +228,10 @@
         </EntityType>
         <EntityType Name="Perfil">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Nombre" />
           </Key>
-          <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Tipo" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="80" Nullable="false" />
         </EntityType>
         <EntityType Name="Permiso">
           <Key>
@@ -255,12 +255,12 @@
           <Key>
             <PropertyRef Name="NumeroEnfasis" />
             <PropertyRef Name="SiglaCarrera" />
-            <PropertyRef Name="IdPerfil" />
+            <PropertyRef Name="NombrePerfil" />
             <PropertyRef Name="IdPermiso" />
           </Key>
           <Property Name="NumeroEnfasis" Type="tinyint" Nullable="false" />
           <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="IdPerfil" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NombrePerfil" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="IdPermiso" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="Profesor">
@@ -363,12 +363,12 @@
             <PropertyRef Name="CorreoInstitucional" />
             <PropertyRef Name="NumeroEnfasis" />
             <PropertyRef Name="SiglaCarrera" />
-            <PropertyRef Name="IdPerfil" />
+            <PropertyRef Name="NombrePerfil" />
           </Key>
           <Property Name="CorreoInstitucional" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="NumeroEnfasis" Type="tinyint" Nullable="false" />
           <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="IdPerfil" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NombrePerfil" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="Unidad_Academica">
           <Key>
@@ -460,7 +460,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
@@ -678,14 +680,16 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
-          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Perfil">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Nombre" />
             </Principal>
             <Dependent Role="Tiene_Usuario_Perfil_Enfasis">
-              <PropertyRef Name="IdPerfil" />
+              <PropertyRef Name="NombrePerfil" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -726,7 +730,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Enfasis">
@@ -752,7 +758,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoseeEnfasisPerfil_Enfasis">
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Posee_Enfasis_Perfil_Permiso" Type="Self.Posee_Enfasis_Perfil_Permiso" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Enfasis">
@@ -766,19 +774,23 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoseeEnfasisPerfil_Perfil">
-          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Posee_Enfasis_Perfil_Permiso" Type="Self.Posee_Enfasis_Perfil_Permiso" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Perfil">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Nombre" />
             </Principal>
             <Dependent Role="Posee_Enfasis_Perfil_Permiso">
-              <PropertyRef Name="IdPerfil" />
+              <PropertyRef Name="NombrePerfil" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoseeEnfasisPerfil_Permiso">
-          <End Role="Permiso" Type="Self.Permiso" Multiplicity="1" />
+          <End Role="Permiso" Type="Self.Permiso" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Posee_Enfasis_Perfil_Permiso" Type="Self.Posee_Enfasis_Perfil_Permiso" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Permiso">
@@ -982,6 +994,15 @@
         <Function Name="ObtenerPerfilUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correo" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="ProcIntroducirSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="titulo" Type="nvarchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ProcIntroduFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="char" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SF_GenerarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
         <Function Name="SP_AgregarPersonaUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="char" Mode="In" />
           <Parameter Name="Nombre1" Type="nvarchar" Mode="In" />
@@ -1536,10 +1557,10 @@
         </EntityType>
         <EntityType Name="Perfil">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Nombre" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Tipo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Tiene_Usuario_Perfil_Enfasis" Relationship="Self.FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Perfil" ToRole="Tiene_Usuario_Perfil_Enfasis" />
           <NavigationProperty Name="Posee_Enfasis_Perfil_Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Perfil" FromRole="Perfil" ToRole="Posee_Enfasis_Perfil_Permiso" />
         </EntityType>
@@ -1573,12 +1594,12 @@
           <Key>
             <PropertyRef Name="NumeroEnfasis" />
             <PropertyRef Name="SiglaCarrera" />
-            <PropertyRef Name="IdPerfil" />
+            <PropertyRef Name="NombrePerfil" />
             <PropertyRef Name="IdPermiso" />
           </Key>
           <Property Name="NumeroEnfasis" Type="Byte" Nullable="false" />
           <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IdPerfil" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NombrePerfil" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdPermiso" Type="Int16" Nullable="false" />
           <NavigationProperty Name="Enfasis" Relationship="Self.FK_PoseeEnfasisPerfil_Enfasis" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Enfasis" />
           <NavigationProperty Name="Perfil" Relationship="Self.FK_PoseeEnfasisPerfil_Perfil" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Perfil" />
@@ -1690,12 +1711,12 @@
             <PropertyRef Name="CorreoInstitucional" />
             <PropertyRef Name="NumeroEnfasis" />
             <PropertyRef Name="SiglaCarrera" />
-            <PropertyRef Name="IdPerfil" />
+            <PropertyRef Name="NombrePerfil" />
           </Key>
           <Property Name="CorreoInstitucional" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NumeroEnfasis" Type="Byte" Nullable="false" />
           <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IdPerfil" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NombrePerfil" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Enfasis" Relationship="Self.FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Tiene_Usuario_Perfil_Enfasis" ToRole="Enfasis" />
           <NavigationProperty Name="Perfil" Relationship="Self.FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Tiene_Usuario_Perfil_Enfasis" ToRole="Perfil" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" FromRole="Tiene_Usuario_Perfil_Enfasis" ToRole="Usuario" />
@@ -1884,7 +1905,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Enfasis">
@@ -1898,7 +1921,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoseeEnfasisPerfil_Enfasis">
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Posee_Enfasis_Perfil_Permiso" Type="Self.Posee_Enfasis_Perfil_Permiso" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Enfasis">
@@ -2132,31 +2157,37 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
-          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Perfil">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Nombre" />
             </Principal>
             <Dependent Role="Tiene_Usuario_Perfil_Enfasis">
-              <PropertyRef Name="IdPerfil" />
+              <PropertyRef Name="NombrePerfil" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoseeEnfasisPerfil_Perfil">
-          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Posee_Enfasis_Perfil_Permiso" Type="Self.Posee_Enfasis_Perfil_Permiso" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Perfil">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Nombre" />
             </Principal>
             <Dependent Role="Posee_Enfasis_Perfil_Permiso">
-              <PropertyRef Name="IdPerfil" />
+              <PropertyRef Name="NombrePerfil" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoseeEnfasisPerfil_Permiso">
-          <End Role="Permiso" Type="Self.Permiso" Multiplicity="1" />
+          <End Role="Permiso" Type="Self.Permiso" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Posee_Enfasis_Perfil_Permiso" Type="Self.Posee_Enfasis_Perfil_Permiso" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Permiso">
@@ -2216,7 +2247,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
@@ -2456,6 +2489,14 @@
           </FunctionImport>
           <FunctionImport Name="ObtenerPerfilUsuario" ReturnType="Collection(String)">
             <Parameter Name="correo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ProcIntroducirSeccion">
+            <Parameter Name="titulo" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ProcIntroduFormulario">
+            <Parameter Name="codigo" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_AgregarPersonaUsuario">
             <Parameter Name="Cedula" Mode="In" Type="String" />
@@ -2758,8 +2799,8 @@
           <EntitySetMapping Name="Perfil">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Perfil">
               <MappingFragment StoreEntitySet="Perfil">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2788,7 +2829,7 @@
               <MappingFragment StoreEntitySet="Posee_Enfasis_Perfil_Permiso">
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
-                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
+                <ScalarProperty Name="NombrePerfil" ColumnName="NombrePerfil" />
                 <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2876,7 +2917,7 @@
                 <ScalarProperty Name="CorreoInstitucional" ColumnName="CorreoInstitucional" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
-                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
+                <ScalarProperty Name="NombrePerfil" ColumnName="NombrePerfil" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2945,13 +2986,15 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="Opiniometro_DatosModel.Store.NombrePersona" />
-          <FunctionImportMapping FunctionImportName="ObtenerPerfilPorDefecto" FunctionName="Opiniometro_DatosModel.Store.ObtenerPerfilPorDefecto" />
-          <FunctionImportMapping FunctionImportName="ObtenerPerfilUsuario" FunctionName="Opiniometro_DatosModel.Store.ObtenerPerfilUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_AgregarPersonaUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarPersonaUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="Opiniometro_DatosModel.Store.SP_CambiarContrasenna" />
-          <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_ContarRespuestasPorGrupo">
+          <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="OpiniometroModel.Store.NombrePersona" />
+          <FunctionImportMapping FunctionImportName="ObtenerPerfilPorDefecto" FunctionName="OpiniometroModel.Store.ObtenerPerfilPorDefecto" />
+          <FunctionImportMapping FunctionImportName="ObtenerPerfilUsuario" FunctionName="OpiniometroModel.Store.ObtenerPerfilUsuario" />
+          <FunctionImportMapping FunctionImportName="ProcIntroducirSeccion" FunctionName="OpiniometroModel.Store.ProcIntroducirSeccion" />
+          <FunctionImportMapping FunctionImportName="ProcIntroduFormulario" FunctionName="OpiniometroModel.Store.ProcIntroduFormulario" />
+          <FunctionImportMapping FunctionImportName="SP_AgregarPersonaUsuario" FunctionName="OpiniometroModel.Store.SP_AgregarPersonaUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="OpiniometroModel.Store.SP_AgregarUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="OpiniometroModel.Store.SP_CambiarContrasenna" />
+          <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="OpiniometroModel.Store.SP_ContarRespuestasPorGrupo">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Opiniometro_DatosModel.SP_ContarRespuestasPorGrupo_Result">
                 <ScalarProperty Name="Respuesta" ColumnName="Respuesta" />
