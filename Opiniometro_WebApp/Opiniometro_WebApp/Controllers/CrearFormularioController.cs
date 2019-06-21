@@ -102,5 +102,14 @@ namespace Opiniometro_WebApp.Controllers
             return Json(!db.Conformado_Item_Sec_Form.Any(pregunta => pregunta.Orden_Seccion == Orden_Seccion), JsonRequestBehavior.AllowGet);
 
         }
+
+
+        public ActionResult eliminar(Conformado_Item_Sec_Form conformado)
+        {
+
+            db.EliminarPreguntasDeSeccion(conformado.CodigoFormulario, conformado.TituloSeccion);
+            return null;
+        }
+        
     }
 }
