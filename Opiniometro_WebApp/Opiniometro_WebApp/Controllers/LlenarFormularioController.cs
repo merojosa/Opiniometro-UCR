@@ -24,7 +24,16 @@ namespace Opiniometro_WebApp.Controllers
             return View(modelo);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// efecto:retorna los cursos matriculados del estudiante loggeado
+        /// recibe:
+        /// <param name="cedulaDelEstudiante"> cedula del estudiante que está loggeado</param>
+        /// <param name="semestre"> recibe el semestre actual </param>
+        /// <param name="ano">recibe el año actual </param>
+        /// modifica--
+        /// <returns></returns>
         public IQueryable<EstudianteGruposMatriculado> ObtenerGrupoMatriculado(string cedulaDelEstudiante, int semestre, int ano) {
             IQueryable<EstudianteGruposMatriculado> grupos =
             from mat in db.Matricula
@@ -54,7 +63,12 @@ namespace Opiniometro_WebApp.Controllers
 
             return grupos;
         }
-
+        /// <summary>
+        /// efecto:recupera la cedula del estudiante loggeado 
+        /// requiere: --
+        /// modifica:--
+        /// </summary>
+        /// <returns></returns>
         public string obtenerCedulaEstLoggeado()
         {
             string correoUsLog = IdentidadManager.obtener_correo_actual();
