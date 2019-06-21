@@ -9,7 +9,17 @@ namespace Opiniometro_WebApp.Controllers
 {
     public class SeleccionFormulariosController : Controller
     {
-        //private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        //prueba para mocking tests
+        public SeleccionFormulariosController()
+        {
+            db = new Opiniometro_DatosEntities();
+        }
+
+        public SeleccionFormulariosController(Opiniometro_DatosEntities db)
+        {
+            this.db = db;
+        }
         /*
         // GET: SeleccionFormularios
         public ActionResult SeleccionFormularios()
@@ -28,5 +38,14 @@ namespace Opiniometro_WebApp.Controllers
             //}
             return PartialView(forms);
         }
+
+        //método para imprimir lista de formularios de un estudiante
+        //public List<Formulario> ObtenerFormularios(String IdEstudiante)
+        //{
+           
+
+        //    return 0;
+        //}
+
     }
 }
