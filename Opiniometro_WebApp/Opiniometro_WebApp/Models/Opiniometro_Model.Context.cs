@@ -99,6 +99,19 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DatosEstudiante_Result>("DatosEstudiante", cedulaParameter);
         }
     
+        public virtual int EliminarPreguntasDeSeccion(string codigoFormulario, string tituloSeccion)
+        {
+            var codigoFormularioParameter = codigoFormulario != null ?
+                new ObjectParameter("CodigoFormulario", codigoFormulario) :
+                new ObjectParameter("CodigoFormulario", typeof(string));
+    
+            var tituloSeccionParameter = tituloSeccion != null ?
+                new ObjectParameter("TituloSeccion", tituloSeccion) :
+                new ObjectParameter("TituloSeccion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EliminarPreguntasDeSeccion", codigoFormularioParameter, tituloSeccionParameter);
+        }
+    
         public virtual ObjectResult<MostrarEstudiantes_Result> MostrarEstudiantes()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MostrarEstudiantes_Result>("MostrarEstudiantes");

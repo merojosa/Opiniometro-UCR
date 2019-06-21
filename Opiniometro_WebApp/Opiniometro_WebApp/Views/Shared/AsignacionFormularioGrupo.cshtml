@@ -1,0 +1,51 @@
+﻿@model Opiniometro_WebApp.Models.GruposYFormsSeleccionados
+
+<table class="table">
+    <thead>
+        <tr>
+            <th align='left'>
+                Curso
+            </th>
+            <th align='right'>
+                Grupo
+            </th>
+            <th align='left'>
+                Profesor
+            </th>
+            <th align='left'>
+                Formularios asignados
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+       @foreach (var gr in Model.GruposSeleccionados)
+        {
+            <tr>
+                <td align='left'>
+                    @Html.DisplayFor(ModelItem => gr.SiglaCurso)<span> - </span>@Html.DisplayFor(ModelItem => gr.NombreCurso)
+                </td>
+                <td align='right'>
+                    @Html.DisplayFor(ModelItem => gr.Numero)
+                </td>
+                <td align='left'>
+                   @foreach (var profe in gr.Profesores)
+                    {
+                        
+                        @Html.DisplayFor(ModelItem => profe.Persona.Nombre) <span> </span>
+                        @Html.DisplayFor(ModelItem => profe.Persona.Apellido1) <span> </span>
+                        @Html.DisplayFor(ModelItem => profe.Persona.Apellido2) <br>
+                    }
+                </td>
+                <td align='left'>
+                   @foreach (var form in Model.FormulariosSeleccionados)
+                    {
+                            @Html.DisplayFor(ModelItem => form.CodigoFormulario) <span> </span>
+                            @Html.DisplayFor(ModelItem => form.NombreFormulario) <br>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
