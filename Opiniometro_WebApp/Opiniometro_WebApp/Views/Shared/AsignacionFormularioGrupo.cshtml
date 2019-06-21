@@ -59,28 +59,28 @@
 <h4>Por favor, indique el periodo de aplicación para cada formulario</h4>
 
 <div style="height:21vh; width:70vw; overflow:auto;">
-    <table class="table">
+    <table class="table" id="tabla-periodos">
         <tbody>
 
             @foreach (var form in Model.FormulariosSeleccionados)
             {
-                <tr class="fila-formulario">
+                <tr>
                     <td style="width:10vw;"> </td>
                     <td align="left">
-                        @Html.DisplayFor(Model => form.CodigoFormulario, new { id = "codigo-form" })
+                        @Html.DisplayFor(Model => form.CodigoFormulario)
                         <span> </span>
                         @Html.DisplayFor(Model => form.NombreFormulario)
                         <span>: </span>
                     </td>
                     <td align="left">
                         <span> de </span>
-                        @Html.EditorFor(Model => form.FechaDeCorte.FechaInicio, new { id = "fecha-inicial" })
+                        @Html.EditorFor(Model => form.FechaDeCorte.FechaInicio, new { @class = "fecha-inicial" })
                         <span> a </span>
-                        @Html.EditorFor(Model => form.FechaDeCorte.FechaFinal, new { id = "fecha-final" })
+                        @Html.EditorFor(Model => form.FechaDeCorte.FechaFinal, new { @class = "fecha-final" })
                         <br />
                     </td>
                     <td style="width:10vw;"> </td>
-                    @Html.HiddenFor(ModelItem => form.CodigoFormulario)
+                    @Html.HiddenFor(ModelItem => form.CodigoFormulario, new { @class = "codigo-form"})
                 </tr>
             }
         </tbody>

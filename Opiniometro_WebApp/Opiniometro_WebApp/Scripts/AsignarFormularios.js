@@ -29,7 +29,9 @@ $(document).ready(function () {
 $(document).ready(function () {
     document.getElementById("boton-efectuar").addEventListener("click",
         function () {
-            var filas = document.getElementsByClassName("fila-formulario");
+            var codigos = document.getElementsByClassName("codigo-form");
+            var inicios = document.getElementsByClassName("fecha-inicial");
+            var fines = document.getElementsByClassName("fecha-final");
 
             var FormulariosYPeriodos = [];
 
@@ -39,13 +41,15 @@ $(document).ready(function () {
                 FechaFinal : ' '
             };
 
-            /*for (var fila = 0; fila < filas.length; fila++) {
-                datosFila.CodigoForm = filas[fila].getElementById("codigo-form").val();
-                datosFila.FechaInicio = filas[fila].getElementById("fecha-inicio").val();
-                datosFila.FechaFinal = filas[fila].getElementById("fecha-final").val();
+            for (var f = 0; f < codigos.length; f++) {
+                datosFila.CodigoForm = codigos[f].val;
+                datosFila.FechaInicio = inicios[f].val;
+                datosFila.FechaFinal = fines[f].val;
 
                 FormulariosYPeriodos.push(datosFila);
-            };*/
+            };/**/
+
+            var tablaPeriodos = document.getElementById("tabla-periodos");
 
             $.post("MetodoPrueba",
                 {
