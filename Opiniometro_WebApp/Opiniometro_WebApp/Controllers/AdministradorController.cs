@@ -18,7 +18,9 @@ using System.Security.Permissions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using System.Security.Cryptography;
 using Opiniometro_WebApp.Models;
+using System.Text;
 //using Microsoft.SqlServer.Dts;
 //using Microsoft.SqlServer.Dts.Runtime;
 
@@ -167,20 +169,6 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         /*
-         * EFECTO: Revisa el contenido de los datos provisionados en el archivo csv.
-         * REQUIERE:
-         * MODIFICA:
-         */
-        private void VerificacionContenidoTuplasValidas(DataTable filasValidas, DataTable filasInvalidas,long numeroFilasLeidas)
-        {
-            throw new NotImplementedException();
-            //Chequeos relacionados con el contenido proveido en el archivo csv
-
-            //Fin de chequeos de contenido
-
-        }
-
-        /*
          * EFECTO: Clasifica y dispersa los datos de la tabla en memoria filasValidas. 
          * REQUIERE: Tabla en memoria que contiene los datos provisionados en el archivo csv,
          * MODIFICA: n/a
@@ -207,54 +195,116 @@ namespace Opiniometro_WebApp.Controllers
             {
                 Persona existePersona = null;
                 Usuario existeUsuario = null;
-                if ((existePersona = db.Persona.Find(filasValidas.Rows[indexFilasValidas]["cedula"])) == null)
+                DataRow filaNueva = filasValidas.Rows[indexFilasValidas];
+                if (db.Persona.Find(filasValidas.Rows[indexFilasValidas]["cedula"]) == null)
                 {
-                    
-                    DataRow nuevaPersona = personaBD.NewRow();
-                    nuevaPersona["cedula"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["cedula"].ToString().ToCharArray());
-                    nuevaPersona["nombre1"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["nombre1"].ToString().ToCharArray());
-                    nuevaPersona["apellido1"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["apellido1"].ToString().ToCharArray());
-                    nuevaPersona["apellido2"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["apellido2"].ToString().ToCharArray());
-                    nuevaPersona["direccion_exacta"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["direccion_exacta"].ToString().ToCharArray());
-                    personaBD.Rows.Add(nuevaPersona);
+                    InsertarFilaEnTablaEnMemoria(filaNueva, personaBD);
                     personaBD.AcceptChanges();
                 }
-
-                if ((existeUsuario = db.Usuario.Find(filasValidas.Rows[indexFilasValidas]["cedula"])) == null)
+                if (db.Usuario.Find(filasValidas.Rows[indexFilasValidas]["cedula"]) == null)
                 {
-                    DataRow nuevoUsuario = usuarioBD.NewRow();
-                    
-                    nuevoUsuario["correo"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["correo"].ToString().ToCharArray());
-
-                    //Insercion de un usuario requiere que tenga un contrasena cifrada con un guid
-                    ObjectParameter contrasenaGenerada = new ObjectParameter("resultado", typeof(String));
-                    db.SP_GenerarContrasena(contrasenaGenerada);
-                    ObjectParameter guidGenerado = new ObjectParameter("id", typeof(SqlGuid));
-                    db.SP_GenerarIdUnico(guidGenerado);
-                   
-                    Guid guid = new Guid(guidGenerado.Value.ToString()); //!HAY QUE REVISAR ESTA LINEA.
-                    ObjectParameter contrasenaHash = new ObjectParameter("contrasenaHash", typeof(SqlBinary));
-                    db.SP_GenerarContrasenaHash(guid.ToString(), (string)contrasenaGenerada.Value, contrasenaHash);
-
-                    nuevoUsuario["contrasena"] = new SqlChars(contrasenaHash.ToString().ToCharArray());
-                    nuevoUsuario["activo"] = new SqlBoolean(true);
-                    nuevoUsuario["cedula"] = new SqlChars(filasValidas.Rows[indexFilasValidas]["cedula"].ToString().ToCharArray());
-                    nuevoUsuario["id"] = new SqlGuid(guidGenerado.Value.ToString());
-                    usuarioBD.Rows.Add(nuevoUsuario);
+                    InsertarFilaEnTablaEnMemoria(filaNueva, usuarioBD);
                     usuarioBD.AcceptChanges();
-
-                    
                 }
 
                 
             }
             
-            personaBD.AcceptChanges();
-            usuarioBD.AcceptChanges();
+            
+            
             return 1;
 
         }
 
+        private void InsertarFilaEnTablaEnMemoria(DataRow filaAInsertar, DataTable tablaDestino)
+        {
+            
+            switch (tablaDestino.TableName)
+            {
+                
+                case "Persona":
+                {
+                    InsertarEnPersonaBD(filaAInsertar, tablaDestino);
+                }
+                break;
+                case "Usuario":
+                {
+                    InsertarEnUsuarioBD(filaAInsertar, tablaDestino);
+
+                }
+                break;
+            }
+            
+        }
+
+        private void InsertarEnPersonaBD(DataRow filaAInsertar, DataTable personaBD)
+        {
+            DataRow filaNueva = personaBD.NewRow();
+            filaNueva["cedula"] = new SqlChars(filaAInsertar["cedula"].ToString().ToCharArray());
+            filaNueva["nombre1"] = new SqlChars(filaAInsertar["nombre1"].ToString().ToCharArray());
+            filaNueva["apellido1"] = new SqlChars(filaAInsertar["apellido1"].ToString().ToCharArray());
+            filaNueva["apellido2"] = new SqlChars(filaAInsertar["apellido2"].ToString().ToCharArray());
+            filaNueva["direccion_exacta"] = new SqlChars(filaAInsertar["direccion_exacta"].ToString().ToCharArray());
+            personaBD.Rows.Add(filaNueva);
+            personaBD.AcceptChanges();
+        }
+
+        private void InsertarEnUsuarioBD(DataRow filaAInsertar, DataTable usuarioBD)
+        {
+            DataRow filaNueva = usuarioBD.NewRow();
+            filaNueva["correo"] = new SqlChars(filaAInsertar["correo"].ToString().ToCharArray());
+
+            //Insercion de un usuario requiere que tenga un contrasena cifrada con un guid
+            string contrasenaRandom = GenerarContrasenaRandom(10, null);
+            Guid guid = ObtenerIdUnico();
+            string contrasenaHash = GenerarContrasenaCifrada(contrasenaRandom += guid.ToString().Substring(0, 36));
+
+            filaNueva["contrasena"] = new SqlChars(contrasenaHash.ToString().ToCharArray());
+            filaNueva["activo"] = new SqlBoolean(true);
+            filaNueva["cedula"] = new SqlChars(filaAInsertar["cedula"].ToString().ToCharArray());
+            filaNueva["id"] = new SqlGuid(guid.ToString().Substring(0, 36));
+            usuarioBD.Rows.Add(filaNueva);
+            usuarioBD.AcceptChanges();
+        }
+
+        private string GenerarContrasenaCifrada(string stringUnico)
+        {
+            byte[] datosCrudos = Encoding.UTF8.GetBytes(stringUnico);
+            byte[] datosCifrados;
+            using(SHA512 sha = new SHA512Managed())
+            {
+                datosCifrados = sha.ComputeHash(datosCrudos);
+                
+            }
+
+            return System.Convert.ToBase64String(datosCifrados);
+        }
+
+        private string GenerarContrasenaRandom(int tamano, string caracteresPermitidos=null)
+        {
+            if(string.IsNullOrEmpty(caracteresPermitidos))
+            {
+                caracteresPermitidos = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            }
+            byte[] valoresRandom = new byte[tamano];
+
+            using(RNGCryptoServiceProvider proveedor = new RNGCryptoServiceProvider())
+            {
+                proveedor.GetBytes(valoresRandom);
+            }
+            char[] caracteres = caracteresPermitidos.ToCharArray();
+            char[] contrasenaGenerada = new char[tamano];
+            for(int i = 0; i<tamano;++i)
+            {
+                contrasenaGenerada[i] = caracteres[valoresRandom[i] % tamano];
+            }
+            return new string(contrasenaGenerada);
+        }
+
+        private Guid ObtenerIdUnico()
+        {
+            return Guid.NewGuid();
+        }
         /*
          * EFECTO: Realiza una insercion en bloque en una tabla de base de datos.
          * REQUIERE: Conexion instanciada y abierta hacia la base de datos. Una tabla en memoria que previamente haya sido llenada con los nuevos valores a guardar en la base de datos.
@@ -493,7 +543,6 @@ namespace Opiniometro_WebApp.Controllers
             dt.Columns[5].AllowDBNull = false;
             return dt;
         }
-
 
 
         /*
