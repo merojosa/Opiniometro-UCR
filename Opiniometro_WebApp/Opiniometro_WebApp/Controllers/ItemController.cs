@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using PagedList;
+using PagedList.Mvc;
 using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
@@ -15,12 +17,17 @@ namespace Opiniometro_WebApp.Controllers
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
-         //GET: Item
-        public ActionResult Index()
+        //Method used to know if an ItemId is already in use
+        public JsonResult IsItemIdAvailable(string ItemId)
         {
-           
+            return Json(!db.Item.Any(item => item.ItemId == ItemId), JsonRequestBehavior.AllowGet);
+        }
+
+         //GET: Item
+        public ActionResult Index(int? page)
+        {
             var item = db.Item.Include(i => i.Seleccion_Unica).Include(i => i.Texto_Libre);
-            return View(item.ToList());
+            return View(item.ToList().ToPagedList(page ?? 1, 5));
         }
 
          //GET: Item/Details/5

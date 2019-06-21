@@ -10,10 +10,12 @@
 namespace Opiniometro_WebApp.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class C__RefactorLog
+    public partial class CursosSegunSemestre_Result
     {
-        public System.Guid OperationKey { get; set; }
+        public string Nombre { get; set; }
+        public string Sigla { get; set; }
+        public byte Tipo { get; set; }
+        public string CodigoUnidad { get; set; }
     }
 }
