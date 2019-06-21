@@ -26,7 +26,8 @@ namespace Opiniometro_WebApp.Models
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
+        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Administrativo> Administrativo { get; set; }
         public virtual DbSet<Canton> Canton { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
@@ -97,6 +98,19 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Cedula", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DatosEstudiante_Result>("DatosEstudiante", cedulaParameter);
+        }
+    
+        public virtual int EliminarPreguntasDeSeccion(string codigoFormulario, string tituloSeccion)
+        {
+            var codigoFormularioParameter = codigoFormulario != null ?
+                new ObjectParameter("CodigoFormulario", codigoFormulario) :
+                new ObjectParameter("CodigoFormulario", typeof(string));
+    
+            var tituloSeccionParameter = tituloSeccion != null ?
+                new ObjectParameter("TituloSeccion", tituloSeccion) :
+                new ObjectParameter("TituloSeccion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EliminarPreguntasDeSeccion", codigoFormularioParameter, tituloSeccionParameter);
         }
     
         public virtual ObjectResult<MostrarEstudiantes_Result> MostrarEstudiantes()
