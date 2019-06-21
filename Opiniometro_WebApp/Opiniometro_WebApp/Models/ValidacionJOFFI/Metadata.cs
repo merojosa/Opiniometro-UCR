@@ -16,6 +16,8 @@ namespace Opiniometro_WebApp.Models
         [StringLength(25, ErrorMessage = "El límite de este campo son 25 caracteres.")]
         [Required]
         public string Nombre { get; set; }
+        [Required(ErrorMessage = "Campo obligatorio: Seleccione la unidad academica.")]
+        public string CodigoUnidadAca { get; set; }
     }
 
     public class SeccionMetadata
