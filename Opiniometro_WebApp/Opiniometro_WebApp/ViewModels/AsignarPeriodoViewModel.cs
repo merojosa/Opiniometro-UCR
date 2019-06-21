@@ -1,20 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
-namespace Opiniometro_WebApp.Models
+namespace Opiniometro_WebApp.ViewModels
 {
-
-    public class AsignarPeriodoViewModel
+    public class AsignarPeriodoViewModel : Controller
     {
-        public IEnumerable<Ciclo_Lectivo> Ciclos { get; set; }
-        public IEnumerable<Carrera> Carreras { get; set; }
-        public IEnumerable<Enfasis> Enfasis { get; set; }
-        public IEnumerable<Curso> Cursos { get; set; }
-        public IEnumerable<Unidad_Academica> UnidadesAcademicas { get; set; }
-
-        // Lista de grupos
-        public IQueryable<ElegirGrupoEditorViewModel> Grupos { get; set; }
-
-
+        // GET: AsignarPeriodoViewModel
+        public ActionResult Index()
+        {
+            return View();
+        }
     }
 }
