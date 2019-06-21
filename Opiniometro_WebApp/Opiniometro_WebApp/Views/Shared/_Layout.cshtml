@@ -82,14 +82,14 @@
                                     <li class="disabled"><a id="link_deshabilitado">Insertar formulario</a></li>
                                 }
 
-                                if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.ASIGNAR_FORMUALRIO))
-                                {
+                                //if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.ASIGNAR_FORMUALRIO))
+                                //{
                                     <li>@Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")</li>
-                                }
+                                @*}
                                 else
                                 {
                                     <li class="disabled"><a id="link_deshabilitado">Asignar formulario</a></li>
-                                }
+                                }*@
 
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VISUALIZAR_RESULTADOS_DE_EVALUACIONES))
                                 {
