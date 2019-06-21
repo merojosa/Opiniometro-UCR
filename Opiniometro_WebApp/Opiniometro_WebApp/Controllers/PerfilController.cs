@@ -9,13 +9,16 @@ using System.Security.Claims;
 using System.Threading;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System.Net;
 
 namespace Opiniometro_WebApp.Controllers
 {
     [Authorize]
     public class PerfilController : Controller
     {
-        public ActionResult Index()
+        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+
+        public ActionResult Cambiar()
         {
             PerfilesUsuario model = new PerfilesUsuario();
             model.ListaPerfiles = ObtenerPerfiles();
@@ -34,7 +37,7 @@ namespace Opiniometro_WebApp.Controllers
 
 
         [HttpPost]
-        public ActionResult Index(PerfilesUsuario model)
+        public ActionResult Cambiar(PerfilesUsuario model)
         {
             cambiar_perfil(model.perfilSeleccionado);
             return RedirectToAction("Index", "Home");
@@ -74,6 +77,37 @@ namespace Opiniometro_WebApp.Controllers
             ICollection<String> perfiles;
             perfiles = db.ObtenerPerfilUsuario(correo_autenticado).ToList();
             return perfiles;
+        }
+
+        // GET: CRUDPERFILES/Delete/5
+        public ActionResult ConfirmarBorrado(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Perfil perfil = db.Perfil.Find(id);
+            if (perfil == null)
+            {
+                return HttpNotFound();
+            }
+            return View(perfil);
+        }
+
+        // POST: CRUDPERFILES/Delete/5
+        [HttpPost, ActionName("ConfirmarBorrado")]
+        [ValidateAntiForgeryToken]
+        public ActionResult BorrarConfirmado(string id)
+        {
+            Perfil perfil = db.Perfil.Find(id);
+            db.Perfil.Remove(perfil);
+            db.SaveChanges();
+            return RedirectToAction("Borrar");
+        }
+
+        public ActionResult Borrar()
+        {
+            return View(db.Perfil.ToList());
         }
     }
 }

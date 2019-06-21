@@ -495,9 +495,11 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_Collapsible.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Perfil\Index.cshtml" />
     <Content Include="Views\SeleccionPermisos\SeleccionarPermisos.cshtml" />
     <Content Include="Views\CrearFormulario\ConformadoVParcial.cshtml" />
+    <Content Include="Views\Perfil\Borrar.cshtml" />
+    <Content Include="Views\Perfil\Cambiar.cshtml" />
+    <Content Include="Views\Perfil\ConfirmarBorrado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

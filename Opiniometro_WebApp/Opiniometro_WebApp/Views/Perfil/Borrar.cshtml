@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Perfil>
+
+@{
+    ViewBag.Title = "Borrar perfil";
+}
+
+<h2>Borrar perfil</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Borrar", "ConfirmarBorrado", new { id=item.Nombre })
+        </td>
+    </tr>
+}
+
+</table>

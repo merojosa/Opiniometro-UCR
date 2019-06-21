@@ -1,0 +1,37 @@
+﻿@model Opiniometro_WebApp.Models.Perfil
+
+@{
+    ViewBag.Title = "Borrar perfil";
+}
+
+<h3>¿Está seguro que quiere eliminar este perfil?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Perfil:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            Descripción:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar a borrado de perfiles", "Borrar")
+        </div>
+    }
+</div>
