@@ -49,10 +49,27 @@ namespace Opiniometro_WebApp.Controllers
 
             return View(modelo);
         }
-        
-        public void Asignar(GruposYFormsSeleccionados gruFormsSeleccionados)
+
+        [HttpPost]
+        public ActionResult Asignar(GruposYFormsSeleccionados GruFormsSeleccionados)
         {
-            ;
+            if (GruFormsSeleccionados != null)
+            {
+                if (GruFormsSeleccionados.TieneQueAsignar())
+                {
+                    // Realizar asignaciones
+
+                    if (ModelState.IsValid)
+                    {
+                        Debug.WriteLine("\n--- Asignaciones casi logradas ---\n");
+                    }
+                    else { Debug.WriteLine("\n--- Modelo invalido ---\n"); }
+                }
+                else { Debug.WriteLine("\n--- No hay asignaciones por hacer: {0} grupos y {1} formularios ---\n", 
+                    GruFormsSeleccionados.GruposSeleccionados.Count(), GruFormsSeleccionados.FormulariosSeleccionados.Count()); }
+            }
+            else { Debug.WriteLine("\n--- No se retorna el modelo ---\n"); }
+            return RedirectToAction("Index", "Home"); // Cambiar por ("Index", "AsignarPeriodosViewModel");
         }
 
         public ActionResult AsignacionFormularioGrupo (List<ElegirGrupoEditorViewModel> grupos, List<ElegirFormularioEditorViewModel> formularios)
@@ -60,15 +77,21 @@ namespace Opiniometro_WebApp.Controllers
             GruposYFormsSeleccionados gruFormsSeleccionados;
             if (grupos != null && formularios != null)
             {
+                /// Fecha por defecto usada para aplicar un formulario. (Desde hoy en 1 semana hasta dentro de 2 semanas)
+                Fecha_Corte fechaPorDefecto = new Fecha_Corte { FechaInicio = DateTime.Now.AddDays(7), FechaFinal = DateTime.Now.AddDays(14) };
+
+                foreach (var form in formularios)
+                {
+                    form.FechaDeCorte = fechaPorDefecto;
+                }
+
                 gruFormsSeleccionados
                     = new GruposYFormsSeleccionados(grupos, formularios);
-                Asignar(gruFormsSeleccionados);
             }
             else
             {
                 gruFormsSeleccionados = new GruposYFormsSeleccionados();
             }
-
             return PartialView("AsignacionFormularioGrupo", gruFormsSeleccionados);
         }
 
@@ -201,7 +224,6 @@ namespace Opiniometro_WebApp.Controllers
             });
 
             grupos = FiltreGrupos(searchString, semestre, anno, codigoUnidadAcadem, siglaCarrera, nombreCurso, grupos);
-            //grupos = FiltreGrupos(searchString, semestre, nomUnidadAcad, nombCarrera, nombreCurso, grupos.AsQueryable()).ToList();
 
             return grupos.ToList();
 
@@ -262,16 +284,17 @@ namespace Opiniometro_WebApp.Controllers
         // Para la vista de los formularios
         public List<ElegirFormularioEditorViewModel> ObtenerFormularios()
         {
-            IQueryable<ElegirFormularioEditorViewModel> formularios =
-                from formul in db.Formulario
+            List<ElegirFormularioEditorViewModel> formularios =
+                (from formul in db.Formulario
                 select new ElegirFormularioEditorViewModel
                 {
                     Seleccionado = false,
                     CodigoFormulario = formul.CodigoFormulario,
-                    NombreFormulario = formul.Nombre
-                };
+                    NombreFormulario = formul.Nombre,
+                    FechaDeCorte = null
+                }).ToList();
 
-            return formularios.ToList();
+            return formularios;
         }
 
         public ActionResult SeleccionFormularios(string formulario)

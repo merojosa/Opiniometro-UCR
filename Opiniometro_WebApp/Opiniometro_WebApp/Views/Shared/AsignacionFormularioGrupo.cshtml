@@ -1,51 +1,88 @@
 ﻿@model Opiniometro_WebApp.Models.GruposYFormsSeleccionados
 
-<table class="table">
-    <thead>
-        <tr>
-            <th align='left'>
-                Curso
-            </th>
-            <th align='right'>
-                Grupo
-            </th>
-            <th align='left'>
-                Profesor
-            </th>
-            <th align='left'>
-                Formularios asignados
-            </th>
-        </tr>
-    </thead>
-
-    <tbody>
-       @foreach (var gr in Model.GruposSeleccionados)
-        {
+<div style="height:37vh; width:70vw; overflow:auto;">
+    <table class="table">
+        <thead>
             <tr>
-                <td align='left'>
-                    @Html.DisplayFor(ModelItem => gr.SiglaCurso)<span> - </span>@Html.DisplayFor(ModelItem => gr.NombreCurso)
-                </td>
-                <td align='right'>
-                    @Html.DisplayFor(ModelItem => gr.Numero)
-                </td>
-                <td align='left'>
-                   @foreach (var profe in gr.Profesores)
-                    {
-                        
-                        @Html.DisplayFor(ModelItem => profe.Persona.Nombre) <span> </span>
-                        @Html.DisplayFor(ModelItem => profe.Persona.Apellido1) <span> </span>
-                        @Html.DisplayFor(ModelItem => profe.Persona.Apellido2) <br>
-                    }
-                </td>
-                <td align='left'>
-                   @foreach (var form in Model.FormulariosSeleccionados)
-                    {
+                <th align='left'>
+                    Curso
+                </th>
+                <th align='right'>
+                    Grupo
+                </th>
+                <th align='left'>
+                    Profesor
+                </th>
+                <th align='left'>
+                    Formularios asignados
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+           @foreach (var gr in Model.GruposSeleccionados)
+            {
+                <tr>
+                    <td align='left'>
+                        @Html.DisplayFor(ModelItem => gr.SiglaCurso)<span> - </span>@Html.DisplayFor(ModelItem => gr.NombreCurso)
+                    </td>
+                    <td align='right'>
+                        @Html.DisplayFor(ModelItem => gr.Numero)
+                    </td>
+                    <td align='left'>
+                        @foreach (var profe in gr.Profesores)
+                        {
+
+                            @Html.DisplayFor(ModelItem => profe.Persona.Nombre) <span> </span>
+                            @Html.DisplayFor(ModelItem => profe.Persona.Apellido1) <span> </span>
+                            @Html.DisplayFor(ModelItem => profe.Persona.Apellido2) <br>
+                        }
+                    </td>
+                    <td align='left'>
+                        @foreach (var form in Model.FormulariosSeleccionados)
+                        {
                             @Html.DisplayFor(ModelItem => form.CodigoFormulario) <span> </span>
                             @Html.DisplayFor(ModelItem => form.NombreFormulario) <br>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                        }
+                    </td>
+                    @Html.HiddenFor(ModelItem => gr.Anno)
+                    @Html.HiddenFor(ModelItem => gr.Semestre)
+                    @Html.HiddenFor(ModelItem => gr.SiglaCurso)
+                    @Html.HiddenFor(ModelItem => gr.Numero)
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
+<br />
+<h4>Por favor, indique el periodo de aplicación para cada formulario</h4>
+
+<div style="height:21vh; width:70vw; overflow:auto;">
+    <table class="table">
+        <tbody>
+
+            @foreach (var form in Model.FormulariosSeleccionados)
+            {
+                <tr>
+                    <td style="width:10vw;"> </td>
+                    <td align="left">
+                        @Html.DisplayFor(Model => form.CodigoFormulario)
+                        <span> </span>
+                        @Html.DisplayFor(Model => form.NombreFormulario)
+                        <span>: </span>
+                    </td>
+                    <td align="left">
+                        <span> de </span>
+                        @Html.EditorFor(Model => form.FechaDeCorte.FechaInicio)
+                        <span> a </span>
+                        @Html.EditorFor(Model => form.FechaDeCorte.FechaFinal)
+                        <br />
+                    </td>
+                    <td style="width:10vw;"> </td>
+                    @Html.HiddenFor(ModelItem => form.CodigoFormulario)
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

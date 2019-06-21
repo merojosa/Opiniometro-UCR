@@ -18,3 +18,10 @@ $(document).ready(function () {
             //alert("CLICKED!");
         });
 });
+
+$(document).ready(function () {
+    document.getElementById("boton-efectuar").addEventListener("click",
+        function () {
+            document.getElementById("efectuar").click();
+        });
+});
