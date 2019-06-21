@@ -215,6 +215,7 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AsignarFormulariosModel.cs" />
+    <Compile Include="Models\AsignarPeriodoModel.cs" />
     <Compile Include="Models\Canton.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -515,11 +516,10 @@
     <Content Include="Views\Auth\Permisos.cshtml" />
     <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
     <Content Include="Views\LlenarFormulario\Index.cshtml" />
+    <Content Include="Views\AsignarPeriodo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
-    <Folder Include="Views\AsignarPeriodoViewModel\" />
-    <Folder Include="Views\AsignarPeriodo\" />
     <Folder Include="Views\SeleccionFormularios\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>

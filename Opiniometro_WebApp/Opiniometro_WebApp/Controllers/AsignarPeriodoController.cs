@@ -22,10 +22,36 @@ namespace Opiniometro_WebApp.Controllers
         {
             this.db = db;
         }
+
+
         // GET: AsignarPeriodo
         public ActionResult Index()
         {
+            var modelo = new AsignarPeriodoViewModel
+            {
+                Grupos = ObtenerGrupos(),
+                Formularios = ObtenerFormularios(),
+            };
             return View();
+        }
+
+
+        //para mostrar los grupos 
+        public IQueryable<Grupo> ObtenerGrupos()
+        {
+            IQueryable<Grupo> grupo = (from g in db.Grupo select g).Distinct();
+            ViewBag.sigla = new SelectList(grupo, "Sigla", "Sigla");
+            ViewBag.nombre = new SelectList(grupo, "Nombre", "Nombre");
+            return grupo;
+        }
+
+        //para moistrar los formularios
+        public IQueryable<Formulario> ObtenerFormularios()
+        {
+            IQueryable<Formulario> formulario = (from f in db.Formulario select f).Distinct();
+            ViewBag.codigoForm = new SelectList(formulario, "CodigoFormulario", "CodigoFormulario");
+            ViewBag.nombre = new SelectList(formulario, "Nombre", "Nombre");
+            return formulario;
         }
     }
 }
