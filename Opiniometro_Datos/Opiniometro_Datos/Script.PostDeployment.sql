@@ -122,9 +122,33 @@ BEGIN
 
 	UPDATE Usuario
 	SET CorreoInstitucional = @Correo
-	WHERE Cedula = @CedulaBusqueda;
+	WHERE Cedula = @Cedula;
 END
 GO
+
+IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
+	DROP PROCEDURE TR_InsertaPersona
+GO
+CREATE TRIGGER TR_InsertaPersona
+ON Persona INSTEAD OF INSERT
+AS
+BEGIN
+	DECLARE @cedula CHAR(9)
+	DECLARE @nombre NVARCHAR(50)
+	DECLARE @apellido1 NVARCHAR(50)
+	DECLARE @apellido2 NVARCHAR(50)
+	
+	SET @cedula = (SELECT Cedula FROM inserted)
+	SET @nombre = (SELECT Nombre FROM inserted)
+	SET @apellido1 = (SELECT Apellido1 FROM inserted)
+	SET @apellido2 = (SELECT Apellido2 FROM inserted)
+
+	IF(@cedula NOT LIKE '' AND  @nombre NOT LIKE ''AND  @apellido1 NOT LIKE ''AND  @apellido2 NOT LIKE '')
+	BEGIN
+		INSERT INTO Persona (Cedula, Nombre, Apellido1, Apellido2)
+		VALUES (@cedula, @nombre, @apellido1, @apellido2)
+	END
+END;
 
 IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
