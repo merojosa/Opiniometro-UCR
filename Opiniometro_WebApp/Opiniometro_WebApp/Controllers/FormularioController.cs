@@ -12,12 +12,28 @@ namespace Opiniometro_WebApp.Controllers
 {
     public class FormularioController : Controller
     {
-        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        private Opiniometro_DatosEntities db;
+
+        public FormularioController()
+        {
+            db = new Opiniometro_DatosEntities();
+        }
+
+        public FormularioController(Opiniometro_DatosEntities db)
+        {
+            this.db = db;
+        }
+
+        //Method used to know if a CodigoFormulario is already in use
+        public JsonResult IsCodigoFormularioAvailable(string CodigoFormulario)
+        {
+            return Json(!db.Formulario.Any(formulario => formulario.CodigoFormulario == CodigoFormulario), JsonRequestBehavior.AllowGet);
+        }
 
         // GET: Formulario
         public ActionResult Index()
         {
-            return View(db.Formulario.ToList());
+            return View("Index", db.Formulario.ToList());
         }
 
         // GET: Formulario/Details/5
@@ -32,13 +48,13 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(formulario);
+            return View("Details", formulario);
         }
 
         // GET: Formulario/Create
         public ActionResult Create()
         {
-            return View();
+            return View("Create");
         }
 
         // POST: Formulario/Create
@@ -52,10 +68,10 @@ namespace Opiniometro_WebApp.Controllers
             {
                 db.Formulario.Add(formulario);
                 db.SaveChanges();
-                return RedirectToAction("Index" );
+                return RedirectToAction("Index");
             }
 
-            return View(formulario);
+            return View("Create", formulario);
         }
 
         // GET: Formulario/Edit/5
@@ -70,7 +86,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(formulario);
+            return View("Edit", formulario);
         }
 
         // POST: Formulario/Edit/5
@@ -86,7 +102,7 @@ namespace Opiniometro_WebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(formulario);
+            return View("Edit", formulario);
         }
 
         // GET: Formulario/Delete/5
@@ -101,7 +117,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(formulario);
+            return View("Delete", formulario);
         }
 
         // POST: Formulario/Delete/5

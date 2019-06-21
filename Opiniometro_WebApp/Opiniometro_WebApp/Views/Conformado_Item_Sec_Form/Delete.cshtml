@@ -1,4 +1,4 @@
-﻿@model Opiniometro_WebApp.Models.Responde
+﻿@model Opiniometro_WebApp.Models.Conformado_Item_Sec_Form
 
 @{
     ViewBag.Title = "Delete";
@@ -8,39 +8,39 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Responde</h4>
+    <h4>Conformado_Item_Sec_Form</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Observacion)
+            @Html.DisplayNameFor(model => model.NombreFormulario)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Observacion)
+            @Html.DisplayFor(model => model.NombreFormulario)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Respuesta)
+            @Html.DisplayNameFor(model => model.Orden_Item)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Respuesta)
+            @Html.DisplayFor(model => model.Orden_Item)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.RespuestaProfesor)
+            @Html.DisplayNameFor(model => model.Orden_Seccion)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.RespuestaProfesor)
+            @Html.DisplayFor(model => model.Orden_Seccion)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Formulario_Respuesta.CodigoFormulario)
+            @Html.DisplayNameFor(model => model.Formulario.Nombre)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Formulario_Respuesta.CodigoFormulario)
+            @Html.DisplayFor(model => model.Formulario.Nombre)
         </dd>
 
         <dt>

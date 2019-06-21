@@ -13,6 +13,14 @@ namespace Opiniometro_WebApp.Controllers.Servicios
 
         // 201-300: The Strategists
 
+        public const int VER_INFORMACION_PERSONAS = 202;
+        public const int INSERTAR_USUARIO = 203;
+        public const int ASIGNAR_FORMULARIO = 204;
+        public const int VISUALIZAR_RESULTADOS_DE_EVALUACIONES = 205;
+        public const int VER_SECCIONES = 206;
+        public const int VER_ITEMS = 207;
+        public const int INSERTAR_FORMULARIO = 208;
+
         // 301-400: JOFFI
 
         // Ejemplos

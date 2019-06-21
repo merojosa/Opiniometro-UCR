@@ -1,20 +1,40 @@
-﻿<nav class="navbar navbar-default-barra-login navbar-fixed-top">
+﻿@using Opiniometro_WebApp.Controllers.Servicios;
+<nav class="navbar navbar-principal navbar-fixed-top" style="z-index:999">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <div style="width: 870px; overflow: hidden" text-align="center">
-                <a class="navbar-brand-barra-login" href="/">
-                    <img src="~/Content/firma-ucr-c.svg" width="1700">
-                </a>
-            </div>
-        </div>
+        <ul class="navbar-header">
+            @if (Request.Browser.Type.Contains("Firefox"))
+            {
+                // Firefox se comporta distinto con los margenes.
+                <li style="height:105px; width: 570px; margin-left:30px; margin-top:-8px; overflow: hidden" text-align="center">
+                    <a class="navbar-brand-barra-login" href="/">
+                        <img src="~/Content/firma-ucr-c.svg" width="1100">
+                    </a>
+                </li>
+               
+            }
+            else
+            {
+                <li style="height:105px; width: 570px; margin-left:30px; margin-top:-25px; overflow: hidden" text-align="center">
+                    <a class="navbar-brand-barra-login" href="/">
+                        <img src="~/Content/firma-ucr-c.svg" width="1100">
+                    </a>
+                </li>
+            }
+        </ul>
+        @if (ViewBag.Title != "Recuperar contraseña" && ViewBag.Title != "Inicio de sesión")
+        {
+            <ul class="nav navbar-nav navbar-right">
+                <li style="margin-right:92px; margin-top:45px"><p class="navbar-text"> @IdentidadManager.obtener_nombre_actual() - @IdentidadManager.obtener_perfil_actual()</p></li>
+            </ul>
+        }
     </div>
 </nav>
 
-<br /> <br /> <br /> <br /> <br />
+<br /><br /><br />
 
 @if (ViewBag.Title != "Recuperar contraseña" && ViewBag.Title != "Inicio de sesión")
 {
     // Si es otra pantalla que no sea recuperar contrasenna o inicio de sesion, se agregan dos espacios
     // ya que esta la barra gris.
-    <br /> <br /> <br />
+    <br /><br /><br />
 }
