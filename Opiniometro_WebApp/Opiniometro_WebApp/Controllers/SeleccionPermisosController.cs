@@ -19,7 +19,7 @@ namespace Opiniometro_WebApp.Controllers
         {
             if (IdentidadManager.verificar_sesion(this) == true)
             {
-                if (IdentidadManager.obtener_perfil_actual() == "Admin")
+                if (IdentidadManager.obtener_perfil_actual() == "Administrador")
                 {
                     bool asignado;
                     using (var context = new Opiniometro_DatosEntities())
