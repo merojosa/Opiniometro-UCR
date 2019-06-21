@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Conformado_Item_Sec_Form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Orden_Seccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TituloSeccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Orden_Item)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemId)
+        </th>       
+        <th>
+            @Html.DisplayNameFor(model => model.Item.TextoPregunta)
+        </th>       
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Orden_Seccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TituloSeccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Orden_Item)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Item.TextoPregunta)
+        </td>
+    </tr>
+}
+
+</table>

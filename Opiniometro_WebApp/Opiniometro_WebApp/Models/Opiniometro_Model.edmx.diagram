@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c283fa55681c44c2b8741e14848c3ecd" Name="Diagram1">
+      <Diagram DiagramId="008dfd07943947b09fe0988a324300e8" Name="Diagram1">
         <EntityTypeShape EntityType="OpiniometroModel.Administrativo" Width="1.5" PointX="9.75" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="OpiniometroModel.Canton" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
         <EntityTypeShape EntityType="OpiniometroModel.Carrera" Width="1.5" PointX="7.5" PointY="31.75" IsExpanded="true" />

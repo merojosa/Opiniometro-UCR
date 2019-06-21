@@ -222,10 +222,10 @@
         </EntityType>
         <EntityType Name="Perfil">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Nombre" />
           </Key>
-          <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Tipo" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="80" Nullable="false" />
         </EntityType>
         <EntityType Name="Permiso">
           <Key>
@@ -248,12 +248,12 @@
           <Key>
             <PropertyRef Name="NumeroEnfasis" />
             <PropertyRef Name="SiglaCarrera" />
-            <PropertyRef Name="IdPerfil" />
+            <PropertyRef Name="NombrePerfil" />
             <PropertyRef Name="IdPermiso" />
           </Key>
           <Property Name="NumeroEnfasis" Type="tinyint" Nullable="false" />
           <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="IdPerfil" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NombrePerfil" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="IdPermiso" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="Profesor">
@@ -356,12 +356,12 @@
             <PropertyRef Name="CorreoInstitucional" />
             <PropertyRef Name="NumeroEnfasis" />
             <PropertyRef Name="SiglaCarrera" />
-            <PropertyRef Name="IdPerfil" />
+            <PropertyRef Name="NombrePerfil" />
           </Key>
           <Property Name="CorreoInstitucional" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="NumeroEnfasis" Type="tinyint" Nullable="false" />
           <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="IdPerfil" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NombrePerfil" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="Unidad_Academica">
           <Key>
@@ -380,11 +380,6 @@
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ValorRandom">
-          <Property Name="randomvalue" Type="varbinary" MaxLength="8000" />
-        </EntityType>-->
         <Association Name="FK_Adm_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Administrativo" Type="Self.Administrativo" Multiplicity="0..1" />
@@ -458,7 +453,9 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
@@ -676,14 +673,16 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
-          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Perfil">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Nombre" />
             </Principal>
             <Dependent Role="Tiene_Usuario_Perfil_Enfasis">
-              <PropertyRef Name="IdPerfil" />
+              <PropertyRef Name="NombrePerfil" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -724,7 +723,9 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Enfasis">
@@ -750,7 +751,9 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoseeEnfasisPerfil_Enfasis">
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Posee_Enfasis_Perfil_Permiso" Type="Self.Posee_Enfasis_Perfil_Permiso" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Enfasis">
@@ -764,19 +767,23 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoseeEnfasisPerfil_Perfil">
-          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Posee_Enfasis_Perfil_Permiso" Type="Self.Posee_Enfasis_Perfil_Permiso" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Perfil">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Nombre" />
             </Principal>
             <Dependent Role="Posee_Enfasis_Perfil_Permiso">
-              <PropertyRef Name="IdPerfil" />
+              <PropertyRef Name="NombrePerfil" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoseeEnfasisPerfil_Permiso">
-          <End Role="Permiso" Type="Self.Permiso" Multiplicity="1" />
+          <End Role="Permiso" Type="Self.Permiso" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Posee_Enfasis_Perfil_Permiso" Type="Self.Posee_Enfasis_Perfil_Permiso" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Permiso">
@@ -1533,10 +1540,10 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
         </EntityType>
         <EntityType Name="Perfil">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Nombre" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Tipo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Tiene_Usuario_Perfil_Enfasis" Relationship="Self.FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Perfil" ToRole="Tiene_Usuario_Perfil_Enfasis" />
           <NavigationProperty Name="Posee_Enfasis_Perfil_Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Perfil" FromRole="Perfil" ToRole="Posee_Enfasis_Perfil_Permiso" />
         </EntityType>
@@ -1569,12 +1576,12 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Key>
             <PropertyRef Name="NumeroEnfasis" />
             <PropertyRef Name="SiglaCarrera" />
-            <PropertyRef Name="IdPerfil" />
+            <PropertyRef Name="NombrePerfil" />
             <PropertyRef Name="IdPermiso" />
           </Key>
           <Property Name="NumeroEnfasis" Type="Byte" Nullable="false" />
           <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IdPerfil" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NombrePerfil" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdPermiso" Type="Int16" Nullable="false" />
           <NavigationProperty Name="Enfasis" Relationship="Self.FK_PoseeEnfasisPerfil_Enfasis" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Enfasis" />
           <NavigationProperty Name="Perfil" Relationship="Self.FK_PoseeEnfasisPerfil_Perfil" FromRole="Posee_Enfasis_Perfil_Permiso" ToRole="Perfil" />
@@ -1686,12 +1693,12 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <PropertyRef Name="CorreoInstitucional" />
             <PropertyRef Name="NumeroEnfasis" />
             <PropertyRef Name="SiglaCarrera" />
-            <PropertyRef Name="IdPerfil" />
+            <PropertyRef Name="NombrePerfil" />
           </Key>
           <Property Name="CorreoInstitucional" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NumeroEnfasis" Type="Byte" Nullable="false" />
           <Property Name="SiglaCarrera" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IdPerfil" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NombrePerfil" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Enfasis" Relationship="Self.FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Tiene_Usuario_Perfil_Enfasis" ToRole="Enfasis" />
           <NavigationProperty Name="Perfil" Relationship="Self.FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Tiene_Usuario_Perfil_Enfasis" ToRole="Perfil" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" FromRole="Tiene_Usuario_Perfil_Enfasis" ToRole="Usuario" />
@@ -1880,7 +1887,9 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Enfasis">
@@ -1894,7 +1903,9 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoseeEnfasisPerfil_Enfasis">
-          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Posee_Enfasis_Perfil_Permiso" Type="Self.Posee_Enfasis_Perfil_Permiso" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Enfasis">
@@ -2128,31 +2139,37 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis">
-          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Perfil">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Nombre" />
             </Principal>
             <Dependent Role="Tiene_Usuario_Perfil_Enfasis">
-              <PropertyRef Name="IdPerfil" />
+              <PropertyRef Name="NombrePerfil" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoseeEnfasisPerfil_Perfil">
-          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Posee_Enfasis_Perfil_Permiso" Type="Self.Posee_Enfasis_Perfil_Permiso" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Perfil">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="Nombre" />
             </Principal>
             <Dependent Role="Posee_Enfasis_Perfil_Permiso">
-              <PropertyRef Name="IdPerfil" />
+              <PropertyRef Name="NombrePerfil" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoseeEnfasisPerfil_Permiso">
-          <End Role="Permiso" Type="Self.Permiso" Multiplicity="1" />
+          <End Role="Permiso" Type="Self.Permiso" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Posee_Enfasis_Perfil_Permiso" Type="Self.Posee_Enfasis_Perfil_Permiso" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Permiso">
@@ -2212,7 +2229,9 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Tiene_Usuario_Perfil_Enfasis" Type="Self.Tiene_Usuario_Perfil_Enfasis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
@@ -2769,8 +2788,8 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <EntitySetMapping Name="Perfil">
             <EntityTypeMapping TypeName="OpiniometroModel.Perfil">
               <MappingFragment StoreEntitySet="Perfil">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2798,7 +2817,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               <MappingFragment StoreEntitySet="Posee_Enfasis_Perfil_Permiso">
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
-                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
+                <ScalarProperty Name="NombrePerfil" ColumnName="NombrePerfil" />
                 <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2886,7 +2905,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
                 <ScalarProperty Name="CorreoInstitucional" ColumnName="CorreoInstitucional" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
-                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
+                <ScalarProperty Name="NombrePerfil" ColumnName="NombrePerfil" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
