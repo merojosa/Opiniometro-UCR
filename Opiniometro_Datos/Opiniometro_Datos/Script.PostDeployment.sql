@@ -584,7 +584,7 @@ END
 GO
 
 GO
-IF OBJECT_ID('SP_DevolverObservacionesPorGrupo') IS NOT NULL
+IF OBJECT_ID('SP_DevolverRespuestasPorGrupo') IS NOT NULL
 	DROP PROCEDURE SP_DevolverRespuestasPorGrupo
 
 --REQ: La base de datos creada.

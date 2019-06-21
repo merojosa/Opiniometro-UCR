@@ -20,72 +20,72 @@
 
 @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
 
+
+
 <div class="container">
 
     @foreach (var title in Model.Formulario_Respuesta.Take(1))
     {
-    <td>
-        <h4 style="text-align:left;">
-            <b>Sigla:</b>
-            @Html.DisplayFor(modelItem => title.Grupo.SiglaCurso)
+        <td>
+            <h4 style="text-align:left;">
+                <b>Sigla:</b>
+                @Html.DisplayFor(modelItem => title.Grupo.SiglaCurso)
 
-            <span style="float:right;">
-                <b>Profesor:</b>
-                @Html.DisplayFor(modelItem => title.Profesor.Persona.Nombre)
-                @Html.DisplayFor(modelItem => title.Profesor.Persona.Apellido1)
-                @Html.DisplayFor(modelItem => title.Profesor.Persona.Apellido2)
-            </span>
+                <span style="float:right;">
+                    <b>Profesor:</b>
+                    @Html.DisplayFor(modelItem => title.Profesor.Persona.Nombre)
+                    @Html.DisplayFor(modelItem => title.Profesor.Persona.Apellido1)
+                    @Html.DisplayFor(modelItem => title.Profesor.Persona.Apellido2)
+                </span>
 
-            <br><br>
+                <br><br>
 
-            <b>Curso:</b>
-            @Html.DisplayFor(modelItem => title.Grupo.Curso.Nombre)
+                <b>Curso:</b>
+                @Html.DisplayFor(modelItem => title.Grupo.Curso.Nombre)
 
-            <span style="float:right;">
-                <b>Semestre:</b>
-                @Html.DisplayFor(modelItem => title.Grupo.SemestreGrupo)
+                <span style="float:right;">
+                    <b>Semestre:</b>
+                    @Html.DisplayFor(modelItem => title.Grupo.SemestreGrupo)
 
-                <b>Año:</b>
-                @Html.DisplayFor(modelItem => title.Grupo.AnnoGrupo)
-            </span>
+                    <b>Año:</b>
+                    @Html.DisplayFor(modelItem => title.Grupo.AnnoGrupo)
+                </span>
 
-            <br><br>
+                <br><br>
 
-            <b>Formulario:</b>
-            @Html.DisplayFor(modelItem => title.CodigoFormulario)
+                <b>Formulario:</b>
+                @Html.DisplayFor(modelItem => title.CodigoFormulario)
 
-            @Html.DisplayFor(modelItem => title.Formulario.Nombre)
+                @Html.DisplayFor(modelItem => title.Formulario.Nombre)
 
-            <span style="float:right;">
-                <b>Grupo:</b>
-                @Html.DisplayFor(modelItem => title.Grupo.Numero)
-            </span>
+                <span style="float:right;">
+                    <b>Grupo:</b>
+                    @Html.DisplayFor(modelItem => title.Grupo.Numero)
+                </span>
 
-        </h4>
-    </td>
+            </h4>
+        </td>
 
-    <br><br>
+        <br><br>
     }
 
 
-    @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string>
-        secciones = new List<string>
-            (); bool seccion_repetida = false;}
+    @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string> secciones = new List<string>(); bool seccion_repetida = false;}
 
-            <div class="panel-group" id="accordion1">
+    <div class="panel-group" id="accordion1">
 
-                @foreach (var formulario in Model.Conformado_Item_Sec_Form)
-                {
-                seccion_actual = formulario.TituloSeccion;
+        @foreach (var formulario in Model.Conformado_Item_Sec_Form)
+        {
+            seccion_actual = formulario.TituloSeccion;
 
-                @*Se ocupa poner una restriccion para no mostrar seciones repetidas*@
+            @*Se ocupa poner una restriccion para no mostrar seciones repetidas*@
 
-                if (secciones.Contains(seccion_actual)) { seccion_repetida = true; }
-                else { secciones.Add(seccion_actual); seccion_repetida = false; }
+            if (secciones.Contains(seccion_actual)) { seccion_repetida = true; }
+            else { secciones.Add(seccion_actual); seccion_repetida = false; }
 
 
-                if (seccion_repetida == false)
-                {
+            if (seccion_repetida == false)
+            {
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -102,30 +102,30 @@
 
                                 @foreach (var seccion in Model.Conformado_Item_Sec_Form)
                                 {
-                                item_actual = seccion.Item.ItemId;
+                                    item_actual = seccion.Item.ItemId;
 
-                                if (seccion.TituloSeccion == seccion_actual && seccion.ItemId == item_actual)
-                                {
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2_@id_counter" href="#collapseThreeOne_@seccion_counter">
-                                                @Html.DisplayFor(model => seccion.Item.TextoPregunta) @*Despliega las preguntas de una seccion en especifico*@
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseThreeOne_@seccion_counter" class="panel-collapse collapse">
-                                        <div class="panel-body">
-
-                                            @if (seccion.Item.TipoPregunta != 1)
-                                            {
-                                            <p>Resultados</p> @*Aqui se ingresa el grafico y desde aqui se mostrarian las observaciones posteriormente, acordarse de ponder una condicion si el tipo de pregunta posee grafico o no*@
-                                            //<p>@("graficarResultados('@seccion.Item.ItemId')")</p>
-                                            <p id="info_@item_actual" style="float:right"></p>
-                                            <div id="contenedorGrafo">
-                                                <canvas id="pie_chart_@item_actual"></canvas>
+                                    if (seccion.TituloSeccion == seccion_actual && seccion.ItemId == item_actual)
+                                    {
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion2_@id_counter" href="#collapseThreeOne_@seccion_counter">
+                                                        @Html.DisplayFor(model => seccion.Item.TextoPregunta) @*Despliega las preguntas de una seccion en especifico*@
+                                                    </a>
+                                                </h4>
                                             </div>
-                                            <script>
+                                            <div id="collapseThreeOne_@seccion_counter" class="panel-collapse collapse">
+                                                <div class="panel-body">
+
+                                                    @if (seccion.Item.TipoPregunta != 1)
+                                                    {
+                                                        <p>Resultados</p> @*Aqui se ingresa el grafico y desde aqui se mostrarian las observaciones posteriormente, acordarse de ponder una condicion si el tipo de pregunta posee grafico o no*@
+                                                        //<p>@("graficarResultados('@seccion.Item.ItemId')")</p>
+                                                        <p id="info_@item_actual" style="float:right"></p>
+                                                        <div id="contenedorGrafo">
+                                                            <canvas id="pie_chart_@item_actual"></canvas>
+                                                        </div>
+                                                        <script>
                                                         $.ajax({
                                                             type: "POST",
                                                             url: "/VisualizarFormulario/GraficoPie/?itemId=@seccion.Item.ItemId",
@@ -183,63 +183,91 @@
                                                                         maintainAspectRatio: false,
                                                                         scales: { xaxes: [{ ticks: { beginAtZero: true } }] },
                                                                         legend: { display: true },
+
                                                                     },
                                                                 })
                                                             }
                                                         });
-                                            </script>
-                                            }
-                                            else
-                                            {
-                                            <div style="height:180px; overflow-y: scroll;">
-                                                @foreach (var item in Model.Formulario_Respuesta.Take(1))
-                                                {
+                                                        </script>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div style="height:180px; overflow-y: scroll;">
+                                                            <p id="info_@item_actual" style="float:right"></p>
 
+                                                            @foreach (var item in Model.Formulario_Respuesta.Take(1))
+                                                            {
+                                                                <script>
+                                                    $.ajax({
+                                                        type: "POST",
+                                                            url: "/VisualizarFormulario/ObservacionesPorPregunta",
+                                                            data: {
+                                                                codigoFormulario: @item.CodigoFormulario;
+                                                                cedulaProfesor: @item.Profesor.CedulaProfesor;
+                                                                annoGrupo: @item.Grupo.AnnoGrupo;
+                                                                semestreGrupo: @item.Grupo.SemestreGrupo;
+                                                                numeroGrupo: @item.Grupo.Numero;
+                                                                siglaCurso: @item.Grupo.SiglaCurso;
+                                                                itemId: @seccion.Item.ItemId;
+                                                            },
+                                                            contentType: "application/json; charset=utf-8",
+                                                            dataType: "json",
+                                                        success: function (chData) {
+                                                            var aData = chData;
+                                                            var obs = aData[0];
+                                                            //var nom = aData[1];
+                                                            //var ap1 = aData[2];
+                                                            //var ap2 = aData[3];
 
+                                                            for (var data in obs) {
+                                                                document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: \n" + (obs[data]).toString();
+                                                            }
 
-
-                                                    @*Se ocupa encontrar la forma de devolver las respuesta de texto_libre por pregunta*@
-                                                }
-                                            </div>
-                                            }
-                                            <br />
-                                            <div class="panel-group" id="accordion3_@seccion_counter">
-
-                                                @if (seccion.Item.TieneObservacion == observation)
-                                                {
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <h4 class="panel-title">
-                                                            <a data-toggle="collapse" data-parent="#accordion3_@seccion_counter" href="#collapseThreeTwo_@seccion_counter">
-                                                                Observaciones @*Aqui se muestran las observaciones relacionadas a una preguntas*@
-                                                            </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="collapseThreeTwo_@seccion_counter" class="panel-collapse collapse">
-                                                        <div class="panel-body">
-                                                            <div style="height:200px; overflow-y: scroll;">
-                                                                @foreach (var item in Model.Conformado_Item_Sec_Form)
-                                                                {
-                                                                <p>Respuesta de estudiante, texto para verificar que el tamanno para el cuadro de texto sea apropiado, lo cual indica que se pueda ver la suficiente informacion, a la vez que no se consuma mucho espacio en pantalla y evite al usuario concentrase en la respuesta de una pregunta. Tambien para comprobar con los companneros de equipo que les parece y si creen que el tamanno deber ser mas grande o mas pequenno, ya que se tiene que tomar un promedio del tamanno de una respuesta de un estudiante.</p>
-                                                                <hr>
-
-                                                                @*Se ocupa encontrar la forma de devolver las observaciones por pregunta*@
-                                                                }
-                                                            </div>
+                                                        }
+                                                    });
+                                                                </script>
+                                                            }
 
                                                         </div>
+                                                    }
+                                                    <br />
+                                                    <div class="panel-group" id="accordion3_@seccion_counter">
+
+                                                        @if (seccion.Item.TieneObservacion == observation)
+                                                        {
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-heading">
+                                                                    <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" data-parent="#accordion3_@seccion_counter" href="#collapseThreeTwo_@seccion_counter">
+                                                                            Observaciones @*Aqui se muestran las observaciones relacionadas a una preguntas*@
+                                                                        </a>
+                                                                    </h4>
+                                                                </div>
+                                                                <div id="collapseThreeTwo_@seccion_counter" class="panel-collapse collapse">
+                                                                    <div class="panel-body">
+                                                                        <div style="height:200px; overflow-y: scroll;">
+                                                                            @foreach (var item in Model.Conformado_Item_Sec_Form)
+                                                                            {
+                                                                                <p>Respuesta de estudiante, texto para verificar que el tamanno para el cuadro de texto sea apropiado, lo cual indica que se pueda ver la suficiente informacion, a la vez que no se consuma mucho espacio en pantalla y evite al usuario concentrase en la respuesta de una pregunta. Tambien para comprobar con los companneros de equipo que les parece y si creen que el tamanno deber ser mas grande o mas pequenno, ya que se tiene que tomar un promedio del tamanno de una respuesta de un estudiante.</p>
+                                                                                <hr>
+
+                                                                                @*Se ocupa encontrar la forma de devolver las observaciones por pregunta*@
+                                                                            }
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+
+
                                                     </div>
                                                 </div>
-                                                }
-
-
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
 
-                                seccion_counter++;
-                                }
+                                        seccion_counter++;
+                                    }
                                 }
                             </div>
 
@@ -248,16 +276,16 @@
                 </div>
 
                 id_counter++;
-                }
-                }
+            }
+        }
 
-            </div>
+    </div>
 </div>
 
 <script src="~/Scripts/Graficar.js"></script>
 @*
-<script>
-function graficarResultados(itemId) {
-        alert(itemId);
-        $.get("/VisualizarFormulario/GraficoPie", { itemId });
-    }</script>*@ 
+    <script>
+    function graficarResultados(itemId) {
+            alert(itemId);
+            $.get("/VisualizarFormulario/GraficoPie", { itemId });
+        }</script>*@ 

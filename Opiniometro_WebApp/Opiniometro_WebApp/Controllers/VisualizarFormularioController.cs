@@ -251,14 +251,22 @@ namespace Opiniometro_WebApp.Controllers
         public JsonResult ObservacionesPorPregunta(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
         {
             var result = ObtenerObservacionesPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId).ToList();
-            List<string> Observaciones = new List<string>();
+
+            List<string> obs = new List<string>();
+            List<string> nom = new List<string>();
+            List<string> ap1 = new List<string>();
+            List<string> ap2 = new List<string>();
 
             foreach (var itemO in result)
             {
-                Observaciones.Add(itemO);
+                obs.Add(itemO);
+                nom.Add(itemO);
+                ap1.Add(itemO);
+                ap2.Add(itemO);
             }
 
-            return Json(Observaciones, JsonRequestBehavior.AllowGet);
+            List<object> observaciones = new List<object> { obs, nom, ap1, ap2 };
+            return Json(observaciones, JsonRequestBehavior.AllowGet);
         }
 
         //EFE:Retorna las respuestas del item.
