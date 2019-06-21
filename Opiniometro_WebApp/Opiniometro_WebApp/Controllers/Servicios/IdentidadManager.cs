@@ -120,7 +120,7 @@ namespace Opiniometro_WebApp.Controllers.Servicios
             db.SP_ObtenerNombre(obtener_correo_actual(), nombre, apellido);
 
 
-            return (string)nombre.Value + " " + (string)apellido.Value;
+            return null;//(string)nombre.Value + " " + (string)apellido.Value;
         }
     }
 }

@@ -201,6 +201,15 @@ namespace Opiniometro_WebApp.Controllers
             base.Dispose(disposing);
         }
 
+        public static int ObtenerObservacionItem(string codForm, string codSeccion, string cedProf, short anno, byte? sem, byte? numgrupo, string sigla, string itemId)
+        {
+            Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+
+            var observaciones = db.SP_ObtenerObservacion(codForm, codSeccion, cedProf, anno, sem, numgrupo, sigla, itemId);
+
+            return observaciones;
+        }
+
         //EFE: Devuelve un Int con la cantidad de respuestas por respuesta.
         //REQ: Que exista la conexion a la base de datos.
         //MOD:--

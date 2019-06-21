@@ -1,4 +1,5 @@
 ﻿@model Opiniometro_WebApp.Models.Formulario
+@using Opiniometro_WebApp.Controllers;
 
 @{
     ViewBag.Title = "Details";
@@ -7,7 +8,7 @@
     <script src="~/Scripts/Chart.js"></script>
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <style>
-        #contenedorGrafo{
+        #contenedorGrafo {
             width: 450px;
             height: 500px;
             border: 0px solid #ddd;
@@ -19,8 +20,16 @@
 
 @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
 
+@{ string codForm = ""; string cedProf = ""; short anno = 0; byte sem = 0; byte numgrupo = 0; string sigla = ""; }
 @foreach (var title in Model.Formulario_Respuesta.Take(1))
 {
+    codForm = title.CodigoFormulario;
+    cedProf = title.Profesor.Persona.Cedula;
+    anno = title.Grupo.AnnoGrupo;
+    sem = title.Grupo.SemestreGrupo;
+    numgrupo = title.Grupo.Numero;
+    sigla = (title.Grupo.SiglaCurso);
+
     <td>
         <h4 style="text-align:left;">
             <b>Sigla:</b>
@@ -63,9 +72,6 @@
 
     <br><br>
 }
-
-
-
 
 @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string> secciones = new List<string>(); bool seccion_repetida = false;}
 
@@ -186,7 +192,7 @@
 
                                                         @foreach (var item in Model.Conformado_Item_Sec_Form)
                                                         {
-                                                            <p>Respuesta de estudiante, texto para verificar que el tamanno para el cuadro de texto sea apropiado, lo cual indica que se pueda ver la suficiente informacion, a la vez que no se consuma mucho espacio en pantalla y evite al usuario concentrase en la respuesta de una pregunta. Tambien para comprobar con los companneros de equipo que les parece y si creen que el tamanno deber ser mas grande o mas pequenno, ya que se tiene que tomar un promedio del tamanno de una respuesta de un estudiante.</p>
+                                                            //<p class="navbar-text"> @VisualizarFormularioController.ObtenerObservacionItem(item.CodigoFormulario, item.ItemId)</p>
                                                             <hr>
 
                                                             @*Se ocupa encontrar la forma de devolver las respuesta de texto_libre por pregunta*@
@@ -211,8 +217,7 @@
                                                                     <div style="height:200px; overflow-y: scroll;">
                                                                         @foreach (var item in Model.Conformado_Item_Sec_Form)
                                                                         {
-                                                                            <p>Respuesta de estudiante, texto para verificar que el tamanno para el cuadro de texto sea apropiado, lo cual indica que se pueda ver la suficiente informacion, a la vez que no se consuma mucho espacio en pantalla y evite al usuario concentrase en la respuesta de una pregunta. Tambien para comprobar con los companneros de equipo que les parece y si creen que el tamanno deber ser mas grande o mas pequenno, ya que se tiene que tomar un promedio del tamanno de una respuesta de un estudiante.</p>
-                                                                            <hr>
+                                                                            <p class="navbar-text"> @VisualizarFormularioController.ObtenerObservacionItem(codForm, item.TituloSeccion, cedProf, anno, sem, numgrupo, sigla, item.ItemId)</p><hr>
 
                                                                             @*Se ocupa encontrar la forma de devolver las observaciones por pregunta*@
                                                                         }
