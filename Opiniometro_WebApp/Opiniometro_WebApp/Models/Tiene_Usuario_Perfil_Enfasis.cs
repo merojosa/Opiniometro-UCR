@@ -17,7 +17,7 @@ namespace Opiniometro_WebApp.Models
         public string CorreoInstitucional { get; set; }
         public byte NumeroEnfasis { get; set; }
         public string SiglaCarrera { get; set; }
-        public string IdPerfil { get; set; }
+        public string NombrePerfil { get; set; }
     
         public virtual Enfasis Enfasis { get; set; }
         public virtual Perfil Perfil { get; set; }

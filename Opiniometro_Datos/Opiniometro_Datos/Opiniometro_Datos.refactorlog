@@ -112,4 +112,32 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="CedulaPersona" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="978d68af-4e58-4deb-8543-6d4a49233b3f" ChangeDateTime="06/20/2019 18:34:51">
+    <Property Name="ElementName" Value="[dbo].[Perfil].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Perfil]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Nombre" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="835692ea-7fc8-44e5-9ae5-513114f004e6" ChangeDateTime="06/20/2019 18:34:59">
+    <Property Name="ElementName" Value="[dbo].[Perfil].[Tipo]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Perfil]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Descripcion" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e8e42c9b-9b32-4365-b1d5-99139a037c4f" ChangeDateTime="06/20/2019 18:37:42">
+    <Property Name="ElementName" Value="[dbo].[Posee_Enfasis_Perfil_Permiso].[IdPerfil]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Posee_Enfasis_Perfil_Permiso]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="NombrePerfil" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="384bcd64-e9b3-4b7b-991a-71d38e282903" ChangeDateTime="06/20/2019 18:38:48">
+    <Property Name="ElementName" Value="[dbo].[Tiene_Usuario_Perfil_Enfasis].[IdPerfil]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Tiene_Usuario_Perfil_Enfasis]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="NombrePerfil" />
+  </Operation>
 </Operations>
