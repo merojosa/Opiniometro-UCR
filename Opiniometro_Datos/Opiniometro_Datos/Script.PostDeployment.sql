@@ -131,12 +131,12 @@ IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 GO
 CREATE PROCEDURE SP_ObtenerPermisosUsuario
 	@Correo		NVARCHAR(50),
-	@Perfil		VARCHAR(10)
+	@Perfil		VARCHAR(30)
 AS
 	SELECT TU.SiglaCarrera, PE.NumeroEnfasis, PE.IdPermiso
-	FROM Tiene_Usuario_Perfil_Enfasis TU	JOIN Perfil ON TU.IdPerfil = Perfil.Id
-											JOIN Posee_Enfasis_Perfil_Permiso PE ON Perfil.Id = PE.IdPerfil
-	WHERE TU.CorreoInstitucional=@Correo AND TU.IdPerfil = @Perfil
+	FROM Tiene_Usuario_Perfil_Enfasis TU	JOIN Perfil ON TU.NombrePerfil = Perfil.Nombre
+											JOIN Posee_Enfasis_Perfil_Permiso PE ON Perfil.Nombre = PE.NombrePerfil
+	WHERE TU.CorreoInstitucional=@Correo AND TU.NombrePerfil = @Perfil
 GO
 
 IF OBJECT_ID('SP_ObtenerNombre') IS NOT NULL
@@ -160,7 +160,7 @@ BEGIN
 END
 GO
 
-EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
+--EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
 
 IF OBJECT_ID('ValorRandom') IS NOT NULL
 	DROP VIEW ValorRandom
@@ -196,21 +196,21 @@ IF OBJECT_ID('SP_AgregarPersonaUsuario') IS NOT NULL
 	DROP PROCEDURE SP_AgregarPersonaUsuario
 GO
 CREATE PROCEDURE SP_AgregarPersonaUsuario
+	@Correo			NVARCHAR(50),
+	@Contrasenna	NVARCHAR(50),
 	@Cedula			CHAR(9),
 	@Nombre			NVARCHAR(50),
 	@Apellido1		NVARCHAR(50),
 	@Apellido2		NVARCHAR(50),
-	@Correo			NVARCHAR(50),
-	@Direccion		NVARCHAR(200)
+	@Direccion		NVARCHAR(256)
 AS
 BEGIN
 	SET NOCOUNT ON
 	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
-	DECLARE @Contrasenna NVARCHAR(10)
 
 	INSERT INTO Persona
 	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2, @Direccion)
-	SET @Contrasenna = (SELECT dbo.SF_GenerarContrasena());
+
 	INSERT INTO Usuario
 	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
 END
@@ -222,9 +222,9 @@ IF OBJECT_ID('ObtenerPerfilUsuario') IS NOT NULL
 GO
 CREATE PROCEDURE ObtenerPerfilUsuario @correo nvarchar(100)
 as 
-select distinct IdPerfil 
-from Tiene_Usuario_Perfil_Enfasis
-where CorreoInstitucional = @correo;
+	SELECT DISTINCT NombrePerfil
+	FROM Tiene_Usuario_Perfil_Enfasis
+	WHERE CorreoInstitucional = @correo;
 go
 
 IF OBJECT_ID('ObtenerPerfilPorDefecto') IS NOT NULL
@@ -232,9 +232,9 @@ IF OBJECT_ID('ObtenerPerfilPorDefecto') IS NOT NULL
 GO
 CREATE PROCEDURE ObtenerPerfilPorDefecto @correo nvarchar(100)
 as 
-select top 1 IdPerfil 
-from Tiene_Usuario_Perfil_Enfasis
-where CorreoInstitucional = @correo;
+	SELECT TOP 1 NombrePerfil 
+	FROM Tiene_Usuario_Perfil_Enfasis
+	WHERE CorreoInstitucional = @correo;
 go
 
 --JJAPH
@@ -291,7 +291,7 @@ VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajue
 		('117720912', 'Jorge', 'Solano', 'Carrillo', 'La Fortuna de San Carlos.'),
 		('236724501', 'Carolina', 'Gutierrez', 'Lozano', 'Sarchí, Alajuela.'),
 		('123456789', 'Ortencia', 'Cañas', 'Griezman', 'San Pedro de Montes de Oca');
-
+		
 INSERT INTO Estudiante VALUES 
  ('116720500', 'B11111')
 ,('115003456', 'B22222')
@@ -439,7 +439,13 @@ INSERT INTO Item(ItemId, TextoPregunta, TieneObservacion, TipoPregunta, NombreCa
 VALUES  ('PRE303', '¿El profesor repuso clases cuando fue necesario?', 1, 3, 'Reglamento'),
 		('PRE404', '¿El profesor entrego la carta del estudiante en las fechas indicadas por el reglamento?', 1, 3, 'Reglamento'),
 		('PRE101', '¿Que opina del curso?', 0, 1, 'Opinion'),
-		('PRE202', '¿Que opina del profesor?', 0, 1, 'Opinion');
+		('PRE202', '¿Que opina del profesor?', 0, 1, 'Opinion'),
+		---Se agregó
+		('PRE505', 'Año de carrera que cursa', 0, 4, 'Opinion'),
+		('PRE606', 'Condicion laboral', 0, 4, 'Opinion'),
+		--Escalar y Escalar Estrella
+		('PRE707', '¿Se prepara adecuadamente para las evaluaciones?', 1, 5, 'Opinion'),
+		('PRE808', '¿Propone actividades que involucren investigacion?', 1, 6, 'Reglamento');
 
 --Item-Texto Libre
 INSERT INTO Texto_Libre (ItemId)
@@ -454,7 +460,11 @@ VALUES  ('PRE303', 1),
 --Seccion
 INSERT INTO Seccion (Titulo, Descripcion)
 VALUES  ('Evaluación de aspectos reglamentarios del profesor', 'Conteste a las preguntas relacionadas a aspectos reglamentarios que el profesor debe cumplir.'),
-		('Opinion general del curso', 'Describa las opiniones que le han generado el profesor con respecto al curso tratado.');
+		('Opinion general del curso', 'Describa las opiniones que le han generado el profesor con respecto al curso tratado.'),
+		--Nueva Seccion
+		('Información del o la estudiante', 'Datos del estudiante'),
+		('Tematicas transversales de la Universidad de Costa Rica', ' '),
+		('Evaluacion de la participacion estudiantil', 'Autoevaluacion estudiantil');
 
 --Formulario
 INSERT INTO Formulario (CodigoFormulario, Nombre)
@@ -468,14 +478,21 @@ VALUES  ('100000002');
 INSERT INTO Formulario_Respuesta (Fecha, CodigoFormulario, CedulaPersona, CedulaProfesor, AnnoGrupo, SemestreGrupo, NumeroGrupo, SiglaGrupo, Completado)
 VALUES  ('2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 1),
 		('2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 1),
-		('2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 1);
+		('2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 1),
+		('2017-3-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 1),
+		('2017-3-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 1),
+		('2017-3-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 1);
 
  --Conformado_Item_Sec_Form
 INSERT INTO Conformado_Item_Sec_Form (ItemId, CodigoFormulario, TituloSeccion, NombreFormulario)
 VALUES	('PRE101', '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
 		('PRE202', '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
 		('PRE303', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores'),	
-		('PRE404', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores');
+		('PRE404', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores'),
+		('PRE505', '131313', 'Información del o la estudiante', 'Evaluación de Profesores'),
+		('PRE606', '131313', 'Información del o la estudiante', 'Evaluación de Profesores'),
+		('PRE707', '131313', 'Evaluacion de la participacion estudiantil', 'Evaluación de Profesores'),
+		('PRE808', '131313', 'Tematicas transversales de la Universidad de Costa Rica', 'Evaluación de Profesores');
 
 --Responde
 INSERT INTO Responde (ItemId, TituloSeccion, FechaRespuesta, CodigoFormularioResp, CedulaPersona, CedulaProfesor, AnnoGrupoResp, SemestreGrupoResp, NumeroGrupoResp, SiglaGrupoResp, Respuesta, Observacion)
@@ -492,7 +509,28 @@ VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-
 		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '1', 'Me repuso una clase a la que falte'),
 		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '1', 'Sí se reviso'),
 		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Entretenido'),
-		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Muy buena profesora');
+		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Muy buena profesora'),
+
+		--Agregado
+		--Cuarta Multiple
+		('PRE505', 'Información del o la estudiante', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Primero', ''),
+		('PRE606', 'Información del o la estudiante', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'No Trabajo', ''),
+		('PRE505', 'Información del o la estudiante', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Segundo', ''),
+		('PRE505', 'Información del o la estudiante', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Tercero', ''),
+		('PRE606', 'Información del o la estudiante', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Trabajo mas de 20 horas semanales', ''),
+		('PRE606', 'Información del o la estudiante', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Trabajo menos de 20 horas semanales', ''),
+		--Escalar 5 y 10
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Demasiado', 'Soy un sapazo'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Poco', 'Me da pereza estudiar'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'A veces', 'Siempre le pongo'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Poco', 'Sí se reviso'),
+		--1 a 10
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '8', 'Me encanta la materia'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', '4', 'Mucho que investigar'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '3', 'Soy muy vago'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '1', 'Demasiado trabajo'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', '7', 'Me encanta la materia'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', '5', 'Mucho que investigar');
 
 GO
 IF OBJECT_ID('SP_ContarRespuestasPorGrupo') IS NOT NULL
@@ -509,15 +547,13 @@ CREATE PROCEDURE SP_ContarRespuestasPorGrupo
 	@semestreGrupo		TINYINT,
 	@numeroGrupo		TINYINT,
 	@siglaCurso			CHAR(6),
-	@itemId				NVARCHAR(10),
-	@respuesta			NVARCHAR(500),
-	@cntResp			INT OUTPUT
+	@itemId				NVARCHAR(10)
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT @cntResp= COUNT(e.Respuesta)
+	SELECT e.Respuesta, COUNT(e.Respuesta) AS cntResp
 	FROM Responde as e
-	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId AND e.Respuesta = @respuesta
+	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
 	GROUP BY e.CodigoFormularioResp, e.CedulaProfesor, e.AnnoGrupoResp, e.SemestreGrupoResp, e.NumeroGrupoResp, e.SiglaGrupoResp, e.ItemId, e.Respuesta
 END
 GO
@@ -563,33 +599,36 @@ VALUES	(1, 'Hacer todo'),
 		(208, 'InsertarFormulario');
 
 INSERT INTO Perfil
-VALUES	('Estudiante', 'Default'),
-		('Admin', 'Default'),
-		('Profesor', 'Default')
+VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
+		('Administrador', 'Puede hacer cualquier cosa como asignar permisos.'),
+		('Profesor', 'Ver sus evaluaciones.')
+
 
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
 		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
-		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor')
+		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor'),
+		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Administrador')
 
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
-		(0, 'SC-01234', 'Admin', 1),
-		(0, 'SC-01234', 'Admin', 2),
+		(0, 'SC-01234', 'Administrador', 1),
+		(0, 'SC-01234', 'Administrador', 2),
 		(0, 'SC-01234', 'Profesor', 2)
 
 
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','202')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','203')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','204')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','205')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','206')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','207')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','204')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','205')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Estudiante','205')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','208')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','208')
+insert into Posee_Enfasis_Perfil_Permiso
+VALUES	(0,'SC-01234', 'Administrador','202'),
+		(0,'SC-01234', 'Administrador','203'),
+		(0,'SC-01234', 'Administrador','204'),
+		(0,'SC-01234', 'Administrador','205'),
+		(0,'SC-01234', 'Administrador','206'),
+		(0,'SC-01234', 'Administrador','207'),
+		(0,'SC-01234', 'Profesor','204'),
+		(0,'SC-01234', 'Profesor','205'),
+		(0,'SC-01234', 'Estudiante','205'),
+		(0,'SC-01234', 'Administrador','208'),
+		(0,'SC-01234', 'Profesor','208')
 
 INSERT INTO Provincia
 VALUES	('San José'),

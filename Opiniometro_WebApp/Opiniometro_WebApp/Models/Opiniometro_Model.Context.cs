@@ -43,6 +43,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Formulario> Formulario { get; set; }
         public virtual DbSet<Formulario_Respuesta> Formulario_Respuesta { get; set; }
         public virtual DbSet<Grupo> Grupo { get; set; }
+        public virtual DbSet<Imparte> Imparte { get; set; }
         public virtual DbSet<Item> Item { get; set; }
         public virtual DbSet<Matricula> Matricula { get; set; }
         public virtual DbSet<Opciones_De_Respuestas_Seleccion_Unica> Opciones_De_Respuestas_Seleccion_Unica { get; set; }
@@ -128,6 +129,32 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("correo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("ObtenerPerfilUsuario", correoParameter);
+        }
+    
+        public virtual int ProcIntroducirSeccion(string titulo, string descripcion)
+        {
+            var tituloParameter = titulo != null ?
+                new ObjectParameter("titulo", titulo) :
+                new ObjectParameter("titulo", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("descripcion", descripcion) :
+                new ObjectParameter("descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProcIntroducirSeccion", tituloParameter, descripcionParameter);
+        }
+    
+        public virtual int ProcIntroduFormulario(string codigo, string nombre)
+        {
+            var codigoParameter = codigo != null ?
+                new ObjectParameter("codigo", codigo) :
+                new ObjectParameter("codigo", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProcIntroduFormulario", codigoParameter, nombreParameter);
         }
     
         public virtual int SP_AgregarPersonaUsuario(string correo, string contrasenna, string cedula, string nombre, string apellido1, string apellido2, string direccion)
@@ -312,6 +339,15 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Direccion", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, correoParameter, direccionParameter);
+        }
+    
+        public virtual ObjectResult<string> SP_ObtenerFormulario(string cod)
+        {
+            var codParameter = cod != null ?
+                new ObjectParameter("cod", cod) :
+                new ObjectParameter("cod", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_ObtenerFormulario", codParameter);
         }
     
         public virtual int SP_ObtenerNombre(string correo, ObjectParameter nombre, ObjectParameter apellido)
