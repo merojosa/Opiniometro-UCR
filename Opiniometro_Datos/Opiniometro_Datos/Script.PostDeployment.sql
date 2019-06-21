@@ -753,6 +753,24 @@ BEGIN
 END
 GO
 
+GO
+CREATE TRIGGER TR_InsertaUsuario
+ON Usuario INSTEAD OF INSERT
+AS
+BEGIN
+	DECLARE @correoInstitucional NVARCHAR(50)
+	DECLARE @cedula CHAR(9)
+
+	SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
+	SET @cedula					= (SELECT Cedula FROM inserted)
+
+	IF((@correoInstitucional LIKE '%@ucr.ac.cr') AND (@correoInstitucional NOT LIKE '') AND (@cedula NOT LIKE '') AND (LEN(@correoInstitucional) <= 50))
+	BEGIN
+		INSERT INTO Usuario (Cedula, CorreoInstitucional)
+		VALUES (@cedula, @correoInstitucional)
+	END
+END;
+
 --select de prueba para la cnt de respuestas
 --SELECT e.Respuesta, COUNT(e.Respuesta) as cantidadRespuestas
 --FROM Responde as e
