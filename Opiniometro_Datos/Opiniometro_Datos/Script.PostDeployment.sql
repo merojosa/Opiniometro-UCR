@@ -126,6 +126,63 @@ BEGIN
 END
 GO
 
+--Trigger de validación de modificar Persona
+IF OBJECT_ID('TR_ValidacionModificarPersona') IS NOT NULL
+	DROP PROCEDURE TR_ValidacionModificarPersona
+GO
+CREATE TRIGGER TR_ValidacionModificarPersona
+ON Persona INSTEAD OF UPDATE
+AS
+BEGIN
+	IF(UPDATE(Nombre) OR UPDATE(Apellido1) OR UPDATE(Apellido2) OR UPDATE(Direccion))
+	BEGIN
+		DECLARE @CedulaBusqueda		VARCHAR(9)
+		DECLARE @Nombre				NVARCHAR(50)
+		DECLARE @Apellido1			NVARCHAR(50)
+		DECLARE @Apellido2			NVARCHAR(50)
+		DECLARE @Direccion			NVARCHAR(256)
+
+		IF((@nombre NOT LIKE '') AND (@Apellido1 NOT LIKE '') AND (@Apellido2 NOT LIKE '') AND (@Direccion NOT LIKE ''))
+		BEGIN
+			UPDATE Persona
+			SET Cedula = @Cedula, Nombre = @Nombre, Apellido1 = @Apellido1, Apellido2 = @Apellido2, Direccion = @Direccion
+			WHERE Cedula = @CedulaBusqueda;
+		END
+		ELSE
+		BEGIN
+			Raiserror('Los campos no pueden estar vacíos.', 16, 1)  
+			Return  
+		END
+	END
+END;
+
+--Trigger de validación de modificar Usuario
+IF OBJECT_ID('TR_ValidacionModificarUsuario') IS NOT NULL
+	DROP PROCEDURE TR_ValidacionModificarUsuario
+GO
+CREATE TRIGGER TR_ValidacionModificarUsuario
+ON Usuario INSTEAD OF UPDATE
+AS
+BEGIN
+	IF(UPDATE(CorreoInstitucional))
+	BEGIN
+		DECLARE @CedulaBusqueda		VARCHAR(9)
+		DECLARE @Correo				NVARCHAR(100)
+
+		IF((@correo LIKE '%@ucr.ac.cr') AND (@correo NOT LIKE ''))
+		BEGIN
+			UPDATE Usuario
+			SET Correo = @Correo
+			WHERE Cedula = @CedulaBusqueda;
+		END
+		ELSE
+		BEGIN
+			Raiserror('El correo no puede estar vacío y debe ser del tipo "nombre@ucr.ac.cr".', 16, 1)  
+			Return  
+		END
+	END
+END;
+
 IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
 GO
