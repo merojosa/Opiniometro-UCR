@@ -54,6 +54,8 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Formulario/Create
         public ActionResult Create()
         {
+            ViewBag.CodigoUnidadAca = new SelectList(db.Unidad_Academica, "Codigo", "Codigo");
+
             return View("Create");
         }
 
@@ -62,7 +64,7 @@ namespace Opiniometro_WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CodigoFormulario,Nombre")] Formulario formulario)
+        public ActionResult Create([Bind(Include = "CodigoFormulario,Nombre, CodigoUnidadAca")] Formulario formulario)
         {
             if (ModelState.IsValid)
             {

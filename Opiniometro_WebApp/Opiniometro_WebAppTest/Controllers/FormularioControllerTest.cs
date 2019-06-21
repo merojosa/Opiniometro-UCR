@@ -19,7 +19,7 @@ namespace Opiniometro_WebAppTest.Controllers
             // Arrange
             var mockDb = new Mock<Opiniometro_DatosEntities>();
             string codigo = "100001";
-            Formulario formulario = new Formulario() { CodigoFormulario = "100001", Nombre = "Programación I" };
+            Formulario formulario = new Formulario() { CodigoFormulario = "100001", Nombre = "Programación I", CodigoUnidadAca= "UC-023874" };
             mockDb.Setup(m => m.Formulario.Find(codigo)).Returns(formulario);
             FormularioController controller = new FormularioController(mockDb.Object);
 

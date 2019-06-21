@@ -184,6 +184,12 @@
         <button id="btnSave" class="btn btn-secondary m-*-auto"><span class="oi oi-arrow-left"></span> Asignar pregunta</button>
     </div>
 </div>
+
+<div class="row">
+    @Html.Action("SeccionesAsignadas", new
+                    {CodForm = Model.Formulario.CodigoFormulario})
+</div>
+
 <div class="row" id="ConformadosID">
 
     @Html.Partial("FormularioVParcial", Model.Conformados)
