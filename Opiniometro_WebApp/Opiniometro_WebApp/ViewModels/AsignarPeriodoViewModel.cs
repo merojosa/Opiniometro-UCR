@@ -9,7 +9,7 @@ namespace Opiniometro_WebApp.Models
         public IEnumerable<Grupo> Grupos { get; set; }
 
         // Lista de formularios
-        public IEnumerable<Formulario> Formularios { get; set; }
+        public List<ElegirFormularioEditorViewModel> Formularios { get; set; }
     }
 
 }

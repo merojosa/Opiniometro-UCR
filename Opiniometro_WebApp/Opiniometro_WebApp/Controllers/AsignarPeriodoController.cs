@@ -46,12 +46,26 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         //para moistrar los formularios
-        public IQueryable<Formulario> ObtenerFormularios()
+        //public IQueryable<Formulario> ObtenerFormularios()
+        //{
+        //    IQueryable<Formulario> formulario = (from f in db.Formulario select f).Distinct();
+        //    ViewBag.codigoForm = new SelectList(formulario, "CodigoFormulario", "CodigoFormulario");
+        //    ViewBag.nombre = new SelectList(formulario, "Nombre", "Nombre");
+        //    return formulario;
+        //}
+
+        public List<ElegirFormularioEditorViewModel> ObtenerFormularios()
         {
-            IQueryable<Formulario> formulario = (from f in db.Formulario select f).Distinct();
-            ViewBag.codigoForm = new SelectList(formulario, "CodigoFormulario", "CodigoFormulario");
-            ViewBag.nombre = new SelectList(formulario, "Nombre", "Nombre");
-            return formulario;
+            IQueryable<ElegirFormularioEditorViewModel> formularios =
+                from formul in db.Formulario
+                select new ElegirFormularioEditorViewModel
+                {
+                    Seleccionado = false,
+                    CodigoFormulario = formul.CodigoFormulario,
+                    NombreFormulario = formul.Nombre
+                };
+
+            return formularios.ToList();
         }
     }
 }
