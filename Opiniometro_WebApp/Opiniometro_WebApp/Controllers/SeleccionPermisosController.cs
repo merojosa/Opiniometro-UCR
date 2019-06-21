@@ -35,7 +35,7 @@ namespace Opiniometro_WebApp.Controllers
 
                         foreach (var posee in model.ListaPosee)
                         {
-                            SeleccionPermisos.Asociaciones asoc = new SeleccionPermisos.Asociaciones(posee.IdPerfil, posee.IdPermiso);
+                            SeleccionPermisos.Asociaciones asoc = new SeleccionPermisos.Asociaciones(posee.NombrePerfil, posee.IdPermiso);
                             //Para verificar si ya existe la combinacion de permiso en una tupla solamente de permiso (id) y perfil (id)
                             //para no insertarla en la lista ListaAsoc. Todo esto pues hay tuplas muy similares debido a que lo que difiere es el enfasis
                             if (!model.ListaAsoc.Any(item => item.Perfil == asoc.Perfil && item.Permiso == asoc.Permiso))
@@ -56,11 +56,11 @@ namespace Opiniometro_WebApp.Controllers
                                 asignado = false;
                                 for (int cont = 0; cont < model.ListaAsoc.Count; cont++)
                                 {
-                                    if (perfil.Id == model.ListaAsoc[cont].Perfil)
+                                    if (perfil.Nombre == model.ListaAsoc[cont].Perfil)
                                     {
                                         if (permiso.Id == model.ListaAsoc[cont].Permiso)
                                         {
-                                            model.ListaGuardar.Add(new SeleccionPermisos.GuardarPerm(perfil.Id, permiso.Id));
+                                            model.ListaGuardar.Add(new SeleccionPermisos.GuardarPerm(perfil.Nombre, permiso.Id));
                                         }
                                     }
                                 }

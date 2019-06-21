@@ -196,6 +196,7 @@
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\Conformado_Item_Sec_FormController.cs" />
     <Compile Include="Controllers\CrearFormularioController.cs" />
+    <Compile Include="Controllers\EnfasisController.cs" />
     <Compile Include="Controllers\FormularioController.cs" />
     <Compile Include="Controllers\Formulario_RespuestaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Models\Ciclo_Lectivo.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewEnfasis.cs" />
     <Compile Include="Models\Conformado_Item_Sec_Form.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -498,6 +500,7 @@
     <Content Include="Views\Perfil\Index.cshtml" />
     <Content Include="Views\SeleccionPermisos\SeleccionarPermisos.cshtml" />
     <Content Include="Views\CrearFormulario\ConformadoVParcial.cshtml" />
+    <Content Include="Views\Enfasis\VerEnfasis.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
