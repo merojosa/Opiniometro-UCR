@@ -16,17 +16,17 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        
-        <td>
-            <u>Seccion: </u>
-            @Html.DisplayFor(modelItem => item.Orden_Seccion)
-        </td>
-        <td>
-            <b>@Html.DisplayFor(modelItem => item.TituloSeccion)</b>
-        </td>
+        <tr>
 
-    </tr>
+            <td>
+                <u>Seccion: </u>
+                @Html.DisplayFor(modelItem => item.Orden_Seccion)
+            </td>
+            <td>
+                <b>@Html.DisplayFor(modelItem => item.TituloSeccion)</b>
+            </td>
+
+        </tr>
 
         <tr>
             <th>
@@ -49,11 +49,11 @@
                 </td>
 
                 <td>
-                    <tr @*id="detalle-@pregunta.ItemId" style="display:none"*@>
-                        <td></td>
-                        <td colspan="5">
-                            @Html.Action("VistaPreviaPregunta", new { id = pregunta.ItemId })
-                    </td>
+            <tr @*id="detalle-@pregunta.ItemId" style="display:none"*@>
+                <td></td>
+                <td colspan="5">
+                    @Html.Action("VistaPreviaPregunta", new { id = pregunta.ItemId })
+                </td>
                 </td>
 
             </tr>
@@ -62,3 +62,4 @@
     }
 
 </table>
+

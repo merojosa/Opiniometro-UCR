@@ -1,23 +1,10 @@
 ﻿@model Opiniometro_WebApp.Models.Item
 
-@{
-    ViewBag.Title = "Vista Previa";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h2>Vista Previa</h2>
-
-
-
-
-
 @if (Model.TipoPregunta == 3)
 {
     <div>
         <dl class="dl-horizontal">
-            <dd>
-                @Html.DisplayFor(model => model.TextoPregunta)
-            </dd>
+
             <dd>
                 <input type="checkbox" name="Si" value='Si' disabled> Sí<br>
                 <input type="checkbox" name="No" value='No' disabled> No<br>
@@ -36,9 +23,6 @@
 else
 {
     <dl class="dl-horizontal">
-        <dd>
-            @Html.DisplayFor(model => model.TextoPregunta)
-        </dd>
 
         <dd>
             <textarea name="comentarioAdicional" rows="5" cols="40" disabled>Escriba su respuesta aquí</textarea>
@@ -53,10 +37,5 @@ else
         }
     </dl>
 }
-
-<p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.ItemID }) |*@
-    @Html.ActionLink("Volver", "Index")
-</p>
 
 

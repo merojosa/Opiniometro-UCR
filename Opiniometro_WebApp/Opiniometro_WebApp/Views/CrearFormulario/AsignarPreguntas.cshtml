@@ -185,14 +185,14 @@
     </div>
 </div>
 
-<div class="row">
+@*<div class="row">
     @Html.Action("SeccionesAsignadas", new
                     {CodForm = Model.Formulario.CodigoFormulario})
-</div>
+</div>*@
 
 <div class="row" id="ConformadosID">
 
-    @Html.Partial("FormularioVParcial", Model.Conformados)
+    @Html.Partial("VistaFormularioVParcial", Model.Conformados)
 
 </div>
 
