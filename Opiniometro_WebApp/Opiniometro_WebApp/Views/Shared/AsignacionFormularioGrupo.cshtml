@@ -64,8 +64,8 @@
 
             @foreach (var form in Model.FormulariosSeleccionados)
             {
-                <tr>
-                    <td style="width:10vw;"> </td>
+                <tr align="center">
+                    <td style="width:5vw;"> </td>
                     <td align="left">
                         @Html.DisplayFor(Model => form.CodigoFormulario)
                         <span> </span>
@@ -74,12 +74,12 @@
                     </td>
                     <td align="left">
                         <span> de </span>
-                        @Html.EditorFor(Model => form.FechaDeCorte.FechaInicio, new { @class = "fecha-inicial" })
+                        @Html.TextBoxFor(Model => form.FechaDeCorte.FechaInicio, "{0:dd/MM/yyyy hh tt}", new { @class = "fecha-inicial form-control default-date-picker"})
                         <span> a </span>
-                        @Html.EditorFor(Model => form.FechaDeCorte.FechaFinal, new { @class = "fecha-final" })
+                        @Html.TextBoxFor(Model => form.FechaDeCorte.FechaFinal, "{0:dd/MM/yyyy hh tt}", new { @class = "fecha-final form-control default-date-picker"})
                         <br />
                     </td>
-                    <td style="width:10vw;"> </td>
+                    <td style="width:5vw;"> </td>
                     @Html.HiddenFor(ModelItem => form.CodigoFormulario, new { @class = "codigo-form"})
                 </tr>
             }

@@ -41,13 +41,15 @@ $(document).ready(function () {
                 FechaFinal : ' '
             };
 
+            //alert(`${codigos.length} forms detectados\n${inicios.length} fechas i detectadas\n${fines.length} fechas f detectadas`);
+
             for (var f = 0; f < codigos.length; f++) {
                 datosFila.CodigoForm = codigos[f].val;
                 datosFila.FechaInicio = inicios[f].val;
                 datosFila.FechaFinal = fines[f].val;
 
                 FormulariosYPeriodos.push(datosFila);
-            };/**/
+            };
 
             var tablaPeriodos = document.getElementById("tabla-periodos");
 
@@ -56,7 +58,7 @@ $(document).ready(function () {
                     PeriodosIndicados: FormulariosYPeriodos
                 },
                 function (data, status) {
-                    /*alert("FUNCIONA? :O");*/
+                    alert("Post fue exitoso.");
                 }
             );
         });
