@@ -149,7 +149,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AuthControllerTest.cs" />
+    <Compile Include="Controllers\CrearFormularioControllerTest.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Controllers\ItemControllerTest.cs" />
     <Compile Include="Controllers\VisualizarFormularioControllerTest.cs" />
     <Compile Include="Controllers\SeccionControllerTest.cs" />
     <Compile Include="Controllers\FormularioControllerTest.cs" />

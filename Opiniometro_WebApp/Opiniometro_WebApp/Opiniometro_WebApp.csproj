@@ -232,6 +232,7 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CrearFormularioModel.cs" />
+    <Compile Include="Models\CrearItemModel.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -516,6 +517,9 @@
     <Content Include="Views\Auth\Permisos.cshtml" />
     <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
     <Content Include="Views\LlenarFormulario\Index.cshtml" />
+    <Content Include="Views\Item\AgregarOpciones.cshtml" />
+    <Content Include="Views\CrearFormulario\VistaPreviaPregunta.cshtml" />
+    <Content Include="Views\CrearFormulario\VistaFormularioVParcial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

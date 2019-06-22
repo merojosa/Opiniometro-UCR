@@ -7,6 +7,8 @@ using System.Web.Mvc;
 
 namespace Opiniometro_WebApp.Models
 {
+
+ 
     public class CrearFormularioModel
     {
 
@@ -21,6 +23,11 @@ namespace Opiniometro_WebApp.Models
         public Nullable<int> Orden_Item { get; set; }
 
         public Nullable<int> Orden_Seccion { get; set; }
+
+        public int ultimaSeccion { get; set; }
+
+        public String plantamiento { get; set; }
+         
     }
 
 
