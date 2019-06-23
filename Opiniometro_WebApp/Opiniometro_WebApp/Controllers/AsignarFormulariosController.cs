@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -295,29 +296,49 @@ namespace Opiniometro_WebApp.Controllers
         {
             var FormulariosConPeriodos = JsonConvert.DeserializeObject<TipoPeriodosIndicados[]>(PeriodosIndicados);
             var GruposEnLista = JsonConvert.DeserializeObject<Grupo[]>(Grupos);
-#if true
-            if (FormulariosConPeriodos == null)
+
+            List<Tiene_Grupo_Formulario> asignaciones = new List<Tiene_Grupo_Formulario>();
+            foreach (var fcp in FormulariosConPeriodos)
             {
-                Debug.WriteLine("\n\nNo hay formularios...\n");
-                return RedirectToAction("Index", "Home");
+                DateTime inicioPeriodo = new DateTime(), finPeriodo = new DateTime();
+                bool fechaIEsCorrecta = DateTime.TryParseExact(fcp.FechaInicio, "dd/MM/yyyy hh tt", CultureInfo.CurrentCulture, DateTimeStyles.None, out inicioPeriodo);
+                bool fechaFEsCorrecta = DateTime.TryParseExact(fcp.FechaFinal, "dd/MM/yyyy hh tt", CultureInfo.CurrentCulture, DateTimeStyles.None, out finPeriodo);
+
+                if (fechaIEsCorrecta && fechaFEsCorrecta)
+                {
+                    if ((from fc in db.Fecha_Corte
+                         where (fc.FechaInicio == inicioPeriodo && fc.FechaFinal == finPeriodo)
+                         select fc).Count() == 0)
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            db.Fecha_Corte.Add(new Fecha_Corte { FechaInicio = inicioPeriodo, FechaFinal = finPeriodo });
+                            db.SaveChanges();
+                        }
+                    }
+                        
+                    foreach (var g in GruposEnLista)
+                    {
+                        asignaciones.Add(new Tiene_Grupo_Formulario
+                        {
+                            SiglaCurso = g.SiglaCurso,
+                            Numero = g.Numero,
+                            Anno = g.AnnoGrupo,
+                            Ciclo = g.SemestreGrupo,
+                            Codigo = fcp.CodigoForm,
+                            FechaInicio = inicioPeriodo,
+                            FechaFinal = finPeriodo
+                        });
+                    }
+                }
             }
 
-            Debug.WriteLine("\n\nInicio de {0} formularios:\n", FormulariosConPeriodos.Count(), 0);
-
-            foreach (var f in FormulariosConPeriodos)
+            if (ModelState.IsValid)
             {
-                Debug.WriteLine("Formulario {0}: {1} - {2}", f.CodigoForm, f.FechaInicio, f.FechaFinal);
+                db.Tiene_Grupo_Formulario.AddRange(asignaciones);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            foreach (var g in GruposEnLista)
-            {
-                Debug.WriteLine("{0}-{1}: {2}, grupo no.{3}", g.SemestreGrupo, g.AnnoGrupo, g.SiglaCurso, g.Numero);
-            }
-#endif
-
-            /*foreach(var fcp in FormulariosConPeriodos)
-            {
-                ;
-            }*/
 
             return RedirectToAction("Index", "Home");
         }
