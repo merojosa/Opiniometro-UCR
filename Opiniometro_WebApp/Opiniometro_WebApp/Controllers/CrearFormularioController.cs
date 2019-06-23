@@ -13,7 +13,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Opiniometro_WebApp.Controllers
 {
-   
+   [Authorize]
     public class CrearFormularioController : Controller
     {
         Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
