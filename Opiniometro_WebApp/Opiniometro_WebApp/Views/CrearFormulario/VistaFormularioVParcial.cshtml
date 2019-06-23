@@ -13,7 +13,7 @@
         </th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.OrderBy(item => item.Orden_Seccion))
     {
         <tr>
 
@@ -36,7 +36,7 @@
             </th>
 
         </tr>
-        foreach (var pregunta in Model)
+        foreach (var pregunta in Model.OrderBy(pregunta => pregunta.Orden_Item))
         {
             <tr>
                 <td>
