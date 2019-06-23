@@ -17,7 +17,7 @@ namespace Opiniometro_WebApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Curso()
         {
-            this.Grupoes = new HashSet<Grupo>();
+            this.Grupo = new HashSet<Grupo>();
             this.Enfasis = new HashSet<Enfasi>();
         }
     
@@ -28,7 +28,7 @@ namespace Opiniometro_WebApp.Models
     
         public virtual Unidad_Academica Unidad_Academica { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Grupo> Grupoes { get; set; }
+        public virtual ICollection<Grupo> Grupo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Enfasi> Enfasis { get; set; }
     }

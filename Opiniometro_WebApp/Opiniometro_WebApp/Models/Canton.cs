@@ -17,7 +17,7 @@ namespace Opiniometro_WebApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Canton()
         {
-            this.Distritoes = new HashSet<Distrito>();
+            this.Distrito = new HashSet<Distrito>();
         }
     
         public string NombreProvincia { get; set; }
@@ -25,6 +25,6 @@ namespace Opiniometro_WebApp.Models
     
         public virtual Provincia Provincia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Distrito> Distritoes { get; set; }
+        public virtual ICollection<Distrito> Distrito { get; set; }
     }
 }
