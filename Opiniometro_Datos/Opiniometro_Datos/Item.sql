@@ -5,5 +5,6 @@
 	[TieneObservacion] BIT,
 	[TipoPregunta] TINYINT NOT NULL,
 	[NombreCategoria] NVARCHAR(20) NOT NULL,
-	CONSTRAINT FK_Ite_Cat FOREIGN KEY([NombreCategoria]) REFERENCES [Categoria] ([NombreCategoria])  
+	[EtiquetaObservacion] NVARCHAR(25) NULL, 
+    CONSTRAINT FK_Ite_Cat FOREIGN KEY([NombreCategoria]) REFERENCES [Categoria] ([NombreCategoria])  
 )

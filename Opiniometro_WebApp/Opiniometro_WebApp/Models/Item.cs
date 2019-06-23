@@ -26,12 +26,15 @@ namespace Opiniometro_WebApp.Models
         public Nullable<bool> TieneObservacion { get; set; }
         public byte TipoPregunta { get; set; }
         public string NombreCategoria { get; set; }
+        public string EtiquetaObservacion { get; set; }
     
         public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
+        public virtual Escalar Escalar { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Responde> Responde { get; set; }
+        public virtual Seleccion_Multiple Seleccion_Multiple { get; set; }
         public virtual Seleccion_Unica Seleccion_Unica { get; set; }
         public virtual Texto_Libre Texto_Libre { get; set; }
     }
