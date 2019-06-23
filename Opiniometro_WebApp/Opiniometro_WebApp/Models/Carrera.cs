@@ -17,7 +17,7 @@ namespace Opiniometro_WebApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Carrera()
         {
-            this.Enfasis = new HashSet<Enfasis>();
+            this.Enfasis = new HashSet<Enfasi>();
         }
     
         public string Sigla { get; set; }
@@ -26,6 +26,6 @@ namespace Opiniometro_WebApp.Models
     
         public virtual Unidad_Academica Unidad_Academica { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Enfasis> Enfasis { get; set; }
+        public virtual ICollection<Enfasi> Enfasis { get; set; }
     }
 }

@@ -239,7 +239,7 @@ namespace Opiniometro_WebApp.Controllers
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--
         [HttpGet]
-        private ObjectResult<string> ObtenerObservacionesPorGrupo(string codigoFormulario, string cedulaProfesor, short? annoGrupo, byte? semestreGrupo, byte? numeroGrupo, string siglaCurso, string itemId)
+        private ObjectResult<SP_DevolverObservacionesPorGrupo_Result> ObtenerObservacionesPorGrupo(string codigoFormulario, string cedulaProfesor, short? annoGrupo, byte? semestreGrupo, byte? numeroGrupo, string siglaCurso, string itemId)
         {
             var result = db.SP_DevolverObservacionesPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
             return result;
@@ -252,47 +252,21 @@ namespace Opiniometro_WebApp.Controllers
         {
             var result = ObtenerObservacionesPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId).ToList();
 
-            List<string> obs = new List<string>();
-            List<string> nom = new List<string>();
-            List<string> ap1 = new List<string>();
-            List<string> ap2 = new List<string>();
+            List<object> obs = new List<object>();
+            List<object> nom = new List<object>();
+            List<object> ap1 = new List<object>();
+            List<object> ap2 = new List<object>();
 
             foreach (var itemO in result)
             {
-                obs.Add(itemO);
-                nom.Add(itemO);
-                ap1.Add(itemO);
-                ap2.Add(itemO);
+                obs.Add(itemO.Observacion);
+                nom.Add(itemO.Nombre);
+                ap1.Add(itemO.Apellido1);
+                ap2.Add(itemO.Apellido2);
             }
 
             List<object> observaciones = new List<object> { obs, nom, ap1, ap2 };
             return Json(observaciones, JsonRequestBehavior.AllowGet);
-        }
-
-        //EFE:Retorna las respuestas del item.
-        //REQ:Que exista una conexion a la base de datos.
-        //MOD:--
-        [HttpGet]
-        private ObjectResult<string> ObtenerRespuestasPorGrupo(string codigoFormulario, string cedulaProfesor, short? annoGrupo, byte? semestreGrupo, byte? numeroGrupo, string siglaCurso, string itemId)
-        {
-            var result = db.SP_DevolverObservacionesPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
-            return result;
-        }
-
-        //EFE:Devuelve las respuestas asignadas a una pregunta en especifico.
-        //REQ:Que exista una conexion a la base de datos.
-        //MOD:--
-        public JsonResult RespuestasPorPregunta(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
-        {
-            var result = ObtenerRespuestasPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId).ToList();
-            List<string> Respuestas = new List<string>();
-
-            foreach (var itemO in result)
-            {
-                Respuestas.Add(itemO);
-            }
-
-            return Json(Respuestas, JsonRequestBehavior.AllowGet);
         }
     }
 }

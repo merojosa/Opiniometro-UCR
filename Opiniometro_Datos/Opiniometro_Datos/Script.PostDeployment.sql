@@ -681,32 +681,6 @@ BEGIN
 END
 GO
 
-GO
-IF OBJECT_ID('SP_DevolverRespuestasPorGrupo') IS NOT NULL
-	DROP PROCEDURE SP_DevolverRespuestasPorGrupo
-
---REQ: La base de datos creada.
---EFE: Retorna las respuestas por pregunta de un grupo especifico.
---MOD:--
-
-GO
-CREATE PROCEDURE SP_DevolverRespuestasPorGrupo
-	@codigoFormulario CHAR(6),
-	@cedulaProfesor CHAR(9),
-	@annoGrupo SMALLINT,
-	@semestreGrupo TINYINT,
-	@numeroGrupo TINYINT,
-	@siglaCurso CHAR(6),
-	@itemId NVARCHAR(10)
-AS
-BEGIN
-	SET NOCOUNT ON
-	SELECT e.Respuesta
-	FROM Responde as e
-	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
-END
-GO
-
 
 --Permisos
 INSERT INTO Permiso
