@@ -43,9 +43,9 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // Para el filtro por énfasis
-        public IQueryable<Enfasi> ObtenerEnfasis(short anno, byte semestre, String codigoUnidadAcadem, String siglaCarrera)
+        public IQueryable<Enfasis> ObtenerEnfasis(short anno, byte semestre, String codigoUnidadAcadem, String siglaCarrera)
         {
-            return new List<Enfasi>().AsQueryable();
+            return new List<Enfasis>().AsQueryable();
         }
 
 

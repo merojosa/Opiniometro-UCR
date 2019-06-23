@@ -36,7 +36,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Curso> Curso { get; set; }
         public virtual DbSet<Distrito> Distrito { get; set; }
         public virtual DbSet<Empadronado> Empadronado { get; set; }
-        public virtual DbSet<Enfasi> Enfasis { get; set; }
+        public virtual DbSet<Enfasis> Enfasis { get; set; }
         public virtual DbSet<Escalar> Escalar { get; set; }
         public virtual DbSet<Estudiante> Estudiante { get; set; }
         public virtual DbSet<Facultad> Facultad { get; set; }
