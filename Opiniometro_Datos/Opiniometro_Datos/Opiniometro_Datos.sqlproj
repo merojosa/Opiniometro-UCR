@@ -108,6 +108,7 @@
     <Build Include="SP_ObtenerFormulario.sql" />
     <Build Include="ProcIntroducirSeccion.sql" />
     <Build Include="SP_ObtenerConformado_Item_Sec_Form.sql" />
+    <Build Include="Conformado_For_Sec.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ScriptGenerarContrasena.sql" />
