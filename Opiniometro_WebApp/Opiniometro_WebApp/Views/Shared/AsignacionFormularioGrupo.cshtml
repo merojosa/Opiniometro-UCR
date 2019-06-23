@@ -45,10 +45,10 @@
                             @Html.DisplayFor(ModelItem => form.NombreFormulario) <br>
                         }
                     </td>
-                    @Html.HiddenFor(ModelItem => gr.Anno)
-                    @Html.HiddenFor(ModelItem => gr.Semestre)
-                    @Html.HiddenFor(ModelItem => gr.SiglaCurso)
-                    @Html.HiddenFor(ModelItem => gr.Numero)
+                    @Html.HiddenFor(ModelItem => gr.Anno, new { @class = "anno-grupo"})
+                    @Html.HiddenFor(ModelItem => gr.Semestre, new { @class = "semestre-grupo" })
+                    @Html.HiddenFor(ModelItem => gr.SiglaCurso, new { @class = "sigla-grupo" })
+                    @Html.HiddenFor(ModelItem => gr.Numero, new { @class = "numero-grupo" })
                 </tr>
             }
         </tbody>

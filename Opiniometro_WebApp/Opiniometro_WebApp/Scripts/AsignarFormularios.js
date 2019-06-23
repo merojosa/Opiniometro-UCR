@@ -19,13 +19,44 @@ $(document).ready(function () {
         });
 });
 
-/*$(document).ready(function () {
-    document.getElementById("boton-efectuar").addEventListener("click",
-        function () {
-            document.getElementById("efectuar").click();
-        });
-});/**/
-/**/
+function ObtenerFormsYPeriodosAsignados() {
+    var codigos = document.getElementsByClassName("codigo-form");
+    var inicios = document.getElementsByClassName("fecha-inicial");
+    var fines = document.getElementsByClassName("fecha-final");
+
+    var FormulariosYPeriodos = [];
+
+    for (var f = 0; f < codigos.length; f++) {
+        FormulariosYPeriodos.push(
+            {
+                CodigoForm: codigos[f].value,
+                FechaInicio: inicios[f].value,
+                FechaFinal: fines[f].value
+            });
+    };
+    return FormulariosYPeriodos;
+}
+function ObtenerGruposAsignados() {
+    var annos = document.getElementsByClassName("anno-grupo");
+    var semestres = document.getElementsByClassName("semestre-grupo");
+    var siglas = document.getElementsByClassName("sigla-grupo");
+    var numeros = document.getElementsByClassName("numero-grupo");
+
+    var grupos = [];
+
+    for (var g = 0; g < annos.length; g++) {
+        grupos.push(
+            {
+                SiglaCurso: siglas[g].value,
+                Numero: numeros[g].value,
+                AnnoGrupo: annos[g].value,
+                SemestreGrupo: semestres[g].value
+            });
+    };
+    return grupos;
+
+}
+
 $(document).ready(function () {
     document.getElementById("boton-efectuar").addEventListener("click",
         function () {
@@ -33,33 +64,17 @@ $(document).ready(function () {
             var inicios = document.getElementsByClassName("fecha-inicial");
             var fines = document.getElementsByClassName("fecha-final");
 
-            var FormulariosYPeriodos = [];
+            var FormulariosYPeriodos = ObtenerFormsYPeriodosAsignados();
+            var Grupos = ObtenerGruposAsignados();
 
-            var datosFila = {
-                CodigoForm : ' ',
-                FechaInicio : ' ',
-                FechaFinal : ' '
-            };
-
-            //alert(`${codigos.length} forms detectados\n${inicios.length} fechas i detectadas\n${fines.length} fechas f detectadas`);
-
-            for (var f = 0; f < codigos.length; f++) {
-                datosFila.CodigoForm = codigos[f].val;
-                datosFila.FechaInicio = inicios[f].val;
-                datosFila.FechaFinal = fines[f].val;
-
-                FormulariosYPeriodos.push(datosFila);
-            };
-
-            var tablaPeriodos = document.getElementById("tabla-periodos");
-
-            $.post("MetodoPrueba",
+            $.post("EfectuarAsignaciones",
                 {
-                    PeriodosIndicados: FormulariosYPeriodos
+                    Grupos: JSON.stringify(Grupos),
+                    PeriodosIndicados: JSON.stringify(FormulariosYPeriodos)
                 },
                 function (data, status) {
-                    alert("Post fue exitoso.");
+                    alert(`Post fue exitoso?\n${status}`);
                 }
             );
         });
-});/**/
+});

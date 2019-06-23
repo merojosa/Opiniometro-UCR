@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -12,6 +13,8 @@ namespace Opiniometro_WebApp.Controllers
     public class AsignarFormulariosController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+
+        public class TipoPeriodosIndicados { public string CodigoForm; public string FechaInicio; public string FechaFinal; };
 
         // Para la vista completa
         [HttpGet]
@@ -48,28 +51,6 @@ namespace Opiniometro_WebApp.Controllers
             };
 
             return View(modelo);
-        }
-
-        [HttpPost]
-        public ActionResult Asignar(GruposYFormsSeleccionados GruFormsSeleccionados)
-        {
-            if (GruFormsSeleccionados != null)
-            {
-                if (GruFormsSeleccionados.TieneQueAsignar())
-                {
-                    // Realizar asignaciones
-
-                    if (ModelState.IsValid)
-                    {
-                        Debug.WriteLine("\n--- Asignaciones casi logradas ---\n");
-                    }
-                    else { Debug.WriteLine("\n--- Modelo invalido ---\n"); }
-                }
-                else { Debug.WriteLine("\n--- No hay asignaciones por hacer: {0} grupos y {1} formularios ---\n", 
-                    GruFormsSeleccionados.GruposSeleccionados.Count(), GruFormsSeleccionados.FormulariosSeleccionados.Count()); }
-            }
-            else { Debug.WriteLine("\n--- No se retorna el modelo ---\n"); }
-            return RedirectToAction("Index", "Home"); // Cambiar por ("Index", "AsignarPeriodosViewModel");
         }
 
         public ActionResult AsignacionFormularioGrupo (List<ElegirGrupoEditorViewModel> grupos, List<ElegirFormularioEditorViewModel> formularios)
@@ -310,12 +291,34 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult MetodoPrueba(object[] PeriodosIndicados)
+        public ActionResult EfectuarAsignaciones(string Grupos, string PeriodosIndicados)
         {
-            if (PeriodosIndicados == null) return RedirectToAction("Index", "Home");
-            foreach (var pi in PeriodosIndicados)
-            { Debug.WriteLine("\n owo \n"); }
-            
+            var FormulariosConPeriodos = JsonConvert.DeserializeObject<TipoPeriodosIndicados[]>(PeriodosIndicados);
+            var GruposEnLista = JsonConvert.DeserializeObject<Grupo[]>(Grupos);
+#if true
+            if (FormulariosConPeriodos == null)
+            {
+                Debug.WriteLine("\n\nNo hay formularios...\n");
+                return RedirectToAction("Index", "Home");
+            }
+
+            Debug.WriteLine("\n\nInicio de {0} formularios:\n", FormulariosConPeriodos.Count(), 0);
+
+            foreach (var f in FormulariosConPeriodos)
+            {
+                Debug.WriteLine("Formulario {0}: {1} - {2}", f.CodigoForm, f.FechaInicio, f.FechaFinal);
+            }
+            foreach (var g in GruposEnLista)
+            {
+                Debug.WriteLine("{0}-{1}: {2}, grupo no.{3}", g.SemestreGrupo, g.AnnoGrupo, g.SiglaCurso, g.Numero);
+            }
+#endif
+
+            /*foreach(var fcp in FormulariosConPeriodos)
+            {
+                ;
+            }*/
+
             return RedirectToAction("Index", "Home");
         }
     }
