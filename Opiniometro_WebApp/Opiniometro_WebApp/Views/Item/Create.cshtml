@@ -73,7 +73,7 @@
         </div>
     </div>
 
-    <div class="fomr-group" id="opciones" style="display:none;">
+    <div class="form-group" id="opciones" hidden="hidden">
         <input type="button" value="Agregar Opciones" class="btn btn-secondary" p id="botonAsignarOpciones" onclick="accionBotonAgregarOpciones()" />
         @Html.Partial("AgregarOpcionesVParcial")
     </div>
@@ -86,6 +86,14 @@
             <input type="button" value="Cancelar" class="btn btn-secondary" id="botonCancelar" onclick="accionBotonCancelar()" />
         </div>
     </div>
+
+    @* La sección de código para habilitar el despliegue de la Vista Parcial AgregarOpciones *@
+    <script>
+        function habilitarVistaParcialAgregarOpciones()
+        {
+            document.getElementById("opciones").hidden = "";
+        }
+    </script>
 
     @* La accion que sucede al seleccionar boton AgregarOpciones *@
     <script>
