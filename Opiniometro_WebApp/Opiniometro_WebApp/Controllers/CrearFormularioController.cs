@@ -106,18 +106,31 @@ namespace Opiniometro_WebApp.Controllers
             return Json(!db.Conformado_Item_Sec_Form.Any(pregunta => pregunta.Orden_Seccion == Orden_Seccion), JsonRequestBehavior.AllowGet);
 
         }
+        //----------------------------------------------------------------------------
+        public ActionResult VistaFormularioVParcial(string codForm)
+        {
+            IEnumerable<Conformado_Item_Sec_Form> listaFormulario = db.Conformado_Item_Sec_Form.Where(y => y.CodigoFormulario == codForm).ToList().Distinct();
+            
+            return PartialView(listaFormulario);
+        }
+
         public ActionResult VistaPreviaPregunta(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Item item = db.Item.Find(id);
             if (item == null)
             {
                 return HttpNotFound();
             }
             return PartialView(item);
+        }
+        public ActionResult ModalPopUp()
+        {
+            return View(); 
         }
     }
 }
