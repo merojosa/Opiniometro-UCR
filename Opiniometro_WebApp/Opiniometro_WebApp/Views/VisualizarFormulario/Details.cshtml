@@ -193,11 +193,35 @@
                                                     else
                                                     {
                                                         <div style="height:180px; overflow-y: scroll;">
-                                                            <p id="info_@item_actual" style="float:right"></p>
-
-                                                            @foreach (var item in Model.Formulario_Respuesta.Take(1))
+                                                           
+                                                            @foreach (var item in Model.Formulario_Respuesta)
                                                             {
-                                                                <script>
+                                                                <p>Respuesta de estudiante, texto para verificar que el tamanno para el cuadro de texto sea apropiado, lo cual indica que se pueda ver la suficiente informacion, a la vez que no se consuma mucho espacio en pantalla y evite al usuario concentrase en la respuesta de una pregunta. Tambien para comprobar con los companneros de equipo que les parece y si creen que el tamanno deber ser mas grande o mas pequenno, ya que se tiene que tomar un promedio del tamanno de una respuesta de un estudiante.</p>
+                                                                <hr>
+                                                            }
+
+                                                        </div>
+                                                    }
+                                                    <br />
+                                                    <div class="panel-group" id="accordion3_@seccion_counter">
+
+                                                        @if (seccion.Item.TieneObservacion == observation)
+                                                        {
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-heading">
+                                                                    <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" data-parent="#accordion3_@seccion_counter" href="#collapseThreeTwo_@seccion_counter">
+                                                                            Observaciones @*Aqui se muestran las observaciones relacionadas a una preguntas*@
+                                                                        </a>
+                                                                    </h4>
+                                                                </div>
+                                                                <div id="collapseThreeTwo_@seccion_counter" class="panel-collapse collapse">
+                                                                    <div class="panel-body">
+                                                                        <div style="height:200px; overflow-y: scroll;">
+                                                                            <p id="info_@item_actual" style="float:right"></p>
+                                                                            @foreach (var item in Model.Formulario_Respuesta.Take(1))
+                                                                            {
+                                                                                <script>
                                                     $.ajax({
                                                         type: "POST",
                                                             url: "/VisualizarFormulario/ObservacionesPorPregunta",
@@ -225,29 +249,8 @@
 
                                                         }
                                                     });
-                                                                </script>
-                                                            }
+                                                                                </script>
 
-                                                        </div>
-                                                    }
-                                                    <br />
-                                                    <div class="panel-group" id="accordion3_@seccion_counter">
-
-                                                        @if (seccion.Item.TieneObservacion == observation)
-                                                        {
-                                                            <div class="panel panel-default">
-                                                                <div class="panel-heading">
-                                                                    <h4 class="panel-title">
-                                                                        <a data-toggle="collapse" data-parent="#accordion3_@seccion_counter" href="#collapseThreeTwo_@seccion_counter">
-                                                                            Observaciones @*Aqui se muestran las observaciones relacionadas a una preguntas*@
-                                                                        </a>
-                                                                    </h4>
-                                                                </div>
-                                                                <div id="collapseThreeTwo_@seccion_counter" class="panel-collapse collapse">
-                                                                    <div class="panel-body">
-                                                                        <div style="height:200px; overflow-y: scroll;">
-                                                                            @foreach (var item in Model.Conformado_Item_Sec_Form)
-                                                                            {
                                                                                 <p>Respuesta de estudiante, texto para verificar que el tamanno para el cuadro de texto sea apropiado, lo cual indica que se pueda ver la suficiente informacion, a la vez que no se consuma mucho espacio en pantalla y evite al usuario concentrase en la respuesta de una pregunta. Tambien para comprobar con los companneros de equipo que les parece y si creen que el tamanno deber ser mas grande o mas pequenno, ya que se tiene que tomar un promedio del tamanno de una respuesta de un estudiante.</p>
                                                                                 <hr>
 
