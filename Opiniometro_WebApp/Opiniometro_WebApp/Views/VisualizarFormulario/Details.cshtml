@@ -20,7 +20,7 @@
 
 @Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
 
-
+@{string perfil_actual = Opiniometro_WebApp.Controllers.Servicios.IdentidadManager.obtener_perfil_actual(); }
 
 <div class="container">
 
@@ -70,7 +70,7 @@
     }
 
 
-    @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = "";  List<string> secciones = new List<string>(); bool seccion_repetida = false;}
+    @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string> secciones = new List<string>(); bool seccion_repetida = false;}
 
     <div class="panel-group" id="accordion1">
 
@@ -207,24 +207,24 @@
 
 
 
-                                                            @if (seccion.Item.TieneObservacion == observation)
-                                                            {
-                                                                <div class="panel panel-default">
-                                                                    <div class="panel-heading">
-                                                                        <h4 class="panel-title">
-                                                                            <a data-toggle="collapse" data-parent="#accordion3_@seccion_counter" href="#collapseThreeTwo_@seccion_counter">
-                                                                                Observaciones @*Aqui se muestran las observaciones relacionadas a una preguntas*@
-                                                                            </a>
-                                                                        </h4>
-                                                                    </div>
-                                                                    <div id="collapseThreeTwo_@seccion_counter" class="panel-collapse collapse">
-                                                                        <div class="panel-body">
-                                                                            <div style="height:200px; overflow-y: scroll;">
-                                                                                <p id="info_@item_actual" style="float:right"></p>
+                                                        @if (seccion.Item.TieneObservacion == observation)
+                                                        {
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-heading">
+                                                                    <h4 class="panel-title">
+                                                                        <a data-toggle="collapse" data-parent="#accordion3_@seccion_counter" href="#collapseThreeTwo_@seccion_counter">
+                                                                            Observaciones @*Aqui se muestran las observaciones relacionadas a una preguntas*@
+                                                                        </a>
+                                                                    </h4>
+                                                                </div>
+                                                                <div id="collapseThreeTwo_@seccion_counter" class="panel-collapse collapse">
+                                                                    <div class="panel-body">
+                                                                        <div style="height:200px; overflow-y: scroll;">
+                                                                            <p id="info_@item_actual" style="float:right"></p>
 
-                                                                                @foreach (var item in Model.Formulario_Respuesta.Take(1))
-                                                                                {
-                                                                                    <script>
+                                                                            @foreach (var item in Model.Formulario_Respuesta.Take(1))
+                                                                            {
+                                                                                <script>
                                                                                     $.ajax({
                                                                                         type: "POST",
                                                                                         url: "/VisualizarFormulario/ObservacionesPorPregunta",
@@ -240,22 +240,31 @@
 
 
                                                                                             for (var data in obs) {
-                                                                                                document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerHTML + (obs[data]).toString();
+
+                                                                                                document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + (obs[data]).toString();
+                                                                                                //if (@perfil_actual == "Admin")
+                                                                                                //{
+                                                                                                 //   for (var name in nom) { document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + " - " + (obs[data]).toString(); }
+                                                                                                 //   for (var nick1 in ap1) { document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + (obs[data]).toString(); }
+                                                                                                 //   for (var nick2 in ap2) { document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + (obs[data]).toString(); }
+                                                                                                //}
                                                                                             }
                                                                                                 }
                                                                                             });
-                                                                                    </script>
-                                                                                }
+                                                                                </script>
 
-                                                                                @*Se ocupa encontrar la forma de devolver las observaciones por pregunta*@
 
-                                                                            </div>
+                                                                            }
+
+                                                                            @*Se ocupa encontrar la forma de devolver las observaciones por pregunta*@
 
                                                                         </div>
+
                                                                     </div>
                                                                 </div>
-                                                            }
-                                                        
+                                                            </div>
+                                                        }
+
 
                                                     </div>
                                                 </div>

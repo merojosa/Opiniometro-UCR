@@ -9,6 +9,8 @@ namespace Opiniometro_WebApp.Controllers.Servicios
     {
         // 6-100: CX
 
+        public const int VER_NOMBRE_DE_ESTUDIANTE = 6;
+
         // 101-200: JJAPH
 
         // 201-300: The Strategists
