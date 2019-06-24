@@ -112,4 +112,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="CedulaPersona" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="cf308462-529d-43bf-bc37-01d61d80bd43" ChangeDateTime="06/22/2019 22:30:20">
+    <Property Name="ElementName" Value="[dbo].[Seleccion_Multiple].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Seleccion_Multiple]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ItemId" />
+  </Operation>
 </Operations>
