@@ -31,4 +31,11 @@ namespace Opiniometro_WebApp.Models
     {
 
     }
+
+    [MetadataType(typeof(PerfilMetadata))]
+    public partial class Perfil
+    {
+
+    }
+
 }
