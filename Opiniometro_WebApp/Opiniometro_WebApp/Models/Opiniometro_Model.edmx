@@ -407,11 +407,6 @@
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ValorRandom">
-          <Property Name="randomvalue" Type="varbinary" MaxLength="8000" />
-        </EntityType>-->
         <Association Name="FK_Adm_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Administrativo" Type="Self.Administrativo" Multiplicity="0..1" />
@@ -2373,7 +2368,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Opiniometro_DatosEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" />
           <EntitySet Name="Canton" EntityType="Self.Canton" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" />
@@ -2631,7 +2626,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
             <Parameter Name="siglaCurso" Mode="In" Type="String" />
             <Parameter Name="itemId" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_DevolverObservacionesPorGrupo" ReturnType="Collection(String)">
+          <FunctionImport Name="SP_DevolverObservacionesPorGrupo" ReturnType="Collection(Opiniometro_DatosModel.SP_DevolverObservacionesPorGrupo_Result)">
             <Parameter Name="codigoFormulario" Mode="In" Type="String" />
             <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
             <Parameter Name="annoGrupo" Mode="In" Type="Int16" />
@@ -2695,6 +2690,12 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           <Property Type="String" Name="Respuesta" Nullable="false" MaxLength="500" />
           <Property Type="Int32" Name="cntResp" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="SP_DevolverObservacionesPorGrupo_Result">
+          <Property Type="String" Name="Observacion" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Apellido1" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Apellido2" Nullable="false" MaxLength="50" />
+        </ComplexType>
         <ComplexType Name="SP_ObtenerPermisosUsuario_Result">
           <Property Type="String" Name="SiglaCarrera" Nullable="false" MaxLength="10" />
           <Property Type="Byte" Name="NumeroEnfasis" Nullable="false" />
@@ -2705,7 +2706,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities">
+        <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities1">
           <EntitySetMapping Name="Administrativo">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Administrativo">
               <MappingFragment StoreEntitySet="Administrativo">
@@ -3122,7 +3123,16 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_DevolverObservacionesPorGrupo" />
+          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_DevolverObservacionesPorGrupo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.SP_DevolverObservacionesPorGrupo_Result">
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_DevolverRespuestasPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_DevolverRespuestasPorGrupo" />
           <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_DatosModel.Store.SP_ExistenciaCorreo" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />

@@ -333,6 +333,9 @@
     <Compile Include="Models\SP_ContarRespuestasPorGrupo_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SP_DevolverObservacionesPorGrupo_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>

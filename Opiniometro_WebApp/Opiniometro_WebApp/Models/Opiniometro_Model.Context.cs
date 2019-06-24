@@ -199,7 +199,7 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ContarRespuestasPorGrupo_Result>("SP_ContarRespuestasPorGrupo", codigoFormularioParameter, cedulaProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numeroGrupoParameter, siglaCursoParameter, itemIdParameter);
         }
     
-        public virtual ObjectResult<string> SP_DevolverObservacionesPorGrupo(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, string itemId)
+        public virtual ObjectResult<SP_DevolverObservacionesPorGrupo_Result> SP_DevolverObservacionesPorGrupo(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, string itemId)
         {
             var codigoFormularioParameter = codigoFormulario != null ?
                 new ObjectParameter("codigoFormulario", codigoFormulario) :
@@ -229,7 +229,7 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("itemId", itemId) :
                 new ObjectParameter("itemId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_DevolverObservacionesPorGrupo", codigoFormularioParameter, cedulaProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numeroGrupoParameter, siglaCursoParameter, itemIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_DevolverObservacionesPorGrupo_Result>("SP_DevolverObservacionesPorGrupo", codigoFormularioParameter, cedulaProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numeroGrupoParameter, siglaCursoParameter, itemIdParameter);
         }
     
         public virtual ObjectResult<string> SP_DevolverRespuestasPorGrupo(string codigoFormulario, string cedulaProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numeroGrupo, string siglaCurso, string itemId)
