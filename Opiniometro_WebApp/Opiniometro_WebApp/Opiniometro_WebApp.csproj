@@ -228,6 +228,9 @@
     <Compile Include="Models\Ciclo_Lectivo.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Conformado_For_Sec.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Conformado_Item_Sec_Form.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
