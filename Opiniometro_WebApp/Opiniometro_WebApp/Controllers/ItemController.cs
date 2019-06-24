@@ -13,6 +13,7 @@ using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
 {
+    [Authorize]
     public class ItemController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
