@@ -14,6 +14,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Threading;
 using Opiniometro_WebApp.Controllers.Servicios;
+using System.Data.Entity.Core;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -55,11 +56,19 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult Login(Usuario usuario)
         {
             ObjectParameter exito = new ObjectParameter("Resultado", 0);
-            db.SP_LoginUsuario(usuario.CorreoInstitucional, usuario.Contrasena, exito);
+            bool error_conexion = false;
+            try
+            {
+                db.SP_LoginUsuario(usuario.CorreoInstitucional, usuario.Contrasena, exito);
 
-            string correo_autenticado = IdentidadManager.obtener_correo_actual();
+            }
+            catch (EntityException)
+            {
+                error_conexion = true;
+                exito.Value = false;
+            }
 
-            if (correo_autenticado != null)      // Si esta autenticado
+            if (IdentidadManager.obtener_correo_actual() != null)      // Si esta autenticado
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -86,7 +95,19 @@ namespace Opiniometro_WebApp.Controllers
             }
             else    // Si hay error en la autenticacion
             {
-                ModelState.AddModelError(string.Empty, "");
+                // Desplegar mensaje de error personalizado.
+                string mensaje_error = "";
+                if(error_conexion == true)
+                {
+                    mensaje_error = "Error de conexión";
+                }
+                else
+                {
+                    mensaje_error = "Usuario o contraseña inválidos";
+                }
+
+                ModelState.AddModelError("ErrorLogin", mensaje_error);
+
 
                 // Devolverse a la misma pagina de Login informando de que hay un error de autenticacion.
                 return View(usuario);
