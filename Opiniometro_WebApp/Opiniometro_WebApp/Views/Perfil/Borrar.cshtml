@@ -6,23 +6,35 @@
 
 <h2>Borrar perfil</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th></th>
-    </tr>
+@using (Html.BeginForm("ObtenerPerfilBorrar", "Perfil", FormMethod.Post))
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.ActionLink("Borrar", "ConfirmarBorrado", new { id = item.Nombre }, new { @class = "btn btn-default" })
-        </td>
-    </tr>
+        @{
+            bool marcar_primero = true;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (marcar_primero == true)
+                        {
+                            <input type="radio" name="NombrePerfil" checked="checked" value="@item.Nombre" />
+                            marcar_primero = false;
+                        }
+                        else
+                        {
+                            <input type="radio" name="NombrePerfil" value="@item.Nombre" />
+                        }
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <input type="submit" value="Borrar" />
 }
-
-</table>

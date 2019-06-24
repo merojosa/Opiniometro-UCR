@@ -79,13 +79,21 @@ namespace Opiniometro_WebApp.Controllers
             return perfiles;
         }
 
-        // GET: CRUDPERFILES/Delete/5
-        public ActionResult ConfirmarBorrado(string id)
+        [HttpPost]
+        public ActionResult ObtenerPerfilBorrar()
         {
-            if (id == null)
+            if (Request.Form["NombrePerfil"] == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            string nombre_perfil = Request.Form["NombrePerfil"].ToString();
+
+
+            return RedirectToAction("ConfirmarBorrado", new { id = nombre_perfil });
+        }
+
+        public ActionResult ConfirmarBorrado(string id)
+        {
             Perfil perfil = db.Perfil.Find(id);
             if (perfil == null)
             {
