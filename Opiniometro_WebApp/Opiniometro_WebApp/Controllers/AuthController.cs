@@ -99,7 +99,7 @@ namespace Opiniometro_WebApp.Controllers
                 string mensaje_error = "";
                 if(error_conexion == true)
                 {
-                    mensaje_error = "Error de conexión";
+                    mensaje_error = "Error de conexión al servidor";
                 }
                 else
                 {
