@@ -4,34 +4,46 @@
     ViewBag.Title = "Borrar perfil";
 }
 
-<h3>¿Está seguro que quiere eliminar este perfil?</h3>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Perfil:
-        </dt>
+@if (Model.Nombre != "Administrador")
+{
+    <h3>¿Está seguro que quiere borrar este perfil?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Perfil:
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
 
-        <dt>
-            Descripción:
-        </dt>
+            <dt>
+                Descripción:
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
 
-    </dl>
+        </dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Borrar" class="btn btn-default" />
-            @Html.ActionLink("Cancelar", "Borrar", new { id = "Borrar" }, new { @class = "btn btn-default" })
-        </div>
-    }
-</div>
+            <div class="form-actions no-color">
+                <input type="submit" value="Borrar" class="btn btn-default" />
+                @Html.ActionLink("Cancelar", "Borrar", new { id = "Borrar" }, new { @class = "btn btn-default" })
+            </div>
+        }
+    </div>
+}
+else
+{
+    <h3>No se puede borrar el perfil administrador.</h3>
+    <br />
+    <div class="form-actions no-color">
+        @Html.ActionLink("Volver", "Borrar", new {}, new { @class = "btn btn-default" })
+    </div>
+}
