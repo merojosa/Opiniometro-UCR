@@ -128,7 +128,7 @@ GO
 
 --Trigger de validación de modificar Persona
 IF OBJECT_ID('TR_ValidacionModificarPersona') IS NOT NULL
-	DROP PROCEDURE TR_ValidacionModificarPersona
+	DROP TRIGGER TR_ValidacionModificarPersona
 GO
 CREATE TRIGGER TR_ValidacionModificarPersona
 ON Persona INSTEAD OF UPDATE
@@ -158,7 +158,7 @@ END;
 
 --Trigger de validación de modificar Usuario
 IF OBJECT_ID('TR_ValidacionModificarUsuario') IS NOT NULL
-	DROP PROCEDURE TR_ValidacionModificarUsuario
+	DROP TRIGGER TR_ValidacionModificarUsuario
 GO
 CREATE TRIGGER TR_ValidacionModificarUsuario
 ON Usuario INSTEAD OF UPDATE
