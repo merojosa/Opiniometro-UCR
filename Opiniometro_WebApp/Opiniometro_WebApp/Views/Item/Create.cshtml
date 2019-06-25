@@ -93,10 +93,9 @@
     <script>
         function habilitarVistaParcialAgregarOpciones(tipoPregunta)
         {
-            @*var e = document.getElementById("comboboxtipopregunta");
-            var strValue = e.options[e.selectedIndex].text;*@
-            if (tipoPregunta == 2)
-            {
+            document.getElementById("opciones").hidden = "hidden";
+
+            if (tipoPregunta.localeCompare("2") == 0) {
                 document.getElementById("opciones").hidden = "";
             }
         }
