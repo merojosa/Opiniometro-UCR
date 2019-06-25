@@ -61,14 +61,14 @@
                                 <dl class="dl-horizontal">
 
                                     <dd>
-                                        <textarea name="comentarioAdicional" rows="5" cols="40" disabled>Escriba su respuesta aquí</textarea>
+                                        <textarea name="comentarioAdicional" rows="5" cols="40"  style="resize:none"  disabled>Escriba su respuesta aquí</textarea>
                                     </dd>
                                     <br>
                                     @if (pregunta.Item.TieneObservacion == true)
                                     {
                                         @Html.Label("Comentario Adicional")
                                         <dd>
-                                            <textarea name="comentarioAdicional" rows="5" cols="40" disabled>Escriba su comentario aqui</textarea>
+                                            <textarea name="comentarioAdicional" rows="5" cols="40"  style="resize:none" disabled>Escriba su comentario aqui</textarea>
                                         </dd>
                                     }
                                 </dl>
@@ -87,7 +87,8 @@
                                         @if (pregunta.Item.TieneObservacion == true)
                                         {
                                             <dd>
-                                                <textarea name="comentarioAdicional" rows="5" cols="40" disabled>Escriba su comentario aqui</textarea>
+                                                <textarea name="comentarioAdicional" rows="5" cols="40" style="resize:none" disabled>Escriba su comentario aqui</textarea>
+                 
                                             </dd>
                                         }
 
