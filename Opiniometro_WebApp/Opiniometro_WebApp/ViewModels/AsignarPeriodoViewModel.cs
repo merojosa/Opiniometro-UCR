@@ -5,11 +5,13 @@ namespace Opiniometro_WebApp.Models
 {
     public class AsignarPeriodoViewModel
     {
+
+        public List<MostrarAsignacionesEditorViewModel> Asignaciones { get; set; }
         // Lista de grupos
-        public IEnumerable<Grupo> Grupos { get; set; }
+        // public IEnumerable<Grupo> Grupos { get; set; }
 
         // Lista de formularios
-        public List<ElegirFormularioEditorViewModel> Formularios { get; set; }
+        //public List<Formulario> Formularios { get; set; }
     }
 
 }

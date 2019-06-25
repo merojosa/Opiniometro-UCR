@@ -29,8 +29,9 @@ namespace Opiniometro_WebApp.Controllers
         {
             var modelo = new AsignarPeriodoViewModel
             {
-                Grupos = ObtenerGrupos(),
-                Formularios = ObtenerFormularios(),
+                Asignaciones = ObtenerGruposconFormulario()
+                //Grupos = ObtenerGrupos(),
+                //Formularios = ObtenerFormularios(),
             };
             return View();
         }
@@ -54,18 +55,30 @@ namespace Opiniometro_WebApp.Controllers
         //    return formulario;
         //}
 
-        public List<ElegirFormularioEditorViewModel> ObtenerFormularios()
+        public List<Formulario> ObtenerFormularios()
         {
-            IQueryable<ElegirFormularioEditorViewModel> formularios =
+            var formularios =
                 from formul in db.Formulario
-                select new ElegirFormularioEditorViewModel
+                select new Formulario
                 {
-                    Seleccionado = false,
                     CodigoFormulario = formul.CodigoFormulario,
-                    NombreFormulario = formul.Nombre
+                    Nombre = formul.Nombre
                 };
 
             return formularios.ToList();
+        }
+
+        public List<MostrarAsignacionesEditorViewModel> ObtenerGruposconFormulario()
+        {
+            IQueryable<MostrarAsignacionesEditorViewModel> Asignaciones =
+                            from asig in db.Tiene_Grupo_Formulario
+                            select new MostrarAsignacionesEditorViewModel
+                            {
+                                CodigoFormulario = asig.Codigo,
+                                SiglaCurso = asig.SiglaCurso
+                            };
+
+            return Asignaciones.ToList();
         }
     }
 }

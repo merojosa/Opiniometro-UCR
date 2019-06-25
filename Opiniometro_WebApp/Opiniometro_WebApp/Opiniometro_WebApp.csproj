@@ -368,6 +368,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AsignarPeriodoViewModel.cs" />
+    <Compile Include="ViewModels\MostrarAsignacionesEditorViewModel.cs" />
     <Compile Include="ViewModels\ElegirFormularioEditorViewModel.cs" />
     <Compile Include="ViewModels\ElegirGrupoEditorViewModel.cs" />
     <Compile Include="ViewModels\EstudianteGruposMatriculado.cs" />
@@ -517,6 +518,7 @@
     <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
     <Content Include="Views\LlenarFormulario\Index.cshtml" />
     <Content Include="Views\AsignarPeriodo\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\MostrarAsignacionesEditorViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

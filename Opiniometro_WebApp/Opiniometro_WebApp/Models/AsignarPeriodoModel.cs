@@ -8,10 +8,12 @@ namespace Opiniometro_WebApp.Models
 {
     public class AsignarPeriodoModel : Controller
     {
+        public IEnumerable<Tiene_Grupo_Formulario> Asignaciones { get; set; }
+
         // Lista de grupos
-        public IEnumerable<Grupo> Grupos { get; set; }
+       // public IEnumerable<Grupo> Grupos { get; set; }
 
         // Lista de formularios
-        public IEnumerable<Formulario> Formularios { get; set; }
+       // public IEnumerable<Formulario> Formularios { get; set; }
     }
 }
