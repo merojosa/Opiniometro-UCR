@@ -197,11 +197,12 @@
     <Compile Include="Controllers\Conformado_Item_Sec_FormController.cs" />
     <Compile Include="Controllers\CrearFormularioController.cs" />
     <Compile Include="Controllers\FormularioController.cs" />
+    <Compile Include="Controllers\FormularioCursoController.cs" />
     <Compile Include="Controllers\Formulario_RespuestaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
-    <Compile Include="Controllers\LlenarFormularioController.cs" />
+    <Compile Include="Controllers\CursosMatriculadosController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\SeleccionPermisosController.cs" />
     <Compile Include="Controllers\Servicios\IdPermiso.cs" />
@@ -228,6 +229,9 @@
     <Compile Include="Models\Ciclo_Lectivo.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Conformado_For_Sec.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Conformado_Item_Sec_Form.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -242,6 +246,9 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CursosSegunSemestre_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C__RefactorLog.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DatosEstudiante_Result.cs">
@@ -268,6 +275,7 @@
     <Compile Include="Models\Formulario.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FormularioCursoModel.cs" />
     <Compile Include="Models\Formulario_Respuesta.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -368,7 +376,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ElegirFormularioEditorViewModel.cs" />
     <Compile Include="ViewModels\ElegirGrupoEditorViewModel.cs" />
-    <Compile Include="ViewModels\EstudianteGruposMatriculado.cs" />
+    <Compile Include="Models\EstudianteGruposMatriculado.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\estilos-propios.css" />
@@ -514,7 +522,7 @@
     <Content Include="Views\Shared\AsignacionFormularioGrupo.cshtml" />
     <Content Include="Views\Auth\Permisos.cshtml" />
     <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
-    <Content Include="Views\LlenarFormulario\Index.cshtml" />
+    <Content Include="Views\CursosMatriculados\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

@@ -36,28 +36,28 @@
             <!-- Despliega los cursos eh los que esta matriculado el estudiante-->
             @foreach (var item in Model.gruposMatriculado)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.siglaCursoMatriculado)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => item.nombreCursoMatriculado)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => item.semestreGrupo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => item.anoGrupo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => item.nombreProfeCurso)
-                        @Html.DisplayFor(model => item.apellidoProfe)
-                    </td>
-                    <td>
-                       @Html.ActionLink(item.formulario,"","");
-                    </td>
-                </tr>
-               
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.siglaCursoMatriculado)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.nombreCursoMatriculado)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.semestreGrupo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.anoGrupo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.nombreProfeCurso)
+                            @Html.DisplayFor(model => item.apellido1Profe)
+                            @Html.DisplayFor(model => item.apellido2Profe)
+                        </td>
+                        <td>
+                           @Html.ActionLink(item.formulario, "", "");
+                        </td>
+                    </tr>               
             }
     </table>
 

@@ -27,11 +27,13 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Administrativo> Administrativo { get; set; }
         public virtual DbSet<Canton> Canton { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
         public virtual DbSet<Ciclo_Lectivo> Ciclo_Lectivo { get; set; }
+        public virtual DbSet<Conformado_For_Sec> Conformado_For_Sec { get; set; }
         public virtual DbSet<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
         public virtual DbSet<Curso> Curso { get; set; }
         public virtual DbSet<Distrito> Distrito { get; set; }

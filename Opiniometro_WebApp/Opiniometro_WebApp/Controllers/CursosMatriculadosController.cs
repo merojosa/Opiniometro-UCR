@@ -10,7 +10,7 @@ using Opiniometro_WebApp.Controllers.Servicios;
 namespace Opiniometro_WebApp.Controllers
 {
     [Authorize]
-    public class LlenarFormularioController : Controller
+    public class CursosMatriculadosController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
@@ -57,7 +57,8 @@ namespace Opiniometro_WebApp.Controllers
                 semestreGrupo = gru.SemestreGrupo,
                 anoGrupo = gru.AnnoGrupo,
                 nombreProfeCurso = prof.Persona.Nombre,
-                apellidoProfe = prof.Persona.Apellido1,
+                apellido1Profe = prof.Persona.Apellido1,
+                apellido2Profe = prof.Persona.Apellido2,
                 formulario = form.Nombre
             };
 
@@ -70,12 +71,18 @@ namespace Opiniometro_WebApp.Controllers
         /// </summary>
         /// <returns></returns>
         public string obtenerCedulaEstLoggeado()
-        {
+        {            
             string correoUsLog = IdentidadManager.obtener_correo_actual();
             string cedula = (from us in db.Usuario
                              where us.CorreoInstitucional == correoUsLog
                              select us).First().Cedula.ToString();
             return cedula;
         }
+
+
+
+
+
+
     }
 }
