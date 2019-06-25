@@ -338,43 +338,6 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ObtenerNombre", correoParameter, nombre, apellido);
         }
     
-        public virtual int SP_ObtenerObservacion(string codFormulario, string codSeccion, string cedProfesor, Nullable<short> annoGrupo, Nullable<byte> semestreGrupo, Nullable<byte> numGrupo, string siglaCurso, string itemId)
-        {
-            var codFormularioParameter = codFormulario != null ?
-                new ObjectParameter("codFormulario", codFormulario) :
-                new ObjectParameter("codFormulario", typeof(string));
-    
-            var codSeccionParameter = codSeccion != null ?
-                new ObjectParameter("codSeccion", codSeccion) :
-                new ObjectParameter("codSeccion", typeof(string));
-    
-            var cedProfesorParameter = cedProfesor != null ?
-                new ObjectParameter("cedProfesor", cedProfesor) :
-                new ObjectParameter("cedProfesor", typeof(string));
-    
-            var annoGrupoParameter = annoGrupo.HasValue ?
-                new ObjectParameter("annoGrupo", annoGrupo) :
-                new ObjectParameter("annoGrupo", typeof(short));
-    
-            var semestreGrupoParameter = semestreGrupo.HasValue ?
-                new ObjectParameter("semestreGrupo", semestreGrupo) :
-                new ObjectParameter("semestreGrupo", typeof(byte));
-    
-            var numGrupoParameter = numGrupo.HasValue ?
-                new ObjectParameter("numGrupo", numGrupo) :
-                new ObjectParameter("numGrupo", typeof(byte));
-    
-            var siglaCursoParameter = siglaCurso != null ?
-                new ObjectParameter("siglaCurso", siglaCurso) :
-                new ObjectParameter("siglaCurso", typeof(string));
-    
-            var itemIdParameter = itemId != null ?
-                new ObjectParameter("itemId", itemId) :
-                new ObjectParameter("itemId", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ObtenerObservacion", codFormularioParameter, codSeccionParameter, cedProfesorParameter, annoGrupoParameter, semestreGrupoParameter, numGrupoParameter, siglaCursoParameter, itemIdParameter);
-        }
-    
         public virtual ObjectResult<SP_ObtenerPermisosUsuario_Result> SP_ObtenerPermisosUsuario(string correo, string perfil)
         {
             var correoParameter = correo != null ?

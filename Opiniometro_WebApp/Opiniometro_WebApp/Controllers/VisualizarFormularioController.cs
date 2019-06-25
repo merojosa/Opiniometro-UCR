@@ -201,15 +201,6 @@ namespace Opiniometro_WebApp.Controllers
             base.Dispose(disposing);
         }
 
-        public static int ObtenerObservacionItem(string codForm, string codSeccion, string cedProf, short anno, byte? sem, byte? numgrupo, string sigla, string itemId)
-        {
-            Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
-
-            var observaciones = db.SP_ObtenerObservacion(codForm, codSeccion, cedProf, anno, sem, numgrupo, sigla, itemId);
-
-            return observaciones;
-        }
-
         //EFE: Devuelve un Int con la cantidad de respuestas por respuesta.
         //REQ: Que exista la conexion a la base de datos.
         //MOD:--
@@ -276,6 +267,24 @@ namespace Opiniometro_WebApp.Controllers
 
             List<object> observaciones = new List<object> { obs, nom, ap1, ap2 };
             return Json(observaciones, JsonRequestBehavior.AllowGet);
+        }
+        
+        [HttpGet]
+        //EFE:Devuelve las preguntas de tipo texto libre.
+        //REQ:Que exista una conexion a la base de datos.
+        //MOD:--
+        public JsonResult ObtenerRespTexto(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
+        {
+            var result = db.SP_DevolverRespuestasPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
+
+            List<object> respuestas = new List<object>();
+
+            foreach (var item in result)
+            {
+                respuestas.Add(item.Respuesta);
+            }
+            
+            return Json(respuestas, JsonRequestBehavior.AllowGet);
         }
     }
 }
