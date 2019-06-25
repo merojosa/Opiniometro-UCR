@@ -25,10 +25,11 @@ namespace Opiniometro_WebApp.Models
             {
             }
 
-            public GuardarPerm(string idPerfil, short idPermiso)
+            public GuardarPerm(string idPerfil, short idPermiso, bool existe)
             {
                 this.Perfil = idPerfil;
                 this.Permiso = idPermiso;
+                this.Existe = existe;
             }
 
             public string Perfil { get; set; }

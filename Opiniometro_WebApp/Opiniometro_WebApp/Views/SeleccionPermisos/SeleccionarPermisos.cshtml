@@ -2,26 +2,19 @@
 
 @{
     ViewBag.Title = "Administrar Permisos";
+    var prueba = Model;
 }
 
 <h2>Administrar Permisos</h2>
 
 <br />
 
-<script type="text/javascript">
-    function funcion(val) {
-        for (var i = 0; i < @Model.ListaPermisos.Count; i++) {
-            document.getElementById(i).checked = false;
-        }
-    }
-</script>
-
 @using (Html.BeginForm("Guardar", "SeleccionPermisos"))
 {
+
     <div style="width : 200px;">
         @Html.Label("Perfil")
-        @*@Html.DropDownListFor(model => Model.IdPerfil, "Perfiles", new SelectList(Model.ListaPerfilesId), "Elegir perfil", new { @id = "perfiles", @class = "form-control" })*@
-        @Html.DropDownListFor(model => Model.IdPerfil, new SelectList(Model.ListaPerfilesId), new { @id = "perfiles", @class = "form-control", @onchange = "funcion(this.value)" })
+        @*@Html.DropDownListFor(model => Model.IdPerfil, new SelectList(Model.ListaPerfilesId), new { @id = "perfiles", @class = "form-control", @onchange = "funcion(this.value)" })*@
 
         <br />
 
@@ -32,19 +25,26 @@
 
             @for (int i = 0; i < Model.ListaPermisos.Count; i++)
             {
-                <tr>
-                    @* Despliega las descripciones de los permisos *@
-                    <td>
-                        @Html.DisplayFor(p => Model.ListaPermisos.ElementAt(i).Descripcion)
-                    </td>
+                <td>
+                    @Html.DisplayFor(model => model.ListaPermisos.ElementAt(i).Descripcion)
+                </td>
 
-                    <td>
-                        @Html.CheckBoxFor(model => Model.ListaGuardar[i].Existe, htmlAttributes: new { @id = i })
-                        @Html.HiddenFor(model => Model.ListaGuardar[i].Permiso, i)
-                        @Html.HiddenFor(model => Model.ListaGuardar[i].Permiso, i)
-                    </td>
-                </tr>
-
+                for (int j = 0; j < Model.ListaPerfiles.Count; j++)
+                {
+                    for (int k = 0; k < Model.ListaGuardar.Count; k++)
+                    {
+                        if (Model.ListaGuardar.ElementAt(k).Permiso == Model.ListaPermisos.ElementAt(i).Id &&
+                            Model.ListaGuardar.ElementAt(k).Perfil == Model.ListaPerfiles.ElementAt(j).Nombre)
+                        {
+                            <td>
+                                @Html.CheckBoxFor(model => Model.ListaGuardar[k].Existe, new { @disabled = "disabled", @checked = "checked", @id = i + "_" + j })
+                                @Html.HiddenFor(model => Model.ListaGuardar[k].Permiso, i)
+                                @Html.HiddenFor(model => Model.ListaGuardar[k].Perfil, j)
+                            </td>
+                        }
+                    }
+                }
+                <tr></tr>
             }
 
         </table>

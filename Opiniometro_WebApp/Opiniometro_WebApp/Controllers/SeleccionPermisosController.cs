@@ -31,7 +31,8 @@ namespace Opiniometro_WebApp.Controllers
                         model.ListaPosee = context.Posee_Enfasis_Perfil_Permiso.ToList();
                         model.ListaEnfasis = context.Enfasis.ToList();
                         model.ListaAsoc = new List<SeleccionPermisos.Asociaciones>();
-                        //model.ListaGuardar = new List<SeleccionPermisos.GuardarPerm>();
+                        model.ListaGuardar = new List<SeleccionPermisos.GuardarPerm>();
+                        model.IdPerfil = "hola";
 
                         foreach (var posee in model.ListaPosee)
                         {
@@ -42,11 +43,6 @@ namespace Opiniometro_WebApp.Controllers
                             {
                                 model.ListaAsoc.Add(asoc);
                             }
-                        }
-
-                        foreach (var a in model.ListaAsoc)
-                        {
-                            System.Diagnostics.Debug.Print(a.Perfil + " " + a.Permiso);
                         }
 
                         foreach (var perfil in model.ListaPerfiles)
@@ -60,14 +56,18 @@ namespace Opiniometro_WebApp.Controllers
                                     {
                                         if (permiso.Id == model.ListaAsoc[cont].Permiso)
                                         {
-                                            model.ListaGuardar.Add(new SeleccionPermisos.GuardarPerm(perfil.Nombre, permiso.Id));
+                                            model.ListaGuardar.Add(new SeleccionPermisos.GuardarPerm(perfil.Nombre, permiso.Id, true));
+                                            asignado = true;
                                         }
+                                    }
+                                    if (cont == model.ListaAsoc.Count - 1 && asignado == false)
+                                    {
+                                        model.ListaGuardar.Add(new SeleccionPermisos.GuardarPerm(perfil.Nombre, permiso.Id, false));
+                                        asignado = false;
                                     }
                                 }
                             }
                         }
-
-                        model.ListaEnfasis = context.Enfasis.ToList();
                         return View(model);
                     }
                 }
