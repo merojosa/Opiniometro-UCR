@@ -1,0 +1,61 @@
+﻿
+@model Opiniometro_WebApp.Models.FormularioCursoModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>FormularioCurso</title>
+</head>
+<body>
+    <table id="tabla-preguntasFormulario" class="table table-sm table-hover" cellspacing="0" width="100">
+        <tr>
+            <th align='left'>
+                Pregunta
+            </th>
+            @*<th align='left'>
+                Curso
+            </th>
+            <th align='left'>
+                Semestre
+            </th>
+            <th align='left'>
+                Año
+            </th>*@
+           
+        </tr>
+        <!-- Despliega los cursos eh los que esta matriculado el estudiante-->
+        @foreach (var item in Model.preguntasFormulario)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.item)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(model => item.nombreCursoMatriculado)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.semestreGrupo)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.anoGrupo)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.nombreProfeCurso)
+                    @Html.DisplayFor(model => item.apellido1Profe)
+                    @Html.DisplayFor(model => item.apellido2Profe)
+                </td>
+                <td>
+                    @Html.ActionLink(item.formulario, "Index", "FormularioCurso");
+                </td>*@
+            </tr>
+        }
+    </table>
+
+</body>
+</html>

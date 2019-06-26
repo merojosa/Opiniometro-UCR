@@ -81,7 +81,9 @@ namespace Opiniometro_WebApp.Controllers
 
 
 
-
+        public ActionResult FormularioCurso() {
+            return View();
+        }
 
 
     }
