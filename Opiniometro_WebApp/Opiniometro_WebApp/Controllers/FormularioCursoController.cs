@@ -15,20 +15,23 @@ namespace Opiniometro_WebApp.Controllers
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string cedulaEstudiante, string codigoForm)
         {
             var modelo = new FormularioCursoModel
             {
-                preguntasFormulario = obtenerPreguntasFormulario()
+                preguntasFormulario = obtenerPreguntasFormulario(cedulaEstudiante,codigoForm)
             };
-
             return View(modelo);
         }
 
-        public IQueryable<FormularioCursoModel> obtenerPreguntasFormulario()
+        public IQueryable<FormularioCursoModel> obtenerPreguntasFormulario(string cedulaEstudiante, string codigoForm)
         {
 
-            IQueryable<FormularioCursoModel> formulario = from it in db.Item
+            IQueryable<FormularioCursoModel> formulario = 
+                from it in db.Item
+                join confSecItem in db.Conformado_Item_Sec_Form on it.ItemId equals confSecItem.ItemId
+                join sec in db.Seccion on confSecItem.TituloSeccion equals sec.Titulo
+                where (confSecItem.CodigoFormulario == codigoForm)
 
             select new FormularioCursoModel
             {
@@ -37,15 +40,6 @@ namespace Opiniometro_WebApp.Controllers
 
             return formulario;
         }
-
-        public string obtenerCedulaEstLoggeado() {
-            string correoUsLog = IdentidadManager.obtener_correo_actual();
-            string cedula = (from us in db.Usuario
-                             where us.CorreoInstitucional == correoUsLog
-                             select us).First().Cedula.ToString();
-            return cedula;
-        }
-
-
+   
     }
 }

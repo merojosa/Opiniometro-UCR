@@ -59,9 +59,11 @@ namespace Opiniometro_WebApp.Controllers
                 nombreProfeCurso = prof.Persona.Nombre,
                 apellido1Profe = prof.Persona.Apellido1,
                 apellido2Profe = prof.Persona.Apellido2,
-                formulario = form.Nombre
-            };
-
+                formulario = form.Nombre,
+                cedEst=cedulaDelEstudiante, // se guarda muchas veces, no es necesario
+                codFormulario = form.CodigoFormulario
+            };            
+            
             return grupos;
         }
         /// <summary>
@@ -78,13 +80,6 @@ namespace Opiniometro_WebApp.Controllers
                              select us).First().Cedula.ToString();
             return cedula;
         }
-
-
-
-        public ActionResult FormularioCurso() {
-            return View();
-        }
-
 
     }
 }

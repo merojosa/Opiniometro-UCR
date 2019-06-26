@@ -55,7 +55,7 @@
                             @Html.DisplayFor(model => item.apellido2Profe)
                         </td>
                         <td>
-                           @Html.ActionLink(item.formulario, "Index", "FormularioCurso");
+                           @Html.ActionLink(item.formulario, "Index", "FormularioCurso", new { cedulaEstudiante = item.cedEst , codigoForm = item.codFormulario}, null);
                         </td>
                     </tr>               
             }
