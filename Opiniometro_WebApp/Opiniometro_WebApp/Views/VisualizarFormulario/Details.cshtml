@@ -28,7 +28,7 @@
     {
         <td>
             <h4 style="text-align:left;">
-                <b>Sigla:</b>
+                <b>Sigla: </b>
                 @Html.DisplayFor(modelItem => title.Grupo.SiglaCurso)
 
                 <span style="float:right;">
@@ -70,7 +70,7 @@
     }
 
 
-    @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string> secciones = new List<string>(); bool seccion_repetida = false;}
+    @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string> secciones = new List<string>(); bool seccion_repetida = false; string admin = "Admin";}
 
     <div class="panel-group" id="accordion1">
 
@@ -146,7 +146,7 @@
 
 
                                                                 //for (var i = 0; i < tamanio; i++)
-                                                                document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: \n" + (tamanio).toString();
+                                                                document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: \n" + (tamanio).toString() + "<br>";
                                                                 @*var iter = aLabels;
                                                                 <p>@seccion.Item.ItemId</p>*@
                                                                 var dataT = {
@@ -234,20 +234,16 @@
                                                                                         success: function (chData) {
                                                                                         var aData = chData;
                                                                                         var obs = aData[0];
-                                                                                        //var nom = aData[1];
-                                                                                        //var ap1 = aData[2];
-                                                                                        //var ap2 = aData[3];
-
+                                                                                        var nom = aData[1];
+                                                                                        var ap1 = aData[2];
+                                                                                        var ap2 = aData[3];
 
                                                                                             for (var data in obs) {
+                                                                                                //if (@perfil_actual.Equals(admin)) {
+                                                                                                document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + "<br>";
+                                                                                                //} else {
 
-                                                                                                document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + (obs[data]).toString();
-                                                                                                //if (@perfil_actual == "Admin")
-                                                                                                //{
-                                                                                                 //   for (var name in nom) { document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + " - " + (obs[data]).toString(); }
-                                                                                                 //   for (var nick1 in ap1) { document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + (obs[data]).toString(); }
-                                                                                                 //   for (var nick2 in ap2) { document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + (obs[data]).toString(); }
-                                                                                                //}
+                                                                                                //}                        
                                                                                             }
                                                                                                 }
                                                                                             });

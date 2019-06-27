@@ -326,6 +326,16 @@
           <Property Name="CodigoEnfasis" Type="tinyint" Nullable="false" />
           <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
+        <EntityType Name="Se_Encuentra_Unidad_Enfasis">
+          <Key>
+            <PropertyRef Name="CodigoUnidadAcademica" />
+            <PropertyRef Name="NumeroEnfasis" />
+            <PropertyRef Name="SiglaCarrera" />
+          </Key>
+          <Property Name="CodigoUnidadAcademica" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="NumeroEnfasis" Type="tinyint" Nullable="false" />
+          <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="Seccion">
           <Key>
             <PropertyRef Name="Titulo" />
@@ -895,6 +905,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Se_Encuentra_Uni_Enf_Endasis">
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="1" />
+          <End Role="Se_Encuentra_Unidad_Enfasis" Type="Self.Se_Encuentra_Unidad_Enfasis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enfasis">
+              <PropertyRef Name="Numero" />
+              <PropertyRef Name="SiglaCarrera" />
+            </Principal>
+            <Dependent Role="Se_Encuentra_Unidad_Enfasis">
+              <PropertyRef Name="NumeroEnfasis" />
+              <PropertyRef Name="SiglaCarrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Se_Encuentra_Uni_Enf_UniAcad">
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="1" />
+          <End Role="Se_Encuentra_Unidad_Enfasis" Type="Self.Se_Encuentra_Unidad_Enfasis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Se_Encuentra_Unidad_Enfasis">
+              <PropertyRef Name="CodigoUnidadAcademica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SeE_Cur">
           <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
           <End Role="Se_Encuentra_Curso_Enfasis" Type="Self.Se_Encuentra_Curso_Enfasis" Multiplicity="*" />
@@ -1032,6 +1068,14 @@
         <Function Name="NombrePersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="Obtener_Items_Por_Seccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ForCod" Type="char" Mode="In" />
+          <Parameter Name="TitSec" Type="nvarchar" Mode="In" />
+          <Parameter Name="Resultado" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="Obtener_Secciones_Por_Formulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ForCod" Type="char" Mode="In" />
+        </Function>
         <Function Name="ObtenerPerfilPorDefecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correo" Type="nvarchar" Mode="In" />
         </Function>
@@ -1146,6 +1190,7 @@
           <EntitySet Name="Provincia" EntityType="Self.Provincia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responde" EntityType="Self.Responde" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Se_Encuentra_Curso_Enfasis" EntityType="Self.Se_Encuentra_Curso_Enfasis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Se_Encuentra_Unidad_Enfasis" EntityType="Self.Se_Encuentra_Unidad_Enfasis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seleccion_Multiple" EntityType="Self.Seleccion_Multiple" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seleccion_Unica" EntityType="Self.Seleccion_Unica" Schema="dbo" store:Type="Tables" />
@@ -1307,6 +1352,14 @@
             <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Responde" EntitySet="Responde" />
           </AssociationSet>
+          <AssociationSet Name="FK_Se_Encuentra_Uni_Enf_Endasis" Association="Self.FK_Se_Encuentra_Uni_Enf_Endasis">
+            <End Role="Enfasis" EntitySet="Enfasis" />
+            <End Role="Se_Encuentra_Unidad_Enfasis" EntitySet="Se_Encuentra_Unidad_Enfasis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Se_Encuentra_Uni_Enf_UniAcad" Association="Self.FK_Se_Encuentra_Uni_Enf_UniAcad">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Se_Encuentra_Unidad_Enfasis" EntitySet="Se_Encuentra_Unidad_Enfasis" />
+          </AssociationSet>
           <AssociationSet Name="FK_SeE_Cur" Association="Self.FK_SeE_Cur">
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Se_Encuentra_Curso_Enfasis" EntitySet="Se_Encuentra_Curso_Enfasis" />
@@ -1459,6 +1512,7 @@
           <NavigationProperty Name="Tiene_Usuario_Perfil_Enfasis" Relationship="Self.FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis" FromRole="Enfasis" ToRole="Tiene_Usuario_Perfil_Enfasis" />
           <NavigationProperty Name="Posee_Enfasis_Perfil_Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Enfasis" FromRole="Enfasis" ToRole="Posee_Enfasis_Perfil_Permiso" />
           <NavigationProperty Name="Curso" Relationship="Self.Se_Encuentra_Curso_Enfasis" FromRole="Enfasis" ToRole="Curso" />
+          <NavigationProperty Name="Unidad_Academica" Relationship="Self.Se_Encuentra_Unidad_Enfasis" FromRole="Enfasis" ToRole="Unidad_Academica" />
         </EntityType>
         <EntityType Name="Escalar">
           <Key>
@@ -1803,6 +1857,7 @@
           <NavigationProperty Name="Curso" Relationship="Self.FK_Cur_Uni" FromRole="Unidad_Academica" ToRole="Curso" />
           <NavigationProperty Name="Facultad" Relationship="Self.FK_Fac_Uni" FromRole="Unidad_Academica" ToRole="Facultad" />
           <NavigationProperty Name="Facultad1" Relationship="Self.Escuela" FromRole="Unidad_Academica" ToRole="Facultad" />
+          <NavigationProperty Name="Enfasis" Relationship="Self.Se_Encuentra_Unidad_Enfasis" FromRole="Unidad_Academica" ToRole="Enfasis" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -2368,7 +2423,11 @@
           <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Opiniometro_DatosEntities1" annotation:LazyLoadingEnabled="true">
+        <Association Name="Se_Encuentra_Unidad_Enfasis">
+          <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" />
           <EntitySet Name="Canton" EntityType="Self.Canton" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" />
@@ -2587,12 +2646,24 @@
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
+          <AssociationSet Name="Se_Encuentra_Unidad_Enfasis" Association="Self.Se_Encuentra_Unidad_Enfasis">
+            <End Role="Enfasis" EntitySet="Enfasis" />
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+          </AssociationSet>
           <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_DatosModel.DatosEstudiante_Result)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_DatosModel.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Obtener_Items_Por_Seccion">
+            <Parameter Name="ForCod" Mode="In" Type="String" />
+            <Parameter Name="TitSec" Mode="In" Type="String" />
+            <Parameter Name="Resultado" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Obtener_Secciones_Por_Formulario" ReturnType="Collection(String)">
+            <Parameter Name="ForCod" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPerfilPorDefecto" ReturnType="Collection(String)">
             <Parameter Name="correo" Mode="In" Type="String" />
@@ -2706,7 +2777,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities1">
+        <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities">
           <EntitySetMapping Name="Administrativo">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Administrativo">
               <MappingFragment StoreEntitySet="Administrativo">
@@ -3090,6 +3161,15 @@
               <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
             </EndProperty>
           </AssociationSetMapping>
+          <AssociationSetMapping Name="Se_Encuentra_Unidad_Enfasis" TypeName="Opiniometro_DatosModel.Se_Encuentra_Unidad_Enfasis" StoreEntitySet="Se_Encuentra_Unidad_Enfasis">
+            <EndProperty Name="Enfasis">
+              <ScalarProperty Name="Numero" ColumnName="NumeroEnfasis" />
+              <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
+            </EndProperty>
+            <EndProperty Name="Unidad_Academica">
+              <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
+            </EndProperty>
+          </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_DatosModel.Store.DatosEstudiante">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Opiniometro_DatosModel.DatosEstudiante_Result">
@@ -3110,6 +3190,8 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="Opiniometro_DatosModel.Store.NombrePersona" />
+          <FunctionImportMapping FunctionImportName="Obtener_Items_Por_Seccion" FunctionName="Opiniometro_DatosModel.Store.Obtener_Items_Por_Seccion" />
+          <FunctionImportMapping FunctionImportName="Obtener_Secciones_Por_Formulario" FunctionName="Opiniometro_DatosModel.Store.Obtener_Secciones_Por_Formulario" />
           <FunctionImportMapping FunctionImportName="ObtenerPerfilPorDefecto" FunctionName="Opiniometro_DatosModel.Store.ObtenerPerfilPorDefecto" />
           <FunctionImportMapping FunctionImportName="ObtenerPerfilUsuario" FunctionName="Opiniometro_DatosModel.Store.ObtenerPerfilUsuario" />
           <FunctionImportMapping FunctionImportName="SP_AgregarPersonaUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_AgregarPersonaUsuario" />
