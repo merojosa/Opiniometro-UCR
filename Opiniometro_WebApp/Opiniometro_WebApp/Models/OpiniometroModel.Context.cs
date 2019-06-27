@@ -89,28 +89,6 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("NombrePersona", cedulaParameter);
         }
     
-        public virtual int Obtener_Items_Por_Seccion(string forCod, string titSec, ObjectParameter resultado)
-        {
-            var forCodParameter = forCod != null ?
-                new ObjectParameter("ForCod", forCod) :
-                new ObjectParameter("ForCod", typeof(string));
-    
-            var titSecParameter = titSec != null ?
-                new ObjectParameter("TitSec", titSec) :
-                new ObjectParameter("TitSec", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Obtener_Items_Por_Seccion", forCodParameter, titSecParameter, resultado);
-        }
-    
-        public virtual ObjectResult<string> Obtener_Secciones_Por_Formulario(string forCod)
-        {
-            var forCodParameter = forCod != null ?
-                new ObjectParameter("ForCod", forCod) :
-                new ObjectParameter("ForCod", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Obtener_Secciones_Por_Formulario", forCodParameter);
-        }
-    
         public virtual ObjectResult<string> ObtenerPerfilPorDefecto(string correo)
         {
             var correoParameter = correo != null ?
