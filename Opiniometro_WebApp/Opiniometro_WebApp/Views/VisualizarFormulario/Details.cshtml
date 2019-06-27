@@ -211,9 +211,8 @@
                                                                     dataType: "json",
                                                                     success: function (chData) {
                                                                     var aData = chData;
-                                                                    var obs = aData[0];
-                                                                    //var nom = aData[1];
-                                                                        for (var data in obs) {
+                                                                    var resp = aData[0];
+                                                                        for (var data in resp) {
                                                                             document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + (obs[data]).toString();
                                                                         }
                                                                     }
