@@ -2368,7 +2368,7 @@
           <End Role="Curso" Type="Self.Curso" Multiplicity="*" />
           <End Role="Enfasis" Type="Self.Enfasis" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Opiniometro_DatosEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" />
           <EntitySet Name="Canton" EntityType="Self.Canton" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" />
@@ -2706,7 +2706,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities1">
+        <EntityContainerMapping StorageEntityContainer="Opiniometro_DatosModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities">
           <EntitySetMapping Name="Administrativo">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Administrativo">
               <MappingFragment StoreEntitySet="Administrativo">
