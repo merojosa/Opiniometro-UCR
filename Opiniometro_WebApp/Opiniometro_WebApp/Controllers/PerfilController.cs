@@ -15,6 +15,19 @@ namespace Opiniometro_WebApp.Controllers
     [Authorize]
     public class PerfilController : Controller
     {
+        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        public ActionResult VerPerfiles(String nom)
+        {
+            if (!String.IsNullOrEmpty(nom))
+            {
+       
+                return View(db.Perfil.Where(m=>m.Nombre.Contains(nom)).ToList());
+            }
+            else {
+                return View(db.Perfil.ToList());
+            }   
+        }
+
         public ActionResult Index()
         {
             PerfilesUsuario model = new PerfilesUsuario();
