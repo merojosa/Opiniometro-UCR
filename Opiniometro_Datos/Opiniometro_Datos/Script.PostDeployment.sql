@@ -540,15 +540,15 @@ VALUES  ('2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 1
  --Conformado_Item_Sec_Form
 INSERT INTO Conformado_Item_Sec_Form (ItemId, CodigoFormulario, TituloSeccion, NombreFormulario, Orden_Seccion, Orden_Item)
 VALUES	('PRE101', '131313', 'Opinion general del curso', 'Evaluación de Profesores', 1, 1),
-		('PRE202', '131313', 'Opinion general del curso', 'Evaluación de Profesores', 1, 2),
+		('PRE202', '131313', 'Opinion general del curso', 'Evaluación de Profesores', 1, 3),
 		('PRE303', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores', 2, 1),	
 		('PRE404', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores', 2, 2),
 		('PRE707', '131313', 'Evaluacion de la participacion estudiantil', 'Evaluación de Profesores', 4, 1),
 		('PRE808', '131313', 'Tematicas transversales de la Universidad de Costa Rica', 'Evaluación de Profesores', 5, 1),
-		('PRE909', '131313', 'Opinion general del curso', 'Evaluación de Profesores', 1, 3),
+		('PRE909', '131313', 'Opinion general del curso', 'Evaluación de Profesores', 1, 4),
 		('PRE505', '131313', 'Información del o la estudiante', 'Evaluación de Profesores', 3, 1),
 		('PRE606', '131313', 'Información del o la estudiante', 'Evaluación de Profesores', 3, 2),
-		('PRE110', '131313', 'Opinion general del curso', 'Evaluación de Profesores', 1, 4);
+		('PRE110', '131313', 'Opinion general del curso', 'Evaluación de Profesores', 1, 2);
 
 --Responde
 INSERT INTO Responde (ItemId, TituloSeccion, FechaRespuesta, CodigoFormularioResp, CedulaPersona, CedulaProfesor, AnnoGrupoResp, SemestreGrupoResp, NumeroGrupoResp, SiglaGrupoResp, Respuesta, Observacion)
