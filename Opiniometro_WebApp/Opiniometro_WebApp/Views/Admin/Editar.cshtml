@@ -74,8 +74,8 @@
                     <div class="col-md-2">
                         <div style="margin-left:80px; width: 200px ">
                             <table class="table">
-                                
-                                    @if (Model.Perfil != null)
+                                @{
+                                    if (Model.Perfil != null)
                                     {
                                         <tr>
                                             <th>
@@ -87,15 +87,11 @@
                                         {
                                             <tr>
                                                 <td>@Model.Perfil.ElementAt(i)</td>
-                                                <td>
-                                                @Html.CheckBoxFor(model => model.perfilesAsignados[i].asignar, new { @checked = "checked", @id = i }) 
-                                                @Html.HiddenFor(Model => Model.perfilesAsignados[i].perfilActual)    
-                                                <br></td>
-                                               
+                                                <td>@Html.CheckBoxFor(model => Model.perfilesAsignados.ElementAt(i).asignar, new { @checked = "checked", @id = i }) <br></td>
                                             </tr>
                                         }
                                     }
-                                
+                                }
 
                             </table>
                         </div>
