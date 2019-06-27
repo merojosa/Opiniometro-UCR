@@ -70,7 +70,7 @@
     }
 
 
-    @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string> secciones = new List<string>(); bool seccion_repetida = false; int ident_seccion = 1; int ident_item = 1;}
+    @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string> secciones = new List<string>(); bool seccion_repetida = false; int ident_seccion = 1; int ident_item = 1; /*No trabja con el orden de secciones e items en la base de datos todavia*/ }
 
     <div class="panel-group" id="accordion1">
 
@@ -91,7 +91,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion1" href="#collapseThree_@id_counter">
-                                @ident_seccion - @Html.DisplayFor(model => formulario.TituloSeccion) @*Despliega las secciones de un formulario en especifico*@
+                                @formulario.Orden_Seccion - @Html.DisplayFor(model => formulario.TituloSeccion) @*Despliega las secciones de un formulario en especifico*@
                             </a>
                         </h4>
                     </div>
@@ -110,7 +110,7 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a data-toggle="collapse" data-parent="#accordion2_@id_counter" href="#collapseThreeOne_@seccion_counter">
-                                                        @ident_item - @Html.DisplayFor(model => seccion.Item.TextoPregunta) @*Despliega las preguntas de una seccion en especifico*@
+                                                        @seccion.Orden_Item - @Html.DisplayFor(model => seccion.Item.TextoPregunta) @*Despliega las preguntas de una seccion en especifico*@
                                                     </a>
                                                 </h4>
                                             </div>
