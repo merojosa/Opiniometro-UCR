@@ -87,11 +87,11 @@
         if (seccion_repetida == false)
         {
 
-                <div class="panel panel-default">
+                <div class="panel panel-default ">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion1" href="#collapseThree_@id_counter">
-                                @formulario.Orden_Seccion - @Html.DisplayFor(model => formulario.TituloSeccion) @*Despliega las secciones de un formulario en especifico*@
+                                @formulario.Orden_Seccion - @Html.DisplayFor(model => formulario.TituloSeccion)@*Despliega las secciones de un formulario en especifico*@
                             </a>
                         </h4>
                     </div>
@@ -110,7 +110,7 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a data-toggle="collapse" data-parent="#accordion2_@id_counter" href="#collapseThreeOne_@seccion_counter">
-                                                        @seccion.Orden_Item - @Html.DisplayFor(model => seccion.Item.TextoPregunta) @*Despliega las preguntas de una seccion en especifico*@
+                                                        @seccion.Orden_Item - <b>@seccion.ItemId</b>.@Html.DisplayFor(model => seccion.Item.TextoPregunta) @*Despliega las preguntas de una seccion en especifico*@
                                                     </a>
                                                 </h4>
                                             </div>
