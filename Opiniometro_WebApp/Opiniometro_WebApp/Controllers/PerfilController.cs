@@ -17,6 +17,33 @@ namespace Opiniometro_WebApp.Controllers
     public class PerfilController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        public ActionResult VerPerfiles(String nom)
+        {
+            if (!String.IsNullOrEmpty(nom))
+            {
+       
+                return View(db.Perfil.Where(m=>m.Nombre.Contains(nom)).ToList());
+            }
+            else {
+                return View(db.Perfil.ToList());
+            }   
+        }
+
+        public ActionResult Index()
+        {
+            PerfilesUsuario model = new PerfilesUsuario();
+            model.ListaPerfiles = ObtenerPerfiles();
+
+            // Si el usuario recien se loggea
+            if(IdentidadManager.obtener_perfil_actual() == null)
+            {
+                // Se escoge un perfil por defecto en caso de que le de cancelar o pase de pagina (no elige perfil).
+                cambiar_perfil(model.ListaPerfiles.ElementAt(0));
+            }
+            // Si no es la primera vez, no se cambia el perfil porque ya hay uno elegido.
+
+            return View(model);
+        }
 
         public ActionResult Cambiar()
         {
@@ -24,7 +51,7 @@ namespace Opiniometro_WebApp.Controllers
             model.ListaPerfiles = ObtenerPerfiles();
 
             // Si el usuario recien se loggea
-            if(IdentidadManager.obtener_perfil_actual() == null)
+            if (IdentidadManager.obtener_perfil_actual() == null)
             {
                 // Se escoge un perfil por defecto en caso de que le de cancelar o pase de pagina (no elige perfil).
                 cambiar_perfil(model.ListaPerfiles.ElementAt(0));

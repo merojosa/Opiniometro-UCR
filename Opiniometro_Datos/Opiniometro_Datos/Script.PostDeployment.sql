@@ -425,6 +425,46 @@ VALUES ('CI1330', 100, 'SC-01234'),
 	   ('DE1001', 12, 'SC-89457'),
 	   ('DE2001', 12, 'SC-89457');
 
+--DROP PROCEDURE CursosSegunCarrera
+--Obtiene la lista de cursos que pertenecen a cierta carrera
+GO
+CREATE PROCEDURE CursosSegunCarrera
+@siglaCarrera NVARCHAR(10)
+AS
+BEGIN
+SELECT C.Nombre, C.Sigla, C.Tipo, C.CodigoUnidad
+FROM Curso C
+WHERE C.Sigla IN (SELECT S.SiglaCurso
+				FROM Se_Encuentra_Curso_Enfasis S
+				WHERE S.SiglaCarrera = @siglaCarrera)
+END
+GO
+
+--Obtiene la lista de cursos que pertenecen a cierto semestre
+CREATE PROCEDURE CursosSegunSemestre
+@semestre TINYINT
+AS
+BEGIN
+SELECT C.Nombre, C.Sigla, C.Tipo, C.CodigoUnidad
+FROM Curso C
+WHERE C.Sigla IN (SELECT G.SiglaCurso
+				FROM Grupo G
+				WHERE G.SemestreGrupo = @semestre)
+END
+GO
+
+--Obtiene la lista de cursos que pertenecen a cierto año
+CREATE PROCEDURE CursosSegunAnno
+@anno SMALLINT
+AS
+BEGIN
+SELECT C.Nombre, C.Sigla, C.Tipo, C.CodigoUnidad
+FROM Curso C
+WHERE C.Sigla IN (SELECT G.SiglaCurso
+				FROM Grupo G
+				WHERE G.AnnoGrupo = @anno)
+END
+GO
 
 
 --Script C.X. Solutions
