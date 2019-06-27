@@ -70,7 +70,7 @@
     }
 
 
-    @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string> secciones = new List<string>(); bool seccion_repetida = false; string admin = "Admin";}
+    @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string> secciones = new List<string>(); bool seccion_repetida = false; int ident_seccion = 1; int ident_item = 1;}
 
     <div class="panel-group" id="accordion1">
 
@@ -80,18 +80,18 @@
 
             @*Se ocupa poner una restriccion para no mostrar seciones repetidas*@
 
-            if (secciones.Contains(seccion_actual)) { seccion_repetida = true; }
-            else { secciones.Add(seccion_actual); seccion_repetida = false; }
+        if (secciones.Contains(seccion_actual)) { seccion_repetida = true; }
+        else { secciones.Add(seccion_actual); seccion_repetida = false; }
 
 
-            if (seccion_repetida == false)
-            {
+        if (seccion_repetida == false)
+        {
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion1" href="#collapseThree_@id_counter">
-                                @Html.DisplayFor(model => formulario.TituloSeccion) @*Despliega las secciones de un formulario en especifico*@
+                                @ident_seccion - @Html.DisplayFor(model => formulario.TituloSeccion) @*Despliega las secciones de un formulario en especifico*@
                             </a>
                         </h4>
                     </div>
@@ -110,7 +110,7 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a data-toggle="collapse" data-parent="#accordion2_@id_counter" href="#collapseThreeOne_@seccion_counter">
-                                                        @Html.DisplayFor(model => seccion.Item.TextoPregunta) @*Despliega las preguntas de una seccion en especifico*@
+                                                        @ident_item - @Html.DisplayFor(model => seccion.Item.TextoPregunta) @*Despliega las preguntas de una seccion en especifico*@
                                                     </a>
                                                 </h4>
                                             </div>
@@ -239,11 +239,12 @@
                                                                                         var ap2 = aData[3];
 
                                                                                             for (var data in obs) {
-                                                                                                //if (@perfil_actual.Equals(admin)) {
+                                                                                                //if (@perfil_actual.Equals("Admin")) { //Cuando se incluye el if lo que esta dentro no se despliega incluso si la condicion es verdadera
                                                                                                 document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + "<br>";
                                                                                                 //} else {
 
-                                                                                                //}                        
+                                                                                                //}   
+                                                                                                // Si no se acomodan las observaciones se bloquea el collapse de mostrar observaciones
                                                                                             }
                                                                                                 }
                                                                                             });
@@ -268,6 +269,7 @@
                                         </div>
 
                                         seccion_counter++;
+                                        ident_item++;
                                     }
                                 }
                             </div>
@@ -277,6 +279,8 @@
                 </div>
 
                 id_counter++;
+                ident_seccion++;
+                ident_item = 1;
             }
         }
 
