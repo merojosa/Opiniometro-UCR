@@ -14,6 +14,7 @@ namespace Opiniometro_WebApp.Controllers.Servicios
         // Estructura de datos: hash: (Carrera-Enfasis, permiso).
 
         private HashSet<string> permisos_usuario;
+        private List<Enfasis> lista_enfasis;
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
         public IdentidadManager()
@@ -26,6 +27,36 @@ namespace Opiniometro_WebApp.Controllers.Servicios
         {
             // Verifico si existe la llave de la combinacion (sigla de la carrera, su enfasis, un permiso en especifico).
             return permisos_usuario.Contains(sigla_carrera + ',' + enfasis + ',' + id_permiso);
+        }
+
+        public bool verificar_permiso(int id_permiso)
+        {
+            bool autorizado = false;
+
+            foreach(Enfasis un_enfasis in lista_enfasis)
+            {
+                // Si ya esta autorizado, no tiene que hacer nada.
+                if(autorizado == false)
+                {
+                    autorizado = verificar_permiso(un_enfasis.SiglaCarrera, un_enfasis.Numero, id_permiso);
+                }
+            }
+
+            return autorizado;
+        }
+
+        public void actualizar_enfasis()
+        {
+            // Procedimiento almacenado.
+
+            // Iterar por cada tupla
+
+            // Guardarla en la lista
+        }
+
+        public List<Enfasis> obtener_enfasis()
+        {
+            return null;
         }
 
         /*
