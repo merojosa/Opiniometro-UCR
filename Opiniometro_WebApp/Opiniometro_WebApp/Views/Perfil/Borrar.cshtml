@@ -8,16 +8,18 @@
 
 @using (Html.BeginForm("ObtenerPerfilBorrar", "Perfil", FormMethod.Post))
 {
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-        </tr>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+    </tr>
 
-        @{
-            bool marcar_primero = true;
-            foreach (var item in Model)
+    @{
+        bool marcar_primero = true;
+        foreach (var item in Model)
+        {
+            if (item.Nombre != "Administrador")    // No se puede eliminar el perfil administrador.
             {
                 <tr>
                     <td>
@@ -35,6 +37,7 @@
                 </tr>
             }
         }
-    </table>
+    }
+</table>
     <input type="submit" value="Borrar" />
 }

@@ -105,12 +105,20 @@ namespace Opiniometro_WebApp.Controllers
         // POST: CRUDPERFILES/Delete/5
         [HttpPost, ActionName("ConfirmarBorrado")]
         [ValidateAntiForgeryToken]
-        public ActionResult BorrarConfirmado(string id)
+        public ActionResult BorrarConfirmado(string nombre_perfil)
         {
-            Perfil perfil = db.Perfil.Find(id);
-            db.Perfil.Remove(perfil);
-            db.SaveChanges();
-            return RedirectToAction("Borrar");
+            // No se puede eliminar el perfil administrador.
+            if(nombre_perfil != "Administrador")
+            {
+                Perfil perfil = db.Perfil.Find(nombre_perfil);
+                db.Perfil.Remove(perfil);
+                db.SaveChanges();
+                return RedirectToAction("Borrar");
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable);
+            }
         }
 
         public ActionResult Borrar()
