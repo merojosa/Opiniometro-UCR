@@ -73,10 +73,14 @@
                         <span>: </span>
                     </td>
                     <td align="left">
-                        <span> de </span>
-                        @Html.TextBoxFor(Model => form.FechaDeCorte.FechaInicio, "{0:dd/MM/yyyy hh tt}", new { @class = "fecha-inicial form-control default-date-picker"})
-                        <span> a </span>
-                        @Html.TextBoxFor(Model => form.FechaDeCorte.FechaFinal, "{0:dd/MM/yyyy hh tt}", new { @class = "fecha-final form-control default-date-picker"})
+                        <span>Inicio: </span>
+                        
+                        <input type="datetime-local" @*style="width: 20vw;"*@ textmode="Date" class="hasDatepicker fecha-inicial" />
+
+                        <span> Fin: </span>
+
+                        <input type="datetime-local" @*style="width: 150px;"*@ textmode="Date" class="hasDatepicker fecha-final" />
+
                         <br />
                     </td>
                     <td style="width:5vw;"> </td>
