@@ -42,6 +42,15 @@
           <Property Name="Anno" Type="smallint" Nullable="false" />
           <Property Name="Semestre" Type="tinyint" Nullable="false" />
         </EntityType>
+        <EntityType Name="Conformado_For_Sec">
+          <Key>
+            <PropertyRef Name="CodigoFormulario" />
+            <PropertyRef Name="TituloSeccion" />
+          </Key>
+          <Property Name="CodigoFormulario" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="TituloSeccion" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="Orden_Seccion" Type="int" />
+        </EntityType>
         <EntityType Name="Conformado_Item_Sec_Form">
           <Key>
             <PropertyRef Name="ItemId" />
@@ -450,6 +459,30 @@
               <PropertyRef Name="Titulo" />
             </Principal>
             <Dependent Role="Conformado_Item_Sec_Form">
+              <PropertyRef Name="TituloSeccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conf_For">
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
+          <End Role="Conformado_For_Sec" Type="Self.Conformado_For_Sec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="CodigoFormulario" />
+            </Principal>
+            <Dependent Role="Conformado_For_Sec">
+              <PropertyRef Name="CodigoFormulario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conf_Sec">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1" />
+          <End Role="Conformado_For_Sec" Type="Self.Conformado_For_Sec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Titulo" />
+            </Principal>
+            <Dependent Role="Conformado_For_Sec">
               <PropertyRef Name="TituloSeccion" />
             </Dependent>
           </ReferentialConstraint>
@@ -1008,6 +1041,9 @@
         <Function Name="NombrePersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ObtenerPerfilesUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="ObtenerPerfilPorDefecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correo" Type="nvarchar" Mode="In" />
         </Function>
@@ -1023,6 +1059,9 @@
           <Parameter Name="nombre" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SF_GenerarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
+        <Function Name="SF_ObtenerCedula" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char">
+          <Parameter Name="correoInstit" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SP_AgregarPersonaUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
@@ -1069,7 +1108,7 @@
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
         </Function>
         <Function Name="SP_ModificarPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CedulaBusqueda" Type="nvarchar" Mode="In" />
+          <Parameter Name="CedulaBusqueda" Type="varchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
           <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
@@ -1095,6 +1134,7 @@
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ciclo_Lectivo" EntityType="Self.Ciclo_Lectivo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Conformado_For_Sec" EntityType="Self.Conformado_For_Sec" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Conformado_Item_Sec_Form" EntityType="Self.Conformado_Item_Sec_Form" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Direccion_Persona" EntityType="Self.Direccion_Persona" Schema="dbo" store:Type="Tables" />
@@ -1151,6 +1191,14 @@
           <AssociationSet Name="FK_Con_Sec" Association="Self.FK_Con_Sec">
             <End Role="Seccion" EntitySet="Seccion" />
             <End Role="Conformado_Item_Sec_Form" EntitySet="Conformado_Item_Sec_Form" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conf_For" Association="Self.FK_Conf_For">
+            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Conformado_For_Sec" EntitySet="Conformado_For_Sec" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conf_Sec" Association="Self.FK_Conf_Sec">
+            <End Role="Seccion" EntitySet="Seccion" />
+            <End Role="Conformado_For_Sec" EntitySet="Conformado_For_Sec" />
           </AssociationSet>
           <AssociationSet Name="FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" Association="Self.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -1362,6 +1410,17 @@
           <Property Name="Semestre" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Grupo" Relationship="Self.FK_Gru_Cic" FromRole="Ciclo_Lectivo" ToRole="Grupo" />
         </EntityType>
+        <EntityType Name="Conformado_For_Sec">
+          <Key>
+            <PropertyRef Name="CodigoFormulario" />
+            <PropertyRef Name="TituloSeccion" />
+          </Key>
+          <Property Name="CodigoFormulario" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TituloSeccion" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Orden_Seccion" Type="Int32" />
+          <NavigationProperty Name="Formulario" Relationship="Self.FK_Conf_For" FromRole="Conformado_For_Sec" ToRole="Formulario" />
+          <NavigationProperty Name="Seccion" Relationship="Self.FK_Conf_Sec" FromRole="Conformado_For_Sec" ToRole="Seccion" />
+        </EntityType>
         <EntityType Name="Conformado_Item_Sec_Form">
           <Key>
             <PropertyRef Name="ItemId" />
@@ -1459,6 +1518,7 @@
           <Property Name="CodigoFormulario" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="CodigoUnidadAca" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Conformado_For_Sec" Relationship="Self.FK_Conf_For" FromRole="Formulario" ToRole="Conformado_For_Sec" />
           <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_For" FromRole="Formulario" ToRole="Conformado_Item_Sec_Form" />
           <NavigationProperty Name="Unidad_Academica" Relationship="Self.FK_For_Uni" FromRole="Formulario" ToRole="Unidad_Academica" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_For" FromRole="Formulario" ToRole="Formulario_Respuesta" />
@@ -1664,6 +1724,7 @@
           </Key>
           <Property Name="Titulo" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Conformado_For_Sec" Relationship="Self.FK_Conf_Sec" FromRole="Seccion" ToRole="Conformado_For_Sec" />
           <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_Sec" FromRole="Seccion" ToRole="Conformado_Item_Sec_Form" />
           <NavigationProperty Name="Responde" Relationship="Self.FK_Res_Sec" FromRole="Seccion" ToRole="Responde" />
         </EntityType>
@@ -1837,6 +1898,30 @@
             <Dependent Role="Grupo">
               <PropertyRef Name="AnnoGrupo" />
               <PropertyRef Name="SemestreGrupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conf_For">
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
+          <End Role="Conformado_For_Sec" Type="Self.Conformado_For_Sec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formulario">
+              <PropertyRef Name="CodigoFormulario" />
+            </Principal>
+            <Dependent Role="Conformado_For_Sec">
+              <PropertyRef Name="CodigoFormulario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Conf_Sec">
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="1" />
+          <End Role="Conformado_For_Sec" Type="Self.Conformado_For_Sec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seccion">
+              <PropertyRef Name="Titulo" />
+            </Principal>
+            <Dependent Role="Conformado_For_Sec">
+              <PropertyRef Name="TituloSeccion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2298,6 +2383,7 @@
           <EntitySet Name="Carrera" EntityType="Self.Carrera" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" />
           <EntitySet Name="Ciclo_Lectivo" EntityType="Self.Ciclo_Lectivo" />
+          <EntitySet Name="Conformado_For_Sec" EntityType="Self.Conformado_For_Sec" />
           <EntitySet Name="Conformado_Item_Sec_Form" EntityType="Self.Conformado_Item_Sec_Form" />
           <EntitySet Name="Curso" EntityType="Self.Curso" />
           <EntitySet Name="Distrito" EntityType="Self.Distrito" />
@@ -2355,6 +2441,14 @@
           <AssociationSet Name="FK_Gru_Cic" Association="Self.FK_Gru_Cic">
             <End Role="Ciclo_Lectivo" EntitySet="Ciclo_Lectivo" />
             <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conf_For" Association="Self.FK_Conf_For">
+            <End Role="Formulario" EntitySet="Formulario" />
+            <End Role="Conformado_For_Sec" EntitySet="Conformado_For_Sec" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Conf_Sec" Association="Self.FK_Conf_Sec">
+            <End Role="Seccion" EntitySet="Seccion" />
+            <End Role="Conformado_For_Sec" EntitySet="Conformado_For_Sec" />
           </AssociationSet>
           <AssociationSet Name="FK_Con_For" Association="Self.FK_Con_For">
             <End Role="Formulario" EntitySet="Formulario" />
@@ -2520,6 +2614,9 @@
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="ObtenerPerfilesUsuario" ReturnType="Collection(OpiniometroModel.ObtenerPerfilesUsuario_Result)">
+            <Parameter Name="Correo" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="ObtenerPerfilPorDefecto" ReturnType="Collection(String)">
             <Parameter Name="correo" Mode="In" Type="String" />
           </FunctionImport>
@@ -2630,6 +2727,10 @@
           <Property Type="String" Name="Apellido2" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Carne" Nullable="false" MaxLength="6" />
         </ComplexType>
+        <ComplexType Name="ObtenerPerfilesUsuario_Result">
+          <Property Type="String" Name="SiglaCarrera" Nullable="false" MaxLength="10" />
+          <Property Type="Byte" Name="NumeroEnfasis" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="SP_ContarRespuestasPorGrupo_Result">
           <Property Type="String" Name="Respuesta" Nullable="true" MaxLength="500" />
           <Property Type="Int32" Name="cntResp" Nullable="true" />
@@ -2682,6 +2783,15 @@
               <MappingFragment StoreEntitySet="Ciclo_Lectivo">
                 <ScalarProperty Name="Anno" ColumnName="Anno" />
                 <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Conformado_For_Sec">
+            <EntityTypeMapping TypeName="OpiniometroModel.Conformado_For_Sec">
+              <MappingFragment StoreEntitySet="Conformado_For_Sec">
+                <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
+                <ScalarProperty Name="TituloSeccion" ColumnName="TituloSeccion" />
+                <ScalarProperty Name="Orden_Seccion" ColumnName="Orden_Seccion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3054,6 +3164,14 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="OpiniometroModel.Store.NombrePersona" />
+          <FunctionImportMapping FunctionImportName="ObtenerPerfilesUsuario" FunctionName="OpiniometroModel.Store.ObtenerPerfilesUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OpiniometroModel.ObtenerPerfilesUsuario_Result">
+                <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
+                <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ObtenerPerfilPorDefecto" FunctionName="OpiniometroModel.Store.ObtenerPerfilPorDefecto" />
           <FunctionImportMapping FunctionImportName="ObtenerPerfilUsuario" FunctionName="OpiniometroModel.Store.ObtenerPerfilUsuario" />
           <FunctionImportMapping FunctionImportName="ProcIntroducirSeccion" FunctionName="OpiniometroModel.Store.ProcIntroducirSeccion" />

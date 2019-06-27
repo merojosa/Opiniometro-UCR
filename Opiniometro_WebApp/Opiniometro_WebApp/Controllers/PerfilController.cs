@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Threading;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System.Net;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -44,10 +45,26 @@ namespace Opiniometro_WebApp.Controllers
             return View(model);
         }
 
+        public ActionResult Cambiar()
+        {
+            PerfilesUsuario model = new PerfilesUsuario();
+            model.ListaPerfiles = ObtenerPerfiles();
+
+            // Si el usuario recien se loggea
+            if (IdentidadManager.obtener_perfil_actual() == null)
+            {
+                // Se escoge un perfil por defecto en caso de que le de cancelar o pase de pagina (no elige perfil).
+                cambiar_perfil(model.ListaPerfiles.ElementAt(0));
+            }
+            // Si no es la primera vez, no se cambia el perfil porque ya hay uno elegido.
+
+            return View(model);
+        }
+
 
 
         [HttpPost]
-        public ActionResult Index(PerfilesUsuario model)
+        public ActionResult Cambiar(PerfilesUsuario model)
         {
             cambiar_perfil(model.perfilSeleccionado);
             return RedirectToAction("Index", "Home");
@@ -87,6 +104,82 @@ namespace Opiniometro_WebApp.Controllers
             ICollection<String> perfiles;
             perfiles = db.ObtenerPerfilUsuario(correo_autenticado).ToList();
             return perfiles;
+        }
+
+        [HttpPost]
+        public ActionResult ObtenerPerfilBorrar()
+        {
+            if (Request.Form["NombrePerfil"] == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            string nombre_perfil = Request.Form["NombrePerfil"].ToString();
+
+
+            return RedirectToAction("ConfirmarBorrado", new { id = nombre_perfil });
+        }
+
+        public ActionResult ConfirmarBorrado(string id)
+        {
+            Perfil perfil = db.Perfil.Find(id);
+            if (perfil == null)
+            {
+                return HttpNotFound();
+            }
+            return View(perfil);
+        }
+
+        // POST: CRUDPERFILES/Delete/5
+        [HttpPost, ActionName("ConfirmarBorrado")]
+        [ValidateAntiForgeryToken]
+        public ActionResult BorrarConfirmado(string nombre_perfil)
+        {
+            // No se puede eliminar el perfil administrador.
+            if(nombre_perfil != "Administrador")
+            {
+                Perfil perfil = db.Perfil.Find(nombre_perfil);
+                db.Perfil.Remove(perfil);
+                db.SaveChanges();
+                return RedirectToAction("Borrar");
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable);
+            }
+        }
+
+        public ActionResult Borrar()
+        {
+            return View(db.Perfil.ToList());
+        }
+
+        // GET: CRUDPERFILES/Create
+        public ActionResult Crear()
+        {
+            return View();
+        }
+
+        // POST: CRUDPERFILES/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Crear([Bind(Include = "Nombre,Descripcion")] Perfil perfil)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Perfil.Add(perfil);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(perfil);
+        }
+
+        public JsonResult IsNombrePerfilAvailable(string Nombre)
+        {
+            return Json(!db.Perfil.Any(perfil => perfil.Nombre == Nombre), JsonRequestBehavior.AllowGet);
+
         }
     }
 }
