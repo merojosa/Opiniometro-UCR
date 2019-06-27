@@ -104,15 +104,6 @@
           <Property Name="Numero" Type="tinyint" Nullable="false" />
           <Property Name="SiglaCarrera" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <EntityType Name="Escalar">
-          <Key>
-            <PropertyRef Name="ItemId" />
-          </Key>
-          <Property Name="ItemId" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="Inicio" Type="smallint" Nullable="false" />
-          <Property Name="Fin" Type="smallint" Nullable="false" />
-          <Property Name="IsaEstrella" Type="bit" />
-        </EntityType>
         <EntityType Name="Escuela">
           <Key>
             <PropertyRef Name="CodigoUnidadAcademica" />
@@ -204,7 +195,6 @@
           <Property Name="TieneObservacion" Type="bit" />
           <Property Name="TipoPregunta" Type="tinyint" Nullable="false" />
           <Property Name="NombreCategoria" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="EtiquetaObservacion" Type="nvarchar" MaxLength="25" />
         </EntityType>
         <EntityType Name="Matricula">
           <Key>
@@ -219,16 +209,6 @@
           <Property Name="Sigla" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="Anno" Type="char" MaxLength="4" Nullable="false" />
           <Property Name="Semestre" Type="tinyint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Opciones_De_Respuestas_Seleccion_Multiple">
-          <Key>
-            <PropertyRef Name="ItemId" />
-            <PropertyRef Name="Orden" />
-            <PropertyRef Name="OpcionRespuesta" />
-          </Key>
-          <Property Name="ItemId" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="Orden" Type="smallint" Nullable="false" />
-          <Property Name="OpcionRespuesta" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="Opciones_De_Respuestas_Seleccion_Unica">
           <Key>
@@ -300,7 +280,6 @@
             <PropertyRef Name="SemestreGrupoResp" />
             <PropertyRef Name="NumeroGrupoResp" />
             <PropertyRef Name="SiglaGrupoResp" />
-            <PropertyRef Name="Respuesta" />
           </Key>
           <Property Name="ItemId" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="TituloSeccion" Type="nvarchar" MaxLength="120" Nullable="false" />
@@ -313,7 +292,7 @@
           <Property Name="NumeroGrupoResp" Type="tinyint" Nullable="false" />
           <Property Name="SiglaGrupoResp" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="Observacion" Type="nvarchar" MaxLength="500" />
-          <Property Name="Respuesta" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Respuesta" Type="nvarchar" MaxLength="500" />
           <Property Name="RespuestaProfesor" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Se_Encuentra_Curso_Enfasis">
@@ -332,12 +311,6 @@
           </Key>
           <Property Name="Titulo" Type="nvarchar" MaxLength="120" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="300" />
-        </EntityType>
-        <EntityType Name="Seleccion_Multiple">
-          <Key>
-            <PropertyRef Name="ItemId" />
-          </Key>
-          <Property Name="ItemId" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="Seleccion_Unica">
           <Key>
@@ -407,6 +380,11 @@
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="ValorRandom">
+          <Property Name="randomvalue" Type="varbinary" MaxLength="8000" />
+        </EntityType>-->
         <Association Name="FK_Adm_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Administrativo" Type="Self.Administrativo" Multiplicity="0..1" />
@@ -578,18 +556,6 @@
             </Principal>
             <Dependent Role="Escuela">
               <PropertyRef Name="CodigoFacultad" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Esc_Ite">
-          <End Role="Item" Type="Self.Item" Multiplicity="1" />
-          <End Role="Escalar" Type="Self.Escalar" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Item">
-              <PropertyRef Name="ItemId" />
-            </Principal>
-            <Dependent Role="Escalar">
-              <PropertyRef Name="ItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -772,18 +738,6 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OpcResMul_Ite">
-          <End Role="Seleccion_Multiple" Type="Self.Seleccion_Multiple" Multiplicity="1" />
-          <End Role="Opciones_De_Respuestas_Seleccion_Multiple" Type="Self.Opciones_De_Respuestas_Seleccion_Multiple" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Seleccion_Multiple">
-              <PropertyRef Name="ItemId" />
-            </Principal>
-            <Dependent Role="Opciones_De_Respuestas_Seleccion_Multiple">
-              <PropertyRef Name="ItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OpcResUni_Ite">
           <End Role="Seleccion_Unica" Type="Self.Seleccion_Unica" Multiplicity="1" />
           <End Role="Opciones_De_Respuestas_Seleccion_Unica" Type="Self.Opciones_De_Respuestas_Seleccion_Unica" Multiplicity="*" />
           <ReferentialConstraint>
@@ -918,18 +872,6 @@
             <Dependent Role="Se_Encuentra_Curso_Enfasis">
               <PropertyRef Name="CodigoEnfasis" />
               <PropertyRef Name="SiglaCarrera" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sel_Mul_Ite">
-          <End Role="Item" Type="Self.Item" Multiplicity="1" />
-          <End Role="Seleccion_Multiple" Type="Self.Seleccion_Multiple" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Item">
-              <PropertyRef Name="ItemId" />
-            </Principal>
-            <Dependent Role="Seleccion_Multiple">
-              <PropertyRef Name="ItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1074,15 +1016,6 @@
           <Parameter Name="siglaCurso" Type="char" Mode="In" />
           <Parameter Name="itemId" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="SP_DevolverRespuestasPorGrupo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="codigoFormulario" Type="char" Mode="In" />
-          <Parameter Name="cedulaProfesor" Type="char" Mode="In" />
-          <Parameter Name="annoGrupo" Type="smallint" Mode="In" />
-          <Parameter Name="semestreGrupo" Type="tinyint" Mode="In" />
-          <Parameter Name="numeroGrupo" Type="tinyint" Mode="In" />
-          <Parameter Name="siglaCurso" Type="char" Mode="In" />
-          <Parameter Name="itemId" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="SP_ExistenciaCorreo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
@@ -1125,7 +1058,6 @@
           <EntitySet Name="Distrito" EntityType="Self.Distrito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empadronado" EntityType="Self.Empadronado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enfasis" EntityType="Self.Enfasis" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Escalar" EntityType="Self.Escalar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Escuela" EntityType="Self.Escuela" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estudiante" EntityType="Self.Estudiante" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Facultad" EntityType="Self.Facultad" Schema="dbo" store:Type="Tables" />
@@ -1136,7 +1068,6 @@
           <EntitySet Name="Imparte" EntityType="Self.Imparte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Matricula" EntityType="Self.Matricula" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Opciones_De_Respuestas_Seleccion_Multiple" EntityType="Self.Opciones_De_Respuestas_Seleccion_Multiple" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Opciones_De_Respuestas_Seleccion_Unica" EntityType="Self.Opciones_De_Respuestas_Seleccion_Unica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Perfil" EntityType="Self.Perfil" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
@@ -1147,7 +1078,6 @@
           <EntitySet Name="Responde" EntityType="Self.Responde" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Se_Encuentra_Curso_Enfasis" EntityType="Self.Se_Encuentra_Curso_Enfasis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Seleccion_Multiple" EntityType="Self.Seleccion_Multiple" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seleccion_Unica" EntityType="Self.Seleccion_Unica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TelefonoPersona" EntityType="Self.TelefonoPersona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Texto_Libre" EntityType="Self.Texto_Libre" Schema="dbo" store:Type="Tables" />
@@ -1211,10 +1141,6 @@
             <End Role="Facultad" EntitySet="Facultad" />
             <End Role="Escuela" EntitySet="Escuela" />
           </AssociationSet>
-          <AssociationSet Name="FK_Esc_Ite" Association="Self.FK_Esc_Ite">
-            <End Role="Item" EntitySet="Item" />
-            <End Role="Escalar" EntitySet="Escalar" />
-          </AssociationSet>
           <AssociationSet Name="FK_Esc_Uni" Association="Self.FK_Esc_Uni">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
             <End Role="Escuela" EntitySet="Escuela" />
@@ -1272,10 +1198,6 @@
             <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
           </AssociationSet>
           <AssociationSet Name="FK_OpcResMul_Ite" Association="Self.FK_OpcResMul_Ite">
-            <End Role="Seleccion_Multiple" EntitySet="Seleccion_Multiple" />
-            <End Role="Opciones_De_Respuestas_Seleccion_Multiple" EntitySet="Opciones_De_Respuestas_Seleccion_Multiple" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OpcResUni_Ite" Association="Self.FK_OpcResUni_Ite">
             <End Role="Seleccion_Unica" EntitySet="Seleccion_Unica" />
             <End Role="Opciones_De_Respuestas_Seleccion_Unica" EntitySet="Opciones_De_Respuestas_Seleccion_Unica" />
           </AssociationSet>
@@ -1314,10 +1236,6 @@
           <AssociationSet Name="FK_SeE_Enf" Association="Self.FK_SeE_Enf">
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Se_Encuentra_Curso_Enfasis" EntitySet="Se_Encuentra_Curso_Enfasis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sel_Mul_Ite" Association="Self.FK_Sel_Mul_Ite">
-            <End Role="Item" EntitySet="Item" />
-            <End Role="Seleccion_Multiple" EntitySet="Seleccion_Multiple" />
           </AssociationSet>
           <AssociationSet Name="FK_Sel_Uni_Ite" Association="Self.FK_Sel_Uni_Ite">
             <End Role="Item" EntitySet="Item" />
@@ -1460,16 +1378,6 @@
           <NavigationProperty Name="Posee_Enfasis_Perfil_Permiso" Relationship="Self.FK_PoseeEnfasisPerfil_Enfasis" FromRole="Enfasis" ToRole="Posee_Enfasis_Perfil_Permiso" />
           <NavigationProperty Name="Curso" Relationship="Self.Se_Encuentra_Curso_Enfasis" FromRole="Enfasis" ToRole="Curso" />
         </EntityType>
-        <EntityType Name="Escalar">
-          <Key>
-            <PropertyRef Name="ItemId" />
-          </Key>
-          <Property Name="ItemId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Inicio" Type="Int16" Nullable="false" />
-          <Property Name="Fin" Type="Int16" Nullable="false" />
-          <Property Name="IsaEstrella" Type="Boolean" />
-          <NavigationProperty Name="Item" Relationship="Self.FK_Esc_Ite" FromRole="Escalar" ToRole="Item" />
-        </EntityType>
         <EntityType Name="Estudiante">
           <Key>
             <PropertyRef Name="CedulaEstudiante" />
@@ -1573,12 +1481,9 @@
           <Property Name="TieneObservacion" Type="Boolean" />
           <Property Name="TipoPregunta" Type="Byte" Nullable="false" />
           <Property Name="NombreCategoria" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="EtiquetaObservacion" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Categoria" Relationship="Self.FK_Ite_Cat" FromRole="Item" ToRole="Categoria" />
           <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_Ite" FromRole="Item" ToRole="Conformado_Item_Sec_Form" />
-          <NavigationProperty Name="Escalar" Relationship="Self.FK_Esc_Ite" FromRole="Item" ToRole="Escalar" />
           <NavigationProperty Name="Responde" Relationship="Self.FK_Res_Ite" FromRole="Item" ToRole="Responde" />
-          <NavigationProperty Name="Seleccion_Multiple" Relationship="Self.FK_Sel_Mul_Ite" FromRole="Item" ToRole="Seleccion_Multiple" />
           <NavigationProperty Name="Seleccion_Unica" Relationship="Self.FK_Sel_Uni_Ite" FromRole="Item" ToRole="Seleccion_Unica" />
           <NavigationProperty Name="Texto_Libre" Relationship="Self.FK_Tex_Ite" FromRole="Item" ToRole="Texto_Libre" />
         </EntityType>
@@ -1597,17 +1502,6 @@
           <Property Name="Semestre" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Estudiante" Relationship="Self.FK_Matricula_Profesor" FromRole="Matricula" ToRole="Estudiante" />
         </EntityType>
-        <EntityType Name="Opciones_De_Respuestas_Seleccion_Multiple">
-          <Key>
-            <PropertyRef Name="ItemId" />
-            <PropertyRef Name="Orden" />
-            <PropertyRef Name="OpcionRespuesta" />
-          </Key>
-          <Property Name="ItemId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Orden" Type="Int16" Nullable="false" />
-          <Property Name="OpcionRespuesta" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Seleccion_Multiple" Relationship="Self.FK_OpcResMul_Ite" FromRole="Opciones_De_Respuestas_Seleccion_Multiple" ToRole="Seleccion_Multiple" />
-        </EntityType>
         <EntityType Name="Opciones_De_Respuestas_Seleccion_Unica">
           <Key>
             <PropertyRef Name="ItemId" />
@@ -1617,7 +1511,7 @@
           <Property Name="ItemId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Orden" Type="Int16" Nullable="false" />
           <Property Name="OpcionRespuesta" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Seleccion_Unica" Relationship="Self.FK_OpcResUni_Ite" FromRole="Opciones_De_Respuestas_Seleccion_Unica" ToRole="Seleccion_Unica" />
+          <NavigationProperty Name="Seleccion_Unica" Relationship="Self.FK_OpcResMul_Ite" FromRole="Opciones_De_Respuestas_Seleccion_Unica" ToRole="Seleccion_Unica" />
         </EntityType>
         <EntityType Name="Perfil">
           <Key>
@@ -1696,7 +1590,6 @@
             <PropertyRef Name="SemestreGrupoResp" />
             <PropertyRef Name="NumeroGrupoResp" />
             <PropertyRef Name="SiglaGrupoResp" />
-            <PropertyRef Name="Respuesta" />
           </Key>
           <Property Name="ItemId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TituloSeccion" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
@@ -1709,7 +1602,7 @@
           <Property Name="NumeroGrupoResp" Type="Byte" Nullable="false" />
           <Property Name="SiglaGrupoResp" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Observacion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Respuesta" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Respuesta" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="RespuestaProfesor" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_Res_ForRes" FromRole="Responde" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Item" Relationship="Self.FK_Res_Ite" FromRole="Responde" ToRole="Item" />
@@ -1724,14 +1617,6 @@
           <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_Sec" FromRole="Seccion" ToRole="Conformado_Item_Sec_Form" />
           <NavigationProperty Name="Responde" Relationship="Self.FK_Res_Sec" FromRole="Seccion" ToRole="Responde" />
         </EntityType>
-        <EntityType Name="Seleccion_Multiple">
-          <Key>
-            <PropertyRef Name="ItemId" />
-          </Key>
-          <Property Name="ItemId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Item" Relationship="Self.FK_Sel_Mul_Ite" FromRole="Seleccion_Multiple" ToRole="Item" />
-          <NavigationProperty Name="Opciones_De_Respuestas_Seleccion_Multiple" Relationship="Self.FK_OpcResMul_Ite" FromRole="Seleccion_Multiple" ToRole="Opciones_De_Respuestas_Seleccion_Multiple" />
-        </EntityType>
         <EntityType Name="Seleccion_Unica">
           <Key>
             <PropertyRef Name="ItemId" />
@@ -1739,7 +1624,7 @@
           <Property Name="ItemId" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsaLikeDislike" Type="Boolean" />
           <NavigationProperty Name="Item" Relationship="Self.FK_Sel_Uni_Ite" FromRole="Seleccion_Unica" ToRole="Item" />
-          <NavigationProperty Name="Opciones_De_Respuestas_Seleccion_Unica" Relationship="Self.FK_OpcResUni_Ite" FromRole="Seleccion_Unica" ToRole="Opciones_De_Respuestas_Seleccion_Unica" />
+          <NavigationProperty Name="Opciones_De_Respuestas_Seleccion_Unica" Relationship="Self.FK_OpcResMul_Ite" FromRole="Seleccion_Unica" ToRole="Opciones_De_Respuestas_Seleccion_Unica" />
         </EntityType>
         <EntityType Name="TelefonoPersona">
           <Key>
@@ -2004,18 +1889,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Esc_Ite">
-          <End Role="Item" Type="Self.Item" Multiplicity="1" />
-          <End Role="Escalar" Type="Self.Escalar" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Item">
-              <PropertyRef Name="ItemId" />
-            </Principal>
-            <Dependent Role="Escalar">
-              <PropertyRef Name="ItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Est_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="0..1" />
@@ -2200,18 +2073,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Sel_Mul_Ite">
-          <End Role="Item" Type="Self.Item" Multiplicity="1" />
-          <End Role="Seleccion_Multiple" Type="Self.Seleccion_Multiple" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Item">
-              <PropertyRef Name="ItemId" />
-            </Principal>
-            <Dependent Role="Seleccion_Multiple">
-              <PropertyRef Name="ItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Sel_Uni_Ite">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
           <End Role="Seleccion_Unica" Type="Self.Seleccion_Unica" Multiplicity="0..1" />
@@ -2237,18 +2098,6 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OpcResMul_Ite">
-          <End Role="Seleccion_Multiple" Type="Self.Seleccion_Multiple" Multiplicity="1" />
-          <End Role="Opciones_De_Respuestas_Seleccion_Multiple" Type="Self.Opciones_De_Respuestas_Seleccion_Multiple" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Seleccion_Multiple">
-              <PropertyRef Name="ItemId" />
-            </Principal>
-            <Dependent Role="Opciones_De_Respuestas_Seleccion_Multiple">
-              <PropertyRef Name="ItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OpcResUni_Ite">
           <End Role="Seleccion_Unica" Type="Self.Seleccion_Unica" Multiplicity="1" />
           <End Role="Opciones_De_Respuestas_Seleccion_Unica" Type="Self.Opciones_De_Respuestas_Seleccion_Unica" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2379,7 +2228,6 @@
           <EntitySet Name="Distrito" EntityType="Self.Distrito" />
           <EntitySet Name="Empadronado" EntityType="Self.Empadronado" />
           <EntitySet Name="Enfasis" EntityType="Self.Enfasis" />
-          <EntitySet Name="Escalar" EntityType="Self.Escalar" />
           <EntitySet Name="Estudiante" EntityType="Self.Estudiante" />
           <EntitySet Name="Facultad" EntityType="Self.Facultad" />
           <EntitySet Name="Fecha_Corte" EntityType="Self.Fecha_Corte" />
@@ -2389,7 +2237,6 @@
           <EntitySet Name="Imparte" EntityType="Self.Imparte" />
           <EntitySet Name="Item" EntityType="Self.Item" />
           <EntitySet Name="Matricula" EntityType="Self.Matricula" />
-          <EntitySet Name="Opciones_De_Respuestas_Seleccion_Multiple" EntityType="Self.Opciones_De_Respuestas_Seleccion_Multiple" />
           <EntitySet Name="Opciones_De_Respuestas_Seleccion_Unica" EntityType="Self.Opciones_De_Respuestas_Seleccion_Unica" />
           <EntitySet Name="Perfil" EntityType="Self.Perfil" />
           <EntitySet Name="Permiso" EntityType="Self.Permiso" />
@@ -2399,7 +2246,6 @@
           <EntitySet Name="Provincia" EntityType="Self.Provincia" />
           <EntitySet Name="Responde" EntityType="Self.Responde" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" />
-          <EntitySet Name="Seleccion_Multiple" EntityType="Self.Seleccion_Multiple" />
           <EntitySet Name="Seleccion_Unica" EntityType="Self.Seleccion_Unica" />
           <EntitySet Name="TelefonoPersona" EntityType="Self.TelefonoPersona" />
           <EntitySet Name="Texto_Libre" EntityType="Self.Texto_Libre" />
@@ -2467,10 +2313,6 @@
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Posee_Enfasis_Perfil_Permiso" EntitySet="Posee_Enfasis_Perfil_Permiso" />
           </AssociationSet>
-          <AssociationSet Name="FK_Esc_Ite" Association="Self.FK_Esc_Ite">
-            <End Role="Item" EntitySet="Item" />
-            <End Role="Escalar" EntitySet="Escalar" />
-          </AssociationSet>
           <AssociationSet Name="FK_Est_Per" Association="Self.FK_Est_Per">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Estudiante" EntitySet="Estudiante" />
@@ -2523,10 +2365,6 @@
             <End Role="Item" EntitySet="Item" />
             <End Role="Responde" EntitySet="Responde" />
           </AssociationSet>
-          <AssociationSet Name="FK_Sel_Mul_Ite" Association="Self.FK_Sel_Mul_Ite">
-            <End Role="Item" EntitySet="Item" />
-            <End Role="Seleccion_Multiple" EntitySet="Seleccion_Multiple" />
-          </AssociationSet>
           <AssociationSet Name="FK_Sel_Uni_Ite" Association="Self.FK_Sel_Uni_Ite">
             <End Role="Item" EntitySet="Item" />
             <End Role="Seleccion_Unica" EntitySet="Seleccion_Unica" />
@@ -2536,10 +2374,6 @@
             <End Role="Texto_Libre" EntitySet="Texto_Libre" />
           </AssociationSet>
           <AssociationSet Name="FK_OpcResMul_Ite" Association="Self.FK_OpcResMul_Ite">
-            <End Role="Seleccion_Multiple" EntitySet="Seleccion_Multiple" />
-            <End Role="Opciones_De_Respuestas_Seleccion_Multiple" EntitySet="Opciones_De_Respuestas_Seleccion_Multiple" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OpcResUni_Ite" Association="Self.FK_OpcResUni_Ite">
             <End Role="Seleccion_Unica" EntitySet="Seleccion_Unica" />
             <End Role="Opciones_De_Respuestas_Seleccion_Unica" EntitySet="Opciones_De_Respuestas_Seleccion_Unica" />
           </AssociationSet>
@@ -2626,16 +2460,7 @@
             <Parameter Name="siglaCurso" Mode="In" Type="String" />
             <Parameter Name="itemId" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_DevolverObservacionesPorGrupo" ReturnType="Collection(Opiniometro_DatosModel.SP_DevolverObservacionesPorGrupo_Result)">
-            <Parameter Name="codigoFormulario" Mode="In" Type="String" />
-            <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
-            <Parameter Name="annoGrupo" Mode="In" Type="Int16" />
-            <Parameter Name="semestreGrupo" Mode="In" Type="Byte" />
-            <Parameter Name="numeroGrupo" Mode="In" Type="Byte" />
-            <Parameter Name="siglaCurso" Mode="In" Type="String" />
-            <Parameter Name="itemId" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_DevolverRespuestasPorGrupo" ReturnType="Collection(String)">
+          <FunctionImport Name="SP_DevolverObservacionesPorGrupo" ReturnType="Collection(String)">
             <Parameter Name="codigoFormulario" Mode="In" Type="String" />
             <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
             <Parameter Name="annoGrupo" Mode="In" Type="Int16" />
@@ -2687,14 +2512,8 @@
           <Property Type="String" Name="Carne" Nullable="false" MaxLength="6" />
         </ComplexType>
         <ComplexType Name="SP_ContarRespuestasPorGrupo_Result">
-          <Property Type="String" Name="Respuesta" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Respuesta" Nullable="true" MaxLength="500" />
           <Property Type="Int32" Name="cntResp" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SP_DevolverObservacionesPorGrupo_Result">
-          <Property Type="String" Name="Observacion" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Apellido1" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Apellido2" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="SP_ObtenerPermisosUsuario_Result">
           <Property Type="String" Name="SiglaCarrera" Nullable="false" MaxLength="10" />
@@ -2795,16 +2614,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Escalar">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Escalar">
-              <MappingFragment StoreEntitySet="Escalar">
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-                <ScalarProperty Name="Inicio" ColumnName="Inicio" />
-                <ScalarProperty Name="Fin" ColumnName="Fin" />
-                <ScalarProperty Name="IsaEstrella" ColumnName="IsaEstrella" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Estudiante">
             <EntityTypeMapping TypeName="Opiniometro_DatosModel.Estudiante">
               <MappingFragment StoreEntitySet="Estudiante">
@@ -2880,7 +2689,6 @@
                 <ScalarProperty Name="TieneObservacion" ColumnName="TieneObservacion" />
                 <ScalarProperty Name="TipoPregunta" ColumnName="TipoPregunta" />
                 <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
-                <ScalarProperty Name="EtiquetaObservacion" ColumnName="EtiquetaObservacion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2892,15 +2700,6 @@
                 <ScalarProperty Name="Sigla" ColumnName="Sigla" />
                 <ScalarProperty Name="Anno" ColumnName="Anno" />
                 <ScalarProperty Name="Semestre" ColumnName="Semestre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Opciones_De_Respuestas_Seleccion_Multiple">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Opciones_De_Respuestas_Seleccion_Multiple">
-              <MappingFragment StoreEntitySet="Opciones_De_Respuestas_Seleccion_Multiple">
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="OpcionRespuesta" ColumnName="OpcionRespuesta" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2988,13 +2787,6 @@
               <MappingFragment StoreEntitySet="Seccion">
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Seleccion_Multiple">
-            <EntityTypeMapping TypeName="Opiniometro_DatosModel.Seleccion_Multiple">
-              <MappingFragment StoreEntitySet="Seleccion_Multiple">
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3123,17 +2915,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_DevolverObservacionesPorGrupo">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.SP_DevolverObservacionesPorGrupo_Result">
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
-                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_DevolverRespuestasPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_DevolverRespuestasPorGrupo" />
+          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_DatosModel.Store.SP_DevolverObservacionesPorGrupo" />
           <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_DatosModel.Store.SP_ExistenciaCorreo" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_LoginUsuario" />
           <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_DatosModel.Store.SP_ModificarPersona" />
