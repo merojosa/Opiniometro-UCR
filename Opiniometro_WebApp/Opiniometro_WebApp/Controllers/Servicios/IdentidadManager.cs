@@ -21,6 +21,7 @@ namespace Opiniometro_WebApp.Controllers.Servicios
         {
             permisos_usuario = new HashSet<string>();
             cargar_permisos();
+            lista_enfasis = obtener_enfasis_usuario();
         }
 
         public bool verificar_permiso(string sigla_carrera, int enfasis, int id_permiso)
@@ -29,10 +30,12 @@ namespace Opiniometro_WebApp.Controllers.Servicios
             return permisos_usuario.Contains(sigla_carrera + ',' + enfasis + ',' + id_permiso);
         }
 
+        // Verificar permiso sin necesidad de pasar un enfasis
         public bool verificar_permiso(int id_permiso)
         {
             bool autorizado = false;
 
+            // Recorrer enfasis.
             foreach(Enfasis un_enfasis in lista_enfasis)
             {
                 // Si ya esta autorizado, no tiene que hacer nada.
@@ -45,18 +48,39 @@ namespace Opiniometro_WebApp.Controllers.Servicios
             return autorizado;
         }
 
-        public void actualizar_enfasis()
+        private List<Enfasis> obtener_enfasis_usuario()
         {
-            // Procedimiento almacenado.
+            var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
+            string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email).Select(c => c.Value).SingleOrDefault();
 
-            // Iterar por cada tupla
+            if(correo_autenticado != null)
+            {
+                List<Enfasis> lista = new List<Enfasis>();
 
-            // Guardarla en la lista
+                // Procedimiento almacenado.
+                // Guardo las tuplas resultantes del llamado al procedimiento almacenado, orden: Sigla de carrera, numero de enfasis, permiso
+                var tuplas_resultantes = db.ObtenerPerfilesUsuario(correo_autenticado);
+                Enfasis enfasis = null;
+
+                // Iterar por cada tupla
+                foreach (var tupla in tuplas_resultantes)
+                {
+                    enfasis = new Enfasis();
+                    enfasis.SiglaCarrera = tupla.SiglaCarrera;
+                    enfasis.Numero = tupla.NumeroEnfasis;
+                    lista.Add(enfasis);
+                }
+                return lista;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public List<Enfasis> obtener_enfasis()
+        public List<Enfasis> obtener_lista_enfasis()
         {
-            return null;
+            return lista_enfasis;
         }
 
         /*
@@ -66,19 +90,13 @@ namespace Opiniometro_WebApp.Controllers.Servicios
         private void cargar_permisos()
         {
             var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
-
             string correo_autenticado = identidad_autenticada.Claims.Where(c => c.Type == ClaimTypes.Email).Select(c => c.Value).SingleOrDefault();
 
             if (correo_autenticado != null)
             {
                 limpiar_permisos();
 
-                List<string> siglas_carrera = new List<string>();
-                List<int> numeros_enfasis = new List<int>();
-                List<int> permisos = new List<int>();
-
                 // Guardo las tuplas resultantes del llamado al procedimiento almacenado, orden: Sigla de carrera, numero de enfasis, permiso
-                // ToDo: hacerlo con el enfasis actual.
                 var tuplas_resultantes = db.SP_ObtenerPermisosUsuario(correo_autenticado, obtener_perfil_actual());
 
                 string llave_hash = null;

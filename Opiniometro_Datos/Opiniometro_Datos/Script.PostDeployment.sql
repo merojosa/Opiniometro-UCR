@@ -274,6 +274,15 @@ AS
 	WHERE Cedula = @Cedula;
 GO
 
+GO
+CREATE PROC ObtenerPerfilesUsuario
+	@Correo	NVARCHAR(50)
+AS
+	SELECT SiglaCarrera, NumeroEnfasis
+	FROM Tiene_Usuario_Perfil_Enfasis
+	WHERE CorreoInstitucional= @Correo
+GO
+
 --Inserciones
 
 INSERT INTO Persona
