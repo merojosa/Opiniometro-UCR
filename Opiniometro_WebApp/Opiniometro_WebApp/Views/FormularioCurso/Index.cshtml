@@ -9,8 +9,7 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>FormularioCurso</title>
+
 </head>
 <body>
     <table id="tabla-preguntasFormulario" class="table table-sm table-hover" cellspacing="0" width="100">
@@ -18,16 +17,6 @@
             <th align='left'>
                 Pregunta
             </th>
-            @*<th align='left'>
-                Curso
-            </th>
-            <th align='left'>
-                Semestre
-            </th>
-            <th align='left'>
-                Año
-            </th>*@
-           
         </tr>
         <!-- Despliega los cursos eh los que esta matriculado el estudiante-->
         @foreach (var item in Model.preguntasFormulario)
@@ -35,27 +24,24 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.item)
+                    <div id="campoTexto">
+                    </div>
+                    <script>
+                        if ( true) {
+                            var n1 = document.getElementById('campoTexto');
+                            var elemento = document.createElement("INPUT");
+                            //var contenido = document.createTextNode("type = text")
+                            //elemento.appendChild(contenido)
+                            elemento.type = 'text';
+                            n1.appendChild(elemento);
+                            //document.getElementById("campoTexto").appendChild(elemento);
+                        }
+                    </script>
                 </td>
-                @*<td>
-                    @Html.DisplayFor(model => item.nombreCursoMatriculado)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.semestreGrupo)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.anoGrupo)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.nombreProfeCurso)
-                    @Html.DisplayFor(model => item.apellido1Profe)
-                    @Html.DisplayFor(model => item.apellido2Profe)
-                </td>
-                <td>
-                    @Html.ActionLink(item.formulario, "Index", "FormularioCurso");
-                </td>*@
             </tr>
-        }
+          }
     </table>
-
+    
+    <script src="~/Scripts/FormularioDelCurso.js"></script>
 </body>
 </html>

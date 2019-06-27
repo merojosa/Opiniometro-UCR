@@ -47,8 +47,9 @@ namespace Opiniometro_WebApp.Controllers
             join tiene in db.Tiene_Grupo_Formulario on new { p1 = gru.AnnoGrupo, p2 = gru.SemestreGrupo, p3 = gru.Numero, p4 = gru.SiglaCurso }
             equals new { p1 = tiene.Anno, p2 = tiene.Ciclo, p3 = tiene.Numero, p4 = tiene.SiglaCurso }
             join form in db.Formulario on tiene.Codigo equals form.CodigoFormulario
-            where (est.CedulaEstudiante == cedulaDelEstudiante && gru.SemestreGrupo == semestre && ano == gru.AnnoGrupo)
-
+            where (est.CedulaEstudiante == cedulaDelEstudiante /*&& mat.Semestre == semestre && ano == gru.AnnoGrupo*/)
+            //MUESTRA DATOS INCORRECTOS EN UN CASO, SE ARREGLARA HASTA QUE SE CAMBIE EL TIPO DE DATO DEL ATRIBUTO AÑO EN LA TABLA IMPARTE
+            //debe modificarse y comparar con la tabla de matricula no con la de grupo
 
             select new EstudianteGruposMatriculado
             {
