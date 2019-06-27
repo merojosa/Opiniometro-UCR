@@ -64,5 +64,16 @@ namespace Opiniometro_WebApp.Models
         public Nullable<int> Orden_Seccion { get; set; }
     }
 
-    
+    // The Strategists
+    public class PerfilMetadata
+    {
+        [Remote("IsNombrePerfilAvailable", "Perfil", ErrorMessage = "Este nombre ya está en uso.")]
+        [StringLength(30, ErrorMessage = "El límite de este campo son de 30 caracteres.")]
+        [Required(ErrorMessage = "Este campo es requerido.")]
+        public string Nombre { get; set; }
+
+        [StringLength(80, ErrorMessage = "El límite de este campo son de 80 caracteres.")]
+        [Required(ErrorMessage = "Este campo es requerido.")]
+        public string Descripcion { get; set; }
+    }
 }

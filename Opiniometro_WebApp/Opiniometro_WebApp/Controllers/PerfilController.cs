@@ -117,5 +117,34 @@ namespace Opiniometro_WebApp.Controllers
         {
             return View(db.Perfil.ToList());
         }
+
+        // GET: CRUDPERFILES/Create
+        public ActionResult Crear()
+        {
+            return View();
+        }
+
+        // POST: CRUDPERFILES/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Crear([Bind(Include = "Nombre,Descripcion")] Perfil perfil)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Perfil.Add(perfil);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(perfil);
+        }
+
+        public JsonResult IsNombrePerfilAvailable(string Nombre)
+        {
+            return Json(!db.Perfil.Any(perfil => perfil.Nombre == Nombre), JsonRequestBehavior.AllowGet);
+
+        }
     }
 }
