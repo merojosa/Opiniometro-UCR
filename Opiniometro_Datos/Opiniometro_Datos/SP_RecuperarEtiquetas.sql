@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[SP_RecuperarEtiquetas]
 	@tipoPregunta INT,
-	@idPregunta INT
+	@idPregunta NVARCHAR (10)
 AS
 BEGIN
 	SET TRANSACTION ISOLATION LEVEL REPEATABLE READ

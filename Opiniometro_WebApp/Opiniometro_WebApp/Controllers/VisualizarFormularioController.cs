@@ -222,9 +222,22 @@ namespace Opiniometro_WebApp.Controllers
             List<object> y = new List<object>();
             //string[] leyenda = new string[tamanio];
             //int?[] cntResps = new int?[tamanio];
-            //int iter = 0;
+            int iter = 0;
+            var labels = db.SP_RecuperarEtiquetas(3, itemId);
+            foreach (var label in labels)
+            {
+                x.Add(label);
+                if (!result.Contains(label))
+                {
+                    y.Add(0);
+                }
+                else
+                    y.Add(result[label].cntResp);
+                iter++;
+            }
             foreach (var itemR in result)
             {
+
                 //leyenda[iter] = itemR.Respuesta;
                 //cntResps[iter] = itemR.cntResp;
                 //iter++;
