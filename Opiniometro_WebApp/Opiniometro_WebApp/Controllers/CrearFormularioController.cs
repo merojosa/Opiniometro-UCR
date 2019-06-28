@@ -11,7 +11,7 @@ using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
 {
-    
+
     public class CrearFormularioController : Controller
     {
         Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
@@ -29,8 +29,8 @@ namespace Opiniometro_WebApp.Controllers
                     .ThenBy(m => m.Orden_Item)
                     .ToList()
 
-        };
-            
+            };
+
             return View(crearFormulario);
         }
 
@@ -38,8 +38,8 @@ namespace Opiniometro_WebApp.Controllers
         //[ValidateAntiForgeryToken]
         public PartialViewResult AgregarConformado(Conformado_Item_Sec_Form conformado)
         {
-           
-           
+
+
             if (ModelState.IsValid)
             {
                 List<Conformado_Item_Sec_Form> conf = db.Conformado_Item_Sec_Form.Where(m => m.ItemId == conformado.ItemId && m.TituloSeccion == conformado.TituloSeccion && m.CodigoFormulario == conformado.CodigoFormulario).ToList();
@@ -51,7 +51,7 @@ namespace Opiniometro_WebApp.Controllers
                 else
                 {
                     return null;
-                }                
+                }
             }
             List<Conformado_Item_Sec_Form> conformados =
                     db.Conformado_Item_Sec_Form
@@ -61,6 +61,11 @@ namespace Opiniometro_WebApp.Controllers
                     .ToList();
             return PartialView("ConformadoVParcial", conformados);
 
+        }
+
+        [HttpGet]
+        public ActionResult EliminarSeccion() {
+            return View();
         }
 
         [HttpGet]

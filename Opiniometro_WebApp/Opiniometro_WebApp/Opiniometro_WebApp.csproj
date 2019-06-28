@@ -511,6 +511,7 @@
     <Content Include="Views\Auth\Permisos.cshtml" />
     <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
     <Content Include="Views\LlenarFormulario\Index.cshtml" />
+    <Content Include="Views\CrearFormulario\EliminarSeccion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

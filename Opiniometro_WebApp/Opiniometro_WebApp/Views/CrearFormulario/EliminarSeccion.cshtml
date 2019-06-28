@@ -1,0 +1,38 @@
+﻿@model Opiniometro_WebApp.Models.Seccion
+
+
+@{
+    /**/
+
+    ViewBag.Title = "EliminarSeccion";
+}
+
+@* Inclusiones necesarias para poder hacer validaciones *@
+<link href="~/Content/Site.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<h2>Eliminar Sección</h2>
+
+@using (Html.BeginForm())
+{
+
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+
+
+    @* Dropdown list para que el usuario escoja la sección del formulario que desea eliminar *@
+    <div class="form-group">
+        @Html.LabelFor(model => model.Titulo, "Título de la sección a eliminar", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Titulo, new SelectList(ViewBag.Titulo, "Value", "Text"), "Seleccione")
+            @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+</div>
+
+}
