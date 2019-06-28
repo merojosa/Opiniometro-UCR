@@ -7,7 +7,8 @@
     [Id]					UNIQUEIDENTIFIER NOT NULL
 	CONSTRAINT PK_Usuario
 		PRIMARY KEY (CorreoInstitucional),
-	CONSTRAINT FK_Usu_Per
+	[RecuperarContrasenna] BIT NULL, 
+    CONSTRAINT FK_Usu_Per
 		FOREIGN KEY (Cedula) REFERENCES Persona(Cedula)
 			ON DELETE NO ACTION
 			ON UPDATE CASCADE
