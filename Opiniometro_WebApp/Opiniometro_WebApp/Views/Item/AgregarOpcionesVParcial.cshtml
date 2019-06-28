@@ -1,73 +1,68 @@
 ﻿@model Opiniometro_WebApp.Models.CrearItemModel
 
-@* Sección de código de la vista para agregar una nueva opción para la pregunta de tipo selección única. *@
-@*<div class="form-group">
-        @Html.Label("Opción ", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Opciones, new { htmlAttributes = new { @class = "form-control", @maxlength = "150" } })
-            @Html.ValidationMessageFor(model => model.Opciones, "", new { @class = "text-danger" })
+@* Vista que se necesita para mostrar los *@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+        <div class="col-sm-3 text-center">
+            <input type="button" value="Agregar Opción" class="btn btn-secondary" id="botonAgregarOpciones" onclick="AddTextBox()" />
         </div>
-    </div>*@
-
-    @{
-        Layout = null;
+        <br />
+        <br />
+        <div class="col-sm-6 text-center" id="TextBoxContainer">
+            <!--Textboxes will be added here -->
+        </div>
+        <br />
+        @*<input type="submit" value="Submit" />*@
     }
-
-    <!DOCTYPE html>
-
-    <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>Index</title>
-    </head>
-    <body>
-        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        function GetDynamicTextBox(value)
         {
-            <div class="col-sm-3 text-center">
-                <button id="btnSave" class="btn btn-secondary m-*-auto"><span class="oi oi-arrow-left"></span> Asignar pregunta</button>
-            </div>
-            <input id="btnAdd" type="button" value="Add" onclick="AddTextBox()" />
-            <br />
-            <br />
-            <div id="TextBoxContainer">
-                <!--Textboxes will be added here -->
-            </div>
-            <br />
-            @*<input type="submit" value="Submit" />*@
+            var div = $("<div />");
+
+            var textBox = $("<input />").attr("type", "textbox").attr("opcion", "DynamicTextBox");
+            textBox.val(value);
+            div.append(textBox);
+
+            var button = $("<input />").attr("type", "button").attr("value", "Remove");
+            button.attr("onclick", "RemoveTextBox(this)");
+            div.append(button);
+
+            return div;
         }
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-        <script type="text/javascript">
-            function GetDynamicTextBox(value) {
-                var div = $("<div />");
+        function AddTextBox()
+        {
+            var div = GetDynamicTextBox("");
+            $("#TextBoxContainer").append(div);
+        }
 
-                var textBox = $("<input />").attr("type", "textbox").attr("opcion", "DynamicTextBox");
-                textBox.val(value);
-                div.append(textBox);
+        function RemoveTextBox(button)
+        {
+            $(button).parent().remove();
+        }
 
-                var button = $("<input />").attr("type", "button").attr("value", "Remove");
-                button.attr("onclick", "RemoveTextBox(this)");
-                div.append(button);
-
-                return div;
+        $(function ()
+        {
+            var values = eval('@Html.Raw(ViewBag.Values)');
+            if (values != null)
+            {
+                $("#TextBoxContainer").html("");
+                $(values).each(function () { $("#TextBoxContainer").append(GetDynamicTextBox(this)); });
             }
-            function AddTextBox() {
-                var div = GetDynamicTextBox("");
-                $("#TextBoxContainer").append(div);
-            }
-
-            function RemoveTextBox(button) {
-                $(button).parent().remove();
-            }
-
-            $(function () {
-                var values = eval('@Html.Raw(ViewBag.Values)');
-                if (values != null) {
-                    $("#TextBoxContainer").html("");
-                    $(values).each(function () {
-                        $("#TextBoxContainer").append(GetDynamicTextBox(this));
-                    });
-                }
-            });
-        </script>
-    </body>
-    </html>
+        });
+    </script>
+</body>
+</html>
