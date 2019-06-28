@@ -193,13 +193,7 @@
                                                     else
                                                     {
                                                         <div style="height:180px; overflow-y: scroll;">
-
-                                                            @foreach (var item in Model.Formulario_Respuesta)
-                                                            {
-                                                                <p>Respuesta de estudiante generica.</p>
-                                                                <hr>
-                                                            }
-
+                                                            <p id="r_@item_actual" style="float:right"></p>
                                                             @foreach (var item in Model.Formulario_Respuesta.Take(1))
                                                             {
                                                                 <script>
@@ -211,10 +205,10 @@
                                                                     dataType: "json",
                                                                     success: function (chData) {
                                                                     var aData = chData;
-                                                                    var obs = aData[0];
-                                                                    //var nom = aData[1];
-                                                                        for (var data in obs) {
-                                                                            document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + (obs[data]).toString();
+                                                                    var resp = aData[0];
+
+                                                                        for (var data in resp) {
+                                                                            document.getElementById("r_@item_actual").innerHTML = document.getElementById("r_@item_actual").innerText + (resp[data]).toString();
                                                                         }
                                                                     }
                                                                  });

@@ -269,13 +269,12 @@ namespace Opiniometro_WebApp.Controllers
             return Json(observaciones, JsonRequestBehavior.AllowGet);
         }
         
-        [HttpGet]
         //EFE:Devuelve las preguntas de tipo texto libre.
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--
         public JsonResult ObtenerRespTexto(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
         {
-            var result = db.SP_DevolverRespuestasPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
+            var result = ObtenerCantidadRespuestasPorPregunta(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
 
             List<object> respuestas = new List<object>();
 
