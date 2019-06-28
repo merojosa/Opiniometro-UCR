@@ -42,6 +42,25 @@
         </div>
     </div>
 
+    <td>
+        @Html.ActionLink("Eliminar Sección", "EliminarSeccion", "EliminarSeccion", new { }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Cancelar", "Index", "Formulario", new { }, new { @class="btn btn-default"})
+    </td>
+
+    <script>
+
+        /*aqui se codifican las acciones al darle click a los botones especificos*/
+
+         function accionBotonEliminarSeccion() {
+            
+        }
+
+        function accionBotonCancelar() {
+            document.location = '@Url.Action("Index", "Formulario")';
+        }
+
+        </script>
+
 </div>
 
 }
