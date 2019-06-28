@@ -5,7 +5,6 @@ using Opiniometro_WebApp.Controllers;
 using Opiniometro_WebApp.Models;
 using Moq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -61,6 +60,6 @@ namespace Opiniometro_WebAppTest.Controllers
             // Assert
             Assert.AreEqual(2, pais.Count);
 
-        }*/
+//        }*/
     }
 }

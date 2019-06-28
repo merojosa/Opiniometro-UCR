@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Data; //Problema de ambiguedad
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using PagedList;
+using PagedList.Mvc;
 using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
@@ -15,11 +17,17 @@ namespace Opiniometro_WebApp.Controllers
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
+        //Method used to know if an ItemId is already in use
+        public JsonResult IsItemIdAvailable(string ItemId)
+        {
+            return Json(!db.Item.Any(item => item.ItemId == ItemId), JsonRequestBehavior.AllowGet);
+        }
+
          //GET: Item
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var item = db.Item.Include(i => i.Seleccion_Unica).Include(i => i.Texto_Libre);
-            return View(item.ToList());
+            return View(item.ToList().ToPagedList(page ?? 1, 5));
         }
 
          //GET: Item/Details/5
@@ -61,7 +69,7 @@ namespace Opiniometro_WebApp.Controllers
          //more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,Categoria,TieneObservacion,TipoPregunta")] Item item)
+        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria")] Item item)
         {
 
 
@@ -78,7 +86,24 @@ namespace Opiniometro_WebApp.Controllers
             return View(item);
         }
 
-         //GET: Item/Edit/5
+        //EFE:
+        //REQ:
+        //MOD:
+        public ActionResult VistaPrevia(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Item item = db.Item.Find(id);
+            if (item == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(item);
+        }
+
+        //GET: Item/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -137,6 +162,12 @@ namespace Opiniometro_WebApp.Controllers
             db.Item.Remove(item);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult itemVParcial(String codigo)
+        {
+            Item item = db.Item.Find(codigo);
+            return PartialView(item);
         }
 
         protected override void Dispose(bool disposing)

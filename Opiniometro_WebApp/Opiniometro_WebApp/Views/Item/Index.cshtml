@@ -1,5 +1,7 @@
-﻿@model IEnumerable<Opiniometro_WebApp.Models.Item>
+﻿@using PagedList;
+@using PagedList.Mvc;
 
+@model IPagedList<Opiniometro_WebApp.Models.Item>
 @{
     ViewBag.Title = "Banco de Preguntas";
 }
@@ -7,57 +9,93 @@
 <h2>Banco de Preguntas</h2>
 
 <p>
-    <input type="submit" value="Crear Nueva Pregunta" class="btn btn-secondary"  id="botonNuevaPregunta" onclick="location.href = 'http://localhost:51103/Item/create'" />
+    <input type="submit" value="Crear Nueva Pregunta" class="btn btn-secondary" id="botonNuevaPregunta" onclick="location.href = 'http://localhost:51103/Item/create'" />
 </p>
 
-<table class="table">
+<table class="table" id="vistaitem">
     <tr>
         <th>
             @Html.Label("Código")
-            @*@Html.DisplayNameFor(model => model.ItemId)*@
+            @*@Html.DisplayNameFor(model => model.First().ItemId)*@
         </th>
         <th>
             @Html.Label("Planteamiento de la pregunta")
-            @*@Html.DisplayNameFor(model => model.TextoPregunta)*@
+            @*@Html.DisplayNameFor(model => model.First().TextoPregunta)*@
         </th>
         <th>
             @Html.Label("Categoría")
-            @*@Html.DisplayNameFor(model => model.Categoria)*@
+            @*@Html.DisplayNameFor(model => model.First().Categoria)*@
         </th>
         <th>
             @Html.Label("Tiene Observación")
-            @*@Html.DisplayNameFor(model => model.TieneObservacion)*@
+            @*@Html.DisplayNameFor(model => model.First().TieneObservacion)*@
         </th>
-
-
-        <th></th>
+        <th>
+            Adicionales
+        </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TextoPregunta)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Categoria )
-        </td>
-        <td>
-            @if (item.TieneObservacion == true)
-            {
-                <input type="checkbox" checked disabled>
-            }
-        </td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TextoPregunta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCategoria)
+            </td>
+            <td>
+                @if (item.TieneObservacion == true)
+                {
+                    <input type="checkbox" checked disabled>
+                }
+            </td>
+
+            <td style="text-align:center"> <img src="~/Content/img/plus.png" identificador="@item.ItemId" /> </td>
+
+            @*<td>*@
+                @* @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }) |*@
+                
+
+                @*|@Html.ActionLink("Vista Previa", "VistaPrevia", new { id = item.ItemId })*@
+                @* @Html.ActionLink("Delete", "Delete", new { id = item.ItemId })*@
+            @*</td>*@
+
+        </tr>
+        <tr id="detalle-@item.ItemId" style="display:none">
+            <td></td>
+            <td colspan="5">
+                @Html.Action("VistaPrevia", new { id = item.ItemId })
+            </td>
+        </tr>
 
 
-        <td>
-           @* @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }) |*@
-            @Html.ActionLink("Vista Previa", "Details", new { id = item.ItemId }) 
-           @* @Html.ActionLink("Delete", "Delete", new { id = item.ItemId })*@
-        </td>
-    </tr>
-}
+    }
 
 </table>
+
+@* This code is used to navigate on the pages *@
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+    new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded,
+        DisplayPageCountAndCurrentLocation = true })
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#vistaitem tr img").click(function () {
+                var identificador = $(this).attr("identificador");
+                var detalle = $("#detalle-" + identificador);
+                if (detalle.css("display") == "none") {
+                    detalle.css("display", "table-row");
+                    $(this).attr("src", "@Url.Content("~/Content/img/minus.png")");
+                } else {
+                    detalle.css("display", "none");
+                    $(this).attr("src", "@Url.Content("~/Content/img/plus.png")");
+                }
+            });
+        });
+    </script>
+}

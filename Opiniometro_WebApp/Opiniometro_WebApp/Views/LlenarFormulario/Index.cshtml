@@ -1,39 +1,64 @@
-﻿@model IEnumerable<Opiniometro_WebApp.Models.Conformado_Item_Sec_Form>
+﻿@model Opiniometro_WebApp.Models.EstudianteGruposMatriculado
 
 @{
-    ViewBag.Title = "LlenarFormulario";
+    ViewBag.Title = "Index";
 }
 
-<h3>Formulario X</h3>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>My page</title>
+</head>
+<body>
+    <h2> Cursos disponibles</h2>     
 
-<table class="fixed_header">
-    <thead>
+    <table id="tabla-gruposMatriculado" class="table table-sm table-hover" cellspacing="0" width="100">
         <tr>
-            <th>
-                <div align='center'>Seccion</div>
+            <th align='left'>
+                Sigla
             </th>
-            <th>
-                <div align='center'>Item</div>
+            <th align='left'>
+                Curso
             </th>
-            <th>
-                <div align='center'>Tipo</div>
+            <th align='left'>
+                Semestre
+            </th>
+            <th align='left'>
+                Año
+            </th>
+            <th align='left'>
+                Nombre Profesor
+            </th>
+            <th align='left'>
+                Formulario
             </th>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Seccion.Titulo)
-            </td>  
-            <td>
-                @Html.DisplayFor(modelItem => item.Item.TextoPregunta)
-            </td>  
-            <td>
-                @Html.DisplayFor(modelItem => item.Item.TipoPregunta)
-            </td>
-        </tr>
-        }
-        </tbody>
-</table>
+            <!-- Despliega los datos de los grupos usando un template personalizado: ElegirGrupoEditorTemplate -->
+            @foreach (var item in Model.gruposMatriculado)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.siglaCursoMatriculado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.nombreCursoMatriculado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.semestreGrupo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.anoGrupo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.nombreProfeCurso)
+                        @Html.DisplayFor(model => item.apellidoProfe)
+                    </td>
+
+                </tr>
+               
+            }
+    </table>
+
+
+</body>
+</html>

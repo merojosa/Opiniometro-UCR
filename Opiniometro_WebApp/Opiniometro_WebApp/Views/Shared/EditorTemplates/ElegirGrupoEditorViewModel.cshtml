@@ -4,42 +4,36 @@
 <!-- Table row (fila) de elementos -->
 <tr>
     @*Checkbox para asignar*@
-    <td>
-        <div align='center'>@Html.CheckBoxFor(model => model.Seleccionado)</div>
+    <td align='left'>
+        @Html.CheckBoxFor(model => model.Seleccionado)
     </td>
 
-    @*Sigla de curso*@
-    <td>
-        <div align='center'>@Html.DisplayFor(model => model.SiglaCurso)</div>
-    </td>
-
-    @*Nombre de curso*@
-    <td>
-        <div align='center'>@Html.DisplayFor(model => model.NombreCurso)</div>
+    @*Curso*@
+    <td align='left'>
+        @Html.DisplayFor(model => model.SiglaCurso)
+        <span> </span>
+        @Html.DisplayFor(model => model.NombreCurso)
     </td>
 
     @*Numero de grupo*@
-    <td>
-        <div align='center'>@Html.DisplayFor(model => model.Numero)</div>
+    <td align='right'>
+        @Html.DisplayFor(model => model.Numero)
     </td>
 
     @*Profesores*@
-    <td>
-        @foreach (var profe in Model.Profesores)
+    <td align='left'>
+       @foreach (var profe in Model.Profesores)
         {
-        <div align='center'>
             @Html.DisplayFor(model => profe.Persona.Nombre) <span> </span>
             @Html.DisplayFor(model => profe.Persona.Apellido1) <span> </span>
             @Html.DisplayFor(model => profe.Persona.Apellido2) <br>
-        </div>
         }
     </td>
 
-    @*Año (escondido)*@
-    <td style="display: none;">@Html.DisplayFor(model => model.Anno)</td>
-    
+    @Html.HiddenFor(model => model.Anno)
+    @Html.HiddenFor(model => model.Semestre)
+    @Html.HiddenFor(model => model.Numero)
+    @Html.HiddenFor(model => model.SiglaCurso)
+    @Html.HiddenFor(model => model.NombreCurso)
 
-    @*Semestre (escondido)*@
-    <td style="display: none;">@Html.DisplayFor(model => model.Semestre)</td>
-    
 </tr>
