@@ -1,84 +1,148 @@
 ﻿
 
+///recibe: --
+//modifica: vista en las preguntas que tienen campode texto
+//retorna--
+function TextoLibre() {
+      
+        var cont = document.getElementById('campoTexto');
+        var elemento = document.createElement("INPUT");
+        elemento.type = 'text';
+        //elemento.setAttribute("size = 15 maxlength = 30");
+        cont.appendChild(elemento);
 
-function escogerTipoRespuesta(tipoPregunta, tieneObservacion) {
-    switch (tipoPregunta) {
+}
 
-        //HAY QUE VER QUE NUMERO LE ASIGNÓ JOFFI A CADA TIPO DE PREGUNTA PARA COLOCARLO EN LOS CASOS
+///recibe: --opciones que se muestran
+//         --si tiene campo de observacion
+//modifica: vista en las preguntas que tienen seleccion unica
+//retorna--
+function seleccionUnica(par1, campoObservacion) {
 
-        //caso 1: respuesta de texto libre
-        case tipoPregunta = 1: 
-                var cont = document.getElementById('campoTexto');
-                var elemento = document.createElement("INPUT");
-                elemento.type = 'text';
-                cont.appendChild(elemento);                        
-            break;    
+    if (campoObservacion == true) {
 
-        //caso 2: respuesta seleccion unica
-        case tipoPregunta = 2:
-            //si posee campo de observacion, entonces
-            if (tieneObservacion == true) {
-
-                //aqui va codigo de seleccion unica
-
-                //la pregunta tambien incluye campo de observacion
-                var cont = document.getElementById('campoTexto');
-                var elemento = document.createElement("INPUT");
-                elemento.type = 'text';
-                cont.appendChild(elemento);
-
-                //en caso de que no tenga observacion, solo se muestra la seleccion unica
-            } else {
-
-                //aqui va codigo de seleccion unica
-            }
-            break;
+        //aqui va el codigo de seleccion unica
 
 
-        //respuesta seleccion multiple
-        case tipoPregunta = 3:
-             //si posee campo de observacion, entonces
-            if (tieneObservacion == true) {
+        //si la pregunta tiene campo de observacion
+        var cont = document.getElementById('campoTexto');
+        var elemento = document.createElement("INPUT");
+        elemento.type = 'text';
+        //elemento.setAttribute("size = 15 maxlength = 30");
+        cont.appendChild(elemento);
 
-                //aqui va codigo de seleccion multiple
 
-                //la pregunta tambien incluye campo de observacion
-                var cont = document.getElementById('campoTexto');
-                var elemento = document.createElement("INPUT");
-                elemento.type = 'text';
-                cont.appendChild(elemento);
+        //en caso de que no tenga observacion, solo se muestra la seleccion unica
+    } else {
 
-                //en caso de que no tenga observacion, solo se muestra la seleccion multiple
-            } else {
+        //aqui va el codigo de seleccion unica
 
-                //aqui va codigo de seleccion multiple
+    }
 
-            }
+}
 
-            break;
-    
+///recibe:-- si tiene campo de observacion
+//modifica: vista en las preguntas que tienen si o no
+//retorna--
+function SiNo(par1, campoObservacion) {
 
-        //caso 4: respuesta escalar
-        case 4:
-           //si posee campo de observacion, entonces
-            if (tieneObservacion == true) {
+    if (campoObservacion == true) {
 
-                //aqui va codigo de escalar
+        //aqui va el codigo de Si-No
 
-                //la pregunta tambien incluye campo de observacion
-                var cont = document.getElementById('campoTexto');
-                var elemento = document.createElement("INPUT");
-                elemento.type = 'text';
-                cont.appendChild(elemento);
 
-                //en caso de que no tenga observacion, solo se muestra la respuesta con escalares
-            } else {
-                 //aqui va codigo de escalar
-            }
-            break;
+        //si la pregunta tiene campo de observacion
+        var cont = document.getElementById('campoTexto');
+        var elemento = document.createElement("INPUT");
+        elemento.type = 'text';
+        //elemento.setAttribute("size = 15 maxlength = 30");
+        cont.appendChild(elemento);
 
-        default:
-            break;
+
+        //en caso de que no tenga observacion, solo se muestra la Si-nO
+    } else {
+
+        //aqui va el codigo de Si-nO
+
+    }
+
+}
+
+///recibe: --opciones que se muestran
+//         --si tiene campo de observacion
+//modifica: vista en las preguntas que tienen seleccion multiple
+//retorna--
+function seleccionMultiple(par1, campoObservacion) {
+
+    if (campoObservacion == true) {
+
+        //aqui va el codigo de seleccion multiple
+
+
+        //si la pregunta tiene campo de observacion
+        var cont = document.getElementById('campoTexto');
+        var elemento = document.createElement("INPUT");
+        elemento.type = 'text';
+        //elemento.setAttribute("size = 15 maxlength = 30");
+        cont.appendChild(elemento);
+
+
+        //en caso de que no tenga observacion, solo se muestra la seleccion multiple
+    } else {
+
+        //aqui va el codigo de seleccion multiple
+
+    }
+}
+
+///recibe: --rango de numeros que se muestran
+//         --si tiene campo de observacion
+//modifica: vista en las preguntas que tienen respuesta de tipo escalar
+//retorna--
+function Escalar(par1, campoObservacion) {
+
+    if (campoObservacion == true) {
+
+        //aqui va el codigo de "escalar"
+
+
+        //si la pregunta tiene campo de observacion
+        var cont = document.getElementById('campoTexto');
+        var elemento = document.createElement("INPUT");
+        elemento.type = 'text';
+        //elemento.setAttribute("size = 15 maxlength = 30");
+        cont.appendChild(elemento);
+
+        //en caso de que no tenga observacion, solo se muestra el "escalar"
+    } else {
+
+        //aqui va el codigo de "escalar"
+
+    }
+}
+
+///recibe: 
+//         --si tiene campo de observacion
+//modifica: vista en las preguntas que tienen respouesta de estrella
+//retorna--
+function Estrella(par1, campoObservacion) {
+
+    if (campoObservacion == true) {
+
+        //aqui va el codigo de "estrella"
+
+
+        //si la pregunta tiene campo de observacion
+        var cont = document.getElementById('campoTexto');
+        var elemento = document.createElement("INPUT");
+        elemento.type = 'text';
+        //elemento.setAttribute("size = 15 maxlength = 30");
+        cont.appendChild(elemento);
+
+        //en caso de que no tenga observacion, solo se muestra el "estrella"
+    } else {
+
+        //aqui va el codigo de "estrella"
 
     }
 }
