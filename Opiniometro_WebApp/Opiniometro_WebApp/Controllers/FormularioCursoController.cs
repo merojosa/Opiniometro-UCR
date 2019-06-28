@@ -36,7 +36,8 @@ namespace Opiniometro_WebApp.Controllers
                 select new FormularioCursoModel
                 {
                     item = it.TextoPregunta,
-                    tieneObservacion = it.TieneObservacion
+                    tieneObservacion = it.TieneObservacion,
+                    Tipo = it.TipoPregunta 
                 };
 
             return formulario;

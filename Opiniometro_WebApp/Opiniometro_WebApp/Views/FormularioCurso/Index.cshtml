@@ -1,5 +1,4 @@
-﻿
-@model Opiniometro_WebApp.Models.FormularioCursoModel
+﻿@model Opiniometro_WebApp.Models.FormularioCursoModel
 
 @{
     ViewBag.Title = "Index";
@@ -24,11 +23,12 @@
         @foreach (var item in Model.preguntasFormulario)
         {
             <tr id="campoTexto">
-                <td >
+                <td>
                     @Html.DisplayFor(modelItem => item.item)
                     <script>
-                        escogerTipoRespuesta(1,true)
+                        escogerTipoRespuesta(1, true)
                     </script>
+                    @{ Html.RenderPartial("SeleccionMultiple"); }
                     <br />
                 </td>
             </tr>
