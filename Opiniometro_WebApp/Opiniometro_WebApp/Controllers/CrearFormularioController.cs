@@ -64,7 +64,9 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult EliminarSeccion() {
+        public ActionResult EliminarSeccion(string codForm) {
+            ViewBag.TituloSeccion = new SelectList(db.Conformado_For_Sec.Where(m => m.CodigoFormulario == codForm), "TituloSeccion", "TituloSeccion");
+
             return View();
         }
 

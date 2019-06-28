@@ -1,4 +1,4 @@
-﻿@model Opiniometro_WebApp.Models.Seccion
+﻿@model Opiniometro_WebApp.Models.Conformado_For_Sec 
 
 
 @{
@@ -26,10 +26,19 @@
 
     @* Dropdown list para que el usuario escoja la sección del formulario que desea eliminar *@
     <div class="form-group">
-        @Html.LabelFor(model => model.Titulo, "Título de la sección a eliminar", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.TituloSeccion, "Título de la sección a eliminar", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Titulo, new SelectList(ViewBag.Titulo, "Value", "Text"), "Seleccione")
-            @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(model => model.TituloSeccion, new SelectList(ViewBag.TituloSeccion, "Value", "Text"), "Seleccione")
+            @Html.ValidationMessageFor(model => model.TituloSeccion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.Label("Código del formulario:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.CodigoFormulario, new { disabled = "disabled" })
+          
         </div>
     </div>
 
