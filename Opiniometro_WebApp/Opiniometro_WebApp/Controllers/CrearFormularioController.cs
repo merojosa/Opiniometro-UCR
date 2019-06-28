@@ -34,17 +34,26 @@ namespace Opiniometro_WebApp.Controllers
                     .ThenBy(m => m.Orden_Item)
                     .ToList()
 
-        };
+            };
             
             return View(crearFormulario);
         }
-
+        public ActionResult VistaPrevia(String codForm)
+        {
+            FormularioModel formularioVistaPrevia = new FormularioModel()
+            {
+                Secciones = db.Seccion.Where(m => m. == codForm )
+                .OrderBy(m => m.TituloSeccion)
+                .ThenBy(m => m.Orden_Item)
+                .ToList()
+            };
+        }
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public PartialViewResult AgregarConformado(Conformado_Item_Sec_Form conformado)
         {
-           
-           
+
+
             if (ModelState.IsValid)
             {
                 List<Conformado_Item_Sec_Form> conf = db.Conformado_Item_Sec_Form.Where(m => m.ItemId == conformado.ItemId && m.TituloSeccion == conformado.TituloSeccion && m.CodigoFormulario == conformado.CodigoFormulario).ToList();
