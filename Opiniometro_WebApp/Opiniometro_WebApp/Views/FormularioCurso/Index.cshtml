@@ -1,0 +1,39 @@
+﻿
+@model Opiniometro_WebApp.Models.FormularioCursoModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="~/Scripts/FormularioDelCurso.js"></script>
+</head>
+<body>
+    <table id="tabla-preguntasFormulario" class="table table-sm table-hover" cellspacing="0" width="100">
+        <tr>
+            <th align='left'>
+                Pregunta
+            </th>
+        </tr>
+        @*Despliega la opcion correspondiente para respoder la pregunta*@
+
+        @foreach (var item in Model.preguntasFormulario)
+        {
+            <tr id="campoTexto">
+                <td >
+                    @Html.DisplayFor(modelItem => item.item)
+                    <script>
+                        escogerTipoRespuesta(1,true)
+                    </script>
+                    <br />
+                </td>
+            </tr>
+        }
+    </table>
+
+</body>
+</html>
