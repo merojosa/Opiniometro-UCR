@@ -13,7 +13,9 @@
         </div>
     </p>
 }
-
+<br>
+<br>
+<br>
     <div style="margin-left:80px; width: 600px ">
         <table class="table">
             <tr>
@@ -26,21 +28,21 @@
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
+            <tr>
+                <td>
 
-                        @item.Nombre
-                        
-                    </td>
+                    @item.Nombre
 
-                    <td>
-                      
-                            @Html.ActionLink("Detalles", "Detalles", "Perfil", new { id = item.Nombre }, new { @class = "btn btn-default" })
-                       
+                </td>
 
-                    </td>
+                <td>
 
-                </tr>
+                    @Html.ActionLink("Detalles", "Detalles", "Perfil", new { nombre = item.Nombre }, new { @class = "btn btn-default" })
+
+
+                </td>
+
+            </tr>
                
                 
                 

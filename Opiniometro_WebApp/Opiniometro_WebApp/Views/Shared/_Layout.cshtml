@@ -33,6 +33,15 @@
                             <li>@Html.ActionLink("Cambiar perfil actual", "Cambiar", "Perfil")</li>
                             <li class="disabled"><a id="link_deshabilitado">Asignar/Revocar permisos</a></li>
                             @{
+                                if (permisos_usuario.verificar_permiso(IdPermiso.VER_INFORMACION_PERSONAS))
+                                {
+                                    <li>@Html.ActionLink("Ver perfiles", "VerPerfiles", "Perfil")</li>
+                                }
+                                else
+                                {
+                                    <li class="disabled"><a id="link_deshabilitado">Ver información de personas</a></li>
+                                }
+
                                 if (permisos_usuario.verificar_permiso(IdPermiso.CREAR_PERFIL))
                                 {
                                     <li>@Html.ActionLink("Crear perfil", "Crear", "Perfil")</li>
@@ -42,14 +51,7 @@
                                     <li class="disabled"><a id="link_deshabilitado">Crear perfil</a></li>
                                 }
 
-                                if (permisos_usuario.verificar_permiso(IdPermiso.VER_INFORMACION_PERSONAS))
-                                {
-                                    <li>@Html.ActionLink("Ver perfiles", "VerPerfiles", "Perfil")</li>
-                                }
-                                else
-                                {
-                                    <li class="disabled"><a id="link_deshabilitado">Ver información de personas</a></li>
-                                }
+
 
                                 if (permisos_usuario.verificar_permiso(IdPermiso.ELIMINAR_PERFILES))
                                 {
