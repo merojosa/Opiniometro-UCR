@@ -67,7 +67,6 @@
         </div>
     </div>
 
-    @*AQUI VA LA VISTA PREVIA*@
     <div class="form-group" id="etiqueta" hidden="hidden">
         @Html.Label("Etiqueta Observación", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -96,7 +95,6 @@
             function habilitarVistaParcialEtiqueta(etiquetaV)
             {
                 document.getElementById("etiqueta").hidden = "hidden";
-
                 if (etiquetaV.localeCompare("true") == 0) {
                     document.getElementById("etiqueta").hidden = "";
                 }
@@ -107,7 +105,6 @@
     <script>
         function habilitarVistaParcialAgregarOpciones(tipoPregunta) {
             document.getElementById("opciones").hidden = "hidden";
-
             if (tipoPregunta.localeCompare("2") == 0) {
                 document.getElementById("opciones").hidden = "";
             }
