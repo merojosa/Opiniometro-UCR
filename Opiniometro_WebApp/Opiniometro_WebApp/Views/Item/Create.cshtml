@@ -77,6 +77,7 @@
 
     <div class="form-group" id="opciones" hidden="hidden">
         <input type="button" value="Agregar Opciones" class="btn btn-secondary" p id="botonAsignarOpciones" onclick="accionBotonAgregarOpciones()" />
+
         @Html.Partial("AgregarOpcionesVParcial")
     </div>
 
@@ -101,13 +102,7 @@
         }
     </script>
 
-    @* La accion que sucede al seleccionar boton AgregarOpciones *@
-    <script>
-        function accionBotonAgregarOpciones()
-        {
-            document.getElementById('opciones').innerHTML = "@Html.Partial("AgregarOpcionesVParcial")";
-        }
-    </script>
+
 
     @* La accion que sucede al seleccionar boton Cancelar *@
     <script>
