@@ -29,7 +29,20 @@ function escogerTipoRespuesta(tipoPregunta, tieneObservacion) {
 
                 //en caso de que no tenga observacion, solo se muestra la seleccion unica
             } else {
+                var selection = document.getElementById('campoTexto'); //para guardar la respuesta?
 
+                var choosed = document.createElement("INPUT");
+                choosed.setAttribute('type', 'radio');
+                choosed.setAttribute('name', name);
+                //choosed.setAttribute('label', Opción1)
+
+                var choosed2 = document.createElement("INPUT");
+                choosed2.setAttribute('type', 'radio');
+                choosed2.setAttribute('name', name);
+                //choosed2.setAttribute('label', Opción2)
+
+                selection.appendChild(choosed);
+                selection.appendChild(choosed2);
                 //aqui va codigo de seleccion unica
             }
             break;
