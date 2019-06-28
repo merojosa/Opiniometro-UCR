@@ -167,35 +167,40 @@
             <button type="button" style="display:none" id="boton-abrir-modal" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalReporte">Reporte de asignaciones</button>
         </div>
 
+    }
 
+    <!-- Modal -->
+    <div id="modalReporte" class="modal fade" role="dialog">
 
-        <!-- Modal -->
-        <div id="modalReporte" class="modal fade" role="dialog">
-            <div class="modal-dialog" style="height:63vh; width:73vw;">
+        <div class="modal-dialog" style="height:73vh; width:73vw;">
 
-                <!-- Modal content-->
-                <div class="modal-content">
+            <!-- Modal content-->
+            <div class="modal-content">
 
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Asignaciones de formularios realizadas para el SEMESTRE-AÑO</h4>
-                    </div>
-
-                    <div class="modal-body">
-                        <div id="asign-content" style="height:60vh; width:70vw; overflow:auto;">
-                            @Html.Partial("AsignacionFormularioGrupo", Model.GruFormsSeleccionados)
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    </div>
-
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Asignaciones de formularios por realizar</h4>
                 </div>
 
+                <div class="modal-body">
+                    <div id="asign-content" style="height:70vh; width:70vw;">
+                        @Html.EditorFor(Model => Model.GruFormsSeleccionados, "~/Views/Shared/AsignacionFormularioGrupos.cshtml")
+                    </div>
+                </div>
+
+                <div class="modal-footer" align="center">
+                    <button type="button" id="boton-efectuar" class="btn btn-default">Efectuar asignaciones</button>
+                    <span> </span>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+
+                <input type="submit" style="display:none" id="efectuar" value="EFECTUAR ASIGNACIONES"/>
+
             </div>
+
         </div>
-    }
+
+    </div>
 
 </div>
 

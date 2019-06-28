@@ -194,14 +194,17 @@
     <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\AsignarFormulariosController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
+    <Compile Include="Controllers\Conformado_Item_Sec_FormController.cs" />
     <Compile Include="Controllers\CrearFormularioController.cs" />
     <Compile Include="Controllers\FormularioController.cs" />
+    <Compile Include="Controllers\FormularioCursoController.cs" />
     <Compile Include="Controllers\Formulario_RespuestaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
-    <Compile Include="Controllers\LlenarFormularioController.cs" />
+    <Compile Include="Controllers\CursosMatriculadosController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
+    <Compile Include="Controllers\SeleccionPermisosController.cs" />
     <Compile Include="Controllers\Servicios\IdPermiso.cs" />
     <Compile Include="Controllers\Servicios\IdentidadManager.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
@@ -224,6 +227,9 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Ciclo_Lectivo.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Conformado_For_Sec.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Conformado_Item_Sec_Form.cs">
@@ -269,6 +275,7 @@
     <Compile Include="Models\Formulario.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FormularioCursoModel.cs" />
     <Compile Include="Models\Formulario_Respuesta.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -309,6 +316,7 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PerfilesUsuario.cs" />
+    <Compile Include="Models\Perfil_ext.cs" />
     <Compile Include="Models\Permiso.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -331,6 +339,7 @@
     <Compile Include="Models\Seccion.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SeleccionPermisos.cs" />
     <Compile Include="Models\Seleccion_Unica.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -365,9 +374,10 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AsignarPeriodosViewModel.cs" />
     <Compile Include="ViewModels\ElegirFormularioEditorViewModel.cs" />
     <Compile Include="ViewModels\ElegirGrupoEditorViewModel.cs" />
-    <Compile Include="ViewModels\EstudianteGruposMatriculado.cs" />
+    <Compile Include="Models\EstudianteGruposMatriculado.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\estilos-propios.css" />
@@ -410,6 +420,7 @@
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\CollapsibleScript.js" />
+    <Content Include="Scripts\FormularioDelCurso.js" />
     <Content Include="Scripts\Graficar.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -506,13 +517,15 @@
     <Content Include="Views\Shared\_Collapsible.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Perfil\Index.cshtml" />
+    <Content Include="Views\SeleccionPermisos\SeleccionarPermisos.cshtml" />
     <Content Include="Views\CrearFormulario\ConformadoVParcial.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ElegirGrupoEditorViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ElegirFormularioEditorViewModel.cshtml" />
     <Content Include="Views\Shared\AsignacionFormularioGrupo.cshtml" />
     <Content Include="Views\Auth\Permisos.cshtml" />
     <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
-    <Content Include="Views\LlenarFormulario\Index.cshtml" />
+    <Content Include="Views\CursosMatriculados\Index.cshtml" />
+    <Content Include="Views\FormularioCurso\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

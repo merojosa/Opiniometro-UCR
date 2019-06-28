@@ -65,12 +65,10 @@
                 @item.persona.Direccion
             </td>
             <td>
-                @Html.ActionLink("Editar", "Editar", new { id = item.persona.Cedula })
+                @Html.ActionLink("Editar", "Editar", new { id = item.persona.Cedula }, new { @class = "btn btn-default" })
+         
             </td>
         </tr>
     }
 
 </table>
-<p>
-@Html.ActionLink("Agregar usuario", "CrearUsuario")
-</p>
