@@ -9,7 +9,8 @@
 
 <html>
 <head>
-
+    <meta charset="utf-8" />
+    <script src="~/Scripts/FormularioDelCurso.js"></script>
 </head>
 <body>
     <table id="tabla-preguntasFormulario" class="table table-sm table-hover" cellspacing="0" width="100">
@@ -18,30 +19,21 @@
                 Pregunta
             </th>
         </tr>
-        <!-- Despliega los cursos eh los que esta matriculado el estudiante-->
+        @*Despliega la opcion correspondiente para respoder la pregunta*@
+
         @foreach (var item in Model.preguntasFormulario)
         {
-            <tr>
-                <td>
+            <tr id="campoTexto">
+                <td >
                     @Html.DisplayFor(modelItem => item.item)
-                    <div id="campoTexto">
-                    </div>
                     <script>
-                        if ( true) {
-                            var n1 = document.getElementById('campoTexto');
-                            var elemento = document.createElement("INPUT");
-                            //var contenido = document.createTextNode("type = text")
-                            //elemento.appendChild(contenido)
-                            elemento.type = 'text';
-                            n1.appendChild(elemento);
-                            //document.getElementById("campoTexto").appendChild(elemento);
-                        }
+                        escogerTipoRespuesta(1,true)
                     </script>
+                    <br />
                 </td>
             </tr>
-          }
+        }
     </table>
-    
-    <script src="~/Scripts/FormularioDelCurso.js"></script>
+
 </body>
 </html>
