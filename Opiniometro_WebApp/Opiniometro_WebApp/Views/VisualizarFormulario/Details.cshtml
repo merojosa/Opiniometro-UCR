@@ -194,7 +194,7 @@
                                                     {
                                                         <div style="height:180px; overflow-y: scroll;">
 
-                                                            <p id="rep_@item_actual" style="float:right"></p>
+                                                            <p id="rep_@item_actual" style="float:left"></p>
 
                                                             @foreach (var item in Model.Formulario_Respuesta.Take(1))
                                                             {
@@ -210,13 +210,11 @@
                                                                     var obs = aData[0];
 
                                                                         for (var data in obs) {
-                                                                            document.getElementById("rep_@item_actual").innerHTML = document.getElementById("rep_@item_actual").innerText + (obs[data]).toString() + " - ";
+                                                                            document.getElementById("rep_@item_actual").innerHTML = document.getElementById("rep_@item_actual").innerText + (obs[data]).toString();
                                                                         }
-                                                                            }
-                                                                        });
+                                                                    }
+                                                                });
                                                             </script>
-
-
                                                             }
 
                                                         </div>
@@ -239,7 +237,7 @@
                                                                 <div id="collapseThreeTwo_@seccion_counter" class="panel-collapse collapse">
                                                                     <div class="panel-body">
                                                                         <div style="height:200px; overflow-y: scroll;">
-                                                                            <p id="info_@item_actual" style="float:right"></p>
+                                                                            <p id="inf_@item_actual" style="float:right"></p>
 
                                                                             @foreach (var item in Model.Formulario_Respuesta.Take(1))
                                                                             {
@@ -258,7 +256,7 @@
                                                                                         var ap2 = aData[3];
 
                                                                                             for (var data in obs) {
-                                                                                                document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + "<br>";
+                                                                                                document.getElementById("inf_@item_actual").innerHTML = document.getElementById("inf_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + "<br>";
                                                                                                 //} else {
 
                                                                                                 //}   

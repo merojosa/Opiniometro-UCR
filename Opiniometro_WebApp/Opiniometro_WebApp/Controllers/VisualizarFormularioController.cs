@@ -282,8 +282,9 @@ namespace Opiniometro_WebApp.Controllers
             {
                 respuestas.Add(item.Respuesta);
             }
-            
-            return Json(respuestas, JsonRequestBehavior.AllowGet);
+
+            List<object> respuestasTexto = new List<object> { respuestas };
+            return Json(respuestasTexto, JsonRequestBehavior.AllowGet);
         }
     }
 }
