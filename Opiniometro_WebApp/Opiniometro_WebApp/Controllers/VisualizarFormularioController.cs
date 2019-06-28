@@ -227,23 +227,23 @@ namespace Opiniometro_WebApp.Controllers
             foreach (var label in labels)
             {
                 x.Add(label);
-                if (!result.Contains(label))
+                if (result[iter].Respuesta != label)
                 {
                     y.Add(0);
                 }
                 else
-                    y.Add(result[label].cntResp);
+                    y.Add(result[iter].cntResp);
                 iter++;
             }
-            foreach (var itemR in result)
-            {
+            //foreach (var itemR in result)
+            //{
 
-                //leyenda[iter] = itemR.Respuesta;
-                //cntResps[iter] = itemR.cntResp;
-                //iter++;
-                x.Add(itemR.Respuesta);
-                y.Add(itemR.cntResp);
-            }
+            //    //leyenda[iter] = itemR.Respuesta;
+            //    //cntResps[iter] = itemR.cntResp;
+            //    //iter++;
+            //    x.Add(itemR.Respuesta);
+            //    y.Add(itemR.cntResp);
+            //}
             List<object> lista = new List<object> { x, y };
             return Json(lista, JsonRequestBehavior.AllowGet);
         }

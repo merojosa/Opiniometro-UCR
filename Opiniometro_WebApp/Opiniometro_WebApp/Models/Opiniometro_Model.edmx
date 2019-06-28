@@ -1120,7 +1120,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
         </Function>
         <Function Name="SP_RecuperarEtiquetas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="tipoPregunta" Type="int" Mode="In" />
-          <Parameter Name="idPregunta" Type="int" Mode="In" />
+          <Parameter Name="idPregunta" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="Opiniometro_DatosModelStoreContainer">
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" Schema="dbo" store:Type="Tables" />
@@ -2685,7 +2685,7 @@ warning 6013: The table/view 'Opiniometro_Datos.dbo.ValorRandom' does not have a
           </FunctionImport>
           <FunctionImport Name="SP_RecuperarEtiquetas" ReturnType="Collection(String)">
             <Parameter Name="tipoPregunta" Mode="In" Type="Int32" />
-            <Parameter Name="idPregunta" Mode="In" Type="Int32" />
+            <Parameter Name="idPregunta" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DatosEstudiante_Result">

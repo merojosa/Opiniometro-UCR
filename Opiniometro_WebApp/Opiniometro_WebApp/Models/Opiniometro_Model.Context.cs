@@ -351,15 +351,15 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ObtenerPermisosUsuario_Result>("SP_ObtenerPermisosUsuario", correoParameter, perfilParameter);
         }
     
-        public virtual ObjectResult<string> SP_RecuperarEtiquetas(Nullable<int> tipoPregunta, Nullable<int> idPregunta)
+        public virtual ObjectResult<string> SP_RecuperarEtiquetas(Nullable<int> tipoPregunta, string idPregunta)
         {
             var tipoPreguntaParameter = tipoPregunta.HasValue ?
                 new ObjectParameter("tipoPregunta", tipoPregunta) :
                 new ObjectParameter("tipoPregunta", typeof(int));
     
-            var idPreguntaParameter = idPregunta.HasValue ?
+            var idPreguntaParameter = idPregunta != null ?
                 new ObjectParameter("idPregunta", idPregunta) :
-                new ObjectParameter("idPregunta", typeof(int));
+                new ObjectParameter("idPregunta", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_RecuperarEtiquetas", tipoPreguntaParameter, idPreguntaParameter);
         }
