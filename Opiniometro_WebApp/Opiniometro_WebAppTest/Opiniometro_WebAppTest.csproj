@@ -156,7 +156,6 @@
     <Compile Include="Controllers\CategoriaControllerTest.cs" />
     <Compile Include="Controllers\IdentidadManagerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

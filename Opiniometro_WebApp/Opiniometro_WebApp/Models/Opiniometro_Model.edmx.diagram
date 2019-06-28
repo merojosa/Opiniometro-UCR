@@ -82,6 +82,12 @@
         <AssociationConnector Association="Opiniometro_DatosModel.Direccion_Persona" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.Escuela" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_DatosModel.Se_Encuentra_Curso_Enfasis" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Escalar" Width="1.5" PointX="17.25" PointY="19.25" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Opciones_De_Respuestas_Seleccion_Multiple" Width="1.5" PointX="19.5" PointY="7.125" />
+        <EntityTypeShape EntityType="Opiniometro_DatosModel.Seleccion_Multiple" Width="1.5" PointX="17.25" PointY="0.75" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Esc_Ite" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_Sel_Mul_Ite" />
+        <AssociationConnector Association="Opiniometro_DatosModel.FK_OpcResMul_Ite1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
