@@ -43,21 +43,20 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult AsignarSecciones(string codForm)
         {
 
-            CrearFormularioModel crearFormulario = new CrearFormularioModel
+            
+            CrearFormularioModel conformado_For_Sec = new CrearFormularioModel
             {
 
-                Secciones = db.Seccion.ToList(),
+                
                 Formulario = db.Formulario.Find(codForm),// le pasamos
-                Conformados = db.Conformado_Item_Sec_Form
-
-                    .Where(m => m.CodigoFormulario == codForm)
-                    .OrderBy(m => m.TituloSeccion)
-                    .ThenBy(m => m.Orden_Item)
-                    .ToList()
+                Conformado_For_Secs = db.Conformado_For_Sec
+                   .ToList()
 
             };
 
-            return View(crearFormulario);
+            ViewBag.CodigoFormulario = new SelectList(db.Formulario, "Codigo", "Codigo");
+
+            return View(conformado_For_Sec);
         }
 
         [HttpPost]
