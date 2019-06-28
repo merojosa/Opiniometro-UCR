@@ -136,25 +136,35 @@ AS
 BEGIN
 	IF(UPDATE(Nombre) OR UPDATE(Apellido1) OR UPDATE(Apellido2) OR UPDATE(Direccion))
 	BEGIN
-		DECLARE @CedulaBusqueda		VARCHAR(10)
 		DECLARE @Cedula				CHAR(10)
 		DECLARE @Nombre				NVARCHAR(51)
 		DECLARE @Apellido1			NVARCHAR(51)
 		DECLARE @Apellido2			NVARCHAR(51)
 		DECLARE @Direccion			NVARCHAR(257)
 
-		IF((@nombre NOT LIKE '') AND (@Apellido1 NOT LIKE '') AND (@Apellido2 NOT LIKE '') AND (@Direccion NOT LIKE '') AND (LEN(@CedulaBusqueda) = 9) 
-			AND (LEN(@Cedula) <= 10) AND (LEN(@Nombre) <= 50) AND (LEN(@Apellido1) <= 50) AND (LEN(@Apellido2) <= 50) AND (LEN(@Direccion) <= 256))
-		BEGIN
-			UPDATE Persona
-			SET Cedula = @Cedula, Nombre = @Nombre, Apellido1 = @Apellido1, Apellido2 = @Apellido2, Direccion = @Direccion
-			WHERE Cedula = @CedulaBusqueda;
-		END
-		ELSE
-		BEGIN
-			Raiserror('Los campos no pueden estar vacíos o exceden el tamaño permitido.', 16, 1)  
-			Return  
-		END
+		SET @Cedula				= (SELECT Cedula FROM inserted)
+		SET @Nombre				= (SELECT Nombre FROM inserted)
+		SET @Apellido1			= (SELECT Apellido1 FROM inserted)
+		SET @Apellido2			= (SELECT Apellido2 FROM inserted)
+		SET @Direccion			= (SELECT Direccion FROM inserted)
+
+		BEGIN TRY
+			IF((@nombre IS NOT NULL) AND (@Apellido1 IS NOT NULL) AND (@Apellido2 IS NOT NULL) AND (@Direccion IS NOT NULL) 
+				AND (LEN(@Cedula) <= 10) AND (LEN(@Nombre) <= 50) AND (LEN(@Apellido1) <= 50) AND (LEN(@Apellido2) <= 50) AND (LEN(@Direccion) <= 256))
+			BEGIN
+				UPDATE Persona
+				SET Cedula = @Cedula, Nombre = @Nombre, Apellido1 = @Apellido1, Apellido2 = @Apellido2, Direccion = @Direccion
+			END
+			ELSE
+			BEGIN
+				Raiserror('Los campos no pueden estar vacíos o exceden el tamaño permitido.', 16, 1)  
+				Return  
+			END
+		END TRY
+
+		BEGIN CATCH
+			PRINT 'ERROR: ' + ERROR_MESSAGE();
+		END CATCH
 	END
 END;
 
@@ -168,20 +178,26 @@ AS
 BEGIN
 	IF(UPDATE(CorreoInstitucional))
 	BEGIN
-		DECLARE @CedulaBusqueda		VARCHAR(10)
 		DECLARE @Correo				NVARCHAR(101)
 
-		IF((@correo LIKE '%@ucr.ac.cr') AND (@correo NOT LIKE '') AND (LEN(@CedulaBusqueda) = 9) AND (LEN(Correo) <= 100))
-		BEGIN
-			UPDATE Usuario
-			SET Correo = @Correo
-			WHERE Cedula = @CedulaBusqueda;
-		END
-		ELSE
-		BEGIN
-			Raiserror('El correo no puede estar vacío y debe ser del tipo "nombre@ucr.ac.cr".', 16, 1)  
-			Return  
-		END
+		SET @Correo				= (SELECT Correo FROM inserted)
+
+		BEGIN TRY
+			IF((@correo IS NOT NULL) AND (@correo LIKE '%@ucr.ac.cr') AND (LEN(Correo) <= 100))
+			BEGIN
+				UPDATE Usuario
+				SET Correo = @Correo
+			END
+			ELSE
+			BEGIN
+				RAISERROR('El correo no puede estar vacío y debe ser del tipo "nombre@ucr.ac.cr".', 16, 1)  
+				RETURN  
+			END
+		END TRY
+
+		BEGIN CATCH
+			PRINT 'ERROR: ' + ERROR_MESSAGE();
+		END CATCH
 	END
 END;
 
