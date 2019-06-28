@@ -150,7 +150,7 @@ BEGIN
 
 		BEGIN TRY
 			IF((@nombre IS NOT NULL) AND (@Apellido1 IS NOT NULL) AND (@Apellido2 IS NOT NULL) AND (@Direccion IS NOT NULL) 
-				AND (LEN(@Cedula) <= 10) AND (LEN(@Nombre) <= 50) AND (LEN(@Apellido1) <= 50) AND (LEN(@Apellido2) <= 50) AND (LEN(@Direccion) <= 256))
+				AND (LEN(@Cedula) <= 9) AND (LEN(@Nombre) <= 50) AND (LEN(@Apellido1) <= 50) AND (LEN(@Apellido2) <= 50) AND (LEN(@Direccion) <= 256))
 			BEGIN
 				UPDATE Persona
 				SET Cedula = @Cedula, Nombre = @Nombre, Apellido1 = @Apellido1, Apellido2 = @Apellido2, Direccion = @Direccion
