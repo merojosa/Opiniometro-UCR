@@ -10,6 +10,9 @@ using System.Web.UI.WebControls;
 using PagedList;
 using PagedList.Mvc;
 using Opiniometro_WebApp.Models;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Web.Script.Serialization;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -95,6 +98,42 @@ namespace Opiniometro_WebApp.Controllers
             ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
             return View(item);
         }
+
+        // Método secundario del Crear para cuando se selecciona el tipo pregunta Selección Única.
+        /*[HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria,EtiquetaObservacion")] Item item, string[] DynamicTextBox)
+        {
+            // Serializa el Array entrante y lo asigna al ViewBag.
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            ViewBag.Values = serializer.Serialize(DynamicTextBox);
+
+            // Uso del procedimiento almacenado para insertar en una sección.
+            db.SP_Insertar_Seccion
+
+            // Ciclo que itera en los valores de los TextBox dinámicos.
+            foreach (string textboxValue in DynamicTextBox)
+            {
+                // Inserta los valores de los TextBox dinámicos en la tabla de la Base de Datos.
+                string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    // Uso del procedimiento almacenado para insertar en las opciones de respuesta de selección única.
+                    db.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica
+
+                    using (SqlCommand cmd = new SqlCommand("INSERT INTO Names(Name) VALUES(@Name)"))
+                    {
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@Name", textboxValue);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+            }
+
+            return View(item);
+        }*/
 
         //EFE:
         //REQ:
