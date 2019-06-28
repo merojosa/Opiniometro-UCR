@@ -11,6 +11,7 @@ namespace Opiniometro_WebApp.Models
 
         public string CodigoFormulario { get; set; }
         public string NombreFormulario { get; set; }
+        public Fecha_Corte FechaDeCorte { get; set; }
 
         public ElegirFormularioEditorViewModel() { }
     }
