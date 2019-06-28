@@ -48,17 +48,58 @@
                 </td>
 
                 <td>
-            <tr @*id="detalle-@pregunta.ItemId" style="display:none"*@>
+            <tr>
                 <td></td>
                 <td colspan="5">
-                    @Html.Action("VistaPreviaPregunta", new { id = pregunta.ItemId })
-                </td>
-                </td>
 
+                    @{
+                        int tipoPregunta = pregunta.Item.TipoPregunta; //Pasamos el tipo de pregunta a int.
+                        switch (tipoPregunta)
+                        {
+                            case 1://Tipo de pregunta si o no.
+
+                                <dl class="dl-horizontal">
+
+                                    <dd>
+                                        <textarea name="comentarioAdicional" rows="5" cols="40" disabled>Escriba su respuesta aquí</textarea>
+                                    </dd>
+                                    <br>
+                                    @if (pregunta.Item.TieneObservacion == true)
+                                    {
+                                        @Html.Label("Comentario Adicional")
+                                        <dd>
+                                            <textarea name="comentarioAdicional" rows="5" cols="40" disabled>Escriba su comentario aqui</textarea>
+                                        </dd>
+                                    }
+                                </dl>
+
+                                break;
+
+                            case 3://Tipo de pregunta texto libre.
+                                <div>
+                                    <dl class="dl-horizontal">
+
+                                        <dd>
+                                            <input type="checkbox" name="Si" value='Si' disabled> Sí<br>
+                                            <input type="checkbox" name="No" value='No' disabled> No<br>
+                                            <input type="checkbox" name="NoSe" value='NoSe' disabled> No sé/ No respondo/ No aplica<br>
+                                        </dd>
+                                        @if (pregunta.Item.TieneObservacion == true)
+                                        {
+                                            <dd>
+                                                <textarea name="comentarioAdicional" rows="5" cols="40" disabled>Escriba su comentario aqui</textarea>
+                                            </dd>
+                                        }
+
+                                    </dl>
+                                </div>
+                             break;
+                        }
+                    }
+                 </td>
+                </td>
             </tr>
-
         }
-    }
-
+     }
 </table>
 

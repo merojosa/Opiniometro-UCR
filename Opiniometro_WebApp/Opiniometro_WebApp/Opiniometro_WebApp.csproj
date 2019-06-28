@@ -500,8 +500,6 @@
     <Content Include="Views\Categoria\Edit.cshtml" />
     <Content Include="Views\Categoria\Index.cshtml" />
     <Content Include="Views\CrearFormulario\AsignarPreguntas.cshtml" />
-    <Content Include="Views\CrearFormulario\SeccionesAsignadas.cshtml" />
-    <Content Include="Views\CrearFormulario\PreguntasAsignadas.cshtml" />
     <Content Include="Views\CrearFormulario\preguntasVParcial.cshtml" />
     <Content Include="Views\CrearFormulario\seccionesVParcial.cshtml" />
     <Content Include="Views\Item\VistaPrevia.cshtml" />
@@ -523,6 +521,7 @@
     <Content Include="Views\Item\AgregarOpciones.cshtml" />
     <Content Include="Views\CrearFormulario\VistaPreviaPregunta.cshtml" />
     <Content Include="Views\CrearFormulario\VistaFormularioVParcial.cshtml" />
+    <Content Include="Views\Item\AgregarOpcionesVParcial.cshtml" />
     <Content Include="Views\CrearFormulario\AsignarSecciones.cshtml" />
   </ItemGroup>
   <ItemGroup>
