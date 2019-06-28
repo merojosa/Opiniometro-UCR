@@ -122,7 +122,11 @@
                                                     <div id="contenedorGrafo">
                                                         <canvas id="pie_chart_@item_actual"></canvas>
                                                     </div>
+                                                    <button id="changeGraph">Change Graph</button>
                                                     <script>
+                                                        var ctx = $("#pie_chart_@item_actual").get(0).getContext("2d");
+                                                        var dataT;
+                                                        var myChart;
                                                         $.ajax({
                                                             type: "POST",
                                                             url: "/VisualizarFormulario/GraficoPie",//?itemId=@seccion.Item.ItemId",
@@ -140,7 +144,7 @@
                                                                 document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: \n" + (tamanio).toString();
                                                                 @*var iter = aLabels;
                                                                 <p>@seccion.Item.ItemId</p>*@
-                                                                var dataT = {
+                                                                dataT = {
                                                                     labels: aLabels,
                                                                     datasets: [{
                                                                     label: "Prueba",
@@ -165,8 +169,7 @@
                                                                         borderWidth: 1
                                                                     }]
                                                                 };
-                                                                var ctx = $("#pie_chart_@item_actual").get(0).getContext("2d");
-                                                                var barChart = new Chart(ctx, {
+                                                                myChart = new Chart(ctx, {
                                                                     type: 'pie',
                                                                     data: dataT,
                                                                     options: {
@@ -178,7 +181,31 @@
                                                                 })
                                                             }
                                                         });
+                                                        document.getElementById('changeGraph').onclick = function () {
+                                                            var typeGrah = myChart.type;
+                                                            myChart.destroy();
+                                                            if (typeGrah == 'pie') {
+                                                                myChart = new Chart(ctx, {
+                                                                    type: 'horizontalBar',
+                                                                    data: dataT
+                                                                });
+                                                            } else{
+                                                                myChart = new Chart(ctx, {
+                                                                    type: 'pie',
+                                                                    data: dataT
+                                                                });
+                                                            }
+                                                        };
                                                     </script>
+                                                    @*<script>
+                                                        document.getElementById('changeGraph').onclick = function () {
+                                                            myChart.destroy();
+                                                            myChart = new Chart(ctx, {
+                                                                type: 'line',
+                                                                data: chartData
+                                                            });
+                                                        };
+                                                    </script>*@
                                                 }
                                                 else
                                                 {
