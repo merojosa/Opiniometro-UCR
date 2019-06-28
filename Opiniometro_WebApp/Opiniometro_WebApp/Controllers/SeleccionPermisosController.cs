@@ -158,7 +158,7 @@ namespace Opiniometro_WebApp.Controllers
                 {
                     //Notificacion de que todo sale bien
                     context.SaveChanges();
-                    TempData["msg"] = "<script>alert('Se han guardado los permisos exitosamente.');</script>";
+                    TempData["msg"] = "<script>alert('Se han guardado los cambios a los permisos exitosamente.');</script>";
                     return RedirectToAction("SeleccionarPermisos");
                 }
 
