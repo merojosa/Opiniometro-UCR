@@ -16,17 +16,17 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        @*<h4>Item</h4>*@
-        <hr />
+<div class="form-horizontal">
+    @*<h4>Item</h4>*@
+    <hr />
 
-        <div class="form-group">
-            @Html.Label("Código", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ItemId, new { htmlAttributes = new { @class = "form-control", @maxlength = "11" } })
-                @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.Label("Código", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ItemId, new { htmlAttributes = new { @class = "form-control", @maxlength = "11" } })
+            @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "text-danger" })
         </div>
+    </div>
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -40,13 +40,13 @@
     </div>
 
 
-        <div class="form-group">
-            @Html.Label("Texto Pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TextoPregunta, new { htmlAttributes = new { @class = "form-control", @maxlength = "121" } })
-                @Html.ValidationMessageFor(model => model.TextoPregunta, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.Label("Texto Pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TextoPregunta, new { htmlAttributes = new { @class = "form-control", @maxlength = "121" } })
+            @Html.ValidationMessageFor(model => model.TextoPregunta, "", new { @class = "text-danger" })
         </div>
+    </div>
 
 
     <div class="form-group">
@@ -57,17 +57,18 @@
         </div>
     </div>
 
-
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         @Html.Label("Tiene Observación", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.TieneObservacion, new SelectList(ViewBag.BooleanItems, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.TieneObservacion, new SelectList(ViewBag.BooleanItems, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control", id = "comboboxtieneobservacion", placeholder="TieneObsevacion",
+           datawith ="100%", onchange = "habilitarVistaParcialEtiqueta(this.value)"})
             @Html.ValidationMessageFor(model => model.TieneObservacion, "", new { @class = "text-danger" })
         </div>
     </div>
 
-
-    <div class="form-group" ng-switch="">
+    @*AQUI VA LA VISTA PREVIA*@
+    <div class="form-group" id="etiqueta" hidden="hidden">
         @Html.Label("Etiqueta Observación", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.EtiquetaObservacion, new { htmlAttributes = new { @class = "form-control", @maxlength = "25" } })
@@ -81,19 +82,30 @@
     </div>
 
 
-        @* Creacion de botones en la misma linea y con color gris *@
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Crear" class="btn btn-secondary" p id="botonCrear" onclick="accionBotonCrear()" />
-                @*<input type="submit" value="Vista Previa" disabled class="btn btn-secondary" p id="botonVistaPrevia" onclick="accionBotonVistaPrevia()"/>*@
-                <input type="button" value="Cancelar" class="btn btn-secondary" id="botonCancelar" onclick="accionBotonCancelar()" />
-            </div>
+    @* Creacion de botones en la misma linea y con color gris *@
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Crear" class="btn btn-secondary" p id="botonCrear" onclick="accionBotonCrear()" />
+            @*<input type="submit" value="Vista Previa" disabled class="btn btn-secondary" p id="botonVistaPrevia" onclick="accionBotonVistaPrevia()"/>*@
+            <input type="button" value="Cancelar" class="btn btn-secondary" id="botonCancelar" onclick="accionBotonCancelar()" />
         </div>
+    </div>
+
+    @*Sección que despliega la opción de introducir descripción cuando la pregunta tiene comentario adicional*@
+    <script>
+            function habilitarVistaParcialEtiqueta(etiquetaV)
+            {
+                document.getElementById("etiqueta").hidden = "hidden";
+
+                if (etiquetaV.localeCompare("true") == 0) {
+                    document.getElementById("etiqueta").hidden = "";
+                }
+            }
+    </script>
 
     @* La sección de código para habilitar el despliegue de la Vista Parcial AgregarOpciones *@
     <script>
-        function habilitarVistaParcialAgregarOpciones(tipoPregunta)
-        {
+        function habilitarVistaParcialAgregarOpciones(tipoPregunta) {
             document.getElementById("opciones").hidden = "hidden";
 
             if (tipoPregunta.localeCompare("2") == 0) {
@@ -108,15 +120,15 @@
         {
             document.getElementById('opciones').innerHTML = "@Html.Partial("AgregarOpcionesVParcial")";
         }
-        </script>
+    </script>
 
-        @* La accion que sucede al seleccionar boton Cancelar *@
-        <script>
+    @* La accion que sucede al seleccionar boton Cancelar *@
+    <script>
         function accionBotonCancelar()
         {
             document.location = '@Url.Action("Index")';
         }
-        </script>
+    </script>
 
-    </div>
+</div>
 }

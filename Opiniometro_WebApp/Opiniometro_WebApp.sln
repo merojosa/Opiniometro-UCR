@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opiniometro_WebApp", "Opini
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opiniometro_WebAppTest", "Opiniometro_WebAppTest\Opiniometro_WebAppTest.csproj", "{4A798B1B-D48F-449C-898E-E3A0239EF1DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opiniometro_WebAppUITest", "Opiniometro_WebAppUITest\Opiniometro_WebAppUITest.csproj", "{57B13DFF-C6EC-4AFD-9B4C-45BC040F682D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{4A798B1B-D48F-449C-898E-E3A0239EF1DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A798B1B-D48F-449C-898E-E3A0239EF1DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A798B1B-D48F-449C-898E-E3A0239EF1DB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{57B13DFF-C6EC-4AFD-9B4C-45BC040F682D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{57B13DFF-C6EC-4AFD-9B4C-45BC040F682D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{57B13DFF-C6EC-4AFD-9B4C-45BC040F682D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{57B13DFF-C6EC-4AFD-9B4C-45BC040F682D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
