@@ -37,14 +37,12 @@ namespace Opiniometro_WebApp.Models
             public bool Existe { get; set; }
         }
 
-        //IdPerfil es para la seleccion actual de perfil
-        public string IdPerfil { get; set; }
         public List<Enfasis> ListaEnfasis { get; set; }
         public List<Permiso> ListaPermisos { get; set; }
         public List<Perfil> ListaPerfiles { get; set; }
         public List<GuardarPerm> ListaGuardar { get; set; }
         public List<Asociaciones> ListaAsoc { get; set; }
+        //Lista con info de tabla Posee_enfasis_permisos
         public List<Posee_Enfasis_Perfil_Permiso> ListaPosee { get; set; }
-        public List<String> ListaPerfilesId { get; set; }
     }
 }

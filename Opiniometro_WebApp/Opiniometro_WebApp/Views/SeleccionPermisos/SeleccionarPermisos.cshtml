@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Administrar Permisos";
-    var prueba = Model;
 }
 
 <h2>Administrar Permisos</h2>
@@ -11,44 +10,56 @@
 
 @using (Html.BeginForm("Guardar", "SeleccionPermisos"))
 {
+    <table class="table" width="400">
+        <tr>
+            <th>
+                Permisos
+            </th>
+            <th></th>
+            <th>
+                Perfiles
+            </th>
+            <th></th>
+        </tr>
+        <th></th>
+        <!--Se despliegan los nombres de los Perfiles para cada columna de permisos-->
+        @for (int i = 0; i < Model.ListaPerfiles.Count; i++)
+        {
+            <td>
+                @Html.DisplayFor(model => Model.ListaPerfiles.ElementAt(i).Nombre)
+            </td>
+        }
 
-    <div style="width : 200px;">
-        @Html.Label("Perfil")
-        @*@Html.DropDownListFor(model => Model.IdPerfil, new SelectList(Model.ListaPerfilesId), new { @id = "perfiles", @class = "form-control", @onchange = "funcion(this.value)" })*@
+        <tr> </tr>
 
-        <br />
+        @for (int i = 0; i < Model.ListaPermisos.Count; i++)
+        {
+            <!--Se muestra la descripcion de cada permiso-->
+            <td>
+                @Html.DisplayFor(model => model.ListaPermisos.ElementAt(i).Descripcion)
+            </td>
 
-        <h3>Permisos</h3>
-
-        <table class="table">
-            <tr> </tr>
-
-            @for (int i = 0; i < Model.ListaPermisos.Count; i++)
+            for (int j = 0; j < Model.ListaPerfiles.Count; j++)
             {
-                <td>
-                    @Html.DisplayFor(model => model.ListaPermisos.ElementAt(i).Descripcion)
-                </td>
-
-                for (int j = 0; j < Model.ListaPerfiles.Count; j++)
+                for (int k = 0; k < Model.ListaGuardar.Count; k++)
                 {
-                    for (int k = 0; k < Model.ListaGuardar.Count; k++)
+                    <!--Revisar si existe permiso asociado a perfil mediante la lista que ya tiene las asociaciones comparando con todos los permisos-->
+                    if (Model.ListaGuardar.ElementAt(k).Permiso == Model.ListaPermisos.ElementAt(i).Id &&
+                        Model.ListaGuardar.ElementAt(k).Perfil == Model.ListaPerfiles.ElementAt(j).Nombre)
                     {
-                        if (Model.ListaGuardar.ElementAt(k).Permiso == Model.ListaPermisos.ElementAt(i).Id &&
-                            Model.ListaGuardar.ElementAt(k).Perfil == Model.ListaPerfiles.ElementAt(j).Nombre)
-                        {
-                            <td>
-                                @Html.CheckBoxFor(model => Model.ListaGuardar[k].Existe, new { @disabled = "disabled", @checked = "checked", @id = i + "_" + j })
-                                @Html.HiddenFor(model => Model.ListaGuardar[k].Permiso, i)
-                                @Html.HiddenFor(model => Model.ListaGuardar[k].Perfil, j)
-                            </td>
-                        }
+                        <!--Pone los checkboxes en checked cuando existe la relacion-->
+                        <td>
+                            @Html.CheckBoxFor(model => Model.ListaGuardar[k].Existe, new { @checked = "checked", @id = i + "_" + j })
+                            @Html.HiddenFor(model => Model.ListaGuardar[k].Permiso, i)
+                            @Html.HiddenFor(model => Model.ListaGuardar[k].Perfil, j)
+                        </td>
                     }
                 }
-                <tr></tr>
             }
+            <tr></tr>
+        }
 
-        </table>
-    </div>
+    </table>
 
     <p align="right">
         <button class="btn btn-default" type="submit">Guardar</button>
