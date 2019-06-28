@@ -13,28 +13,42 @@
         </div>
     </p>
 }
-<table class="table">
-    <tr>
-        <th>
 
-            Nombre
-        </th>
+    <div style="margin-left:80px; width: 600px ">
+        <table class="table">
+            <tr>
+                <th>
 
-    </tr>
+                    Nombre
+                </th>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @item.Nombre
-            </td>
-            <td>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+
+                        @item.Nombre
+                        
+                    </td>
+
+                    <td>
+                      
+                            @Html.ActionLink("Detalles", "Detalles", "Perfil", new { id = item.Nombre }, new { @class = "btn btn-default" })
+                       
+
+                    </td>
+
+                </tr>
                
+                
+                
+                    
 
+              
 
+            }
 
-            </td>
-        </tr>
-    }
-
-</table>
+        </table>
+     </div>

@@ -17,6 +17,14 @@ namespace Opiniometro_WebApp.Controllers
     public class PerfilController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+
+        public ActionResult Detalles (String nombre)
+        {
+            return View(db.Perfil.Find(nombre));
+        }
+            
+
+
         public ActionResult VerPerfiles(String nom)
         {
             if (!String.IsNullOrEmpty(nom))

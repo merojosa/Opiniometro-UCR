@@ -1,0 +1,35 @@
+﻿@model Opiniometro_WebApp.Models.Perfil
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Perfil</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <div style="margin-left:350px;">
+        @Html.ActionLink("Cancelar", "VerPerfiles", "Perfil", "", new { @class = "btn btn-default" })
+        </div>
+</p>
