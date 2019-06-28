@@ -423,24 +423,28 @@ namespace Opiniometro_WebApp.Controllers
         //Modifica: N/A.
         public ActionResult EnviarCorreoFormulario(Curso curso)
         {
-            string contenido = "<p>Estimado usuario, se le solicita dedicar unos minutos de su tiempo para evaluar los cursos" +
-               "en los cuales se encuentra matriculado. Favor ingresar a  Opiniómetro@UCR</p> <b>";
-
             List<Usuario> usuarios = (from u in db.Usuario
                                       select u).ToList();
 
-            //var matriculados = from m in db.Matricula
-            //                   where m.Sigla.Equals(curso.Sigla)
-            //                   select m;
-            //foreach (var ma in matriculados)
-            //{
-            //    Usuario usuario = new Usuario();
-            //    usuario = usuarios.Find(us => us.Cedula.Equals(ma.CedulaEstudiante));
+            List<Persona> personas = (from p in db.Persona
+                                      select p).ToList();
 
-            //    // Se le envía al usuario el correo con la notificación del formulario 
-            //    EnviarCorreo(usuario.CorreoInstitucional, "Evaluación pendiente - Opiniómetro@UCR", contenido);
-            //}
-            EnviarCorreo("jennifer.villalobos@ucr.ac.cr", "Evaluación pendiente - Opiniómetro@UCR", contenido);
+            var matriculados = from m in db.Matricula
+                               where m.Sigla.Equals(curso.Sigla)
+                               select m;
+            foreach (var ma in matriculados)
+            {
+                Usuario usuario = new Usuario();
+                usuario = usuarios.Find(us => us.Cedula.Equals(ma.CedulaEstudiante));
+
+                Persona persona = new Persona();
+                persona = personas.Find(p => p.Cedula.Equals(ma.CedulaEstudiante));
+                string contenido = "<p>Estimado " + persona.Nombre + " " + persona.Apellido1 + ", se le solicita dedicar unos minutos de su tiempo para evaluar los cursos" +
+               " en los cuales se encuentra matriculado. Favor ingresar a  Opiniómetro@UCR</p> <b>";
+
+                // Se le envía al usuario el correo con la notificación del formulario 
+                EnviarCorreo(usuario.CorreoInstitucional, "Evaluación pendiente - Opiniómetro@UCR", contenido);
+            }
             var modelo = new AsignarFormulariosViewModel
             {
                 Ciclos = ObtenerCiclos("UC-023874"),
