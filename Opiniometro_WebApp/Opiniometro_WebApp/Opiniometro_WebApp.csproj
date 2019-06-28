@@ -420,6 +420,7 @@
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\CollapsibleScript.js" />
+    <Content Include="Scripts\Escalar.js" />
     <Content Include="Scripts\FormularioDelCurso.js" />
     <Content Include="Scripts\Graficar.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -526,6 +527,7 @@
     <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
     <Content Include="Views\CursosMatriculados\Index.cshtml" />
     <Content Include="Views\FormularioCurso\Index.cshtml" />
+    <Content Include="Views\FormularioCurso\Escalar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

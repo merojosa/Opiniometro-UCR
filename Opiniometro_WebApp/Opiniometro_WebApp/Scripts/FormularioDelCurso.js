@@ -58,12 +58,13 @@ function escogerTipoRespuesta(tipoPregunta, tieneObservacion) {
             break;
     
 
-        //caso 4: respuesta escalar
-        case 4:
+        //caso 5: respuesta escalar
+        case tipoPregunta = 5:
            //si posee campo de observacion, entonces
             if (tieneObservacion == true) {
 
                 //aqui va codigo de escalar
+                
 
                 //la pregunta tambien incluye campo de observacion
                 var cont = document.getElementById('campoTexto');

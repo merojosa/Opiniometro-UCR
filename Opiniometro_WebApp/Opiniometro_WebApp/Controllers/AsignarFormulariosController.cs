@@ -461,7 +461,7 @@ namespace Opiniometro_WebApp.Controllers
             };
             return View("Index", modelo);
         }
-    } 
+     
 
         [HttpPost]
         public ActionResult EfectuarAsignaciones(string Grupos, string PeriodosIndicados)

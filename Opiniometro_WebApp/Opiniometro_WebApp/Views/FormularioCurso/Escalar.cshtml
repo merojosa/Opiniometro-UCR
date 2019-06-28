@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.FormularioCursoModel>
+
+<div>
+    <script src="~/Scripts/Escalar.js"></script>
+
+    <!--Toman el valor del rango y del tipo (si es de estrellas o no)-->
+    @Html.Hidden("Inicio", null)
+    @Html.Hidden("Final", null)
+    @Html.Hidden("Estrellas", null)
+
+    <script>
+        var vec = preguntaEscalar()
+        //< input type = "radio" name = "rango" value = "1" > vec.value
+    </script>
+</div>

@@ -27,7 +27,8 @@
                 <td >
                     @Html.DisplayFor(modelItem => item.item)
                     <script>
-                        escogerTipoRespuesta(1,true)
+                        escogerTipoRespuesta(5, true)
+                        @Html.Partial("Escalar", item)
                     </script>
                     <br />
                 </td>

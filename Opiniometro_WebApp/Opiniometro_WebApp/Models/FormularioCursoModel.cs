@@ -10,6 +10,7 @@ namespace Opiniometro_WebApp.Models
     {
         public string item { set; get; }
         public bool? tieneObservacion { get; set; }
+        public int tipoPregunta { get; set; }
 
         public IQueryable<FormularioCursoModel> preguntasFormulario;
     }
