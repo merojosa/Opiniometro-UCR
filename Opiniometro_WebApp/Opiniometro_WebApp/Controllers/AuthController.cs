@@ -150,7 +150,7 @@ namespace Opiniometro_WebApp.Controllers
                 string contrasenna_generada = GenerarContrasenna(10);
 
                 // La guardo en la base de datos llamando al procedimiento almacenado.
-                db.SP_CambiarContrasenna(usuario.CorreoInstitucional, contrasenna_generada);
+                //db.SP_CambiarContrasenna(usuario.CorreoInstitucional, contrasenna_generada);
                 
 
                 string contenido =
