@@ -70,7 +70,7 @@
     }
 
 
-    @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string> secciones = new List<string>(); bool seccion_repetida = false;}
+    @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string> secciones = new List<string>(); bool seccion_repetida = false; int ident_seccion = 1; int ident_item = 1; /*No trabja con el orden de secciones e items en la base de datos todavia*/ }
 
     <div class="panel-group" id="accordion1">
 
@@ -80,18 +80,18 @@
 
             @*Se ocupa poner una restriccion para no mostrar seciones repetidas*@
 
-            if (secciones.Contains(seccion_actual)) { seccion_repetida = true; }
-            else { secciones.Add(seccion_actual); seccion_repetida = false; }
+        if (secciones.Contains(seccion_actual)) { seccion_repetida = true; }
+        else { secciones.Add(seccion_actual); seccion_repetida = false; }
 
 
-            if (seccion_repetida == false)
-            {
+        if (seccion_repetida == false)
+        {
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion1" href="#collapseThree_@id_counter">
-                                @Html.DisplayFor(model => formulario.TituloSeccion) @*Despliega las secciones de un formulario en especifico*@
+                                @formulario.Orden_Seccion - @Html.DisplayFor(model => formulario.TituloSeccion)@*Despliega las secciones de un formulario en especifico*@
                             </a>
                         </h4>
                     </div>
@@ -110,7 +110,7 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a data-toggle="collapse" data-parent="#accordion2_@id_counter" href="#collapseThreeOne_@seccion_counter">
-                                                        @Html.DisplayFor(model => seccion.Item.TextoPregunta) @*Despliega las preguntas de una seccion en especifico*@
+                                                        @seccion.Orden_Item - <b>@seccion.ItemId</b>.@Html.DisplayFor(model => seccion.Item.TextoPregunta) @*Despliega las preguntas de una seccion en especifico*@
                                                     </a>
                                                 </h4>
                                             </div>
@@ -193,13 +193,7 @@
                                                     else
                                                     {
                                                         <div style="height:180px; overflow-y: scroll;">
-
-                                                            @foreach (var item in Model.Formulario_Respuesta)
-                                                            {
-                                                                <p>Respuesta de estudiante generica.</p>
-                                                                <hr>
-                                                            }
-
+                                                            <p id="res_@item_actual" style="float:left"></p>
                                                             @foreach (var item in Model.Formulario_Respuesta.Take(1))
                                                             {
                                                                 <script>
@@ -212,9 +206,10 @@
                                                                     success: function (chData) {
                                                                     var aData = chData;
                                                                     var resp = aData[0];
+
                                                                         for (var data in resp) {
-                                                                            document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + (obs[data]).toString();
-                                                                        }
+                                                                            document.getElementById("res_@item_actual").innerHTML = document.getElementById("res_@item_actual").innerText + (resp[data]).toString() + " \n";
++                                                                       }
                                                                     }
                                                                  });
                                                                 </script>
@@ -240,7 +235,7 @@
                                                                 <div id="collapseThreeTwo_@seccion_counter" class="panel-collapse collapse">
                                                                     <div class="panel-body">
                                                                         <div style="height:200px; overflow-y: scroll;">
-                                                                            <p id="info_@item_actual" style="float:right"></p>
+                                                                            <p id="obs_@item_actual" style="float:right"></p>
 
                                                                             @foreach (var item in Model.Formulario_Respuesta.Take(1))
                                                                             {
@@ -254,24 +249,17 @@
                                                                                         success: function (chData) {
                                                                                         var aData = chData;
                                                                                         var obs = aData[0];
-                                                                                        //var nom = aData[1];
-                                                                                        //var ap1 = aData[2];
-                                                                                        //var ap2 = aData[3];
-
+                                                                                        var nom = aData[1];
+                                                                                        var ap1 = aData[2];
+                                                                                        var ap2 = aData[3];
 
                                                                                             for (var data in obs) {
-
-                                                                                                document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + (obs[data]).toString();
-                                                                                                //if (@perfil_actual == "Admin")
-                                                                                                //{
-                                                                                                 //}
+                                                                                                document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + "\r\n";
                                                                                             }
-                                                                                                }
-                                                                                            });
+                                                                                        }
+                                                                                    });
                                                                                 </script>
                                                                             }
-
-                                                                            @*Se ocupa encontrar la forma de devolver las observaciones por pregunta*@
 
                                                                         </div>
 
@@ -287,6 +275,7 @@
                                         </div>
 
                                         seccion_counter++;
+                                        ident_item++;
                                     }
                                 }
                             </div>
@@ -296,6 +285,8 @@
                 </div>
 
                 id_counter++;
+                ident_seccion++;
+                ident_item = 1;
             }
         }
 

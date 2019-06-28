@@ -204,9 +204,14 @@
     <Compile Include="Controllers\Servicios\IdPermiso.cs" />
     <Compile Include="Controllers\Servicios\IdentidadManager.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
+    <Compile Include="Controllers\VisualizarFormularioController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Models\Administrativo.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AsignarFormulariosModel.cs" />
     <Compile Include="Models\Canton.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -222,6 +227,7 @@
     <Compile Include="Models\Conformado_Item_Sec_Form.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CrearFormularioModel.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -258,6 +264,7 @@
     <Compile Include="Models\Grupo.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Imparte.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -294,12 +301,14 @@
     <Compile Include="Models\Perfil.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PerfilesUsuario.cs" />
     <Compile Include="Models\Permiso.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Persona.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PersonaPerfilEnfasisModel.cs" />
     <Compile Include="Models\Posee_Enfasis_Perfil_Permiso.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -327,15 +336,6 @@
     <Compile Include="Models\SP_DevolverObservacionesPorGrupo_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\VisualizarFormularioController.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AsignarFormulariosModel.cs" />
-    <Compile Include="Models\CrearFormularioModel.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\PerfilesUsuario.cs" />
-    <Compile Include="Models\PersonaPerfilEnfasisModel.cs" />
     <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>

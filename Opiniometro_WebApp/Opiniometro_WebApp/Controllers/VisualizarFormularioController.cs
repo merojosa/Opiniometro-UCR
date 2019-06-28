@@ -274,7 +274,7 @@ namespace Opiniometro_WebApp.Controllers
         //MOD:--
         public JsonResult ObtenerRespTexto(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
         {
-            var result = db.SP_ContarRespuestasPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
+            var result = db.ObtenerCantidadRespuestasPorPregunta(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
 
             List<object> respuestasTexto = new List<object>();
 
