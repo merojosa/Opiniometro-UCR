@@ -21,7 +21,7 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult AsignarPreguntas(string codForm)
         {  
             
-            CrearFormularioModel crearFormulario = new CrearFormularioModel
+            CrearFormularioModel crearFormulario = new CrearFormularioModel 
             {
                 
                 Secciones = db.Seccion.ToList(),
@@ -32,22 +32,18 @@ namespace Opiniometro_WebApp.Controllers
                     .Where(m => m.CodigoFormulario == codForm)
                     .OrderBy(m => m.TituloSeccion)
                     .ThenBy(m => m.Orden_Item)
+                    .ToList(),
+                ConformadoS = db.Conformado_For_Sec
+                    .Where(m => m.CodigoFormulario == codForm)
+                    .OrderBy(m => m.TituloSeccion)
+                    .ThenBy(m => m.Orden_Seccion)
                     .ToList()
 
             };
             
             return View(crearFormulario);
         }
-        public ActionResult VistaPrevia(String codForm)
-        {
-            FormularioModel formularioVistaPrevia = new FormularioModel()
-            {
-                Secciones = db.Seccion.Where(m => m. == codForm )
-                .OrderBy(m => m.TituloSeccion)
-                .ThenBy(m => m.Orden_Item)
-                .ToList()
-            };
-        }
+  
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public PartialViewResult AgregarConformado(Conformado_Item_Sec_Form conformado)
@@ -116,11 +112,22 @@ namespace Opiniometro_WebApp.Controllers
 
         }
         //----------------------------------------------------------------------------
-        public ActionResult VistaFormularioVParcial(string codForm)
+        public P VistaFormularioVParcial(String codForm)
         {
-            IEnumerable<Conformado_Item_Sec_Form> listaFormulario = db.Conformado_Item_Sec_Form.Where(y => y.CodigoFormulario == codForm).ToList().Distinct();
-            
-            return PartialView(listaFormulario);
+            FormularioModel formularioVistaPrevia = new FormularioModel()//Modelo donde obtenemos las 
+            {
+                Secciones = db.Conformado_For_Sec.Where(m => m.CodigoFormulario == codForm)
+                .OrderBy(m => m.TituloSeccion)
+                .ThenBy(m => m.Orden_Seccion)
+                .ToList(),
+
+                Preguntas = db.Conformado_Item_Sec_Form.Where(m => m.CodigoFormulario == codForm)
+                .OrderBy(m => m.TituloSeccion)
+                .ThenBy(m => m.Orden_Seccion)
+                .ToList()
+            };
+     
+            return PartialView(formularioVistaPrevia);
         }
 
         public ActionResult VistaPreviaPregunta(string id)

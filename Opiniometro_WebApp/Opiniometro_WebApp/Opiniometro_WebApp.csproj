@@ -228,10 +228,12 @@
     <Compile Include="Models\Ciclo_Lectivo.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Conformado_For_Sec.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Conformado_Item_Sec_Form.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CrearFormularioModel.cs" />
     <Compile Include="Models\CrearItemModel.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
@@ -269,7 +271,7 @@
     <Compile Include="Models\Formulario.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FormularioModel.cs" />
+    <Compile Include="Models\FormularioCompleto.cs" />
     <Compile Include="Models\Formulario_Respuesta.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
