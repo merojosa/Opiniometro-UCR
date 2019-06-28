@@ -131,12 +131,12 @@ IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 GO
 CREATE PROCEDURE SP_ObtenerPermisosUsuario
 	@Correo		NVARCHAR(50),
-	@Perfil		VARCHAR(10)
+	@Perfil		VARCHAR(30)
 AS
 	SELECT TU.SiglaCarrera, PE.NumeroEnfasis, PE.IdPermiso
-	FROM Tiene_Usuario_Perfil_Enfasis TU	JOIN Perfil ON TU.IdPerfil = Perfil.Id
-											JOIN Posee_Enfasis_Perfil_Permiso PE ON Perfil.Id = PE.IdPerfil
-	WHERE TU.CorreoInstitucional=@Correo AND TU.IdPerfil = @Perfil
+	FROM Tiene_Usuario_Perfil_Enfasis TU	JOIN Perfil ON TU.NombrePerfil = Perfil.Nombre
+											JOIN Posee_Enfasis_Perfil_Permiso PE ON Perfil.Nombre = PE.NombrePerfil
+	WHERE TU.CorreoInstitucional=@Correo AND TU.NombrePerfil = @Perfil
 GO
 
 IF OBJECT_ID('SP_ObtenerNombre') IS NOT NULL
@@ -196,21 +196,21 @@ IF OBJECT_ID('SP_AgregarPersonaUsuario') IS NOT NULL
 	DROP PROCEDURE SP_AgregarPersonaUsuario
 GO
 CREATE PROCEDURE SP_AgregarPersonaUsuario
+	@Correo			NVARCHAR(50),
+	@Contrasenna	NVARCHAR(50),
 	@Cedula			CHAR(9),
 	@Nombre			NVARCHAR(50),
 	@Apellido1		NVARCHAR(50),
 	@Apellido2		NVARCHAR(50),
-	@Correo			NVARCHAR(50),
-	@Direccion		NVARCHAR(200)
+	@Direccion		NVARCHAR(256)
 AS
 BEGIN
 	SET NOCOUNT ON
 	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
-	DECLARE @Contrasenna NVARCHAR(10)
 
 	INSERT INTO Persona
 	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2, @Direccion)
-	SET @Contrasenna = (SELECT dbo.SF_GenerarContrasena());
+
 	INSERT INTO Usuario
 	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
 END
@@ -222,9 +222,9 @@ IF OBJECT_ID('ObtenerPerfilUsuario') IS NOT NULL
 GO
 CREATE PROCEDURE ObtenerPerfilUsuario @correo nvarchar(100)
 as 
-select distinct IdPerfil 
-from Tiene_Usuario_Perfil_Enfasis
-where CorreoInstitucional = @correo;
+	SELECT DISTINCT NombrePerfil
+	FROM Tiene_Usuario_Perfil_Enfasis
+	WHERE CorreoInstitucional = @correo;
 go
 
 IF OBJECT_ID('ObtenerPerfilPorDefecto') IS NOT NULL
@@ -232,9 +232,9 @@ IF OBJECT_ID('ObtenerPerfilPorDefecto') IS NOT NULL
 GO
 CREATE PROCEDURE ObtenerPerfilPorDefecto @correo nvarchar(100)
 as 
-select top 1 IdPerfil 
-from Tiene_Usuario_Perfil_Enfasis
-where CorreoInstitucional = @correo;
+	SELECT TOP 1 NombrePerfil 
+	FROM Tiene_Usuario_Perfil_Enfasis
+	WHERE CorreoInstitucional = @correo;
 go
 
 --JJAPH
@@ -415,6 +415,34 @@ VALUES ('CI1330', 100, 'SC-01234'),
 	   ('CI1328', 101, 'SC-01234'),
 	   ('DE1001', 12, 'SC-89457'),
 	   ('DE2001', 12, 'SC-89457');
+
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('123456', 'Evaluacion Derecho 1')
+
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('987654', 'Historia Der. 1')
+
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('123789', 'Form. Investigacion')
+
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('159753', 'Derecho Priv. 1')
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE1001',1,2019,1,'123456',18-06-19 ,28-06-19 )
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE2001',3,2019,1,'159753',18-06-19 ,28-06-19 )
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE1002',7,2019,1,'987654',18-06-19 ,28-06-19 )
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE1007',4,2019,1,'123789',18-06-19 ,28-06-19 )
+
+insert into Fecha_Corte(FechaInicio,FechaFinal)
+values (18-06-19, 28-06-19)
+
 
 --DROP PROCEDURE CursosSegunCarrera
 --Obtiene la lista de cursos que pertenecen a cierta carrera
@@ -639,33 +667,36 @@ VALUES	(1, 'Hacer todo'),
 		(208, 'InsertarFormulario');
 
 INSERT INTO Perfil
-VALUES	('Estudiante', 'Default'),
-		('Admin', 'Default'),
-		('Profesor', 'Default')
+VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
+		('Administrador', 'Puede hacer cualquier cosa como asignar permisos.'),
+		('Profesor', 'Ver sus evaluaciones.')
+
 
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
 		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
-		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor')
+		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor'),
+		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Administrador')
 
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
-		(0, 'SC-01234', 'Admin', 1),
-		(0, 'SC-01234', 'Admin', 2),
+		(0, 'SC-01234', 'Administrador', 1),
+		(0, 'SC-01234', 'Administrador', 2),
 		(0, 'SC-01234', 'Profesor', 2)
 
 
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','202')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','203')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','204')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','205')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','206')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','207')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','204')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','205')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Estudiante','205')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Admin','208')
-insert into Posee_Enfasis_Perfil_Permiso(NumeroEnfasis,SiglaCarrera,IdPerfil,IdPermiso)values(0,'SC-01234', 'Profesor','208')
+insert into Posee_Enfasis_Perfil_Permiso
+VALUES	(0,'SC-01234', 'Administrador','202'),
+		(0,'SC-01234', 'Administrador','203'),
+		(0,'SC-01234', 'Administrador','204'),
+		(0,'SC-01234', 'Administrador','205'),
+		(0,'SC-01234', 'Administrador','206'),
+		(0,'SC-01234', 'Administrador','207'),
+		(0,'SC-01234', 'Profesor','204'),
+		(0,'SC-01234', 'Profesor','205'),
+		(0,'SC-01234', 'Estudiante','205'),
+		(0,'SC-01234', 'Administrador','208'),
+		(0,'SC-01234', 'Profesor','208')
 
 INSERT INTO Provincia
 VALUES	('San José'),
