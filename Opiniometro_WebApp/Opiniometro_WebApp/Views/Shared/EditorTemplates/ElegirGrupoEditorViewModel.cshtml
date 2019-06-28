@@ -1,0 +1,39 @@
+﻿@model Opiniometro_WebApp.Models.ElegirGrupoEditorViewModel
+
+
+<!-- Table row (fila) de elementos -->
+<tr>
+    @*Checkbox para asignar*@
+    <td align='left'>
+        @Html.CheckBoxFor(model => model.Seleccionado)
+    </td>
+
+    @*Curso*@
+    <td align='left'>
+        @Html.DisplayFor(model => model.SiglaCurso)
+        <span> </span>
+        @Html.DisplayFor(model => model.NombreCurso)
+    </td>
+
+    @*Numero de grupo*@
+    <td align='right'>
+        @Html.DisplayFor(model => model.Numero)
+    </td>
+
+    @*Profesores*@
+    <td align='left'>
+       @foreach (var profe in Model.Profesores)
+        {
+            @Html.DisplayFor(model => profe.Persona.Nombre) <span> </span>
+            @Html.DisplayFor(model => profe.Persona.Apellido1) <span> </span>
+            @Html.DisplayFor(model => profe.Persona.Apellido2) <br>
+        }
+    </td>
+
+    @Html.HiddenFor(model => model.Anno)
+    @Html.HiddenFor(model => model.Semestre)
+    @Html.HiddenFor(model => model.Numero)
+    @Html.HiddenFor(model => model.SiglaCurso)
+    @Html.HiddenFor(model => model.NombreCurso)
+
+</tr>

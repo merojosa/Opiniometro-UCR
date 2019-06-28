@@ -274,6 +274,15 @@ AS
 	WHERE Cedula = @Cedula;
 GO
 
+GO
+CREATE PROC ObtenerPerfilesUsuario
+	@Correo	NVARCHAR(50)
+AS
+	SELECT SiglaCarrera, NumeroEnfasis
+	FROM Tiene_Usuario_Perfil_Enfasis
+	WHERE CorreoInstitucional= @Correo
+GO
+
 --Inserciones
 
 INSERT INTO Persona
@@ -416,6 +425,46 @@ VALUES ('CI1330', 100, 'SC-01234'),
 	   ('DE1001', 12, 'SC-89457'),
 	   ('DE2001', 12, 'SC-89457');
 
+--DROP PROCEDURE CursosSegunCarrera
+--Obtiene la lista de cursos que pertenecen a cierta carrera
+GO
+CREATE PROCEDURE CursosSegunCarrera
+@siglaCarrera NVARCHAR(10)
+AS
+BEGIN
+SELECT C.Nombre, C.Sigla, C.Tipo, C.CodigoUnidad
+FROM Curso C
+WHERE C.Sigla IN (SELECT S.SiglaCurso
+				FROM Se_Encuentra_Curso_Enfasis S
+				WHERE S.SiglaCarrera = @siglaCarrera)
+END
+GO
+
+--Obtiene la lista de cursos que pertenecen a cierto semestre
+CREATE PROCEDURE CursosSegunSemestre
+@semestre TINYINT
+AS
+BEGIN
+SELECT C.Nombre, C.Sigla, C.Tipo, C.CodigoUnidad
+FROM Curso C
+WHERE C.Sigla IN (SELECT G.SiglaCurso
+				FROM Grupo G
+				WHERE G.SemestreGrupo = @semestre)
+END
+GO
+
+--Obtiene la lista de cursos que pertenecen a cierto año
+CREATE PROCEDURE CursosSegunAnno
+@anno SMALLINT
+AS
+BEGIN
+SELECT C.Nombre, C.Sigla, C.Tipo, C.CodigoUnidad
+FROM Curso C
+WHERE C.Sigla IN (SELECT G.SiglaCurso
+				FROM Grupo G
+				WHERE G.AnnoGrupo = @anno)
+END
+GO
 
 
 --Script C.X. Solutions
@@ -596,7 +645,8 @@ VALUES	(1, 'Hacer todo'),
 		(205, 'VisualizarResultadosDeEvaluaciones'),
 		(206, 'VerSecciones'),
 		(207, 'VerItems'),
-		(208, 'InsertarFormulario');
+		(208, 'InsertarFormulario'),
+		(209, 'Eliminar perfiles');
 
 INSERT INTO Perfil
 VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
@@ -610,25 +660,24 @@ VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Administrador')
 
+
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
 		(0, 'SC-01234', 'Administrador', 1),
 		(0, 'SC-01234', 'Administrador', 2),
-		(0, 'SC-01234', 'Profesor', 2)
-
-
-insert into Posee_Enfasis_Perfil_Permiso
-VALUES	(0,'SC-01234', 'Administrador','202'),
-		(0,'SC-01234', 'Administrador','203'),
-		(0,'SC-01234', 'Administrador','204'),
-		(0,'SC-01234', 'Administrador','205'),
-		(0,'SC-01234', 'Administrador','206'),
-		(0,'SC-01234', 'Administrador','207'),
-		(0,'SC-01234', 'Profesor','204'),
-		(0,'SC-01234', 'Profesor','205'),
-		(0,'SC-01234', 'Estudiante','205'),
-		(0,'SC-01234', 'Administrador','208'),
-		(0,'SC-01234', 'Profesor','208')
+		(0, 'SC-01234', 'Profesor', 2),
+		(0,'SC-01234', 'Administrador', 202),
+		(0,'SC-01234', 'Administrador', 203),
+		(0,'SC-01234', 'Administrador', 204),
+		(0,'SC-01234', 'Administrador', 205),
+		(0,'SC-01234', 'Administrador', 206),
+		(0,'SC-01234', 'Administrador', 207),
+		(0,'SC-01234', 'Profesor', 204),
+		(0,'SC-01234', 'Profesor', 205),
+		(0,'SC-01234', 'Estudiante', 205),
+		(0,'SC-01234', 'Administrador', 208),
+		(0,'SC-01234', 'Profesor', 208),
+		(0, 'SC-01234', 'Administrador', 209)
 
 INSERT INTO Provincia
 VALUES	('San José'),
