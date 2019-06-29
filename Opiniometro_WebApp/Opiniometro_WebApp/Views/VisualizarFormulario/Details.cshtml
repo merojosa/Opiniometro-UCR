@@ -9,7 +9,7 @@
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <style>
         #contenedorGrafo {
-            width: 450px;
+            width: 1080px;
             height: 500px;
             border: 0px solid #ddd;
             padding: 1px;
@@ -70,7 +70,7 @@
     }
 
 
-    @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string> secciones = new List<string>(); bool seccion_repetida = false; int ident_seccion = 1; int ident_item = 1; /*No trabja con el orden de secciones e items en la base de datos todavia*/ }
+    @{int id_counter = 0; int seccion_counter = 0; bool? observation = true; string seccion_actual = ""; string item_actual = ""; List<string> secciones = new List<string>(); bool seccion_repetida = false; }
 
     <div class="panel-group" id="accordion1">
 
@@ -119,13 +119,13 @@
 
                                                     @if (seccion.Item.TipoPregunta != 1)
                                                     {
-                                                        @*Aqui se ingresa el grafico y desde aqui se mostrarian las observaciones posteriormente, acordarse de ponder una condicion si el tipo de pregunta posee grafico o no*@
+                                                            @*Aqui se ingresa el grafico y desde aqui se mostrarian las observaciones posteriormente, acordarse de ponder una condicion si el tipo de pregunta posee grafico o no*@
                                                         //<p>@("graficarResultados('@seccion.Item.ItemId')")</p>
-                                                        <p id="info_@item_actual" style="float:right"></p>
-                                                        <div id="contenedorGrafo">
-                                                            <canvas id="pie_chart_@item_actual"></canvas>
-                                                        </div>
-                                                        <script>
+                                                            <p id="graf_@item_actual" style="float:inherit"></p>
+                                                            <div id="contenedorGrafo">
+                                                                <canvas id="pie_chart_@item_actual"></canvas>
+                                                            </div>
+                                                            <script>
                                                         $.ajax({
                                                             type: "POST",
                                                             url: "/VisualizarFormulario/GraficoPie/?itemId=@seccion.Item.ItemId",
@@ -146,7 +146,7 @@
 
 
                                                                 //for (var i = 0; i < tamanio; i++)
-                                                                document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: \n" + (tamanio).toString() + "<br>";
+                                                                document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: \n" + (tamanio).toString() + "<br>";
                                                                 @*var iter = aLabels;
                                                                 <p>@seccion.Item.ItemId</p>*@
                                                                 var dataT = {
@@ -175,20 +175,33 @@
                                                                     }]
                                                                 };
                                                                 var ctx = $("#pie_chart_@item_actual").get(0).getContext("2d");
-                                                                var barChart = new Chart(ctx, {
-                                                                    type: 'pie',
-                                                                    data: dataT,
-                                                                    options: {
-                                                                        responsive: true,
-                                                                        maintainAspectRatio: false,
-                                                                        scales: { xaxes: [{ ticks: { beginAtZero: true } }] },
-                                                                        legend: { display: true },
+                                                                if ('@seccion.Item.TipoPregunta' == 2 || '@seccion.Item.TipoPregunta' == 3 || '@seccion.Item.TipoPregunta' == 6) {
+                                                                    var barChart = new Chart(ctx, {
+                                                                        type: 'pie',
+                                                                        data: dataT,
+                                                                        options: {
+                                                                            responsive: true,
+                                                                            maintainAspectRatio: false,
+                                                                            scales: { xaxes: [{ ticks: { beginAtZero: true } }] },
+                                                                            legend: { display: true },
 
-                                                                    },
-                                                                })
+                                                                        },
+                                                                    })
+                                                                } else if ('@seccion.Item.TipoPregunta' == 4 || '@seccion.Item.TipoPregunta' == 5) {
+                                                                    var barChart = new Chart(ctx, {
+                                                                        type: 'horizontalBar',
+                                                                        data: dataT,
+                                                                        options: {
+                                                                            responsive: true,
+                                                                            maintainAspectRatio: false,
+                                                                            scales: { xAxes: [{ ticks: { beginAtZero: true } }] },
+                                                                            legend: { display: true },
+                                                                        },
+                                                                    })
+                                                                }
                                                             }
                                                         });
-                                                        </script>
+                                                            </script>
                                                     }
                                                     else
                                                     {
@@ -220,7 +233,7 @@
                                                                 <div id="collapseThreeTwo_@seccion_counter" class="panel-collapse collapse">
                                                                     <div class="panel-body">
                                                                         <div style="height:200px; overflow-y: scroll;">
-                                                                            <p id="info_@item_actual" style="float:right"></p>
+                                                                            <p id="obs_@item_actual" style="float:left"></p>
 
                                                                             @foreach (var item in Model.Formulario_Respuesta.Take(1))
                                                                             {
@@ -239,11 +252,12 @@
                                                                                         var ap2 = aData[3];
 
                                                                                             for (var data in obs) {
-                                                                                                //if (@perfil_actual.Equals("Admin")) { //Cuando se incluye el if lo que esta dentro no se despliega incluso si la condicion es verdadera
-                                                                                                document.getElementById("info_@item_actual").innerHTML = document.getElementById("info_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + "<br>";
-                                                                                                //} else {
+                                                                                                if ('@perfil_actual' == "Admin") { //Cuando se incluye el if lo que esta dentro no se despliega incluso si la condicion es verdadera
+                                                                                                    document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + " ";
 
-                                                                                                //}   
+                                                                                                } else if ('@perfil_actual' != "Admin"){
+                                                                                                     document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " " ;
+                                                                                                }
                                                                                                 // Si no se acomodan las observaciones se bloquea el collapse de mostrar observaciones
                                                                                             }
                                                                                                 }
@@ -269,7 +283,6 @@
                                         </div>
 
                                         seccion_counter++;
-                                        ident_item++;
                                     }
                                 }
                             </div>
@@ -279,8 +292,6 @@
                 </div>
 
                 id_counter++;
-                ident_seccion++;
-                ident_item = 1;
             }
         }
 
