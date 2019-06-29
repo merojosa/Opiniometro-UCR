@@ -31,4 +31,10 @@ namespace Opiniometro_WebApp.Models
     {
 
     }
+
+    // The Strategists.
+    [MetadataType(typeof(PerfilMetadata))]
+    public partial class Perfil
+    {
+    }
 }
