@@ -18,23 +18,23 @@ namespace Opiniometro_WebApp.Controllers
         [HttpGet]
         public ActionResult Index(string cedulaEstudiante, string codigoForm)
         {
-            var modelo = new FormularioCursoModel
+            var modelo = new FormularioPorCurso
             {
                 preguntasFormulario = obtenerPreguntasFormulario(cedulaEstudiante,codigoForm)
             };
             return View(modelo);
         }
 
-        public IQueryable<FormularioCursoModel> obtenerPreguntasFormulario(string cedulaEstudiante, string codigoForm)
+        public IQueryable<DatosFormulario> obtenerPreguntasFormulario(string cedulaEstudiante, string codigoForm)
         {
 
-            IQueryable<FormularioCursoModel> formulario =
+            IQueryable<DatosFormulario> formulario =
                 from it in db.Item
                 join confSecItem in db.Conformado_Item_Sec_Form on it.ItemId equals confSecItem.ItemId
                 join sec in db.Seccion on confSecItem.TituloSeccion equals sec.Titulo
                 where (confSecItem.CodigoFormulario == codigoForm)
 
-                select new FormularioCursoModel
+                select new DatosFormulario
                 {
                     item = it.TextoPregunta,
                     tieneObservacion = it.TieneObservacion,
