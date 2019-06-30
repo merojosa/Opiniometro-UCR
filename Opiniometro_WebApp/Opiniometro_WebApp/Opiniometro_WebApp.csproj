@@ -272,7 +272,6 @@
     <Compile Include="Models\Formulario.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FormularioCompleto.cs" />
     <Compile Include="Models\Formulario_Respuesta.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
