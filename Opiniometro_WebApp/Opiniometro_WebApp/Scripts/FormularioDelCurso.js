@@ -34,7 +34,20 @@ function TextoLibre(contTextoLibre) {
     contenido.appendChild(elemento);
 }
 
+///recibe: --opciones que se muestran
+//         --si tiene campo de observacion
+//modifica: vista en las preguntas que tienen seleccion unica
+//retorna--
+function seleccionUnica(contSelUnica/*,listaOpciones*/) {
+  
+}
 
+///recibe:-- si tiene campo de observacion
+//modifica: vista en las preguntas que tienen si o no
+//retorna--
+function RespondeSiNo(contSiNo) {
+
+}
 
 
 ///recibe: --opciones que se muestran

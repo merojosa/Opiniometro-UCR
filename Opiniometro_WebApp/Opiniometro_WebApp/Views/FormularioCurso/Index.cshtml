@@ -39,7 +39,41 @@
             </script>
         }
 
-      
+        if (dato.tipoPregunta == 2)
+        {
+            <div id="preguntaSelUnica"> </div>
+
+            <script>
+                crearElemento("selUnica", contSelUnica, "Esta es una pregunta de S.U del formulario", "preguntaSelUnica");
+                seleccionUnica(contSelUnica/*,listaOpciones*/);
+                contSelUnica++;
+            </script>
+
+            //Campo de observacion de la opcion de seleccion unica
+            @*if (dato.tieneObservacion == true) {
+                    <script>
+                        TextoLibre();
+                    </script>
+                }*@
+        }
+
+        if (dato.tipoPregunta == 3)
+        {
+            <div id="preguntaSiNo"> </div>
+
+            <script>
+                crearElemento("SiNo", contSiNo, "Esta es una pregunta de si/no del formulario", "preguntaSiNo");
+                RespondeSiNo(contSiNo);
+                contSiNo++;
+            </script>
+
+            //Campo de observacion de la opcion de respuesta Si-No
+            @*if (dato.tieneObservacion == true) {
+                    <script>
+                        TextoLibre();
+                    </script>
+                }*@
+        }
 
         @*    if (dato.tipoPregunta == 4)
             {
