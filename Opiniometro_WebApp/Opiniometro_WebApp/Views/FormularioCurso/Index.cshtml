@@ -21,18 +21,84 @@
         </tr>
         @*Despliega la opcion correspondiente para respoder la pregunta*@
 
-        @foreach (var item in Model.preguntasFormulario)
+        @foreach (var dato in Model.preguntasFormulario)
         {
-            <tr id="campoTexto">
-                <td>
-                    @Html.DisplayFor(modelItem => item.item)
-                    <script>
-                        escogerTipoRespuesta(2, false)
 
-                    </script>
-                    <br /> 
-                </td>
-            </tr>
+            if (dato.tipoPregunta == 1)
+            {
+                <tr id="campoTexto">
+                    <td>
+                        @Html.DisplayFor(modelItem => dato.item)
+
+                        <script>
+                            TextoLibre()
+                        </script>
+
+                        <br />
+                    </td>
+                </tr>
+            }
+
+            if (dato.tipoPregunta == 2)
+            {
+                <tr id="selUnica">
+                    <td>
+                        @Html.DisplayFor(modelItem => dato.item)
+
+                        <script>
+                            seleccionUnica(/*par1 , dato.tieneObservacion*/)
+                        </script>
+
+                        <br />
+                    </td>
+                </tr>
+            }
+
+            if (dato.tipoPregunta == 3)
+            {
+                <tr id="SiNo">
+                    <td>
+                        @Html.DisplayFor(modelItem => dato.item)
+
+                        <script>
+                            SiNo(/*par1 , dato.tieneObservacion*/)
+                        </script>
+
+                        <br />
+                    </td>
+                </tr>
+            }
+
+            if (dato.tipoPregunta == 4)
+            {
+                <tr id="escalar">
+                    <td>
+                        @Html.DisplayFor(modelItem => dato.item)
+
+                        <script>
+                            seleccionMultiple(/*par1 , dato.tieneObservacion*/)
+                        </script>
+
+                        <br />
+                    </td>
+                </tr>
+            }
+
+            if (dato.tipoPregunta == 5)
+            {
+                <tr id="estrella">
+                    <td>
+                        @Html.DisplayFor(modelItem => dato.item)
+
+                        <script>
+                            Estrella(/*par1 , dato.tieneObservacion*/)
+                        </script>
+
+                        <br />
+                    </td>
+                </tr>
+            }
+
         }
     </table>
 
