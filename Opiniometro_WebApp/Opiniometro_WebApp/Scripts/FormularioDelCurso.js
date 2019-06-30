@@ -1,22 +1,45 @@
 ﻿
 
-///recibe: --
-//modifica: vista en las preguntas que tienen campode texto
-//retorna--
-function TextoLibre() {
-      
-        var cont = document.getElementById('campoTexto');
-        var elemento = document.createElement("INPUT");
-        elemento.type = 'text';
-        //elemento.setAttribute("size = 15 maxlength = 30");
-        cont.appendChild(elemento);
 
+////modifica el id del div de las preguntas que poseen campo de texto libre
+//function renombrar(num) {
+//   $("#campoTexto0").attr("id", "campoTexto1");
+//}
+
+//function newLine(etiqueta) {
+//    var elemento = document.createElement("hr/");
+//    var f = document.getElementById(etiqueta);
+//    document.getElementById(etiqueta).appendChild(elemento);
+//}
+
+//crear cada elemento que contendra la pregunta con su id UNICO
+function crearElemento(nombreId, numeroId, pregunta, etiquetaDiv) {
+    var elemento = document.createElement("div");
+    var contenido = document.createTextNode(pregunta);
+    elemento.appendChild(contenido);
+    elemento.setAttribute("id", nombreId.concat(numeroId));
+    document.getElementById(etiquetaDiv).appendChild(elemento);
+    //document.body.appendChild(elemento);
+}
+ 
+///recibe: --
+//modifica: vista en las preguntas que tienen campo de texto
+//retorna--
+function TextoLibre(contTextoLibre) {
+    var contenido = document.getElementById("campoTexto".concat(contTextoLibre)) ;
+    var elemento = document.createElement("INPUT");
+    elemento.type = 'text';
+    elemento.style.width = "400px";
+    elemento.style.height = "150px";
+    contenido.appendChild(elemento);
 }
 
 ///recibe: --opciones que se muestran
 //         --si tiene campo de observacion
 //modifica: vista en las preguntas que tienen seleccion unica
 //retorna--
+function seleccionUnica(contSelUnica/*,listaOpciones*/) {
+  
 function seleccionUnica(par1, campoObservacion) {
 
     if (campoObservacion == true) {
@@ -45,105 +68,34 @@ function seleccionUnica(par1, campoObservacion) {
 ///recibe:-- si tiene campo de observacion
 //modifica: vista en las preguntas que tienen si o no
 //retorna--
-function SiNo(par1, campoObservacion) {
-
-    if (campoObservacion == true) {
-
-        //aqui va el codigo de Si-No
-
-
-        //si la pregunta tiene campo de observacion
-        var cont = document.getElementById('campoTexto');
-        var elemento = document.createElement("INPUT");
-        elemento.type = 'text';
-        //elemento.setAttribute("size = 15 maxlength = 30");
-        cont.appendChild(elemento);
-
-
-        //en caso de que no tenga observacion, solo se muestra la Si-nO
-    } else {
-
-        //aqui va el codigo de Si-nO
-
-    }
+function RespondeSiNo(contSiNo) {
 
 }
+
 
 ///recibe: --opciones que se muestran
 //         --si tiene campo de observacion
 //modifica: vista en las preguntas que tienen seleccion multiple
 //retorna--
-function seleccionMultiple(par1, campoObservacion) {
+function seleccionMultiple() {
 
-    if (campoObservacion == true) {
-
-        //aqui va el codigo de seleccion multiple
-
-
-        //si la pregunta tiene campo de observacion
-        var cont = document.getElementById('campoTexto');
-        var elemento = document.createElement("INPUT");
-        elemento.type = 'text';
-        //elemento.setAttribute("size = 15 maxlength = 30");
-        cont.appendChild(elemento);
-
-
-        //en caso de que no tenga observacion, solo se muestra la seleccion multiple
-    } else {
-
-        //aqui va el codigo de seleccion multiple
-
-    }
+  
 }
 
 ///recibe: --rango de numeros que se muestran
 //         --si tiene campo de observacion
 //modifica: vista en las preguntas que tienen respuesta de tipo escalar
 //retorna--
-function Escalar(par1, campoObservacion) {
-
-    if (campoObservacion == true) {
-
-        //aqui va el codigo de "escalar"
+function Escalar() {
 
 
-        //si la pregunta tiene campo de observacion
-        var cont = document.getElementById('campoTexto');
-        var elemento = document.createElement("INPUT");
-        elemento.type = 'text';
-        //elemento.setAttribute("size = 15 maxlength = 30");
-        cont.appendChild(elemento);
-
-        //en caso de que no tenga observacion, solo se muestra el "escalar"
-    } else {
-
-        //aqui va el codigo de "escalar"
-
-    }
 }
 
 ///recibe: 
 //         --si tiene campo de observacion
 //modifica: vista en las preguntas que tienen respouesta de estrella
 //retorna--
-function Estrella(par1, campoObservacion) {
-
-    if (campoObservacion == true) {
-
-        //aqui va el codigo de "estrella"
+function Estrella() {
 
 
-        //si la pregunta tiene campo de observacion
-        var cont = document.getElementById('campoTexto');
-        var elemento = document.createElement("INPUT");
-        elemento.type = 'text';
-        //elemento.setAttribute("size = 15 maxlength = 30");
-        cont.appendChild(elemento);
-
-        //en caso de que no tenga observacion, solo se muestra el "estrella"
-    } else {
-
-        //aqui va el codigo de "estrella"
-
-    }
 }

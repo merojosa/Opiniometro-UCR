@@ -1,5 +1,5 @@
 ﻿
-@model Opiniometro_WebApp.Models.FormularioCursoModel
+@model Opiniometro_WebApp.Models.FormularioPorCurso
 
 @{
     ViewBag.Title = "Index";
@@ -11,96 +11,89 @@
 <head>
     <meta charset="utf-8" />
     <script src="~/Scripts/FormularioDelCurso.js"></script>
+
 </head>
 <body>
-    <table id="tabla-preguntasFormulario" class="table table-sm table-hover" cellspacing="0" width="100">
-        <tr>
-            <th align='left'>
-                Pregunta
-            </th>
-        </tr>
-        @*Despliega la opcion correspondiente para respoder la pregunta*@
+    @*contadores usados para darle un id unico a los div que contiene el tipo de respuesta*@
+    <script>
+        contTextoLibre = 0;
+        contSelUnica = 0;
+        contSiNo = 0;
+        contSelMult = 0;
+        contEscalar = 0;
+        contEstrella = 0;
+    </script>
 
-        @foreach (var dato in Model.preguntasFormulario)
+    <table> <tr> <th> Preguntas <br />  </th> </tr> </table>
+
+    @foreach (var dato in Model.preguntasFormulario)
+    {
+        if (dato.tipoPregunta == 1)
         {
+            <div id="preguntaTextoLibre"> </div>
 
-            if (dato.tipoPregunta == 1)
+            <script>
+                crearElemento("campoTexto", contTextoLibre, "Esta es una pregunta de T.L del formulario"/*aqui va el valor devuelto por dato.item*/, "preguntaTextoLibre");
+                TextoLibre(contTextoLibre);
+                contTextoLibre++;
+            </script>
+        }
+
+        if (dato.tipoPregunta == 2)
+        {
+            <div id="preguntaSelUnica"> </div>
+
+            <script>
+                crearElemento("selUnica", contSelUnica, "Esta es una pregunta de S.U del formulario", "preguntaSelUnica");
+                seleccionUnica(contSelUnica/*,listaOpciones*/);
+                contSelUnica++;
+            </script>
+
+            //Campo de observacion de la opcion de seleccion unica
+            @*if (dato.tieneObservacion == true) {
+                    <script>
+                        TextoLibre();
+                    </script>
+                }*@
+        }
+
+        if (dato.tipoPregunta == 3)
+        {
+            <div id="preguntaSiNo"> </div>
+
+            <script>
+                crearElemento("SiNo", contSiNo, "Esta es una pregunta de si/no del formulario", "preguntaSiNo");
+                RespondeSiNo(contSiNo);
+                contSiNo++;
+            </script>
+
+            //Campo de observacion de la opcion de respuesta Si-No
+            @*if (dato.tieneObservacion == true) {
+                    <script>
+                        TextoLibre();
+                    </script>
+                }*@
+        }
+
+        @*    if (dato.tipoPregunta == 4)
             {
-                <tr id="campoTexto">
-                    <td>
-                        @Html.DisplayFor(modelItem => dato.item)
+                 <div id="preguntaSelMultiple"> </div>
 
-                        <script>
-                            TextoLibre()
-                        </script>
-
-                        <br />
-                    </td>
-                </tr>
-            }
-
-            if (dato.tipoPregunta == 2)
-            {
-                <tr id="selUnica">
-                    <td>
-                        @Html.DisplayFor(modelItem => dato.item)
-
-                        <script>
-                            seleccionUnica(par1 , dato.tieneObservacion)
-                        </script>
-
-                        <br />
-                    </td>
-                </tr>
-            }
-
-            if (dato.tipoPregunta == 3)
-            {
-                <tr id="SiNo">
-                    <td>
-                        @Html.DisplayFor(modelItem => dato.item)
-
-                        <script>
-                            SiNo(/*par1 , dato.tieneObservacion*/)
-                        </script>
-
-                        <br />
-                    </td>
-                </tr>
-            }
-
-            if (dato.tipoPregunta == 4)
-            {
-                <tr id="escalar">
-                    <td>
-                        @Html.DisplayFor(modelItem => dato.item)
-
-                        <script>
-                            seleccionMultiple(/*par1 , dato.tieneObservacion*/)
-                        </script>
-
-                        <br />
-                    </td>
-                </tr>
             }
 
             if (dato.tipoPregunta == 5)
             {
-                <tr id="estrella">
-                    <td>
-                        @Html.DisplayFor(modelItem => dato.item)
+                  <div id="preguntaEscalar"> </div>
 
-                        <script>
-                            Estrella(/*par1 , dato.tieneObservacion*/)
-                        </script>
-
-                        <br />
-                    </td>
-                </tr>
             }
 
-        }
-    </table>
+            if (dato.tipoPregunta == 6)
+            {
+                 <div id="preguntaEstrella"> </div>
+
+            }*@
+
+    }
 
 </body>
 </html>
