@@ -234,6 +234,7 @@
     <Compile Include="Models\Conformado_Item_Sec_Form.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CrearFormularioModel.cs" />
     <Compile Include="Models\CrearItemModel.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>

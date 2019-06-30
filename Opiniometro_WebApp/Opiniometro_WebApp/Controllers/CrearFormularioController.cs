@@ -33,7 +33,8 @@ namespace Opiniometro_WebApp.Controllers
                     .OrderBy(m => m.TituloSeccion)
                     .ThenBy(m => m.Orden_Item)
                     .ToList(),
-                ConformadoS = db.Conformado_For_Sec
+
+                ConformadoS = db.Conformado_For_Sec//Llenamos nuestra lista de secciones del formulario.                   
                     .Where(m => m.CodigoFormulario == codForm)
                     .OrderBy(m => m.TituloSeccion)
                     .ThenBy(m => m.Orden_Seccion)
@@ -63,6 +64,7 @@ namespace Opiniometro_WebApp.Controllers
                     return null;
                 }                
             }
+            //A
             List<Conformado_Item_Sec_Form> conformados =
                     db.Conformado_Item_Sec_Form
                     .Include("Item")
@@ -112,19 +114,11 @@ namespace Opiniometro_WebApp.Controllers
 
         }
         //----------------------------------------------------------------------------
-        public P VistaFormularioVParcial(String codForm)
+        public PartialViewResult VistaFormularioVParcial(String codForm)
         {
-            FormularioModel formularioVistaPrevia = new FormularioModel()//Modelo donde obtenemos las 
+            FormularioCompleto formularioVistaPrevia = new FormularioCompleto()//Modelo donde obtenemos las 
             {
-                Secciones = db.Conformado_For_Sec.Where(m => m.CodigoFormulario == codForm)
-                .OrderBy(m => m.TituloSeccion)
-                .ThenBy(m => m.Orden_Seccion)
-                .ToList(),
-
-                Preguntas = db.Conformado_Item_Sec_Form.Where(m => m.CodigoFormulario == codForm)
-                .OrderBy(m => m.TituloSeccion)
-                .ThenBy(m => m.Orden_Seccion)
-                .ToList()
+                
             };
      
             return PartialView(formularioVistaPrevia);
