@@ -28,7 +28,7 @@
     {
         <td>
             <h4 style="text-align:left;">
-                <b>Sigla: </b>
+                <b>Sigla:</b>
                 @Html.DisplayFor(modelItem => title.Grupo.SiglaCurso)
 
                 <span style="float:right;">
@@ -152,7 +152,7 @@
                                                                 var dataT = {
                                                                     labels: aLabels,
                                                                     datasets: [{
-                                                                    label: "Prueba",
+                                                                    label: "Cantidad de Respuestas",
                                                                         data: aDatasets1,
                                                                         fill: false,
                                                                         backgroundColor: [
@@ -253,10 +253,11 @@
 
                                                                                             for (var data in obs) {
                                                                                                 if ('@perfil_actual' == "Admin") { //Cuando se incluye el if lo que esta dentro no se despliega incluso si la condicion es verdadera
-                                                                                                    document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + " ";
+                                                                                                    document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + " ";                                                                                                  
 
                                                                                                 } else if ('@perfil_actual' != "Admin"){
-                                                                                                     document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " " ;
+                                                                                                    document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " ";
+                                                                                                    
                                                                                                 }
                                                                                                 // Si no se acomodan las observaciones se bloquea el collapse de mostrar observaciones
                                                                                             }
