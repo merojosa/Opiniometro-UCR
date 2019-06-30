@@ -39,30 +39,16 @@ function TextoLibre(contTextoLibre) {
 //modifica: vista en las preguntas que tienen seleccion unica
 //retorna--
 function seleccionUnica(contSelUnica/*,listaOpciones*/) {
-  
-function seleccionUnica(par1, campoObservacion) {
 
-    if (campoObservacion == true) {
-
-
-
-        //si la pregunta tiene campo de observacion
-        var cont = document.getElementById('campoTexto');
-        var elemento = document.createElement("INPUT");
-        elemento.type = 'text';
-        //elemento.setAttribute("size = 15 maxlength = 30");
-        cont.appendChild(elemento);
-
-
-        //en caso de que no tenga observacion, solo se muestra la seleccion unica
-    }  
+    var contenido = document.getElementById("selUnica".concat(contSelUnica));
     var choosed = document.createElement("INPUT");
     choosed.setAttribute('type', 'radio');
-    choosed.setAttribute('name', 'op2');
+    choosed.setAttribute('name', contSelUnica);
     //choosed.setAttribute('label', Opción1)
 
-    selection.appendChild(choosed);
+    contenido.appendChild(choosed);
         //aqui va codigo de seleccion unica
+
 }
 
 ///recibe:-- si tiene campo de observacion
