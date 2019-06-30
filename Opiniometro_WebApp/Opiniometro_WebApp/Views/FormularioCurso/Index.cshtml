@@ -24,12 +24,13 @@
         @foreach (var item in Model.preguntasFormulario)
         {
             <tr id="campoTexto">
-                <td >
+                <td>
                     @Html.DisplayFor(modelItem => item.item)
                     <script>
                         escogerTipoRespuesta(2, false)
+
                     </script>
-                    <br />
+                    <br /> 
                 </td>
             </tr>
         }
