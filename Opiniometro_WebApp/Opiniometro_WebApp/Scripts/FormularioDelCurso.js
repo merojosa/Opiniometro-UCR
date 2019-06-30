@@ -21,7 +21,6 @@ function seleccionUnica(par1, campoObservacion) {
 
     if (campoObservacion == true) {
 
-        //aqui va el codigo de seleccion unica
 
 
         //si la pregunta tiene campo de observacion
@@ -33,12 +32,14 @@ function seleccionUnica(par1, campoObservacion) {
 
 
         //en caso de que no tenga observacion, solo se muestra la seleccion unica
-    } else {
+    }  
+    var choosed = document.createElement("INPUT");
+    choosed.setAttribute('type', 'radio');
+    choosed.setAttribute('name', 'op2');
+    //choosed.setAttribute('label', Opción1)
 
-        //aqui va el codigo de seleccion unica
-
-    }
-
+    selection.appendChild(choosed);
+        //aqui va codigo de seleccion unica
 }
 
 ///recibe:-- si tiene campo de observacion
@@ -73,15 +74,6 @@ function SiNo(par1, campoObservacion) {
 //modifica: vista en las preguntas que tienen seleccion multiple
 //retorna--
 function seleccionMultiple(par1, campoObservacion) {
-                var choosed = document.createElement("INPUT");
-                choosed.setAttribute('type', 'radio');
-                choosed.setAttribute('name', 'op2');
-                //choosed.setAttribute('label', Opción1)
-
-                selection.appendChild(choosed);
-                //aqui va codigo de seleccion unica
-            }
-            break;
 
     if (campoObservacion == true) {
 
