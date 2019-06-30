@@ -38,9 +38,23 @@ namespace Opiniometro_WebApp.Controllers
                     .Where(m => m.CodigoFormulario == codForm)
                     .OrderBy(m => m.TituloSeccion)
                     .ThenBy(m => m.Orden_Seccion)
-                    .ToList()
+                    .ToList(),
+            FormularioCompleto = new FormularioCompletoModel()//Modelo donde obtenemos las 
+            {
+                     Conformados = db.Conformado_Item_Sec_Form
+                    .Where(m => m.CodigoFormulario == codForm)
+                    .OrderBy(m => m.TituloSeccion)
+                    .ThenBy(m => m.Orden_Item)
+                    .ToList(),
 
-            };
+                     ConformadoS = db.Conformado_For_Sec//Llenamos nuestra lista de secciones del formulario.                   
+                    .Where(m => m.CodigoFormulario == codForm)
+                    .OrderBy(m => m.TituloSeccion)
+                    .ThenBy(m => m.Orden_Seccion)
+                    .ToList()
+            }
+
+        };
             
             return View(crearFormulario);
         }
@@ -114,11 +128,22 @@ namespace Opiniometro_WebApp.Controllers
 
         }
         //----------------------------------------------------------------------------
-        public PartialViewResult VistaFormularioVParcial(String codForm)
+        public ActionResult VistaFormularioVParcial(String codForm)
         {
-            FormularioCompleto formularioVistaPrevia = new FormularioCompleto()//Modelo donde obtenemos las 
+            FormularioCompletoModel formularioVistaPrevia = new FormularioCompletoModel()//Modelo donde obtenemos las 
             {
-                
+                Conformados = db.Conformado_Item_Sec_Form
+
+                    .Where(m => m.CodigoFormulario == codForm)
+                    .OrderBy(m => m.TituloSeccion)
+                    .ThenBy(m => m.Orden_Item)
+                    .ToList(),
+
+                ConformadoS = db.Conformado_For_Sec//Llenamos nuestra lista de secciones del formulario.                   
+                    .Where(m => m.CodigoFormulario == codForm)
+                    .OrderBy(m => m.TituloSeccion)
+                    .ThenBy(m => m.Orden_Seccion)
+                    .ToList()
             };
      
             return PartialView(formularioVistaPrevia);
