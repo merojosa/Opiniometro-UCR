@@ -25,7 +25,7 @@ BEGIN
 	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
 
 	INSERT INTO Usuario
-	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id, 0)
 END
 GO
 
@@ -103,6 +103,7 @@ BEGIN
 		WHERE CorreoInstitucional = @CorreoBuscar
 	END	
 END
+GO
 
 -- Modificar Persona
 IF OBJECT_ID('SP_ModificarPersona') IS NOT NULL
@@ -214,7 +215,7 @@ BEGIN
 	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2, @Direccion)
 
 	INSERT INTO Usuario
-	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id, 0)
 END
 GO
 
@@ -276,6 +277,9 @@ AS
 	WHERE Cedula = @Cedula;
 GO
 
+GO
+IF OBJECT_ID('ObtenerPerfilesUsuario') IS NOT NULL
+	DROP PROCEDURE ObtenerPerfilesUsuario
 GO
 CREATE PROC ObtenerPerfilesUsuario
 	@Correo	NVARCHAR(50)
@@ -429,6 +433,9 @@ VALUES ('CI1330', 100, 'SC-01234'),
 
 --DROP PROCEDURE CursosSegunCarrera
 --Obtiene la lista de cursos que pertenecen a cierta carrera
+
+IF OBJECT_ID('CursosSegunCarrera') IS NOT NULL
+	DROP PROCEDURE CursosSegunCarrera
 GO
 CREATE PROCEDURE CursosSegunCarrera
 @siglaCarrera NVARCHAR(10)
@@ -443,6 +450,9 @@ END
 GO
 
 --Obtiene la lista de cursos que pertenecen a cierto semestre
+IF OBJECT_ID('CursosSegunSemestre') IS NOT NULL
+	DROP PROCEDURE CursosSegunSemestre
+GO
 CREATE PROCEDURE CursosSegunSemestre
 @semestre TINYINT
 AS
@@ -456,6 +466,9 @@ END
 GO
 
 --Obtiene la lista de cursos que pertenecen a cierto año
+IF OBJECT_ID('CursosSegunAnno') IS NOT NULL
+	DROP PROCEDURE CursosSegunAnno
+GO
 CREATE PROCEDURE CursosSegunAnno
 @anno SMALLINT
 AS
@@ -658,7 +671,7 @@ VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
 
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
-		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
+		('admin@ucr.ac.cr', 0, 'SC-01234', 'Administrador'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Administrador')
 
