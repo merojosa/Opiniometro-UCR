@@ -83,7 +83,7 @@
         <AssociationConnector Association="Opiniometro_Model.Direccion_Persona" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.Escuela" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.Se_Encuentra_Curso_Enfasis" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Opiniometro_Model.Conformado_For_Sec" Width="1.5" PointX="17.375" PointY="9.25" />
+        <EntityTypeShape EntityType="Opiniometro_Model.Conformado_For_Sec" PointX="17.25" PointY="9.25" Width="1.5" />
         <AssociationConnector Association="Opiniometro_Model.FK_Conf_For" />
         <AssociationConnector Association="Opiniometro_Model.FK_Conf_Sec" />
       </Diagram>
