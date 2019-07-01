@@ -390,12 +390,8 @@
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RecuperarContrasenna" Type="bit" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="ValorRandom">
-          <Property Name="randomvalue" Type="varbinary" MaxLength="8000" />
-        </EntityType>-->
         <Association Name="FK_Adm_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Administrativo" Type="Self.Administrativo" Multiplicity="0..1" />
@@ -1077,10 +1073,6 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
-        </Function>
-        <Function Name="SP_CambiarContrasenna" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Correo" Type="nvarchar" Mode="In" />
-          <Parameter Name="Contrasenna_Nueva" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SP_ContarRespuestasPorGrupo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigoFormulario" Type="char" Mode="In" />
@@ -1802,6 +1794,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Property Name="Id" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Usu_Per" FromRole="Usuario" ToRole="Persona" />
           <NavigationProperty Name="Tiene_Usuario_Perfil_Enfasis" Relationship="Self.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" FromRole="Usuario" ToRole="Tiene_Usuario_Perfil_Enfasis" />
+          <Property Name="RecuperarContrasenna" Type="Boolean" />
         </EntityType>
         <Association Name="FK_Adm_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
@@ -3063,6 +3056,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="Opiniometro_Model.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="RecuperarContrasenna" ColumnName="RecuperarContrasenna" />
                 <ScalarProperty Name="CorreoInstitucional" ColumnName="CorreoInstitucional" />
                 <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
@@ -3155,7 +3149,6 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <FunctionImportMapping FunctionImportName="ProcIntroduFormulario" FunctionName="Opiniometro_Model.Store.ProcIntroduFormulario" />
           <FunctionImportMapping FunctionImportName="SP_AgregarPersonaUsuario" FunctionName="Opiniometro_Model.Store.SP_AgregarPersonaUsuario" />
           <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_Model.Store.SP_AgregarUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="Opiniometro_Model.Store.SP_CambiarContrasenna" />
           <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="Opiniometro_Model.Store.SP_ContarRespuestasPorGrupo">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Opiniometro_Model.SP_ContarRespuestasPorGrupo_Result">

@@ -21,7 +21,7 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult AsignarPreguntas(string codForm)
         {  
             
-            CrearFormularioModel crearFormulario = new CrearFormularioModel
+            CrearFormularioModel crearFormulario = new CrearFormularioModel 
             {
                 
                 Secciones = db.Seccion.ToList(),
@@ -32,7 +32,27 @@ namespace Opiniometro_WebApp.Controllers
                     .Where(m => m.CodigoFormulario == codForm)
                     .OrderBy(m => m.TituloSeccion)
                     .ThenBy(m => m.Orden_Item)
+                    .ToList(),
+
+                ConformadoS = db.Conformado_For_Sec//Llenamos nuestra lista de secciones del formulario.                   
+                    .Where(m => m.CodigoFormulario == codForm)
+                    .OrderBy(m => m.TituloSeccion)
+                    .ThenBy(m => m.Orden_Seccion)
+                    .ToList(),
+            FormularioCompleto = new FormularioCompletoModel()//Modelo donde obtenemos las 
+            {
+                     Conformados = db.Conformado_Item_Sec_Form
+                    .Where(m => m.CodigoFormulario == codForm)
+                    .OrderBy(m => m.TituloSeccion)
+                    .ThenBy(m => m.Orden_Item)
+                    .ToList(),
+
+                     ConformadoS = db.Conformado_For_Sec//Llenamos nuestra lista de secciones del formulario.                   
+                    .Where(m => m.CodigoFormulario == codForm)
+                    .OrderBy(m => m.TituloSeccion)
+                    .ThenBy(m => m.Orden_Seccion)
                     .ToList()
+            }
 
         };
             
@@ -64,8 +84,8 @@ namespace Opiniometro_WebApp.Controllers
         //[ValidateAntiForgeryToken]
         public PartialViewResult AgregarConformado(Conformado_Item_Sec_Form conformado)
         {
-           
-           
+
+
             if (ModelState.IsValid)
             {
                 List<Conformado_Item_Sec_Form> conf = db.Conformado_Item_Sec_Form.Where(m => m.ItemId == conformado.ItemId && m.TituloSeccion == conformado.TituloSeccion && m.CodigoFormulario == conformado.CodigoFormulario).ToList();
@@ -79,6 +99,7 @@ namespace Opiniometro_WebApp.Controllers
                     return null;
                 }                
             }
+            //A
             List<Conformado_Item_Sec_Form> conformados =
                     db.Conformado_Item_Sec_Form
                     .Include("Item")
@@ -128,11 +149,25 @@ namespace Opiniometro_WebApp.Controllers
 
         }
         //----------------------------------------------------------------------------
-        public ActionResult VistaFormularioVParcial(string codForm)
+        public ActionResult VistaFormularioVParcial(String codForm)
         {
-            IEnumerable<Conformado_Item_Sec_Form> listaFormulario = db.Conformado_Item_Sec_Form.Where(y => y.CodigoFormulario == codForm).ToList().Distinct();
-            
-            return PartialView(listaFormulario);
+            FormularioCompletoModel formularioVistaPrevia = new FormularioCompletoModel()//Modelo donde obtenemos las 
+            {
+                Conformados = db.Conformado_Item_Sec_Form
+
+                    .Where(m => m.CodigoFormulario == codForm)
+                    .OrderBy(m => m.TituloSeccion)
+                    .ThenBy(m => m.Orden_Item)
+                    .ToList(),
+
+                ConformadoS = db.Conformado_For_Sec//Llenamos nuestra lista de secciones del formulario.                   
+                    .Where(m => m.CodigoFormulario == codForm)
+                    .OrderBy(m => m.TituloSeccion)
+                    .ThenBy(m => m.Orden_Seccion)
+                    .ToList()
+            };
+     
+            return PartialView(formularioVistaPrevia);
         }
 
         public ActionResult VistaPreviaPregunta(string id)
