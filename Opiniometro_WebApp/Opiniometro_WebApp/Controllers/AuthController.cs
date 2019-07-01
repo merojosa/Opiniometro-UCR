@@ -14,6 +14,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Threading;
 using Opiniometro_WebApp.Controllers.Servicios;
+using System.Data.Entity.Core;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -55,11 +56,19 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult Login(Usuario usuario)
         {
             ObjectParameter exito = new ObjectParameter("Resultado", 0);
-            db.SP_LoginUsuario(usuario.CorreoInstitucional, usuario.Contrasena, exito);
+            bool error_conexion = false;
+            try
+            {
+                db.SP_LoginUsuario(usuario.CorreoInstitucional, usuario.Contrasena, exito);
 
-            string correo_autenticado = IdentidadManager.obtener_correo_actual();
+            }
+            catch (EntityException)
+            {
+                error_conexion = true;
+                exito.Value = false;
+            }
 
-            if (correo_autenticado != null)      // Si esta autenticado
+            if (IdentidadManager.obtener_correo_actual() != null)      // Si esta autenticado
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -81,12 +90,33 @@ namespace Opiniometro_WebApp.Controllers
 
                 // Creo objeto IdentidadManager, la llave (para acceder al objeto) seria el correo, el cual es unico para cada usuario.
                 Session[usuario.CorreoInstitucional] = new IdentidadManager();
+
+                var recuperar_contrasena = db.Usuario.Where(m => m.CorreoInstitucional == usuario.CorreoInstitucional).ToList();
+                if(recuperar_contrasena.ElementAt(0).RecuperarContrasenna == true)
+                {
+                    return RedirectToAction("CambiarContrasenna");
+                }
+                else
+                {
+                    return RedirectToAction("Cambiar", "Perfil");
+                }
                 
-                return RedirectToAction("Index", "Perfil");
             }
             else    // Si hay error en la autenticacion
             {
-                ModelState.AddModelError(string.Empty, "");
+                // Desplegar mensaje de error personalizado.
+                string mensaje_error = "";
+                if(error_conexion == true)
+                {
+                    mensaje_error = "Error de conexión al servidor";
+                }
+                else
+                {
+                    mensaje_error = "Usuario o contraseña inválidos";
+                }
+
+                ModelState.AddModelError("ErrorLogin", mensaje_error);
+
 
                 // Devolverse a la misma pagina de Login informando de que hay un error de autenticacion.
                 return View(usuario);
@@ -150,7 +180,7 @@ namespace Opiniometro_WebApp.Controllers
                 string contrasenna_generada = GenerarContrasenna(10);
 
                 // La guardo en la base de datos llamando al procedimiento almacenado.
-                db.SP_CambiarContrasenna(usuario.CorreoInstitucional, contrasenna_generada);
+                db.SP_CambiarContrasenna(usuario.CorreoInstitucional, contrasenna_generada, true);
                 
 
                 string contenido =
@@ -210,6 +240,27 @@ namespace Opiniometro_WebApp.Controllers
                 contrasenna.Append(caracteres_aleatorios[byte_aleatorio % (caracteres_aleatorios.Length)]);
             }
             return contrasenna.ToString();
-        }        
+        }
+        
+        [Authorize]
+        public ActionResult CambiarContrasenna()
+        {
+            return View("CambiarContrasenna");
+        }
+
+        [HttpPost]
+        public ActionResult CambiarContrasenna(FormCollection form)
+        {
+            if(form["Contrasenna1"] == form["Contrasenna2"])
+            {
+                db.SP_CambiarContrasenna(IdentidadManager.obtener_correo_actual(), form["Contrasenna1"], false);
+                return RedirectToAction("Cambiar", "Perfil");
+            }
+            else
+            {
+                ModelState.AddModelError("ErrorContrasenna", "Las contraseñas no coinciden");
+                return View(form);
+            }
+        }
     }
 }

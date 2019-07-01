@@ -35,7 +35,8 @@
             <td>
                 @*<input type="button" value="Asignar preguntas" class="btn btn-secondary" id="botonNuevaSeccion" onclick="accionBotonAsignarPregunta()"/>*@
                 
-                
+                @*@Html.ActionLink("Vista previa", "VistaFormularioVParcial", "CrearFormularo", new { codForm = item.CodigoFormulario }, new { @class = "btn btn-default" })*@
+
                 @Html.ActionLink("Asignar Preguntas", "AsignarPreguntas", "CrearFormulario" ,new { codForm = item.CodigoFormulario}, new { @class = "btn btn-default" })
                 @*@Html.ActionLink("Details", "Details", new { id=item.CodigoFormulario }) |*@
                 @*@Html.ActionLink("Delete", "Delete", new { id=item.CodigoFormulario })*@

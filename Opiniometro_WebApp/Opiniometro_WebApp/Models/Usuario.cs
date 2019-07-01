@@ -25,6 +25,7 @@ namespace Opiniometro_WebApp.Models
         public bool Activo { get; set; }
         public string Cedula { get; set; }
         public System.Guid Id { get; set; }
+        public Nullable<bool> RecuperarContrasenna { get; set; }
     
         public virtual Persona Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
