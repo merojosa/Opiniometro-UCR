@@ -32,6 +32,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
         public virtual DbSet<Ciclo_Lectivo> Ciclo_Lectivo { get; set; }
+        public virtual DbSet<Conformado_For_Sec> Conformado_For_Sec { get; set; }
         public virtual DbSet<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }
         public virtual DbSet<Curso> Curso { get; set; }
         public virtual DbSet<Distrito> Distrito { get; set; }
@@ -125,6 +126,15 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Cedula", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("NombrePersona", cedulaParameter);
+        }
+    
+        public virtual ObjectResult<ObtenerPerfilesUsuario_Result> ObtenerPerfilesUsuario(string correo)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerPerfilesUsuario_Result>("ObtenerPerfilesUsuario", correoParameter);
         }
     
         public virtual ObjectResult<string> ObtenerPerfilPorDefecto(string correo)
