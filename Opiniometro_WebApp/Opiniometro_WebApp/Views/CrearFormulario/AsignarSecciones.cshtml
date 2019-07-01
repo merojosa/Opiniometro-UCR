@@ -7,7 +7,7 @@
 <div class="form-group">
     @Html.Label( "Formulario", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-      @*  @Html.DropDownListFor(model => model.Formulario, new SelectList(ViewBag.CodigoFormulario, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control" })*@
+        @Html.DropDownList("Formulario", new SelectList(ViewBag.CodigoFormulario, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control" })
         @*@Html.ValidationMessageFor(model => model.NombreCategoria, "", new { @class = "text-danger" })*@
     </div>
 </div>
