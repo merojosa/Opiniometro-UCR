@@ -33,8 +33,8 @@
             @Html.AntiForgeryToken()
 
             <div class="form-actions no-color">
-                <input type="submit" value="Borrar" class="btn btn-default" />
-                @Html.ActionLink("Cancelar", "Borrar", new { id = "Borrar" }, new { @class = "btn btn-default" })
+                <input type = "submit" value="Borrar" class="btn btn-default" />
+                @Html.ActionLink("Cancelar", "Borrar", null, new { @class = "btn btn-default" })
             </div>
         }
     </div>
@@ -44,6 +44,6 @@ else
     <h3>No se puede borrar el perfil administrador.</h3>
     <br />
     <div class="form-actions no-color">
-        @Html.ActionLink("Volver", "Borrar", new {}, new { @class = "btn btn-default" })
+        @Html.ActionLink("Volver", "Borrar", null, new { @class = "btn btn-default" })
     </div>
 }
