@@ -1,41 +1,39 @@
-﻿@{
-    ViewBag.Title = "Inicio de sesión";
+﻿
+@{
+    ViewBag.Title = "Cambiar contraseña";
 }
 
-
-<!--Login-->
 <div align="center" style="padding-right:100px">
     <h1>Opiniómetro@UCR</h1>
-    @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+    @using (Html.BeginForm("CambiarContrasenna", "Auth", FormMethod.Post))
     {
         <div class="login-container">
             <div class="row">
                 <div class="panel panel-default" style="width: 400px ">
-                    <h3>Ingreso al Sistema</h3>
+                    <h3>Cambiar contraseña</h3>
                     <div class="panel-body">
                         <div class="input-group" style="width:250px">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                            <input name="CorreoInstitucional" type="email" class="form-control" placeholder="Correo institucional">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+                            <input type="password" class="form-control" name="Contrasenna2" placeholder="Contraseña nueva">
                         </div>
                         <br />
                         <div class="input-group" style="width:250px">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
-                            <input type="password" class="form-control" name="Contrasena" placeholder="Contraseña">
+                            <input type="password" class="form-control" name="Contrasenna1" placeholder="Repita contraseña">
                         </div>
                         <br />
                         <div class="form-group">
-                            <input type="submit" value="Ingresar" name="Ingresar" class = "btn btn-default" />
+                            <input type="submit" value="Cambiar" class="btn btn-default" />
                         </div>
 
-                        <div class="form-group">
-                            @Html.ActionLink("¿Olvidó su contraseña?", "Recuperar")
-                        </div>
+
                         <div class="login-error">
-                            @Html.ValidationMessage("ErrorLogin")
+                            @Html.ValidationMessage("ErrorContrasenna")
                         </div>
                     </div>
                 </div>
             </div>
-        </div>  
+        </div>
     }
 </div>
+

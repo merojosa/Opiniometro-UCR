@@ -82,8 +82,9 @@ IF OBJECT_ID('SP_CambiarContrasenna') IS NOT NULL
 	DROP PROCEDURE SP_CambiarContrasenna
 GO
 CREATE PROCEDURE SP_CambiarContrasenna
-	@Correo				NVARCHAR(50),
-	@Contrasenna_Nueva	NVARCHAR(50)
+	@Correo					NVARCHAR(50),
+	@Contrasenna_Nueva		NVARCHAR(50),
+	@RecuperarContrasenna	BIT
 AS
 BEGIN
 	SET NOCOUNT ON
@@ -96,11 +97,12 @@ BEGIN
 						WHERE CorreoInstitucional=@Correo)
 
 	IF(@CorreoBuscar IS NOT NULL)	-- Si existe el correo
+	BEGIN
 		UPDATE Usuario
-		SET Contrasena = HASHBYTES('SHA2_512', @Contrasenna_Nueva+CAST(Id AS NVARCHAR(36)))
-		
+		SET Contrasena = HASHBYTES('SHA2_512', @Contrasenna_Nueva+CAST(Id AS NVARCHAR(36))), RecuperarContrasenna = @RecuperarContrasenna
+		WHERE CorreoInstitucional = @CorreoBuscar
+	END	
 END
-GO
 
 -- Modificar Persona
 IF OBJECT_ID('SP_ModificarPersona') IS NOT NULL
