@@ -90,8 +90,17 @@ namespace Opiniometro_WebApp.Controllers
 
                 // Creo objeto IdentidadManager, la llave (para acceder al objeto) seria el correo, el cual es unico para cada usuario.
                 Session[usuario.CorreoInstitucional] = new IdentidadManager();
+
+                var recuperar_contrasena = db.Usuario.Where(m => m.CorreoInstitucional == usuario.CorreoInstitucional).ToList();
+                if(recuperar_contrasena.ElementAt(0).RecuperarContrasenna == true)
+                {
+                    return RedirectToAction("CambiarContrasenna");
+                }
+                else
+                {
+                    return RedirectToAction("Cambiar", "Perfil");
+                }
                 
-                return RedirectToAction("Cambiar", "Perfil");
             }
             else    // Si hay error en la autenticacion
             {
@@ -171,7 +180,7 @@ namespace Opiniometro_WebApp.Controllers
                 string contrasenna_generada = GenerarContrasenna(10);
 
                 // La guardo en la base de datos llamando al procedimiento almacenado.
-                db.SP_CambiarContrasenna(usuario.CorreoInstitucional, contrasenna_generada);
+                db.SP_CambiarContrasenna(usuario.CorreoInstitucional, contrasenna_generada, true);
                 
 
                 string contenido =
@@ -231,6 +240,27 @@ namespace Opiniometro_WebApp.Controllers
                 contrasenna.Append(caracteres_aleatorios[byte_aleatorio % (caracteres_aleatorios.Length)]);
             }
             return contrasenna.ToString();
-        }        
+        }
+        
+        [Authorize]
+        public ActionResult CambiarContrasenna()
+        {
+            return View("CambiarContrasenna");
+        }
+
+        [HttpPost]
+        public ActionResult CambiarContrasenna(FormCollection form)
+        {
+            if(form["Contrasenna1"] == form["Contrasenna2"])
+            {
+                db.SP_CambiarContrasenna(IdentidadManager.obtener_correo_actual(), form["Contrasenna1"], false);
+                return RedirectToAction("Cambiar", "Perfil");
+            }
+            else
+            {
+                ModelState.AddModelError("ErrorContrasenna", "Las contraseñas no coinciden");
+                return View(form);
+            }
+        }
     }
 }

@@ -21,7 +21,7 @@
                 </li>
             }
         </ul>
-        @if (ViewBag.Title != "Recuperar contraseña" && ViewBag.Title != "Inicio de sesión")
+        @if (ViewBag.Title != "Recuperar contraseña" && ViewBag.Title != "Inicio de sesión" && ViewBag.Title != "Cambiar contraseña")
         {
             <ul class="nav navbar-nav navbar-right">
                 <li style="margin-right:92px; margin-top:45px"><p class="navbar-text"> @IdentidadManager.obtener_nombre_actual() - @IdentidadManager.obtener_perfil_actual()</p></li>

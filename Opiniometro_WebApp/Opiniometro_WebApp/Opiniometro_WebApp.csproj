@@ -344,7 +344,16 @@
     <Compile Include="Models\SP_ContarRespuestasPorGrupo_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TelefonoPersona.cs">
@@ -439,8 +448,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Formulario\Create.cshtml" />
@@ -464,16 +471,6 @@
     <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
     <Content Include="Views\Auth\Recuperar.cshtml" />
     <Content Include="Views\Shared\Auth\BarraLogin.cshtml" />
-    <Content Include="Views\Items\Create.cshtml" />
-    <Content Include="Views\Items\Delete.cshtml" />
-    <Content Include="Views\Items\Details.cshtml" />
-    <Content Include="Views\Items\Edit.cshtml" />
-    <Content Include="Views\Items\Index.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
     <Content Include="Views\VisualizarFormulario\Create.cshtml" />
     <Content Include="Views\VisualizarFormulario\Delete.cshtml" />
     <Content Include="Views\VisualizarFormulario\Details.cshtml" />
@@ -481,12 +478,6 @@
     <Content Include="Views\VisualizarFormulario\Index.cshtml" />
     <Content Include="Views\Admin\VerPersonas.cshtml" />
     <Content Include="Views\Admin\CrearUsuario.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
-    <Content Include="Views\LogInPerfiles\Index.cshtml" />
     <Content Include="Views\Administrador\CargarArchivo.cshtml" />
     <Content Include="Views\Administrador\Index.cshtml" />
     <Content Include="Views\Categoria\Create.cshtml" />
@@ -513,11 +504,6 @@
     <Content Include="Views\Perfil\ConfirmarBorrado.cshtml" />
     <Content Include="Views\Perfil\Crear.cshtml" />
     <Content Include="Views\Perfil\VerPerfiles.cshtml" />
-    <Content Include="Views\Conformado_Item_Sec_Form\Create.cshtml" />
-    <Content Include="Views\Conformado_Item_Sec_Form\Delete.cshtml" />
-    <Content Include="Views\Conformado_Item_Sec_Form\Details.cshtml" />
-    <Content Include="Views\Conformado_Item_Sec_Form\Edit.cshtml" />
-    <Content Include="Views\Conformado_Item_Sec_Form\Index.cshtml" />
     <Content Include="Views\LlenarFormulario\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\AsignacionFormularioGrupo.cshtml" />
@@ -525,10 +511,12 @@
     <Content Include="Views\Shared\EditorTemplates\ElegirFormularioEditorViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ElegirGrupoEditorViewModel.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Edit.cshtml" />
+    <Content Include="Views\Auth\CambiarContrasenna.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
     <Folder Include="Views\SeleccionFormularios\" />
+    <Folder Include="Views\Seleccion_Unica\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
