@@ -251,38 +251,79 @@ namespace Opiniometro_WebApp.Controllers
 
         private void InsertarEnUsuarioBD(DataRow filaAInsertar, DataTable usuarioBD)
         {
+            string hileraConexion =
+                "data source=(localdb)\\ProjectsV13;initial catalog=Opiniometro_Datos;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;";
             DataRow filaNueva = usuarioBD.NewRow();
             filaNueva["correo"] = new SqlChars(filaAInsertar["correo"].ToString().ToCharArray());
+
+
+
 
             //Insercion de un usuario requiere que tenga un contrasena cifrada con un guid
             string contrasenaRandom = GenerarContrasenaRandom(10, null);
             Guid guid = ObtenerIdUnico();
-            string contrasenaHash = GenerarContrasenaCifrada(contrasenaRandom += guid.ToString().Substring(0, 36));
+            byte[] resultadoHash;
+            /*using (SqlConnection conexionBD = new SqlConnection(hileraConexion))
+            {
+                conexionBD.Open();
+                SqlCommand cmd = new SqlCommand("dbo.SP_GenerarContrasenaHash", conexionBD);
 
-            filaNueva["contrasena"] = new SqlChars(contrasenaHash.ToString().ToCharArray());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", guid.ToString());
+                cmd.Parameters.AddWithValue("contrasena", contrasenaRandom);
+                cmd.Parameters.Add("@contrasenaHash", System.Data.SqlDbType.VarBinary, 50).Direction = System.Data.ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                resultadoHash = (byte[]) cmd.Parameters["@contrasenaHash"].Value;
+            }
+            */
+
+
+            ObjectParameter contrasenaHash = new ObjectParameter("contrasenaHash", typeof(SqlBinary));
+            db.SP_GenerarContrasenaHash(guid.ToString().Substring(0,36), contrasenaRandom, contrasenaHash);
+            //string contrasenaHash = GenerarContrasenaCifrada(contrasenaRandom += guid.ToString().Substring(0, 36));
+            //SqlChars chars = new SqlChars((char[])contrasenaHash.Value);
+            //SqlChars chars = new SqlChars(contrasenaHash.ToCharArray());
+            //string contrasenaString = Encoding.Unicode.GetString(contrasenaCifrada, 0, contrasenaCifrada.Length);
+            //SqlBinary datosCifrados = (SqlBinary)contrasenaHash.Value;
+            //string contrasenaCifrada = Convert.ToString(contrasenaHash.Value);
+            resultadoHash = (byte[])contrasenaHash.Value;
+            string contrasenaCifrada = resultadoHash.ToString();
+            filaNueva["contrasena"] = new SqlChars(contrasenaCifrada.ToCharArray()); //contrasenaHash;//contrasenaHash.Substring(0,50);//
             filaNueva["activo"] = new SqlBoolean(true);
             filaNueva["cedula"] = new SqlChars(filaAInsertar["cedula"].ToString().ToCharArray());
-            filaNueva["id"] = new SqlGuid(guid.ToString().Substring(0, 36));
+            //filaNueva["id"] = new SqlGuid(guid.ToString());
+            filaNueva["id"] = guid;
             usuarioBD.Rows.Add(filaNueva);
             usuarioBD.AcceptChanges();
+            
         }
 
         private string GenerarContrasenaCifrada(string stringUnico)
         {
-            byte[] datosCrudos = Encoding.UTF8.GetBytes(stringUnico);
+            byte[] datosCrudos = Encoding.Unicode.GetBytes(stringUnico);
+            
             byte[] datosCifrados;
-            using(SHA512 sha = new SHA512Managed())
+            using(SHA512 sha = SHA512Managed.Create())
             {
+                
                 datosCifrados = sha.ComputeHash(datosCrudos);
                 
             }
+            string base64 = System.Convert.ToBase64String(datosCifrados);
+            byte[] base64bytes = System.Convert.FromBase64String(base64);
+            return Encoding.Unicode.GetString(base64bytes, 0, base64bytes.Length);
+            //return System.Convert.ToBase64String(datosCifrados);
+            
+            //Encoding.Unicode.GetString()
+            //return Encoding.Unicode.GetString(datosCifrados, 0, datosCifrados.Length);
+            
 
-            return System.Convert.ToBase64String(datosCifrados);
         }
 
         private string GenerarContrasenaRandom(int tamano, string caracteresPermitidos=null)
         {
-            if(string.IsNullOrEmpty(caracteresPermitidos))
+            /*
+             * if(string.IsNullOrEmpty(caracteresPermitidos))
             {
                 caracteresPermitidos = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             }
@@ -299,11 +340,14 @@ namespace Opiniometro_WebApp.Controllers
                 contrasenaGenerada[i] = caracteres[valoresRandom[i] % tamano];
             }
             return new string(contrasenaGenerada);
+             */
+            return "hjjaadbegd";
         }
 
         private Guid ObtenerIdUnico()
         {
-            return Guid.NewGuid();
+            //return Guid.NewGuid();
+            return Guid.Parse("db8f24c9-76a5-4db7-86a8-e40b82fef13a");
         }
         /*
          * EFECTO: Realiza una insercion en bloque en una tabla de base de datos.
@@ -555,16 +599,23 @@ namespace Opiniometro_WebApp.Controllers
             DataTable dt = new DataTable();
             dt.TableName = "Usuario";
             dt.Columns.Add("correo", typeof(System.Data.SqlTypes.SqlChars));
+
+            
             dt.Columns.Add("contrasena", typeof(System.Data.SqlTypes.SqlChars));
+            //dt.Columns.Add("contrasena", typeof(string));
             dt.Columns.Add("activo", typeof(System.Data.SqlTypes.SqlBoolean));
             dt.Columns.Add("cedula", typeof(System.Data.SqlTypes.SqlChars));
             dt.Columns.Add("id", typeof(System.Data.SqlTypes.SqlGuid));
 
             dt.Columns[0].AllowDBNull = false;
+            
             dt.Columns[1].AllowDBNull = false;
+            //dt.Columns[1].MaxLength = 50;
             dt.Columns[2].AllowDBNull = false;
             dt.Columns[3].AllowDBNull = false;
             dt.Columns[4].AllowDBNull = false;
+
+            
 
             return dt;
         }
