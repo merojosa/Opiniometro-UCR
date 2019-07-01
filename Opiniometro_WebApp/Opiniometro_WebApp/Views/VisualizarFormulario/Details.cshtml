@@ -126,37 +126,39 @@
                                                         <canvas id="pie_chart_@item_actual"></canvas>
                                                     </div>
                                                     <button id="changeGraph">Change Graph</button>
+                                                    foreach (var item in Model.Formulario_Respuesta.Take(1))
+                                                    {
                                                     <script>
                                                         var ctx = $("#pie_chart_@item_actual").get(0).getContext("2d");
-                                                        var dataT;
-                                                        var myChart;
+                                                        //var dataT;
+                                                        //var myChart;
                                                         $.ajax({
                                                             type: "POST",
                                                             url: "/VisualizarFormulario/GraficoPie",//?itemId=@seccion.Item.ItemId",
-                                                            data: "{ 'itemId': '@seccion.Item.ItemId', 'codFormulario': '@seccion.CodigoFormulario' }",
+                                                            data: "{ 'codigoFormulario': '@seccion.CodigoFormulario', 'cedulaProfesor': '@item.CedulaProfesor', 'annoGrupo': '@item.Grupo.AnnoGrupo', 'semestreGrupo': '@item.Grupo.SemestreGrupo', 'numeroGrupo': '@item.Grupo.Numero', 'siglaCurso': '@item.Grupo.SiglaCurso', 'itemId': '@seccion.Item.ItemId'  }",
                                                             contentType: "application/json; charset=utf-8",
                                                             dataType: "json",
-                                                            success: function (chData) {
-                                                                var aData = chData;
-                                                                var aLabels = aData[0];
-                                                                var aDatasets1 = aData[1];
+                                                            success: function(chData) {
+                                                                    var aData = chData;
+                                                                    var aLabels = aData[0];
+                                                                    var aDatasets1 = aData[1];
 
-                                                                var tamanio = 0;
+                                                                    var tamanio = 0;
 
                                                                 for (var data in aDatasets1) {
-                                                                    var valor = parseInt(aDatasets1[data]);
-                                                                    tamanio = tamanio + valor;
-                                                                }
+                                                                        var valor = parseInt(aDatasets1[data]);
+                                                                        tamanio = tamanio + valor;
+                                                                    }
 
 
-                                                                //for (var i = 0; i < tamanio; i++)
-                                                                document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: \n" + (tamanio).toString() + "<br>";
+                                                                    //for (var i = 0; i < tamanio; i++)
+                                                                    document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: \n" + (tamanio).toString() + "<br>";
                                                                 @*var iter = aLabels;
                                                                 <p>@seccion.Item.ItemId</p>*@
-                                                                dataT = {
-                                                                    labels: aLabels,
+                                                                            var dataT = {
+                                                                            labels: aLabels,
                                                                     datasets: [{
-                                                                    label: "Prueba",
+                                                                                label: "Prueba",
                                                                         data: aDatasets1,
                                                                         fill: false,
                                                                         backgroundColor: [
@@ -178,13 +180,13 @@
                                                                         borderWidth: 1
                                                                     }]
                                                                 };
-                                                                var ctx = $("#pie_chart_@item_actual").get(0).getContext("2d");
-                                                                if ('@seccion.Item.TipoPregunta' == 2 || '@seccion.Item.TipoPregunta' == 3 || '@seccion.Item.TipoPregunta' == 6) {
-                                                                    var barChart = new Chart(ctx, {
+                                                                            var ctx = $("#pie_chart_@item_actual").get(0).getContext("2d");
+                                                                            if ('@seccion.Item.TipoPregunta' == 2 || '@seccion.Item.TipoPregunta' == 3 || '@seccion.Item.TipoPregunta' == 6) {
+                                                                                var barChart = new Chart(ctx, {
                                                                         type: 'pie',
                                                                         data: dataT,
                                                                         options: {
-                                                                            responsive: true,
+                                                                                responsive: true,
                                                                             maintainAspectRatio: false,
                                                                             scales: { xaxes: [{ ticks: { beginAtZero: true } }] },
                                                                             legend: { display: true },
@@ -192,7 +194,7 @@
                                                                         },
                                                                     })
                                                                 } else if ('@seccion.Item.TipoPregunta' == 4 || '@seccion.Item.TipoPregunta' == 5) {
-                                                                    var barChart = new Chart(ctx, {
+                                                                            var barChart = new Chart(ctx, {
                                                                         type: 'horizontalBar',
                                                                         data: dataT,
                                                                         options: {
@@ -203,8 +205,8 @@
                                                                         },
                                                                     })
                                                                 }
-                                                            }
-                                                        });
+                                                                }
+                                                            });
                                                         document.getElementById('changeGraph').onclick = function () {
                                                             var typeGrah = myChart.type;
                                                             myChart.destroy();
@@ -230,6 +232,7 @@
                                                             });
                                                         };
                                                     </script>*@
+                                                    }
                                                 }
                                                 else
                                                 {
