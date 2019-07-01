@@ -1,0 +1,17 @@
+﻿@model Opiniometro_WebApp.Models.ElegirFormularioEditorViewModel
+
+<tr>
+    <td align="left">
+        <div align="left">@Html.CheckBoxFor(model => model.Seleccionado)</div>
+    </td>
+    <td align="left">
+        <div align="left">
+            @Html.DisplayFor(model => model.CodigoFormulario)
+            <span> </span>
+            @Html.DisplayFor(model => model.NombreFormulario)
+        </div>
+    </td>
+
+    @Html.HiddenFor(model => model.CodigoFormulario)
+    @Html.HiddenFor(model => model.NombreFormulario)
+</tr>

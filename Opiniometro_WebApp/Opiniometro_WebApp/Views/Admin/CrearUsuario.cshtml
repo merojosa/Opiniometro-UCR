@@ -69,10 +69,11 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-3">
                 <input type="submit" value="Guardar" class="btn btn-default" />
+                @Html.ActionLink("Cancelar", "Index", "Home", "", new { @class = "btn btn-default" })
             </div>
         </div>
         <div class="col-md-offset-2 col-md-3">
-            @Html.ActionLink("Volver", "VerPersonas")
+            
         </div>
     </div>
     }
