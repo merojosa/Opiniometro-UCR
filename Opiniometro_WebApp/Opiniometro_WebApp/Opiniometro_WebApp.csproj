@@ -354,6 +354,9 @@
     <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TelefonoPersona.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>

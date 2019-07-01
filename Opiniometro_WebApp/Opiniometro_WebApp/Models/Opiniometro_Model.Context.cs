@@ -63,6 +63,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Conformado_For_Sec> Conformado_For_Sec { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     
         public virtual ObjectResult<CursosSegunAnno_Result> CursosSegunAnno(Nullable<short> anno)
         {
