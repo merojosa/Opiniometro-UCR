@@ -32,6 +32,7 @@ namespace Opiniometro_WebApp.Controllers
                 from it in db.Item
                 join confSecItem in db.Conformado_Item_Sec_Form on it.ItemId equals confSecItem.ItemId
                 join sec in db.Seccion on confSecItem.TituloSeccion equals sec.Titulo
+                join opc in db.Opciones_De_Respuestas_Seleccion_Unica on it.ItemId equals opc.ItemId
                 where (confSecItem.CodigoFormulario == codigoForm)
 
                 select new DatosFormulario
