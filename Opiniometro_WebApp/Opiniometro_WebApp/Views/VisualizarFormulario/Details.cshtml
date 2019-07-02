@@ -28,7 +28,7 @@
     {
         <td>
             <h4 style="text-align:left;">
-                <b>Sigla: </b>
+                <b>Sigla:</b>
                 @Html.DisplayFor(modelItem => title.Grupo.SiglaCurso)
 
                 <span style="float:right;">
@@ -119,117 +119,100 @@
 
                                                     @if (seccion.Item.TipoPregunta != 1)
                                                     {
-                                                        <p>Resultados</p> @*Aqui se ingresa el grafico y desde aqui se mostrarian las observaciones posteriormente, acordarse de ponder una condicion si el tipo de pregunta posee grafico o no*@
+                                                        @*Aqui se ingresa el grafico y desde aqui se mostrarian las observaciones posteriormente, acordarse de ponder una condicion si el tipo de pregunta posee grafico o no*@
                                                         //<p>@("graficarResultados('@seccion.Item.ItemId')")</p>
-                                                        <p id="info_@item_actual" style="float:right"></p>
+                                                        <p id="graf_@item_actual" style="float:inherit"></p>
                                                         <div id="contenedorGrafo">
                                                             <canvas id="pie_chart_@item_actual"></canvas>
                                                         </div>
-                                                        //<button id="changeGraph">Change Graph</button>
-                                                        //foreach (var item in Model.Formulario_Respuesta.Take(1))
-                                                        //{
-                                                            <script>
-                                                            //var ctx = $("#pie_chart_@item_actual").get(0).getContext("2d");
-                                                        //var dataT;
-                                                        //var myChart;
-                                                                //'cedulaProfesor': 'item.CedulaProfesor', 'annoGrupo': 'item.Grupo.AnnoGrupo', 'semestreGrupo': 'item.Grupo.SemestreGrupo', 'numeroGrupo': 'item.Grupo.Numero', 'siglaCurso': 'item.Grupo.SiglaCurso', 'itemId': 'seccion.Item.ItemId'  }",
+                                                        <script>
+                                                        $.ajax({
+                                                            type: "POST",
+                                                            url: "/VisualizarFormulario/GraficoPie/?itemId=@seccion.Item.ItemId",
+                                                            data: "{ 'codigoFormulario': '@seccion.CodigoFormulario', 'itemId': '@seccion.Item.ItemId' }",
+                                                            contentType: "application/json; charset=utf-8",
+                                                            dataType: "json",
+                                                            success: function (chData) {
+                                                                var aData = chData;
+                                                                var aLabels = aData[0];
+                                                                var aDatasets1 = aData[1];
 
-                                                            $.ajax({
-                                                                type: "POST",
-                                                                url: "/VisualizarFormulario/GraficoPie",//?itemId=@seccion.Item.ItemId",
-                                                                data: "{ 'codigoFormulario': '@seccion.CodigoFormulario', 'itemId': '@seccion.Item.ItemId' }",
-                                                                contentType: "application/json; charset=utf-8",
-                                                                dataType: "json",
-                                                                success: function (chData) {
-                                                                    var aData = chData;
-                                                                    var aLabels = aData[0];
-                                                                    var aDatasets1 = aData[1];
-                                                                    var tamanio = 0;
-                                                                    for (var data in aDatasets1) {
-                                                                        var valor = parseInt(aDatasets1[data]);
-                                                                        tamanio = tamanio + valor;
-                                                                    }
+                                                                var tamanio = 0;
+                                                                var cantidadOpciones = 0;
+                                                                var promedio = 0;
+
+                                                                for (var data in aDatasets1) {
+                                                                    var valor = parseInt(aDatasets1[data]);
+                                                                    tamanio = tamanio + valor;
+                                                                    cantidadOpciones++;
+                                                                }
+
+                                                                promedio = tamanio / cantidadOpciones;
+
                                                                 //for (var i = 0; i < tamanio; i++)
-                                                                    document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: \n" + (tamanio).toString() + "<br>";
+                                                                document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: " + (tamanio).toString() + " ";
+
+                                                                //Promedio
+                                                                document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Promedio: " + (promedio).toString() + " ";
+                                                                //Mediana
+                                                                //Desviacion Estandar
+
+
                                                                 @*var iter = aLabels;
                                                                 <p>@seccion.Item.ItemId</p>*@
-                                                                    var dataT = {
-                                                                        labels: aLabels,
-                                                                        datasets: [{
-                                                                            label: "Prueba",
-                                                                            data: aDatasets1,
-                                                                            fill: false,
-                                                                            backgroundColor: [
-                                                                                'rgba(255, 99, 132, 0.2)',
-                                                                                'rgba(54, 162, 235, 0.2)',
-                                                                                'rgba(255, 206, 86, 0.2)',
-                                                                                'rgba(75, 192, 192, 0.2)',
-                                                                                'rgba(153, 102, 255, 0.2)',
-                                                                                'rgba(255, 159, 64, 0.2)'
-                                                                            ],
-                                                                            borderColor: [
-                                                                                'rgba(255, 99, 132, 1)',
-                                                                                'rgba(54, 162, 235, 1)',
-                                                                                'rgba(255, 206, 86, 1)',
-                                                                                'rgba(75, 192, 192, 1)',
-                                                                                'rgba(153, 102, 255, 1)',
-                                                                                'rgba(255, 159, 64, 1)'
-                                                                            ],
-                                                                            borderWidth: 1
-                                                                        }]
-                                                                    };
-                                                                    var ctx = $("#pie_chart_@item_actual").get(0).getContext("2d");
-                                                                    if ('@seccion.Item.TipoPregunta' == 2 || '@seccion.Item.TipoPregunta' == 3 || '@seccion.Item.TipoPregunta' == 6) {
-                                                                        var barChart = new Chart(ctx, {
-                                                                            type: 'pie',
-                                                                            data: dataT,
-                                                                            options: {
-                                                                                responsive: true,
-                                                                                maintainAspectRatio: false,
-                                                                                scales: { xaxes: [{ ticks: { beginAtZero: true } }] },
-                                                                                legend: { display: true },
-                                                                            },
-                                                                        })
-                                                                    } else if ('@seccion.Item.TipoPregunta' == 4 || '@seccion.Item.TipoPregunta' == 5) {
-                                                                        var barChart = new Chart(ctx, {
-                                                                            type: 'horizontalBar',
-                                                                            data: dataT,
-                                                                            options: {
-                                                                                responsive: true,
-                                                                                maintainAspectRatio: false,
-                                                                                scales: { xAxes: [{ ticks: { beginAtZero: true } }] },
-                                                                                legend: { display: true },
-                                                                            },
-                                                                        })
-                                                                    }
+                                                                var dataT = {
+                                                                    labels: aLabels,
+                                                                    datasets: [{
+                                                                    label: "Cantidad de Respuestas",
+                                                                        data: aDatasets1,
+                                                                        fill: false,
+                                                                        backgroundColor: [
+                                                                            'rgba(255, 99, 132, 0.2)',
+                                                                            'rgba(54, 162, 235, 0.2)',
+                                                                            'rgba(255, 206, 86, 0.2)',
+                                                                            'rgba(75, 192, 192, 0.2)',
+                                                                            'rgba(153, 102, 255, 0.2)',
+                                                                            'rgba(255, 159, 64, 0.2)'
+                                                                        ],
+                                                                        borderColor: [
+                                                                            'rgba(255, 99, 132, 1)',
+                                                                            'rgba(54, 162, 235, 1)',
+                                                                            'rgba(255, 206, 86, 1)',
+                                                                            'rgba(75, 192, 192, 1)',
+                                                                            'rgba(153, 102, 255, 1)',
+                                                                            'rgba(255, 159, 64, 1)'
+                                                                        ],
+                                                                        borderWidth: 1
+                                                                    }]
+                                                                };
+                                                                var ctx = $("#pie_chart_@item_actual").get(0).getContext("2d");
+                                                                if ('@seccion.Item.TipoPregunta' == 2 || '@seccion.Item.TipoPregunta' == 3 || '@seccion.Item.TipoPregunta' == 6) {
+                                                                    var barChart = new Chart(ctx, {
+                                                                        type: 'pie',
+                                                                        data: dataT,
+                                                                        options: {
+                                                                            responsive: true,
+                                                                            maintainAspectRatio: false,
+                                                                            scales: { xaxes: [{ ticks: { beginAtZero: true } }] },
+                                                                            legend: { display: true },
+
+                                                                        },
+                                                                    })
+                                                                } else if ('@seccion.Item.TipoPregunta' == 4 || '@seccion.Item.TipoPregunta' == 5) {
+                                                                    var barChart = new Chart(ctx, {
+                                                                        type: 'horizontalBar',
+                                                                        data: dataT,
+                                                                        options: {
+                                                                            responsive: true,
+                                                                            maintainAspectRatio: false,
+                                                                            scales: { xAxes: [{ ticks: { beginAtZero: true } }] },
+                                                                            legend: { display: true },
+                                                                        },
+                                                                    })
                                                                 }
-                                                            });
-                                                                //document.getElementById('changeGraph').onclick = function () {
-                                                                //    var typeGrah = myChart.type;
-                                                                //    myChart.destroy();
-                                                                //    if (typeGrah == 'pie') {
-                                                                //        myChart = new Chart(ctx, {
-                                                                //            type: 'horizontalBar',
-                                                                //            data: dataT
-                                                                //        });
-                                                                //    } else {
-                                                                //        myChart = new Chart(ctx, {
-                                                                //            type: 'pie',
-                                                                //            data: dataT
-                                                                //        });
-                                                                //    }
-                                                                //};
-                                                            </script>
-                                                            @*<script>
-                                                                    document.getElementById('changeGraph').onclick = function () {
-                                                                        myChart.destroy();
-                                                                        myChart = new Chart(ctx, {
-                                                                            type: 'line',
-                                                                            data: chartData
-                                                                        });
-                                                                    };
-                                                                </script>*@
-                                                        //}
+                                                            }
+                                                        });
+                                                        </script>
                                                     }
                                                     else
                                                     {
@@ -245,6 +228,8 @@
                                                     }
                                                     <br />
                                                     <div class="panel-group" id="accordion3_@seccion_counter">
+
+
 
                                                         @if (seccion.Item.TieneObservacion == observation)
                                                         {
@@ -282,7 +267,8 @@
                                                                                                     document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + " ";
 
                                                                                                 } else if ('@perfil_actual' != "Admin"){
-                                                                                                     document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " " ;
+                                                                                                    document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " ";
+
                                                                                                 }
                                                                                                 // Si no se acomodan las observaciones se bloquea el collapse de mostrar observaciones
                                                                                             }
