@@ -22,6 +22,8 @@ namespace Opiniometro_WebApp.Controllers.Servicios
         public const int VER_SECCIONES = 206;
         public const int VER_ITEMS = 207;
         public const int INSERTAR_FORMULARIO = 208;
+        public const int ELIMINAR_PERFILES = 209;
+        public const int CREAR_PERFIL = 210;
 
         // 301-400: JOFFI
 

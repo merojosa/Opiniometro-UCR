@@ -28,7 +28,7 @@
     {
         <td>
             <h4 style="text-align:left;">
-                <b>Sigla: </b>
+                <b>Sigla:</b>
                 @Html.DisplayFor(modelItem => title.Grupo.SiglaCurso)
 
                 <span style="float:right;">
@@ -80,12 +80,12 @@
 
             @*Se ocupa poner una restriccion para no mostrar seciones repetidas*@
 
-        if (secciones.Contains(seccion_actual)) { seccion_repetida = true; }
-        else { secciones.Add(seccion_actual); seccion_repetida = false; }
+            if (secciones.Contains(seccion_actual)) { seccion_repetida = true; }
+            else { secciones.Add(seccion_actual); seccion_repetida = false; }
 
 
-        if (seccion_repetida == false)
-        {
+            if (seccion_repetida == false)
+            {
 
                 <div class="panel panel-default ">
                     <div class="panel-heading">
@@ -119,17 +119,17 @@
 
                                                     @if (seccion.Item.TipoPregunta != 1)
                                                     {
-                                                            @*Aqui se ingresa el grafico y desde aqui se mostrarian las observaciones posteriormente, acordarse de ponder una condicion si el tipo de pregunta posee grafico o no*@
+                                                        @*Aqui se ingresa el grafico y desde aqui se mostrarian las observaciones posteriormente, acordarse de ponder una condicion si el tipo de pregunta posee grafico o no*@
                                                         //<p>@("graficarResultados('@seccion.Item.ItemId')")</p>
-                                                            <p id="graf_@item_actual" style="float:inherit"></p>
-                                                            <div id="contenedorGrafo">
-                                                                <canvas id="pie_chart_@item_actual"></canvas>
-                                                            </div>
-                                                            <script>
+                                                        <p id="graf_@item_actual" style="float:inherit"></p>
+                                                        <div id="contenedorGrafo">
+                                                            <canvas id="pie_chart_@item_actual"></canvas>
+                                                        </div>
+                                                        <script>
                                                         $.ajax({
                                                             type: "POST",
                                                             url: "/VisualizarFormulario/GraficoPie/?itemId=@seccion.Item.ItemId",
-                                                            //data{ itemId: @seccion.Item.ItemId },
+                                                            data: "{ 'codigoFormulario': '@seccion.CodigoFormulario', 'itemId': '@seccion.Item.ItemId' }",
                                                             contentType: "application/json; charset=utf-8",
                                                             dataType: "json",
                                                             success: function (chData) {
@@ -138,21 +138,32 @@
                                                                 var aDatasets1 = aData[1];
 
                                                                 var tamanio = 0;
+                                                                var cantidadOpciones = 0;
+                                                                var promedio = 0;
 
                                                                 for (var data in aDatasets1) {
                                                                     var valor = parseInt(aDatasets1[data]);
                                                                     tamanio = tamanio + valor;
+                                                                    cantidadOpciones++;
                                                                 }
 
+                                                                promedio = tamanio / cantidadOpciones;
 
                                                                 //for (var i = 0; i < tamanio; i++)
-                                                                document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: \n" + (tamanio).toString() + "<br>";
+                                                                document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: " + (tamanio).toString() + " ";
+
+                                                                //Promedio
+                                                                document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Promedio: " + (promedio).toString() + " ";
+                                                                //Mediana
+                                                                //Desviacion Estandar
+
+
                                                                 @*var iter = aLabels;
                                                                 <p>@seccion.Item.ItemId</p>*@
                                                                 var dataT = {
                                                                     labels: aLabels,
                                                                     datasets: [{
-                                                                    label: "Prueba",
+                                                                    label: "Cantidad de Respuestas",
                                                                         data: aDatasets1,
                                                                         fill: false,
                                                                         backgroundColor: [
@@ -201,7 +212,7 @@
                                                                 }
                                                             }
                                                         });
-                                                            </script>
+                                                        </script>
                                                     }
                                                     else
                                                     {
@@ -256,7 +267,8 @@
                                                                                                     document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + " ";
 
                                                                                                 } else if ('@perfil_actual' != "Admin"){
-                                                                                                     document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " " ;
+                                                                                                    document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " ";
+
                                                                                                 }
                                                                                                 // Si no se acomodan las observaciones se bloquea el collapse de mostrar observaciones
                                                                                             }
