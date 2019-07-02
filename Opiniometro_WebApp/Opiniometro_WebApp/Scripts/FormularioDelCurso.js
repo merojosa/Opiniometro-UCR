@@ -31,7 +31,7 @@ function TextoLibre(contTextoLibre) {
     var elemento = document.createElement("textarea");
     elemento.rows = "5";
     elemento.cols = "50";
-    elemento.maxLength = "160";
+    elemento.maxLength = "160";   
     contenido.appendChild(elemento);
 }
 
@@ -47,7 +47,9 @@ function seleccionUnica(contSelUnica/*,listaOpciones*/) {
 //modifica: vista en las preguntas que tienen si o no
 //retorna--
 function RespondeSiNo(contSiNo) {
-
+    var x = document.createElement("INPUT");
+    x.setAttribute("type", "radio");
+    contenido.appendChild(x);
 }
 
 
