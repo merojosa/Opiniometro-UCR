@@ -1,4 +1,5 @@
-﻿@model Opiniometro_WebApp.Models.FormularioCursoModel
+﻿
+@model Opiniometro_WebApp.Models.FormularioPorCurso
 
 @{
     ViewBag.Title = "Index";
@@ -10,30 +11,96 @@
 <head>
     <meta charset="utf-8" />
     <script src="~/Scripts/FormularioDelCurso.js"></script>
+
 </head>
 <body>
-    <table id="tabla-preguntasFormulario" class="table table-sm table-hover" cellspacing="0" width="100">
-        <tr>
-            <th align='left'>
-                Pregunta
-            </th>
-        </tr>
-        @*Despliega la opcion correspondiente para respoder la pregunta*@
+    @*contadores usados para darle un id unico a los div que contiene el tipo de respuesta*@
+    <script>
+        contTextoLibre = 0;
+        contSelUnica = 0;
+        contSiNo = 0;
+        contSelMult = 0;
+        contEscalar = 0;
+        contEstrella = 0;
+    </script>
 
-        @foreach (var item in Model.preguntasFormulario)
+    <table> <tr> <th> <h3><u>Preguntas de Formulario</u> </h3> <br />  </th> </tr> </table> <br /><br />
+
+    @foreach (var dato in Model.preguntasFormulario)
+    {
+        if (dato.tipoPregunta == 1)
         {
-            <tr id="campoTexto">
-                <td>
-                    @Html.DisplayFor(modelItem => item.item)
-                    <script>
-                        escogerTipoRespuesta(1, true)
-                    </script>
-                    @{ Html.RenderPartial("SeleccionMultiple"); }
-                    <br />
-                </td>
-            </tr>
+            <div id="preguntaTextoLibre"> </div>
+
+
+            <script type="text/javascript">
+                crearElemento("campoTexto", contTextoLibre, "@dato.item" , "preguntaTextoLibre");
+                insertNueLinea("campoTexto".concat(contTextoLibre));
+                TextoLibre(contTextoLibre);
+                lineaHor("campoTexto".concat(contTextoLibre));
+                contTextoLibre++;
+            </script>
         }
-    </table>
+
+        if (dato.tipoPregunta == 2)
+        {
+            <div id="preguntaSelUnica"> </div>
+
+            <script>
+                crearElemento("selUnica", contSelUnica, "@dato.item", "preguntaSelUnica");
+                insertNueLinea("selUnica".concat(contSelUnica));
+                seleccionUnica(contSelUnica/*,listaOpciones*/);
+                lineaHor("selUnica".concat(contSelUnica));
+                contSelUnica++;
+            </script>
+
+            //Campo de observacion de la opcion de seleccion unica
+            @*if (dato.tieneObservacion == true) {
+                    <script>
+                        TextoLibre();
+                    </script>
+                }*@
+        }
+
+        if (dato.tipoPregunta == 3)
+        {
+            <div id="preguntaSiNo"> </div>
+
+            <script>
+                crearElemento("SiNo", contSiNo, "@dato.item", "preguntaSiNo");
+                insertNueLinea("SiNo".concat(contSiNo));
+                RespondeSiNo(contSiNo);
+                lineaHor("SiNo".concat(contSiNo));
+                contSiNo++;
+            </script>
+
+            //Campo de observacion de la opcion de respuesta Si-No
+            @*if (dato.tieneObservacion == true) {
+                    <script>
+                        TextoLibre();
+                    </script>
+                }*@
+        }
+
+        @*    if (dato.tipoPregunta == 4)
+            {
+                 <div id="preguntaSelMultiple"> </div>
+
+            }
+
+            if (dato.tipoPregunta == 5)
+            {
+                  <div id="preguntaEscalar"> </div>
+
+            }
+
+            if (dato.tipoPregunta == 6)
+            {
+                 <div id="preguntaEstrella"> </div>
+
+            }*@
+
+    }
 
 </body>
 </html>
