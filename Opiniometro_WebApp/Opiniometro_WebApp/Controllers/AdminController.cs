@@ -96,21 +96,11 @@ namespace Opiniometro_WebApp.Controllers
         {
             try
             {
-                if ((per.Persona.Cedula != null) && (per.Persona.Cedula != null) && (per.Persona.Nombre != null) && (per.Persona.Apellido1 != null) && (per.Persona.Apellido2 != null)
-                    && (per.usuario.CorreoInstitucional != null) && (per.Persona.Direccion != null) 
-                    && (per.Persona.Cedula.Length == 9) && (per.Persona.Nombre.Length <= 50) && (per.Persona.Apellido1.Length <= 50) && (per.Persona.Apellido2.Length <= 50)
-                    && (per.usuario.CorreoInstitucional.Length <= 100) && (per.Persona.Direccion.Length <= 256))
+                using (db)
                 {
-                    using (db)
-                    {
-                        db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre, per.Persona.Apellido1, per.Persona.Apellido2, per.usuario.CorreoInstitucional, per.Persona.Direccion);
-                    }
+                    db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre, per.Persona.Apellido1, per.Persona.Apellido2, per.usuario.CorreoInstitucional, per.Persona.Direccion);
+                    return RedirectToAction("VerPersonas");
                 }
-                else
-                {
-                    //Mensaje de error
-                }
-                return RedirectToAction("VerPersonas");
             }
             catch (Exception)
             {
