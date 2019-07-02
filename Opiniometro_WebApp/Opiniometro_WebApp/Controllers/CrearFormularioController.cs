@@ -22,11 +22,51 @@ namespace Opiniometro_WebApp.Controllers
             {
                 Secciones = db.Seccion.ToList(),
                 Items = db.Item.ToList(),
-                Formulario = db.Formulario.Find(codForm)// le pasamos
-                
-            };
+                Formulario = db.Formulario.Find(codForm),// le pasamos
+                Conformados = db.Conformado_Item_Sec_Form
+                    .Where(m => m.CodigoFormulario == codForm)
+                    .OrderBy(m => m.TituloSeccion)
+                    .ThenBy(m => m.Orden_Item)
+                    .ToList()
+
+        };
             
             return View(crearFormulario);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public PartialViewResult AgregarConformado(Conformado_Item_Sec_Form conformado)
+        {
+           
+           
+            if (ModelState.IsValid)
+            {
+                List<Conformado_Item_Sec_Form> conf = db.Conformado_Item_Sec_Form.Where(m => m.ItemId == conformado.ItemId && m.TituloSeccion == conformado.TituloSeccion && m.CodigoFormulario == conformado.CodigoFormulario).ToList();
+                if (conf.Count == 0)
+                {
+                    db.Conformado_Item_Sec_Form.Add(conformado);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return null;
+                }                
+            }
+            List<Conformado_Item_Sec_Form> conformados =
+                    db.Conformado_Item_Sec_Form
+                    .Include("Item")
+                    .Where(m => m.CodigoFormulario == conformado.CodigoFormulario && m.TituloSeccion == conformado.TituloSeccion)
+                    .OrderBy(m => m.Orden_Item)
+                    .ToList();
+            return PartialView("ConformadoVParcial", conformados);
+
+        }
+
+        [HttpGet]
+        public JsonResult GetConformados()
+        {
+            return Json(db.Conformado_Item_Sec_Form.First().Seccion, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SeccionesAsignadas(string CodForm)
@@ -50,6 +90,17 @@ namespace Opiniometro_WebApp.Controllers
         {
             List<Seccion> secciones = db.Seccion.ToList();
             return PartialView(secciones);
+        }
+        // Metodo para poder validar si un numero esta disponible. 
+        public JsonResult IsOrden_ItemAvailable(int Orden_Item)
+        {
+            return Json(!db.Conformado_Item_Sec_Form.Any(pregunta => pregunta.Orden_Item == Orden_Item), JsonRequestBehavior.AllowGet);
+
+        }
+        public JsonResult IsOrden_SeccionAvailable(int Orden_Seccion)
+        {
+            return Json(!db.Conformado_Item_Sec_Form.Any(pregunta => pregunta.Orden_Seccion == Orden_Seccion), JsonRequestBehavior.AllowGet);
+
         }
     }
 }

@@ -1,45 +1,37 @@
-﻿@using Opiniometro_WebApp.Controllers.Servicios
-
-@{
+﻿@{
     ViewBag.Title = "Inicio de sesión";
 }
 
 
 <!--Login-->
-<div align="center">
+<div align="center" style="padding-right:100px">
     <h1>Opiniómetro@UCR</h1>
     @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
     {
         <div class="login-container">
             <div class="row">
-                <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default" style="width: 400px ">
+                    <h3>Ingreso al Sistema</h3>
+                    <div class="panel-body">
+                        <div class="input-group" style="width:250px">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                            <input name="CorreoInstitucional" type="email" class="form-control" placeholder="Correo institucional">
+                        </div>
+                        <br />
+                        <div class="input-group" style="width:250px">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+                            <input type="password" class="form-control" name="Contrasena" placeholder="Contraseña">
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <input type="submit" value="Ingresar" name="Ingresar" class = "btn btn-default" />
+                        </div>
 
-                    <div class="panel panel-default" style="width: 400px ">
-
-                        <h3>Ingreso al Sistema</h3>
-                        <div class="panel-body">
-                            <div>
-                                <form>
-                                    <div class="input-group" style="width:250px">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                        <input name="CorreoInstitucional" type="email" class="form-control" placeholder="Correo institucional">
-                                    </div>
-                                    <br />
-                                    <div class="input-group" style="width:250px">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
-                                        <input type="password" class="form-control" name="Contrasena" placeholder="Contraseña">
-                                    </div>
-                                    <br />
-                                    <div class="form-group">
-                                        <input type="submit" value="Ingresar" name="Ingresar" />
-                                    </div>
-
-                                    <div class="form-group">
-                                        @Html.ActionLink("¿Olvidó su contraseña?", "Recuperar")
-                                    </div>
-                                    @Html.ValidationSummary(true, "Correo o contraseña inválidos", htmlAttributes: new { @class = "login-error" })
-                                </form>
-                            </div>
+                        <div class="form-group">
+                            @Html.ActionLink("¿Olvidó su contraseña?", "Recuperar")
+                        </div>
+                        <div class="login-error">
+                            @Html.ValidationMessage("ErrorLogin")
                         </div>
                     </div>
                 </div>

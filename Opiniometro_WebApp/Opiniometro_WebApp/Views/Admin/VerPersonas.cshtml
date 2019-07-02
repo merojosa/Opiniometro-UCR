@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Opiniometro_WebApp.Models.Persona>
+﻿
 
 @{
     ViewBag.Title = "VerPersonas";
@@ -10,57 +10,65 @@
 {
     <p>
         <div class="form-group, form-inline">
-            @Html.TextBox("cedula")
+            @Html.TextBox("nom")
             <input type="submit" value="Buscar" class="btn btn-default" />
         </div>
-     </p>
+    </p>
 }
-    <table class="table">
+<table class="table">
+    <tr>
+        <th>
+
+            Cédula
+        </th>
+        <th>
+            Nombre
+        </th>
+        <th>
+
+            Primer apellido
+        </th>
+        <th>
+
+            Segundo apellido
+        </th>
+        <th>
+
+            Correo Institucional
+        </th>
+        <th>
+
+            Dirección
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
         <tr>
-            <th>
-                <!--@Html.DisplayNameFor(model => model.Cedula)-->
-                Cédula
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                <!--@Html.DisplayNameFor(model => model.Apellido1)-->
-                Primer apellido
-            </th>
-            <th>
-                <!--@Html.DisplayNameFor(model => model.Apellido2)-->
-                Segundo apellido
-            </th>
-            <th>
-                <!--@Html.DisplayNameFor(model => model.Direccion)-->
-                Dirección
-            </th>
-            <th></th>
+            <td>
+                @item.persona.Cedula
+            </td>
+            <td>
+                @item.persona.Nombre
+            </td>
+            <td>
+                @item.persona.Apellido1
+            </td>
+            <td>
+                @item.persona.Apellido2
+            </td>
+            <td>
+                @item.usuario.CorreoInstitucional
+            </td>
+            <td>
+                @item.persona.Direccion
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Editar", new { id = item.persona.Cedula }, new { @class = "btn btn-default" })
+         
+            </td>
         </tr>
+    }
 
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cedula)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellido1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellido2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Direccion)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Editar", new { id = item.Cedula })
-            </td>
-        </tr> 
-        }
-
-    </table>
+</table>

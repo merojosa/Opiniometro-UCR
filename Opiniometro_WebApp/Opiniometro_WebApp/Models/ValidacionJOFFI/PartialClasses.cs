@@ -25,4 +25,16 @@ namespace Opiniometro_WebApp.Models
     public partial class Item
     {
     }
+
+    [MetadataType(typeof(CrearFormularioMetadata))]
+    public partial class CrearFormulario
+    {
+
+    }
+
+    // The Strategists.
+    [MetadataType(typeof(PerfilMetadata))]
+    public partial class Perfil
+    {
+    }
 }

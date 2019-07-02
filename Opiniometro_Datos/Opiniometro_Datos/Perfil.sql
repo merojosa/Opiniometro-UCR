@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Perfil]
 (
-	[Id]	VARCHAR(10)	NOT NULL, 
-	[Tipo]	VARCHAR(30)	NOT NULL,
+	[Nombre]	VARCHAR(30)	NOT NULL, 
+	[Descripcion]	VARCHAR(80)	NOT NULL,
 	CONSTRAINT PK_Perfil
-		PRIMARY KEY (Id)
+		PRIMARY KEY ([Nombre])
 )

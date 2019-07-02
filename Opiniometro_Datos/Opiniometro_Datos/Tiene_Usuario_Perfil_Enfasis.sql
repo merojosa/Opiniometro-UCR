@@ -3,18 +3,24 @@
 	[CorreoInstitucional] NVARCHAR(50) NOT NULL, 
     [NumeroEnfasis] TINYINT NOT NULL, 
     [SiglaCarrera] NVARCHAR(10) NOT NULL, 
-    [IdPerfil] VARCHAR(10) NOT NULL,
+    [NombrePerfil] VARCHAR(30) NOT NULL,
 
-	CONSTRAINT PK_Tiene_Usuario_Perfil_Enfasis PRIMARY KEY ([CorreoInstitucional], [NumeroEnfasis], [SiglaCarrera], [IdPerfil]),
+	CONSTRAINT PK_Tiene_Usuario_Perfil_Enfasis PRIMARY KEY ([CorreoInstitucional], [NumeroEnfasis], [SiglaCarrera], [NombrePerfil]),
 
 	CONSTRAINT FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis FOREIGN KEY (CorreoInstitucional)
-	REFERENCES Usuario(CorreoInstitucional),
+	REFERENCES Usuario(CorreoInstitucional)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
 
 	CONSTRAINT FK_NumeroEnfasis_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis FOREIGN KEY (NumeroEnfasis, SiglaCarrera)
-	REFERENCES Enfasis(Numero, SiglaCarrera),
+	REFERENCES Enfasis(Numero, SiglaCarrera)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
 
-	CONSTRAINT FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis FOREIGN KEY (IdPerfil)
-	REFERENCES Perfil(Id)
+	CONSTRAINT FK_IdPerfil_SiglaCarrera_Tiene_Usuario_Perfil_Enfasis FOREIGN KEY ([NombrePerfil])
+	REFERENCES Perfil([Nombre])
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 
 )
 
