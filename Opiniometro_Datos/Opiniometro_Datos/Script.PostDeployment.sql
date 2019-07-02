@@ -139,6 +139,7 @@ AS
 BEGIN
 	IF(UPDATE(Nombre) OR UPDATE(Apellido1) OR UPDATE(Apellido2) OR UPDATE(Direccion))
 	BEGIN
+		DECLARE @CedulaBusqueda		CHAR(10)
 		DECLARE @Cedula				CHAR(10)
 		DECLARE @Nombre				NVARCHAR(51)
 		DECLARE @Apellido1			NVARCHAR(51)
@@ -157,6 +158,7 @@ BEGIN
 			BEGIN
 				UPDATE Persona
 				SET Cedula = @Cedula, Nombre = @Nombre, Apellido1 = @Apellido1, Apellido2 = @Apellido2, Direccion = @Direccion
+				WHERE Cedula = @CedulaBusqueda;
 			END
 			ELSE
 			BEGIN
@@ -172,37 +174,39 @@ BEGIN
 END;
 
 --Trigger de validación de modificar Usuario
-IF OBJECT_ID('TR_ValidacionModificarUsuario') IS NOT NULL
-	DROP TRIGGER TR_ValidacionModificarUsuario
-GO
-CREATE TRIGGER TR_ValidacionModificarUsuario
-ON Usuario INSTEAD OF UPDATE
-AS
-BEGIN
-	IF(UPDATE(CorreoInstitucional))
-	BEGIN
-		DECLARE @Correo				NVARCHAR(101)
+--IF OBJECT_ID('TR_ValidacionModificarUsuario') IS NOT NULL
+--	DROP TRIGGER TR_ValidacionModificarUsuario
+--GO
+--CREATE TRIGGER TR_ValidacionModificarUsuario
+--ON Usuario INSTEAD OF UPDATE
+--AS
+--BEGIN
+--	IF(UPDATE(CorreoInstitucional))
+--	BEGIN
+--		DECLARE @CedulaBusqueda		CHAR(10)
+--		DECLARE @Correo				NVARCHAR(101)
+--
+--		SET @Correo				= (SELECT CorreoInstitucional FROM inserted)
 
-		SET @Correo				= (SELECT Correo FROM inserted)
-
-		BEGIN TRY
-			IF((@correo IS NOT NULL) AND (@correo LIKE '%@ucr.ac.cr') AND (LEN(Correo) <= 100))
-			BEGIN
-				UPDATE Usuario
-				SET Correo = @Correo
-			END
-			ELSE
-			BEGIN
-				RAISERROR('El correo no puede estar vacío y debe ser del tipo "nombre@ucr.ac.cr".', 16, 1)  
-				RETURN  
-			END
-		END TRY
-
-		BEGIN CATCH
-			PRINT 'ERROR: ' + ERROR_MESSAGE();
-		END CATCH
-	END
-END;
+--		BEGIN TRY
+--			IF((@correo IS NOT NULL) AND (@correo LIKE '%@ucr.ac.cr') AND (LEN(@Correo) <= 100))
+--			BEGIN
+--				UPDATE Usuario
+--				SET CorreoInstitucional = @Correo
+--				WHERE Cedula = @CedulaBusqueda;
+--			END
+--			ELSE
+--			BEGIN
+--				RAISERROR('El correo no puede estar vacío y debe ser del tipo "nombre@ucr.ac.cr".', 16, 1)  
+--				RETURN  
+--			END
+--		END TRY
+--
+--		BEGIN CATCH
+--			PRINT 'ERROR: ' + ERROR_MESSAGE();
+--		END CATCH
+--	END
+--END;
 
 IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
