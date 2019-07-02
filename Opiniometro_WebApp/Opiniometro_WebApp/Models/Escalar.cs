@@ -17,8 +17,8 @@ namespace Opiniometro_WebApp.Models
         public string ItemId { get; set; }
         public short Inicio { get; set; }
         public short Fin { get; set; }
-        public Nullable<bool> IsaEstrella { get; set; }
         public short Incremento { get; set; }
+        public Nullable<bool> IsaEstrella { get; set; }
     
         public virtual Item Item { get; set; }
     }
