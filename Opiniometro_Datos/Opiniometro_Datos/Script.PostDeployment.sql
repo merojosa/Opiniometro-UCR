@@ -758,16 +758,50 @@ CREATE TRIGGER TR_InsertaUsuario
 ON Usuario INSTEAD OF INSERT
 AS
 BEGIN
-	DECLARE @correoInstitucional NVARCHAR(50)
-	DECLARE @cedula CHAR(9)
+	DECLARE @correoInstitucional NVARCHAR(51)
+	DECLARE @cedula CHAR(10)
 
 	SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
 	SET @cedula					= (SELECT Cedula FROM inserted)
 
-	IF((@correoInstitucional LIKE '%@ucr.ac.cr') AND (@correoInstitucional NOT LIKE '') AND (@cedula NOT LIKE '') AND (LEN(@correoInstitucional) <= 50))
+	IF((@correoInstitucional LIKE '%@ucr.ac.cr') AND (@correoInstitucional NOT LIKE '') AND (@cedula NOT LIKE '') AND (LEN(@correoInstitucional) <= 50) AND  (LEN(@cedula) = 9))
 	BEGIN
 		INSERT INTO Usuario (Cedula, CorreoInstitucional)
 		VALUES (@cedula, @correoInstitucional)
+	END
+	ELSE
+	BEGIN
+		RAISERROR('Hay campos no pueden estar vacíos o exceder el tamaño adecuado', 16, 1)
+		RETURN
+	END
+END;
+
+GO
+CREATE TRIGGER TR_InsertaPersona
+ON Usuario INSTEAD OF INSERT
+AS
+BEGIN
+	DECLARE @cedula CHAR(10)
+	DECLARE @nombre1 NVARCHAR(51)
+	DECLARE @nombre2 NVARCHAR(51)
+	DECLARE @apellido1 NVARCHAR(51)
+	DECLARE @apellido2 NVARCHAR(51)
+
+
+	SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
+	SET @cedula					= (SELECT Cedula FROM inserted)
+
+	IF((@cedula NOT LIKE '') AND  (LEN(@cedula) = 9) AND (@nombre1 NOT LIKE '') AND (LEN(@nombre1) <= 50) 
+	AND  (LEN(@nombre2) <= 50)  AND (@apellido1 NOT LIKE '') AND (LEN(@apellido1) <= 50)  
+	AND (@apellido2 NOT LIKE '') AND (LEN(@apellido2) <= 50))
+	BEGIN
+		INSERT INTO PerPersona(Cedula, nombre1, nombre2, apellido1, apellido2)
+		VALUES (@cedula, @nombre1, @nombre2, @apellido1, @apellido2)
+	END
+	ELSE
+	BEGIN
+		RAISERROR('Hay campos no pueden estar vacíos o exceder el tamaño adecuado', 16, 1)
+		RETURN
 	END
 END;
 
