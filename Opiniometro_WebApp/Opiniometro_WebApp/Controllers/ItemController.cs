@@ -96,10 +96,10 @@ namespace Opiniometro_WebApp.Controllers
 
             ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID", item.ItemId);
             ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
-            return View(item);
+            return View("Create", item);
         }
 
-        // Método secundario del Crear para cuando se selecciona el tipo pregunta Selección Única.
+        // Método mejorado del Crear para cuando se selecciona el tipo pregunta Selección Única.
         /*[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria,EtiquetaObservacion")] Item item, string[] DynamicTextBox)
@@ -108,31 +108,22 @@ namespace Opiniometro_WebApp.Controllers
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             ViewBag.Values = serializer.Serialize(DynamicTextBox);
 
-            // Uso del procedimiento almacenado para insertar en una sección.
-            db.SP_Insertar_Seccion
-
-            // Ciclo que itera en los valores de los TextBox dinámicos.
-            foreach (string textboxValue in DynamicTextBox)
+            if (ModelState.IsValid)
             {
-                // Inserta los valores de los TextBox dinámicos en la tabla de la Base de Datos.
-                string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-                using (SqlConnection con = new SqlConnection(constr))
-                {
-                    // Uso del procedimiento almacenado para insertar en las opciones de respuesta de selección única.
-                    db.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica
+                db.Item.Add(item);
+                db.SaveChanges();
 
-                    using (SqlCommand cmd = new SqlCommand("INSERT INTO Names(Name) VALUES(@Name)"))
-                    {
-                        cmd.Connection = con;
-                        cmd.Parameters.AddWithValue("@Name", textboxValue);
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                    }
+                // Uso del procedimiento almacenado para insertar en una sección.
+                db.SP_Insertar_Seleccion_Unica(item.ItemId, false);
+
+                // Uso del procedimiento almancenado para insertar todas las opciones de respuesta en la tabla Selección Única.
+                for (short index = 0; index < DynamicTextBox.Length; ++index)
+                {
+                    db.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica(item.ItemId, index, DynamicTextBox[index]);
                 }
             }
 
-            return View(item);
+            return View("Create", item);
         }*/
 
         //EFE:
