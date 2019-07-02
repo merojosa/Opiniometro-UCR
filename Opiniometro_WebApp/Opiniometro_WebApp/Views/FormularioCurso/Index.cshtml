@@ -24,7 +24,7 @@
         contEstrella = 0;
     </script>
 
-    <table> <tr> <th> Preguntas <br />  </th> </tr> </table>
+    <table> <tr> <th> <h3><u>Preguntas de Formulario</u> </h3> <br />  </th> </tr> </table> <br /><br />
 
     @foreach (var dato in Model.preguntasFormulario)
     {
@@ -32,9 +32,12 @@
         {
             <div id="preguntaTextoLibre"> </div>
 
-            <script>
-                crearElemento("campoTexto", contTextoLibre, "Esta es una pregunta de T.L del formulario"/*aqui va el valor devuelto por dato.item*/, "preguntaTextoLibre");
+
+            <script type="text/javascript">
+                crearElemento("campoTexto", contTextoLibre, "@dato.item" , "preguntaTextoLibre");
+                insertNueLinea("campoTexto".concat(contTextoLibre));
                 TextoLibre(contTextoLibre);
+                lineaHor("campoTexto".concat(contTextoLibre));
                 contTextoLibre++;
             </script>
         }
@@ -44,8 +47,10 @@
             <div id="preguntaSelUnica"> </div>
 
             <script>
-                crearElemento("selUnica", contSelUnica, "Esta es una pregunta de S.U del formulario", "preguntaSelUnica");
+                crearElemento("selUnica", contSelUnica, "@dato.item", "preguntaSelUnica");
+                insertNueLinea("selUnica".concat(contSelUnica));
                 seleccionUnica(contSelUnica/*,listaOpciones*/);
+                lineaHor("selUnica".concat(contSelUnica));
                 contSelUnica++;
             </script>
 
@@ -62,8 +67,10 @@
             <div id="preguntaSiNo"> </div>
 
             <script>
-                crearElemento("SiNo", contSiNo, "Esta es una pregunta de si/no del formulario", "preguntaSiNo");
+                crearElemento("SiNo", contSiNo, "@dato.item", "preguntaSiNo");
+                insertNueLinea("SiNo".concat(contSiNo));
                 RespondeSiNo(contSiNo);
+                lineaHor("SiNo".concat(contSiNo));
                 contSiNo++;
             </script>
 

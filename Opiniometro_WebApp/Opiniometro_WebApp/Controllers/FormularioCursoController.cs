@@ -57,7 +57,8 @@ namespace Opiniometro_WebApp.Controllers
                 }
             );
          */
-        public void GuardarRespuestas (string CedulaEstudiante, string CedulaProfesor, string Grupo, string CodigoFormulario, string FechaRespuestas, string Respuestas)
+        public void GuardarRespuestas (string CedulaEstudiante, string CedulaProfesor, string Grupo, 
+            string CodigoFormulario, string FechaRespuestas, string Respuestas)
         {
             var cedulaEst = JsonConvert.DeserializeObject<string>(CedulaEstudiante);
             var cedulaProf = JsonConvert.DeserializeObject<string>(CedulaProfesor);
