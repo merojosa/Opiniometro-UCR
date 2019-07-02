@@ -547,9 +547,9 @@ VALUES  ('PRE303', 'Sí', 1),
 		('PRE606', 'NS/NR', 4);
 
 --Item-Escalar
-INSERT INTO Escalar (ItemId, Inicio, Fin, IsaEstrella)
-VALUES	('PRE707', 0, 10, 0),
-		('PRE808', 1, 5, 1);
+INSERT INTO Escalar (ItemId, Inicio, Fin, Incremento, IsaEstrella)
+VALUES	('PRE707', 0, 10, 1, 0),
+		('PRE808', 1, 5, 1, 1);
 
 --Item-Seleccion Multiple
 INSERT INTO Seleccion_Multiple (ItemId)
