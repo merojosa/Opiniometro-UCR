@@ -4,6 +4,9 @@
     ViewBag.Title = "Detalles";
 }
 
+@using (Html.BeginForm("ObtenerPerfilBorrar", "Perfil", FormMethod.Post))
+{
+
 <h2>Detalles</h2>
 
 <div>
@@ -32,7 +35,9 @@
 
 <br>
 <p>
-    <div style="margin-left:350px;">
+    <div style="margin-left:200px;">
+        @Html.ActionLink("Editar", "Editar", "Perfil", new { nombre = Model.Nombre }, new { @class = "btn btn-default" })
         @Html.ActionLink("Cancelar", "VerPerfiles", "Perfil", "", new { @class = "btn btn-default" })
         </div>
 </p>
+}

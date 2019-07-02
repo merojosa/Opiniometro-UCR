@@ -22,7 +22,25 @@ namespace Opiniometro_WebApp.Controllers
         {
             return View(db.Perfil.Find(nombre));
         }
+
+        public ActionResult Editar(String nombre)
+        {
+            return View(db.Perfil.Find(nombre));
+        }
+
+        [HttpPost]
+        public ActionResult Editar([Bind(Include = "Nombre,Descripcion")] Perfil perfil)
+        {
+            if (perfil.Nombre != "Administrador")
+            {
+                return RedirectToAction("VerPerfiles", "Perfil");
+            }
+            else {
+                return RedirectToAction("VerPerfiles", "Perfil");
+            }
             
+        }
+
 
 
         public ActionResult VerPerfiles(String nom)

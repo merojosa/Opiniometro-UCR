@@ -14,9 +14,15 @@
     </p>
 }
 <br>
+
+    @Html.ActionLink("Crear perfil", "Crear", "Perfil", "", new { @class = "btn btn-default" })
+
+    @Html.ActionLink("Borrar perfil", "Borrar", "Perfil", "", new { @class = "btn btn-default", @style = "margin-left: 5px"})
+
 <br>
 <br>
-    <div style="margin-left:80px; width: 600px ">
+<br>
+    <div style="width: 600px ">
         <table class="table">
             <tr>
                 <th>
@@ -37,7 +43,8 @@
 
                 <td>
 
-                    @Html.ActionLink("Detalles", "Detalles", "Perfil", new { nombre = item.Nombre }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Detalles", "Detalles", "Perfil", new { nombre = item.Nombre }, new { @class = "btn btn-default"})
+                    @Html.ActionLink("Editar", "Editar", "Perfil", new { nombre = item.Nombre }, new { @class = "btn btn-default", @style = "margin-left: 5px" })
 
 
                 </td>
