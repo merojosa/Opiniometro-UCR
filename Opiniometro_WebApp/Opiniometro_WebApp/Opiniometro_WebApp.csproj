@@ -236,6 +236,7 @@
     <Compile Include="Models\C__RefactorLog.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DatosEstudiante.cs" />
     <Compile Include="Models\DatosEstudiante_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -276,6 +277,7 @@
     <Compile Include="Models\Matricula.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\MostrarEstudiantes_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -297,6 +299,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\Perfil.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
