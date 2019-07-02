@@ -294,7 +294,7 @@ namespace Opiniometro_WebApp.Controllers
             string contrasenaCifrada = resultadoHash.ToString();
             filaNueva["Contrasena"] = contrasenaCifrada; //contrasenaHash;//contrasenaHash.Substring(0,50);//
             filaNueva["Activo"] = true;
-            filaNueva["Cedula"] = filaAInsertar["cedula"];
+            filaNueva["Cedula"] = filaAInsertar["Cedula"];
             //filaNueva["id"] = new SqlGuid(guid.ToString());
             filaNueva["Id"] = guid;
             usuarioBD.Rows.Add(filaNueva);
@@ -461,78 +461,10 @@ namespace Opiniometro_WebApp.Controllers
             filaInvalida["apellido1"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["apellido1"];
             filaInvalida["apellido2"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["apellido2"];
             filaInvalida["correo"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["correo"];
-           filaInvalida["direccion_exacta"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["direccion_exacta"];
+            filaInvalida["direccion_exacta"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["direccion_exacta"];
             filaInvalida["sigla_carrera"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["sigla_carrera"];
             filaInvalida["enfasis"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["enfasis"];
         }
-
-        /*
-         * EFECTO: Retorna tabla en memoria con un esquema basico. Utilizado para almacenar filas del archivo que preeliminarmente estan correctas.
-         * REQUIERE: n/a
-         * MODIFICA: n/a
-         */
-        private DataTable CrearTablaUsuarios()
-        {
-            DataTable dt = new DataTable();
-            dt.TableName = "usuarios_validos";
-            // Ver documentacion sobre los tipos en https://docs.microsoft.com/en-us/dotnet/api/system.data.sqltypes?view=netframework-4.6.1
-            //dt.Columns.Add("cedula", System.Type.GetType("System.Data.SqlTypes.SqlChars"));
-            dt.Columns.Add("cedula", typeof(string));            //0
-            dt.Columns.Add("perfil", typeof(string));            //1
-            dt.Columns.Add("carne", typeof(string));             //2
-            dt.Columns.Add("nombre1", typeof(string));           //3
-            dt.Columns.Add("nombre2", typeof(string));           //4
-            dt.Columns.Add("apellido1", typeof(string));         //5
-            dt.Columns.Add("apellido2", typeof(string));         //6
-            dt.Columns.Add("correo", typeof(string));            //7
-            dt.Columns.Add("provincia", typeof(string));         //8
-            dt.Columns.Add("canton", typeof(string));            //9
-            dt.Columns.Add("distrito", typeof(string));          //10
-            dt.Columns.Add("direccion_exacta", typeof(string));  //11
-            dt.Columns.Add("sigla_carrera", typeof(string));     //12
-            dt.Columns.Add("enfasis", typeof(byte));            //13
-        
-            // Estableciendo tamano maximo de las columnas de texto
-            dt.Columns[0].MaxLength = 9;
-            dt.Columns[0].AllowDBNull = false;
-
-            dt.Columns[1].MaxLength = 10;
-            dt.Columns[1].AllowDBNull = false;
-
-            dt.Columns[2].MaxLength = 6;
-
-            dt.Columns[3].MaxLength = 50;
-            dt.Columns[3].AllowDBNull = false;
-
-            dt.Columns[4].MaxLength = 50;
-
-            dt.Columns[5].MaxLength = 50;
-            dt.Columns[5].AllowDBNull = false;
-
-            dt.Columns[6].MaxLength = 50;
-            dt.Columns[6].AllowDBNull = false;
-
-            dt.Columns[7].MaxLength = 50;
-            dt.Columns[7].AllowDBNull = false;
-
-            dt.Columns[8].MaxLength = 50;
-            dt.Columns[8].AllowDBNull = false;
-
-            dt.Columns[9].MaxLength = 50;
-            dt.Columns[9].AllowDBNull = false;
-
-            dt.Columns[10].MaxLength = 50;
-            dt.Columns[10].AllowDBNull = false;
-
-            dt.Columns[11].MaxLength = 200;
-            dt.Columns[11].AllowDBNull = false;
-
-            dt.Columns[12].MaxLength = 10;
-            //dt.Columns[13].MaxLength = 3; //Need to check if this applies correctly to tiny ints.
-            return dt;
-        }
-
-
 
         /*
          * EFECTO: Retorna una tabla en memoria sin esquema para guardar las filas incorrectas provisionadas en el archivo csv.
@@ -558,64 +490,6 @@ namespace Opiniometro_WebApp.Controllers
             dt.Columns.Add("sigla_carrera", typeof(string));
             dt.Columns.Add("enfasis", typeof(string));
             
-            return dt;
-        }
-
-
-        /*
-         * EFECTO: Retorna una tabla en memoria con el esquema de la tabla Persona de la base de datos.
-         * REQUIERE: n/a
-         * MODIFICA: n/a
-         */
-        private DataTable CrearTablaPersonaBD()
-        {
-            DataTable dt = new DataTable();
-            dt.TableName = "Persona";
-            dt.Columns.Add("cedula", typeof(System.Data.SqlTypes.SqlChars));
-            dt.Columns.Add("nombre1", typeof(System.Data.SqlTypes.SqlChars));           
-            dt.Columns.Add("nombre2", typeof(System.Data.SqlTypes.SqlChars));           
-            dt.Columns.Add("apellido1", typeof(System.Data.SqlTypes.SqlChars));         
-            dt.Columns.Add("apellido2", typeof(System.Data.SqlTypes.SqlChars));
-            dt.Columns.Add("direccion_exacta", typeof(System.Data.SqlTypes.SqlChars));
-
-            dt.Columns[0].AllowDBNull = false;
-            dt.Columns[1].AllowDBNull = false;
-
-            dt.Columns[3].AllowDBNull = false;
-            dt.Columns[4].AllowDBNull = false;
-            dt.Columns[5].AllowDBNull = false;
-            return dt;
-        }
-
-
-        /*
-         * EFECTO: retorna una tabla en memoria con el esquema de la tabla Usuario de la base de datos.
-         * REQUIERE: n/a
-         * MODIFICA: n/a
-         */
-        private DataTable CrearTablaUsuarioBD()
-        {
-            DataTable dt = new DataTable();
-            dt.TableName = "Usuario";
-            dt.Columns.Add("correo", typeof(System.Data.SqlTypes.SqlChars));
-
-            
-            dt.Columns.Add("contrasena", typeof(System.Data.SqlTypes.SqlChars));
-            //dt.Columns.Add("contrasena", typeof(string));
-            dt.Columns.Add("activo", typeof(System.Data.SqlTypes.SqlBoolean));
-            dt.Columns.Add("cedula", typeof(System.Data.SqlTypes.SqlChars));
-            dt.Columns.Add("id", typeof(System.Data.SqlTypes.SqlGuid));
-
-            dt.Columns[0].AllowDBNull = false;
-            
-            dt.Columns[1].AllowDBNull = false;
-            //dt.Columns[1].MaxLength = 50;
-            dt.Columns[2].AllowDBNull = false;
-            dt.Columns[3].AllowDBNull = false;
-            dt.Columns[4].AllowDBNull = false;
-
-            
-
             return dt;
         }
 
