@@ -1,0 +1,18 @@
+﻿@model IEnumerable<string>
+
+@{
+    ViewBag.Title = "SeleccionUnica";
+}
+
+@*@foreach (var opcion in Model)
+    {
+        @Html.DisplayFor(modelItem => item.item)
+        <input type="checkbox" name="seleccion" value="seleccion">  @Html.DisplayFor(modelItem => opcion.OpcionRespuesta)<br>
+    }*@
+
+<fieldset>
+    @foreach (var opcion in Model)
+    {
+        <br><input type="radio" name="seleccion" value=opcion><label>@opcion</label>
+    }
+</fieldset>

@@ -25,23 +25,43 @@ namespace Opiniometro_WebApp.Controllers
             return View(modelo);
         }
 
-        public IQueryable<DatosFormulario> obtenerPreguntasFormulario(string cedulaEstudiante, string codigoForm)
+        public IQueryable<Pregunta> obtenerPreguntasFormulario(string cedulaEstudiante, string codigoForm)
         {
 
-            IQueryable<DatosFormulario> formulario =
+            IQueryable<Pregunta> formulario =
                 from it in db.Item
                 join confSecItem in db.Conformado_Item_Sec_Form on it.ItemId equals confSecItem.ItemId
                 join sec in db.Seccion on confSecItem.TituloSeccion equals sec.Titulo
                 where (confSecItem.CodigoFormulario == codigoForm)
 
-                select new DatosFormulario
+                select new Pregunta
                 {
+                    itemId = it.ItemId,
                     item = it.TextoPregunta,
                     tieneObservacion = it.TieneObservacion,
                     tipoPregunta = it.TipoPregunta
                 };
 
-            return formulario;
+            List<Pregunta> preguntas = new List<Pregunta>();
+            foreach (Pregunta p in formulario)
+            {
+                string id = p.itemId;
+                string texto = p.item;
+                bool? observacion = p.tieneObservacion;
+                int tipo = p.tipoPregunta;
+                if (p.tipoPregunta == 1)
+                    preguntas.Add(new TextoLibre { itemId = id, item = texto, tieneObservacion = observacion, tipoPregunta = tipo });
+                else if (p.tipoPregunta == 2)
+                {
+                    IQueryable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Unica
+                                                  where ops.ItemId == id
+                                                  select ops.OpcionRespuesta;
+                    preguntas.Add(new SeleccionUnica{ itemId = id, item = texto, tieneObservacion = observacion, tipoPregunta = tipo,
+                        Opciones = opciones.ToList() });
+                }
+            }
+
+            return preguntas.AsQueryable();
         }
 
         /* Llamar con:
@@ -93,6 +113,28 @@ namespace Opiniometro_WebApp.Controllers
 
             // tuplas contiene todas las tuplas por insertar a la base.
         }
-   
+
+        public ActionResult ObtenerOpcionesSelUnica(string id, string texto, bool? obs, int tipo)
+        {
+            //Console.WriteLine(id);
+            //List<SeleccionUnica> preguntas = new List<SeleccionUnica>();
+        /*
+            string id = p.itemId;
+            string texto = p.item;
+            bool? observacion = p.tieneObservacion;
+            int tipo = p.tipoPregunta;*/
+            IEnumerable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Unica
+                                            where ops.ItemId == id
+                                            select ops.OpcionRespuesta;
+            /*preguntas.Add(new SeleccionUnica
+            {
+                itemId = id,
+                item = texto,
+                tieneObservacion = obs,
+                tipoPregunta = tipo,
+                Opciones = opciones.ToList()
+            });*/
+            return PartialView("SeleccionUnica", opciones);
+        }
     }
 }

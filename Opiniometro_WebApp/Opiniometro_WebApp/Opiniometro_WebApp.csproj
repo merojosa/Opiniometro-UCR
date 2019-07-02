@@ -527,7 +527,7 @@
     <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
     <Content Include="Views\CursosMatriculados\Index.cshtml" />
     <Content Include="Views\FormularioCurso\Index.cshtml" />
-    <Content Include="Views\FormularioCurso\SeleccionMultiple.cshtml" />
+    <Content Include="Views\FormularioCurso\SeleccionUnica.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

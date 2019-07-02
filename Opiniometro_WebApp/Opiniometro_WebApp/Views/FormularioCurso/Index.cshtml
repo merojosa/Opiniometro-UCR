@@ -30,8 +30,9 @@
     {
         if (dato.tipoPregunta == 1)
         {
-            <div id="preguntaTextoLibre"> </div>
-
+            <div id="preguntaTextoLibre">
+            </div>
+            
 
             <script type="text/javascript">
                 crearElemento("campoTexto", contTextoLibre, "@dato.item" , "preguntaTextoLibre");
@@ -44,7 +45,9 @@
 
         if (dato.tipoPregunta == 2)
         {
-            <div id="preguntaSelUnica"> </div>
+            <div id="preguntaSelUnica">
+                @Html.Action("ObtenerOpcionesSelUnica", "FormularioCurso", new { id = dato.itemId, texto = dato.item, obs = dato.tieneObservacion, tipo = dato.tipoPregunta });
+            </div>
 
             <script>
                 crearElemento("selUnica", contSelUnica, "@dato.item", "preguntaSelUnica");
