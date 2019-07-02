@@ -21,12 +21,15 @@ using System.Web.UI.WebControls;
 using System.Security.Cryptography;
 using Opiniometro_WebApp.Models;
 using System.Text;
+using System.Reflection;
 //using Microsoft.SqlServer.Dts;
 //using Microsoft.SqlServer.Dts.Runtime;
 
 
 namespace Opiniometro_WebApp.Controllers
 {
+    enum Tablas { DatosEstudiante, Persona, Usuario, Estudiante, Perfil, Enfasis};
+
     public class AdministradorController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
@@ -100,7 +103,7 @@ namespace Opiniometro_WebApp.Controllers
          */
         private DataTable ProcesarArchivo(string path)
         {
-            DataTable filasValidas = CrearTablaUsuarios();
+            DataTable filasValidas = ObtenerTabla(Tablas.DatosEstudiante);//CrearTablaUsuarios();
             DataTable filasInvalidas = CrearTablaUsuariosInvalidos();
             string filaLeida = String.Empty;
             DataRow tupla;
@@ -137,8 +140,8 @@ namespace Opiniometro_WebApp.Controllers
             filasValidas.AcceptChanges();
 
             //Tablas en memoria con que poseen el mismo esquema que las tablas en la base de datos.
-            DataTable personaBD = CrearTablaPersonaBD();
-            DataTable usuarioBD = CrearTablaUsuarioBD();
+            DataTable personaBD = ObtenerTabla(Tablas.Persona);//CrearTablaPersonaBD();
+            DataTable usuarioBD = ObtenerTabla(Tablas.Usuario);//CrearTablaUsuarioBD();
             
             //Multicast
             MulticastDatosProvisionados(filasValidas, personaBD, usuarioBD);
@@ -196,12 +199,12 @@ namespace Opiniometro_WebApp.Controllers
                 Persona existePersona = null;
                 Usuario existeUsuario = null;
                 DataRow filaNueva = filasValidas.Rows[indexFilasValidas];
-                if (db.Persona.Find(filasValidas.Rows[indexFilasValidas]["cedula"]) == null)
+                if (db.Persona.Find(filasValidas.Rows[indexFilasValidas]["Cedula"]) == null)
                 {
                     InsertarFilaEnTablaEnMemoria(filaNueva, personaBD);
                     personaBD.AcceptChanges();
                 }
-                if (db.Usuario.Find(filasValidas.Rows[indexFilasValidas]["cedula"]) == null)
+                if (db.Usuario.Find(filasValidas.Rows[indexFilasValidas]["Cedula"]) == null)
                 {
                     InsertarFilaEnTablaEnMemoria(filaNueva, usuarioBD);
                     usuarioBD.AcceptChanges();
@@ -240,11 +243,12 @@ namespace Opiniometro_WebApp.Controllers
         private void InsertarEnPersonaBD(DataRow filaAInsertar, DataTable personaBD)
         {
             DataRow filaNueva = personaBD.NewRow();
-            filaNueva["cedula"] = new SqlChars(filaAInsertar["cedula"].ToString().ToCharArray());
-            filaNueva["nombre1"] = new SqlChars(filaAInsertar["nombre1"].ToString().ToCharArray());
-            filaNueva["apellido1"] = new SqlChars(filaAInsertar["apellido1"].ToString().ToCharArray());
-            filaNueva["apellido2"] = new SqlChars(filaAInsertar["apellido2"].ToString().ToCharArray());
-            filaNueva["direccion_exacta"] = new SqlChars(filaAInsertar["direccion_exacta"].ToString().ToCharArray());
+            
+            filaNueva["Cedula"] = filaAInsertar["Cedula"];
+            filaNueva["Nombre1"] = filaAInsertar["Nombre1"];
+            filaNueva["Apellido1"] = filaAInsertar["Apellido1"];
+            filaNueva["Apellido2"] = filaAInsertar["Apellido2"];
+            filaNueva["DireccionDetallada"] = filaAInsertar["DireccionDetallada"];
             personaBD.Rows.Add(filaNueva);
             personaBD.AcceptChanges();
         }
@@ -254,7 +258,7 @@ namespace Opiniometro_WebApp.Controllers
             string hileraConexion =
                 "data source=(localdb)\\ProjectsV13;initial catalog=Opiniometro_Datos;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;";
             DataRow filaNueva = usuarioBD.NewRow();
-            filaNueva["correo"] = new SqlChars(filaAInsertar["correo"].ToString().ToCharArray());
+            filaNueva["CorreoInstitucional"] = filaAInsertar["CorreoInstitucional"];
 
 
 
@@ -288,11 +292,11 @@ namespace Opiniometro_WebApp.Controllers
             //string contrasenaCifrada = Convert.ToString(contrasenaHash.Value);
             resultadoHash = (byte[])contrasenaHash.Value;
             string contrasenaCifrada = resultadoHash.ToString();
-            filaNueva["contrasena"] = new SqlChars(contrasenaCifrada.ToCharArray()); //contrasenaHash;//contrasenaHash.Substring(0,50);//
-            filaNueva["activo"] = new SqlBoolean(true);
-            filaNueva["cedula"] = new SqlChars(filaAInsertar["cedula"].ToString().ToCharArray());
+            filaNueva["Contrasena"] = contrasenaCifrada; //contrasenaHash;//contrasenaHash.Substring(0,50);//
+            filaNueva["Activo"] = true;
+            filaNueva["Cedula"] = filaAInsertar["cedula"];
             //filaNueva["id"] = new SqlGuid(guid.ToString());
-            filaNueva["id"] = guid;
+            filaNueva["Id"] = guid;
             usuarioBD.Rows.Add(filaNueva);
             usuarioBD.AcceptChanges();
             
@@ -417,21 +421,22 @@ namespace Opiniometro_WebApp.Controllers
             {
                 case "Persona":
                 {
-                    insercionEnBloque.ColumnMappings.Add("cedula", "Cedula");
-                    insercionEnBloque.ColumnMappings.Add("nombre1", "Nombre1");
-                    insercionEnBloque.ColumnMappings.Add("nombre2", "Nombre2");
-                    insercionEnBloque.ColumnMappings.Add("apellido1", "Apellido1");
-                    insercionEnBloque.ColumnMappings.Add("apellido2", "Apellido2");
-                    insercionEnBloque.ColumnMappings.Add("direccion_exacta", "DireccionDetallada");
+                                                          //Fuente  Destino
+                    insercionEnBloque.ColumnMappings.Add("Cedula", "Cedula");
+                    insercionEnBloque.ColumnMappings.Add("Nombre1", "Nombre1");
+                    insercionEnBloque.ColumnMappings.Add("Nombre2", "Nombre2");
+                    insercionEnBloque.ColumnMappings.Add("Apellido1", "Apellido1");
+                    insercionEnBloque.ColumnMappings.Add("Apellido2", "Apellido2");
+                    insercionEnBloque.ColumnMappings.Add("DireccionDetallada", "DireccionDetallada");
                 }
                 break;
                 case "Usuario":
                 {
-                        insercionEnBloque.ColumnMappings.Add("correo", "CorreoInstitucional");
-                        insercionEnBloque.ColumnMappings.Add("contrasena", "Contrasena");
-                        insercionEnBloque.ColumnMappings.Add("activo", "Activo");
-                        insercionEnBloque.ColumnMappings.Add("cedula", "Cedula");
-                        insercionEnBloque.ColumnMappings.Add("id", "Id");
+                        insercionEnBloque.ColumnMappings.Add("CorreoInstitucional", "CorreoInstitucional");
+                        insercionEnBloque.ColumnMappings.Add("Contrasena", "Contrasena");
+                        insercionEnBloque.ColumnMappings.Add("Activo", "Activo");
+                        insercionEnBloque.ColumnMappings.Add("Cedula", "Cedula");
+                        insercionEnBloque.ColumnMappings.Add("Id", "Id");
                 }
                 break;
             }
@@ -456,10 +461,7 @@ namespace Opiniometro_WebApp.Controllers
             filaInvalida["apellido1"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["apellido1"];
             filaInvalida["apellido2"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["apellido2"];
             filaInvalida["correo"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["correo"];
-            filaInvalida["provincia"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["provincia"];
-            filaInvalida["canton"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["canton"];
-            filaInvalida["distrito"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["distrito"];
-            filaInvalida["direccion_exacta"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["direccion_exacta"];
+           filaInvalida["direccion_exacta"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["direccion_exacta"];
             filaInvalida["sigla_carrera"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["sigla_carrera"];
             filaInvalida["enfasis"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["enfasis"];
         }
@@ -552,9 +554,6 @@ namespace Opiniometro_WebApp.Controllers
             dt.Columns.Add("apellido1", typeof(string));
             dt.Columns.Add("apellido2", typeof(string));
             dt.Columns.Add("correo", typeof(string));
-            dt.Columns.Add("provincia", typeof(string));
-            dt.Columns.Add("canton", typeof(string));
-            dt.Columns.Add("distrito", typeof(string));
             dt.Columns.Add("direccion_exacta", typeof(string));
             dt.Columns.Add("sigla_carrera", typeof(string));
             dt.Columns.Add("enfasis", typeof(string));
@@ -618,6 +617,63 @@ namespace Opiniometro_WebApp.Controllers
             
 
             return dt;
+        }
+
+        private DataTable ObtenerTabla(Tablas EnumeracionTipoTabla)
+        {
+            Type Tipo = ObtenerTipoDeTabla(EnumeracionTipoTabla);
+            DataTable dt = null;
+            if(Tipo != null)
+            {
+                PropertyInfo[] propiedadesDeTipo = Tipo.GetProperties();
+                dt = new DataTable(Tipo.Name);
+
+                foreach(PropertyInfo propiedad in propiedadesDeTipo)
+                {
+                    dt.Columns.Add(propiedad.Name, propiedad.PropertyType);
+                }
+            }
+            return dt;
+        }
+
+        private Type ObtenerTipoDeTabla(Tablas EnumeracionTipoTabla)
+        {
+            Type Tipo = null;
+
+            switch (EnumeracionTipoTabla)
+            {
+                case Tablas.DatosEstudiante:
+                    {
+                        Tipo = typeof(DatosEstudiante);
+                    }
+                    break;
+                case Tablas.Persona:
+                    {
+                        Tipo = typeof(Persona);
+                    }
+                    break;
+                case Tablas.Usuario:
+                    {
+                        Tipo = typeof(Usuario);
+                    }
+                    break;
+                case Tablas.Estudiante:
+                    {
+                        Tipo = typeof(Estudiante);
+                    }
+                    break;
+                case Tablas.Perfil:
+                    {
+                        Tipo = typeof(Perfil);
+                    }
+                    break;
+                case Tablas.Enfasis:
+                    {
+                        Tipo = typeof(Enfasis);
+                    }
+                    break;
+            }
+            return Tipo;
         }
     }
  
