@@ -214,9 +214,9 @@ namespace Opiniometro_WebApp.Controllers
         //EFE:Crea un gráfico con la información de los resultados en la base de datos.
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso,
-        public JsonResult GraficoPie(string codigoFormulario, string itemId)
+        public JsonResult GraficoPie(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
         {//"131313"
-            var result = ObtenerCantidadRespuestasPorPregunta(codigoFormulario, "100000002", 2017, 2, 1, "CI1330", itemId).ToList();//ObtenerCantidadRespuestasPorPregunta  "PRE303"
+            var result = ObtenerCantidadRespuestasPorPregunta(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId).ToList();//ObtenerCantidadRespuestasPorPregunta  "PRE303", codigoFormulario, "100000002", 2017, 2, 1, "CI1330", itemId
             //int tamanio = result.Count;
             List<object> x = new List<object>();
             List<object> y = new List<object>();
