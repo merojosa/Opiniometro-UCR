@@ -402,6 +402,11 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RecuperarContrasenna" Type="bit" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="ValorRandom">
+          <Property Name="randomvalue" Type="varbinary" MaxLength="8000" />
+        </EntityType>-->
         <Association Name="FK_Adm_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Administrativo" Type="Self.Administrativo" Multiplicity="0..1" />
@@ -1144,12 +1149,26 @@
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="itemid" Type="nvarchar" Mode="In" />
+          <Parameter Name="orden" Type="smallint" Mode="In" />
+          <Parameter Name="opcionrespuesta" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Insertar_Seccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="titulo" Type="nvarchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Insertar_Seleccion_Unica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="itemid" Type="nvarchar" Mode="In" />
+          <Parameter Name="isalikedislike" Type="bit" Mode="In" />
+        </Function>
         <Function Name="SP_LoginUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
         </Function>
         <Function Name="SP_ModificarPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CedulaBusqueda" Type="varchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
           <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
@@ -2761,12 +2780,26 @@
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica">
+            <Parameter Name="itemid" Mode="In" Type="String" />
+            <Parameter Name="orden" Mode="In" Type="Int16" />
+            <Parameter Name="opcionrespuesta" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insertar_Seccion">
+            <Parameter Name="titulo" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insertar_Seleccion_Unica">
+            <Parameter Name="itemid" Mode="In" Type="String" />
+            <Parameter Name="isalikedislike" Mode="In" Type="Boolean" />
+          </FunctionImport>
           <FunctionImport Name="SP_LoginUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="SP_ModificarPersona">
+            <Parameter Name="CedulaBusqueda" Mode="In" Type="String" />
             <Parameter Name="Cedula" Mode="In" Type="String" />
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="Apellido1" Mode="In" Type="String" />
@@ -3330,6 +3363,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" />
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Seccion" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seccion" />
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seleccion_Unica" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_Model.Store.SP_LoginUsuario" />
           <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_Model.Store.SP_ModificarPersona" />
           <FunctionImportMapping FunctionImportName="SP_ObtenerFormulario" FunctionName="Opiniometro_Model.Store.SP_ObtenerFormulario" />

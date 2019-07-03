@@ -11,11 +11,9 @@ namespace Opiniometro_WebApp.Models
 {
     using System;
     
-    public partial class MostrarEstudiantes_Result
+    public partial class SP_ContarRespuestasPorGrupo_Result
     {
-        public string Nombre { get; set; }
-        public string Apellido1 { get; set; }
-        public string Apellido2 { get; set; }
-        public string Carne { get; set; }
+        public string Respuesta { get; set; }
+        public Nullable<int> cntResp { get; set; }
     }
 }
