@@ -2,29 +2,27 @@
     ViewBag.Title = "Recuperar contraseña";
 }
 
-<div align="center">
-    <h1>Opiniómetro@UCR</h1>
+<div align="center" style="padding-right:100px">
     @using (Html.BeginForm("Recuperar", "Auth", FormMethod.Post))
     {
         <div class="login-container">
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
+                    <h1>Opiniómetro@UCR</h1>
                     <div class="panel panel-default">
                         <h3>Recuperar contraseña</h3>
                         <div class="panel-body">
                             <div>
-                                <form>
-                                    <div class="input-group" style="width:250px">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                        <input name="CorreoInstitucional" type="email" class="form-control" placeholder="Correo institucional">
-                                    </div>
-                                    <br />
-                                    <div class="form-group">
-                                        <input type="submit" value="Enviar Correo" name="Enviar" />
-                                    </div>
-                                    @Html.ValidationSummary(true, "Revise la bandeja de su correo institucional", htmlAttributes: new { @class = "" })
-                                    @Html.ActionLink("Ir a página de Ingreso al Sistema", "Login")
-                                </form>
+                                <div class="input-group" style="width:250px">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                    <input name="CorreoInstitucional" type="email" class="form-control" placeholder="Correo institucional">
+                                </div>
+                                <br />
+                                <div class="form-group">
+                                    <input type="submit" value="Enviar Correo" name="Enviar" class="btn btn-default" />
+                                    @Html.ActionLink("Volver", "Login", "Auth", null, new { @class = "btn btn-default" })
+                                </div>
+                                @Html.ValidationSummary(true, "Revise la bandeja de su correo institucional", htmlAttributes: new { @class = "" })
                             </div>
                         </div>
                     </div>

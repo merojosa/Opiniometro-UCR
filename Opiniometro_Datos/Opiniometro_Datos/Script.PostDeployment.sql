@@ -25,7 +25,7 @@ BEGIN
 	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
 
 	INSERT INTO Usuario
-	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id, 0)
 END
 GO
 
@@ -82,8 +82,9 @@ IF OBJECT_ID('SP_CambiarContrasenna') IS NOT NULL
 	DROP PROCEDURE SP_CambiarContrasenna
 GO
 CREATE PROCEDURE SP_CambiarContrasenna
-	@Correo				NVARCHAR(50),
-	@Contrasenna_Nueva	NVARCHAR(50)
+	@Correo					NVARCHAR(50),
+	@Contrasenna_Nueva		NVARCHAR(50),
+	@RecuperarContrasenna	BIT
 AS
 BEGIN
 	SET NOCOUNT ON
@@ -96,9 +97,11 @@ BEGIN
 						WHERE CorreoInstitucional=@Correo)
 
 	IF(@CorreoBuscar IS NOT NULL)	-- Si existe el correo
+	BEGIN
 		UPDATE Usuario
-		SET Contrasena = HASHBYTES('SHA2_512', @Contrasenna_Nueva+CAST(Id AS NVARCHAR(36)))
-		
+		SET Contrasena = HASHBYTES('SHA2_512', @Contrasenna_Nueva+CAST(Id AS NVARCHAR(36))), RecuperarContrasenna = @RecuperarContrasenna
+		WHERE CorreoInstitucional = @CorreoBuscar
+	END	
 END
 GO
 
@@ -247,7 +250,7 @@ BEGIN
 	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2, @Direccion)
 
 	INSERT INTO Usuario
-	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id, 0)
 END
 GO
 
@@ -307,6 +310,18 @@ AS
 	SELECT CONCAT(Nombre, ' ' ,Apellido1, ' ', Apellido2) as 'Nombre Completo', Carne, Cedula
 	FROM Persona P JOIN Estudiante E ON P.Cedula = E.CedulaEstudiante
 	WHERE Cedula = @Cedula;
+GO
+
+GO
+IF OBJECT_ID('ObtenerPerfilesUsuario') IS NOT NULL
+	DROP PROCEDURE ObtenerPerfilesUsuario
+GO
+CREATE PROC ObtenerPerfilesUsuario
+	@Correo	NVARCHAR(50)
+AS
+	SELECT SiglaCarrera, NumeroEnfasis
+	FROM Tiene_Usuario_Perfil_Enfasis
+	WHERE CorreoInstitucional= @Correo
 GO
 
 --Inserciones
@@ -451,6 +466,55 @@ VALUES ('CI1330', 100, 'SC-01234'),
 	   ('DE1001', 12, 'SC-89457'),
 	   ('DE2001', 12, 'SC-89457');
 
+--DROP PROCEDURE CursosSegunCarrera
+--Obtiene la lista de cursos que pertenecen a cierta carrera
+
+IF OBJECT_ID('CursosSegunCarrera') IS NOT NULL
+	DROP PROCEDURE CursosSegunCarrera
+GO
+CREATE PROCEDURE CursosSegunCarrera
+@siglaCarrera NVARCHAR(10)
+AS
+BEGIN
+SELECT C.Nombre, C.Sigla, C.Tipo, C.CodigoUnidad
+FROM Curso C
+WHERE C.Sigla IN (SELECT S.SiglaCurso
+				FROM Se_Encuentra_Curso_Enfasis S
+				WHERE S.SiglaCarrera = @siglaCarrera)
+END
+GO
+
+--Obtiene la lista de cursos que pertenecen a cierto semestre
+IF OBJECT_ID('CursosSegunSemestre') IS NOT NULL
+	DROP PROCEDURE CursosSegunSemestre
+GO
+CREATE PROCEDURE CursosSegunSemestre
+@semestre TINYINT
+AS
+BEGIN
+SELECT C.Nombre, C.Sigla, C.Tipo, C.CodigoUnidad
+FROM Curso C
+WHERE C.Sigla IN (SELECT G.SiglaCurso
+				FROM Grupo G
+				WHERE G.SemestreGrupo = @semestre)
+END
+GO
+
+--Obtiene la lista de cursos que pertenecen a cierto año
+IF OBJECT_ID('CursosSegunAnno') IS NOT NULL
+	DROP PROCEDURE CursosSegunAnno
+GO
+CREATE PROCEDURE CursosSegunAnno
+@anno SMALLINT
+AS
+BEGIN
+SELECT C.Nombre, C.Sigla, C.Tipo, C.CodigoUnidad
+FROM Curso C
+WHERE C.Sigla IN (SELECT G.SiglaCurso
+				FROM Grupo G
+				WHERE G.AnnoGrupo = @anno)
+END
+GO
 
 
 --Script C.X. Solutions
@@ -631,7 +695,8 @@ VALUES	(1, 'Hacer todo'),
 		(205, 'VisualizarResultadosDeEvaluaciones'),
 		(206, 'VerSecciones'),
 		(207, 'VerItems'),
-		(208, 'InsertarFormulario');
+		(208, 'InsertarFormulario'),
+		(209, 'Eliminar perfiles');
 
 INSERT INTO Perfil
 VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
@@ -641,29 +706,28 @@ VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
 
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
-		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
+		('admin@ucr.ac.cr', 0, 'SC-01234', 'Administrador'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Administrador')
+
 
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
 		(0, 'SC-01234', 'Administrador', 1),
 		(0, 'SC-01234', 'Administrador', 2),
-		(0, 'SC-01234', 'Profesor', 2)
-
-
-insert into Posee_Enfasis_Perfil_Permiso
-VALUES	(0,'SC-01234', 'Administrador','202'),
-		(0,'SC-01234', 'Administrador','203'),
-		(0,'SC-01234', 'Administrador','204'),
-		(0,'SC-01234', 'Administrador','205'),
-		(0,'SC-01234', 'Administrador','206'),
-		(0,'SC-01234', 'Administrador','207'),
-		(0,'SC-01234', 'Profesor','204'),
-		(0,'SC-01234', 'Profesor','205'),
-		(0,'SC-01234', 'Estudiante','205'),
-		(0,'SC-01234', 'Administrador','208'),
-		(0,'SC-01234', 'Profesor','208')
+		(0, 'SC-01234', 'Profesor', 2),
+		(0,'SC-01234', 'Administrador', 202),
+		(0,'SC-01234', 'Administrador', 203),
+		(0,'SC-01234', 'Administrador', 204),
+		(0,'SC-01234', 'Administrador', 205),
+		(0,'SC-01234', 'Administrador', 206),
+		(0,'SC-01234', 'Administrador', 207),
+		(0,'SC-01234', 'Profesor', 204),
+		(0,'SC-01234', 'Profesor', 205),
+		(0,'SC-01234', 'Estudiante', 205),
+		(0,'SC-01234', 'Administrador', 208),
+		(0,'SC-01234', 'Profesor', 208),
+		(0, 'SC-01234', 'Administrador', 209)
 
 INSERT INTO Provincia
 VALUES	('San José'),
