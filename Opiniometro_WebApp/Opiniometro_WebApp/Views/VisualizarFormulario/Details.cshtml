@@ -7,6 +7,7 @@
 <head>
     <script src="~/Scripts/Chart.js"></script>
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/Graficar.js"></script>
     <style>
         #contenedorGrafo {
             width: 1080px;
@@ -131,11 +132,13 @@
                                                         <div id="contenedorGrafo">
                                                             <canvas id="pie_chart_@item_actual"></canvas>
                                                         </div>
-                                                        <button id="changeGraph" >Cambiar Gráfico</button>
+                                                        <div>
+                                                            <button type="button" id="changeGraph" onclick="refrescar(document.getElementById('pie_chart_@item_actual'))">Cambiar Gráfico</button>
+                                                        </div>
                                                         <script>
                                                         $.ajax({
                                                             type: "POST",
-                                                            url: "/VisualizarFormulario/GraficoPie/?itemId=@seccion.Item.ItemId",
+                                                            url: "/VisualizarFormulario/GraficoPie",
                                                             data: "{ 'codigoFormulario': '@codigoFormularioRec', 'cedulaProfesor': '@cedulaProfesorRec', 'annoGrupo': '@annoGrupoRec', 'semestreGrupo': '@semestreGrupoRec', 'numeroGrupo': '@numeroGrupoRec', 'siglaCurso': '@siglaCursoRec', 'itemId': '@seccion.Item.ItemId' }",
                                                             contentType: "application/json; charset=utf-8",
                                                             dataType: "json",
@@ -163,10 +166,6 @@
                                                                 document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Promedio: " + (promedio).toString() + " ";
                                                                 //Mediana
                                                                 //Desviacion Estandar
-
-
-                                                                @*var iter = aLabels;
-                                                                <p>@seccion.Item.ItemId</p>*@
                                                                 var dataT = {
                                                                     labels: aLabels,
                                                                     datasets: [{
@@ -218,7 +217,7 @@
                                                                     })
                                                                 }
                                                             }
-                                                        });
+                                                            });
                                                         </script>
                                                     }
                                                     else
@@ -316,11 +315,3 @@
 
     </div>
 </div>
-
-<script src="~/Scripts/Graficar.js"></script>
-@*
-    <script>
-    function graficarResultados(itemId) {
-            alert(itemId);
-            $.get("/VisualizarFormulario/GraficoPie", { itemId });
-        }</script>*@ 
