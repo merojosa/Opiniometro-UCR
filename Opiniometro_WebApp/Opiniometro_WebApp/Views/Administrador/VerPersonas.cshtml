@@ -1,17 +1,12 @@
-﻿
-
-@{
+﻿@{
     ViewBag.Title = "VerPersonas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h2>Personas registradas</h2>
 @using (Html.BeginForm())
 {
     <p>
-
         <div class="form-group, form-inline">
-
             Nombre:
             @Html.TextBox("nom")
             Cédula:
@@ -24,31 +19,25 @@
 <table class="table">
     <tr>
         <th>
-
             Cédula
         </th>
         <th>
             Nombre
         </th>
         <th>
-
             Primer apellido
         </th>
         <th>
-
             Segundo apellido
         </th>
         <th>
-
             Correo Institucional
         </th>
         <th>
-
             Dirección
         </th>
         <th></th>
     </tr>
-
     @foreach (var item in Model)
     {
         <tr>
@@ -72,9 +61,8 @@
             </td>
             <td>
                 @Html.ActionLink("Editar", "Editar", new { id = item.persona.Cedula }, new { @class = "btn btn-default" })
-         
+
             </td>
         </tr>
     }
-
 </table>

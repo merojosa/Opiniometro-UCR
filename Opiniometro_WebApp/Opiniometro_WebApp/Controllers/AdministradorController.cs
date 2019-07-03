@@ -12,6 +12,10 @@ using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
+using System.Security.Cryptography;
+using System.Net.Mail;
+using System.Text;
+
 //using Microsoft.SqlServer.Dts;
 //using Microsoft.SqlServer.Dts.Runtime;
 
@@ -21,6 +25,7 @@ namespace Opiniometro_WebApp.Controllers
     public class AdministradorController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        private const string caracteres_aleatorios = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         // GET: Administrador
         public ActionResult Index()
@@ -107,7 +112,7 @@ namespace Opiniometro_WebApp.Controllers
                             AgregarTuplaValida(filaLeida, filasValidas, numeroFilasLeidas);
                         }
 
-                        
+
                     }
                 }
             }
@@ -122,7 +127,7 @@ namespace Opiniometro_WebApp.Controllers
             tupla = filasValidas.NewRow();
             tupla.ItemArray = filaLeida.Split(',');
             int Tamano = tupla.ItemArray.Count();
-            filasValidas.Rows.Add(tupla); 
+            filasValidas.Rows.Add(tupla);
         }
 
 
@@ -154,8 +159,8 @@ namespace Opiniometro_WebApp.Controllers
             dt.Columns.Add("direccion_exacta", typeof(System.Data.SqlTypes.SqlChars));  //11
             dt.Columns.Add("sigla_carrera", typeof(System.Data.SqlTypes.SqlChars));     //12
             dt.Columns.Add("enfasis", typeof(System.Data.SqlTypes.SqlByte));            //13
-           
-            
+
+
             // Estableciendo constraint NOT NULL para cada columna de la tabla de datos.
             foreach (DataColumn column in dt.Columns)
             {
@@ -201,10 +206,206 @@ namespace Opiniometro_WebApp.Controllers
             dt.Columns.Add("direccion_exacta", typeof(string));
             dt.Columns.Add("sigla_carrera", typeof(string));
             dt.Columns.Add("enfasis", typeof(string));
-            
+
             return dt;
         }
+
+
+        public Persona Persona { get; private set; }
+
+        public ActionResult VerPersonas(string nom, string ced)
+        {
+            if (!String.IsNullOrEmpty(nom) && !String.IsNullOrEmpty(ced))
+            {
+                ViewModelAdmin model = new ViewModelAdmin();
+                List<Persona> listaPersonas = db.Persona.ToList();
+                List<Usuario> listaUsuarios = db.Usuario.ToList();
+                var query = from p in listaPersonas
+                            join u in listaUsuarios on p.Cedula equals u.Cedula into table1
+                            from u in table1
+                            where p.Nombre.Contains(nom)
+                            where p.Cedula.Contains(ced)
+                            select new ViewModelAdmin { persona = p, usuario = u };
+                return View(query);
+            }
+            else if (!String.IsNullOrEmpty(ced))
+            {
+                ViewModelAdmin model = new ViewModelAdmin();
+                List<Persona> listaPersonas = db.Persona.ToList();
+                List<Usuario> listaUsuarios = db.Usuario.ToList();
+                var query = from p in listaPersonas
+                            join u in listaUsuarios on p.Cedula equals u.Cedula into table1
+                            from u in table1
+                            where p.Cedula.Contains(ced)
+                            select new ViewModelAdmin { persona = p, usuario = u };
+                return View(query);
+            }
+            else if (!String.IsNullOrEmpty(nom))
+            {
+                ViewModelAdmin model = new ViewModelAdmin();
+                List<Persona> listaPersonas = db.Persona.ToList();
+                List<Usuario> listaUsuarios = db.Usuario.ToList();
+                var query = from p in listaPersonas
+                            join u in listaUsuarios on p.Cedula equals u.Cedula into table1
+                            from u in table1
+                            where p.Nombre.Contains(nom)
+                            select new ViewModelAdmin { persona = p, usuario = u };
+                return View(query);
+            }
+            else
+            {
+                ViewModelAdmin model = new ViewModelAdmin();
+                List<Persona> listaPersonas = db.Persona.ToList();
+                List<Usuario> listaUsuarios = db.Usuario.ToList();
+                var query = from p in listaPersonas
+                            join u in listaUsuarios on p.Cedula equals u.Cedula into table1
+                            from u in table1
+                            select new ViewModelAdmin { persona = p, usuario = u };
+                return View(query);
+            }
+
+
+        }
+
+
+        public ActionResult Editar(string id)
+        {
+            try
+            {
+                Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel modelPersona = new Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel();
+                modelPersona.Persona = db.Persona.Find(id);
+
+                try
+                {
+                    String correoInstitucional = db.Usuario.Where(m => m.Cedula == id).First().CorreoInstitucional;
+                    modelPersona.Persona = db.Persona.SingleOrDefault(u => u.Cedula == id);
+                    modelPersona.usuario = db.Usuario.SingleOrDefault(u => u.Cedula == id);
+                    modelPersona.viejaCedula = id;
+                    modelPersona.PerfilDeUsuario = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
+                    modelPersona.Perfil = db.Perfil.Select(n => n.Nombre).ToList();
+                    modelPersona.perfilesAsignados = modelPersona.getAsignarPerfil(modelPersona.PerfilDeUsuario, modelPersona.Perfil);
+                    return View(modelPersona);
+                }
+                catch (Exception)
+                {
+                    return View(modelPersona);
+                }
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Editar(PersonaPerfilEnfasisModel per)
+        {
+            try
+            {
+                using (db)
+                {
+                    //db.SP_ModificarPersona(per.viejaCedula, per.Persona.Cedula, per.Persona.Nombre, per.Persona.Apellido1, per.Persona.Apellido2, per.usuario.CorreoInstitucional, per.Persona.Direccion);
+                    return RedirectToAction("VerPersonas");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+
+        public ActionResult Borrar(string id)
+        {
+            // db.SP_EliminarPersona(id);
+            return RedirectToAction("VerPersonas");
+        }
+
+
+        public ActionResult CrearUsuario()
+        {
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult CrearUsuario(ViewModelAdmin per)
+        {
+            try
+            {
+                using (db)
+                {
+                    string contrasenna_generada = GenerarContrasenna(10);
+                    if (!per.usuario.CorreoInstitucional.Equals("") && !contrasenna_generada.Equals("") && !per.persona.Cedula.Equals("") && !per.persona.Nombre.Equals("") && !per.persona.Apellido1.Equals("") && !per.persona.Apellido2.Equals("") && !per.persona.Direccion.Equals("") &&
+                        per.usuario.CorreoInstitucional.Length < 50 && contrasenna_generada.Length < 50 && per.persona.Cedula.Length == 9 && per.persona.Nombre.Length < 50 && per.persona.Apellido1.Length < 50 && per.persona.Apellido2.Length < 50 && per.persona.Direccion.Length < 50)
+                    {
+                        db.SP_AgregarPersonaUsuario(per.usuario.CorreoInstitucional, contrasenna_generada, per.persona.Cedula, per.persona.Nombre, per.persona.Apellido1, per.persona.Apellido2, per.persona.Direccion);
+
+                        string contenido =
+                         "<p>Se le ha creado un usuario en Opiniometro@UCR.</p>" +
+                         "<p>A continuación, su contraseña temporal, ingrésela junto con su correo institucional:</p> <b>"
+                         + contrasenna_generada + "</b>";
+
+                        // Envio correo con la contrasenna autogenerada
+                        EnviarCorreo(per.usuario.CorreoInstitucional, "Usuario creado - Opiniómetro@UCR", contenido);
+                    }
+                    return RedirectToAction("VerPersonas");
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        private void EnviarCorreo(string receptor, string asunto, string contenido)
+        {
+            string autor = System.Configuration.ConfigurationManager.AppSettings["CorreoEmisor"].ToString();
+            string contrasenna = System.Configuration.ConfigurationManager.AppSettings["ContrasennaEmisor"].ToString();
+
+            SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587);
+            cliente.EnableSsl = true;
+            cliente.Timeout = 100000;
+            cliente.DeliveryMethod = SmtpDeliveryMethod.Network;
+            cliente.UseDefaultCredentials = false;
+            cliente.Credentials = new NetworkCredential(autor, contrasenna);
+
+            MailMessage correo = new MailMessage(autor, receptor, asunto, contenido);
+            correo.IsBodyHtml = true;
+            correo.BodyEncoding = UTF8Encoding.UTF8;
+            cliente.Send(correo);
+
+        }
+
+        /*
+         * EFECTO:
+         * REQUIERE:
+         * MODIFICA:
+         * 
+         * Basado en: https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings
+         */
+        private string GenerarContrasenna(int tamanno)
+        {
+            byte[] datos = new byte[tamanno];
+            using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider())
+            {
+                crypto.GetBytes(datos);
+            }
+
+            StringBuilder contrasenna = new StringBuilder(tamanno);
+
+            foreach (byte byte_aleatorio in datos)
+            {
+                contrasenna.Append(caracteres_aleatorios[byte_aleatorio % (caracteres_aleatorios.Length)]);
+            }
+            return contrasenna.ToString();
+        }
+
     }
-
-
 }
