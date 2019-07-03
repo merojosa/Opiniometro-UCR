@@ -82,8 +82,9 @@ IF OBJECT_ID('SP_CambiarContrasenna') IS NOT NULL
 	DROP PROCEDURE SP_CambiarContrasenna
 GO
 CREATE PROCEDURE SP_CambiarContrasenna
-	@Correo				NVARCHAR(50),
-	@Contrasenna_Nueva	NVARCHAR(50)
+	@Correo					NVARCHAR(50),
+	@Contrasenna_Nueva		NVARCHAR(50),
+	@RecuperarContrasenna	BIT
 AS
 BEGIN
 	SET NOCOUNT ON
@@ -96,11 +97,12 @@ BEGIN
 						WHERE CorreoInstitucional=@Correo)
 
 	IF(@CorreoBuscar IS NOT NULL)	-- Si existe el correo
+	BEGIN
 		UPDATE Usuario
-		SET Contrasena = HASHBYTES('SHA2_512', @Contrasenna_Nueva+CAST(Id AS NVARCHAR(36)))
-		
+		SET Contrasena = HASHBYTES('SHA2_512', @Contrasenna_Nueva+CAST(Id AS NVARCHAR(36))), RecuperarContrasenna = @RecuperarContrasenna
+		WHERE CorreoInstitucional = @CorreoBuscar
+	END	
 END
-GO
 
 -- Modificar Persona
 IF OBJECT_ID('SP_ModificarPersona') IS NOT NULL
@@ -272,6 +274,15 @@ AS
 	SELECT CONCAT(Nombre, ' ' ,Apellido1, ' ', Apellido2) as 'Nombre Completo', Carne, Cedula
 	FROM Persona P JOIN Estudiante E ON P.Cedula = E.CedulaEstudiante
 	WHERE Cedula = @Cedula;
+GO
+
+GO
+CREATE PROC ObtenerPerfilesUsuario
+	@Correo	NVARCHAR(50)
+AS
+	SELECT SiglaCarrera, NumeroEnfasis
+	FROM Tiene_Usuario_Perfil_Enfasis
+	WHERE CorreoInstitucional= @Correo
 GO
 
 --Inserciones
@@ -636,7 +647,8 @@ VALUES	(1, 'Hacer todo'),
 		(205, 'VisualizarResultadosDeEvaluaciones'),
 		(206, 'VerSecciones'),
 		(207, 'VerItems'),
-		(208, 'InsertarFormulario');
+		(208, 'InsertarFormulario'),
+		(209, 'Eliminar perfiles');
 
 INSERT INTO Perfil
 VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
@@ -650,25 +662,24 @@ VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Administrador')
 
+
 INSERT INTO Posee_Enfasis_Perfil_Permiso
 VALUES	(0, 'SC-01234', 'Estudiante', 3),
 		(0, 'SC-01234', 'Administrador', 1),
 		(0, 'SC-01234', 'Administrador', 2),
-		(0, 'SC-01234', 'Profesor', 2)
-
-
-insert into Posee_Enfasis_Perfil_Permiso
-VALUES	(0,'SC-01234', 'Administrador','202'),
-		(0,'SC-01234', 'Administrador','203'),
-		(0,'SC-01234', 'Administrador','204'),
-		(0,'SC-01234', 'Administrador','205'),
-		(0,'SC-01234', 'Administrador','206'),
-		(0,'SC-01234', 'Administrador','207'),
-		(0,'SC-01234', 'Profesor','204'),
-		(0,'SC-01234', 'Profesor','205'),
-		(0,'SC-01234', 'Estudiante','205'),
-		(0,'SC-01234', 'Administrador','208'),
-		(0,'SC-01234', 'Profesor','208')
+		(0, 'SC-01234', 'Profesor', 2),
+		(0,'SC-01234', 'Administrador', 202),
+		(0,'SC-01234', 'Administrador', 203),
+		(0,'SC-01234', 'Administrador', 204),
+		(0,'SC-01234', 'Administrador', 205),
+		(0,'SC-01234', 'Administrador', 206),
+		(0,'SC-01234', 'Administrador', 207),
+		(0,'SC-01234', 'Profesor', 204),
+		(0,'SC-01234', 'Profesor', 205),
+		(0,'SC-01234', 'Estudiante', 205),
+		(0,'SC-01234', 'Administrador', 208),
+		(0,'SC-01234', 'Profesor', 208),
+		(0, 'SC-01234', 'Administrador', 209)
 
 INSERT INTO Provincia
 VALUES	('San José'),

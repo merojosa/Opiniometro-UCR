@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Perfil>
+
+@{
+    ViewBag.Title = "Borrar perfil";
+}
+
+<h2>Borrar perfil</h2>
+
+@using (Html.BeginForm("ObtenerPerfilBorrar", "Perfil", FormMethod.Post))
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+        </tr>
+
+        @{
+            bool marcar_primero = true;
+            foreach (var item in Model)
+            {
+                if (item.Nombre != "Administrador")    // No se puede eliminar el perfil administrador.
+                {
+                    <tr>
+                        <td>
+                            @if (marcar_primero == true)
+                            {
+                                <input type="radio" name="NombrePerfil" checked="checked" value="@item.Nombre" />
+                                marcar_primero = false;
+                            }
+                            else
+                            {
+                                <input type="radio" name="NombrePerfil" value="@item.Nombre" />
+                            }
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+    <input type="submit" value="Borrar" class="btn btn-default" />
+    @Html.ActionLink("Cancelar", "Index", "Home", null, new { @class = "btn btn-default" })
+}

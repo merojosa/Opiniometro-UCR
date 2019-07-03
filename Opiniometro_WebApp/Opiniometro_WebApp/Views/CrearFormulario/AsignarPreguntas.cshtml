@@ -68,24 +68,7 @@
 </div>
 
 
-<div class="form-group">
 
-    @Html.Label("Orden de la Seccion", htmlAttributes: new { @class = "control-label col-md-2" })
-
-    <div class="col-md-4">
-        @Html.EditorFor(model => model.Orden_Seccion, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Orden_Seccion, "", new { @class = "text-danger" })
-
-    </div>
-    @Html.Label("Orden de la pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
-
-    <div class="col-md-4">
-        @Html.EditorFor(model => model.Orden_Item, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Orden_Item, "", new { @class = "text-danger" })
-
-    </div>
-
-</div>
 
 
 
@@ -197,7 +180,7 @@
 
 </div>*@
 
- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalVistaPrevia">
+ <button id ="VistaPrevia" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalVistaPrevia">
     Vista Previa
 </button>
 
@@ -205,16 +188,16 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalVistaPrevia"> <b> Vista previa </b> </h5>
+                <h5 class="modal-title" id="modalVistaPrevia"> <centered><h1> Vista previa </h1> </centered></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                @Html.Partial("VistaFormularioVParcial", Model.Conformados)
+                @Html.Partial("VistaFormularioVParcial", Model.FormularioCompleto)
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -225,7 +208,7 @@
 
 
 @Html.ActionLink("Terminar","Index", "Formulario", null, new { @class = "btn btn-default" })
-  
+
 
 
 <script>
