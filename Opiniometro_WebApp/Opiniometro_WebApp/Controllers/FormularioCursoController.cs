@@ -114,7 +114,7 @@ namespace Opiniometro_WebApp.Controllers
             // tuplas contiene todas las tuplas por insertar a la base.
         }
 
-        public ActionResult ObtenerOpcionesSelUnica(string id, string texto, bool? obs, int tipo)
+        public ActionResult ObtenerOpcionesSelUnica(string id)
         {
             //Console.WriteLine(id);
             //List<SeleccionUnica> preguntas = new List<SeleccionUnica>();
