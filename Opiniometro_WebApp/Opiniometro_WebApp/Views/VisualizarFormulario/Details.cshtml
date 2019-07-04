@@ -23,9 +23,15 @@
 @{string perfil_actual = Opiniometro_WebApp.Controllers.Servicios.IdentidadManager.obtener_perfil_actual(); }
 
 <div class="container">
-
+    @{ string codigoFormularioRec = ""; string cedulaProfesorRec = ""; short annoGrupoRec = 0; byte semestreGrupoRec = 0; byte numeroGrupoRec = 0; string siglaCursoRec = ""; }
     @foreach (var title in Model.Formulario_Respuesta.Take(1))
     {
+        codigoFormularioRec = title.CodigoFormulario;
+        cedulaProfesorRec = title.CedulaProfesor;
+        annoGrupoRec = title.AnnoGrupo;
+        semestreGrupoRec = title.SemestreGrupo;
+        numeroGrupoRec = title.NumeroGrupo;
+        siglaCursoRec = title.SiglaGrupo;
         <td>
             <h4 style="text-align:left;">
                 <b>Sigla:</b>
@@ -125,11 +131,12 @@
                                                         <div id="contenedorGrafo">
                                                             <canvas id="pie_chart_@item_actual"></canvas>
                                                         </div>
+                                                        <button id="changeGraph" >Cambiar Gráfico</button>
                                                         <script>
                                                         $.ajax({
                                                             type: "POST",
                                                             url: "/VisualizarFormulario/GraficoPie/?itemId=@seccion.Item.ItemId",
-                                                            //data{ itemId: @seccion.Item.ItemId },
+                                                            data: "{ 'codigoFormulario': '@codigoFormularioRec', 'cedulaProfesor': '@cedulaProfesorRec', 'annoGrupo': '@annoGrupoRec', 'semestreGrupo': '@semestreGrupoRec', 'numeroGrupo': '@numeroGrupoRec', 'siglaCurso': '@siglaCursoRec', 'itemId': '@seccion.Item.ItemId' }",
                                                             contentType: "application/json; charset=utf-8",
                                                             dataType: "json",
                                                             success: function (chData) {
