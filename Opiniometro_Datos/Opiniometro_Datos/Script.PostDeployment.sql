@@ -25,7 +25,7 @@ BEGIN
 	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
 
 	INSERT INTO Usuario
-	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id, 0)
 END
 GO
 
@@ -103,6 +103,7 @@ BEGIN
 		WHERE CorreoInstitucional = @CorreoBuscar
 	END	
 END
+GO
 
 -- Modificar Persona
 IF OBJECT_ID('SP_ModificarPersona') IS NOT NULL
@@ -115,19 +116,19 @@ CREATE PROCEDURE SP_ModificarPersona
 	@Nombre2			NVARCHAR(50),
 	@Apellido1			NVARCHAR(50),
 	@Apellido2			NVARCHAR(50),
-	@Correo				NVARCHAR(100),
-	@Direccion			NVARCHAR(256)
+	@Correo				NVARCHAR(50)
 AS
 BEGIN
 	UPDATE Persona
-	SET Cedula = @Cedula, Nombre1 = @Nombre1, Nombre2 = @Nombre2, Apellido1 = @Apellido1, Apellido2 = @Apellido2, DireccionDetallada = @DireccionDetallada
+	SET Cedula = @Cedula, Nombre1 = @Nombre1, Nombre2 = @Nombre2, Apellido1 = @Apellido1, Apellido2 = @Apellido2
 	WHERE Cedula = @CedulaBusqueda;
 
 	UPDATE Usuario
 	SET CorreoInstitucional = @Correo
-	WHERE Cedula = @CedulaBusqueda;
+	WHERE Cedula = @Cedula;
 END
 GO
+
 
 IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
@@ -163,7 +164,7 @@ BEGIN
 END
 GO
 
-EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre1='Barry2', @Nombre2='', @Apellido1='Allen2', @Apellido2='Garcia2', @DireccionDetallada='Central City2';
+--EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre1='Barry2', @Nombre2='', @Apellido1='Allen2', @Apellido2='Garcia2', @DireccionDetallada='Central City2';
 
 IF OBJECT_ID('ValorRandom') IS NOT NULL
 	DROP VIEW ValorRandom
@@ -205,18 +206,17 @@ CREATE PROCEDURE SP_AgregarPersonaUsuario
 	@Nombre1		NVARCHAR(50),
 	@Nombre2		NVARCHAR(50),
 	@Apellido1		NVARCHAR(50),
-	@Apellido2		NVARCHAR(50),
-	@Direccion		NVARCHAR(256)
+	@Apellido2		NVARCHAR(50)
 AS
 BEGIN
 	SET NOCOUNT ON
 	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
 
 	INSERT INTO Persona
-	VALUES (@Cedula, @Nombre1, @Nombre2, @Apellido1, @Apellido2, @Direccion)
+	VALUES (@Cedula, @Nombre1, @Nombre2, @Apellido1, @Apellido2)
 	SET @Contrasenna = (SELECT dbo.SF_GenerarContrasena());
 	INSERT INTO Usuario
-	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id, 0)
 END
 GO
 
@@ -281,6 +281,9 @@ AS
 GO
 
 GO
+IF OBJECT_ID('ObtenerPerfilesUsuario') IS NOT NULL
+	DROP PROCEDURE ObtenerPerfilesUsuario
+GO
 CREATE PROC ObtenerPerfilesUsuario
 	@Correo	NVARCHAR(50)
 AS
@@ -292,20 +295,20 @@ GO
 --Inserciones
 
 INSERT INTO Persona
-VALUES	('116720500', 'Jose Andrés', NULL,'Mejías', 'Rojas', 'Desamparados de Alajuela.'),
-		('115003456', 'Daniel', NULL, 'Escalante', 'Perez', 'Desamparados de San José.'),
-		('117720910', 'Jose Andrés', NULL, 'Mejías', 'Rojas', 'La Fortuna de San Carlos.'),
-		('236724507', 'Jose Andrés', NULL, 'Mejías', 'Rojas', 'Sarchí, Alajuela.'),
+VALUES	('116720500', 'Jose Andrés', NULL,'Mejías', 'Rojas'),
+		('115003456', 'Daniel', NULL, 'Escalante', 'Perez'),
+		('117720910', 'Jose Andrés', NULL, 'Mejías', 'Rojas'),
+		('236724507', 'Jose Andrés', NULL, 'Mejías', 'Rojas'),
 		--Agregado de datos para visualizacion a cargo de CX Solutions
-		('100000001', 'CX', NULL, 'Solutions', 'S.A.', 'San Pedro Montes de Oca'),
-		('100000002', 'Marta', NULL, 'Rojas', 'Sanches', '300 metros norte de Pulmitan'),--Profesora
+		('100000001', 'CX', NULL, 'Solutions', 'S.A.'),
+		('100000002', 'Marta', NULL, 'Rojas', 'Sanches'),--Profesora
 		--Estudiantes
-		('100000003', 'Juan', NULL, 'Briceño', 'Lupon', '400 metros norte del Heraldo de la Grieta'),
-		('100000005', 'Pepito', NULL, 'Fonsi', 'Monge', '20 metros norte del Blue del lado Rojo'),
-		('100000004', 'Maria', NULL, 'Fallas', 'Merdi', 'Costado este del estandarte de top'),
-		('117720912', 'Jorge', NULL, 'Solano', 'Carrillo', 'La Fortuna de San Carlos.'),
-		('236724501', 'Carolina', NULL, 'Gutierrez', 'Lozano', 'Sarchí, Alajuela.'),
-		('123456789', 'Ortencia', NULL, 'Cañas', 'Griezman', 'San Pedro de Montes de Oca');
+		('100000003', 'Juan', NULL, 'Briceño', 'Lupon'),
+		('100000005', 'Pepito', NULL, 'Fonsi', 'Monge'),
+		('100000004', 'Maria', NULL, 'Fallas', 'Merdi'),
+		('117720912', 'Jorge', NULL, 'Solano', 'Carrillo'),
+		('236724501', 'Carolina', NULL, 'Gutierrez', 'Lozano'),
+		('123456789', 'Ortencia', NULL, 'Cañas', 'Griezman');
 
 INSERT INTO Estudiante VALUES 
  ('116720500', 'B11111')
@@ -433,6 +436,9 @@ VALUES ('CI1330', 100, 'SC-01234'),
 
 --DROP PROCEDURE CursosSegunCarrera
 --Obtiene la lista de cursos que pertenecen a cierta carrera
+
+IF OBJECT_ID('CursosSegunCarrera') IS NOT NULL
+	DROP PROCEDURE CursosSegunCarrera
 GO
 CREATE PROCEDURE CursosSegunCarrera
 @siglaCarrera NVARCHAR(10)
@@ -447,6 +453,9 @@ END
 GO
 
 --Obtiene la lista de cursos que pertenecen a cierto semestre
+IF OBJECT_ID('CursosSegunSemestre') IS NOT NULL
+	DROP PROCEDURE CursosSegunSemestre
+GO
 CREATE PROCEDURE CursosSegunSemestre
 @semestre TINYINT
 AS
@@ -460,6 +469,9 @@ END
 GO
 
 --Obtiene la lista de cursos que pertenecen a cierto año
+IF OBJECT_ID('CursosSegunAnno') IS NOT NULL
+	DROP PROCEDURE CursosSegunAnno
+GO
 CREATE PROCEDURE CursosSegunAnno
 @anno SMALLINT
 AS
@@ -662,7 +674,7 @@ VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
 
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
-		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
+		('admin@ucr.ac.cr', 0, 'SC-01234', 'Administrador'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Administrador')
 
@@ -839,15 +851,17 @@ IF OBJECT_ID('SP_GenerarContrasenaHash') IS NOT NULL
 	DROP PROCEDURE SP_GenerarContrasenaHash
 GO
 CREATE PROCEDURE SP_GenerarContrasenaHash
-@id	UNIQUEIDENTIFIER,
+@id	NVARCHAR(50),
 @contrasena	NVARCHAR(10),
-@contrasenaHash NVARCHAR(50) OUTPUT
+@contrasenaHash VARBINARY(50) OUTPUT
 AS
 BEGIN
 	SET @contrasenaHash = HASHBYTES('SHA2_512', @contrasena+CAST(@id AS NVARCHAR(36)))
 END
 GO
 
+IF OBJECT_ID('TR_InsertaUsuario') IS NOT NULL
+	DROP TRIGGER TR_InsertaUsuario
 GO
 CREATE TRIGGER TR_InsertaUsuario
 ON Usuario INSTEAD OF INSERT
@@ -871,9 +885,11 @@ BEGIN
 	END
 END;
 
+IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
+	DROP TRIGGER TR_InsertaPersona
 GO
 CREATE TRIGGER TR_InsertaPersona
-ON Usuario INSTEAD OF INSERT
+ON Persona INSTEAD OF INSERT
 AS
 BEGIN
 	DECLARE @cedula CHAR(10)
@@ -881,10 +897,15 @@ BEGIN
 	DECLARE @nombre2 NVARCHAR(51)
 	DECLARE @apellido1 NVARCHAR(51)
 	DECLARE @apellido2 NVARCHAR(51)
+	--DECLARE @correoInstitucional NVARCHAR(51)
 
-
-	SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
+	--SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
+	
 	SET @cedula					= (SELECT Cedula FROM inserted)
+	SET @nombre1				= (SELECT Nombre1 FROM inserted)
+	SET @nombre2				= (SELECT Nombre2 FROM inserted)
+	SET @apellido1				= (SELECT Apellido1 FROM inserted)
+	SET @apellido2				= (SELECT Apellido2 FROM inserted)
 
 	IF((@cedula NOT LIKE '') AND  (LEN(@cedula) = 9) AND (@nombre1 NOT LIKE '') AND (LEN(@nombre1) <= 50) 
 	AND  (LEN(@nombre2) <= 50)  AND (@apellido1 NOT LIKE '') AND (LEN(@apellido1) <= 50)  
