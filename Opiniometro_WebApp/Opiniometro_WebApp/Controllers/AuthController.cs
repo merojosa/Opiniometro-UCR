@@ -20,6 +20,7 @@ namespace Opiniometro_WebApp.Controllers
 {
     public class AuthController : Controller
     {
+        private ServicioCorreo servicio_correo = new ServicioCorreo();
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
         private const string caracteres_aleatorios = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -177,34 +178,10 @@ namespace Opiniometro_WebApp.Controllers
                     + contrasenna_generada + "</b>";
 
                 // Envio correo con la contrasenna autogenerada
-                EnviarCorreo(usuario.CorreoInstitucional, "Cambio de contraseña - Opiniómetro@UCR", contenido);
+                servicio_correo.EnviarCorreo(usuario.CorreoInstitucional, "Cambio de contraseña - Opiniómetro@UCR", contenido);
             }
             ModelState.AddModelError(string.Empty, "");
             return View(usuario);
-        }
-
-        /*
-         * EFECTO: envia un correo con una contrasena aleatoria.
-         * REQUIERE: el correo de la persona que va a recibir la contrasena, el asunto de la persona, y el contenido del mismo.
-         * MODIFICA: n/a
-         */
-        private void EnviarCorreo(string correo_receptor, string asunto, string contenido)
-        {
-            string correo_emisor = System.Configuration.ConfigurationManager.AppSettings["CorreoEmisor"].ToString();
-            string contrasenna = System.Configuration.ConfigurationManager.AppSettings["ContrasennaEmisor"].ToString();
-
-            SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587);
-            cliente.EnableSsl = true;
-            cliente.Timeout = 100000;
-            cliente.DeliveryMethod = SmtpDeliveryMethod.Network;
-            cliente.UseDefaultCredentials = false;
-            cliente.Credentials = new NetworkCredential(correo_emisor, contrasenna);
-
-            MailMessage correo = new MailMessage(correo_emisor, correo_receptor, asunto, contenido);
-            correo.IsBodyHtml = true;
-            correo.BodyEncoding = UTF8Encoding.UTF8;
-            cliente.Send(correo);
-
         }
 
         /*

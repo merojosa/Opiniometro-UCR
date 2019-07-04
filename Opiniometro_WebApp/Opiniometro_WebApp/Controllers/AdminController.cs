@@ -17,12 +17,14 @@ using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Net.Mail;
 using System.Net;
+using Opiniometro_WebApp.Controllers.Servicios;
 
 namespace Opiniometro_WebApp.Controllers
 {
     [Authorize]
     public class AdminController : Controller
     {
+        private ServicioCorreo servicio_correo = new ServicioCorreo();
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
         private const string caracteres_aleatorios = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -140,7 +142,7 @@ namespace Opiniometro_WebApp.Controllers
                      + contrasenna_generada + "</b>";
 
                     // Envio correo con la contrasenna autogenerada
-                    EnviarCorreo(per.usuario.CorreoInstitucional, "Usuario creado - Opiniómetro@UCR", contenido);
+                    servicio_correo.EnviarCorreo(per.usuario.CorreoInstitucional, "Usuario creado - Opiniómetro@UCR", contenido);
                     return RedirectToAction("VerPersonas");
                 }
             }
@@ -149,25 +151,6 @@ namespace Opiniometro_WebApp.Controllers
 
                 throw;
             }
-
-        }
-
-        private void EnviarCorreo(string receptor, string asunto, string contenido)
-        {
-            string autor = System.Configuration.ConfigurationManager.AppSettings["CorreoEmisor"].ToString();
-            string contrasenna = System.Configuration.ConfigurationManager.AppSettings["ContrasennaEmisor"].ToString();
-
-            SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587);
-            cliente.EnableSsl = true;
-            cliente.Timeout = 100000;
-            cliente.DeliveryMethod = SmtpDeliveryMethod.Network;
-            cliente.UseDefaultCredentials = false;
-            cliente.Credentials = new NetworkCredential(autor, contrasenna);
-
-            MailMessage correo = new MailMessage(autor, receptor, asunto, contenido);
-            correo.IsBodyHtml = true;
-            correo.BodyEncoding = UTF8Encoding.UTF8;
-            cliente.Send(correo);
 
         }
 
@@ -197,4 +180,4 @@ namespace Opiniometro_WebApp.Controllers
 
 
     }
-    }
+}

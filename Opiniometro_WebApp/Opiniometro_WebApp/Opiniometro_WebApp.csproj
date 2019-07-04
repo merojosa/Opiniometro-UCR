@@ -206,6 +206,7 @@
     <Compile Include="Controllers\Servicios\IdPermiso.cs" />
     <Compile Include="Controllers\Servicios\IdentidadManager.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
+    <Compile Include="Controllers\Servicios\ServicioCorreo.cs" />
     <Compile Include="Controllers\VisualizarFormularioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
