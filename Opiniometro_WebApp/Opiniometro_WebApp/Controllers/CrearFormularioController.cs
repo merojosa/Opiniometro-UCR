@@ -56,7 +56,8 @@ namespace Opiniometro_WebApp.Controllers
 
         };
             //ViewBag.CodigoFormulario = new SelectList(db.Conformado_For_Sec.Distinct(), "CodigoFormulario", "CodigoFormulario");
-            ViewBag.CodigoFormulario = new SelectList(db.Formulario.Distinct(), "CodigoFormulario", "CodigoFormulario");
+            ViewBag.CodigoFormulario = new SelectList(db.Formulario.Distinct(), "CodigoFormulario", "Nombre");
+            ViewBag.TituloSeccion = new SelectList(db.Conformado_For_Sec.Where(m => m.CodigoFormulario == codForm), "TituloSeccion", "TituloSeccion");
 
             return View(crearFormulario);
         }

@@ -5,9 +5,17 @@
 <h2>Copiar Secciones</h2>
 
 <div class="form-group">
-    @Html.Label( "Formulario", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label("Formulario", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownList("Formulario", new SelectList(ViewBag.CodigoFormulario, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control" })
-        @*@Html.ValidationMessageFor(model => model.NombreCategoria, "", new { @class = "text-danger" })*@
+        @Html.DropDownList("Formulario", new SelectList(ViewBag.CodigoFormulario, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control", @onchange = "" })
+
     </div>
+
+    @Html.Label("Sección", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownList("Sección", new SelectList(ViewBag.TituloSeccion, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control", @onchange = "" })
+
+    </div>
+
+
 </div>
