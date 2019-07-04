@@ -129,40 +129,6 @@ BEGIN
 END
 GO
 
-IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
-	DROP TRIGGER TR_InsertaPersona
-GO
-CREATE TRIGGER TR_InsertaPersona
-ON Persona INSTEAD OF INSERT
-AS
-BEGIN
-	DECLARE @cedula CHAR(10)
-	DECLARE @nombre NVARCHAR(51)
-	DECLARE @apellido1 NVARCHAR(51)
-	DECLARE @apellido2 NVARCHAR(51)
-	
-	SET @cedula = (SELECT Cedula FROM inserted)
-	SET @nombre = (SELECT Nombre1 FROM inserted)
-	SET @apellido1 = (SELECT Apellido1 FROM inserted)
-	SET @apellido2 = (SELECT Apellido2 FROM inserted)
-
-	BEGIN TRY
-	IF((@cedula IS NOT NULL) AND (@nombre IS NOT NULL) AND (@apellido1 IS NOT NULL) AND (@apellido2 IS NOT NULL) AND (LEN(@cedula) = 9) AND (LEN(@nombre) < 50) AND (LEN(@apellido1) < 50) AND (LEN(@apellido2) < 50))
-	BEGIN
-		INSERT INTO Persona (Cedula, Nombre1, Apellido1, Apellido2)
-		VALUES (@cedula, @nombre, @apellido1, @apellido2)
-	END
-	ELSE
-	BEGIN
-		RAISERROR('Datos incorrectos',16,1)
-		RETURN
-	END
-	END TRY
-
-	BEGIN CATCH 
-		PRINT 'ERROR: ' + ERROR_MESSAGE( );
-	END CATCH
-END;
 
 IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
@@ -198,7 +164,7 @@ BEGIN
 END
 GO
 
-EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre1='Barry2', @Nombre2='', @Apellido1='Allen2', @Apellido2='Garcia2', @DireccionDetallada='Central City2';
+--EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre1='Barry2', @Nombre2='', @Apellido1='Allen2', @Apellido2='Garcia2', @DireccionDetallada='Central City2';
 
 IF OBJECT_ID('ValorRandom') IS NOT NULL
 	DROP VIEW ValorRandom
@@ -247,7 +213,7 @@ BEGIN
 	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
 
 	INSERT INTO Persona
-	VALUES (@Cedula, @Nombre1, @Nombre2, @Apellido1, @Apellido2, @Direccion)
+	VALUES (@Cedula, @Nombre1, @Nombre2, @Apellido1, @Apellido2)
 	SET @Contrasenna = (SELECT dbo.SF_GenerarContrasena());
 	INSERT INTO Usuario
 	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id, 0)
@@ -894,6 +860,8 @@ BEGIN
 END
 GO
 
+IF OBJECT_ID('TR_InsertaUsuario') IS NOT NULL
+	DROP TRIGGER TR_InsertaUsuario
 GO
 CREATE TRIGGER TR_InsertaUsuario
 ON Usuario INSTEAD OF INSERT
@@ -917,9 +885,11 @@ BEGIN
 	END
 END;
 
+IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
+	DROP TRIGGER TR_InsertaPersona
 GO
 CREATE TRIGGER TR_InsertaPersona
-ON Usuario INSTEAD OF INSERT
+ON Persona INSTEAD OF INSERT
 AS
 BEGIN
 	DECLARE @cedula CHAR(10)
@@ -927,10 +897,15 @@ BEGIN
 	DECLARE @nombre2 NVARCHAR(51)
 	DECLARE @apellido1 NVARCHAR(51)
 	DECLARE @apellido2 NVARCHAR(51)
+	--DECLARE @correoInstitucional NVARCHAR(51)
 
-
-	SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
+	--SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
+	
 	SET @cedula					= (SELECT Cedula FROM inserted)
+	SET @nombre1				= (SELECT Nombre1 FROM inserted)
+	SET @nombre2				= (SELECT Nombre2 FROM inserted)
+	SET @apellido1				= (SELECT Apellido1 FROM inserted)
+	SET @apellido2				= (SELECT Apellido2 FROM inserted)
 
 	IF((@cedula NOT LIKE '') AND  (LEN(@cedula) = 9) AND (@nombre1 NOT LIKE '') AND (LEN(@nombre1) <= 50) 
 	AND  (LEN(@nombre2) <= 50)  AND (@apellido1 NOT LIKE '') AND (LEN(@apellido1) <= 50)  

@@ -245,7 +245,7 @@ namespace Opiniometro_WebApp.Controllers
                     InsertarFilaEnTablaEnMemoria(filaNueva, usuarioBD);
                     usuarioBD.AcceptChanges();
                 }
-                if (filaNueva["Perfil"] == "Estudiante")
+                if (filaNueva["Perfil"].ToString().CompareTo("Estudiante") == 0)
                 {
                     if (db.Estudiante.Find(filaNueva["Cedula"]) == null)
                     {
@@ -258,7 +258,7 @@ namespace Opiniometro_WebApp.Controllers
                         empadronadoBD.AcceptChanges();
                     }
                 }
-                else if (filaNueva["Perfil"] == "Profesor")
+                else if (filaNueva["Perfil"].ToString().CompareTo("Profesor") == 0)
                 {
                     if (db.Profesor.Find(filaNueva["Cedula"]) == null)
                     {

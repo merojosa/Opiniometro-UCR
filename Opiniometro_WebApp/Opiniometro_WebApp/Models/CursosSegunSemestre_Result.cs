@@ -11,12 +11,11 @@ namespace Opiniometro_WebApp.Models
 {
     using System;
     
-    public partial class sp_helpdiagrams_Result
+    public partial class CursosSegunSemestre_Result
     {
-        public string Database { get; set; }
-        public string Name { get; set; }
-        public int ID { get; set; }
-        public string Owner { get; set; }
-        public int OwnerID { get; set; }
+        public string Nombre { get; set; }
+        public string Sigla { get; set; }
+        public byte Tipo { get; set; }
+        public string CodigoUnidad { get; set; }
     }
 }

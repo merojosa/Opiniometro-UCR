@@ -8,6 +8,7 @@ namespace Opiniometro_WebApp.Models
         [Required]
         [StringLength(9, MinimumLength = 9)]
         [DataType(DataType.Text)]
+        [RegularExpression(@"[0-9]+")]
         public string Cedula;
 
         [Required]
@@ -62,7 +63,7 @@ namespace Opiniometro_WebApp.Models
     {
         [Required]
         [StringLength(9, MinimumLength = 9)]
-        [RegularExpression([0-9]+)]
+        [RegularExpression(@"[0-9]+")]
         [DataType(DataType.Text)]
         public string Cedula;
 
@@ -119,7 +120,7 @@ namespace Opiniometro_WebApp.Models
         [Required]
         [StringLength(9, MinimumLength = 9)]
         [DataType(DataType.Text)]
-        [RegularExpression([0-9]+)]
+        [RegularExpression(@"[0-9]+")]
         public string CedulaEstudiante;
 
         [Required]
@@ -133,7 +134,7 @@ namespace Opiniometro_WebApp.Models
         [Required]
         [StringLength(9, MinimumLength = 9)]
         [DataType(DataType.Text)]
-        [RegularExpression([0-9]+)]
+        [RegularExpression(@"[0-9]+")]
         public string CedulaEstudiante;
 
         [Required]
@@ -179,7 +180,7 @@ namespace Opiniometro_WebApp.Models
         [Required]
         [StringLength(9, MinimumLength = 9)]
         [DataType(DataType.Text)]
-        [RegularExpression([0-9]+)]
+        [RegularExpression(@"[0-9]+")]
         public string CedulaProfesor;
     }
 

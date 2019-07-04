@@ -10,14 +10,12 @@
 namespace Opiniometro_WebApp.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class CursosSegunAnno_Result
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public string Nombre { get; set; }
+        public string Sigla { get; set; }
+        public byte Tipo { get; set; }
+        public string CodigoUnidad { get; set; }
     }
 }

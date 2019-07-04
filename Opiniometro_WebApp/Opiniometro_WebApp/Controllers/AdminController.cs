@@ -40,7 +40,7 @@ namespace Opiniometro_WebApp.Controllers
                 var query = from p in listaPersonas
                             join u in listaUsuarios on p.Cedula equals u.Cedula into table1
                             from u in table1
-                            where p.Nombre.Contains(nom)
+                            where p.Nombre1.Contains(nom)
                             where p.Cedula.Contains(ced)
                             select new ViewModelAdmin { persona = p, usuario = u };
                 return View(query);
@@ -65,7 +65,7 @@ namespace Opiniometro_WebApp.Controllers
                 var query = from p in listaPersonas
                             join u in listaUsuarios on p.Cedula equals u.Cedula into table1
                             from u in table1
-                            where p.Nombre.Contains(nom)
+                            where p.Nombre1.Contains(nom)
                             select new ViewModelAdmin { persona = p, usuario = u };
                 return View(query);
             }
@@ -122,14 +122,14 @@ namespace Opiniometro_WebApp.Controllers
         {
             try
             {
-                if ((per.Persona.Cedula != null) && (per.Persona.Cedula != null) && (per.Persona.Nombre != null) && (per.Persona.Apellido1 != null) && (per.Persona.Apellido2 != null)
-                    && (per.usuario.CorreoInstitucional != null) && (per.Persona.Direccion != null)
-                    && (per.Persona.Cedula.Length == 9) && (per.Persona.Nombre.Length <= 50) && (per.Persona.Apellido1.Length <= 50) && (per.Persona.Apellido2.Length <= 50)
-                    && (per.usuario.CorreoInstitucional.Length <= 100) && (per.Persona.Direccion.Length <= 256))
+                if ((per.Persona.Cedula != null) && (per.Persona.Cedula != null) && (per.Persona.Nombre1 != null) && (per.Persona.Apellido1 != null) && (per.Persona.Apellido2 != null)
+                    && (per.usuario.CorreoInstitucional != null) 
+                    && (per.Persona.Cedula.Length == 9) && (per.Persona.Nombre1.Length <= 50) && (per.Persona.Apellido1.Length <= 50) && (per.Persona.Apellido2.Length <= 50)
+                    && (per.usuario.CorreoInstitucional.Length <= 100))
                 {
                     using (db)
                     {
-                        db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre, per.Persona.Apellido1, per.Persona.Apellido2, per.usuario.CorreoInstitucional, per.Persona.Direccion);
+                        db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre1, "",per.Persona.Apellido1, per.Persona.Apellido2, per.usuario.CorreoInstitucional);
                     }
                 }
                 else
@@ -161,15 +161,15 @@ namespace Opiniometro_WebApp.Controllers
         {
             try
             {
-                if ((per.Persona.Cedula != null) && (per.Persona.Cedula != null) && (per.Persona.Nombre != null) && (per.Persona.Apellido1 != null) && (per.Persona.Apellido2 != null)
-                    && (per.usuario.CorreoInstitucional != null) && (per.Persona.Direccion != null)
-                    && (per.Persona.Cedula.Length == 9) && (per.Persona.Nombre.Length <= 50) && (per.Persona.Apellido1.Length <= 50) && (per.Persona.Apellido2.Length <= 50)
-                    && (per.usuario.CorreoInstitucional.Length <= 100) && (per.Persona.Direccion.Length <= 256))
+                if ((per.persona.Cedula != null) && (per.persona.Cedula != null) && (per.persona.Nombre1 != null) && (per.persona.Apellido1 != null) && (per.persona.Apellido2 != null)
+                    && (per.usuario.CorreoInstitucional != null) 
+                    && (per.persona.Cedula.Length == 9) && (per.persona.Nombre1.Length <= 50) && (per.persona.Apellido1.Length <= 50) && (per.persona.Apellido2.Length <= 50)
+                    && (per.usuario.CorreoInstitucional.Length <= 100))
                 {
                     using (db)
                     {
                         string contrasenna_generada = GenerarContrasenna(10);
-                    db.SP_AgregarPersonaUsuario(per.usuario.CorreoInstitucional, contrasenna_generada, per.persona.Cedula, per.persona.Nombre, per.persona.Apellido1, per.persona.Apellido2, per.persona.Direccion);
+                    db.SP_AgregarPersonaUsuario(per.usuario.CorreoInstitucional, contrasenna_generada, per.persona.Cedula, per.persona.Nombre1, "", per.persona.Apellido1, per.persona.Apellido2);
 
                         string contenido =
                          "<p>Se le ha creado un usuario en Opiniometro@UCR.</p>" +
@@ -180,7 +180,6 @@ namespace Opiniometro_WebApp.Controllers
                         EnviarCorreo(per.usuario.CorreoInstitucional, "Usuario creado - Opiniómetro@UCR", contenido);
                     }
                     return RedirectToAction("VerPersonas");
-                    }
                 }
                 else
                 {
@@ -193,6 +192,7 @@ namespace Opiniometro_WebApp.Controllers
                 throw;
             }
 
+            return null;
         }
 
         private void EnviarCorreo(string receptor, string asunto, string contenido)
