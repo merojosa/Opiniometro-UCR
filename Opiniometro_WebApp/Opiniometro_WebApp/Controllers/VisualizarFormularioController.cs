@@ -220,6 +220,7 @@ namespace Opiniometro_WebApp.Controllers
             //int tamanio = result.Count;
             List<object> x = new List<object>();
             List<object> y = new List<object>();
+
             //string[] leyenda = new string[tamanio];
             //int?[] cntResps = new int?[tamanio];
             //int iter = 0;
@@ -231,6 +232,10 @@ namespace Opiniometro_WebApp.Controllers
                 x.Add(itemR.Respuesta);
                 y.Add(itemR.cntResp);
             }
+
+            //Calcular la mediana
+
+
             List<object> lista = new List<object> { x, y };
             return Json(lista, JsonRequestBehavior.AllowGet);
         }

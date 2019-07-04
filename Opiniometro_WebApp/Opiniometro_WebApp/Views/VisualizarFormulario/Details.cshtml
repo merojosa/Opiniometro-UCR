@@ -159,10 +159,14 @@
                                                                 //for (var i = 0; i < tamanio; i++)
                                                                 document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: " + (tamanio).toString() + " ";
 
-                                                                //Promedio
-                                                                document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Promedio: " + (promedio).toString() + " ";
-                                                                //Mediana
-                                                                //Desviacion Estandar
+                                                                if ('@seccion.Item.TipoPregunta' == 4 || '@seccion.Item.TipoPregunta' == 5)
+                                                                {
+                                                                    //Promedio
+                                                                    document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Promedio: " + (promedio).toString() + " ";
+                                                                    //Mediana
+                                                                    //Desviacion Estandar
+                                                                }
+                                                              
                                                             
 
                                                                 @*var iter = aLabels;
