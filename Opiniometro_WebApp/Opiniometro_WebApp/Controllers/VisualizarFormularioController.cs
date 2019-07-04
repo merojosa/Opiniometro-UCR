@@ -221,6 +221,9 @@ namespace Opiniometro_WebApp.Controllers
             List<object> x = new List<object>();
             List<object> y = new List<object>();
 
+            List<int?> listaOrdenada = new List<int?>();
+            int size = 0;
+            int? mediana = 0;
             //string[] leyenda = new string[tamanio];
             //int?[] cntResps = new int?[tamanio];
             //int iter = 0;
@@ -231,12 +234,23 @@ namespace Opiniometro_WebApp.Controllers
                 //iter++;
                 x.Add(itemR.Respuesta);
                 y.Add(itemR.cntResp);
+                listaOrdenada.Add(itemR.cntResp);
+            }
+
+            listaOrdenada.Sort();
+            size = listaOrdenada.Count();
+            if (size % 2 == 0)
+            {
+                mediana = (listaOrdenada[(size/2) - 1] + listaOrdenada[(size/2)]) / 2;
+            }
+            else
+            {
+                mediana = listaOrdenada[(size / 2)]; 
             }
 
             //Calcular la mediana
 
-
-            List<object> lista = new List<object> { x, y };
+            List<object> lista = new List<object> { x, y, mediana };
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
 

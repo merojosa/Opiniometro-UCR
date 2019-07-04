@@ -143,6 +143,7 @@
                                                                 var aData = chData;
                                                                 var aLabels = aData[0];
                                                                 var aDatasets1 = aData[1];
+                                                                var aMediana = aData[2]
 
                                                                 var tamanio = 0;
                                                                 var cantidadOpciones = 0;
@@ -164,6 +165,7 @@
                                                                     //Promedio
                                                                     document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Promedio: " + (promedio).toString() + " ";
                                                                     //Mediana
+                                                                    document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Mediana: " + (aMediana).toString() + " ";
                                                                     //Desviacion Estandar
                                                                 }
                                                               
