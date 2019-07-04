@@ -3,20 +3,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Opiniometro_WebApp.Models
 {
-    public class DatosEstudianteMetadata
+    public class DatosProvisionadosMetadata
     {
         [Required]
         [StringLength(9, MinimumLength = 9)]
         [DataType(DataType.Text)]
         public string Cedula;
 
-        /*[Required]
-        public string Perfil { get; set; }*/
-
         [Required]
-        [StringLength(6, MinimumLength = 6)]
+        [StringLength(30)]
         [DataType(DataType.Text)]
-        public string Carne;
+        [RegularExpression(@"Estudiante|Profesor|Administrador")]
+        public string Perfil { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -43,10 +41,10 @@ namespace Opiniometro_WebApp.Models
         [DataType(DataType.EmailAddress)]
         public string CorreoInstitucional;
 
-        [Required]
-        [StringLength(200)]
+        
+        [StringLength(6, MinimumLength = 6)]
         [DataType(DataType.Text)]
-        public string DireccionDetallada;
+        public string Carne;
 
         [Required]
         [StringLength(10)]
@@ -64,6 +62,7 @@ namespace Opiniometro_WebApp.Models
     {
         [Required]
         [StringLength(9, MinimumLength = 9)]
+        [RegularExpression([0-9]+)]
         [DataType(DataType.Text)]
         public string Cedula;
 
@@ -103,7 +102,7 @@ namespace Opiniometro_WebApp.Models
         [Required]
         public string Contrasena;
 
-
+        [Required]
         public bool Activo;
 
         [Required]
@@ -120,6 +119,7 @@ namespace Opiniometro_WebApp.Models
         [Required]
         [StringLength(9, MinimumLength = 9)]
         [DataType(DataType.Text)]
+        [RegularExpression([0-9]+)]
         public string CedulaEstudiante;
 
         [Required]
@@ -133,6 +133,7 @@ namespace Opiniometro_WebApp.Models
         [Required]
         [StringLength(9, MinimumLength = 9)]
         [DataType(DataType.Text)]
+        [RegularExpression([0-9]+)]
         public string CedulaEstudiante;
 
         [Required]
@@ -149,8 +150,8 @@ namespace Opiniometro_WebApp.Models
 
     public class Tiene_Usuario_Perfil_EnfasisMetadata
     {
+        
         [Required]
-        Required]
         [StringLength(50)]
         [RegularExpression(@"([\w]+\.)([\w])(@ucr.ac.cr)")]
         [DataType(DataType.EmailAddress)]
@@ -172,4 +173,15 @@ namespace Opiniometro_WebApp.Models
         public string NombrePerfil;
 
     }
+
+    public class ProfesorMetadata
+    {
+        [Required]
+        [StringLength(9, MinimumLength = 9)]
+        [DataType(DataType.Text)]
+        [RegularExpression([0-9]+)]
+        public string CedulaProfesor;
+    }
+
+    
 }

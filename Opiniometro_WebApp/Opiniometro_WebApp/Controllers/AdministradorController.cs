@@ -28,7 +28,7 @@ using System.Reflection;
 
 namespace Opiniometro_WebApp.Controllers
 {
-    enum Tablas { DatosEstudiante, Persona, Usuario, Estudiante, Empadronado, TieneUsuarioPerfilEnfasis};
+    enum Tablas { DatosProvisionados, Persona, Usuario, Estudiante, Empadronado, Profesor, TieneUsuarioPerfilEnfasis};
 
     public class AdministradorController : Controller
     {
@@ -103,7 +103,7 @@ namespace Opiniometro_WebApp.Controllers
          */
         private DataTable ProcesarArchivo(string path)
         {
-            DataTable filasValidas = ObtenerTabla(Tablas.DatosEstudiante);//CrearTablaUsuarios();
+            DataTable filasValidas = ObtenerTabla(Tablas.DatosProvisionados);//CrearTablaUsuarios();
             DataTable filasInvalidas = CrearTablaUsuariosInvalidos();
             string filaLeida = String.Empty;
             DataRow tupla;
@@ -140,14 +140,15 @@ namespace Opiniometro_WebApp.Controllers
             filasValidas.AcceptChanges();
 
             //Tablas en memoria con que poseen el mismo esquema que las tablas en la base de datos.
-            DataTable personaBD = ObtenerTabla(Tablas.Persona);//CrearTablaPersonaBD();
-            DataTable usuarioBD = ObtenerTabla(Tablas.Usuario);//CrearTablaUsuarioBD();
+            DataTable personaBD = ObtenerTabla(Tablas.Persona);
+            DataTable usuarioBD = ObtenerTabla(Tablas.Usuario);
             DataTable estudianteBD = ObtenerTabla(Tablas.Estudiante);
             DataTable empadronadoBD = ObtenerTabla(Tablas.Empadronado);
+            DataTable profesorBD = ObtenerTabla(Tablas.Profesor);
             DataTable tieneUsuarioPerfilEnfasisBD = ObtenerTabla(Tablas.TieneUsuarioPerfilEnfasis);
 
             //Multicast
-            MulticastDatosProvisionados(filasValidas, personaBD, usuarioBD, estudianteBD, empadronadoBD, tieneUsuarioPerfilEnfasisBD);
+            MulticastDatosProvisionados(filasValidas, personaBD, usuarioBD, estudianteBD, empadronadoBD, profesorBD, tieneUsuarioPerfilEnfasisBD);
             filasValidas.Dispose();
 
             if (personaBD.Rows.Count > 0)
@@ -197,6 +198,10 @@ namespace Opiniometro_WebApp.Controllers
 
             personaBD.Dispose();
             usuarioBD.Dispose();
+            estudianteBD.Dispose();
+            empadronadoBD.Dispose();
+            profesorBD.Dispose();
+            tieneUsuarioPerfilEnfasisBD.Dispose();
             filasInvalidas.AcceptChanges();
             return filasInvalidas;
         }
@@ -206,7 +211,7 @@ namespace Opiniometro_WebApp.Controllers
          * REQUIERE: Tabla en memoria que contiene los datos provisionados en el archivo csv,
          * MODIFICA: n/a
          */
-        private int MulticastDatosProvisionados(DataTable filasValidas, DataTable personaBD, DataTable usuarioBD, DataTable estudianteBD, DataTable empadronadoBD, DataTable tieneUsuarioPerfilEnfasisBD)
+        private int MulticastDatosProvisionados(DataTable filasValidas, DataTable personaBD, DataTable usuarioBD, DataTable estudianteBD, DataTable empadronadoBD, DataTable profesorBD, DataTable tieneUsuarioPerfilEnfasisBD)
         {
             /*
                  * Orden de insercion
@@ -226,32 +231,45 @@ namespace Opiniometro_WebApp.Controllers
                  */
             for (int indexFilasValidas = 0; indexFilasValidas < filasValidas.Rows.Count; ++indexFilasValidas)
             {
-                Persona existePersona = null;
-                Usuario existeUsuario = null;
+                
                 DataRow filaNueva = filasValidas.Rows[indexFilasValidas];
-                if (db.Persona.Find(filasValidas.Rows[indexFilasValidas]["Cedula"]) == null)
+
+
+                if (db.Persona.Find(filaNueva["Cedula"]) == null)
                 {
                     InsertarFilaEnTablaEnMemoria(filaNueva, personaBD);
                     personaBD.AcceptChanges();
                 }
-                if (db.Usuario.Find(filasValidas.Rows[indexFilasValidas]["Cedula"]) == null)
+                if (db.Usuario.Find(filaNueva["Cedula"]) == null)
                 {
                     InsertarFilaEnTablaEnMemoria(filaNueva, usuarioBD);
                     usuarioBD.AcceptChanges();
                 }
-                if(db.Estudiante.Find(filasValidas.Rows[indexFilasValidas]["Cedula"]) == null)
+                if (filaNueva["Perfil"] == "Estudiante")
                 {
-                    InsertarFilaEnTablaEnMemoria(filaNueva, estudianteBD);
-                    estudianteBD.AcceptChanges();
+                    if (db.Estudiante.Find(filaNueva["Cedula"]) == null)
+                    {
+                        InsertarFilaEnTablaEnMemoria(filaNueva, estudianteBD);
+                        estudianteBD.AcceptChanges();
+                    }
+                    if (db.Empadronado.Find(filaNueva["Cedula"], filaNueva["NumeroEnfasis"], filaNueva["SiglaCarrera"]) == null)
+                    {
+                        InsertarFilaEnTablaEnMemoria(filaNueva, empadronadoBD);
+                        empadronadoBD.AcceptChanges();
+                    }
                 }
-                if(db.Empadronado.Find(filasValidas.Rows[indexFilasValidas]["Cedula"], filasValidas.Rows[indexFilasValidas]["NumeroEnfasis"], filasValidas.Rows[indexFilasValidas]["SiglaCarrera"]) == null)
+                else if (filaNueva["Perfil"] == "Profesor")
                 {
-                    InsertarFilaEnTablaEnMemoria(filaNueva, empadronadoBD);
-                    empadronadoBD.AcceptChanges();
+                    if (db.Profesor.Find(filaNueva["Cedula"]) == null)
+                    {
+                        InsertarFilaEnTablaEnMemoria(filaNueva, profesorBD);
+                    }
                 }
-                if(db.Tiene_Usuario_Perfil_Enfasis.Find(filasValidas.Rows[indexFilasValidas]["CorreoInstitucional"], filasValidas.Rows[indexFilasValidas]["NumeroEnfasis"], filasValidas.Rows[indexFilasValidas]["SiglaCarrera"], filasValidas.Rows[indexFilasValidas]["Cedula"]) == null)
+                
+                
+                if(db.Tiene_Usuario_Perfil_Enfasis.Find(filaNueva["CorreoInstitucional"], filaNueva["NumeroEnfasis"], filaNueva["SiglaCarrera"], filaNueva["Perfil"]) == null)
                 {
-
+                    InsertarFilaEnTablaEnMemoria(filaNueva, tieneUsuarioPerfilEnfasisBD);
                 }
             }
             
@@ -278,6 +296,26 @@ namespace Opiniometro_WebApp.Controllers
 
                 }
                 break;
+                case "Estudiante":
+                {
+                    InsertarEnEstudianteBD(filaAInsertar, tablaDestino);
+                }
+                break;
+                case "Empadronado":
+                {
+                    InsertarEnEmpadronadoBD(filaAInsertar, tablaDestino);
+                }
+                break;
+                case "Profesor":
+                {
+                    InsertarEnProfesorBD(filaAInsertar, tablaDestino);
+                }
+                break;
+                case "Tiene_Usuario_Perfil_Enfasis":
+                {
+                    InsertarEnTieneUsuarioPerfilEnfasisBD(filaAInsertar, tablaDestino);
+                }
+                break;
             }
             
         }
@@ -288,6 +326,7 @@ namespace Opiniometro_WebApp.Controllers
             
             filaNueva["Cedula"] = filaAInsertar["Cedula"];
             filaNueva["Nombre1"] = filaAInsertar["Nombre1"];
+            filaNueva["Nombre2"] = filaAInsertar["Nombre2"];
             filaNueva["Apellido1"] = filaAInsertar["Apellido1"];
             filaNueva["Apellido2"] = filaAInsertar["Apellido2"];
             filaNueva["DireccionDetallada"] = filaAInsertar["DireccionDetallada"];
@@ -342,6 +381,45 @@ namespace Opiniometro_WebApp.Controllers
             usuarioBD.Rows.Add(filaNueva);
             usuarioBD.AcceptChanges();
             
+        }
+        
+        private void InsertarEnEstudianteBD(DataRow filaAInsertar, DataTable estudianteBD)
+        {
+            DataRow filaNueva = estudianteBD.NewRow();
+            filaNueva["CedulaEstudiante"] = filaAInsertar["Cedula"];
+            filaNueva["Carne"] = filaAInsertar["Carne"];
+            estudianteBD.Rows.Add(filaNueva);
+            estudianteBD.AcceptChanges();
+        }
+
+        private void InsertarEnEmpadronadoBD(DataRow filaAInsertar, DataTable empadronadoBD)
+        {
+            DataRow filaNueva = empadronadoBD.NewRow();
+            filaNueva["CedulaEstudiante"] = filaAInsertar["Cedula"];
+            filaNueva["NumeroEnfasis"] = filaAInsertar["NumeroEnfasis"];
+            filaNueva["SiglaCarrera"] = filaAInsertar["SiglaCarrera"];
+            empadronadoBD.Rows.Add(filaNueva);
+            empadronadoBD.AcceptChanges();
+        }
+
+        private void InsertarEnProfesorBD(DataRow filaAInsertar, DataTable profesorBD)
+        {
+            DataRow filaNueva = profesorBD.NewRow();
+            filaNueva["CedulaProfesor"] = filaAInsertar["Cedula"];
+            profesorBD.Rows.Add(filaNueva);
+            profesorBD.AcceptChanges();
+        }
+
+        private void InsertarEnTieneUsuarioPerfilEnfasisBD(DataRow filaAInsertar, DataTable tieneUsuarioPerfilEnfasisBD)
+        {
+            DataRow filaNueva = tieneUsuarioPerfilEnfasisBD.NewRow();
+
+            filaNueva["CorreoInstitucional"] = filaAInsertar["CorreoInstitucional"];
+            filaNueva["NumeroEnfasis"] = filaAInsertar["NumeroEnfasis"];
+            filaNueva["SiglaCarrera"] = filaAInsertar["SiglaCarrera"];
+            filaNueva["NombrePerfil"] = filaAInsertar["Perfil"];
+            tieneUsuarioPerfilEnfasisBD.Rows.Add(filaNueva);
+            tieneUsuarioPerfilEnfasisBD.AcceptChanges();
         }
 
         private string GenerarContrasenaCifrada(string stringUnico)
@@ -469,16 +547,42 @@ namespace Opiniometro_WebApp.Controllers
                     insercionEnBloque.ColumnMappings.Add("Nombre2", "Nombre2");
                     insercionEnBloque.ColumnMappings.Add("Apellido1", "Apellido1");
                     insercionEnBloque.ColumnMappings.Add("Apellido2", "Apellido2");
-                    insercionEnBloque.ColumnMappings.Add("DireccionDetallada", "DireccionDetallada");
+                    
                 }
                 break;
                 case "Usuario":
                 {
-                        insercionEnBloque.ColumnMappings.Add("CorreoInstitucional", "CorreoInstitucional");
-                        insercionEnBloque.ColumnMappings.Add("Contrasena", "Contrasena");
-                        insercionEnBloque.ColumnMappings.Add("Activo", "Activo");
-                        insercionEnBloque.ColumnMappings.Add("Cedula", "Cedula");
-                        insercionEnBloque.ColumnMappings.Add("Id", "Id");
+                    insercionEnBloque.ColumnMappings.Add("CorreoInstitucional", "CorreoInstitucional");
+                    insercionEnBloque.ColumnMappings.Add("Contrasena", "Contrasena");
+                    insercionEnBloque.ColumnMappings.Add("Activo", "Activo");
+                    insercionEnBloque.ColumnMappings.Add("Cedula", "Cedula");
+                    insercionEnBloque.ColumnMappings.Add("Id", "Id");
+                }
+                break;
+                case "Estudiante":
+                {
+                    insercionEnBloque.ColumnMappings.Add("CedulaEstudiante", "CedulaEstudiante");
+                    insercionEnBloque.ColumnMappings.Add("Carne", "Carne");
+                }
+                break;
+                case "Empadronado":
+                {
+                    insercionEnBloque.ColumnMappings.Add("CedulaEstudiante", "CedulaEstudiante");
+                    insercionEnBloque.ColumnMappings.Add("NumeroEnfasis", "NumeroEnfasis");
+                    insercionEnBloque.ColumnMappings.Add("SiglaCarrera", "SiglaCarrera");
+                }
+                break;
+                case "Profesor":
+                {
+                    insercionEnBloque.ColumnMappings.Add("CedulaProfesor", "CedulaProfesor");
+                }
+                break;
+                case "Tiene_Usuario_Perfil_Enfasis":
+                {
+                    insercionEnBloque.ColumnMappings.Add("CorreoInstitucional", "CorreoInstitucional");
+                    insercionEnBloque.ColumnMappings.Add("NumeroEnfasis", "NumeroEnfasis");
+                    insercionEnBloque.ColumnMappings.Add("SiglaCarrera", "SiglaCarrera");
+                    insercionEnBloque.ColumnMappings.Add("NombrePerfil", "NombrePerfil");
                 }
                 break;
             }
@@ -522,13 +626,13 @@ namespace Opiniometro_WebApp.Controllers
             dt.Columns.Add("error", typeof(string));
             dt.Columns.Add("cedula", typeof(string));
             dt.Columns.Add("perfil", typeof(string));
-            dt.Columns.Add("carne", typeof(string));
+            
             dt.Columns.Add("nombre1", typeof(string));
             dt.Columns.Add("nombre2", typeof(string));
             dt.Columns.Add("apellido1", typeof(string));
             dt.Columns.Add("apellido2", typeof(string));
             dt.Columns.Add("correo", typeof(string));
-            dt.Columns.Add("direccion_exacta", typeof(string));
+            dt.Columns.Add("carne", typeof(string));
             dt.Columns.Add("sigla_carrera", typeof(string));
             dt.Columns.Add("enfasis", typeof(string));
             
@@ -558,9 +662,9 @@ namespace Opiniometro_WebApp.Controllers
 
             switch (EnumeracionTipoTabla)
             {
-                case Tablas.DatosEstudiante:
+                case Tablas.DatosProvisionados:
                     {
-                        Tipo = typeof(DatosEstudiante);
+                        Tipo = typeof(DatosProvisionados);
                     }
                     break;
                 case Tablas.Persona:
@@ -578,14 +682,19 @@ namespace Opiniometro_WebApp.Controllers
                         Tipo = typeof(Estudiante);
                     }
                     break;
-                case Tablas.Perfil:
+                case Tablas.Empadronado:
                     {
-                        Tipo = typeof(Perfil);
+                        Tipo = typeof(Empadronado) ;
                     }
                     break;
-                case Tablas.Enfasis:
+                case Tablas.Profesor:
                     {
-                        Tipo = typeof(Enfasis);
+                        Tipo =  typeof(Profesor);
+                    }
+                    break;
+                case Tablas.TieneUsuarioPerfilEnfasis:
+                    {
+                        Tipo = typeof(Tiene_Usuario_Perfil_Enfasis);
                     }
                     break;
             }

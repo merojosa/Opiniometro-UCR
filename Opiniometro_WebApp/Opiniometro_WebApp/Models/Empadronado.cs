@@ -21,3 +21,4 @@ namespace Opiniometro_WebApp.Models
         public virtual Estudiante Estudiante { get; set; }
     }
 }
+i

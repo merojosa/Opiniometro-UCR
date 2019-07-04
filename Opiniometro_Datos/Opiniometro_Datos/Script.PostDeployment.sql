@@ -116,12 +116,11 @@ CREATE PROCEDURE SP_ModificarPersona
 	@Nombre2			NVARCHAR(50),
 	@Apellido1			NVARCHAR(50),
 	@Apellido2			NVARCHAR(50),
-	@Correo				NVARCHAR(50),
-	@DireccionDetallada	NVARCHAR(200)
+	@Correo				NVARCHAR(50)
 AS
 BEGIN
 	UPDATE Persona
-	SET Cedula = @Cedula, Nombre1 = @Nombre1, Nombre2 = @Nombre2, Apellido1 = @Apellido1, Apellido2 = @Apellido2, DireccionDetallada = @DireccionDetallada
+	SET Cedula = @Cedula, Nombre1 = @Nombre1, Nombre2 = @Nombre2, Apellido1 = @Apellido1, Apellido2 = @Apellido2
 	WHERE Cedula = @CedulaBusqueda;
 
 	UPDATE Usuario
@@ -143,14 +142,14 @@ BEGIN
 	DECLARE @apellido2 NVARCHAR(51)
 	
 	SET @cedula = (SELECT Cedula FROM inserted)
-	SET @nombre = (SELECT Nombre FROM inserted)
+	SET @nombre = (SELECT Nombre1 FROM inserted)
 	SET @apellido1 = (SELECT Apellido1 FROM inserted)
 	SET @apellido2 = (SELECT Apellido2 FROM inserted)
 
 	BEGIN TRY
-	IF(@cedula IS NOT NULL AND @nombre IS NOT NULL AND @apellido1 IS NOT NULL AND @apellido2 IS NOT NULL  AND (LEN(@cedula) = 9) AND (LEN(@nombre) < 50) AND (LEN(@apellido1) < 50) AND (LEN(@apellido2) < 50))
+	IF((@cedula IS NOT NULL) AND (@nombre IS NOT NULL) AND (@apellido1 IS NOT NULL) AND (@apellido2 IS NOT NULL) AND (LEN(@cedula) = 9) AND (LEN(@nombre) < 50) AND (LEN(@apellido1) < 50) AND (LEN(@apellido2) < 50))
 	BEGIN
-		INSERT INTO Persona (Cedula, Nombre, Apellido1, Apellido2)
+		INSERT INTO Persona (Cedula, Nombre1, Apellido1, Apellido2)
 		VALUES (@cedula, @nombre, @apellido1, @apellido2)
 	END
 	ELSE
@@ -241,15 +240,14 @@ CREATE PROCEDURE SP_AgregarPersonaUsuario
 	@Nombre1		NVARCHAR(50),
 	@Nombre2		NVARCHAR(50),
 	@Apellido1		NVARCHAR(50),
-	@Apellido2		NVARCHAR(50),
-	@Direccion		NVARCHAR(256)
+	@Apellido2		NVARCHAR(50)
 AS
 BEGIN
 	SET NOCOUNT ON
 	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
 
 	INSERT INTO Persona
-	VALUES (@Cedula, @Nombre1, @Nombre2, @Apellido1, @Apellido2, @Direccion)
+	VALUES (@Cedula, @Nombre1, @Nombre2, @Apellido1, @Apellido2)
 
 	INSERT INTO Usuario
 	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id, 0)
@@ -331,20 +329,20 @@ GO
 --Inserciones
 
 INSERT INTO Persona
-VALUES	('116720500', 'Jose Andrés', NULL,'Mejías', 'Rojas', 'Desamparados de Alajuela.'),
-		('115003456', 'Daniel', NULL, 'Escalante', 'Perez', 'Desamparados de San José.'),
-		('117720910', 'Jose Andrés', NULL, 'Mejías', 'Rojas', 'La Fortuna de San Carlos.'),
-		('236724507', 'Jose Andrés', NULL, 'Mejías', 'Rojas', 'Sarchí, Alajuela.'),
+VALUES	('116720500', 'Jose Andrés', NULL,'Mejías', 'Rojas'),
+		('115003456', 'Daniel', NULL, 'Escalante', 'Perez'),
+		('117720910', 'Jose Andrés', NULL, 'Mejías', 'Rojas'),
+		('236724507', 'Jose Andrés', NULL, 'Mejías', 'Rojas'),
 		--Agregado de datos para visualizacion a cargo de CX Solutions
-		('100000001', 'CX', NULL, 'Solutions', 'S.A.', 'San Pedro Montes de Oca'),
-		('100000002', 'Marta', NULL, 'Rojas', 'Sanches', '300 metros norte de Pulmitan'),--Profesora
+		('100000001', 'CX', NULL, 'Solutions', 'S.A.'),
+		('100000002', 'Marta', NULL, 'Rojas', 'Sanches'),--Profesora
 		--Estudiantes
-		('100000003', 'Juan', NULL, 'Briceño', 'Lupon', '400 metros norte del Heraldo de la Grieta'),
-		('100000005', 'Pepito', NULL, 'Fonsi', 'Monge', '20 metros norte del Blue del lado Rojo'),
-		('100000004', 'Maria', NULL, 'Fallas', 'Merdi', 'Costado este del estandarte de top'),
-		('117720912', 'Jorge', NULL, 'Solano', 'Carrillo', 'La Fortuna de San Carlos.'),
-		('236724501', 'Carolina', NULL, 'Gutierrez', 'Lozano', 'Sarchí, Alajuela.'),
-		('123456789', 'Ortencia', NULL, 'Cañas', 'Griezman', 'San Pedro de Montes de Oca');
+		('100000003', 'Juan', NULL, 'Briceño', 'Lupon'),
+		('100000005', 'Pepito', NULL, 'Fonsi', 'Monge'),
+		('100000004', 'Maria', NULL, 'Fallas', 'Merdi'),
+		('117720912', 'Jorge', NULL, 'Solano', 'Carrillo'),
+		('236724501', 'Carolina', NULL, 'Gutierrez', 'Lozano'),
+		('123456789', 'Ortencia', NULL, 'Cañas', 'Griezman');
 
 INSERT INTO Estudiante VALUES 
  ('116720500', 'B11111')

@@ -22,4 +22,12 @@ namespace Opiniometro_WebApp.Models
     [MetadataType(typeof(EmpadronadoMetadata))]
     public partial class Empadronado
     { }
+
+    [MetadataType(typeof(ProfesorMetadata))]
+    public partial class Profesor
+    { }
+
+    [MetadataType(typeof(Tiene_Usuario_Perfil_EnfasisMetadata))]
+    public partial class Tiene_Usuario_Perfil_Enfasis
+    { }
 }

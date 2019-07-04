@@ -240,7 +240,7 @@
     <Compile Include="Models\C__RefactorLog.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DatosEstudiante.cs" />
+    <Compile Include="Models\DatosProvisionados.cs" />
     <Compile Include="Models\DatosEstudiante_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>

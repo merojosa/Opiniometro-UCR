@@ -6,8 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Opiniometro_WebApp.Models
 {
-    [MetadataType(typeof(DatosEstudianteMetadata))]
-    public partial class DatosEstudiante { 
+    [MetadataType(typeof(DatosProvisionadosMetadata))]
+    public partial class DatosProvisionados { 
 
         [Required]
         [StringLength(9, MinimumLength = 9)]
@@ -19,11 +19,6 @@ namespace Opiniometro_WebApp.Models
         [DataType(DataType.Text)]
         [RegularExpression(@"Estudiante|Profesor|Administrador")]
         public string Perfil { get; set; }
-
-        [Required]
-        [StringLength(6, MinimumLength = 6)]
-        [DataType(DataType.Text)]
-        public string Carne { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -50,10 +45,9 @@ namespace Opiniometro_WebApp.Models
         [DataType(DataType.EmailAddress)]
         public string CorreoInstitucional { get; set; }
 
-        [Required]
-        [StringLength(200)]
+        [StringLength(6, MinimumLength = 6)]
         [DataType(DataType.Text)]
-        public string DireccionDetallada { get; set; }
+        public string Carne { get; set; }
 
         [Required]
         [StringLength(10)]
