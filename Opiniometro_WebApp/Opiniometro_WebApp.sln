@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opiniometro_WebApp", "Opiniometro_WebApp\Opiniometro_WebApp.csproj", "{DC6D5169-A650-4F81-8B50-9C2B00F39085}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opiniometro_WebAppTest", "Opiniometro_WebAppTest\Opiniometro_WebAppTest.csproj", "{4A798B1B-D48F-449C-898E-E3A0239EF1DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opiniometro_UITest", "Opiniometro_UITest\Opiniometro_UITest.csproj", "{6CE79F3A-A0FC-4DF5-84D5-D83AC56FC18C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{DC6D5169-A650-4F81-8B50-9C2B00F39085}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC6D5169-A650-4F81-8B50-9C2B00F39085}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC6D5169-A650-4F81-8B50-9C2B00F39085}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A798B1B-D48F-449C-898E-E3A0239EF1DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A798B1B-D48F-449C-898E-E3A0239EF1DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A798B1B-D48F-449C-898E-E3A0239EF1DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A798B1B-D48F-449C-898E-E3A0239EF1DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CE79F3A-A0FC-4DF5-84D5-D83AC56FC18C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CE79F3A-A0FC-4DF5-84D5-D83AC56FC18C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CE79F3A-A0FC-4DF5-84D5-D83AC56FC18C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CE79F3A-A0FC-4DF5-84D5-D83AC56FC18C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

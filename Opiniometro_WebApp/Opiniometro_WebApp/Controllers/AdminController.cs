@@ -75,7 +75,7 @@ namespace Opiniometro_WebApp.Controllers
                     modelPersona.PerfilDeUsuario = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
                     modelPersona.Perfil = db.Perfil.Select(n => n.Nombre).ToList();
                     modelPersona.perfilesAsignados = modelPersona.getAsignarPerfil(modelPersona.PerfilDeUsuario, modelPersona.Perfil);
-                    modelPersona.Perfil = db.Perfil.Select(n=>n.Id).ToList();
+                    modelPersona.Perfil = db.Perfil.Select(n=>n.Nombre).ToList();
                     return View(modelPersona);
                 }
                 catch (Exception)

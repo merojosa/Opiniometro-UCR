@@ -451,6 +451,18 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Insertar_Seccion", tituloParameter, descripcionParameter);
         }
     
+        public virtual int SP_Insertar_Seleccion_Unica(string itemid, Nullable<bool> isalikedislike)
+        {
+            var itemidParameter = itemid != null ?
+                new ObjectParameter("itemid", itemid) :
+                new ObjectParameter("itemid", typeof(string));
+    
+            var isalikedislikeParameter = isalikedislike.HasValue ?
+                new ObjectParameter("isalikedislike", isalikedislike) :
+                new ObjectParameter("isalikedislike", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Insertar_Seleccion_Unica", itemidParameter, isalikedislikeParameter);
+        }
     
         public virtual int SP_LoginUsuario(string correo, string contrasenna, ObjectParameter resultado)
         {
@@ -465,8 +477,12 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_LoginUsuario", correoParameter, contrasennaParameter, resultado);
         }
     
-        public virtual int SP_ModificarPersona(string cedula, string nombre, string apellido1, string apellido2, string correo, string direccion)
+        public virtual int SP_ModificarPersona(string cedulaBusqueda, string cedula, string nombre, string apellido1, string apellido2, string correo, string direccion)
         {
+            var cedulaBusquedaParameter = cedulaBusqueda != null ?
+                new ObjectParameter("CedulaBusqueda", cedulaBusqueda) :
+                new ObjectParameter("CedulaBusqueda", typeof(string));
+    
             var cedulaParameter = cedula != null ?
                 new ObjectParameter("Cedula", cedula) :
                 new ObjectParameter("Cedula", typeof(string));
@@ -491,7 +507,7 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Direccion", direccion) :
                 new ObjectParameter("Direccion", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, correoParameter, direccionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, correoParameter, direccionParameter);
         }
     
         public virtual ObjectResult<string> SP_ObtenerFormulario(string cod)
