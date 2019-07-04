@@ -25,7 +25,7 @@ BEGIN
 	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
 
 	INSERT INTO Usuario
-	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id, 0)
 END
 GO
 
@@ -82,8 +82,9 @@ IF OBJECT_ID('SP_CambiarContrasenna') IS NOT NULL
 	DROP PROCEDURE SP_CambiarContrasenna
 GO
 CREATE PROCEDURE SP_CambiarContrasenna
-	@Correo				NVARCHAR(50),
-	@Contrasenna_Nueva	NVARCHAR(50)
+	@Correo					NVARCHAR(50),
+	@Contrasenna_Nueva		NVARCHAR(50),
+	@RecuperarContrasenna	BIT
 AS
 BEGIN
 	SET NOCOUNT ON
@@ -96,9 +97,11 @@ BEGIN
 						WHERE CorreoInstitucional=@Correo)
 
 	IF(@CorreoBuscar IS NOT NULL)	-- Si existe el correo
+	BEGIN
 		UPDATE Usuario
-		SET Contrasena = HASHBYTES('SHA2_512', @Contrasenna_Nueva+CAST(Id AS NVARCHAR(36)))
-		
+		SET Contrasena = HASHBYTES('SHA2_512', @Contrasenna_Nueva+CAST(Id AS NVARCHAR(36))), RecuperarContrasenna = @RecuperarContrasenna
+		WHERE CorreoInstitucional = @CorreoBuscar
+	END	
 END
 GO
 
@@ -122,9 +125,44 @@ BEGIN
 
 	UPDATE Usuario
 	SET CorreoInstitucional = @Correo
-	WHERE Cedula = @CedulaBusqueda;
+	WHERE Cedula = @Cedula;
 END
 GO
+
+IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
+	DROP TRIGGER TR_InsertaPersona
+GO
+CREATE TRIGGER TR_InsertaPersona
+ON Persona INSTEAD OF INSERT
+AS
+BEGIN
+	DECLARE @cedula CHAR(10)
+	DECLARE @nombre NVARCHAR(51)
+	DECLARE @apellido1 NVARCHAR(51)
+	DECLARE @apellido2 NVARCHAR(51)
+	
+	SET @cedula = (SELECT Cedula FROM inserted)
+	SET @nombre = (SELECT Nombre FROM inserted)
+	SET @apellido1 = (SELECT Apellido1 FROM inserted)
+	SET @apellido2 = (SELECT Apellido2 FROM inserted)
+
+	BEGIN TRY
+	IF(@cedula IS NOT NULL AND @nombre IS NOT NULL AND @apellido1 IS NOT NULL AND @apellido2 IS NOT NULL  AND (LEN(@cedula) = 9) AND (LEN(@nombre) < 50) AND (LEN(@apellido1) < 50) AND (LEN(@apellido2) < 50))
+	BEGIN
+		INSERT INTO Persona (Cedula, Nombre, Apellido1, Apellido2)
+		VALUES (@cedula, @nombre, @apellido1, @apellido2)
+	END
+	ELSE
+	BEGIN
+		RAISERROR('Datos incorrectos',16,1)
+		RETURN
+	END
+	END TRY
+
+	BEGIN CATCH 
+		PRINT 'ERROR: ' + ERROR_MESSAGE( );
+	END CATCH
+END;
 
 IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
@@ -212,7 +250,7 @@ BEGIN
 	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2, @Direccion)
 
 	INSERT INTO Usuario
-	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id, 0)
 END
 GO
 
@@ -274,6 +312,9 @@ AS
 	WHERE Cedula = @Cedula;
 GO
 
+GO
+IF OBJECT_ID('ObtenerPerfilesUsuario') IS NOT NULL
+	DROP PROCEDURE ObtenerPerfilesUsuario
 GO
 CREATE PROC ObtenerPerfilesUsuario
 	@Correo	NVARCHAR(50)
@@ -427,6 +468,9 @@ VALUES ('CI1330', 100, 'SC-01234'),
 
 --DROP PROCEDURE CursosSegunCarrera
 --Obtiene la lista de cursos que pertenecen a cierta carrera
+
+IF OBJECT_ID('CursosSegunCarrera') IS NOT NULL
+	DROP PROCEDURE CursosSegunCarrera
 GO
 CREATE PROCEDURE CursosSegunCarrera
 @siglaCarrera NVARCHAR(10)
@@ -441,6 +485,9 @@ END
 GO
 
 --Obtiene la lista de cursos que pertenecen a cierto semestre
+IF OBJECT_ID('CursosSegunSemestre') IS NOT NULL
+	DROP PROCEDURE CursosSegunSemestre
+GO
 CREATE PROCEDURE CursosSegunSemestre
 @semestre TINYINT
 AS
@@ -454,6 +501,9 @@ END
 GO
 
 --Obtiene la lista de cursos que pertenecen a cierto año
+IF OBJECT_ID('CursosSegunAnno') IS NOT NULL
+	DROP PROCEDURE CursosSegunAnno
+GO
 CREATE PROCEDURE CursosSegunAnno
 @anno SMALLINT
 AS
@@ -656,7 +706,7 @@ VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
 
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
-		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
+		('admin@ucr.ac.cr', 0, 'SC-01234', 'Administrador'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Administrador')
 
