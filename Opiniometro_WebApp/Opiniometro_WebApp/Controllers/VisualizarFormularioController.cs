@@ -214,26 +214,41 @@ namespace Opiniometro_WebApp.Controllers
         //EFE:Crea un gráfico con la información de los resultados en la base de datos.
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso,
-        public JsonResult GraficoPie(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
-        {//"131313"
-            var result = ObtenerCantidadRespuestasPorPregunta(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId).ToList();//ObtenerCantidadRespuestasPorPregunta  "PRE303", codigoFormulario, "100000002", 2017, 2, 1, "CI1330", itemId
-            //int tamanio = result.Count;
+        public JsonResult GraficoPie(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId, byte tipoPregunta)
+        {//"131313"            
+            var result = ObtenerCantidadRespuestasPorPregunta(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId).ToList();
             List<object> x = new List<object>();
             List<object> y = new List<object>();
-            //string[] leyenda = new string[tamanio];
-            //int?[] cntResps = new int?[tamanio];
-            int iter = 0;
-            var labels = db.SP_RecuperarEtiquetas(3, itemId);
-            foreach (var label in labels)
+            if (Enumerable.Range(5, 6).Contains(tipoPregunta))
             {
-                x.Add(label);
-                if (result[iter].Respuesta != label)
+
+                var labels = db.SP_RecuperarEtiquetas(tipoPregunta, itemId);
+                bool encontrado;
+                foreach (var label in labels)
                 {
-                    y.Add(0);
+                    encontrado = false;
+                    x.Add(label);
+                    foreach (var resul in result)
+                    {
+                        if (resul.Respuesta == label)
+                        {
+                            y.Add(resul.cntResp);
+                            encontrado = true;
+                        }
+                    }
+                    if (encontrado == false)
+                    {
+                        y.Add(0);
+                    }
                 }
-                else
-                    y.Add(result[iter].cntResp);
-                iter++;
+            }
+            else
+            {
+                var rango = db.SP_RecuperarEtiquetas(5, itemId).ToList();
+                for (int i = Int32.Parse(rango[0]); i < Int32.Parse(rango[1]); i += Int32.Parse(rango[2]))
+                {
+
+                }
             }
             //foreach (var itemR in result)
             //{
