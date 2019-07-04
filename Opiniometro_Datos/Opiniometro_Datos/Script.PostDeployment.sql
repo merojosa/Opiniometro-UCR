@@ -738,10 +738,13 @@ CREATE PROCEDURE SP_DevolverObservacionesPorGrupo
 	@itemId NVARCHAR(10)
 AS
 BEGIN
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED
+	BEGIN TRANSACTION tc2
 	SET NOCOUNT ON
 	SELECT e.Observacion, a.Nombre, a.Apellido1, a.Apellido2
 	FROM Responde as e, Persona as a
 	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId AND e.CedulaPersona = a.Cedula
+	COMMIT TRANSACTION tc2
 END
 GO
 
