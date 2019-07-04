@@ -28,7 +28,7 @@ namespace Opiniometro_WebApp.Models
 
     public class SeleccionUnica : Pregunta
     {
-        public List<string> Opciones;
+        public IEnumerable<string> Opciones;
     }
 
     public class SiNo : Pregunta

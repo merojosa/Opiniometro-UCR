@@ -54,7 +54,7 @@
             </script>
 
             <div id="preguntaSelUnica">
-                @Html.Action("ObtenerOpcionesSelUnica", "FormularioCurso", new { id = dato.itemId })
+                @Html.Action("ObtenerOpcionesSelUnica", "FormularioCurso", new { id = dato.itemId, texto = dato.item, observacion = dato.tieneObservacion, tipo = dato.tipoPregunta })
             </div>
 
             //Campo de observacion de la opcion de seleccion unica

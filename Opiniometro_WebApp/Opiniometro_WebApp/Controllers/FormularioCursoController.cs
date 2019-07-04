@@ -114,7 +114,7 @@ namespace Opiniometro_WebApp.Controllers
             // tuplas contiene todas las tuplas por insertar a la base.
         }
 
-        public ActionResult ObtenerOpcionesSelUnica(string id)
+        public ActionResult ObtenerOpcionesSelUnica(string id, string texto, bool? observacion, int tipo)
         {
             //Console.WriteLine(id);
             //List<SeleccionUnica> preguntas = new List<SeleccionUnica>();
@@ -134,7 +134,9 @@ namespace Opiniometro_WebApp.Controllers
                 tipoPregunta = tipo,
                 Opciones = opciones.ToList()
             });*/
-            return PartialView("SeleccionUnica", opciones);
+            SeleccionUnica selec = new SeleccionUnica { itemId = id, item = texto, tieneObservacion = observacion, tipoPregunta = tipo, Opciones = opciones };
+
+            return PartialView("SeleccionUnica", selec);
         }
     }
 }
