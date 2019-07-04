@@ -97,7 +97,7 @@ namespace Opiniometro_WebApp.Controllers
                 else
                 {
                     return null;
-                }
+                }                
             }
             //A
             List<Conformado_Item_Sec_Form> conformados =
@@ -108,13 +108,6 @@ namespace Opiniometro_WebApp.Controllers
                     .ToList();
             return PartialView("ConformadoVParcial", conformados);
 
-        }
-
-        [HttpGet]
-        public ActionResult EliminarSeccion(string codForm) {
-            ViewBag.TituloSeccion = new SelectList(db.Conformado_For_Sec.Where(m => m.CodigoFormulario == codForm), "TituloSeccion", "TituloSeccion");
-
-            return View();
         }
 
         [HttpGet]

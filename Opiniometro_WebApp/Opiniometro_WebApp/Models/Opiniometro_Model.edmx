@@ -1423,7 +1423,8 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Opiniometro_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1584,7 +1585,6 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <NavigationProperty Name="Unidad_Academica" Relationship="Self.FK_For_Uni" FromRole="Formulario" ToRole="Unidad_Academica" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_For" FromRole="Formulario" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Tiene_Grupo_Formulario" Relationship="Self.FK_Tie_For" FromRole="Formulario" ToRole="Tiene_Grupo_Formulario" />
-          <NavigationProperty Name="Conformado_For_Sec" Relationship="OpiniometroModel.FK_Conf_For" FromRole="Formulario" ToRole="Conformado_For_Sec" />
         </EntityType>
         <EntityType Name="Formulario_Respuesta">
           <Key>
@@ -1789,7 +1789,6 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <NavigationProperty Name="Conformado_For_Sec" Relationship="Self.FK_Conf_Sec" FromRole="Seccion" ToRole="Conformado_For_Sec" />
           <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_Sec" FromRole="Seccion" ToRole="Conformado_Item_Sec_Form" />
           <NavigationProperty Name="Responde" Relationship="Self.FK_Res_Sec" FromRole="Seccion" ToRole="Responde" />
-          <NavigationProperty Name="Conformado_For_Sec" Relationship="OpiniometroModel.FK_Conf_Sec" FromRole="Seccion" ToRole="Conformado_For_Sec" />
         </EntityType>
         <EntityType Name="Seleccion_Unica">
           <Key>
@@ -1886,7 +1885,6 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Property Name="RecuperarContrasenna" Type="Boolean" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Usu_Per" FromRole="Usuario" ToRole="Persona" />
           <NavigationProperty Name="Tiene_Usuario_Perfil_Enfasis" Relationship="Self.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" FromRole="Usuario" ToRole="Tiene_Usuario_Perfil_Enfasis" />
-          <Property Name="RecuperarContrasenna" Type="Boolean" />
         </EntityType>
         <Association Name="FK_Adm_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
@@ -2688,16 +2686,16 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           </FunctionImport>
           <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_Model.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
-          <Parameter Name="Cedula" Mode="In" Type="String" />
+            <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPerfilesUsuario" ReturnType="Collection(Opiniometro_Model.ObtenerPerfilesUsuario_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPerfilPorDefecto" ReturnType="Collection(String)">
-          <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPerfilUsuario" ReturnType="Collection(String)">
-          <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ProcIntroducirSeccion">
             <Parameter Name="titulo" Mode="In" Type="String" />
@@ -2800,7 +2798,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ObtenerFormulario" ReturnType="Collection(String)">
-          <Parameter Name="cod" Mode="In" Type="String" />
+            <Parameter Name="cod" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ObtenerNombre">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -2907,66 +2905,6 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Property Type="String" Name="SiglaCarrera" Nullable="false" MaxLength="10" />
           <Property Type="Byte" Name="NumeroEnfasis" Nullable="false" />
           <Property Type="Int16" Name="IdPermiso" Nullable="false" />
-        </ComplexType>
-        <EntityType Name="Conformado_For_Sec">
-          <Key>
-            <PropertyRef Name="CodigoFormulario" />
-            <PropertyRef Name="TituloSeccion" />
-          </Key>
-          <Property Name="CodigoFormulario" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Name="TituloSeccion" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
-          <Property Name="Orden_Seccion" Type="Int32" />
-          <NavigationProperty Name="Formulario" Relationship="OpiniometroModel.FK_Conf_For" FromRole="Conformado_For_Sec" ToRole="Formulario" />
-          <NavigationProperty Name="Seccion" Relationship="OpiniometroModel.FK_Conf_Sec" FromRole="Conformado_For_Sec" ToRole="Seccion" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <Association Name="FK_Conf_For">
-          <End Type="OpiniometroModel.Formulario" Role="Formulario" Multiplicity="1" />
-          <End Type="OpiniometroModel.Conformado_For_Sec" Role="Conformado_For_Sec" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Formulario">
-              <PropertyRef Name="CodigoFormulario" />
-            </Principal>
-            <Dependent Role="Conformado_For_Sec">
-              <PropertyRef Name="CodigoFormulario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Conf_Sec">
-          <End Type="OpiniometroModel.Seccion" Role="Seccion" Multiplicity="1" />
-          <End Type="OpiniometroModel.Conformado_For_Sec" Role="Conformado_For_Sec" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Seccion">
-              <PropertyRef Name="Titulo" />
-            </Principal>
-            <Dependent Role="Conformado_For_Sec">
-              <PropertyRef Name="TituloSeccion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <ComplexType Name="ObtenerPerfilesUsuario_Result">
-          <Property Type="String" Name="SiglaCarrera" Nullable="false" MaxLength="10" />
-          <Property Type="Byte" Name="NumeroEnfasis" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3317,7 +3255,6 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="Opiniometro_Model.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="RecuperarContrasenna" ColumnName="RecuperarContrasenna" />
                 <ScalarProperty Name="CorreoInstitucional" ColumnName="CorreoInstitucional" />
                 <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
