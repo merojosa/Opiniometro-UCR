@@ -13,6 +13,7 @@ using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
 {
+    [Authorize]
     public class ItemController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
@@ -30,7 +31,18 @@ namespace Opiniometro_WebApp.Controllers
             return View(item.ToList().ToPagedList(page ?? 1, 5));
         }
 
-         //GET: Item/Details/5
+        //GET: AgregarOpciones
+        public ActionResult AgregarOpciones()
+        {
+            return View("AgregarOpciones");
+        }
+
+        public ActionResult AgregarOpcionesVParcial()
+        {
+            return PartialView("AgregarOpcionesVParcial");
+        }
+
+        //GET: Item/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -51,7 +63,8 @@ namespace Opiniometro_WebApp.Controllers
             ViewBag.TipoPreguntaItems = new List<ListItem>
             {
                   new ListItem { Text = "Sí-No", Value="3" },
-                  new ListItem { Text = "Texto Libre", Value="1" }
+                  new ListItem { Text = "Texto Libre", Value="1" },
+                  new ListItem { Text = "Selección Única", Value="2" }
             };
             ViewBag.BooleanItems = new List<ListItem>
             {
@@ -61,7 +74,7 @@ namespace Opiniometro_WebApp.Controllers
             ViewBag.NombreCategoria = new SelectList(db.Categoria, "NombreCategoria", "NombreCategoria");
             ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID");
             ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId");
-            return View();
+            return View("Create");
         }
 
          //POST: Item/Create
@@ -69,7 +82,7 @@ namespace Opiniometro_WebApp.Controllers
          //more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria")] Item item)
+        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria,EtiquetaObservacion")] Item item)
         {
             if (ModelState.IsValid)
             {
