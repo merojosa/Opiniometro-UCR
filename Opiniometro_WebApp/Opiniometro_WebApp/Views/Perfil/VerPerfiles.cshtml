@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "VerPerfiles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Perfiles</h2>
+@using (Html.BeginForm())
+{
+    <p>
+        <div class="form-group, form-inline">
+            @Html.TextBox("nom")
+            <input type="submit" value="Buscar" class="btn btn-default" />
+        </div>
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+
+            Nombre
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Nombre
+            </td>
+            <td>
+               
+
+
+
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.ActionLink("Volver", "Index", "Home", null, new { @class = "btn btn-default" })
