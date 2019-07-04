@@ -13,7 +13,7 @@ namespace Opiniometro_WebApp.Models
     
     public partial class MostrarEstudiantes_Result
     {
-        public string Nombre1 { get; set; }
+        public string Nombre { get; set; }
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
         public string Carne { get; set; }
