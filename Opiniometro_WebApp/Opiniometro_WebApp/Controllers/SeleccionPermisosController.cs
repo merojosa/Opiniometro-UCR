@@ -14,21 +14,6 @@ namespace Opiniometro_WebApp.Controllers
     [Authorize]
     public class SeleccionPermisosController : Controller
     {
-        public void agregarTupla(string perf, short perm, List<Posee_Enfasis_Perfil_Permiso> listaP, List<Enfasis> listaE)
-        {
-            using (var context = new Opiniometro_DatosEntities())
-            {
-                //Hay que hacer borrado para todos los enfasis
-                foreach (var item in listaE)
-                {
-                    if (listaP.Any(tupla => tupla.NombrePerfil == perf && tupla.IdPermiso == perm && tupla.SiglaCarrera == item.SiglaCarrera && tupla.NumeroEnfasis == item.Numero))
-                    {
-                        System.Diagnostics.Debug.Print("Existe para agregar");
-                    }
-                }
-            }
-        }
-
         // GET: SeleccionPermisos
         public ActionResult SeleccionarPermisos()
         {
@@ -42,7 +27,8 @@ namespace Opiniometro_WebApp.Controllers
                     using (var context = new Opiniometro_DatosEntities())
                     {
                         SeleccionPermisos model = new SeleccionPermisos();
-                        model.ListaPerfiles = context.Perfil.ToList();
+                        model.ListaPerfiles = Perfil.ObtenerPerfilesMenosAdmin();//No se deben editar los permisos de administrador desde la aplicacion
+
                         model.ListaPermisos = context.Permiso.ToList();
                         model.ListaPosee = context.Posee_Enfasis_Perfil_Permiso.ToList();
                         model.ListaEnfasis = context.Enfasis.ToList();
@@ -105,7 +91,7 @@ namespace Opiniometro_WebApp.Controllers
             using (var context = new Opiniometro_DatosEntities())
             {
                 SeleccionPermisos model = new SeleccionPermisos();
-                model.ListaPerfiles = context.Perfil.ToList();
+                model.ListaPerfiles = Perfil.ObtenerPerfilesMenosAdmin();
                 model.ListaPermisos = context.Permiso.ToList();
                 model.ListaEnfasis = context.Enfasis.ToList();
                 model.ListaPosee = context.Posee_Enfasis_Perfil_Permiso.ToList();

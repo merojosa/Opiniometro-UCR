@@ -345,9 +345,12 @@
     <Compile Include="Models\SP_ContarRespuestasPorGrupo_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs" />
+    <Compile Include="Models\sp_helpdiagrams_Result.cs" />
     <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Models\TelefonoPersona.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>

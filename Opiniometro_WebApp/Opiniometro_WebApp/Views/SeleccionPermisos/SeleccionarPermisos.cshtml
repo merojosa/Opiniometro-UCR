@@ -8,6 +8,20 @@
 
 <br />
 
+<!--Script para los checkboxes que se usan para seleccionar toda una columna-->
+<script type="text/javascript">
+    function seleccionMultiple(element, numPermisos) {
+        for (var i = 0; i < numPermisos; i++) {
+            if (element.checked) {
+                document.getElementById(i + '_' + element.id[0]).checked = true;//Posicion cero pues la hilera del id tiene el primer caracter el indice del perfil
+            }
+            else {
+                document.getElementById(i + '_' + element.id[0]).checked = false;
+            }
+        }
+    }
+</script>
+
 @using (Html.BeginForm("Guardar", "SeleccionPermisos"))
 {
     <table class="table" width="400">
@@ -26,6 +40,7 @@
         @for (int i = 0; i < Model.ListaPerfiles.Count; i++)
         {
             <td>
+                <input type="checkbox" value="check" id="@(i+"mult")" onchange="seleccionMultiple(this,@(Model.ListaPermisos.Count))" />
                 @Html.DisplayFor(model => Model.ListaPerfiles.ElementAt(i).Nombre)
             </td>
         }
