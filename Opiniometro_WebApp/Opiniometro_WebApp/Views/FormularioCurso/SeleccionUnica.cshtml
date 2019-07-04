@@ -1,4 +1,5 @@
-﻿@model Opiniometro_WebApp.Models.SeleccionUnica
+﻿@model IEnumerable<string>
+@*@model Opiniometro_WebApp.Models.SeleccionUnica*@
 
 @{
     ViewBag.Title = "SeleccionUnica";
@@ -11,8 +12,9 @@
     }*@
 
 <fieldset>
-    @foreach (var opcion in Model.Opciones)
+
+    @foreach (var opcion in Model)
     {
-        <br><input type="radio" name="seleccion" value=opcion id="@Model.itemId"+"@opcion"><label>@opcion</label>
+        <br><input type="radio" name="seleccion" value="@opcion" id="@opcion"><label>@opcion</label>
     }
 </fieldset>

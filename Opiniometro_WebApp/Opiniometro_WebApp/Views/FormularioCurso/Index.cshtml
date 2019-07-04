@@ -30,7 +30,7 @@
     {
         if (dato.tipoPregunta == 1)
         {
-            <div id="preguntaTextoLibre">
+            <div id="preguntaTextoLibre" class="pregunta">
             </div>
 
 
@@ -45,16 +45,19 @@
 
         if (dato.tipoPregunta == 2)
         {
+
             <script>
                 crearElemento("selUnica", contSelUnica, @Html.Raw(Json.Encode(dato.item)), "preguntaSelUnica");
                 insertNueLinea("selUnica".concat(contSelUnica));
-                seleccionUnica(contSelUnica/*,listaOpciones*/);
+                //seleccionUnica(contSelUnica/*, listaOpciones*/ );
                 lineaHor("selUnica".concat(contSelUnica));
                 contSelUnica++;
             </script>
 
-            <div id="preguntaSelUnica">
-                @Html.Action("ObtenerOpcionesSelUnica", "FormularioCurso", new { id = dato.itemId, texto = dato.item, observacion = dato.tieneObservacion, tipo = dato.tipoPregunta })
+            <div id="preguntaSelUnica" class="pregunta">
+                @Html.Partial("SeleccionUnica", dato.Opciones)
+                @*<div style="display:none;"></div>
+                    @Html.Action("ObtenerOpcionesSelUnica", "FormularioCurso", new { id = dato.itemId, texto = dato.item, observacion = dato.tieneObservacion, tipo = dato.tipoPregunta })*@
             </div>
 
             //Campo de observacion de la opcion de seleccion unica
@@ -67,7 +70,7 @@
 
         if (dato.tipoPregunta == 3)
         {
-            <div id="preguntaSiNo"> </div>
+            <div id="preguntaSiNo" class="pregunta"> </div>
 
             <script>
                 crearElemento("SiNo", contSiNo, @Html.Raw(Json.Encode(dato.item)), "preguntaSiNo");

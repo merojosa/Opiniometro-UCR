@@ -42,7 +42,7 @@ function TextoLibre(contTextoLibre) {
 function seleccionUnica(contSelUnica, item_id) {
 
     var contenido = document.getElementById("preguntaSelUnica".concat(contSelUnica));
-    /* 
+    /*
     $.get("/FormularioDelCurso/ObtenerOpcionesSelUnica", {
         id: item_id
     }, function (json_list) {

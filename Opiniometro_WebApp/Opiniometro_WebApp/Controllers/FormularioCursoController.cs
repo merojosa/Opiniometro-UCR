@@ -50,13 +50,13 @@ namespace Opiniometro_WebApp.Controllers
                 bool? observacion = p.tieneObservacion;
                 int tipo = p.tipoPregunta;
                 if (p.tipoPregunta == 1)
-                    preguntas.Add(new TextoLibre { itemId = id, item = texto, tieneObservacion = observacion, tipoPregunta = tipo });
+                    preguntas.Add(new Pregunta { itemId = id, item = texto, tieneObservacion = observacion, tipoPregunta = tipo });
                 else if (p.tipoPregunta == 2)
                 {
                     IQueryable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Unica
                                                   where ops.ItemId == id
                                                   select ops.OpcionRespuesta;
-                    preguntas.Add(new SeleccionUnica{ itemId = id, item = texto, tieneObservacion = observacion, tipoPregunta = tipo,
+                    preguntas.Add(new Pregunta{ itemId = id, item = texto, tieneObservacion = observacion, tipoPregunta = tipo,
                         Opciones = opciones.ToList() });
                 }
             }
@@ -114,7 +114,7 @@ namespace Opiniometro_WebApp.Controllers
             // tuplas contiene todas las tuplas por insertar a la base.
         }
 
-        public ActionResult ObtenerOpcionesSelUnica(string id, string texto, bool? observacion, int tipo)
+        public string ObtenerOpcionesSelUnica(string id)
         {
             //Console.WriteLine(id);
             //List<SeleccionUnica> preguntas = new List<SeleccionUnica>();
@@ -134,9 +134,12 @@ namespace Opiniometro_WebApp.Controllers
                 tipoPregunta = tipo,
                 Opciones = opciones.ToList()
             });*/
-            SeleccionUnica selec = new SeleccionUnica { itemId = id, item = texto, tieneObservacion = observacion, tipoPregunta = tipo, Opciones = opciones };
+            //SeleccionUnica selec = new SeleccionUnica { itemId = id, item = texto, tieneObservacion = observacion, tipoPregunta = tipo, Opciones = opciones };
+            string[] op = opciones.ToArray();
 
-            return PartialView("SeleccionUnica", selec);
+            //return PartialView("SeleccionUnica", selec);
+            var json = JsonConvert.SerializeObject(op);
+            return json;
         }
     }
 }

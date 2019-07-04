@@ -13,6 +13,8 @@ namespace Opiniometro_WebApp.Models
         public bool? tieneObservacion { get; set; }
         public int tipoPregunta { set; get;}
 
+        public IEnumerable<string> Opciones;
+
     }
 
     public class FormularioPorCurso {
