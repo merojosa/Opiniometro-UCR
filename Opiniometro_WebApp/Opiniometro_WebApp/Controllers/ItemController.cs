@@ -119,7 +119,7 @@ namespace Opiniometro_WebApp.Controllers
                 // Uso del procedimiento almancenado para insertar todas las opciones de respuesta en la tabla Selección Única.
                 for (short index = 0; index < DynamicTextBox.Length; ++index)
                 {
-                    db.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica(item.ItemId, index, DynamicTextBox[index]);
+                    db.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica(item.ItemId, index+1, DynamicTextBox[index]);
                 }
             }
 

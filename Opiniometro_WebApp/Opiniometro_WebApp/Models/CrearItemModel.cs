@@ -17,6 +17,7 @@
         public Nullable<bool> TieneObservacion { get; set; }
         public byte TipoPregunta { get; set; }
         public string NombreCategoria { get; set; }
+        public string EtiquetaObservacion { get; set; }
 
         public string Opcion { get; set; } 
         public List<string> Opciones { get; set; }
