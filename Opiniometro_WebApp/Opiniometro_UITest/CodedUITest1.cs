@@ -44,7 +44,7 @@ namespace Opiniometro_UITest
         [TestInitialize()]
         public void MyTestInitialize()
         {
-            BrowserWindow.CurrentBrowser="ie" //"ie" "Chrome" "firefox"
+            BrowserWindow.CurrentBrowser = "ie"; //"ie" "Chrome" "firefox"
             this.UIMap.InicializarOpiniometro();
             // To generate code for this test, select "Generate Code for Coded UI Test" from the shortcut menu and select one of the menu items.
         }
