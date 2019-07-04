@@ -19,10 +19,6 @@ namespace Opiniometro_WebApp.Models
     public partial class Estudiante
     { }
 
-    [MetadataType(typeof(EnfasisMetadata))]
-    public partial class Enfasis
-    { }
-
     [MetadataType(typeof(EmpadronadoMetadata))]
     public partial class Empadronado
     { }

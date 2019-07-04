@@ -14,8 +14,11 @@ namespace Opiniometro_WebApp.Models
         [DataType(DataType.Text)]
         public string Cedula { get; set; }
 
-        /*[Required]
-        public string Perfil { get; set; }*/
+        [Required]
+        [StringLength(30)]
+        [DataType(DataType.Text)]
+        [RegularExpression(@"Estudiante|Profesor|Administrador")]
+        public string Perfil { get; set; }
 
         [Required]
         [StringLength(6, MinimumLength = 6)]

@@ -28,7 +28,7 @@ using System.Reflection;
 
 namespace Opiniometro_WebApp.Controllers
 {
-    enum Tablas { DatosEstudiante, Persona, Usuario, Estudiante, Perfil, Enfasis};
+    enum Tablas { DatosEstudiante, Persona, Usuario, Estudiante, Empadronado, TieneUsuarioPerfilEnfasis};
 
     public class AdministradorController : Controller
     {
@@ -142,9 +142,12 @@ namespace Opiniometro_WebApp.Controllers
             //Tablas en memoria con que poseen el mismo esquema que las tablas en la base de datos.
             DataTable personaBD = ObtenerTabla(Tablas.Persona);//CrearTablaPersonaBD();
             DataTable usuarioBD = ObtenerTabla(Tablas.Usuario);//CrearTablaUsuarioBD();
-            
+            DataTable estudianteBD = ObtenerTabla(Tablas.Estudiante);
+            DataTable empadronadoBD = ObtenerTabla(Tablas.Empadronado);
+            DataTable tieneUsuarioPerfilEnfasisBD = ObtenerTabla(Tablas.TieneUsuarioPerfilEnfasis);
+
             //Multicast
-            MulticastDatosProvisionados(filasValidas, personaBD, usuarioBD);
+            MulticastDatosProvisionados(filasValidas, personaBD, usuarioBD, estudianteBD, empadronadoBD, tieneUsuarioPerfilEnfasisBD);
             filasValidas.Dispose();
 
             if (personaBD.Rows.Count > 0)
@@ -162,7 +165,34 @@ namespace Opiniometro_WebApp.Controllers
             }
             else
             {
-                ViewBag.InsercionPersona = "No hubo inserciones en la tabla Usuario";
+                ViewBag.InsercionUsuario = "No hubo inserciones en la tabla Usuario";
+            }
+
+            if(estudianteBD.Rows.Count > 0)
+            {
+                InsercionEnBloque(estudianteBD);
+            }
+            else
+            {
+                ViewBag.InsercionEstudiante = "No hubo inserciones en la tabla Estudiante";
+            }
+
+            if(empadronadoBD.Rows.Count > 0)
+            {
+                InsercionEnBloque(empadronadoBD);
+            }
+            else
+            {
+                ViewBag.InsercionEmpadronado = "No hubo inserciones en la tabla Empadronado";
+            }
+
+            if(tieneUsuarioPerfilEnfasisBD.Rows.Count > 0)
+            {
+                InsercionEnBloque(tieneUsuarioPerfilEnfasisBD);
+            }
+            else
+            {
+                ViewBag.InsercionTUPE = "No hubo inserciones en la tabla Tiene_Usuario_Perfil_Enfasis";
             }
 
             personaBD.Dispose();
@@ -176,7 +206,7 @@ namespace Opiniometro_WebApp.Controllers
          * REQUIERE: Tabla en memoria que contiene los datos provisionados en el archivo csv,
          * MODIFICA: n/a
          */
-        private int MulticastDatosProvisionados(DataTable filasValidas, DataTable personaBD, DataTable usuarioBD)
+        private int MulticastDatosProvisionados(DataTable filasValidas, DataTable personaBD, DataTable usuarioBD, DataTable estudianteBD, DataTable empadronadoBD, DataTable tieneUsuarioPerfilEnfasisBD)
         {
             /*
                  * Orden de insercion
@@ -209,8 +239,20 @@ namespace Opiniometro_WebApp.Controllers
                     InsertarFilaEnTablaEnMemoria(filaNueva, usuarioBD);
                     usuarioBD.AcceptChanges();
                 }
+                if(db.Estudiante.Find(filasValidas.Rows[indexFilasValidas]["Cedula"]) == null)
+                {
+                    InsertarFilaEnTablaEnMemoria(filaNueva, estudianteBD);
+                    estudianteBD.AcceptChanges();
+                }
+                if(db.Empadronado.Find(filasValidas.Rows[indexFilasValidas]["Cedula"], filasValidas.Rows[indexFilasValidas]["NumeroEnfasis"], filasValidas.Rows[indexFilasValidas]["SiglaCarrera"]) == null)
+                {
+                    InsertarFilaEnTablaEnMemoria(filaNueva, empadronadoBD);
+                    empadronadoBD.AcceptChanges();
+                }
+                if(db.Tiene_Usuario_Perfil_Enfasis.Find(filasValidas.Rows[indexFilasValidas]["CorreoInstitucional"], filasValidas.Rows[indexFilasValidas]["NumeroEnfasis"], filasValidas.Rows[indexFilasValidas]["SiglaCarrera"], filasValidas.Rows[indexFilasValidas]["Cedula"]) == null)
+                {
 
-                
+                }
             }
             
             

@@ -128,19 +128,6 @@ namespace Opiniometro_WebApp.Models
         public string Carne;
     }
 
-    public class EnfasisMetadata
-    {
-        [Required]
-        [StringLength(3, MinimumLength = 1)]
-        [RegularExpression(@"[\d]{1,3}")]
-        public byte Numero;
-
-        [Required]
-        [StringLength(10)]
-        [DataType(DataType.Text)]
-        public string SiglaCarrera;
-    }
-
     public class EmpadronadoMetadata
     {
         [Required]
@@ -158,5 +145,31 @@ namespace Opiniometro_WebApp.Models
         [StringLength(10)]
         [DataType(DataType.Text)]
         public string SiglaCarrera;
+    }
+
+    public class Tiene_Usuario_Perfil_EnfasisMetadata
+    {
+        [Required]
+        Required]
+        [StringLength(50)]
+        [RegularExpression(@"([\w]+\.)([\w])(@ucr.ac.cr)")]
+        [DataType(DataType.EmailAddress)]
+        public string CorreoInstitucional;
+
+        [Required]
+        [StringLength(3, MinimumLength = 1)]
+        [RegularExpression(@"[\d]{1,3}")]
+        [DataType(DataType.Text)]
+        public byte NumeroEnfasis;
+
+        [Required]
+        [StringLength(10)]
+        [DataType(DataType.Text)]
+        public string SiglaCarrera;
+
+        [Required]
+        [StringLength(30)]
+        public string NombrePerfil;
+
     }
 }
