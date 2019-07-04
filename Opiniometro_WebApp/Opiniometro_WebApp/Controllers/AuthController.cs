@@ -14,6 +14,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Threading;
 using Opiniometro_WebApp.Controllers.Servicios;
+using System.Data.Entity.Core;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -29,6 +30,9 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult Login()
         {
+            // Eliminar el correo de recuperar en caso de que se devuelva al login se haber cambiado la contrasenna.
+            Session.Remove("recuperar");
+
             // Si esta autenticado, redireccione a Home.
             if (IdentidadManager.obtener_correo_actual() != null)      
             {
@@ -55,38 +59,53 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult Login(Usuario usuario)
         {
             ObjectParameter exito = new ObjectParameter("Resultado", 0);
-            db.SP_LoginUsuario(usuario.CorreoInstitucional, usuario.Contrasena, exito);
+            bool error_conexion = false;
+            try
+            {
+                db.SP_LoginUsuario(usuario.CorreoInstitucional, usuario.Contrasena, exito);
 
-            string correo_autenticado = IdentidadManager.obtener_correo_actual();
+            }
+            catch (EntityException)
+            {
+                error_conexion = true;
+                exito.Value = false;
+            }
 
-            if (correo_autenticado != null)      // Si esta autenticado
+            if (IdentidadManager.obtener_correo_actual() != null)      // Si esta autenticado
             {
                 return RedirectToAction("Index", "Home");
             }
             else if ((bool)exito.Value == true) // Si se pudo autenticar (correo y contrasenna validos).
             {
-                // Creo una entidad solo con el correo, falta elegir perfil.
-                var identidad = new ClaimsIdentity(
-                    new[] {
-                    new Claim(ClaimTypes.Email, usuario.CorreoInstitucional),
-                    },
-                    DefaultAuthenticationTypes.ApplicationCookie);
+                // Note que si se cambia la contrasenna no se crea ninguna sesion.
 
-                // Elimino cualquier cookie o session para no retener nada que no se va usar (preventivo).
-                eliminar_privilegios(this);
-
-                // Guardo la identidad para poder accederla desde cualquier otro sitio.
-                Thread.CurrentPrincipal = new ClaimsPrincipal(identidad);
-                HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, identidad);
-
-                // Creo objeto IdentidadManager, la llave (para acceder al objeto) seria el correo, el cual es unico para cada usuario.
-                Session[usuario.CorreoInstitucional] = new IdentidadManager();
-                
-                return RedirectToAction("Index", "Perfil");
+                var recuperar_contrasena = db.Usuario.Where(m => m.CorreoInstitucional == usuario.CorreoInstitucional).ToList();
+                if(recuperar_contrasena.ElementAt(0).RecuperarContrasenna == true)
+                {
+                    Session["recuperar"] = usuario.CorreoInstitucional;
+                    return RedirectToAction("CambiarContrasenna");
+                }
+                else
+                {
+                    crear_sesion(usuario.CorreoInstitucional);
+                    return RedirectToAction("Cambiar", "Perfil");
+                }
             }
             else    // Si hay error en la autenticacion
             {
-                ModelState.AddModelError(string.Empty, "");
+                // Desplegar mensaje de error personalizado.
+                string mensaje_error = "";
+                if(error_conexion == true)
+                {
+                    mensaje_error = "Error de conexión al servidor";
+                }
+                else
+                {
+                    mensaje_error = "Usuario o contraseña inválidos";
+                }
+
+                ModelState.AddModelError("ErrorLogin", mensaje_error);
+
 
                 // Devolverse a la misma pagina de Login informando de que hay un error de autenticacion.
                 return View(usuario);
@@ -150,7 +169,7 @@ namespace Opiniometro_WebApp.Controllers
                 string contrasenna_generada = GenerarContrasenna(10);
 
                 // La guardo en la base de datos llamando al procedimiento almacenado.
-                db.SP_CambiarContrasenna(usuario.CorreoInstitucional, contrasenna_generada);
+                db.SP_CambiarContrasenna(usuario.CorreoInstitucional, contrasenna_generada, true);
                 
 
                 string contenido =
@@ -210,6 +229,67 @@ namespace Opiniometro_WebApp.Controllers
                 contrasenna.Append(caracteres_aleatorios[byte_aleatorio % (caracteres_aleatorios.Length)]);
             }
             return contrasenna.ToString();
-        }        
+        }
+        
+        public ActionResult CambiarContrasenna()
+        {
+            string correo = (string)Session["recuperar"];
+            if(correo != null)
+            {
+                var recuperar_contrasena = db.Usuario.Where(m => m.CorreoInstitucional == correo).ToList();
+                if (recuperar_contrasena.ElementAt(0).RecuperarContrasenna == true)
+                {
+                    return View("CambiarContrasenna");
+                }
+            }
+            return RedirectToAction("Login");
+        }
+
+        
+        [HttpPost]
+        public ActionResult CambiarContrasenna(FormCollection form)
+        {
+            if (form["Contrasenna1"] == form["Contrasenna2"] && form["Contrasenna1"].Length > 0)
+            {
+                string correo = (string)Session["recuperar"];
+                var recuperar_contrasena = db.Usuario.Where(m => m.CorreoInstitucional == correo).ToList();
+
+                if (recuperar_contrasena.ElementAt(0).RecuperarContrasenna == true && correo != null)
+                {
+                    db.SP_CambiarContrasenna(correo, form["Contrasenna1"], false);
+                    crear_sesion(correo);
+                    return RedirectToAction("Cambiar", "Perfil");
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.MethodNotAllowed);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("ErrorContrasenna", "Las contraseñas no coinciden");
+                return View(form);
+            }
+        }
+
+        private void crear_sesion(string correo)
+        {
+            // Creo una entidad solo con el correo, falta elegir perfil.
+            var identidad = new ClaimsIdentity(
+                new[] {
+                    new Claim(ClaimTypes.Email, correo),
+                },
+                DefaultAuthenticationTypes.ApplicationCookie);
+
+            // Elimino cualquier cookie o session para no retener nada que no se va usar (preventivo).
+            eliminar_privilegios(this);
+
+            // Guardo la identidad para poder accederla desde cualquier otro sitio.
+            Thread.CurrentPrincipal = new ClaimsPrincipal(identidad);
+            HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties { IsPersistent = false }, identidad);
+
+            // Creo objeto IdentidadManager, la llave (para acceder al objeto) seria el correo, el cual es unico para cada usuario.
+            Session[correo] = new IdentidadManager();
+        }
     }
 }

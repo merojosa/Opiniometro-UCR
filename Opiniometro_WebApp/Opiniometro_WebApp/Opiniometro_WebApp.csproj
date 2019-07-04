@@ -214,6 +214,7 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AsignarFormulariosModel.cs" />
+    <Compile Include="Models\BuscarCursoPorNombre_Result.cs" />
     <Compile Include="Models\Canton.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -224,6 +225,9 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Ciclo_Lectivo.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Conformado_For_Sec.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Conformado_Item_Sec_Form.cs">
@@ -281,6 +285,9 @@
     <Compile Include="Models\MostrarEstudiantes_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ObtenerPerfilesUsuario_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Opciones_De_Respuestas_Seleccion_Unica.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -334,7 +341,16 @@
     <Compile Include="Models\SP_ContarRespuestasPorGrupo_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TelefonoPersona.cs">
@@ -360,6 +376,10 @@
     <Compile Include="Models\ViewModelAdmin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AsignarFormulariosViewModel.cs" />
+    <Compile Include="ViewModels\ElegirFormularioEditorViewModel.cs" />
+    <Compile Include="ViewModels\ElegirGrupoEditorViewModel.cs" />
+    <Compile Include="ViewModels\EstudianteGruposMatriculado.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\estilos-propios.css" />
@@ -425,8 +445,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Formulario\Create.cshtml" />
@@ -450,16 +468,6 @@
     <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
     <Content Include="Views\Auth\Recuperar.cshtml" />
     <Content Include="Views\Shared\Auth\BarraLogin.cshtml" />
-    <Content Include="Views\Items\Create.cshtml" />
-    <Content Include="Views\Items\Delete.cshtml" />
-    <Content Include="Views\Items\Details.cshtml" />
-    <Content Include="Views\Items\Edit.cshtml" />
-    <Content Include="Views\Items\Index.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
     <Content Include="Views\VisualizarFormulario\Create.cshtml" />
     <Content Include="Views\VisualizarFormulario\Delete.cshtml" />
     <Content Include="Views\VisualizarFormulario\Details.cshtml" />
@@ -467,12 +475,6 @@
     <Content Include="Views\VisualizarFormulario\Index.cshtml" />
     <Content Include="Views\Admin\VerPersonas.cshtml" />
     <Content Include="Views\Admin\CrearUsuario.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
-    <Content Include="Views\LogInPerfiles\Index.cshtml" />
     <Content Include="Views\Administrador\CargarArchivo.cshtml" />
     <Content Include="Views\Administrador\Index.cshtml" />
     <Content Include="Views\Categoria\Create.cshtml" />
@@ -492,12 +494,27 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_Collapsible.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Perfil\Index.cshtml" />
     <Content Include="Views\SeleccionPermisos\SeleccionarPermisos.cshtml" />
     <Content Include="Views\CrearFormulario\ConformadoVParcial.cshtml" />
+    <Content Include="Views\Perfil\Borrar.cshtml" />
+    <Content Include="Views\Perfil\Cambiar.cshtml" />
+    <Content Include="Views\Perfil\ConfirmarBorrado.cshtml" />
+    <Content Include="Views\Perfil\Crear.cshtml" />
+    <Content Include="Views\Perfil\VerPerfiles.cshtml" />
+    <Content Include="Views\LlenarFormulario\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\AsignacionFormularioGrupo.cshtml" />
+    <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ElegirFormularioEditorViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ElegirGrupoEditorViewModel.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Edit.cshtml" />
+    <Content Include="Views\Auth\CambiarContrasenna.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
+    <Folder Include="Views\SeleccionFormularios\" />
+    <Folder Include="Views\Seleccion_Unica\" />
+    <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
