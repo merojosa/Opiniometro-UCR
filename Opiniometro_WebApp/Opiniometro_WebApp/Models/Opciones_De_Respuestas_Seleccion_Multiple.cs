@@ -12,12 +12,12 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class Opciones_De_Respuestas_Seleccion_Multiple
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public string ItemId { get; set; }
+        public short Orden { get; set; }
+        public string OpcionRespuesta { get; set; }
+    
+        public virtual Seleccion_Multiple Seleccion_Multiple { get; set; }
     }
 }

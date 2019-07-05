@@ -19,7 +19,6 @@ namespace Opiniometro_WebApp.Models
         {
             this.Carrera = new HashSet<Carrera>();
             this.Curso = new HashSet<Curso>();
-            this.Formulario = new HashSet<Formulario>();
         }
     
         public string Codigo { get; set; }
@@ -30,8 +29,6 @@ namespace Opiniometro_WebApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Curso> Curso { get; set; }
         public virtual Facultad Facultad { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Formulario> Formulario { get; set; }
         public virtual Facultad Facultad1 { get; set; }
     }
 }
