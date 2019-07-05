@@ -75,14 +75,14 @@ $(document).ready(function () {
 
                 $.ajax({
                     type: "POST",
-                    url: "EfectuarAsignaciones",
+                    url: "/AsignarFormularios/EfectuarAsignaciones",
                     data: {
                         Grupos: JSON.stringify(Grupos),
                         PeriodosIndicados: JSON.stringify(FormulariosYPeriodos)
                     },
                     success: function (data, status) {
                         alert("Se ha realizado las asignaciones exitosamente.");
-                        window.location.href = "/home/index";
+                        window.location.href = "/Asignacion_Formulario/index";
                     },
                     error: function (data, status) {
                         alert(`Ha ocurrido un error. Por favor reintente asignar más tarde.\nStatus: ${status}`);

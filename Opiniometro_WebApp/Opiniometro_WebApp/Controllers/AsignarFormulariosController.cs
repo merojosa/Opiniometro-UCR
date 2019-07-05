@@ -401,11 +401,11 @@ namespace Opiniometro_WebApp.Controllers
             foreach (var fcp in FormulariosConPeriodos)
             {
                 DateTime inicioPeriodo = new DateTime(), finPeriodo = new DateTime();
-                //bool fechaIEsCorrecta = DateTime.TryParseExact(fcp.FechaInicio, "dd/MM/yyyy hh:mm tt", CultureInfo.CurrentCulture, DateTimeStyles.None, out inicioPeriodo);
-                //bool fechaFEsCorrecta = DateTime.TryParseExact(fcp.FechaFinal, "dd/MM/yyyy hh:mm tt", CultureInfo.CurrentCulture, DateTimeStyles.None, out finPeriodo);
+                bool fechaIEsCorrecta = DateTime.TryParseExact(fcp.FechaInicio, "yyyy-MM-ddThh:mm", CultureInfo.CurrentCulture, DateTimeStyles.None, out inicioPeriodo);
+                bool fechaFEsCorrecta = DateTime.TryParseExact(fcp.FechaFinal, "yyyy-MM-ddThh:mm", CultureInfo.CurrentCulture, DateTimeStyles.None, out finPeriodo);
 
-                bool fechaIEsCorrecta = DateTime.TryParse(fcp.FechaInicio, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out inicioPeriodo);
-                bool fechaFEsCorrecta = DateTime.TryParse(fcp.FechaFinal, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out finPeriodo);
+                //bool fechaIEsCorrecta = DateTime.TryParse(fcp.FechaInicio, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out inicioPeriodo);
+                //bool fechaFEsCorrecta = DateTime.TryParse(fcp.FechaFinal, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out finPeriodo);
                 if (fechaIEsCorrecta && fechaFEsCorrecta)
                 {
                     //Debug.WriteLine("Fecha inicio: {0}\nFecha fin: {1}\n\n", inicioPeriodo.ToString(), finPeriodo.ToString());
@@ -434,6 +434,10 @@ namespace Opiniometro_WebApp.Controllers
                             FechaFinal = finPeriodo
                         });
                     }
+                }
+                else
+                {
+                    Debug.Write("\n\nFecha incorrecta /\n\n");
                 }
             }
 
