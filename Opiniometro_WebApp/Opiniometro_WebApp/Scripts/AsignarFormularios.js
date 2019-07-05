@@ -65,7 +65,6 @@ $(document).ready(function () {
 
                 var exitoso = false;
 
-                alert("Efectuando asignaciones, por favor espere...");
                 var codigos = document.getElementsByClassName("codigo-form");
                 var inicios = document.getElementsByClassName("fecha-inicial");
                 var fines = document.getElementsByClassName("fecha-final");
@@ -81,11 +80,29 @@ $(document).ready(function () {
                         PeriodosIndicados: JSON.stringify(FormulariosYPeriodos)
                     },
                     success: function (data, status) {
-                        alert("Se ha realizado las asignaciones exitosamente.");
-                        window.location.href = "/Asignacion_Formulario/index";
+                        var d = JSON.parse(data);
+                        alert(`data: ${d}`);
+                        if (d == 0) {
+                            alert("Asignaciones fallidas. Por favor revise el formato de los periodos seleccionados.");
+                        }
+                        else {
+                            if (d == -1) {
+                                alert("Hubo un problema con la base de datos. Por favor contacte a soporte técnico.");
+                            }
+                            else {
+                                if (d < FormulariosYPeriodos.length * Grupos.length) {
+                                    alert("Se ha realizado algunas asignaciones. Es posible que algunas fallaran. Por favor revise los periodos seleccionados y vuelva a intentarlo.")
+                                }
+                                else {
+                                    alert("Se concretó exitosamente todas las asignaciones.");
+                                }
+
+                                window.location.href = "/Asignacion_Formulario/index";
+                            }
+                        }
                     },
                     error: function (data, status) {
-                        alert(`Ha ocurrido un error. Por favor reintente asignar más tarde.\nStatus: ${status}`);
+                        alert(`Ha ocurrido un error. Por favor intente de nuevo.\nStatus: ${status}`);
                         botonEfectuar.disabled = false;
                     }
                 });

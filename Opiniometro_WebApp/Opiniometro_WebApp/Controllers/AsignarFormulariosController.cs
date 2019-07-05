@@ -392,8 +392,9 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult EfectuarAsignaciones(string Grupos, string PeriodosIndicados)
+        public string EfectuarAsignaciones(string Grupos, string PeriodosIndicados)
         {
+            int asignacionesConcretadas = 0;
             var FormulariosConPeriodos = JsonConvert.DeserializeObject<TipoPeriodosIndicados[]>(PeriodosIndicados);
             var GruposEnLista = JsonConvert.DeserializeObject<Grupo[]>(Grupos);
 
@@ -433,6 +434,7 @@ namespace Opiniometro_WebApp.Controllers
                             FechaInicio = inicioPeriodo,
                             FechaFinal = finPeriodo
                         });
+                        ++asignacionesConcretadas;
                     }
                 }
                 else
@@ -445,10 +447,10 @@ namespace Opiniometro_WebApp.Controllers
             {
                 db.Tiene_Grupo_Formulario.AddRange(asignaciones);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return JsonConvert.SerializeObject(asignacionesConcretadas);
             }
 
-            return RedirectToAction("Index", "Home");
+            return JsonConvert.SerializeObject(-1);
         }
     }
 }
