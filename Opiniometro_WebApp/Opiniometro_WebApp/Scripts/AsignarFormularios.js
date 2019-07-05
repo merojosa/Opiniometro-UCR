@@ -81,7 +81,6 @@ $(document).ready(function () {
                     },
                     success: function (data, status) {
                         var d = JSON.parse(data);
-                        alert(`data: ${d}`);
                         if (d == 0) {
                             alert("Asignaciones fallidas. Por favor revise el formato de los periodos seleccionados.");
                         }
