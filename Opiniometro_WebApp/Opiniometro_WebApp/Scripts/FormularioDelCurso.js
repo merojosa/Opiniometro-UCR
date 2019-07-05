@@ -1,16 +1,17 @@
 ﻿
 
 
-////modifica el id del div de las preguntas que poseen campo de texto libre
-//function renombrar(num) {
-//   $("#campoTexto0").attr("id", "campoTexto1");
-//}
+///Se crea elemento que agraga un salto de linea
 
-//function newLine(etiqueta) {
-//    var elemento = document.createElement("hr/");
-//    var f = document.getElementById(etiqueta);
-//    document.getElementById(etiqueta).appendChild(elemento);
-//}
+function insertNueLinea(etiqueta) {
+    var elemento = document.createElement("br");
+    document.getElementById(etiqueta).appendChild(elemento);
+}
+
+function lineaHor(etiqueta) {
+    var elemento = document.createElement("hr");
+    document.getElementById(etiqueta).appendChild(elemento);
+}
 
 //crear cada elemento que contendra la pregunta con su id UNICO
 function crearElemento(nombreId, numeroId, pregunta, etiquetaDiv) {
@@ -27,10 +28,10 @@ function crearElemento(nombreId, numeroId, pregunta, etiquetaDiv) {
 //retorna--
 function TextoLibre(contTextoLibre) {
     var contenido = document.getElementById("campoTexto".concat(contTextoLibre)) ;
-    var elemento = document.createElement("INPUT");
-    elemento.type = 'text';
-    elemento.style.width = "400px";
-    elemento.style.height = "150px";
+    var elemento = document.createElement("textarea");
+    elemento.rows = "5";
+    elemento.cols = "50";
+    elemento.maxLength = "160";
     contenido.appendChild(elemento);
 }
 

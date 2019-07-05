@@ -82,23 +82,29 @@
                                     <li class="disabled"><a id="link_deshabilitado">Insertar formulario</a></li>
                                 }
 
-                                //if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.ASIGNAR_FORMUALRIO))
-                                //{
-                                    <li>@Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")</li>
-                                @*}
+
+
+                                <li>@Html.ActionLink("Ver asignaciones de formularios", "Index", "Asignacion_Formulario")</li>
+                                <li>@Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")</li>
+                                @*if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.ASIGNAR_FORMUALRIO))
+                                {
+                                    <li>@Html.ActionLink("Ver asignaciones de formularios", "Index", "Asignacion_Formulario")</li>
+                                <li>@Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")</li>
+                                }
                                 else
                                 {
+                                    <li class="disabled"><a id="link_deshabilitado">Ver asignaciones de formularios</a></li>
                                     <li class="disabled"><a id="link_deshabilitado">Asignar formulario</a></li>
                                 }*@
 
                                 //if (permisos_usuario.verificar_permiso("SC-89457", 12, IdPermiso.CALIFICAR_CURSOS))
                                 //{
-                                    <li>@Html.ActionLink("Evaluar profesores", "Index", "CursosMatriculados")</li>
+                                <li>@Html.ActionLink("Evaluar profesores", "Index", "CursosMatriculados")</li>
                                 @*}
-                                else
-                                {
-                                    <li class="disabled"><a id="link_deshabilitado">Evaluar profesores</a></li>
-                                }*@
+            else
+            {
+                <li class="disabled"><a id="link_deshabilitado">Evaluar profesores</a></li>
+            }*@
 
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VISUALIZAR_RESULTADOS_DE_EVALUACIONES))
                                 {

@@ -11,73 +11,87 @@
 <head>
     <meta charset="utf-8" />
     <script src="~/Scripts/FormularioDelCurso.js"></script>
-
 </head>
 <body>
     @*contadores usados para darle un id unico a los div que contiene el tipo de respuesta*@
     <script>
-        contTextoLibre = 0;
-        contSelUnica = 0;
-        contSiNo = 0;
-        contSelMult = 0;
-        contEscalar = 0;
-        contEstrella = 0;
+      var  contTextoLibre = 0;
+      var contSelUnica = 0;
+      var  contSiNo = 0;
+      var  contSelMult = 0;
+      var  contEscalar = 0;
+      var contEstrella = 0;
     </script>
 
-    <table> <tr> <th> Preguntas <br />  </th> </tr> </table>
+    <table class="table table-responsive" align="center" border="1">
+        <tr id="pyr" bgcolor="#FFFFFF" align="center">
+            <td><b><font color="#000000"><h3><b>Formulario</b> </h3></font></b></td>
+        </tr>
+        <tr bgcolor="#FFFFFF" align="left">
+            <td>
+                <table class="table table-responsive" border="1" >
+                   <tr bgcolor="#FFFFFF" >
+                        <td>
 
-    @foreach (var dato in Model.preguntasFormulario)
-    {
-        if (dato.tipoPregunta == 1)
-        {
-            <div id="preguntaTextoLibre"> </div>
+                           @foreach (var dato in Model.preguntasFormulario) {
 
-            <script>
-                crearElemento("campoTexto", contTextoLibre, "Esta es una pregunta de T.L del formulario"/*aqui va el valor devuelto por dato.item*/, "preguntaTextoLibre");
-                TextoLibre(contTextoLibre);
-                contTextoLibre++;
-            </script>
-            }
+                               if (dato.tipoPregunta == 1) { 
+                               
+                                   <div id="preguntaTextoLibre"> </div>
 
-        if (dato.tipoPregunta == 2)
-        {
-            <div id="preguntaSelUnica"> </div>
 
-            <script>
-                crearElemento("selUnica", contSelUnica, "Esta es una pregunta de S.U del formulario", "preguntaSelUnica");
-                seleccionUnica(contSelUnica/*,listaOpciones*/);
-                contSelUnica++;
-            </script>
+                                       <script type="text/javascript">
+                                            crearElemento("campoTexto", contTextoLibre, "@dato.item" , "preguntaTextoLibre");
+                                            insertNueLinea("campoTexto".concat(contTextoLibre));
+                                            TextoLibre(contTextoLibre);
+                                            lineaHor("campoTexto".concat(contTextoLibre));
+                                            contTextoLibre++;
+                                       </script>
+                               }
 
-            //Campo de observacion de la opcion de seleccion unica
-            @*if (dato.tieneObservacion == true) {
-                    <script>
-                        TextoLibre();
-                    </script>
-                }*@
-        }
+                                if (dato.tipoPregunta == 2)
+                                {
+                                    <div id="preguntaSelUnica"> </div>
 
-        if (dato.tipoPregunta == 3)
-        {
-            <div id="preguntaSiNo"> </div>
+                                    <script>
+                                        crearElemento("selUnica", contSelUnica, "@dato.item", "preguntaSelUnica");
+                                        insertNueLinea("selUnica".concat(contSelUnica));
+                                        seleccionUnica(contSelUnica/*,listaOpciones*/);
+                                        lineaHor("selUnica".concat(contSelUnica));
+                                        contSelUnica++;
+                                    </script>
 
-            <script>
-                crearElemento("SiNo", contSiNo, "Esta es una pregunta de si/no del formulario", "preguntaSiNo");
-                RespondeSiNo(contSiNo);
-                contSiNo++;
-            </script>
+                                    //Campo de observacion de la opcion de seleccion unica
+                                    @*if (dato.tieneObservacion == true) {
+                                        <script>
+                                                TextoLibre();
+                                        </script>
+                                    }*@
+                                }
 
-            //Campo de observacion de la opcion de respuesta Si-No
-            @*if (dato.tieneObservacion == true) {
-                    <script>
-                        TextoLibre();
-                    </script>
-                }*@
-        }
+                                if (dato.tipoPregunta == 3)
+                                {
+                                    <div id="preguntaSiNo"> </div>
 
-        @*    if (dato.tipoPregunta == 4)
-            {
-                 <div id="preguntaSelMultiple"> </div>
+                                    <script>
+                                        crearElemento("SiNo", contSiNo, "@dato.item", "preguntaSiNo");
+                                        insertNueLinea("SiNo".concat(contSiNo));
+                                        RespondeSiNo(contSiNo);
+                                        lineaHor("SiNo".concat(contSiNo));
+                                        contSiNo++;
+                                    </script>
+
+                                    //Campo de observacion de la opcion de respuesta Si-No
+                                    @*if (dato.tieneObservacion == true) {
+                                        <script>
+                                            TextoLibre();
+                                        </script>
+                                    }*@
+                                }
+
+                                 @*if (dato.tipoPregunta == 4)
+                                {
+                                     <div id="preguntaSelMultiple"> </div>
 
             }*@
 
@@ -99,9 +113,17 @@
             {
                 <div id="preguntaEstrella"> </div>
 
-            }*@
+                                }*@
 
-    }
+                             }
 
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    
 </body>
 </html>
