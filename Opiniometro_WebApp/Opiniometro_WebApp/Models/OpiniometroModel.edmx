@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Opiniometro_DatosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Opiniometro_DatosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrativo">
           <Key>
             <PropertyRef Name="CedulaAdministrativo" />
@@ -1398,8 +1398,7 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Opiniometro_DatosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2629,29 +2628,29 @@
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
           <FunctionImport Name="CursosSegunAnno" ReturnType="Collection(Opiniometro_DatosModel.CursosSegunAnno_Result)">
-            <Parameter Name="anno" Mode="In" Type="Int16" />
+          <Parameter Name="anno" Mode="In" Type="Int16" />
           </FunctionImport>
           <FunctionImport Name="CursosSegunCarrera" ReturnType="Collection(Opiniometro_DatosModel.CursosSegunCarrera_Result)">
-            <Parameter Name="siglaCarrera" Mode="In" Type="String" />
+          <Parameter Name="siglaCarrera" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="CursosSegunSemestre" ReturnType="Collection(Opiniometro_DatosModel.CursosSegunSemestre_Result)">
-            <Parameter Name="semestre" Mode="In" Type="Byte" />
+          <Parameter Name="semestre" Mode="In" Type="Byte" />
           </FunctionImport>
           <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_DatosModel.DatosEstudiante_Result)">
-            <Parameter Name="Cedula" Mode="In" Type="String" />
+          <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_DatosModel.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
-            <Parameter Name="Cedula" Mode="In" Type="String" />
+          <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPerfilesUsuario" ReturnType="Collection(Opiniometro_DatosModel.ObtenerPerfilesUsuario_Result)">
-            <Parameter Name="Correo" Mode="In" Type="String" />
+          <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPerfilPorDefecto" ReturnType="Collection(String)">
-            <Parameter Name="correo" Mode="In" Type="String" />
+          <Parameter Name="correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPerfilUsuario" ReturnType="Collection(String)">
-            <Parameter Name="correo" Mode="In" Type="String" />
+          <Parameter Name="correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_AgregarPersonaUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -2718,7 +2717,7 @@
             <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ObtenerFormulario" ReturnType="Collection(String)">
-            <Parameter Name="cod" Mode="In" Type="String" />
+          <Parameter Name="cod" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ObtenerNombre">
             <Parameter Name="Correo" Mode="In" Type="String" />

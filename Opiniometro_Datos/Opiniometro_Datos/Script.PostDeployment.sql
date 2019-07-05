@@ -687,11 +687,14 @@ CREATE PROCEDURE SP_ContarRespuestasPorGrupo
 	@itemId				NVARCHAR(10)
 AS
 BEGIN
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED
+	BEGIN TRANSACTION tc0
 	SET NOCOUNT ON
 	SELECT e.Respuesta, COUNT(e.Respuesta) AS cntResp
 	FROM Responde as e
 	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
 	GROUP BY e.CodigoFormularioResp, e.CedulaProfesor, e.AnnoGrupoResp, e.SemestreGrupoResp, e.NumeroGrupoResp, e.SiglaGrupoResp, e.ItemId, e.Respuesta
+	COMMIT TRANSACTION tc0
 END
 GO
 
@@ -713,10 +716,13 @@ CREATE PROCEDURE SP_DevolverRespuestasPorGrupo
 	@itemId				NVARCHAR(10)
 AS
 BEGIN
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED
+	BEGIN TRANSACTION tc1
 	SET NOCOUNT ON
 	SELECT e.Respuesta
 	FROM Responde as e
 	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
+	COMMIT TRANSACTION tc2
 END
 GO
 
