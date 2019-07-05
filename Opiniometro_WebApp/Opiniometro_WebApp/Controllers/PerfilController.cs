@@ -140,7 +140,9 @@ namespace Opiniometro_WebApp.Controllers
                 Perfil perfil = db.Perfil.Find(id);
                 db.Perfil.Remove(perfil);
                 db.SaveChanges();
-                TempData["msg"] = "<script>alert('El perfil se ha borrado exitosamente');</script>";
+                
+                // Desplegar alert hasta que se cargue la pagina por completo.
+                TempData["msg"] = "<script> $(document).ready(function(){ alert('El perfil se ha borrado exitosamente.');}); </script>";
                 return RedirectToAction("Borrar");
             }
             else
@@ -174,7 +176,7 @@ namespace Opiniometro_WebApp.Controllers
 
                 if((int)numero_error.Value == 0)
                 {
-                    TempData["msg"] = "<script>alert('El perfil se ha creado exitosamente');</script>";
+                    TempData["msg"] = "<script> $(document).ready(function(){ alert('El perfil se ha creado exitosamente.');}); </script>";
                     return RedirectToAction("VerPerfiles");
                 }
                 else

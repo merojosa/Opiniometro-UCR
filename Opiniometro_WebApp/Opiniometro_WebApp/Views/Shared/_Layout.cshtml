@@ -173,5 +173,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    @Html.Raw(TempData["msg"])
 </body>
 </html>
