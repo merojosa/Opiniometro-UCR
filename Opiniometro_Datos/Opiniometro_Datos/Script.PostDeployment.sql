@@ -757,41 +757,54 @@ CREATE PROCEDURE [dbo].[SP_RecuperarEtiquetas]
 	@idPregunta NVARCHAR (10)
 AS
 BEGIN
+	SET NOCOUNT ON
 	SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
 	BEGIN TRANSACTION t1
 		IF @tipoPregunta = 2 --seleccion unica
 			BEGIN
-				SELECT	OpcionRespuesta
-				FROM	Opciones_De_Respuestas_Seleccion_Unica 
-				WHERE	ItemId = @idPregunta
+				SELECT	e.OpcionRespuesta AS Label
+				FROM	Opciones_De_Respuestas_Seleccion_Unica AS e
+				WHERE	e.ItemId = @idPregunta
 			END
 		ELSE IF @tipoPregunta = 3 --like dislike(si/no)
 			BEGIN
-				SELECT	OpcionRespuesta
-				FROM	Opciones_De_Respuestas_Seleccion_Unica
-				WHERE	ItemId = @idPregunta
+				SELECT	e.OpcionRespuesta AS Label
+				FROM	Opciones_De_Respuestas_Seleccion_Unica AS e
+				WHERE	e.ItemId = @idPregunta
 			END
 		ELSE IF @tipoPregunta = 4 --seleccion multiple
 			BEGIN	
-				SELECT	OpcionRespuesta
-				FROM	Opciones_De_Respuestas_Seleccion_Multiple
-				WHERE	ItemID = @idPregunta
-			END
-		ELSE IF @tipoPregunta = 5 --Escalar
-			BEGIN
-				SELECT	Escalar.Inicio,Escalar.Fin,Escalar.Incremento
-				FROM	Escalar 
-				WHERE	ItemId = @idPregunta
-			END
-		ELSE IF @tipoPregunta = 6 --Escalar Estrella
-			BEGIN
-				SELECT	Escalar.Inicio,Escalar.Fin, Escalar.Incremento
-				FROM	Escalar 
-				WHERE	ItemId = @idPregunta
+				SELECT	e.OpcionRespuesta AS Label
+				FROM	Opciones_De_Respuestas_Seleccion_Multiple AS e
+				WHERE	e.ItemID = @idPregunta
 			END
 	COMMIT TRANSACTION t1
 END
+GO
 
+IF OBJECT_ID('SP_RecuperarEtiquetasEscalar') IS NOT NULL
+	DROP PROCEDURE [dbo].[SP_RecuperarEtiquetasEscalar]
+GO
+CREATE PROCEDURE [dbo].[SP_RecuperarEtiquetasEscalar]
+	@tipoPregunta INT,
+	@idPregunta NVARCHAR (10)
+AS
+BEGIN
+	SET NOCOUNT ON
+	IF @tipoPregunta = 5 --Escalar
+		BEGIN
+		SELECT	e.Inicio,e.Fin,e.Incremento
+		FROM	Escalar as e
+		WHERE	e.ItemId = @idPregunta
+	END
+	ELSE IF @tipoPregunta = 6 --Escalar Estrella
+		BEGIN
+		SELECT	e.Inicio,e.Fin, e.Incremento
+		FROM	Escalar as e 
+		WHERE	e.ItemId = @idPregunta
+	END
+END
+GO
 
 --Permisos
 INSERT INTO Permiso

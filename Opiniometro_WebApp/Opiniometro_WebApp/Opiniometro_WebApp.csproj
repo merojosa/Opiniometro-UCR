@@ -296,18 +296,18 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Opiniometro_Model.Context.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>Opiniometro_Model.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Opiniometro_Model.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\Opiniometro_Model.Designer.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Perfil.cs">
@@ -351,6 +351,9 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_RecuperarEtiquetasEscalar_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TelefonoPersona.cs">
@@ -401,10 +404,13 @@
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
       <LastGenOutput>Opiniometro_Model.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\Opiniometro_Model.edmx.diagram">
+      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
+    </Content>
     <Content Include="Models\Opiniometro_Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
       <LastGenOutput>Opiniometro_Model.cs</LastGenOutput>
+      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -412,9 +418,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Opiniometro_Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Opiniometro_Model.edmx.diagram">
-      <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />

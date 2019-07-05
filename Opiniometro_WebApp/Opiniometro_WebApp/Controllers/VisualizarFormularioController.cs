@@ -211,19 +211,22 @@ namespace Opiniometro_WebApp.Controllers
             return result;
         }
 
+       
+
         //EFE:Crea un gráfico con la información de los resultados en la base de datos.
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso,
         public JsonResult GraficoPie(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId, byte tipoPregunta)
-        {//"131313"            
+        {          
             var result = ObtenerCantidadRespuestasPorPregunta(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId).ToList();
             List<object> x = new List<object>();
             List<object> y = new List<object>();
-            if (Enumerable.Range(5, 6).Contains(tipoPregunta))
+            if (!Enumerable.Range(5, 6).Contains(tipoPregunta))
             {
 
-                var labels = db.SP_RecuperarEtiquetas(tipoPregunta, itemId);
+                var labels = db.SP_RecuperarEtiquetas(tipoPregunta, itemId).ToList();
                 bool encontrado;
+                
                 foreach (var label in labels)
                 {
                     encontrado = false;
@@ -244,21 +247,49 @@ namespace Opiniometro_WebApp.Controllers
             }
             else
             {
-                var rango = db.SP_RecuperarEtiquetas(5, itemId).ToList();
-                for (int i = Int32.Parse(rango[0]); i < Int32.Parse(rango[1]); i += Int32.Parse(rango[2]))
+                var rango = db.SP_RecuperarEtiquetasEscalar(tipoPregunta, itemId).ToList();
+                int inicio = rango[0].Inicio;
+                int final = rango[0].Fin;
+                int incremento = rango[0].Incremento;
+                bool encontrado;
+                for (int i = inicio; i <= (final+1); i += incremento)
                 {
-
+                    encontrado = true;
+                    if (i == final + 1)
+                    {
+                        x.Add("No se/No Responde/No Aplica");
+                        foreach (var resul in result)
+                        {
+                            if (Int16.Parse(resul.Respuesta) == i)
+                            {
+                                encontrado = true;
+                                y.Add(resul.cntResp);
+                            }
+                        }
+                        if(encontrado == false)
+                        {
+                            y.Add(0);
+                        }
+                    }
+                    else
+                    {
+                        
+                        x.Add(i);
+                        foreach (var resul in result)
+                        {
+                            if (Int16.Parse(resul.Respuesta) == i)
+                            {
+                                encontrado = true;
+                                y.Add(resul.cntResp);
+                            }
+                        }
+                        if (encontrado == false)
+                        {
+                            y.Add(0);
+                        }
+                    }
                 }
-            }
-            //foreach (var itemR in result)
-            //{
-
-            //    //leyenda[iter] = itemR.Respuesta;
-            //    //cntResps[iter] = itemR.cntResp;
-            //    //iter++;
-            //    x.Add(itemR.Respuesta);
-            //    y.Add(itemR.cntResp);
-            //}
+            }           
             List<object> lista = new List<object> { x, y };
             return Json(lista, JsonRequestBehavior.AllowGet);
         }

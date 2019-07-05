@@ -406,5 +406,18 @@ namespace Opiniometro_WebApp.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_RecuperarEtiquetas", tipoPreguntaParameter, idPreguntaParameter);
         }
+    
+        public virtual ObjectResult<SP_RecuperarEtiquetasEscalar_Result> SP_RecuperarEtiquetasEscalar(Nullable<int> tipoPregunta, string idPregunta)
+        {
+            var tipoPreguntaParameter = tipoPregunta.HasValue ?
+                new ObjectParameter("tipoPregunta", tipoPregunta) :
+                new ObjectParameter("tipoPregunta", typeof(int));
+    
+            var idPreguntaParameter = idPregunta != null ?
+                new ObjectParameter("idPregunta", idPregunta) :
+                new ObjectParameter("idPregunta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_RecuperarEtiquetasEscalar_Result>("SP_RecuperarEtiquetasEscalar", tipoPreguntaParameter, idPreguntaParameter);
+        }
     }
 }
