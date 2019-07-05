@@ -137,20 +137,22 @@ CREATE TRIGGER TR_ValidacionModificarPersona
 ON Persona INSTEAD OF UPDATE
 AS
 BEGIN
-	IF(UPDATE(Nombre) OR UPDATE(Apellido1) OR UPDATE(Apellido2) OR UPDATE(Direccion))
+	--IF(UPDATE(Nombre) OR UPDATE(Apellido1) OR UPDATE(Apellido2) OR UPDATE(Direccion)) --quitar
 	BEGIN
-		DECLARE @CedulaBusqueda		CHAR(10)
+		--DECLARE @CedulaBusqueda		CHAR(10) --modificar
 		DECLARE @Cedula				CHAR(10)
 		DECLARE @Nombre				NVARCHAR(51)
 		DECLARE @Apellido1			NVARCHAR(51)
 		DECLARE @Apellido2			NVARCHAR(51)
 		DECLARE @Direccion			NVARCHAR(257)
+		DECLARE @CedulaUpdate		CHAR(10)
 
 		SET @Cedula				= (SELECT Cedula FROM inserted)
 		SET @Nombre				= (SELECT Nombre FROM inserted)
 		SET @Apellido1			= (SELECT Apellido1 FROM inserted)
 		SET @Apellido2			= (SELECT Apellido2 FROM inserted)
 		SET @Direccion			= (SELECT Direccion FROM inserted)
+		SET @CedulaUpdate		= (SELECT Cedula FROM deleted)
 
 		BEGIN TRY
 			IF((@nombre IS NOT NULL) AND (@Apellido1 IS NOT NULL) AND (@Apellido2 IS NOT NULL) AND (@Direccion IS NOT NULL) 
@@ -158,7 +160,14 @@ BEGIN
 			BEGIN
 				UPDATE Persona
 				SET Cedula = @Cedula, Nombre = @Nombre, Apellido1 = @Apellido1, Apellido2 = @Apellido2, Direccion = @Direccion
-				WHERE Cedula = @CedulaBusqueda;
+				WHERE Cedula = @Cedula;
+
+				IF(@Cedula = @CedulaUpdate)
+				BEGIN
+					UPDATE Usuario
+					SET @Cedula = Cedula
+					WHERE Cedula = @CedulaUpdate;
+				END
 			END
 			ELSE
 			BEGIN
@@ -181,30 +190,42 @@ CREATE TRIGGER TR_ValidacionModificarUsuario
 ON Usuario INSTEAD OF UPDATE
 AS
 BEGIN
-	IF(UPDATE(CorreoInstitucional))
-	BEGIN
-		DECLARE @CedulaBusqueda		CHAR(10)
-		DECLARE @Correo				NVARCHAR(101)
+	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;	--Nivel 0: Cambio de nivel de transacción
 
-		SET @Correo				= (SELECT CorreoInstitucional FROM inserted)
-		BEGIN TRY
-			IF((@correo IS NOT NULL) AND (@correo LIKE '%@ucr.ac.cr') AND (LEN(@Correo) <= 100))
+	BEGIN TRY	--Nivel 1: Try
+		BEGIN TRANSACTION ValidacionModificarUsuario	--Nivel 2: Transaction
+			ALTER TABLE Usuario NOCHECK CONSTRAINT FK_Usu_Per --revisar
+			
+			--IF(UPDATE(CorreoInstitucional)) --quitar
 			BEGIN
-				UPDATE Usuario
-				SET CorreoInstitucional = @Correo
-				WHERE Cedula = @CedulaBusqueda;
-			END
-			ELSE
-			BEGIN
-				RAISERROR('El correo no puede estar vacío y debe ser del tipo "nombre@ucr.ac.cr".', 16, 1)  
-				RETURN  
-			END
-		END TRY
+				DECLARE @CedulaBusqueda		CHAR(10)
+				DECLARE @Correo				NVARCHAR(101)
 
-		BEGIN CATCH
-			PRINT 'ERROR: ' + ERROR_MESSAGE();
-		END CATCH
-	END
+				SET @Correo				= (SELECT CorreoInstitucional FROM inserted)
+
+				IF((@correo IS NOT NULL) AND (@correo LIKE '%@ucr.ac.cr') AND (LEN(@Correo) <= 100))
+				BEGIN
+					UPDATE Usuario
+					SET CorreoInstitucional = @Correo
+					WHERE Cedula = @CedulaBusqueda;
+				END
+				ELSE
+				BEGIN
+					RAISERROR('El correo no puede estar vacío y debe ser del tipo "nombre@ucr.ac.cr".', 16, 1)  
+					RETURN  
+				END
+			END
+
+			ALTER TABLE Usuario CHECK CONSTRAINT FK_Usu_Per --revisar
+		COMMIT TRANSACTION ValidacionModificarUsuario	--Nivel 2: Transaction
+	END TRY
+
+	BEGIN CATCH
+		PRINT 'ERROR: ' + ERROR_MESSAGE();
+		ROLLBACK TRANSACTION SP_CrearPerfil
+	END CATCH	--Nivel 1: Try
+
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
 END;
 
 IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
