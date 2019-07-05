@@ -11,6 +11,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System.Net;
 using System.Data.Entity.Core.Objects;
+using System.Data.SqlClient;
+using System.Data.Entity;
+using System.Data;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -171,10 +174,17 @@ namespace Opiniometro_WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                ObjectParameter numero_error = new ObjectParameter("Numero_Error", 0);
-                db.SP_CrearPerfil(perfil.Nombre, perfil.Descripcion, numero_error);
+                // Parametros
+                var Nombre = new SqlParameter("@Nombre", perfil.Nombre);
+                var Descripcion = new SqlParameter("@Descripcion", perfil.Descripcion);
+                var Numero_Error = new SqlParameter("@Numero_Error", 0);
+                Numero_Error.Direction = ParameterDirection.Output;
+                Numero_Error.SqlDbType = SqlDbType.Int;
 
-                if((int)numero_error.Value == 0)
+                db.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction,
+                    "EXEC SP_CrearPerfil @Nombre, @Descripcion, @Numero_Error OUT", Nombre, Descripcion, Numero_Error);
+
+                if ((int)Numero_Error.Value == 0)
                 {
                     TempData["msg"] = "<script> $(document).ready(function(){ alert('El perfil se ha creado exitosamente.');}); </script>";
                     return RedirectToAction("VerPerfiles");
