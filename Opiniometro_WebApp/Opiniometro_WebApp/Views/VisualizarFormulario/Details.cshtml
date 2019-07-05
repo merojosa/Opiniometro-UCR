@@ -143,30 +143,28 @@
                                                                 var aData = chData;
                                                                 var aLabels = aData[0];
                                                                 var aDatasets1 = aData[1];
-                                                                var aMediana = aData[2]
+                                                                var aPromedio = aData[2];
+                                                                var aMediana = aData[3];
+                                                                var aDesviacion = aData[4];
 
                                                                 var tamanio = 0;
-                                                                var cantidadOpciones = 0;
-                                                                var promedio = 0;
 
                                                                 for (var data in aDatasets1) {
                                                                     var valor = parseInt(aDatasets1[data]);
                                                                     tamanio = tamanio + valor;
-                                                                    cantidadOpciones++;
                                                                 }
-
-                                                                promedio = tamanio / cantidadOpciones;
 
                                                                 //for (var i = 0; i < tamanio; i++)
                                                                 document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: " + (tamanio).toString() + " ";
 
-                                                                if ('@seccion.Item.TipoPregunta' == 4 || '@seccion.Item.TipoPregunta' == 5)
+                                                                if ('@seccion.Item.TipoPregunta' == 5 || '@seccion.Item.TipoPregunta' == 6)
                                                                 {
                                                                     //Promedio
-                                                                    document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Promedio: " + (promedio).toString() + " ";
+                                                                    document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Promedio: " + (aPromedio).toString() + " ";
                                                                     //Mediana
                                                                     document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Mediana: " + (aMediana).toString() + " ";
                                                                     //Desviacion Estandar
+                                                                    document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Desviacion estandar: " + (aDesviacion).toString() + " ";
                                                                 }
                                                               
                                                             

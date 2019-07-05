@@ -223,7 +223,13 @@ namespace Opiniometro_WebApp.Controllers
 
             List<int?> listaOrdenada = new List<int?>();
             int size = 0;
-            int? mediana = 0;
+            double? mediana = 0;
+            double? tamanio = 0;
+            int counter = 0;
+            double? promedio = 0;
+            double? desviacion = 0;
+            double sumatoria = 0;
+            double actual = 0;
             //string[] leyenda = new string[tamanio];
             //int?[] cntResps = new int?[tamanio];
             //int iter = 0;
@@ -235,22 +241,41 @@ namespace Opiniometro_WebApp.Controllers
                 x.Add(itemR.Respuesta);
                 y.Add(itemR.cntResp);
                 listaOrdenada.Add(itemR.cntResp);
+                tamanio = tamanio + listaOrdenada[counter];
+                counter++;
             }
 
             listaOrdenada.Sort();
             size = listaOrdenada.Count();
+
+            //Calcular el promedio
+
+            promedio = tamanio / size;
+
+            //Calcular la mediana
+
             if (size % 2 == 0)
             {
                 mediana = (listaOrdenada[(size/2) - 1] + listaOrdenada[(size/2)]) / 2;
             }
             else
             {
-                mediana = listaOrdenada[(size / 2)]; 
+                mediana = listaOrdenada[(size/2)]; 
             }
 
-            //Calcular la mediana
+            //Calcular la desviacion estandar
 
-            List<object> lista = new List<object> { x, y, mediana };
+
+
+            for(int i = 0; i < size; i++)
+            {
+                actual = (double)listaOrdenada[i];
+                sumatoria = sumatoria + Math.Pow(actual - (double)mediana, 2);
+            }
+
+            desviacion = Math.Sqrt(sumatoria / size);
+
+            List<object> lista = new List<object> { x, y, promedio, mediana, desviacion};
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
 
