@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
 using System.Data.Entity.Core.Objects;
+using System.Text;
 using System.Web.Helpers; //Para graficos, borrar despues
 
 namespace Opiniometro_WebApp.Controllers
@@ -31,7 +32,6 @@ namespace Opiniometro_WebApp.Controllers
         // GET: VisualizarFormulario
         public ActionResult Index()
         {
-            ViewBag.CursoID = new SelectList(db.Curso, "Sigla", "Nombre");
             var semestres = (from sem in db.Ciclo_Lectivo select sem.Semestre).AsEnumerable().Distinct();
             ViewBag.SemestreId = new SelectList(semestres);
             var annos = (from ann in db.Ciclo_Lectivo select ann.Anno).AsEnumerable().Distinct();
@@ -39,23 +39,48 @@ namespace Opiniometro_WebApp.Controllers
 
             var grupos = (from grup in db.Grupo select grup.Numero).AsEnumerable().Distinct();
             ViewBag.GrupoID = new SelectList(grupos);
+            
+            IQueryable<Responde> formularios = from form in db.Responde select form;
+            List<Curso> cursosConFormularios = new List<Curso>();
+            foreach (var c in formularios)
+            {
+                Curso nuevo = db.Curso.Find(c.SiglaGrupoResp);
 
-            IQueryable<Formulario> formularios = from form in db.Formulario select form;
-            return View(formularios);
+                cursosConFormularios.Add(nuevo);
+            }
+            ViewBag.CursoID = new SelectList(cursosConFormularios.Distinct(), "Sigla", "Nombre");
+
+            List<Formulario> formulariosfiltrados = new List<Formulario>();
+            foreach (var f in formularios)
+            {
+                Formulario nuevo = db.Formulario.Find(f.CodigoFormularioResp);
+
+                formulariosfiltrados.Add(nuevo);
+            }
+            return View(formulariosfiltrados);
         }
 
         [HttpPost]
         public ActionResult Index(int? x)
         {
-            ViewBag.CursoID = new SelectList(db.Curso, "Sigla", "Nombre");
+            IQueryable<Responde> formularios = from form in db.Responde select form;
+            List<Formulario> formulariosfiltrados = new List<Formulario>();
+            List<Curso> cursosConFormularios = new List<Curso>();
+
+            foreach (var c in formularios)
+            {
+                Curso nuevo = db.Curso.Find(c.SiglaGrupoResp);
+
+                cursosConFormularios.Add(nuevo);
+            }
+
+            ViewBag.CursoID = new SelectList(cursosConFormularios.Distinct(), "Sigla", "Nombre");
             var semestres = (from sem in db.Ciclo_Lectivo select sem.Semestre).AsEnumerable().Distinct();
             ViewBag.SemestreId = new SelectList(semestres);
             var annos = (from ann in db.Ciclo_Lectivo select ann.Anno).AsEnumerable().Distinct();
             ViewBag.AnnoId = new SelectList(annos);
             var grupos = (from grup in db.Grupo select grup.Numero).AsEnumerable().Distinct();
             ViewBag.GrupoID = new SelectList(grupos);
-
-            IQueryable<Formulario> formulariosO = from form in db.Formulario select form;
 
             String selectcurso = Request.Form["selectcurso"];
             String selectsemestre = Request.Form["selectsemestre"];
@@ -63,25 +88,25 @@ namespace Opiniometro_WebApp.Controllers
             String selecgrupo = Request.Form["selecgrupo"];
             if (!String.IsNullOrEmpty(selectsemestre) || !String.IsNullOrEmpty(selectcurso) || !String.IsNullOrEmpty(selectanno) || !String.IsNullOrEmpty(selecgrupo))
             {
-                IQueryable<Responde> formularios = from form in db.Responde select form;
-
                 if (!String.IsNullOrEmpty(selectcurso))
                 {
                     formularios = formularios.Where(f => f.SiglaGrupoResp.Equals(selectcurso));
                 }
                 if (!String.IsNullOrEmpty(selectsemestre))
                 {
-                    formularios = formularios.Where(f => f.SemestreGrupoResp.Equals(Int32.Parse(selectsemestre)));
+                    byte semestre = byte.Parse(selectsemestre);
+                    formularios = formularios.Where(f => f.SemestreGrupoResp.Equals( semestre ));
                 }
                 if (!String.IsNullOrEmpty(selectanno))
                 {
-                    formularios = formularios.Where(f => f.AnnoGrupoResp.Equals(Int32.Parse(selectanno)));
+                    short anno = short.Parse(selectanno);
+                    formularios = formularios.Where(f => f.AnnoGrupoResp.Equals( anno ));
                 }
                 if (!String.IsNullOrEmpty(selecgrupo))
                 {
-                    formularios = formularios.Where(f => f.NumeroGrupoResp.Equals(Int32.Parse(selecgrupo)));
+                    byte grupo = byte.Parse(selecgrupo);
+                    formularios = formularios.Where(f => f.NumeroGrupoResp.Equals( grupo ));
                 }
-                List<Formulario> formulariosfiltrados = new List<Formulario>();
                 foreach (var f in formularios)
                 {
                     Formulario nuevo = db.Formulario.Find(f.CodigoFormularioResp);
@@ -92,7 +117,13 @@ namespace Opiniometro_WebApp.Controllers
             }
             else
             {
-                return View(formulariosO);
+                foreach (var f in formularios)
+                {
+                    Formulario nuevo = db.Formulario.Find(f.CodigoFormularioResp);
+
+                    formulariosfiltrados.Add(nuevo);
+                }
+                return View(formulariosfiltrados);
             }
         }
 
@@ -267,6 +298,24 @@ namespace Opiniometro_WebApp.Controllers
 
             List<object> observaciones = new List<object> { obs, nom, ap1, ap2 };
             return Json(observaciones, JsonRequestBehavior.AllowGet);
+        }
+        
+        //EFE:Devuelve las preguntas de tipo texto libre.
+        //REQ:Que exista una conexion a la base de datos.
+        //MOD:--
+        public JsonResult ObtenerRespTexto(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
+        {
+            var result = ObtenerCantidadRespuestasPorPregunta(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
+
+            List<object> respuestas = new List<object>();
+
+            foreach (var item in result)
+            {
+                respuestas.Add(item.Respuesta);
+            }
+
+            List<object> respuestasTexto = new List<object> { respuestas };
+            return Json(respuestasTexto, JsonRequestBehavior.AllowGet);
         }
     }
 }
