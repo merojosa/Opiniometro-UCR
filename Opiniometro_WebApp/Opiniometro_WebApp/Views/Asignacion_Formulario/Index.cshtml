@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Opiniometro_WebApp.Models.Tiene_Grupo_Formulario>
+
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h2>Asignaciones de formularios</h2>
+    <table class="table table-responsive">
+        <tr>
+            <th>
+                Ciclo
+            </th>
+            <th>
+                Curso
+            </th>
+            <th>
+                Grupo
+            </th>
+            <th>
+                Formulario
+            </th>
+            <th>
+                Periodo de aplicación
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Grupo.SemestreGrupo)-@Html.DisplayFor(modelItem => item.Grupo.AnnoGrupo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Grupo.SiglaCurso) @Html.DisplayFor(modelItem => item.Grupo.Curso.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Grupo.Numero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Formulario.CodigoFormulario) @Html.DisplayFor(modelItem => item.Formulario.Nombre)
+                </td>
+                <td>
+                    <span>@item.Fecha_Corte.FechaInicio.ToString("dd/MM/yyyy hhtt")</span> - <span>@item.Fecha_Corte.FechaFinal.ToString("dd/MM/yyyy hhtt")</span>
+                </td>
+                <td>
+                @*@Html.ActionLink("Editar", "Edit", new { /* id=item.PrimaryKey */ }) |*@
+                @*@Html.ActionLink("Eliminar", "Delete", new { GrupoElim = item.Grupo, FormularioElim = item.Formulario, PeriodoElim = item.Fecha_Corte}, new {@class = "btn btn-default"} )@**@
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <p>
+        <input type="button" value="Realizar más asignaciones" class="btn btn-secondary" onclick="accionCrearAsignaciones()" />
+    </p>
+</body>
+</html>
+
+<script>
+        function accionCrearAsignaciones() {
+            document.location = '@Url.Action("Index", "AsignarFormularios")';
+        }
+</script>

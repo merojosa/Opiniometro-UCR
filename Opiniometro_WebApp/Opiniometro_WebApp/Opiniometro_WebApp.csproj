@@ -192,6 +192,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdministradorController.cs" />
+    <Compile Include="Controllers\Asignacion_FormularioController.cs" />
     <Compile Include="Controllers\AsignarFormulariosController.cs" />
     <Compile Include="Controllers\AsignarPeriodoController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
@@ -534,6 +535,9 @@
     <Content Include="Views\Shared\EditorTemplates\MostrarAsignacionesEditorViewModel.cshtml" />
     <Content Include="Views\CursosMatriculados\Index.cshtml" />
     <Content Include="Views\FormularioCurso\Index.cshtml" />
+    <Content Include="Views\Asignacion_Formulario\Delete.cshtml" />
+    <Content Include="Views\Asignacion_Formulario\Edit.cshtml" />
+    <Content Include="Views\Asignacion_Formulario\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
