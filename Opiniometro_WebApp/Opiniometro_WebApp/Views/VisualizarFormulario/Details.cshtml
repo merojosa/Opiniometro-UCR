@@ -19,8 +19,6 @@
     </style>
 </head>
 
-@Html.Partial("~\\Views\\Shared\\Auth\\BarraLogin.cshtml")
-
 @{string perfil_actual = Opiniometro_WebApp.Controllers.Servicios.IdentidadManager.obtener_perfil_actual(); }
 
 <div class="container">
@@ -270,10 +268,10 @@
 
                                                                                             for (var data in obs) {
                                                                                                 if ('@perfil_actual' == "Admin") { //Cuando se incluye el if lo que esta dentro no se despliega incluso si la condicion es verdadera
-                                                                                                    document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + " ";
+                                                                                                    document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + ".";
 
                                                                                                 } else if ('@perfil_actual' != "Admin"){
-                                                                                                    document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " ";
+                                                                                                    document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + ".<br />";
 
                                                                                                 }
                                                                                                 // Si no se acomodan las observaciones se bloquea el collapse de mostrar observaciones
