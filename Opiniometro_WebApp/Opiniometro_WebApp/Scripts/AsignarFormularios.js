@@ -15,7 +15,6 @@ $(document).ready(function () {
     document.getElementById("boton-asignar").addEventListener("click",
         function () {
             document.getElementById("boton-abrir-modal").click();
-            //alert("CLICKED!");
         });
 });
 
@@ -60,21 +59,39 @@ function ObtenerGruposAsignados() {
 $(document).ready(function () {
     document.getElementById("boton-efectuar").addEventListener("click",
         function () {
-            var codigos = document.getElementsByClassName("codigo-form");
-            var inicios = document.getElementsByClassName("fecha-inicial");
-            var fines = document.getElementsByClassName("fecha-final");
+            if (confirm("¿Seguro de que desea efectuar las asignaciones?")) {
+                var botonEfectuar = document.getElementById("efectuar");
+                botonEfectuar.disabled = true;
 
-            var FormulariosYPeriodos = ObtenerFormsYPeriodosAsignados();
-            var Grupos = ObtenerGruposAsignados();
+                var exitoso = false;
 
-            $.post("EfectuarAsignaciones",
-                {
-                    Grupos: JSON.stringify(Grupos),
-                    PeriodosIndicados: JSON.stringify(FormulariosYPeriodos)
-                },
-                function (data, status) {
-                    alert(`Post fue exitoso?\n${status}`);
-                }
-            );
+                alert("Efectuando asignaciones, por favor espere...");
+                var codigos = document.getElementsByClassName("codigo-form");
+                var inicios = document.getElementsByClassName("fecha-inicial");
+                var fines = document.getElementsByClassName("fecha-final");
+
+                var FormulariosYPeriodos = ObtenerFormsYPeriodosAsignados();
+                var Grupos = ObtenerGruposAsignados();
+
+                $.ajax({
+                    type: "POST",
+                    url: "EfectuarAsignaciones",
+                    data: {
+                        Grupos: JSON.stringify(Grupos),
+                        PeriodosIndicados: JSON.stringify(FormulariosYPeriodos)
+                    },
+                    success: function (data, status) {
+                        alert("Se ha realizado las asignaciones exitosamente.");
+                        window.location.href = "/home/index";
+                    },
+                    error: function (data, status) {
+                        alert(`Ha ocurrido un error. Por favor reintente asignar más tarde.\nStatus: ${status}`);
+                        botonEfectuar.disabled = false;
+                    }
+                });
+            }
+            else {
+                // No hacer nada: se cancela la asignación.
+            }
         });
 });
