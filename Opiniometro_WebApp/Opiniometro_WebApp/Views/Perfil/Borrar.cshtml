@@ -41,4 +41,6 @@
     </table>
     <input type="submit" value="Borrar" class="btn btn-default" />
     @Html.ActionLink("Cancelar", "Index", "Home", null, new { @class = "btn btn-default" })
+
+    @Html.Raw(TempData["msg"])
 }

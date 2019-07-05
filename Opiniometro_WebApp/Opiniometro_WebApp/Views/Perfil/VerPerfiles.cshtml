@@ -28,14 +28,11 @@
             <td>
                 @item.Nombre
             </td>
-            <td>
-               
-
-
-
-            </td>
+            <td></td>
         </tr>
     }
 
 </table>
 @Html.ActionLink("Volver", "Index", "Home", null, new { @class = "btn btn-default" })
+
+@Html.Raw(TempData["msg"])
