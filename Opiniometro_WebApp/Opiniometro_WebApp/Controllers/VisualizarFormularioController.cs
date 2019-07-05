@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
 using System.Data.Entity.Core.Objects;
+using System.Text;
 using System.Web.Helpers; //Para graficos, borrar despues
 
 namespace Opiniometro_WebApp.Controllers
@@ -93,15 +94,18 @@ namespace Opiniometro_WebApp.Controllers
                 }
                 if (!String.IsNullOrEmpty(selectsemestre))
                 {
-                    formularios = formularios.Where(f => f.SemestreGrupoResp.Equals(Int32.Parse(selectsemestre)));
+                    byte semestre = byte.Parse(selectsemestre);
+                    formularios = formularios.Where(f => f.SemestreGrupoResp.Equals( semestre ));
                 }
                 if (!String.IsNullOrEmpty(selectanno))
                 {
-                    formularios = formularios.Where(f => f.AnnoGrupoResp.Equals(Int32.Parse(selectanno)));
+                    short anno = short.Parse(selectanno);
+                    formularios = formularios.Where(f => f.AnnoGrupoResp.Equals( anno ));
                 }
                 if (!String.IsNullOrEmpty(selecgrupo))
                 {
-                    formularios = formularios.Where(f => f.NumeroGrupoResp.Equals(Int32.Parse(selecgrupo)));
+                    byte grupo = byte.Parse(selecgrupo);
+                    formularios = formularios.Where(f => f.NumeroGrupoResp.Equals( grupo ));
                 }
                 foreach (var f in formularios)
                 {
