@@ -18,15 +18,15 @@ namespace Opiniometro_WebApp.Models
         public Profesor()
         {
             this.Formulario_Respuesta = new HashSet<Formulario_Respuesta>();
-            this.Grupo = new HashSet<Grupo>();
+            this.Imparte = new HashSet<Imparte>();
         }
     
         public string CedulaProfesor { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Formulario_Respuesta> Formulario_Respuesta { get; set; }
-        public virtual Persona Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Grupo> Grupo { get; set; }
+        public virtual ICollection<Imparte> Imparte { get; set; }
+        public virtual Persona Persona { get; set; }
     }
 }

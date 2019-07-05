@@ -10,12 +10,15 @@
 namespace Opiniometro_WebApp.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class MostrarEstudiantes_Result
+    public partial class Conformado_For_Sec
     {
-        public string Nombre { get; set; }
-        public string Apellido1 { get; set; }
-        public string Apellido2 { get; set; }
-        public string Carne { get; set; }
+        public string CodigoFormulario { get; set; }
+        public string TituloSeccion { get; set; }
+        public Nullable<int> Orden_Seccion { get; set; }
+    
+        public virtual Formulario Formulario { get; set; }
+        public virtual Seccion Seccion { get; set; }
     }
 }
