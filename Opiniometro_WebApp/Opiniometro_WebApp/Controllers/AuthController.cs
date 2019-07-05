@@ -233,8 +233,10 @@ namespace Opiniometro_WebApp.Controllers
 
                 if (recuperar_contrasena.ElementAt(0).RecuperarContrasenna == true && correo != null)
                 {
+                    // Cambio exitoso.
                     db.SP_CambiarContrasenna(correo, form["Contrasenna1"], false);
                     crear_sesion(correo);
+                    TempData["msg"] = "<script> $(document).ready(function(){ alert('Contraseña cambiada exitosamente.');}); </script>";
                     return RedirectToAction("Cambiar", "Perfil");
                 }
                 else
