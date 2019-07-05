@@ -1,6 +1,18 @@
 ﻿@model Opiniometro_WebApp.Models.VistaPreviaPreguntaModel
 
-@if (Model.Item.TipoPregunta == 3)
+@if (Model.Item.TipoPregunta == 1)
+{
+    <dl class="dl-horizontal">
+        <dd>
+            @Html.DisplayFor(model => model.Item.TextoPregunta)
+        </dd>
+
+        <dd>
+            <textarea name="comentarioAdicional" rows="5" cols="40" disabled>Escriba su respuesta aquí</textarea>
+        </dd>
+    </dl>
+}
+@if (Model.Item.TipoPregunta == 3 || Model.Item.TipoPregunta == 2)
 {
     <div>
         <dl class="dl-horizontal">
@@ -10,18 +22,21 @@
             <dd>
                 <table>
                     @foreach (var option in Model.Opciones)
-                        {
-                            <tr>
-                                <td>
-                                    <input type="checkbox" disabled />
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => option.OpcionRespuesta)
-                                </td>
-                            </tr>
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" disabled />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => option.OpcionRespuesta)
+                            </td>
+                        </tr>
 
-                          }
+                    }
                 </table>
+            </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Item.EtiquetaObservacion)
             </dd>
             @if (Model.Item.TieneObservacion == true)
             {
@@ -33,24 +48,3 @@
         </dl>
     </div>
 }
-else
-{
-    <dl class="dl-horizontal">
-        <dd>
-            @Html.DisplayFor(model => model.Item.TextoPregunta)
-        </dd>
-
-        <dd>
-            <textarea name="comentarioAdicional" rows="5" cols="40" disabled>Escriba su respuesta aquí</textarea>
-        </dd>
-
-        @if (Model.Item.TieneObservacion == true)
-        {
-            @Html.Label("Comentario Adicional")
-            <dd>
-                <textarea name="comentarioAdicional" rows="5" cols="40" disabled>Escriba su comentario aqui</textarea>
-            </dd>
-        }
-    </dl>
-}
-
