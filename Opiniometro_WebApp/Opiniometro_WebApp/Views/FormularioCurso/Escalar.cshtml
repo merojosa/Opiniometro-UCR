@@ -4,29 +4,10 @@
     ViewBag.Title = "Escalar";
 }*@
 
-<div>
-    @*<script src="~/Scripts/FormularioDelCurso.js"></script>
-    <script src="~/Scripts/Escalar.js"></script>*@
-
-    <!--Toman el valor del rango y del tipo (si es de estrellas o no)-->
-    @*@Html.Hidden("Inicio", null)
-    @Html.Hidden("Final", null)
-    @Html.Hidden("Estrellas", null)*@
-
-    @*<script>
-        var vec = preguntaEscalar()
-                < br > <input type="radio" name="seleccion" value="1"> v.value
-                foreach(v in vec)
-            {
-                <br><input type="radio" name="seleccion" value="1"> v.value
-            }
-    </script>*@
-
-    @*<br><input type="radio" name="seleccion" value="1"> valor(nombre)*@
-</div>
+    @*<script src="~/Scripts/FormularioDelCurso.js"></script>*@
 
 <fieldset>
-    @foreach (var opcion in Model)
+    @foreach (var rango in Model)
     {
          <br><input type="radio" name="rango" value="@opcion" id="@opcion"><label>@opcion</label>
     }

@@ -531,6 +531,7 @@
     <Content Include="Views\Asignacion_Formulario\Delete.cshtml" />
     <Content Include="Views\Asignacion_Formulario\Edit.cshtml" />
     <Content Include="Views\Asignacion_Formulario\Index.cshtml" />
+    <Content Include="Views\FormularioCurso\Escalar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

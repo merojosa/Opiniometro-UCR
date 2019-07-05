@@ -31,93 +31,92 @@
             <td>
                 <table class="table table-responsive" border="1" >
                    <tr bgcolor="#FFFFFF" >
-                        <td>
+                       <td>
 
-                           @foreach (var dato in Model.preguntasFormulario) {
+                           @foreach (var dato in Model.preguntasFormulario)
+                           {
 
-                               if (dato.tipoPregunta == 1) { 
-                               
+                               if (dato.tipoPregunta == 1)
+                               {
+
                                    <div id="preguntaTextoLibre"> </div>
 
 
-                                       <script type="text/javascript">
+                                   <script type="text/javascript">
                                             crearElemento("campoTexto", contTextoLibre, "@dato.item" , "preguntaTextoLibre");
                                             insertNueLinea("campoTexto".concat(contTextoLibre));
                                             TextoLibre(contTextoLibre);
                                             lineaHor("campoTexto".concat(contTextoLibre));
                                             contTextoLibre++;
-                                       </script>
+                                   </script>
                                }
 
-                                if (dato.tipoPregunta == 2)
-                                {
-                                    <div id="preguntaSelUnica"> </div>
+                               if (dato.tipoPregunta == 2)
+                               {
+                                   <div id="preguntaSelUnica"> </div>
 
-                                    <script>
+                                   <script>
                                         crearElemento("selUnica", contSelUnica, "@dato.item", "preguntaSelUnica");
                                         insertNueLinea("selUnica".concat(contSelUnica));
                                         seleccionUnica(contSelUnica/*,listaOpciones*/);
                                         lineaHor("selUnica".concat(contSelUnica));
                                         contSelUnica++;
-                                    </script>
+                                   </script>
 
-                                    //Campo de observacion de la opcion de seleccion unica
-                                    @*if (dato.tieneObservacion == true) {
-                                        <script>
-                                                TextoLibre();
-                                        </script>
-                                    }*@
-                                }
+                                   //Campo de observacion de la opcion de seleccion unica
+                                   @*if (dato.tieneObservacion == true) {
+                    <script>
+                            TextoLibre();
+                    </script>
+                }*@
+                               }
 
-                                if (dato.tipoPregunta == 3)
-                                {
-                                    <div id="preguntaSiNo"> </div>
+                               if (dato.tipoPregunta == 3)
+                               {
+                                   <div id="preguntaSiNo"> </div>
 
-                                    <script>
+                                   <script>
                                         crearElemento("SiNo", contSiNo, "@dato.item", "preguntaSiNo");
                                         insertNueLinea("SiNo".concat(contSiNo));
                                         RespondeSiNo(contSiNo);
                                         lineaHor("SiNo".concat(contSiNo));
                                         contSiNo++;
-                                    </script>
+                                   </script>
 
-                                    //Campo de observacion de la opcion de respuesta Si-No
-                                    @*if (dato.tieneObservacion == true) {
-                                        <script>
-                                            TextoLibre();
-                                        </script>
-                                    }*@
-                                }
+                                   //Campo de observacion de la opcion de respuesta Si-No
+                                   @*if (dato.tieneObservacion == true) {
+                                       <script>
+                                       TextoLibre();
+                                       </script>
+                                       }*@
+                               }
 
-                                 @*if (dato.tipoPregunta == 4)
-                                {
-                                     <div id="preguntaSelMultiple"> </div>
+                               @*if (dato.tipoPregunta == 4)
+                                   {
+                                   <div id="preguntaSelMultiple"> </div>
+                                   }*@
 
-            }*@
+                               if (dato.tipoPregunta == 5)
+                               {
+                                   <div id="preguntaEscalar"> </div>
 
-        if (dato.tipoPregunta == 5)
-        {
-            <div id="preguntaEscalar"> </div>
+                                   <script>
+                                       crearElemento("Escalar", contEscalar, @Html.Raw(Json.Encode(dato.item)), "preguntaEscalar");
+                                       insertNueLinea("Escalar".concat(contEscalar));
+                                       preguntaEscalar(contEscalar);
+                                       lineaHor("Escalar".concat(contEscalar));
+                                       contEscalar++;
+                                   </script>
 
-            <script>
-                 crearElemento("Escalar", contEscalar, @Html.Raw(Json.Encode(dato.item)), "preguntaEscalar");
-                 insertNueLinea("Escalar".concat(contEscalar));
-                 preguntaEscalar(contEscalar);
-                 lineaHor("Escalar".concat(contEscalar));
-                 contEscalar++;
-            </script>
+                               }
 
-        }
+                               @*if (dato.tipoPregunta == 6)
+                                   {
+                                   <div id="preguntaEstrella"> </div>
+                                   }*@
+                           }
 
-        @*if (dato.tipoPregunta == 6)
-            {
-                <div id="preguntaEstrella"> </div>
-
-                                }*@
-
-                             }
-
-                        </td>
+                       </td>
                     </tr>
                 </table>
             </td>
