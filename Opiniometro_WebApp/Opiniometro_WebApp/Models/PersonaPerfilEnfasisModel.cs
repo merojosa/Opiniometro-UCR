@@ -45,6 +45,10 @@
 
 
         public virtual List<AsignarPerfil> perfilesAsignados { get; set; }
+
+        public virtual List <Boolean> tienePerfil { get; set; }
+
+
         public virtual ICollection<Enfasis> Enfasis { get; set; }
 
         public virtual ICollection<String> PerfilDeUsuario { get; set; }
