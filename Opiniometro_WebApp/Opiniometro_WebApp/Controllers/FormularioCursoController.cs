@@ -38,8 +38,7 @@ namespace Opiniometro_WebApp.Controllers
                 {
                     tipoPregunta = it.TipoPregunta,
                     item = it.TextoPregunta,
-                    tieneObservacion = it.TieneObservacion,
-                    tipoPregunta = it.TipoPregunta
+                    tieneObservacion = it.TieneObservacion
                 };
 
             return formulario;

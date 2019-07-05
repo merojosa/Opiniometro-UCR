@@ -63,10 +63,25 @@ function seleccionMultiple() {
 //         --si tiene campo de observacion
 //modifica: vista en las preguntas que tienen respuesta de tipo escalar
 //retorna--
-function Escalar() {
-
-
-}
+function Escalar(contEscalar, item_id) {
+    var contenido = document.getElementById("preguntaEscalar".concat(contSelUnica));
+        /* 
++    $.get("/FormularioDelCurso/ObtenerOpcionesSelUnica", {
++        id: item_id
++    }, function (json_list) {
++        alert(json_list);
++
++        var list = JSON.parse(json_list);
++        foreach (var op in list)
++        {
++            var radio = document.createElement("input");
++            radio.type = "radio";
++            radio.name = op;
++            radio.id = op.concat(contSelUnica);
++            radio.value = "op";
++            contenido.appendChild(radio);
++        }
++});*/
 
 ///recibe: 
 //         --si tiene campo de observacion

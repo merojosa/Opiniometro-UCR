@@ -37,7 +37,7 @@
                 TextoLibre(contTextoLibre);
                 contTextoLibre++;
             </script>
-        }
+            }
 
         if (dato.tipoPregunta == 2)
         {
@@ -79,17 +79,25 @@
             {
                  <div id="preguntaSelMultiple"> </div>
 
-            }
+            }*@
 
-            if (dato.tipoPregunta == 5)
+        if (dato.tipoPregunta == 5)
+        {
+            <div id="preguntaEscalar"> </div>
+
+            <script>
+                 crearElemento("Escalar", contEscalar, @Html.Raw(Json.Encode(dato.item)), "preguntaEscalar");
+                 insertNueLinea("Escalar".concat(contEscalar));
+                 preguntaEscalar(contEscalar);
+                 lineaHor("Escalar".concat(contEscalar));
+                 contEscalar++;
+            </script>
+
+        }
+
+        @*if (dato.tipoPregunta == 6)
             {
-                  <div id="preguntaEscalar"> </div>
-
-            }
-
-            if (dato.tipoPregunta == 6)
-            {
-                 <div id="preguntaEstrella"> </div>
+                <div id="preguntaEstrella"> </div>
 
             }*@
 

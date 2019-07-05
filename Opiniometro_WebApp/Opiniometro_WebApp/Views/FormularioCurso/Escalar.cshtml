@@ -1,15 +1,33 @@
-﻿@model IEnumerable<Opiniometro_WebApp.Models.FormularioCursoModel>
+﻿@*@model Opiniometro_WebApp.Models.FormularioPorCurso*@
+
+@*@{
+    ViewBag.Title = "Escalar";
+}*@
 
 <div>
-    <script src="~/Scripts/Escalar.js"></script>
+    @*<script src="~/Scripts/FormularioDelCurso.js"></script>
+    <script src="~/Scripts/Escalar.js"></script>*@
 
     <!--Toman el valor del rango y del tipo (si es de estrellas o no)-->
-    @Html.Hidden("Inicio", null)
+    @*@Html.Hidden("Inicio", null)
     @Html.Hidden("Final", null)
-    @Html.Hidden("Estrellas", null)
+    @Html.Hidden("Estrellas", null)*@
 
-    <script>
+    @*<script>
         var vec = preguntaEscalar()
-        //< input type = "radio" name = "rango" value = "1" > vec.value
-    </script>
+                < br > <input type="radio" name="seleccion" value="1"> v.value
+                foreach(v in vec)
+            {
+                <br><input type="radio" name="seleccion" value="1"> v.value
+            }
+    </script>*@
+
+    @*<br><input type="radio" name="seleccion" value="1"> valor(nombre)*@
 </div>
+
+<fieldset>
+    @foreach (var opcion in Model)
+    {
+         <br><input type="radio" name="rango" value="@opcion" id="@opcion"><label>@opcion</label>
+    }
+</fieldset>
