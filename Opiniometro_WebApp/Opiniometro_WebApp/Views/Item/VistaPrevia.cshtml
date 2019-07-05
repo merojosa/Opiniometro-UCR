@@ -24,9 +24,19 @@
                     @foreach (var option in Model.Opciones)
                     {
                         <tr>
-                            <td>
-                                <input type="checkbox" disabled />
-                            </td>
+                            @if (Model.Item.TipoPregunta == 3)
+                            {
+                                <td>
+                                    <input type="checkbox" disabled />
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <input type="radio" disabled />
+                                </td>
+                            }
+
                             <td>
                                 @Html.DisplayFor(model => option.OpcionRespuesta)
                             </td>
