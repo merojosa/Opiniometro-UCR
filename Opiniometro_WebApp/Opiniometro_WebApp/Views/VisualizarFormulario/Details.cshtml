@@ -254,8 +254,8 @@
                                                                 </div>
                                                                 <div id="collapseThreeTwo_@seccion_counter" class="panel-collapse collapse">
                                                                     <div class="panel-body">
-                                                                        <div style="height:200px; overflow-y: scroll;">
-                                                                            <p id="obs_@item_actual" style="float:left"></p>
+                                                                        <div id="obs_@item_actual" style="height:200px; overflow-y: scroll;">
+                                                                            @*<p id="obs_@item_actual" style="float:left"></p>*@
 
                                                                             @foreach (var item in Model.Formulario_Respuesta.Take(1))
                                                                             {
@@ -272,17 +272,19 @@
                                                                                         var nom = aData[1];
                                                                                         var ap1 = aData[2];
                                                                                             var ap2 = aData[3];
+                                                                                            var texto = "";
 
                                                                                             for (var data in obs) {
-                                                                                                if ('@perfil_actual' == "Administrador") { //Cuando se incluye el if lo que esta dentro no se despliega incluso si la condicion es verdadera
-                                                                                                    document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + " ";
-
-                                                                                                } else if ('@perfil_actual' != "Administrador"){
-                                                                                                    document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " ";
-
+                                                                                                if ('@perfil_actual' == "Administrador") { @*Cuando se incluye el if lo que esta dentro no se despliega incluso si la condicion es verdadera*@
+                                                                                                    @*document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + "xx";*@
+                                                                                                    texto = texto + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + "<hr>";
+                                                                                                } else if ('@perfil_actual' != "Administrador") {
+                                                                                                    texto = texto + (obs[data]).toString() + "<hr>";
                                                                                                 }
                                                                                                 // Si no se acomodan las observaciones se bloquea el collapse de mostrar observaciones
                                                                                             }
+
+                                                                                            document.getElementById("obs_@item_actual").innerHTML = texto;
                                                                                                 }
                                                                                             });
                                                                                 </script>
