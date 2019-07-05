@@ -10,6 +10,7 @@ using System.Threading;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System.Net;
+using System.Data.Entity.Core.Objects;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -21,7 +22,6 @@ namespace Opiniometro_WebApp.Controllers
         {
             if (!String.IsNullOrEmpty(nom))
             {
-       
                 return View(db.Perfil.Where(m=>m.Nombre.Contains(nom)).ToList());
             }
             else {
@@ -168,9 +168,17 @@ namespace Opiniometro_WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Perfil.Add(perfil);
-                db.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                ObjectParameter numero_error = new ObjectParameter("Numero_Error", 0);
+                db.SP_CrearPerfil(perfil.Nombre, perfil.Descripcion, numero_error);
+
+                if((int)numero_error.Value == 0)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("ErrorCrearPerfil", "Error al crear perfil");
+                }
             }
 
             return View(perfil);
@@ -179,7 +187,6 @@ namespace Opiniometro_WebApp.Controllers
         public JsonResult IsNombrePerfilAvailable(string Nombre)
         {
             return Json(!db.Perfil.Any(perfil => perfil.Nombre == Nombre), JsonRequestBehavior.AllowGet);
-
         }
     }
 }

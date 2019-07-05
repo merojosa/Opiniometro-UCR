@@ -28,8 +28,6 @@ namespace Opiniometro_WebApp.Controllers
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
         private const string caracteres_aleatorios = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        
-
         public Persona Persona { get; private set; }
 
         public ActionResult VerPersonas(string nom)

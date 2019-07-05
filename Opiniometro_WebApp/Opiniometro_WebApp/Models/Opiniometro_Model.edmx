@@ -1044,10 +1044,6 @@
         <Function Name="DatosEstudiante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="EliminarPreguntasDeSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CodigoFormulario" Type="char" Mode="In" />
-          <Parameter Name="TituloSeccion" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="MostrarEstudiantes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="NombrePersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1113,6 +1109,11 @@
           <Parameter Name="TituloSec" Type="nvarchar" Mode="In" />
           <Parameter Name="CodFormDest" Type="char" Mode="In" />
         </Function>
+        <Function Name="SP_CrearPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="Numero_Error" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -1132,6 +1133,10 @@
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_EliminarSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoFormulario" Type="char" Mode="In" />
+          <Parameter Name="TituloSeccion" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SP_ExistenciaCorreo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
@@ -1144,12 +1149,26 @@
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="itemid" Type="nvarchar" Mode="In" />
+          <Parameter Name="orden" Type="smallint" Mode="In" />
+          <Parameter Name="opcionrespuesta" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Insertar_Seccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="titulo" Type="nvarchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Insertar_Seleccion_Unica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="itemid" Type="nvarchar" Mode="In" />
+          <Parameter Name="isalikedislike" Type="bit" Mode="In" />
+        </Function>
         <Function Name="SP_LoginUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
         </Function>
         <Function Name="SP_ModificarPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CedulaBusqueda" Type="varchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
           <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
@@ -2666,10 +2685,6 @@
           <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_Model.DatosEstudiante_Result)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="EliminarPreguntasDeSeccion">
-            <Parameter Name="CodigoFormulario" Mode="In" Type="String" />
-            <Parameter Name="TituloSeccion" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_Model.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
@@ -2730,6 +2745,11 @@
             <Parameter Name="TituloSec" Mode="In" Type="String" />
             <Parameter Name="CodFormDest" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_CrearPerfil">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="Numero_Error" Mode="InOut" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="sp_creatediagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -2749,6 +2769,10 @@
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_EliminarSeccion">
+            <Parameter Name="CodigoFormulario" Mode="In" Type="String" />
+            <Parameter Name="TituloSeccion" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SP_ExistenciaCorreo">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
@@ -2761,12 +2785,26 @@
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica">
+            <Parameter Name="itemid" Mode="In" Type="String" />
+            <Parameter Name="orden" Mode="In" Type="Int16" />
+            <Parameter Name="opcionrespuesta" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insertar_Seccion">
+            <Parameter Name="titulo" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insertar_Seleccion_Unica">
+            <Parameter Name="itemid" Mode="In" Type="String" />
+            <Parameter Name="isalikedislike" Mode="In" Type="Boolean" />
+          </FunctionImport>
           <FunctionImport Name="SP_LoginUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="SP_ModificarPersona">
+            <Parameter Name="CedulaBusqueda" Mode="In" Type="String" />
             <Parameter Name="Cedula" Mode="In" Type="String" />
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="Apellido1" Mode="In" Type="String" />
@@ -3270,7 +3308,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="EliminarPreguntasDeSeccion" FunctionName="Opiniometro_Model.Store.EliminarPreguntasDeSeccion" />
           <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_Model.Store.MostrarEstudiantes">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Opiniometro_Model.MostrarEstudiantes_Result">
@@ -3307,9 +3344,11 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_CopiarSeccion" FunctionName="Opiniometro_Model.Store.SP_CopiarSeccion" />
+          <FunctionImportMapping FunctionImportName="SP_CrearPerfil" FunctionName="Opiniometro_Model.Store.SP_CrearPerfil" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Opiniometro_Model.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_Model.Store.SP_DevolverObservacionesPorGrupo" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Opiniometro_Model.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="SP_EliminarSeccion" FunctionName="Opiniometro_Model.Store.SP_EliminarSeccion" />
           <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_Model.Store.SP_ExistenciaCorreo" />
           <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Opiniometro_Model.Store.sp_helpdiagramdefinition">
             <ResultMapping>
@@ -3330,6 +3369,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" />
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Seccion" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seccion" />
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seleccion_Unica" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_Model.Store.SP_LoginUsuario" />
           <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_Model.Store.SP_ModificarPersona" />
           <FunctionImportMapping FunctionImportName="SP_ObtenerFormulario" FunctionName="Opiniometro_Model.Store.SP_ObtenerFormulario" />
