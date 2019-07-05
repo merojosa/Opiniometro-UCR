@@ -39,7 +39,6 @@
         </div>
     </div>
 
-
     <div class="form-group">
         @Html.Label("Texto Pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -47,7 +46,6 @@
             @Html.ValidationMessageFor(model => model.TextoPregunta, "", new { @class = "text-danger" })
         </div>
     </div>
-
 
     <div class="form-group">
         @Html.LabelFor(model => model.NombreCategoria, "Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -79,7 +77,6 @@
         @Html.Partial("AgregarOpcionesVParcial")
     </div>
 
-
     @* Creacion de botones en la misma linea y con color gris *@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -91,13 +88,12 @@
 
     @*Sección que despliega la opción de introducir descripción cuando la pregunta tiene comentario adicional*@
     <script>
-            function habilitarVistaParcialEtiqueta(etiquetaV)
-            {
-                document.getElementById("etiqueta").hidden = "hidden";
-                if (etiquetaV.localeCompare("true") == 0) {
-                    document.getElementById("etiqueta").hidden = "";
-                }
+        function habilitarVistaParcialEtiqueta(etiquetaV) {
+            document.getElementById("etiqueta").hidden = "hidden";
+            if (etiquetaV.localeCompare("true") == 0) {
+                document.getElementById("etiqueta").hidden = "";
             }
+        }
     </script>
 
     @* La sección de código para habilitar el despliegue de la Vista Parcial AgregarOpciones *@
@@ -109,8 +105,6 @@
             }
         }
     </script>
-
-
 
     @* La accion que sucede al seleccionar boton Cancelar *@
     <script>
