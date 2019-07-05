@@ -38,7 +38,7 @@
             @*@Html.DropDownListFor(model => model.TituloSeccion, new SelectList(ViewBag.TituloSeccion, "Value", "Text"), "Seleccione")*@
             @Html.DropDownListFor(model => model.TituloSeccion,
             new SelectList(ViewBag.TituloSeccion, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control", id = "dropdownlistTitulos",
-            placeholder = "TituloSeccion", data_width = "100%", onchange = "eliminarSec(this.value)"})
+            placeholder = "TituloSeccion", data_width = "100%", onchange = "guardarValor(this.value)"})
             
             @Html.ValidationMessageFor(model => model.TituloSeccion, "", new { @class = "text-danger" })
         </div>
@@ -48,7 +48,7 @@
 
 
     <td>
-        <button id="btnEliminar" class="btn btn-secondary m-*-auto"><span class="oi oi-arrow-left"></span> Eliminar Sección</button>
+        <button id="btnEliminar" class="btn btn-secondary m-*-auto"><span class="oi oi-arrow-left"></span> Eliminar Sección </button>
         @Html.ActionLink("Cancelar", "Index", "Formulario", new { }, new { @class = "btn btn-default" })
     </td>
 
@@ -56,15 +56,15 @@
     <script>
 
         /*aqui se codifican las acciones al darle click a los botones especificos*/
-
-        $(document).ready(function eliminarSec() {
+        
+        $(document).ready(function () {
             $("#btnEliminar").click(function () {
             $.ajax({
                 type: "POST",
                 url: "CrearFormulario", // the URL of the controller action method
                 data: { //pasando informacion
-                   @*CodigoFormulario: @Html.Raw(Json.Encode(Model.CodigoFormulario)),
-                    TituloSeccion: @Html.Raw(Json.Encode(Model.TituloSeccion))*@
+                   @*CodigoFormulario: @Html.Raw(Json.Encode(Model.CodigoFormulario))*@
+                    TituloSeccion: titulo
                 },
                 success: function (result) {
                     // lo que se hace con el resultado
@@ -82,6 +82,13 @@
             });
             });
         });
+
+        function guardarValor(string valor) {
+           
+            titulo = valor;
+            return titulo;
+
+        }
 
 
         function accionBotonCancelar() {
