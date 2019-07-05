@@ -33,11 +33,11 @@
         {
             var div = $("<div />");
 
-            var textBox = $("<input />").attr("type", "textbox").attr("opcion", "DynamicTextBox");
+            var textBox = $("<input />").attr("type", "textbox").attr("name", "DynamicTextBox");
             textBox.val(value);
             div.append(textBox);
 
-            var button = $("<input />").attr("type", "button").attr("value", "Remove");
+            var button = $("<input />").attr("type", "button").attr("value", "Eliminar");
             button.attr("onclick", "RemoveTextBox(this)");
             div.append(button);
 
