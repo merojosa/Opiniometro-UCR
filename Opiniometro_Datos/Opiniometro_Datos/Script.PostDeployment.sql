@@ -228,6 +228,7 @@ BEGIN
 	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
 END;
 
+--Revisar
 IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
 	DROP TRIGGER TR_InsertaPersona
 GO
