@@ -10,16 +10,13 @@
 namespace Opiniometro_WebApp.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Escalar
+    public partial class sp_helpdiagrams_Result
     {
-        public string ItemId { get; set; }
-        public short Inicio { get; set; }
-        public short Fin { get; set; }
-        public short Incremento { get; set; }
-        public Nullable<bool> IsaEstrella { get; set; }
-    
-        public virtual Item Item { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

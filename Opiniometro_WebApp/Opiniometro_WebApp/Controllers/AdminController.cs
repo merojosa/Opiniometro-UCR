@@ -152,6 +152,7 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public ActionResult CrearUsuario(ViewModelAdmin per)
         {
+            /*
             try
             {
                 using (db)
@@ -177,6 +178,8 @@ namespace Opiniometro_WebApp.Controllers
 
                 throw;
             }
+            */
+            return RedirectToAction("VerPersonas");
 
         }
 

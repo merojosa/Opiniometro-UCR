@@ -823,7 +823,9 @@ VALUES	(1, 'Hacer todo'),
 		(206, 'VerSecciones'),
 		(207, 'VerItems'),
 		(208, 'InsertarFormulario'),
-		(209, 'Eliminar perfiles');
+		(209, 'Eliminar perfiles'),
+		(210, 'Crear perfil'),
+		(211, 'Asignar y revocar permisos');
 
 INSERT INTO Perfil
 VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
@@ -854,7 +856,9 @@ VALUES	(0, 'SC-01234', 'Estudiante', 3),
 		(0,'SC-01234', 'Estudiante', 205),
 		(0,'SC-01234', 'Administrador', 208),
 		(0,'SC-01234', 'Profesor', 208),
-		(0, 'SC-01234', 'Administrador', 209)
+		(0, 'SC-01234', 'Administrador', 209),
+		(0, 'SC-01234', 'Administrador', 210),
+		(0, 'SC-01234', 'Administrador', 211)
 
 INSERT INTO Provincia
 VALUES	('San José'),

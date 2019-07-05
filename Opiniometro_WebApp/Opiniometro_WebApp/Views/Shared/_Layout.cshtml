@@ -32,9 +32,13 @@
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Cambiar perfil actual", "Cambiar", "Perfil")</li>
                             @{
-                                if (IdentidadManager.obtener_perfil_actual() == "Administrador")
+                                if (permisos_usuario.verificar_permiso(IdPermiso.ASIGNAR_REVOCAR_PERMISOS))
                                 {
                                     <li>@Html.ActionLink("Asignar/Revocar permisos", "SeleccionarPermisos", "SeleccionPermisos")</li>
+                                }
+                                else
+                                {
+                                    <li class="disabled"><a id="link_deshabilitado">Asignar/Revocar permisos</a></li>
                                 }
                                 if (permisos_usuario.verificar_permiso(IdPermiso.CREAR_PERFIL))
                                 {
