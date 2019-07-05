@@ -174,39 +174,38 @@ BEGIN
 END;
 
 --Trigger de validación de modificar Usuario
---IF OBJECT_ID('TR_ValidacionModificarUsuario') IS NOT NULL
---	DROP TRIGGER TR_ValidacionModificarUsuario
---GO
---CREATE TRIGGER TR_ValidacionModificarUsuario
---ON Usuario INSTEAD OF UPDATE
---AS
---BEGIN
---	IF(UPDATE(CorreoInstitucional))
---	BEGIN
---		DECLARE @CedulaBusqueda		CHAR(10)
---		DECLARE @Correo				NVARCHAR(101)
---
---		SET @Correo				= (SELECT CorreoInstitucional FROM inserted)
+IF OBJECT_ID('TR_ValidacionModificarUsuario') IS NOT NULL
+	DROP TRIGGER TR_ValidacionModificarUsuario
+GO
+CREATE TRIGGER TR_ValidacionModificarUsuario
+ON Usuario INSTEAD OF UPDATE
+AS
+BEGIN
+	IF(UPDATE(CorreoInstitucional))
+	BEGIN
+		DECLARE @CedulaBusqueda		CHAR(10)
+		DECLARE @Correo				NVARCHAR(101)
 
---		BEGIN TRY
---			IF((@correo IS NOT NULL) AND (@correo LIKE '%@ucr.ac.cr') AND (LEN(@Correo) <= 100))
---			BEGIN
---				UPDATE Usuario
---				SET CorreoInstitucional = @Correo
---				WHERE Cedula = @CedulaBusqueda;
---			END
---			ELSE
---			BEGIN
---				RAISERROR('El correo no puede estar vacío y debe ser del tipo "nombre@ucr.ac.cr".', 16, 1)  
---				RETURN  
---			END
---		END TRY
---
---		BEGIN CATCH
---			PRINT 'ERROR: ' + ERROR_MESSAGE();
---		END CATCH
---	END
---END;
+		SET @Correo				= (SELECT CorreoInstitucional FROM inserted)
+		BEGIN TRY
+			IF((@correo IS NOT NULL) AND (@correo LIKE '%@ucr.ac.cr') AND (LEN(@Correo) <= 100))
+			BEGIN
+				UPDATE Usuario
+				SET CorreoInstitucional = @Correo
+				WHERE Cedula = @CedulaBusqueda;
+			END
+			ELSE
+			BEGIN
+				RAISERROR('El correo no puede estar vacío y debe ser del tipo "nombre@ucr.ac.cr".', 16, 1)  
+				RETURN  
+			END
+		END TRY
+
+		BEGIN CATCH
+			PRINT 'ERROR: ' + ERROR_MESSAGE();
+		END CATCH
+	END
+END;
 
 IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
