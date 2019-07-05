@@ -1049,10 +1049,6 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
         <Function Name="DatosEstudiante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="EliminarPreguntasDeSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CodigoFormulario" Type="char" Mode="In" />
-          <Parameter Name="TituloSeccion" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="MostrarEstudiantes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="NombrePersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1118,6 +1114,11 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Parameter Name="TituloSec" Type="nvarchar" Mode="In" />
           <Parameter Name="CodFormDest" Type="char" Mode="In" />
         </Function>
+        <Function Name="SP_CrearPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="Numero_Error" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -1136,6 +1137,10 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
         <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_EliminarSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoFormulario" Type="char" Mode="In" />
+          <Parameter Name="TituloSeccion" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SP_ExistenciaCorreo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
@@ -2685,10 +2690,6 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_Model.DatosEstudiante_Result)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="EliminarPreguntasDeSeccion">
-            <Parameter Name="CodigoFormulario" Mode="In" Type="String" />
-            <Parameter Name="TituloSeccion" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_Model.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
@@ -2749,6 +2750,11 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="TituloSec" Mode="In" Type="String" />
             <Parameter Name="CodFormDest" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_CrearPerfil">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="Numero_Error" Mode="InOut" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="sp_creatediagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -2767,6 +2773,10 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <FunctionImport Name="sp_dropdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_EliminarSeccion">
+            <Parameter Name="CodigoFormulario" Mode="In" Type="String" />
+            <Parameter Name="TituloSeccion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ExistenciaCorreo">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -3303,7 +3313,6 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="EliminarPreguntasDeSeccion" FunctionName="Opiniometro_Model.Store.EliminarPreguntasDeSeccion" />
           <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_Model.Store.MostrarEstudiantes">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Opiniometro_Model.MostrarEstudiantes_Result">
@@ -3340,9 +3349,11 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_CopiarSeccion" FunctionName="Opiniometro_Model.Store.SP_CopiarSeccion" />
+          <FunctionImportMapping FunctionImportName="SP_CrearPerfil" FunctionName="Opiniometro_Model.Store.SP_CrearPerfil" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Opiniometro_Model.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_Model.Store.SP_DevolverObservacionesPorGrupo" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Opiniometro_Model.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="SP_EliminarSeccion" FunctionName="Opiniometro_Model.Store.SP_EliminarSeccion" />
           <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_Model.Store.SP_ExistenciaCorreo" />
           <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Opiniometro_Model.Store.sp_helpdiagramdefinition">
             <ResultMapping>

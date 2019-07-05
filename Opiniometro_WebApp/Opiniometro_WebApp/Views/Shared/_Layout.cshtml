@@ -92,8 +92,9 @@
                                     <li>@Html.ActionLink("Cargar Archivo", "CargarArchivo", "Administrador")</li>
                                 }
                                 else
-                                {
-                                    <li class="disabled"><a id="link_deshabilitado">Cargar Archivo</a></li>
+                                {                                    
+                                    <li>@Html.ActionLink("Cargar Archivo", "CargarArchivo", "Administrador")</li>
+                                    <!-- <li class="disabled"><a>Cargar Archivo</a></li> -->
                                 }
                             }
                         </ul>

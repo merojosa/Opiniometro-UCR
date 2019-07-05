@@ -1,25 +1,29 @@
-﻿@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
     <title>Cargar Archivo</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opiniómetro@UCR</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/estilos-propios.css")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    @using (Html.BeginForm("CargarArchivo", "Administrador", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <!--span>Select File:</span-->
-        <input type="file" name="postedFile" />
-        <br />
-        <input type="submit" value="Cargar" class="btn btn-default" />
-        <br />
-        <span style="color:green">@ViewBag.Message</span>
-    }
+
+<h1>Cargar Archivo</h1>
+
+@using (Html.BeginForm("CargarArchivo", "Administrador", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+    <!--span>Select File:</span-->
+    <input type="file" name="postedFile"/>
+    <br/>
+    <input type="submit" value="Cargar" class="btn btn-default"/>
+    <br/>
+    <span style="color: green">@ViewBag.Message</span>
+}
 </body>
 </html>
 

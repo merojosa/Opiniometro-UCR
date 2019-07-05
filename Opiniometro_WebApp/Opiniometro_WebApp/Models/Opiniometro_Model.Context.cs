@@ -101,19 +101,6 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DatosEstudiante_Result>("DatosEstudiante", cedulaParameter);
         }
     
-        public virtual int EliminarPreguntasDeSeccion(string codigoFormulario, string tituloSeccion)
-        {
-            var codigoFormularioParameter = codigoFormulario != null ?
-                new ObjectParameter("CodigoFormulario", codigoFormulario) :
-                new ObjectParameter("CodigoFormulario", typeof(string));
-    
-            var tituloSeccionParameter = tituloSeccion != null ?
-                new ObjectParameter("TituloSeccion", tituloSeccion) :
-                new ObjectParameter("TituloSeccion", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EliminarPreguntasDeSeccion", codigoFormularioParameter, tituloSeccionParameter);
-        }
-    
         public virtual ObjectResult<MostrarEstudiantes_Result> MostrarEstudiantes()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MostrarEstudiantes_Result>("MostrarEstudiantes");
@@ -319,6 +306,19 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CopiarSeccion", codFormOrigenParameter, tituloSecParameter, codFormDestParameter);
         }
     
+        public virtual int SP_CrearPerfil(string nombre, string descripcion, ObjectParameter numero_Error)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CrearPerfil", nombreParameter, descripcionParameter, numero_Error);
+        }
+    
         public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
             var diagramnameParameter = diagramname != null ?
@@ -384,6 +384,19 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("owner_id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int SP_EliminarSeccion(string codigoFormulario, string tituloSeccion)
+        {
+            var codigoFormularioParameter = codigoFormulario != null ?
+                new ObjectParameter("CodigoFormulario", codigoFormulario) :
+                new ObjectParameter("CodigoFormulario", typeof(string));
+    
+            var tituloSeccionParameter = tituloSeccion != null ?
+                new ObjectParameter("TituloSeccion", tituloSeccion) :
+                new ObjectParameter("TituloSeccion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_EliminarSeccion", codigoFormularioParameter, tituloSeccionParameter);
         }
     
         public virtual int SP_ExistenciaCorreo(string correo, ObjectParameter resultado)

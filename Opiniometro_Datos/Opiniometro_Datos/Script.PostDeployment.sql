@@ -112,15 +112,15 @@ GO
 CREATE PROCEDURE SP_ModificarPersona
 	@CedulaBusqueda		VARCHAR(9),
 	@Cedula				CHAR(9),
-	@Nombre				NVARCHAR(50),
+	@Nombre1			NVARCHAR(50),
+	@Nombre2			NVARCHAR(50),
 	@Apellido1			NVARCHAR(50),
 	@Apellido2			NVARCHAR(50),
-	@Correo				NVARCHAR(100),
-	@Direccion			NVARCHAR(256)
+	@Correo				NVARCHAR(50)
 AS
 BEGIN
 	UPDATE Persona
-	SET Cedula = @Cedula, Nombre = @Nombre, Apellido1 = @Apellido1, Apellido2 = @Apellido2, Direccion = @Direccion
+	SET Cedula = @Cedula, Nombre1 = @Nombre1, Nombre2 = @Nombre2, Apellido1 = @Apellido1, Apellido2 = @Apellido2
 	WHERE Cedula = @CedulaBusqueda;
 
 	UPDATE Usuario
@@ -129,40 +129,6 @@ BEGIN
 END
 GO
 
-IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
-	DROP TRIGGER TR_InsertaPersona
-GO
-CREATE TRIGGER TR_InsertaPersona
-ON Persona INSTEAD OF INSERT
-AS
-BEGIN
-	DECLARE @cedula CHAR(10)
-	DECLARE @nombre NVARCHAR(51)
-	DECLARE @apellido1 NVARCHAR(51)
-	DECLARE @apellido2 NVARCHAR(51)
-	
-	SET @cedula = (SELECT Cedula FROM inserted)
-	SET @nombre = (SELECT Nombre FROM inserted)
-	SET @apellido1 = (SELECT Apellido1 FROM inserted)
-	SET @apellido2 = (SELECT Apellido2 FROM inserted)
-
-	BEGIN TRY
-	IF(@cedula IS NOT NULL AND @nombre IS NOT NULL AND @apellido1 IS NOT NULL AND @apellido2 IS NOT NULL  AND (LEN(@cedula) = 9) AND (LEN(@nombre) < 50) AND (LEN(@apellido1) < 50) AND (LEN(@apellido2) < 50))
-	BEGIN
-		INSERT INTO Persona (Cedula, Nombre, Apellido1, Apellido2)
-		VALUES (@cedula, @nombre, @apellido1, @apellido2)
-	END
-	ELSE
-	BEGIN
-		RAISERROR('Datos incorrectos',16,1)
-		RETURN
-	END
-	END TRY
-
-	BEGIN CATCH 
-		PRINT 'ERROR: ' + ERROR_MESSAGE( );
-	END CATCH
-END;
 
 IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
@@ -188,7 +154,7 @@ AS
 BEGIN
 	SET NOCOUNT ON
 	
-	SET @Nombre = (SELECT Nombre
+	SET @Nombre = (SELECT Nombre1
 	FROM Usuario U	JOIN Persona P ON U.Cedula = p.Cedula
 	WHERE U.CorreoInstitucional=@Correo)
 
@@ -198,7 +164,7 @@ BEGIN
 END
 GO
 
---EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
+--EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre1='Barry2', @Nombre2='', @Apellido1='Allen2', @Apellido2='Garcia2', @DireccionDetallada='Central City2';
 
 IF OBJECT_ID('ValorRandom') IS NOT NULL
 	DROP VIEW ValorRandom
@@ -237,22 +203,24 @@ CREATE PROCEDURE SP_AgregarPersonaUsuario
 	@Correo			NVARCHAR(50),
 	@Contrasenna	NVARCHAR(50),
 	@Cedula			CHAR(9),
-	@Nombre			NVARCHAR(50),
+	@Nombre1		NVARCHAR(50),
+	@Nombre2		NVARCHAR(50),
 	@Apellido1		NVARCHAR(50),
-	@Apellido2		NVARCHAR(50),
-	@Direccion		NVARCHAR(256)
+	@Apellido2		NVARCHAR(50)
 AS
 BEGIN
 	SET NOCOUNT ON
 	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
 
 	INSERT INTO Persona
-	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2, @Direccion)
-
+	VALUES (@Cedula, @Nombre1, @Nombre2, @Apellido1, @Apellido2)
+	SET @Contrasenna = (SELECT dbo.SF_GenerarContrasena());
 	INSERT INTO Usuario
 	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id, 0)
 END
 GO
+
+
 
 
 IF OBJECT_ID('ObtenerPerfilUsuario') IS NOT NULL
@@ -289,7 +257,7 @@ GO
 --Pantalla 1, Home
 CREATE PROCEDURE MostrarEstudiantes
 AS 
-	SELECT Nombre, Apellido1, Apellido2, Carne
+	SELECT Nombre1, Apellido1, Apellido2, Carne
 	FROM Persona P JOIN Estudiante E ON P.Cedula = E.CedulaEstudiante;
 GO
 
@@ -298,7 +266,7 @@ GO
 CREATE PROCEDURE NombrePersona 
 @Cedula VARCHAR(9)
 AS
-	SELECT Nombre
+	SELECT Nombre1
 	FROM Persona
 	WHERE Cedula = @Cedula;
 
@@ -307,7 +275,7 @@ GO
 CREATE PROCEDURE DatosEstudiante
 @Cedula VARCHAR(9)
 AS
-	SELECT CONCAT(Nombre, ' ' ,Apellido1, ' ', Apellido2) as 'Nombre Completo', Carne, Cedula
+	SELECT CONCAT(Nombre1, ' ' ,Apellido1, ' ', Apellido2) as 'Nombre Completo', Carne, Cedula
 	FROM Persona P JOIN Estudiante E ON P.Cedula = E.CedulaEstudiante
 	WHERE Cedula = @Cedula;
 GO
@@ -327,21 +295,21 @@ GO
 --Inserciones
 
 INSERT INTO Persona
-VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajuela.'),
-		('115003456', 'Daniel', 'Escalante', 'Perez', 'Desamparados de San José.'),
-		('117720910', 'Jose Andrés', 'Mejías', 'Rojas', 'La Fortuna de San Carlos.'),
-		('236724507', 'Jose Andrés', 'Mejías', 'Rojas', 'Sarchí, Alajuela.'),
+VALUES	('116720500', 'Jose Andrés', NULL,'Mejías', 'Rojas'),
+		('115003456', 'Daniel', NULL, 'Escalante', 'Perez'),
+		('117720910', 'Jose Andrés', NULL, 'Mejías', 'Rojas'),
+		('236724507', 'Jose Andrés', NULL, 'Mejías', 'Rojas'),
 		--Agregado de datos para visualizacion a cargo de CX Solutions
-		('100000001', 'CX', 'Solutions', 'S.A.', 'San Pedro Montes de Oca'),
-		('100000002', 'Marta', 'Rojas', 'Sanches', '300 metros norte de Pulmitan'),--Profesora
+		('100000001', 'CX', NULL, 'Solutions', 'S.A.'),
+		('100000002', 'Marta', NULL, 'Rojas', 'Sanches'),--Profesora
 		--Estudiantes
-		('100000003', 'Juan', 'Briceño', 'Lupon', '400 metros norte del Heraldo de la Grieta'),
-		('100000005', 'Pepito', 'Fonsi', 'Monge', '20 metros norte del Blue del lado Rojo'),
-		('100000004', 'Maria', 'Fallas', 'Merdi', 'Costado este del estandarte de top'),
-		('117720912', 'Jorge', 'Solano', 'Carrillo', 'La Fortuna de San Carlos.'),
-		('236724501', 'Carolina', 'Gutierrez', 'Lozano', 'Sarchí, Alajuela.'),
-		('123456789', 'Ortencia', 'Cañas', 'Griezman', 'San Pedro de Montes de Oca');
-		
+		('100000003', 'Juan', NULL, 'Briceño', 'Lupon'),
+		('100000005', 'Pepito', NULL, 'Fonsi', 'Monge'),
+		('100000004', 'Maria', NULL, 'Fallas', 'Merdi'),
+		('117720912', 'Jorge', NULL, 'Solano', 'Carrillo'),
+		('236724501', 'Carolina', NULL, 'Gutierrez', 'Lozano'),
+		('123456789', 'Ortencia', NULL, 'Cañas', 'Griezman');
+
 INSERT INTO Estudiante VALUES 
  ('116720500', 'B11111')
 ,('115003456', 'B22222')
@@ -844,6 +812,114 @@ VALUES	('San José', 'San José', 'Carmen'),
 		('Cartago', 'El Guarco', 'Tobosi'),
 		('Cartago', 'El Guarco', 'Patio de Agua')
 		
+--Función:
+--Retorna Unique Identifier [Ver SP_agregarPersonaUsuario]
+IF OBJECT_ID('SP_GenerarContrasena') IS NOT NULL
+	DROP PROCEDURE SP_GenerarContrasena
+GO
+CREATE PROCEDURE SP_GenerarContrasena
+@resultado	NVARCHAR(10) OUTPUT 
+AS
+BEGIN
+	DECLARE @contrasenaRandom NVARCHAR(10);
+	DECLARE @infoBinario VARBINARY(10);
+	DECLARE @datosCaracteres NVARCHAR(10);
+
+	SELECT @infoBinario = randomvalue FROM ValorRandom;
+
+	SET @datosCaracteres = CAST ('' as xml).value('xs:base64Binary(sql:variable("@InfoBinario"))', 'varchar (max)');
+
+	SET @resultado = @datosCaracteres;
+
+END
+GO
+
+--Genera un Id único
+IF OBJECT_ID('SP_GenerarIdUnico') IS NOT NULL
+	DROP PROCEDURE SP_GenerarIdUnico
+GO
+CREATE PROCEDURE SP_GenerarIdUnico
+@id	UNIQUEIDENTIFIER OUTPUT
+AS
+BEGIN
+	SET @id = NEWID()
+END
+GO
+
+--Devuelve un GUID generado por la base
+IF OBJECT_ID('SP_GenerarContrasenaHash') IS NOT NULL
+	DROP PROCEDURE SP_GenerarContrasenaHash
+GO
+CREATE PROCEDURE SP_GenerarContrasenaHash
+@id	NVARCHAR(50),
+@contrasena	NVARCHAR(10),
+@contrasenaHash VARBINARY(50) OUTPUT
+AS
+BEGIN
+	SET @contrasenaHash = HASHBYTES('SHA2_512', @contrasena+CAST(@id AS NVARCHAR(36)))
+END
+GO
+
+IF OBJECT_ID('TR_InsertaUsuario') IS NOT NULL
+	DROP TRIGGER TR_InsertaUsuario
+GO
+CREATE TRIGGER TR_InsertaUsuario
+ON Usuario INSTEAD OF INSERT
+AS
+BEGIN
+	DECLARE @correoInstitucional NVARCHAR(51)
+	DECLARE @cedula CHAR(10)
+
+	SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
+	SET @cedula					= (SELECT Cedula FROM inserted)
+
+	IF((@correoInstitucional LIKE '%@ucr.ac.cr') AND (@correoInstitucional NOT LIKE '') AND (@cedula NOT LIKE '') AND (LEN(@correoInstitucional) <= 50) AND  (LEN(@cedula) = 9))
+	BEGIN
+		INSERT INTO Usuario (Cedula, CorreoInstitucional)
+		VALUES (@cedula, @correoInstitucional)
+	END
+	ELSE
+	BEGIN
+		RAISERROR('Hay campos no pueden estar vacíos o exceder el tamaño adecuado', 16, 1)
+		RETURN
+	END
+END;
+
+IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
+	DROP TRIGGER TR_InsertaPersona
+GO
+CREATE TRIGGER TR_InsertaPersona
+ON Persona INSTEAD OF INSERT
+AS
+BEGIN
+	DECLARE @cedula CHAR(10)
+	DECLARE @nombre1 NVARCHAR(51)
+	DECLARE @nombre2 NVARCHAR(51)
+	DECLARE @apellido1 NVARCHAR(51)
+	DECLARE @apellido2 NVARCHAR(51)
+	--DECLARE @correoInstitucional NVARCHAR(51)
+
+	--SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
+	
+	SET @cedula					= (SELECT Cedula FROM inserted)
+	SET @nombre1				= (SELECT Nombre1 FROM inserted)
+	SET @nombre2				= (SELECT Nombre2 FROM inserted)
+	SET @apellido1				= (SELECT Apellido1 FROM inserted)
+	SET @apellido2				= (SELECT Apellido2 FROM inserted)
+
+	IF((@cedula NOT LIKE '') AND  (LEN(@cedula) = 9) AND (@nombre1 NOT LIKE '') AND (LEN(@nombre1) <= 50) 
+	AND  (LEN(@nombre2) <= 50)  AND (@apellido1 NOT LIKE '') AND (LEN(@apellido1) <= 50)  
+	AND (@apellido2 NOT LIKE '') AND (LEN(@apellido2) <= 50))
+	BEGIN
+		INSERT INTO PerPersona(Cedula, nombre1, nombre2, apellido1, apellido2)
+		VALUES (@cedula, @nombre1, @nombre2, @apellido1, @apellido2)
+	END
+	ELSE
+	BEGIN
+		RAISERROR('Hay campos no pueden estar vacíos o exceder el tamaño adecuado', 16, 1)
+		RETURN
+	END
+END;
 
 --select de prueba para la cnt de respuestas
 --SELECT e.Respuesta, COUNT(e.Respuesta) as cantidadRespuestas
