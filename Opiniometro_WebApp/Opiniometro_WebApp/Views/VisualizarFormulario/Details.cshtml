@@ -271,13 +271,13 @@
                                                                                         var obs = aData[0];
                                                                                         var nom = aData[1];
                                                                                         var ap1 = aData[2];
-                                                                                        var ap2 = aData[3];
+                                                                                            var ap2 = aData[3];
 
                                                                                             for (var data in obs) {
-                                                                                                if ('@perfil_actual' == "Admin") { //Cuando se incluye el if lo que esta dentro no se despliega incluso si la condicion es verdadera
+                                                                                                if ('@perfil_actual' == "Administrador") { //Cuando se incluye el if lo que esta dentro no se despliega incluso si la condicion es verdadera
                                                                                                     document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + " ";
 
-                                                                                                } else if ('@perfil_actual' != "Admin"){
+                                                                                                } else if ('@perfil_actual' != "Administrador"){
                                                                                                     document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " ";
 
                                                                                                 }
