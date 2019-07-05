@@ -40,7 +40,7 @@
         @for (int i = 0; i < Model.ListaPerfiles.Count; i++)
         {
             <td>
-                <input type="checkbox" value="check" id="@(i+"mult")" onchange="seleccionMultiple(this,@(Model.ListaPermisos.Count))" />
+                <input title="Seleccionar columna" type="checkbox" value="check" id="@(i+"mult")" onchange="seleccionMultiple(this,@(Model.ListaPermisos.Count))" />
                 @Html.DisplayFor(model => Model.ListaPerfiles.ElementAt(i).Nombre)
             </td>
         }
