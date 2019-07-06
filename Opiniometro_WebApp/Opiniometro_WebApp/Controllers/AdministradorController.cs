@@ -22,6 +22,8 @@ using System.Security.Cryptography;
 using Opiniometro_WebApp.Models;
 using System.Text;
 using System.Reflection;
+using System.Web.WebPages;
+
 //using Microsoft.SqlServer.Dts;
 //using Microsoft.SqlServer.Dts.Runtime;
 
@@ -29,7 +31,7 @@ using System.Reflection;
 namespace Opiniometro_WebApp.Controllers
 {
     enum Tablas { DatosProvisionados, Persona, Usuario, Estudiante, Empadronado, Profesor, TieneUsuarioPerfilEnfasis};
-
+    enum EntradasProvisionadas {Cedula, Perfil, Nombre1, Nombre2, Apellido1, Apellido2, Correo, Carne, SiglaCarrera, NumeroEnfasis}
     public class AdministradorController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
@@ -74,11 +76,13 @@ namespace Opiniometro_WebApp.Controllers
                         postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
                         filasInvalidas = ProcesarArchivo(path + Path.GetFileName(postedFile.FileName));
                         ViewBag.Message = "Archivo cargado con exito.";
+                        System.IO.File.Delete(path + Path.GetFileName(postedFile.FileName));
                     }
                     catch (Exception e)
                     {
 
                         ViewBag.Message = "Error al cargar el archivo. Intente de nuevo mas tarde.";
+                        System.IO.File.Delete(path + Path.GetFileName(postedFile.FileName));
                         Console.WriteLine(e);
                         throw;
                     }
@@ -107,6 +111,8 @@ namespace Opiniometro_WebApp.Controllers
             DataTable filasInvalidas = CrearTablaUsuariosInvalidos();
             string filaLeida = String.Empty;
             DataRow tupla;
+            
+            
             int numeroFilasLeidas = 0;
             using (StreamReader streamCsv = new StreamReader(path))
             {
@@ -117,9 +123,23 @@ namespace Opiniometro_WebApp.Controllers
 
                     try
                     {
-                        tupla.ItemArray = filaLeida.Split(',');
-                        //Tupla cumple preeliminarmente con requisitos de formato
-                        filasValidas.Rows.Add(tupla);
+                        String[] entradasFilaLeida = filaLeida.Split(',');
+                        bool valido = ValidacionEntrada(entradasFilaLeida, filasInvalidas, numeroFilasLeidas);
+                        if (valido)
+                        {
+                            tupla.ItemArray = entradasFilaLeida;
+                            //Tupla cumple preeliminarmente con requisitos de formato
+                            if (tupla.HasErrors)
+                            {
+                                AgregarTuplaInvalida(filaLeida, filasInvalidas, tupla, numeroFilasLeidas);
+                            }
+                            else
+                            {
+                                filasValidas.Rows.Add(tupla);
+                            }
+                        }
+                        
+                        
 
                     }
                     catch (Exception e)
@@ -187,6 +207,15 @@ namespace Opiniometro_WebApp.Controllers
                 ViewBag.InsercionEmpadronado = "No hubo inserciones en la tabla Empadronado";
             }
 
+            if (profesorBD.Rows.Count > 0)
+            {
+                InsercionEnBloque(profesorBD);
+            }
+            else
+            {
+                ViewBag.InsercionProfesor = "No hubo inserciones en la tabla Profesor";
+            }
+
             if(tieneUsuarioPerfilEnfasisBD.Rows.Count > 0)
             {
                 InsercionEnBloque(tieneUsuarioPerfilEnfasisBD);
@@ -204,6 +233,186 @@ namespace Opiniometro_WebApp.Controllers
             tieneUsuarioPerfilEnfasisBD.Dispose();
             filasInvalidas.AcceptChanges();
             return filasInvalidas;
+        }
+
+        private bool ValidacionEntrada(string[] entradasFilaLeida, DataTable filasInvalidas, int numeroFilasLeidas)
+        {
+            DataRow filaInvalida = filasInvalidas.NewRow();
+            if (ValidacionLongitud(filaInvalida, entradasFilaLeida) &&
+                ValidacionContenido(filaInvalida, entradasFilaLeida))
+            {
+                return true;
+            }
+            
+            
+
+            if (filaInvalida.RowState == DataRowState.Modified)
+            {
+                filaInvalida[1] = numeroFilasLeidas;
+                for (int i = 0; i < entradasFilaLeida.Length; i++)
+                {
+                    filaInvalida[i + 2] = entradasFilaLeida[i];
+                }
+                
+
+                filasInvalidas.Rows.Add(filaInvalida);
+                filasInvalidas.AcceptChanges();
+            }
+
+            return false;
+        }
+
+        private bool ValidacionContenido(DataRow filaInvalida, string[] entradasFilaLeida)
+        {
+            bool valido = false;
+            for (int i = 0; i < entradasFilaLeida.Length; ++i)
+            {
+                if(System.Text.RegularExpressions.Regex.IsMatch(entradasFilaLeida))
+            }
+        }
+
+        private bool ValidacionLongitud(DataRow filaInvalida, string[] entradasFilaLeida)
+        {
+            bool valido = false;
+            if (entradasFilaLeida.Length != 10)
+            {
+                if (entradasFilaLeida.Length < 10)
+                {
+                    filaInvalida["error"] += "La fila de entrada contiene menos de diez items.\n";
+                }
+                else
+                {
+                    filaInvalida["error"] += "La fila de entrada contiene más de diez items.\n";
+                }
+            }
+            else
+            {
+
+                for (int i = 0; i < entradasFilaLeida.Length; i++)
+                {
+
+                    switch (i)
+                    {
+                        case 0: //cedula
+                        {
+                            if (entradasFilaLeida[0].IsEmpty())
+                            {
+                                filaInvalida["error"] += "El numero de cédula es un campo obligatorio\n";
+                            }
+                            else if (entradasFilaLeida[0].Length != 9)
+                            {
+                                filaInvalida["error"] += "El numero de cedula debe contener nueve caracteres\n";
+                            }
+
+                        }
+                            break;
+                        case 1: //perfil
+                        {
+                            if (entradasFilaLeida[1].IsEmpty() || entradasFilaLeida[1].Length > 30)
+                            {
+                                filaInvalida["error"] +=
+                                    "El nombre de un perfil debe contener al menos 1 caracter y no debe exceder de 30 caracteres\n";
+                            }
+                        }
+                            break;
+                        case 2: //nombre
+                        case 4: //apellido1
+                        case 5: //apellido2
+                        case 6: //correo institucional
+                        {
+                            string nombreCampo = String.Empty;
+                            if (i == 2)
+                            {
+                                nombreCampo = "primer nombre";
+                            }
+                            else if (i == 4)
+                            {
+                                nombreCampo = "primer apellido";
+                            }
+                            else if (i == 5)
+                            {
+                                nombreCampo = "segundo apellido";
+                            }
+                            else if (i == 6)
+                            {
+                                nombreCampo = "correo institucional";
+                            }
+
+                            if (entradasFilaLeida[i].IsEmpty() || entradasFilaLeida[i].Length > 50)
+                            {
+                                filaInvalida["error"] += "El " + nombreCampo +
+                                                         " es un campo obligatorio y debe contener al menos un caracter y no debe exceder de 50 caracteres\n";
+                            }
+                        }
+                            break;
+                        case 3: //nombre2
+                        case 7: //carne
+                        {
+                            if (!entradasFilaLeida[i].IsEmpty())
+                            {
+                                if (i == 3 && entradasFilaLeida[i].Length > 50)
+                                {
+                                    filaInvalida["error"] += "El segundo nombre no debe exceder de 50 caracteres\n";
+                                }
+                                else if (i == 7 && entradasFilaLeida.Length != 6)
+                                {
+                                    filaInvalida["error"] += "El carne debe contener seis caracteres\n";
+                                }
+                            }
+                        }
+                            break;
+                        case 8:
+                        {
+                            if (entradasFilaLeida[i].Length > 10)
+                            {
+                                filaInvalida["error"] += "La sigla de carrera no debe exceder de diez caracteres\n";
+                            }
+                        }
+                            break;
+                        case 9:
+                        {
+                            if (entradasFilaLeida[i].IsEmpty() || entradasFilaLeida.Length > 3)
+                            {
+                                filaInvalida["error"] +=
+                                    "El numero de enfasis de contener al menos un caracter y no debe exceder de tres caracteres\n";
+                            }
+                        }
+                            break;
+                    }
+                }
+
+                valido = true;
+            }
+
+            return valido;
+        }
+
+        private void AgregarTuplaInvalida(string filaLeida, DataTable filasInvalidas, DataRow tupla, int numeroFilasLeidas)
+        {
+            DataColumn[] columnasConError = tupla.GetColumnsInError();
+            DataRow filaInvalida = filasInvalidas.NewRow();
+            foreach (DataColumn columna in columnasConError)
+            {
+                filaInvalida["error"] += tupla.GetColumnError(columna.ColumnName);
+                //filaInvalida["error"] += "\n";
+            }
+
+            
+            filaInvalida["fila"] = numeroFilasLeidas;
+            
+            filaInvalida["cedula"] = tupla["cedula"];
+            filaInvalida["perfil"] = tupla["perfil"];
+            filaInvalida["carne"] = tupla["carne"];
+            filaInvalida["nombre1"] = tupla["nombre1"];
+            filaInvalida["nombre2"] = tupla["nombre2"];
+            filaInvalida["apellido1"] = tupla["apellido1"];
+            filaInvalida["apellido2"] = tupla["apellido2"];
+            filaInvalida["correo"] = tupla["correo"];
+            filaInvalida["sigla_carrera"] = tupla["sigla_carrera"];
+            filaInvalida["enfasis"] = tupla["enfasis"];
+
+            filasInvalidas.Rows.Add(filaInvalida);
+            filasInvalidas.AcceptChanges();
         }
 
         /*
@@ -329,7 +538,7 @@ namespace Opiniometro_WebApp.Controllers
             filaNueva["Nombre2"] = filaAInsertar["Nombre2"];
             filaNueva["Apellido1"] = filaAInsertar["Apellido1"];
             filaNueva["Apellido2"] = filaAInsertar["Apellido2"];
-            filaNueva["DireccionDetallada"] = filaAInsertar["DireccionDetallada"];
+            
             personaBD.Rows.Add(filaNueva);
             personaBD.AcceptChanges();
         }
@@ -607,9 +816,11 @@ namespace Opiniometro_WebApp.Controllers
             filaInvalida["apellido1"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["apellido1"];
             filaInvalida["apellido2"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["apellido2"];
             filaInvalida["correo"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["correo"];
-            filaInvalida["direccion_exacta"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["direccion_exacta"];
             filaInvalida["sigla_carrera"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["sigla_carrera"];
             filaInvalida["enfasis"] = filasInvalidas.Rows[numeroFilasLeidas - 1]["enfasis"];
+
+            filasInvalidas.Rows.Add(filaInvalida);
+            filasInvalidas.AcceptChanges();
         }
 
         /*
@@ -650,7 +861,15 @@ namespace Opiniometro_WebApp.Controllers
 
                 foreach(PropertyInfo propiedad in propiedadesDeTipo)
                 {
-                    dt.Columns.Add(propiedad.Name, propiedad.PropertyType);
+                    /*DataColumn columnaNueva = new DataColumn();
+                    columnaNueva.ColumnName = propiedad.Name;
+                    columnaNueva.DataType =
+                        Nullable.GetUnderlyingType(propiedad.PropertyType) ?? propiedad.PropertyType;
+                    PropertyCollection pc = columnaNueva.ExtendedProperties;
+                    propiedad.GetCustomAttributes()*/
+                    
+                    dt.Columns.Add(propiedad.Name, Nullable.GetUnderlyingType(propiedad.PropertyType) ?? propiedad.PropertyType);
+                    
                 }
             }
             return dt;

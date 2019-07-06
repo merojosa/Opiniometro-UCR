@@ -181,14 +181,14 @@ namespace Opiniometro_WebApp.Controllers
                     }
                     return RedirectToAction("VerPersonas");
                 }
-                else
+               else
                 {
                     //Mensaje de error
                 }
             }
             catch (Exception)
             {
-
+ 
                 throw;
             }
 
