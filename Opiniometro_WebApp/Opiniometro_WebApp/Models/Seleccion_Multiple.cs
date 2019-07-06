@@ -12,23 +12,18 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Unidad_Academica
+    public partial class Seleccion_Multiple
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Unidad_Academica()
+        public Seleccion_Multiple()
         {
-            this.Carrera = new HashSet<Carrera>();
-            this.Curso = new HashSet<Curso>();
+            this.Opciones_De_Respuestas_Seleccion_Multiple = new HashSet<Opciones_De_Respuestas_Seleccion_Multiple>();
         }
     
-        public string Codigo { get; set; }
-        public string Nombre { get; set; }
+        public string ItemId { get; set; }
     
+        public virtual Item Item { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Carrera> Carrera { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Curso> Curso { get; set; }
-        public virtual Facultad Facultad { get; set; }
-        public virtual Facultad Facultad1 { get; set; }
+        public virtual ICollection<Opciones_De_Respuestas_Seleccion_Multiple> Opciones_De_Respuestas_Seleccion_Multiple { get; set; }
     }
 }
