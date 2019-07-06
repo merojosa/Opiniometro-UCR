@@ -110,13 +110,13 @@ IF OBJECT_ID('SP_ModificarPersona') IS NOT NULL
 	DROP PROCEDURE SP_ModificarPersona
 GO
 CREATE PROCEDURE SP_ModificarPersona
-	@CedulaBusqueda		VARCHAR(9),
-	@Cedula				CHAR(9),
-	@Nombre1			NVARCHAR(50),
-	@Nombre2			NVARCHAR(50),
-	@Apellido1			NVARCHAR(50),
-	@Apellido2			NVARCHAR(50),
-	@Correo				NVARCHAR(50)
+	@CedulaBusqueda		VARCHAR(10),
+	@Cedula				CHAR(10),
+	@Nombre1			NVARCHAR(51),
+	@Nombre2			NVARCHAR(51),
+	@Apellido1			NVARCHAR(51),
+	@Apellido2			NVARCHAR(51),
+	@Correo				NVARCHAR(51)
 AS
 BEGIN
 	UPDATE Persona
@@ -147,9 +147,9 @@ IF OBJECT_ID('SP_ObtenerNombre') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerNombre
 GO
 CREATE PROCEDURE SP_ObtenerNombre
-	@Correo			NVARCHAR(50),
-	@Nombre			NVARCHAR(50) OUT,
-	@Apellido		NVARCHAR(50) OUT
+	@Correo			NVARCHAR(51),
+	@Nombre			NVARCHAR(51) OUT,
+	@Apellido		NVARCHAR(51) OUT
 AS
 BEGIN
 	SET NOCOUNT ON
@@ -200,13 +200,13 @@ IF OBJECT_ID('SP_AgregarPersonaUsuario') IS NOT NULL
 	DROP PROCEDURE SP_AgregarPersonaUsuario
 GO
 CREATE PROCEDURE SP_AgregarPersonaUsuario
-	@Correo			NVARCHAR(50),
-	@Contrasenna	NVARCHAR(50),
-	@Cedula			CHAR(9),
-	@Nombre1		NVARCHAR(50),
-	@Nombre2		NVARCHAR(50),
-	@Apellido1		NVARCHAR(50),
-	@Apellido2		NVARCHAR(50)
+	@Correo			NVARCHAR(51),
+	@Contrasenna	NVARCHAR(51),
+	@Cedula			CHAR(10),
+	@Nombre1		NVARCHAR(51),
+	@Nombre2		NVARCHAR(51),
+	@Apellido1		NVARCHAR(51),
+	@Apellido2		NVARCHAR(51)
 AS
 BEGIN
 	SET NOCOUNT ON
@@ -828,121 +828,6 @@ VALUES	(0, 'SC-01234', 'Estudiante', 3),
 		(0, 'SC-01234', 'Administrador', 210),
 		(0, 'SC-01234', 'Administrador', 211)
 
-INSERT INTO Provincia
-VALUES	('San José'),
-		('Cartago'),
-		('Heredia'),
-		('Alajuela'),
-		('Puntarenas'),
-		('Guanacaste'),
-		('Limón');
-
-INSERT INTO Canton
-VALUES	('San José', 'Acosta'),
-		('San José', 'Alajuelita'),
-		('San José', 'Aserrí'),
-		('San José', 'Desamparados'),
-		('San José', 'Curridabat'),
-		('San José', 'Dota'),
-		('San José', 'Escazú'),
-		('San José', 'Goicoechea'),
-		('San José', 'León Cortés Castro'),
-		('San José', 'Montes de Oca'),
-		('San José', 'Mora'),
-		('San José', 'Moravia'),
-		('San José', 'Puriscal'),
-		('San José', 'San José'),
-		('San José', 'Tarrazú'),
-		('San José', 'Turrubares'),
-		('San José', 'Vazquez de Coronado'),
-		('Cartago', 'Cartago'),
-		('Cartago', 'Paraíso'),
-		('Cartago', 'La Unión'),
-		('Cartago', 'Jiménez'),
-		('Cartago', 'Turrialba'),
-		('Cartago', 'Alvarado'),
-		('Cartago', 'Oreamuno'),
-		('Cartago', 'El Guarco')
-
-INSERT INTO Distrito
-VALUES	('San José', 'San José', 'Carmen'),
-		('San José', 'San José', 'Merced'),
-		('San José', 'San José', 'Hospital'),
-		('San José', 'San José', 'Catedral'),
-		('San José', 'San José', 'Zapote'),
-		('San José', 'San José', 'San Francisco de Dos Ríos'),
-		('San José', 'San José', 'Uruca'),
-		('San José', 'San José', 'Mata Redonda'),
-		('San José', 'San José', 'Pavas'),
-		('San José', 'San José', 'Hatillo'),
-		('San José', 'San José', 'San Sebastián'),
-		('San José', 'Escazú', 'Escazú'),
-		('San José', 'Escazú', 'San Antonio'),
-		('San José', 'Escazú', 'San Rafael'),
-		('San José', 'Desamparados', 'Desamparados'),
-		('San José', 'Desamparados', 'San Miguel'),
-		('San José', 'Desamparados', 'San Juan de Dios'),
-		('San José', 'Desamparados', 'San Rafael Arriba'),
-		('San José', 'Desamparados', 'San Rafael Abajo'),
-		('San José', 'Desamparados', 'San Antonio'),
-		('San José', 'Desamparados', 'Frailes'),
-		('San José', 'Desamparados', 'Patarrá'),
-		('San José', 'Desamparados', 'San Cristóbal'),
-		('San José', 'Desamparados', 'Rosario'),
-		('San José', 'Desamparados', 'Damas'),
-		('San José', 'Desamparados', 'Gravilias'),
-		('Cartago', 'Cartago', 'Oriental'),
-		('Cartago', 'Cartago', 'Occidental'),
-		('Cartago', 'Cartago', 'Carmen'),
-		('Cartago', 'Cartago', 'San Nicilás'),
-		('Cartago', 'Cartago', 'Agua Caliente'),
-		('Cartago', 'Cartago', 'Guadalupe'),
-		('Cartago', 'Cartago', 'Corralillo'),
-		('Cartago', 'Cartago', 'Tierra Blanca'),
-		('Cartago', 'Cartago', 'Dulce Nombre'),
-		('Cartago', 'Cartago', 'Llano Grande'),
-		('Cartago', 'Cartago', 'Quebradilla'),
-		('Cartago', 'Paraíso', 'Paraíso'),
-		('Cartago', 'Paraíso', 'Santiago'),
-		('Cartago', 'Paraíso', 'Orosi'),
-		('Cartago', 'Paraíso', 'Cachí'),
-		('Cartago', 'Paraíso', 'Llanps de Santa Lucía'),
-		('Cartago', 'La Unión', 'Tres Ríos'),
-		('Cartago', 'La Unión', 'San Diego'),
-		('Cartago', 'La Unión', 'San Juan'),
-		('Cartago', 'La Unión', 'San Rafael'),
-		('Cartago', 'La Unión', 'Concepción'),
-		('Cartago', 'La Unión', 'Dulce Nombre'),
-		('Cartago', 'La Unión', 'San Ramón'),
-		('Cartago', 'La Unión', 'Río Azul'),
-		('Cartago', 'Jiménez', 'Juan Viñas'),
-		('Cartago', 'Jiménez', 'Tucurrique'),
-		('Cartago', 'Jiménez', 'Pejibaye'),
-		('Cartago', 'Turrialba', 'Turrialba'),
-		('Cartago', 'Turrialba', 'La Suiza'),
-		('Cartago', 'Turrialba', 'Peralta'),
-		('Cartago', 'Turrialba', 'San Cruz'),
-		('Cartago', 'Turrialba', 'Santa Teresita'),
-		('Cartago', 'Turrialba', 'Pavones'),
-		('Cartago', 'Turrialba', 'Tuis'),
-		('Cartago', 'Turrialba', 'Tayitic'),
-		('Cartago', 'Turrialba', 'Santa Rosa'),
-		('Cartago', 'Turrialba', 'Tres Equis'),
-		('Cartago', 'Turrialba', 'La Isabel'),
-		('Cartago', 'Turrialba', 'Chirripó'),
-		('Cartago', 'Alvarado', 'Pacayas'),
-		('Cartago', 'Alvarado', 'Cervantes'),
-		('Cartago', 'Alvarado', 'Capellades'),
-		('Cartago', 'Oreamuno', 'San Rafael'),
-		('Cartago', 'Oreamuno', 'Cot'),
-		('Cartago', 'Oreamuno', 'Potrero Cerrado'),
-		('Cartago', 'Oreamuno', 'Cipreses'),
-		('Cartago', 'Oreamuno', 'Santa Rosa'),
-		('Cartago', 'El Guarco', 'El Tejar'),
-		('Cartago', 'El Guarco', 'San Isidro'),
-		('Cartago', 'El Guarco', 'Tobosi'),
-		('Cartago', 'El Guarco', 'Patio de Agua')
-		
 --Función:
 --Retorna Unique Identifier [Ver SP_agregarPersonaUsuario]
 IF OBJECT_ID('SP_GenerarContrasena') IS NOT NULL
