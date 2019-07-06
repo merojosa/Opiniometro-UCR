@@ -87,8 +87,8 @@
                                         {
                                         <tr>
                                             <td>@Model.Perfil.ElementAt(i)</td>
-                                            <td>@Html.CheckBoxFor(model => Model.tienePerfil.ElementAt(i), new { @checked = "checked", @id = i }) <br></td>
-                                            @Html.HiddenFor(model => Model.Perfil.ElementAt(i))
+                                            <td>@Html.CheckBoxFor(model => Model.tienePerfil[i], new { @checked = "checked", @id = i }) <br></td>
+                                            @Html.HiddenFor(model => Model.Perfil[i])
                                         </tr>
                                         }
                                     }

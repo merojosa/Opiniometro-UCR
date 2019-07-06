@@ -72,7 +72,7 @@ namespace Opiniometro_WebApp.Controllers
                     modelPersona.PerfilDeUsuario = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
                     modelPersona.Perfil = db.Perfil.Select(n => n.Nombre).ToList();
                     modelPersona.perfilesAsignados = modelPersona.getAsignarPerfil(modelPersona.PerfilDeUsuario, modelPersona.Perfil);
-
+                    modelPersona.tienePerfil = new List<Boolean>();
                     for (int contador = 0; contador < modelPersona.perfilesAsignados.Count; contador++)
                     {
                         modelPersona.tienePerfil.Add(modelPersona.perfilesAsignados.ElementAt(contador).asignar);

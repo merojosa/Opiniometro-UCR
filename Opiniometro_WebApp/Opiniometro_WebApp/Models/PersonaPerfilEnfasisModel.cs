@@ -53,7 +53,7 @@
 
         public virtual ICollection<String> PerfilDeUsuario { get; set; }
 
-        public virtual ICollection<String> Perfil { get; set; }
+        public virtual List<String> Perfil { get; set; }
 
         public List<Persona> listaPersonas { get; set; }
         public List<Usuario> listaUsuarios { get; set; }
