@@ -11,9 +11,9 @@
     [NumeroGrupoResp] TINYINT NOT NULL , 
     [SiglaGrupoResp] CHAR(6) NOT NULL, 
     [Observacion] NVARCHAR(500) NULL, 
-    [Respuesta] NVARCHAR(500) NULL, 
+    [Respuesta] NVARCHAR(500) NOT NULL, 
     [RespuestaProfesor] NVARCHAR(500) NULL ,
-	CONSTRAINT [PK_Responde] PRIMARY KEY([ItemId], [TituloSeccion], [FechaRespuesta], [CodigoFormularioResp], [CedulaPersona], [CedulaProfesor], [AnnoGrupoResp], [SemestreGrupoResp], [NumeroGrupoResp], [SiglaGrupoResp]),
+	CONSTRAINT [PK_Responde] PRIMARY KEY([ItemId], [TituloSeccion], [FechaRespuesta], [CodigoFormularioResp], [CedulaPersona], [CedulaProfesor], [AnnoGrupoResp], [SemestreGrupoResp], [NumeroGrupoResp], [SiglaGrupoResp], [Respuesta]),
 	CONSTRAINT [FK_Res_Ite] FOREIGN KEY ([ItemId])
 	REFERENCES [Item] ([ItemId]), --ON DELETE SET DEFAULT ON UPDATE CASCADE,
 	CONSTRAINT [FK_Res_Sec] FOREIGN KEY ([TituloSeccion])

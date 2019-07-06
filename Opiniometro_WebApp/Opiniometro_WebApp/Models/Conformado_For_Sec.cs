@@ -12,8 +12,13 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class C__RefactorLog
+    public partial class Conformado_For_Sec
     {
-        public System.Guid OperationKey { get; set; }
+        public string CodigoFormulario { get; set; }
+        public string TituloSeccion { get; set; }
+        public Nullable<int> Orden_Seccion { get; set; }
+    
+        public virtual Formulario Formulario { get; set; }
+        public virtual Seccion Seccion { get; set; }
     }
 }

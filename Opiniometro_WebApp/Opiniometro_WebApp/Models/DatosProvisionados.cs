@@ -7,9 +7,8 @@ using System.ComponentModel.DataAnnotations;
 namespace Opiniometro_WebApp.Models
 {
     [MetadataType(typeof(DatosProvisionadosMetadata))]
-    public class DatosProvisionados { 
-
-        
+    public class DatosProvisionados
+    {
         public string Cedula { get; set; }
         public string Perfil { get; set; }
         public string Nombre1 { get; set; }

@@ -102,6 +102,9 @@
     <None Include="Script.EliminarPersona.sql" />
     <Build Include="Tiene_Usuario_Perfil_Enfasis.sql" />
     <Build Include="SP_ObtenerFormulario.sql" />
+    <Build Include="Seleccion_Multiple.sql" />
+    <Build Include="Opciones_De_Respuestas_Seleccion_Unica.sql" />
+    <Build Include="Escalar.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ScriptGenerarContrasena.sql" />

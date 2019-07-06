@@ -12,14 +12,12 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Imparte
+    public partial class Opciones_De_Respuestas_Seleccion_Multiple
     {
-        public string CedulaProfesor { get; set; }
-        public byte Numero { get; set; }
-        public string Sigla { get; set; }
-        public string Anno { get; set; }
-        public byte Semestre { get; set; }
+        public string ItemId { get; set; }
+        public short Orden { get; set; }
+        public string OpcionRespuesta { get; set; }
     
-        public virtual Profesor Profesor { get; set; }
+        public virtual Seleccion_Multiple Seleccion_Multiple { get; set; }
     }
 }

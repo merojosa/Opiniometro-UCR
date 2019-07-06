@@ -28,7 +28,10 @@
             Cédula
         </th>
         <th>
-            Nombre
+            Primer nombre
+        </th>
+        <th>
+            Segundo nombre
         </th>
         <th>
 
@@ -42,10 +45,6 @@
 
             Correo Institucional
         </th>
-        @*<th>
-
-            Dirección
-        </th>*@
         <th></th>
     </tr>
 
@@ -59,6 +58,9 @@
                 @item.persona.Nombre1
             </td>
             <td>
+                @item.persona.Nombre2
+            </td>
+            <td>
                 @item.persona.Apellido1
             </td>
             <td>
@@ -67,9 +69,6 @@
             <td>
                 @item.usuario.CorreoInstitucional
             </td>
-            @*<td>
-                @item.persona.Direccion
-            </td>*@
             <td>
                 @Html.ActionLink("Editar", "Editar", new { id = item.persona.Cedula }, new { @class = "btn btn-default" })
          
