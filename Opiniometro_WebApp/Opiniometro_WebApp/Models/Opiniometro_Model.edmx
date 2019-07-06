@@ -12,14 +12,6 @@
           <Property Name="CedulaAdministrativo" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Tipo" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
-        <EntityType Name="Canton">
-          <Key>
-            <PropertyRef Name="NombreProvincia" />
-            <PropertyRef Name="NombreCanton" />
-          </Key>
-          <Property Name="NombreProvincia" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="NombreCanton" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="Carrera">
           <Key>
             <PropertyRef Name="Sigla" />
@@ -72,28 +64,6 @@
           <Property Name="Nombre" Type="varchar" MaxLength="75" Nullable="false" />
           <Property Name="Tipo" Type="tinyint" Nullable="false" />
           <Property Name="CodigoUnidad" Type="nvarchar" MaxLength="10" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Direccion_Persona">
-          <Key>
-            <PropertyRef Name="Cedula" />
-            <PropertyRef Name="Provincia" />
-            <PropertyRef Name="Canton" />
-            <PropertyRef Name="Distrito" />
-          </Key>
-          <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
-          <Property Name="Provincia" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Canton" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Distrito" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Distrito">
-          <Key>
-            <PropertyRef Name="NombreProvincia" />
-            <PropertyRef Name="NombreCanton" />
-            <PropertyRef Name="NombreDistrito" />
-          </Key>
-          <Property Name="NombreProvincia" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="NombreCanton" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="NombreDistrito" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Empadronado">
           <Key>
@@ -269,10 +239,10 @@
             <PropertyRef Name="Cedula" />
           </Key>
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre2" Type="nvarchar" MaxLength="50" />
           <Property Name="Apellido1" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Apellido2" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Direccion" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="Posee_Enfasis_Perfil_Permiso">
           <Key>
@@ -291,12 +261,6 @@
             <PropertyRef Name="CedulaProfesor" />
           </Key>
           <Property Name="CedulaProfesor" Type="char" MaxLength="9" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Provincia">
-          <Key>
-            <PropertyRef Name="NombreProvincia" />
-          </Key>
-          <Property Name="NombreProvincia" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Responde">
           <Key>
@@ -440,18 +404,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Can_Pro">
-          <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
-          <End Role="Canton" Type="Self.Canton" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Provincia">
-              <PropertyRef Name="NombreProvincia" />
-            </Principal>
-            <Dependent Role="Canton">
-              <PropertyRef Name="NombreProvincia" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Car_Uni">
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="1" />
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="*" />
@@ -547,48 +499,6 @@
             </Principal>
             <Dependent Role="Curso">
               <PropertyRef Name="CodigoUnidad" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Dir_Dis">
-          <End Role="Distrito" Type="Self.Distrito" Multiplicity="1" />
-          <End Role="Direccion_Persona" Type="Self.Direccion_Persona" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Distrito">
-              <PropertyRef Name="NombreProvincia" />
-              <PropertyRef Name="NombreCanton" />
-              <PropertyRef Name="NombreDistrito" />
-            </Principal>
-            <Dependent Role="Direccion_Persona">
-              <PropertyRef Name="Provincia" />
-              <PropertyRef Name="Canton" />
-              <PropertyRef Name="Distrito" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Dir_Per">
-          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
-          <End Role="Direccion_Persona" Type="Self.Direccion_Persona" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Persona">
-              <PropertyRef Name="Cedula" />
-            </Principal>
-            <Dependent Role="Direccion_Persona">
-              <PropertyRef Name="Cedula" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Dis_Can">
-          <End Role="Canton" Type="Self.Canton" Multiplicity="1" />
-          <End Role="Distrito" Type="Self.Distrito" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Canton">
-              <PropertyRef Name="NombreProvincia" />
-              <PropertyRef Name="NombreCanton" />
-            </Principal>
-            <Dependent Role="Distrito">
-              <PropertyRef Name="NombreProvincia" />
-              <PropertyRef Name="NombreCanton" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1142,10 +1052,10 @@
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
-          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Nombre1" Type="nvarchar" Mode="In" />
+          <Parameter Name="Nombre2" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido2" Type="nvarchar" Mode="In" />
-          <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SP_AgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
@@ -1218,6 +1128,11 @@
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
         </Function>
+        <Function Name="SP_GenerarContrasenaHash" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="nvarchar" Mode="In" />
+          <Parameter Name="contrasena" Type="nvarchar" Mode="In" />
+          <Parameter Name="contrasenaHash" Type="varbinary" Mode="InOut" />
+        </Function>
         <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -1247,11 +1162,11 @@
         <Function Name="SP_ModificarPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CedulaBusqueda" Type="varchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
-          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Nombre1" Type="nvarchar" Mode="In" />
+          <Parameter Name="Nombre2" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido2" Type="nvarchar" Mode="In" />
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
-          <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SP_ObtenerFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cod" Type="char" Mode="In" />
@@ -1273,15 +1188,12 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="Opiniometro_ModelStoreContainer">
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Canton" EntityType="Self.Canton" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ciclo_Lectivo" EntityType="Self.Ciclo_Lectivo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Conformado_For_Sec" EntityType="Self.Conformado_For_Sec" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Conformado_Item_Sec_Form" EntityType="Self.Conformado_Item_Sec_Form" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Direccion_Persona" EntityType="Self.Direccion_Persona" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Distrito" EntityType="Self.Distrito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empadronado" EntityType="Self.Empadronado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enfasis" EntityType="Self.Enfasis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Escalar" EntityType="Self.Escalar" Schema="dbo" store:Type="Tables" />
@@ -1302,7 +1214,6 @@
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Provincia" EntityType="Self.Provincia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responde" EntityType="Self.Responde" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Se_Encuentra_Curso_Enfasis" EntityType="Self.Se_Encuentra_Curso_Enfasis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
@@ -1318,10 +1229,6 @@
           <AssociationSet Name="FK_Adm_Per" Association="Self.FK_Adm_Per">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Administrativo" EntitySet="Administrativo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Can_Pro" Association="Self.FK_Can_Pro">
-            <End Role="Provincia" EntitySet="Provincia" />
-            <End Role="Canton" EntitySet="Canton" />
           </AssociationSet>
           <AssociationSet Name="FK_Car_Uni" Association="Self.FK_Car_Uni">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
@@ -1354,18 +1261,6 @@
           <AssociationSet Name="FK_Cur_Uni" Association="Self.FK_Cur_Uni">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
             <End Role="Curso" EntitySet="Curso" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Dir_Dis" Association="Self.FK_Dir_Dis">
-            <End Role="Distrito" EntitySet="Distrito" />
-            <End Role="Direccion_Persona" EntitySet="Direccion_Persona" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Dir_Per" Association="Self.FK_Dir_Per">
-            <End Role="Persona" EntitySet="Persona" />
-            <End Role="Direccion_Persona" EntitySet="Direccion_Persona" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Dis_Can" Association="Self.FK_Dis_Can">
-            <End Role="Canton" EntitySet="Canton" />
-            <End Role="Distrito" EntitySet="Distrito" />
           </AssociationSet>
           <AssociationSet Name="FK_Empadronado_Estudiante" Association="Self.FK_Empadronado_Estudiante">
             <End Role="Estudiante" EntitySet="Estudiante" />
@@ -1533,16 +1428,6 @@
           <Property Name="Tipo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Adm_Per" FromRole="Administrativo" ToRole="Persona" />
         </EntityType>
-        <EntityType Name="Canton">
-          <Key>
-            <PropertyRef Name="NombreProvincia" />
-            <PropertyRef Name="NombreCanton" />
-          </Key>
-          <Property Name="NombreProvincia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NombreCanton" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Provincia" Relationship="Self.FK_Can_Pro" FromRole="Canton" ToRole="Provincia" />
-          <NavigationProperty Name="Distrito" Relationship="Self.FK_Dis_Can" FromRole="Canton" ToRole="Distrito" />
-        </EntityType>
         <EntityType Name="Carrera">
           <Key>
             <PropertyRef Name="Sigla" />
@@ -1607,18 +1492,6 @@
           <NavigationProperty Name="Unidad_Academica" Relationship="Self.FK_Cur_Uni" FromRole="Curso" ToRole="Unidad_Academica" />
           <NavigationProperty Name="Grupo" Relationship="Self.FK_Gru_Cur" FromRole="Curso" ToRole="Grupo" />
           <NavigationProperty Name="Enfasis" Relationship="Self.Se_Encuentra_Curso_Enfasis" FromRole="Curso" ToRole="Enfasis" />
-        </EntityType>
-        <EntityType Name="Distrito">
-          <Key>
-            <PropertyRef Name="NombreProvincia" />
-            <PropertyRef Name="NombreCanton" />
-            <PropertyRef Name="NombreDistrito" />
-          </Key>
-          <Property Name="NombreProvincia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NombreCanton" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NombreDistrito" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Canton" Relationship="Self.FK_Dis_Can" FromRole="Distrito" ToRole="Canton" />
-          <NavigationProperty Name="Persona" Relationship="Self.Direccion_Persona" FromRole="Distrito" ToRole="Persona" />
         </EntityType>
         <EntityType Name="Empadronado">
           <Key>
@@ -1812,17 +1685,16 @@
             <PropertyRef Name="Cedula" />
           </Key>
           <Property Name="Cedula" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombre1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombre2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Apellido1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Apellido2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Administrativo" Relationship="Self.FK_Adm_Per" FromRole="Persona" ToRole="Administrativo" />
           <NavigationProperty Name="Estudiante" Relationship="Self.FK_Est_Per" FromRole="Persona" ToRole="Estudiante" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Per" FromRole="Persona" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK_Pro_Per" FromRole="Persona" ToRole="Profesor" />
           <NavigationProperty Name="TelefonoPersona" Relationship="Self.FK_Tel_Per" FromRole="Persona" ToRole="TelefonoPersona" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Usu_Per" FromRole="Persona" ToRole="Usuario" />
-          <NavigationProperty Name="Distrito" Relationship="Self.Direccion_Persona" FromRole="Persona" ToRole="Distrito" />
         </EntityType>
         <EntityType Name="Posee_Enfasis_Perfil_Permiso">
           <Key>
@@ -1847,13 +1719,6 @@
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Pro" FromRole="Profesor" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Pro_Per" FromRole="Profesor" ToRole="Persona" />
           <NavigationProperty Name="Grupo" Relationship="Self.Imparte" FromRole="Profesor" ToRole="Grupo" />
-        </EntityType>
-        <EntityType Name="Provincia">
-          <Key>
-            <PropertyRef Name="NombreProvincia" />
-          </Key>
-          <Property Name="NombreProvincia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Canton" Relationship="Self.FK_Can_Pro" FromRole="Provincia" ToRole="Canton" />
         </EntityType>
         <EntityType Name="Responde">
           <Key>
@@ -2008,32 +1873,6 @@
             </Principal>
             <Dependent Role="Administrativo">
               <PropertyRef Name="CedulaAdministrativo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Can_Pro">
-          <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
-          <End Role="Canton" Type="Self.Canton" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Provincia">
-              <PropertyRef Name="NombreProvincia" />
-            </Principal>
-            <Dependent Role="Canton">
-              <PropertyRef Name="NombreProvincia" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Dis_Can">
-          <End Role="Canton" Type="Self.Canton" Multiplicity="1" />
-          <End Role="Distrito" Type="Self.Distrito" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Canton">
-              <PropertyRef Name="NombreProvincia" />
-              <PropertyRef Name="NombreCanton" />
-            </Principal>
-            <Dependent Role="Distrito">
-              <PropertyRef Name="NombreProvincia" />
-              <PropertyRef Name="NombreCanton" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2563,10 +2402,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Direccion_Persona">
-          <End Role="Distrito" Type="Self.Distrito" Multiplicity="*" />
-          <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
-        </Association>
         <Association Name="Escuela">
           <End Role="Facultad" Type="Self.Facultad" Multiplicity="0..1" />
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="*" />
@@ -2581,14 +2416,12 @@
         </Association>
         <EntityContainer Name="Opiniometro_DatosEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" />
-          <EntitySet Name="Canton" EntityType="Self.Canton" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" />
           <EntitySet Name="Ciclo_Lectivo" EntityType="Self.Ciclo_Lectivo" />
           <EntitySet Name="Conformado_For_Sec" EntityType="Self.Conformado_For_Sec" />
           <EntitySet Name="Conformado_Item_Sec_Form" EntityType="Self.Conformado_Item_Sec_Form" />
           <EntitySet Name="Curso" EntityType="Self.Curso" />
-          <EntitySet Name="Distrito" EntityType="Self.Distrito" />
           <EntitySet Name="Empadronado" EntityType="Self.Empadronado" />
           <EntitySet Name="Enfasis" EntityType="Self.Enfasis" />
           <EntitySet Name="Escalar" EntityType="Self.Escalar" />
@@ -2607,7 +2440,6 @@
           <EntitySet Name="Persona" EntityType="Self.Persona" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" />
-          <EntitySet Name="Provincia" EntityType="Self.Provincia" />
           <EntitySet Name="Responde" EntityType="Self.Responde" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" />
           <EntitySet Name="Seleccion_Multiple" EntityType="Self.Seleccion_Multiple" />
@@ -2622,14 +2454,6 @@
           <AssociationSet Name="FK_Adm_Per" Association="Self.FK_Adm_Per">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Administrativo" EntitySet="Administrativo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Can_Pro" Association="Self.FK_Can_Pro">
-            <End Role="Provincia" EntitySet="Provincia" />
-            <End Role="Canton" EntitySet="Canton" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Dis_Can" Association="Self.FK_Dis_Can">
-            <End Role="Canton" EntitySet="Canton" />
-            <End Role="Distrito" EntitySet="Distrito" />
           </AssociationSet>
           <AssociationSet Name="FK_Car_Uni" Association="Self.FK_Car_Uni">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
@@ -2791,10 +2615,6 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
           </AssociationSet>
-          <AssociationSet Name="Direccion_Persona" Association="Self.Direccion_Persona">
-            <End Role="Distrito" EntitySet="Distrito" />
-            <End Role="Persona" EntitySet="Persona" />
-          </AssociationSet>
           <AssociationSet Name="Escuela" Association="Self.Escuela">
             <End Role="Facultad" EntitySet="Facultad" />
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
@@ -2816,7 +2636,7 @@
           <FunctionImport Name="CursosSegunSemestre" ReturnType="Collection(Opiniometro_Model.CursosSegunSemestre_Result)">
             <Parameter Name="semestre" Mode="In" Type="Byte" />
           </FunctionImport>
-          <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_Model.DatosEstudiante_Result)">
+          <FunctionImport Name="DatosEstudiante">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_Model.MostrarEstudiantes_Result)" />
@@ -2844,10 +2664,10 @@
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Cedula" Mode="In" Type="String" />
-            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Nombre1" Mode="In" Type="String" />
+            <Parameter Name="Nombre2" Mode="In" Type="String" />
             <Parameter Name="Apellido1" Mode="In" Type="String" />
             <Parameter Name="Apellido2" Mode="In" Type="String" />
-            <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_AgregarUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -2890,7 +2710,7 @@
             <Parameter Name="version" Mode="In" Type="Int32" />
             <Parameter Name="definition" Mode="In" Type="Binary" />
           </FunctionImport>
-          <FunctionImport Name="SP_DevolverObservacionesPorGrupo" ReturnType="Collection(Opiniometro_Model.SP_DevolverObservacionesPorGrupo_Result)">
+          <FunctionImport Name="SP_DevolverObservacionesPorGrupo">
             <Parameter Name="codigoFormulario" Mode="In" Type="String" />
             <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
             <Parameter Name="annoGrupo" Mode="In" Type="Int16" />
@@ -2919,6 +2739,11 @@
           <FunctionImport Name="SP_ExistenciaCorreo">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GenerarContrasenaHash">
+            <Parameter Name="id" Mode="In" Type="String" />
+            <Parameter Name="contrasena" Mode="In" Type="String" />
+            <Parameter Name="contrasenaHash" Mode="InOut" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Opiniometro_Model.sp_helpdiagramdefinition_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -2949,11 +2774,11 @@
           <FunctionImport Name="SP_ModificarPersona">
             <Parameter Name="CedulaBusqueda" Mode="In" Type="String" />
             <Parameter Name="Cedula" Mode="In" Type="String" />
-            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Nombre1" Mode="In" Type="String" />
+            <Parameter Name="Nombre2" Mode="In" Type="String" />
             <Parameter Name="Apellido1" Mode="In" Type="String" />
             <Parameter Name="Apellido2" Mode="In" Type="String" />
             <Parameter Name="Correo" Mode="In" Type="String" />
-            <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ObtenerFormulario" ReturnType="Collection(String)">
             <Parameter Name="cod" Mode="In" Type="String" />
@@ -2992,13 +2817,8 @@
           <Property Type="Byte" Name="Tipo" Nullable="false" />
           <Property Type="String" Name="CodigoUnidad" Nullable="false" MaxLength="10" />
         </ComplexType>
-        <ComplexType Name="DatosEstudiante_Result">
-          <Property Type="String" Name="Nombre_Completo" Nullable="false" MaxLength="152" />
-          <Property Type="String" Name="Carne" Nullable="false" MaxLength="6" />
-          <Property Type="String" Name="Cedula" Nullable="false" MaxLength="9" />
-        </ComplexType>
         <ComplexType Name="MostrarEstudiantes_Result">
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Nombre1" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Apellido1" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Apellido2" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Carne" Nullable="false" MaxLength="6" />
@@ -3010,12 +2830,6 @@
         <ComplexType Name="SP_ContarRespuestasPorGrupo_Result">
           <Property Type="String" Name="Respuesta" Nullable="false" MaxLength="500" />
           <Property Type="Int32" Name="cntResp" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SP_DevolverObservacionesPorGrupo_Result">
-          <Property Type="String" Name="Observacion" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Apellido1" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Apellido2" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -3044,14 +2858,6 @@
               <MappingFragment StoreEntitySet="Administrativo">
                 <ScalarProperty Name="CedulaAdministrativo" ColumnName="CedulaAdministrativo" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Canton">
-            <EntityTypeMapping TypeName="Opiniometro_Model.Canton">
-              <MappingFragment StoreEntitySet="Canton">
-                <ScalarProperty Name="NombreProvincia" ColumnName="NombreProvincia" />
-                <ScalarProperty Name="NombreCanton" ColumnName="NombreCanton" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3107,15 +2913,6 @@
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
                 <ScalarProperty Name="CodigoUnidad" ColumnName="CodigoUnidad" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Distrito">
-            <EntityTypeMapping TypeName="Opiniometro_Model.Distrito">
-              <MappingFragment StoreEntitySet="Distrito">
-                <ScalarProperty Name="NombreProvincia" ColumnName="NombreProvincia" />
-                <ScalarProperty Name="NombreCanton" ColumnName="NombreCanton" />
-                <ScalarProperty Name="NombreDistrito" ColumnName="NombreDistrito" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3264,10 +3061,10 @@
             <EntityTypeMapping TypeName="Opiniometro_Model.Persona">
               <MappingFragment StoreEntitySet="Persona">
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
+                <ScalarProperty Name="Nombre2" ColumnName="Nombre2" />
                 <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
                 <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3285,13 +3082,6 @@
             <EntityTypeMapping TypeName="Opiniometro_Model.Profesor">
               <MappingFragment StoreEntitySet="Profesor">
                 <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Provincia">
-            <EntityTypeMapping TypeName="Opiniometro_Model.Provincia">
-              <MappingFragment StoreEntitySet="Provincia">
-                <ScalarProperty Name="NombreProvincia" ColumnName="NombreProvincia" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3406,16 +3196,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Direccion_Persona" TypeName="Opiniometro_Model.Direccion_Persona" StoreEntitySet="Direccion_Persona">
-            <EndProperty Name="Distrito">
-              <ScalarProperty Name="NombreProvincia" ColumnName="Provincia" />
-              <ScalarProperty Name="NombreCanton" ColumnName="Canton" />
-              <ScalarProperty Name="NombreDistrito" ColumnName="Distrito" />
-            </EndProperty>
-            <EndProperty Name="Persona">
-              <ScalarProperty Name="Cedula" ColumnName="Cedula" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="Escuela" TypeName="Opiniometro_Model.Escuela" StoreEntitySet="Escuela">
             <EndProperty Name="Facultad">
               <ScalarProperty Name="CodigoUnidadAcademica" ColumnName="CodigoFacultad" />
@@ -3474,19 +3254,11 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_Model.Store.DatosEstudiante">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_Model.DatosEstudiante_Result">
-                <ScalarProperty Name="Nombre_Completo" ColumnName="Nombre Completo" />
-                <ScalarProperty Name="Carne" ColumnName="Carne" />
-                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_Model.Store.DatosEstudiante" />
           <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_Model.Store.MostrarEstudiantes">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Opiniometro_Model.MostrarEstudiantes_Result">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
                 <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
                 <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
                 <ScalarProperty Name="Carne" ColumnName="Carne" />
@@ -3521,20 +3293,12 @@
           <FunctionImportMapping FunctionImportName="SP_CopiarSeccion" FunctionName="Opiniometro_Model.Store.SP_CopiarSeccion" />
           <FunctionImportMapping FunctionImportName="SP_CrearPerfil" FunctionName="Opiniometro_Model.Store.SP_CrearPerfil" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Opiniometro_Model.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_Model.Store.SP_DevolverObservacionesPorGrupo">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_Model.SP_DevolverObservacionesPorGrupo_Result">
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
-                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_Model.Store.SP_DevolverObservacionesPorGrupo" />
           <FunctionImportMapping FunctionImportName="SP_DevolverRespuestasPorGrupo" FunctionName="Opiniometro_Model.Store.SP_DevolverRespuestasPorGrupo" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Opiniometro_Model.Store.sp_dropdiagram" />
           <FunctionImportMapping FunctionImportName="SP_EliminarSeccion" FunctionName="Opiniometro_Model.Store.SP_EliminarSeccion" />
           <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_Model.Store.SP_ExistenciaCorreo" />
+          <FunctionImportMapping FunctionImportName="SP_GenerarContrasenaHash" FunctionName="Opiniometro_Model.Store.SP_GenerarContrasenaHash" />
           <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Opiniometro_Model.Store.sp_helpdiagramdefinition">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Opiniometro_Model.sp_helpdiagramdefinition_Result">
