@@ -12,19 +12,18 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Canton
+    public partial class Seleccion_Multiple
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Canton()
+        public Seleccion_Multiple()
         {
-            this.Distrito = new HashSet<Distrito>();
+            this.Opciones_De_Respuestas_Seleccion_Multiple = new HashSet<Opciones_De_Respuestas_Seleccion_Multiple>();
         }
     
-        public string NombreProvincia { get; set; }
-        public string NombreCanton { get; set; }
+        public string ItemId { get; set; }
     
-        public virtual Provincia Provincia { get; set; }
+        public virtual Item Item { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Distrito> Distrito { get; set; }
+        public virtual ICollection<Opciones_De_Respuestas_Seleccion_Multiple> Opciones_De_Respuestas_Seleccion_Multiple { get; set; }
     }
 }
