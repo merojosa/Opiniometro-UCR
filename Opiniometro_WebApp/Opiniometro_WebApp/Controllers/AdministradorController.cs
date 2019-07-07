@@ -301,7 +301,7 @@ namespace Opiniometro_WebApp.Controllers
                 valido = false;
             }
 
-            if (!entradasFilaLeida[7].IsEmpty() && !Regex.IsMatch(entradasFilaLeida[7], @"[A-Z]{1}[\d]{5}"))
+            if (!entradasFilaLeida[7].IsEmpty() && !Regex.IsMatch(entradasFilaLeida[7], @"[a-zA-Z]{1}[\d]{5}", RegexOptions.IgnoreCase))
             {
                 filaInvalida["error"] +=
                     "El carne debe tener una letra de la A-Z en mayúscula seguido de cinco dígitos entre 0-9\n";
