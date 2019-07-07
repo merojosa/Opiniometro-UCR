@@ -771,7 +771,7 @@ CREATE PROCEDURE SP_DevolverObservacionesPorGrupo
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT e.Observacion, a.Nombre, a.Apellido1, a.Apellido2
+	SELECT e.Observacion, a.Nombre1, a.Apellido1, a.Apellido2
 	FROM Responde as e, Persona as a
 	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId AND e.CedulaPersona = a.Cedula
 END

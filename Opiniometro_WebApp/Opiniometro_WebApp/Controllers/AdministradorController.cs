@@ -22,6 +22,7 @@ using System.Security.Cryptography;
 using Opiniometro_WebApp.Models;
 using System.Text;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Web.WebPages;
 
 //using Microsoft.SqlServer.Dts;
@@ -264,11 +265,56 @@ namespace Opiniometro_WebApp.Controllers
 
         private bool ValidacionContenido(DataRow filaInvalida, string[] entradasFilaLeida)
         {
-            bool valido = false;
-            for (int i = 0; i < entradasFilaLeida.Length; ++i)
+            bool valido = true;
+
+            if (!Regex.IsMatch(entradasFilaLeida[0], @"[0-9]+"))
             {
-                if(System.Text.RegularExpressions.Regex.IsMatch(entradasFilaLeida))
+                filaInvalida["error"] += "El numero de cédula solo debe contener dígitos entre 0-9\n";
+                valido = false;
             }
+
+            if (!Regex.IsMatch(entradasFilaLeida[1], @"Estudiante|Profesor", RegexOptions.IgnoreCase))
+            {
+                filaInvalida["error"] += "El perfil debe ser Estudiante o Profesor\n";
+                valido = false;
+            }
+
+            for (int i = 2; i < 6; ++i)
+            {
+                if (!Regex.IsMatch(entradasFilaLeida[i], @"[a-zA-Z]"))
+                {
+                    string nombreCampo = String.Empty;
+                    
+                    if(i == 2) { nombreCampo = "primer nombre";}
+                        else if(i == 3) { nombreCampo = "segundo nombre";}
+                            else if(i == 4) { nombreCampo = "primer apellido";}
+                                else if(i == 5) { nombreCampo = "segundo apellido";}
+
+                    filaInvalida["error"] += "El " + nombreCampo + " solo debe contener caracteres que sean letras\n";
+                }
+            }
+
+            if (!Regex.IsMatch(entradasFilaLeida[6], @"([\w]+\.)([\w]+)(@ucr.ac.cr)"))
+            {
+                filaInvalida["error"] +=
+                    "Direccion de correo debe tener el formato de las direcciones emitidas por la UCR\n"; 
+                valido = false;
+            }
+
+            if (!entradasFilaLeida[7].IsEmpty() && !Regex.IsMatch(entradasFilaLeida[7], @"[A-Z]{1}[\d]{5}"))
+            {
+                filaInvalida["error"] +=
+                    "El carne debe tener una letra de la A-Z en mayúscula seguido de cinco dígitos entre 0-9\n";
+                valido = false;
+            }
+
+            if (!Regex.IsMatch(entradasFilaLeida[9], @"[\d]{1,3}"))
+            {
+                filaInvalida["error"] += "El numero del énfasis solo debe contener dígitos entre 0-9\n";
+                valido = false;
+            }
+
+            return valido;
         }
 
         private bool ValidacionLongitud(DataRow filaInvalida, string[] entradasFilaLeida)
@@ -287,7 +333,7 @@ namespace Opiniometro_WebApp.Controllers
             }
             else
             {
-
+                valido = true;
                 for (int i = 0; i < entradasFilaLeida.Length; i++)
                 {
 
@@ -295,23 +341,20 @@ namespace Opiniometro_WebApp.Controllers
                     {
                         case 0: //cedula
                         {
-                            if (entradasFilaLeida[0].IsEmpty())
+                            if (entradasFilaLeida[i].IsEmpty() || entradasFilaLeida[i].Length != 9)
                             {
-                                filaInvalida["error"] += "El numero de cédula es un campo obligatorio\n";
+                                filaInvalida["error"] += "El numero de cédula es un campo obligatorio y debe contener nueve caracteres\n";
+                                valido = false;
                             }
-                            else if (entradasFilaLeida[0].Length != 9)
-                            {
-                                filaInvalida["error"] += "El numero de cedula debe contener nueve caracteres\n";
-                            }
-
                         }
                             break;
                         case 1: //perfil
                         {
-                            if (entradasFilaLeida[1].IsEmpty() || entradasFilaLeida[1].Length > 30)
+                            if (entradasFilaLeida[i].IsEmpty() || entradasFilaLeida[i].Length > 30)
                             {
                                 filaInvalida["error"] +=
-                                    "El nombre de un perfil debe contener al menos 1 caracter y no debe exceder de 30 caracteres\n";
+                                    "El nombre de un perfil es un campo obligatorio y debe contener al menos 1 caracter y no debe exceder de 30 caracteres\n";
+                                valido = false;
                             }
                         }
                             break;
@@ -320,28 +363,29 @@ namespace Opiniometro_WebApp.Controllers
                         case 5: //apellido2
                         case 6: //correo institucional
                         {
-                            string nombreCampo = String.Empty;
-                            if (i == 2)
-                            {
-                                nombreCampo = "primer nombre";
-                            }
-                            else if (i == 4)
-                            {
-                                nombreCampo = "primer apellido";
-                            }
-                            else if (i == 5)
-                            {
-                                nombreCampo = "segundo apellido";
-                            }
-                            else if (i == 6)
-                            {
-                                nombreCampo = "correo institucional";
-                            }
-
                             if (entradasFilaLeida[i].IsEmpty() || entradasFilaLeida[i].Length > 50)
                             {
+                                string nombreCampo = String.Empty;
+                                if (i == 2)
+                                {
+                                    nombreCampo = "primer nombre";
+                                }
+                                else if (i == 4)
+                                {
+                                    nombreCampo = "primer apellido";
+                                }
+                                else if (i == 5)
+                                {
+                                    nombreCampo = "segundo apellido";
+                                }
+                                else if (i == 6)
+                                {
+                                    nombreCampo = "correo institucional";
+                                }
+
                                 filaInvalida["error"] += "El " + nombreCampo +
                                                          " es un campo obligatorio y debe contener al menos un caracter y no debe exceder de 50 caracteres\n";
+                                valido = false;
                             }
                         }
                             break;
@@ -353,35 +397,39 @@ namespace Opiniometro_WebApp.Controllers
                                 if (i == 3 && entradasFilaLeida[i].Length > 50)
                                 {
                                     filaInvalida["error"] += "El segundo nombre no debe exceder de 50 caracteres\n";
+                                    valido = false;
                                 }
-                                else if (i == 7 && entradasFilaLeida.Length != 6)
+                                else if (i == 7 && entradasFilaLeida[i].Length != 6)
                                 {
                                     filaInvalida["error"] += "El carne debe contener seis caracteres\n";
+                                    valido = false;
                                 }
                             }
                         }
                             break;
-                        case 8:
+                        case 8://sigla carrera
                         {
                             if (entradasFilaLeida[i].Length > 10)
                             {
                                 filaInvalida["error"] += "La sigla de carrera no debe exceder de diez caracteres\n";
+                                valido = false;
                             }
                         }
                             break;
-                        case 9:
+                        case 9://numero enfasis
                         {
-                            if (entradasFilaLeida[i].IsEmpty() || entradasFilaLeida.Length > 3)
+                            if (entradasFilaLeida[i].IsEmpty() || entradasFilaLeida[i].Length > 3)
                             {
                                 filaInvalida["error"] +=
                                     "El numero de enfasis de contener al menos un caracter y no debe exceder de tres caracteres\n";
+                                valido = false;
                             }
                         }
                             break;
                     }
                 }
 
-                valido = true;
+                
             }
 
             return valido;
@@ -394,12 +442,9 @@ namespace Opiniometro_WebApp.Controllers
             foreach (DataColumn columna in columnasConError)
             {
                 filaInvalida["error"] += tupla.GetColumnError(columna.ColumnName);
-                //filaInvalida["error"] += "\n";
             }
 
-            
             filaInvalida["fila"] = numeroFilasLeidas;
-            
             filaInvalida["cedula"] = tupla["cedula"];
             filaInvalida["perfil"] = tupla["perfil"];
             filaInvalida["carne"] = tupla["carne"];
@@ -626,7 +671,15 @@ namespace Opiniometro_WebApp.Controllers
             filaNueva["CorreoInstitucional"] = filaAInsertar["CorreoInstitucional"];
             filaNueva["NumeroEnfasis"] = filaAInsertar["NumeroEnfasis"];
             filaNueva["SiglaCarrera"] = filaAInsertar["SiglaCarrera"];
-            filaNueva["NombrePerfil"] = filaAInsertar["Perfil"];
+            if (Regex.IsMatch(filaAInsertar["Perfil"].ToString(), @"Estudiante", RegexOptions.IgnoreCase))
+            {
+                filaNueva["NombrePerfil"] = "Estudiante";
+            }
+            else if (Regex.IsMatch(filaAInsertar["Perfil"].ToString(), @"Profesor", RegexOptions.IgnoreCase))
+            {
+                filaNueva["NombrePerfil"] = "Profesor";
+            }
+             
             tieneUsuarioPerfilEnfasisBD.Rows.Add(filaNueva);
             tieneUsuarioPerfilEnfasisBD.AcceptChanges();
         }
@@ -861,15 +914,7 @@ namespace Opiniometro_WebApp.Controllers
 
                 foreach(PropertyInfo propiedad in propiedadesDeTipo)
                 {
-                    /*DataColumn columnaNueva = new DataColumn();
-                    columnaNueva.ColumnName = propiedad.Name;
-                    columnaNueva.DataType =
-                        Nullable.GetUnderlyingType(propiedad.PropertyType) ?? propiedad.PropertyType;
-                    PropertyCollection pc = columnaNueva.ExtendedProperties;
-                    propiedad.GetCustomAttributes()*/
-                    
                     dt.Columns.Add(propiedad.Name, Nullable.GetUnderlyingType(propiedad.PropertyType) ?? propiedad.PropertyType);
-                    
                 }
             }
             return dt;
