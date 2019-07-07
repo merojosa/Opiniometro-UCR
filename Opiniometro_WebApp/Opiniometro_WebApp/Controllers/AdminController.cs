@@ -40,7 +40,7 @@ namespace Opiniometro_WebApp.Controllers
                 var query = from p in listaPersonas
                             join u in listaUsuarios on p.Cedula equals u.Cedula into table1
                             from u in table1
-                            where p.Nombre.Contains(nom)
+                            where p.Nombre1.Contains(nom)
                             select new ViewModelAdmin { persona = p, usuario = u };
                 return View(query);
             }

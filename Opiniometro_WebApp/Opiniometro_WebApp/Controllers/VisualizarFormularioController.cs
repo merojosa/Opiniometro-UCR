@@ -260,7 +260,7 @@ namespace Opiniometro_WebApp.Controllers
             foreach (var itemO in result)
             {
                 obs.Add(itemO.Observacion);
-                nom.Add(itemO.Nombre);
+                nom.Add(itemO.Nombre1);
                 ap1.Add(itemO.Apellido1);
                 ap2.Add(itemO.Apellido2);
             }
