@@ -17,7 +17,7 @@
 
     @if (IdentidadManager.usuario_loggeado() == true)
     {
-    var permisos_usuario = (IdentidadManager)Session[IdentidadManager.obtener_correo_actual()];
+        var permisos_usuario = (IdentidadManager)Session[IdentidadManager.obtener_correo_actual()];
 
         <nav class="navbar navbar-opiniometro-ternaria navbar-fixed-top" style="margin-top:90px; z-index:999">
             <div class="container-fluid">
@@ -31,8 +31,15 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Perfiles<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Cambiar perfil actual", "Cambiar", "Perfil")</li>
-                            <li class="disabled"><a id="link_deshabilitado">Asignar/Revocar permisos</a></li>
                             @{
+                                if (permisos_usuario.verificar_permiso(IdPermiso.ASIGNAR_REVOCAR_PERMISOS))
+                                {
+                                    <li>@Html.ActionLink("Asignar/Revocar permisos", "SeleccionarPermisos", "SeleccionPermisos")</li>
+                                }
+                                else
+                                {
+                                    <li class="disabled"><a id="link_deshabilitado">Asignar/Revocar permisos</a></li>
+                                }
                                 if (permisos_usuario.verificar_permiso(IdPermiso.VER_INFORMACION_PERSONAS))
                                 {
                                     <li>@Html.ActionLink("Ver perfiles", "VerPerfiles", "Perfil")</li>
@@ -91,8 +98,9 @@
                                     <li>@Html.ActionLink("Cargar Archivo", "CargarArchivo", "Administrador")</li>
                                 }
                                 else
-                                {
-                                    <li class="disabled"><a id="link_deshabilitado">Cargar Archivo</a></li>
+                                {                                    
+                                    <li>@Html.ActionLink("Cargar Archivo", "CargarArchivo", "Administrador")</li>
+                                    <!-- <li class="disabled"><a>Cargar Archivo</a></li> -->
                                 }
                             }
                         </ul>
@@ -110,7 +118,7 @@
                                     <li class="disabled"><a id="link_deshabilitado">Insertar formulario</a></li>
                                 }
 
-                                if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.ASIGNAR_FORMUALRIO))
+                                if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.ASIGNAR_FORMULARIO))
                                 {
                                     <li>@Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")</li>
                                 }
@@ -150,11 +158,11 @@
                     </li>
                 </ul>
 
-            <ul class="nav navbar-nav navbar-right">
-                <li style="margin-right:90px">@Html.ActionLink("Cerrar sesión", "CerrarSesion", "Auth")</li>
-            </ul>
-        </div>
-    </nav>
+                <ul class="nav navbar-nav navbar-right">
+                    <li style="margin-right:90px">@Html.ActionLink("Cerrar sesión", "CerrarSesion", "Auth")</li>
+                </ul>
+            </div>
+        </nav>
     }
 
     <div class="container-fluid" style="margin-left:100px">
@@ -168,5 +176,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    @Html.Raw(TempData["msg"])
 </body>
 </html>

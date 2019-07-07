@@ -10,6 +10,10 @@ using System.Threading;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System.Net;
+using System.Data.Entity.Core.Objects;
+using System.Data.SqlClient;
+using System.Data.Entity;
+using System.Data;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -47,7 +51,6 @@ namespace Opiniometro_WebApp.Controllers
         {
             if (!String.IsNullOrEmpty(nom))
             {
-       
                 return View(db.Perfil.Where(m=>m.Nombre.Contains(nom)).ToList());
             }
             else {
@@ -158,14 +161,17 @@ namespace Opiniometro_WebApp.Controllers
         // POST: CRUDPERFILES/Delete/5
         [HttpPost, ActionName("ConfirmarBorrado")]
         [ValidateAntiForgeryToken]
-        public ActionResult BorrarConfirmado(string nombre_perfil)
+        public ActionResult BorrarConfirmado(string id)
         {
             // No se puede eliminar el perfil administrador.
-            if(nombre_perfil != "Administrador")
+            if(id != "Administrador")
             {
-                Perfil perfil = db.Perfil.Find(nombre_perfil);
+                Perfil perfil = db.Perfil.Find(id);
                 db.Perfil.Remove(perfil);
                 db.SaveChanges();
+                
+                // Desplegar alert hasta que se cargue la pagina por completo.
+                TempData["msg"] = "<script> $(document).ready(function(){ alert('El perfil se ha borrado exitosamente.');}); </script>";
                 return RedirectToAction("Borrar");
             }
             else
@@ -194,9 +200,25 @@ namespace Opiniometro_WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Perfil.Add(perfil);
-                db.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                // Parametros
+                var Nombre = new SqlParameter("@Nombre", perfil.Nombre);
+                var Descripcion = new SqlParameter("@Descripcion", perfil.Descripcion);
+                var Numero_Error = new SqlParameter("@Numero_Error", 0);
+                Numero_Error.Direction = ParameterDirection.Output;
+                Numero_Error.SqlDbType = SqlDbType.Int;
+
+                db.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction,
+                    "EXEC SP_CrearPerfil @Nombre, @Descripcion, @Numero_Error OUT", Nombre, Descripcion, Numero_Error);
+
+                if ((int)Numero_Error.Value == 0)
+                {
+                    TempData["msg"] = "<script> $(document).ready(function(){ alert('El perfil se ha creado exitosamente.');}); </script>";
+                    return RedirectToAction("VerPerfiles");
+                }
+                else
+                {
+                    ModelState.AddModelError("ErrorCrearPerfil", "Error al crear perfil");
+                }
             }
 
             return View(perfil);
@@ -205,7 +227,6 @@ namespace Opiniometro_WebApp.Controllers
         public JsonResult IsNombrePerfilAvailable(string Nombre)
         {
             return Json(!db.Perfil.Any(perfil => perfil.Nombre == Nombre), JsonRequestBehavior.AllowGet);
-
         }
     }
 }

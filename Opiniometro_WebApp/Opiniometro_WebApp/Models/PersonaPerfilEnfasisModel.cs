@@ -59,6 +59,7 @@
         public List<Usuario> listaUsuarios { get; set; }
         
         public Persona Persona { get; set; }
+        public string viejaCedula { get; set; }
         public Usuario usuario { get; set; }
     }
 }

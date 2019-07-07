@@ -12,17 +12,14 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Provincia
+    public partial class Escalar
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Provincia()
-        {
-            this.Canton = new HashSet<Canton>();
-        }
+        public string ItemId { get; set; }
+        public short Inicio { get; set; }
+        public short Fin { get; set; }
+        public short Incremento { get; set; }
+        public Nullable<bool> IsaEstrella { get; set; }
     
-        public string NombreProvincia { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Canton> Canton { get; set; }
+        public virtual Item Item { get; set; }
     }
 }
