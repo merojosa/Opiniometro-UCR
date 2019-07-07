@@ -106,6 +106,9 @@
     <Build Include="Provincia.sql" />
     <Build Include="Direccion_Persona.sql" />
     <Build Include="SP_ObtenerFormulario.sql" />
+    <Build Include="Seleccion_Multiple.sql" />
+    <Build Include="Opciones_De_Respuestas_Seleccion_Unica.sql" />
+    <Build Include="Escalar.sql" />
     <Build Include="AlmacenarRespuesta.sql" />
     <Build Include="AlmacenarVariasRespuestas.sql" />
   </ItemGroup>

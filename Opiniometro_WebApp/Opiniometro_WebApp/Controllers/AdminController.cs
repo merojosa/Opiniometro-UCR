@@ -98,7 +98,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 using (db)
                 {
-                    db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre, per.Persona.Apellido1, per.Persona.Apellido2, per.usuario.CorreoInstitucional, per.Persona.Direccion);
+                    //db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre, per.Persona.Apellido1, per.Persona.Apellido2, per.usuario.CorreoInstitucional, per.Persona.Direccion);
                     return RedirectToAction("VerPersonas");
                 }
             }
@@ -132,7 +132,7 @@ namespace Opiniometro_WebApp.Controllers
                 using (db)
                 {
                     string contrasenna_generada = GenerarContrasenna(10);
-                    db.SP_AgregarPersonaUsuario(per.usuario.CorreoInstitucional, contrasenna_generada, per.persona.Cedula, per.persona.Nombre, per.persona.Apellido1, per.persona.Apellido2, per.persona.Direccion);             
+                    //db.SP_AgregarPersonaUsuario(per.usuario.CorreoInstitucional, contrasenna_generada, per.persona.Cedula, per.persona.Nombre, per.persona.Apellido1, per.persona.Apellido2, per.persona.Direccion);             
 
                     string contenido =
                      "<p>Se le ha creado un usuario en Opiniometro@UCR.</p>" +

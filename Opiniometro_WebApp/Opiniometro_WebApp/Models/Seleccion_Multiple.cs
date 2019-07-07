@@ -12,23 +12,18 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class Seleccion_Multiple
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuario()
+        public Seleccion_Multiple()
         {
-            this.Tiene_Usuario_Perfil_Enfasis = new HashSet<Tiene_Usuario_Perfil_Enfasis>();
+            this.Opciones_De_Respuestas_Seleccion_Multiple = new HashSet<Opciones_De_Respuestas_Seleccion_Multiple>();
         }
     
-        public string CorreoInstitucional { get; set; }
-        public string Contrasena { get; set; }
-        public bool Activo { get; set; }
-        public string Cedula { get; set; }
-        public System.Guid Id { get; set; }
-        public Nullable<bool> RecuperarContrasenna { get; set; }
+        public string ItemId { get; set; }
     
-        public virtual Persona Persona { get; set; }
+        public virtual Item Item { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tiene_Usuario_Perfil_Enfasis> Tiene_Usuario_Perfil_Enfasis { get; set; }
+        public virtual ICollection<Opciones_De_Respuestas_Seleccion_Multiple> Opciones_De_Respuestas_Seleccion_Multiple { get; set; }
     }
 }

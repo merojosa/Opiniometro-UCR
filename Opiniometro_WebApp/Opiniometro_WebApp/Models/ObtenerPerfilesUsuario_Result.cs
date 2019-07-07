@@ -10,16 +10,10 @@
 namespace Opiniometro_WebApp.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Imparte
+    public partial class ObtenerPerfilesUsuario_Result
     {
-        public string CedulaProfesor { get; set; }
-        public byte Numero { get; set; }
-        public string Sigla { get; set; }
-        public string Anno { get; set; }
-        public byte Semestre { get; set; }
-    
-        public virtual Profesor Profesor { get; set; }
+        public string SiglaCarrera { get; set; }
+        public byte NumeroEnfasis { get; set; }
     }
 }
