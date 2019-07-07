@@ -499,6 +499,13 @@ WHERE C.Sigla IN (SELECT G.SiglaCurso
 END
 GO
 
+-- Vista (SQL) de la tabla Imparte, para que pueda ser creada como entidad en el model
+CREATE VIEW Imparte_View
+AS
+SELECT *
+FROM Imparte
+GO
+
 
 --Script C.X. Solutions
 
