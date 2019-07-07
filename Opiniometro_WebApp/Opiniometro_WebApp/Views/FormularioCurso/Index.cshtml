@@ -15,113 +15,108 @@
 <body>
     @*contadores usados para darle un id unico a los div que contiene el tipo de respuesta*@
     <script>
-      var  contTextoLibre = 0;
-      var contSelUnica = 0;
-      var  contSiNo = 0;
-      var  contSelMult = 0;
-      var  contEscalar = 0;
-      var contEstrella = 0;
+        var contTextoLibre = 0;
+        var contSelUnica = 0;
+        var contSiNo = 0;
+        var contSelMult = 0;
+        var contEscalar = 0;
+        var contEstrella = 0;
     </script>
 
-    <table class="table table-responsive" align="center" border="1">
-        <tr id="pyr" bgcolor="#FFFFFF" align="center">
-            <td><b><font color="#000000"><h3><b>Formulario</b> </h3></font></b></td>
-        </tr>
-        <tr bgcolor="#FFFFFF" align="left">
-            <td>
-                <table class="table table-responsive" border="1" >
-                   <tr bgcolor="#FFFFFF" >
-                        <td>
-
-    @foreach (var dato in Model.preguntasFormulario)
+    @foreach (var seccion in Model.Secciones)
     {
-        if (dato.tipoPregunta == 1)
+        <label>@seccion.Titulo</label><br>
+        foreach (var pregunta in seccion.PreguntasFormulario)
         {
-            <div id="preguntaTextoLibre" class="pregunta">
-            </div>
+            <label>&nbsp @pregunta.item (tipo: @pregunta.tipoPregunta)</label><br>
 
+            if (pregunta.Opciones != null) //IMPORTANTE
+            {
+                foreach (var opcion in pregunta.Opciones)
+                {
+                    <label>&nbsp &nbsp @opcion</label><br>
+                }
+            }
 
-            <script type="text/javascript">
-                crearElemento("campoTexto", contTextoLibre, @Html.Raw(Json.Encode(dato.item)) , "preguntaTextoLibre");
-                insertNueLinea("campoTexto".concat(contTextoLibre));
-                TextoLibre(contTextoLibre);
-                lineaHor("campoTexto".concat(contTextoLibre));
-                contTextoLibre++;
-            </script>
         }
 
-        if (dato.tipoPregunta == 2)
+    }
+
+    @*
+        <table class="table table-responsive" align="center" border="1">
+            <tr id="pyr" bgcolor="#FFFFFF" align="center">
+                <td><b><font color="#000000"><h3><b>Formulario</b> </h3></font></b></td>
+            </tr>
+            <tr bgcolor="#FFFFFF" align="left">
+                <td>
+                    <table class="table table-responsive" border="1" >
+                       <tr bgcolor="#FFFFFF" >
+                            <td>
+
+        @foreach (var dato in Model.preguntasFormulario)
         {
+            if (dato.tipoPregunta == 1)
+            {
+                <div id="preguntaTextoLibre" class="pregunta">
+                </div>
 
-            <script>
-                crearElemento("selUnica", contSelUnica, @Html.Raw(Json.Encode(dato.item)), "preguntaSelUnica");
-                insertNueLinea("selUnica".concat(contSelUnica));
-                //seleccionUnica(contSelUnica/*, listaOpciones*/ );
-                lineaHor("selUnica".concat(contSelUnica));
-                contSelUnica++;
-            </script>
 
-            <div id="preguntaSelUnica" class="pregunta">
-                @Html.Partial("SeleccionUnica", dato.Opciones)
-                @*<div style="display:none;"></div>
-                    @Html.Action("ObtenerOpcionesSelUnica", "FormularioCurso", new { id = dato.itemId, texto = dato.item, observacion = dato.tieneObservacion, tipo = dato.tipoPregunta })*@
-            </div>
+                <script type="text/javascript">
+                    crearElemento("campoTexto", contTextoLibre, @Html.Raw(Json.Encode(dato.item)) , "preguntaTextoLibre");
+                    insertNueLinea("campoTexto".concat(contTextoLibre));
+                    TextoLibre(contTextoLibre);
+                    lineaHor("campoTexto".concat(contTextoLibre));
+                    contTextoLibre++;
+                </script>
+            }
 
-            //Campo de observacion de la opcion de seleccion unica
-            @*if (dato.tieneObservacion == true) {
-                    <script>
-                        TextoLibre();
-                    </script>
-                }*@
+            if (dato.tipoPregunta == 2)
+            {
+
+                <script>
+                    crearElemento("selUnica", contSelUnica, @Html.Raw(Json.Encode(dato.item)), "preguntaSelUnica");
+                    insertNueLinea("selUnica".concat(contSelUnica));
+                    //seleccionUnica(contSelUnica/*, listaOpciones*/ );
+                    lineaHor("selUnica".concat(contSelUnica));
+                    contSelUnica++;
+                </script>
+
+                <div id="preguntaSelUnica" class="pregunta">
+
+                </div>
+
+                //Campo de observacion de la opcion de seleccion unica
+                //if (dato.tieneObservacion == true) {
+                //        <script>
+                //            TextoLibre();
+                //        </script>
+                //}
+            }
+
+            if (dato.tipoPregunta == 3)
+            {
+                <div id="preguntaSiNo" class="pregunta"> </div>
+
+                <script>
+                    crearElemento("SiNo", contSiNo, @Html.Raw(Json.Encode(dato.item)), "preguntaSiNo");
+                    insertNueLinea("SiNo".concat(contSiNo));
+                    RespondeSiNo(contSiNo);
+                    lineaHor("SiNo".concat(contSiNo));
+                    contSiNo++;
+                </script>
+
+            }
+
+
         }
 
-        if (dato.tipoPregunta == 3)
-        {
-            <div id="preguntaSiNo" class="pregunta"> </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    *@
 
-            <script>
-                crearElemento("SiNo", contSiNo, @Html.Raw(Json.Encode(dato.item)), "preguntaSiNo");
-                insertNueLinea("SiNo".concat(contSiNo));
-                RespondeSiNo(contSiNo);
-                lineaHor("SiNo".concat(contSiNo));
-                contSiNo++;
-            </script>
-
-                                    //Campo de observacion de la opcion de respuesta Si-No
-                                    @*if (dato.tieneObservacion == true) {
-                                        <script>
-                                            TextoLibre();
-                                        </script>
-                                    }*@
-                                }
-
-                                 @*if (dato.tipoPregunta == 4)
-                                {
-                                     <div id="preguntaSelMultiple"> </div>
-
-                                }
-
-                                if (dato.tipoPregunta == 5)
-                                {
-                                      <div id="preguntaEscalar"> </div>
-
-                                }
-
-                                if (dato.tipoPregunta == 6)
-                                {
-                                     <div id="preguntaEstrella"> </div>
-
-                                }*@
-
-                             }
-
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-
-    
 </body>
 </html>

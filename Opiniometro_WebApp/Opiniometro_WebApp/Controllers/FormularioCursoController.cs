@@ -20,15 +20,95 @@ namespace Opiniometro_WebApp.Controllers
         {
             var modelo = new FormularioPorCurso
             {
-                preguntasFormulario = obtenerPreguntasFormulario(cedulaEstudiante,codigoForm)
+                Secciones = obtenerPreguntasFormulario(cedulaEstudiante,codigoForm)
             };
             return View(modelo);
         }
 
-        public IQueryable<Pregunta> obtenerPreguntasFormulario(string cedulaEstudiante, string codigoForm)
+        public SeccionFormulario[] obtenerPreguntasFormulario(string cedulaEstudiante, string codigoForm)
         {
 
-            IQueryable<Pregunta> formulario =
+            IQueryable < SeccionFormulario > seccionesQuery =
+                from conf in db.Conformado_Item_Sec_Form
+                where conf.CodigoFormulario == codigoForm
+                select new SeccionFormulario
+                {
+                    Titulo = conf.TituloSeccion
+                };
+
+            SeccionFormulario[] secciones = seccionesQuery.Distinct().ToArray();
+
+            for (int seccion = 0; seccion < secciones.Count(); ++ seccion)
+            {
+                string titulo = secciones[seccion].Titulo;
+                IQueryable<Pregunta> preguntasQuery =
+                from it in db.Item
+                join confSecItem in db.Conformado_Item_Sec_Form on it.ItemId equals confSecItem.ItemId
+                join sec in db.Seccion on confSecItem.TituloSeccion equals titulo
+                where (confSecItem.CodigoFormulario == codigoForm && confSecItem.TituloSeccion == titulo)
+                select new Pregunta
+                {
+                    itemId = it.ItemId,
+                    item = it.TextoPregunta,
+                    tieneObservacion = it.TieneObservacion,
+                    tipoPregunta = it.TipoPregunta
+                };
+
+                Pregunta[] preguntas = preguntasQuery.Distinct().ToArray();
+
+                //secciones.ElementAt(seccion).PreguntasFormulario = preguntas.ToList();
+                secciones[seccion].PreguntasFormulario = preguntas;
+
+                if (secciones[seccion].PreguntasFormulario != null)
+                {
+                    for (int pregunta = 0; pregunta < secciones[seccion].PreguntasFormulario.Count(); ++pregunta)
+                    {
+                        if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 1)
+                        {
+                            ;
+                        }
+                        else if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 2)
+                        {
+                            string id = secciones[seccion].PreguntasFormulario[pregunta].itemId;
+                            IQueryable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Unica
+                                                          where ops.ItemId == id
+                                                          select ops.OpcionRespuesta;
+                            secciones[seccion].PreguntasFormulario[pregunta].Opciones = opciones.ToArray();
+                            //secciones.ElementAt(seccion).PreguntasFormulario.ElementAt(pregunta).Opciones = opciones.ToList();
+                        }
+                    }
+                    
+                }
+                
+            }
+
+           
+            foreach(SeccionFormulario s in secciones)
+            {
+                Debug.WriteLine(s.Titulo);
+                if(s.PreguntasFormulario != null)
+                {
+                    foreach (Pregunta p in s.PreguntasFormulario)
+                    {
+                        Debug.WriteLine("\t" + p.item);
+
+                        if (p.Opciones != null)
+                        {
+                            foreach (String o in p.Opciones)
+                            {
+                                Debug.WriteLine("\t\t" + o);
+
+                            }
+                        }
+                    }
+                }
+                
+            }
+
+
+            return secciones;
+            /*
+            IQueryable < Pregunta > formulario =
                 from it in db.Item
                 join confSecItem in db.Conformado_Item_Sec_Form on it.ItemId equals confSecItem.ItemId
                 join sec in db.Seccion on confSecItem.TituloSeccion equals sec.Titulo
@@ -60,8 +140,9 @@ namespace Opiniometro_WebApp.Controllers
                         Opciones = opciones.ToList() });
                 }
             }
-
+            
             return preguntas.AsQueryable();
+            */
         }
 
         /* Llamar con:
