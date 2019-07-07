@@ -174,9 +174,13 @@ namespace Opiniometro_WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                string nombre = System.Text.RegularExpressions.Regex.Replace(perfil.Nombre.Trim(), @"\s+", " ");
+
+                string descripcion = System.Text.RegularExpressions.Regex.Replace(perfil.Descripcion.Trim(), @"\s+", " ");
+
                 // Parametros
-                var Nombre = new SqlParameter("@Nombre", perfil.Nombre);
-                var Descripcion = new SqlParameter("@Descripcion", perfil.Descripcion);
+                var Nombre = new SqlParameter("@Nombre", nombre);
+                var Descripcion = new SqlParameter("@Descripcion", descripcion);
                 var Numero_Error = new SqlParameter("@Numero_Error", 0);
                 Numero_Error.Direction = ParameterDirection.Output;
                 Numero_Error.SqlDbType = SqlDbType.Int;

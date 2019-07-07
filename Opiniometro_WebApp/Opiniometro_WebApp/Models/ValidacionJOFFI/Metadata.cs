@@ -70,7 +70,7 @@ namespace Opiniometro_WebApp.Models
         [Remote("IsNombrePerfilAvailable", "Perfil", ErrorMessage = "Este nombre ya está en uso.")]
         [StringLength(30, ErrorMessage = "El límite de este campo son de 30 caracteres.")]
         [Required(ErrorMessage = "Este campo es requerido.")]
-        [RegularExpression("^[a-zA-Z0-9\\s]*$", ErrorMessage = "Solo se permiten números y letras sin tilde.")]
+        [RegularExpression("([a-zA-z0-9]*(\\s)*)*$", ErrorMessage = "Solo se permiten números y letras sin tilde.")]
         public string Nombre { get; set; }
 
         [StringLength(80, ErrorMessage = "El límite de este campo son de 80 caracteres.")]
