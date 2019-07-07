@@ -11,20 +11,27 @@
 <head>
     <meta charset="utf-8" />
     <script src="~/Scripts/FormularioDelCurso.js"></script>
-
 </head>
 <body>
     @*contadores usados para darle un id unico a los div que contiene el tipo de respuesta*@
     <script>
-        contTextoLibre = 0;
-        contSelUnica = 0;
-        contSiNo = 0;
-        contSelMult = 0;
-        contEscalar = 0;
-        contEstrella = 0;
+      var  contTextoLibre = 0;
+      var contSelUnica = 0;
+      var  contSiNo = 0;
+      var  contSelMult = 0;
+      var  contEscalar = 0;
+      var contEstrella = 0;
     </script>
 
-    <table> <tr> <th> <h3><u>Preguntas de Formulario</u> </h3> <br />  </th> </tr> </table> <br /><br />
+    <table class="table table-responsive" align="center" border="1">
+        <tr id="pyr" bgcolor="#FFFFFF" align="center">
+            <td><b><font color="#000000"><h3><b>Formulario</b> </h3></font></b></td>
+        </tr>
+        <tr bgcolor="#FFFFFF" align="left">
+            <td>
+                <table class="table table-responsive" border="1" >
+                   <tr bgcolor="#FFFFFF" >
+                        <td>
 
     @foreach (var dato in Model.preguntasFormulario)
     {
@@ -80,33 +87,41 @@
                 contSiNo++;
             </script>
 
-            //Campo de observacion de la opcion de respuesta Si-No
-            @*if (dato.tieneObservacion == true) {
-                    <script>
-                        TextoLibre();
-                    </script>
-                }*@
-        }
+                                    //Campo de observacion de la opcion de respuesta Si-No
+                                    @*if (dato.tieneObservacion == true) {
+                                        <script>
+                                            TextoLibre();
+                                        </script>
+                                    }*@
+                                }
 
-        @*    if (dato.tipoPregunta == 4)
-            {
-                 <div id="preguntaSelMultiple"> </div>
+                                 @*if (dato.tipoPregunta == 4)
+                                {
+                                     <div id="preguntaSelMultiple"> </div>
 
-            }
+                                }
 
-            if (dato.tipoPregunta == 5)
-            {
-                  <div id="preguntaEscalar"> </div>
+                                if (dato.tipoPregunta == 5)
+                                {
+                                      <div id="preguntaEscalar"> </div>
 
-            }
+                                }
 
-            if (dato.tipoPregunta == 6)
-            {
-                 <div id="preguntaEstrella"> </div>
+                                if (dato.tipoPregunta == 6)
+                                {
+                                     <div id="preguntaEstrella"> </div>
 
-            }*@
+                                }*@
 
-    }
+                             }
 
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    
 </body>
 </html>

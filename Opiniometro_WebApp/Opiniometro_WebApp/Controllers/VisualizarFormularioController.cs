@@ -36,7 +36,7 @@ namespace Opiniometro_WebApp.Controllers
             ViewBag.SemestreId = new SelectList(semestres);
             var annos = (from ann in db.Ciclo_Lectivo select ann.Anno).AsEnumerable().Distinct();
             ViewBag.AnnoId = new SelectList(annos);
-            
+
             var grupos = (from grup in db.Grupo select grup.Numero).AsEnumerable().Distinct();
             ViewBag.GrupoID = new SelectList(grupos);
 
@@ -213,10 +213,10 @@ namespace Opiniometro_WebApp.Controllers
 
         //EFE:Crea un gráfico con la información de los resultados en la base de datos.
         //REQ:Que exista una conexion a la base de datos.
-        //MOD:--
-        public JsonResult GraficoPie(string itemId)
-        {
-            var result = ObtenerCantidadRespuestasPorPregunta("131313", "100000002", 2017, 2, 1, "CI1330", itemId).ToList();//ObtenerCantidadRespuestasPorPregunta  "PRE303"
+        //MOD:--string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso,
+        public JsonResult GraficoPie(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
+        {//"131313"
+            var result = ObtenerCantidadRespuestasPorPregunta(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId).ToList();//ObtenerCantidadRespuestasPorPregunta  "PRE303", codigoFormulario, "100000002", 2017, 2, 1, "CI1330", itemId
             //int tamanio = result.Count;
             List<object> x = new List<object>();
             List<object> y = new List<object>();
@@ -238,23 +238,35 @@ namespace Opiniometro_WebApp.Controllers
         //EFE:Retorna las observaciones del item.
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--
-        public JsonResult ObservacionesPorGrupo(string itemId)
+        [HttpGet]
+        private ObjectResult<SP_DevolverObservacionesPorGrupo_Result> ObtenerObservacionesPorGrupo(string codigoFormulario, string cedulaProfesor, short? annoGrupo, byte? semestreGrupo, byte? numeroGrupo, string siglaCurso, string itemId)
         {
-            var result = db.SP_DevolverObservacionesPorGrupo("131313", "100000002", 2017, 2, 1, "CI1330", itemId).ToList();//ObtenerCantidadRespuestasPorPregunta  "PRE303"
-            //int tamanio = result.Count;
-            //List<object> x = new List<object>();
-            //string[] leyenda = new string[tamanio];
-            //int?[] cntResps = new int?[tamanio];
-            //int iter = 0;List<object>
-            //foreach (var itemR in result)
-            //{
-            //    //leyenda[iter] = itemR.Respuesta;
-            //    //cntResps[iter] = itemR.cntResp;
-            //    //iter++;
-            //    x.Add(itemR);
-            //}
-            return Json(result, JsonRequestBehavior.AllowGet);
-            //return result;
+            var result = db.SP_DevolverObservacionesPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
+            return result;
+        }
+
+        //EFE:Devuelve las observaciones asignadas a una pregunta en especifico.
+        //REQ:Que exista una conexion a la base de datos.
+        //MOD:--
+        public JsonResult ObservacionesPorPregunta(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
+        {
+            var result = ObtenerObservacionesPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId).ToList();
+
+            List<object> obs = new List<object>();
+            List<object> nom = new List<object>();
+            List<object> ap1 = new List<object>();
+            List<object> ap2 = new List<object>();
+
+            foreach (var itemO in result)
+            {
+                obs.Add(itemO.Observacion);
+                nom.Add(itemO.Nombre1);
+                ap1.Add(itemO.Apellido1);
+                ap2.Add(itemO.Apellido2);
+            }
+
+            List<object> observaciones = new List<object> { obs, nom, ap1, ap2 };
+            return Json(observaciones, JsonRequestBehavior.AllowGet);
         }
     }
 }
