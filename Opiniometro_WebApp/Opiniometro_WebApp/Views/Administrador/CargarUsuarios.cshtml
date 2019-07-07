@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+
+@model System.Data.DataTable
+@using System.Data
+<html>
+<head>
+    <title>Cargar Archivo</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opiniómetro@UCR</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/estilos-propios.css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+    <h1>Cargar Archivo</h1>
+
+    @using (Html.BeginForm("CargarUsuarios", "Administrador", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <!--span>Select File:</span-->
+        <input type="file" name="postedFile" />
+        <br />
+        <input type="submit" value="Cargar" class="btn btn-default" />
+        <br />
+        <span style="color: green">@ViewBag.Message</span>
+    }
+
+<table class="table">
+    <thead>
+    <tr>
+        @foreach (DataColumn columna in Model.Columns)
+        {
+            <th>@columna.ColumnName</th>
+        }
+    </tr>
+    </thead>
+    
+    <tbody>
+    @foreach (DataRow fila in Model.Rows)
+    {
+        <tr>
+            @foreach (DataColumn columna in Model.Columns)
+            {
+                <td>@fila[columna.ColumnName]</td>
+            }
+        </tr>
+        
+    }
+    </tbody>
+    
+</table>
+
+</body>
+</html>
+
+
+

@@ -485,7 +485,7 @@
     <Content Include="Views\Seleccion_Unica\Details.cshtml" />
     <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
     <Content Include="Views\Seleccion_Unica\Index.cshtml" />
-    <Content Include="Views\Administrador\CargarArchivo.cshtml" />
+    <Content Include="Views\Administrador\CargarUsuarios.cshtml" />
     <Content Include="Views\Administrador\Index.cshtml" />
     <Content Include="Views\Categoria\Create.cshtml" />
     <Content Include="Views\Categoria\Delete.cshtml" />

@@ -45,7 +45,7 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult CargarArchivo()
+        public ActionResult CargarUsuarios()
         {
             return View();
         }
@@ -57,10 +57,10 @@ namespace Opiniometro_WebApp.Controllers
          * MODIFICA:
          */
         [HttpPost]
-        public ActionResult CargarArchivo(HttpPostedFileBase postedFile)
+        public ActionResult CargarUsuarios(HttpPostedFileBase postedFile)
         {
             DataTable filasInvalidas = null;
-
+            
             if (postedFile != null && postedFile.ContentLength > 0)
             {
                 if (postedFile.FileName.EndsWith(".csv"))
@@ -97,7 +97,7 @@ namespace Opiniometro_WebApp.Controllers
                 
             }
 
-            return View();
+            return View(filasInvalidas);
         }
 
 
