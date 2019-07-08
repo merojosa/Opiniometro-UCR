@@ -637,18 +637,5 @@ namespace Opiniometro_WebApp.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EditarPerfil", nombreParameter, nombreViejoParameter, descripcionParameter, numero_Error);
         }
-    
-        public virtual int SP_Insertar_Seleccion_Unica(string itemid, Nullable<bool> isalikedislike)
-        {
-            var itemidParameter = itemid != null ?
-                new ObjectParameter("itemid", itemid) :
-                new ObjectParameter("itemid", typeof(string));
-    
-            var isalikedislikeParameter = isalikedislike.HasValue ?
-                new ObjectParameter("isalikedislike", isalikedislike) :
-                new ObjectParameter("isalikedislike", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Insertar_Seleccion_Unica", itemidParameter, isalikedislikeParameter);
-        }
     }
 }
