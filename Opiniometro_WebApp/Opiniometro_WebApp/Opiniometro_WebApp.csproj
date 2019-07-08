@@ -248,6 +248,7 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DatosProvisionados.cs" />
+    <Compile Include="Models\EditarPerfil.cs" />
     <Compile Include="Models\Empadronado.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>

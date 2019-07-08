@@ -22,27 +22,70 @@ namespace Opiniometro_WebApp.Controllers
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
-        public ActionResult Detalles (String nombre)
+        public ActionResult Detalles(String nombre)
         {
             return View(db.Perfil.Find(nombre));
         }
 
         public ActionResult Editar(String nombre)
         {
-            return View(db.Perfil.Find(nombre));
+
+            EditarPerfil perfil = new EditarPerfil();
+            Perfil infoPerfil = db.Perfil.Find(nombre);
+            perfil.Nombre = infoPerfil.Nombre;
+            perfil.NombreViejo = infoPerfil.Nombre;
+            perfil.Descripcion = infoPerfil.Descripcion;
+            return View(perfil);
         }
 
         [HttpPost]
-        public ActionResult Editar([Bind(Include = "Nombre,Descripcion")] Perfil perfil)
+        [ValidateAntiForgeryToken]
+        public ActionResult Editar([Bind(Include = "Nombre,Descripcion,NombreViejo")]EditarPerfil perfil)
         {
-            if (perfil.Nombre != "Administrador")
+            if (perfil.Nombre == perfil.NombreViejo || !db.Perfil.Any(model => model.Nombre == perfil.Nombre))
             {
-                return RedirectToAction("VerPerfiles", "Perfil");
+                if (perfil.Nombre != "Administrador")
+                {
+                    
+                    if (ModelState.IsValid)
+                {
+
+                    // Parametros
+                    var Nombre = new SqlParameter("@nombre", perfil.Nombre);
+                    var NombreViejo = new SqlParameter("@nombreViejo", perfil.NombreViejo);
+                    var Descripcion = new SqlParameter("@descripcion", perfil.Descripcion); 
+                    var Numero_Error = new SqlParameter("@Numero_Error", 0);
+                    Numero_Error.Direction = ParameterDirection.Output;
+                    Numero_Error.SqlDbType = SqlDbType.Int;
+
+                    db.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction,
+                        "EXEC EditarPerfil @nombre, @nombreViejo, @descripcion, @Numero_Error OUT", Nombre, NombreViejo, Descripcion, Numero_Error);
+
+                    if ((int)Numero_Error.Value == 0)
+                    {
+                        TempData["msg"] = "<script> $(document).ready(function(){ alert('El perfil se ha editado exitosamente.');}); </script>";
+                        return RedirectToAction("VerPerfiles");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("ErrorEditarPerfil", "Error al editar perfil");
+                    }
+
+                }
+                
+                    TempData["msg"] = "<script>alert('Se editó el perfil');</script>";
+                    return RedirectToAction("VerPerfiles", "Perfil");
+                }
+                else
+                {
+                    return RedirectToAction("VerPerfiles", "Perfil");
+                }
             }
             else {
-                return RedirectToAction("VerPerfiles", "Perfil");
+                TempData["msg"] = "<script>alert('No se pudo editar el perfil  ');</script>";
+                return RedirectToAction("Editar", "Perfil",new { nombre = perfil.NombreViejo });
             }
-            
+
         }
 
 
@@ -227,6 +270,11 @@ namespace Opiniometro_WebApp.Controllers
         public JsonResult IsNombrePerfilAvailable(string Nombre)
         {
             return Json(!db.Perfil.Any(perfil => perfil.Nombre == Nombre), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult IsNombrePerfilValido(EditarPerfil perfilP)
+        {
+            return Json(!db.Perfil.Any(perfil => perfil.Nombre == perfilP.Nombre), JsonRequestBehavior.AllowGet);
         }
     }
 }

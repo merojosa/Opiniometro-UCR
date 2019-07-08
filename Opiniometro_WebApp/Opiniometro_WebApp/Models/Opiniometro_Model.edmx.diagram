@@ -85,6 +85,7 @@
         <AssociationConnector Association="Opiniometro_Model.Escuela" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.Imparte" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.Se_Encuentra_Curso_Enfasis" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_Model.FK_For_Uni" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
