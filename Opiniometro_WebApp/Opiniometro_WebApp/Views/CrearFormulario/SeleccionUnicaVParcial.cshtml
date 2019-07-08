@@ -1,0 +1,45 @@
+﻿@model Opiniometro_WebApp.Models.VistaPreviaPreguntaModel
+
+<div>
+    <dl class="dl-horizontal">
+        <dd>
+            @Html.DisplayFor(model => model.Item.TextoPregunta)
+        </dd>
+        <dd>
+            <table>
+                @foreach (var option in Model.Opciones)
+                {
+                    <tr>
+                        @if (Model.Item.TipoPregunta == 3)
+                        {
+                            <td>
+                                <input type="checkbox" disabled />
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <input type="radio" disabled />
+                            </td>
+                        }
+
+                        <td>
+                            @Html.DisplayFor(model => option.OpcionRespuesta)
+                        </td>
+                    </tr>
+
+                }
+            </table>
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Item.EtiquetaObservacion)
+        </dd>
+        @if (Model.Item.TieneObservacion == true)
+        {
+            <dd>
+                <textarea name="comentarioAdicional" rows="5" cols="40" disabled>Escriba su comentario aqui</textarea>
+            </dd>
+        }
+
+    </dl>
+</div>

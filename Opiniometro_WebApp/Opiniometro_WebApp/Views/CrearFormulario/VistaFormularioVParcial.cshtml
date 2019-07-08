@@ -1,7 +1,7 @@
 ﻿
 @model Opiniometro_WebApp.Models.FormularioCompletoModel
 
-<table class="table">
+<table class="table" align="left">
     <tr>
         <th>
         </th>
@@ -18,7 +18,7 @@
         <tr>
 
             <td>
-                <u>Seccion: </u>
+                <u>Seccion</u>:
                 @Html.DisplayFor(modelItem => item.Orden_Seccion)
             </td>
             <td>
@@ -40,7 +40,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => pregunta.Orden_Item)
+                    <b>@Html.DisplayFor(modelItem => pregunta.Orden_Item) - </b>
                 </td>
 
                 <td>
@@ -50,7 +50,7 @@
                 <td>
             <tr>
                 <td></td>
-                <td colspan="5">
+                <td colspan="2">
 
                     @{
                         int tipoPregunta = pregunta.Item.TipoPregunta; //Pasamos el tipo de pregunta a int.
@@ -58,23 +58,25 @@
                         {
                             case 1://Tipo de pregunta si o no.
 
-                                <dl class="dl-horizontal">
+                                <dl class="col-md-2">
 
                                     <dd>
-                                        <textarea name="comentarioAdicional" rows="5" cols="40"  style="resize:none"  disabled>Escriba su respuesta aquí</textarea>
+                                        <textarea name="comentarioAdicional" rows="5" cols="40" style="resize:none" disabled>Escriba su respuesta aquí</textarea>
                                     </dd>
-                                    <br>
+                                    
                                     @if (pregunta.Item.TieneObservacion == true)
                                     {
                                         @Html.Label("Comentario Adicional")
                                         <dd>
-                                            <textarea name="comentarioAdicional" rows="5" cols="40"  style="resize:none" disabled>Escriba su comentario aqui</textarea>
+                                            <textarea name="comentarioAdicional" rows="5" cols="40" style="resize:none" disabled>Escriba su comentario aqui</textarea>
                                         </dd>
                                     }
                                 </dl>
 
                                 break;
-
+                            case 2:
+                                @Html.Action("SeleccionUnicaVParcial", new { id = pregunta.ItemId })                         
+                                break;
                             case 3://Tipo de pregunta texto libre.
                                 <div>
                                     <dl class="dl-horizontal">
@@ -88,16 +90,16 @@
                                         {
                                             <dd>
                                                 <textarea name="comentarioAdicional" rows="5" cols="40" style="resize:none" disabled>Escriba su comentario aqui</textarea>
-                 
+
                                             </dd>
                                         }
 
                                     </dl>
                                 </div>
-                             break;
+                                break;
                         }
                     }
-                 </td>
+                </td>
                 </td>
             </tr>
         }
