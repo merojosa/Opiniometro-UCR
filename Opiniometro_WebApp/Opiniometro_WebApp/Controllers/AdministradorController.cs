@@ -342,29 +342,28 @@ namespace Opiniometro_WebApp.Controllers
                     && (per.Persona.Cedula.Length == 9) && (per.Persona.Nombre1.Length <= 50) && (per.Persona.Apellido1.Length <= 50) && (per.Persona.Apellido2.Length <= 50)
                     && (per.Usuario.CorreoInstitucional.Length <= 100))
                 {
-                    using (db)
-                    {
-                        string contrasenna_generada = GenerarContrasenna(10);
-                        db.SP_AgregarPersonaUsuario(per.Usuario.CorreoInstitucional, contrasenna_generada, per.Persona.Cedula, per.Persona.Nombre1, "", per.Persona.Apellido1, per.Persona.Apellido2);
+                    string contrasenna_generada = GenerarContrasenna(10);
+                    db.SP_AgregarPersonaUsuario(per.Usuario.CorreoInstitucional, contrasenna_generada, per.Persona.Cedula, per.Persona.Nombre1, per.Persona.Nombre2, per.Persona.Apellido1, per.Persona.Apellido2);
 
-                        string contenido =
-                         "<p>Se le ha creado un usuario en Opiniometro@UCR.</p>" +
-                         "<p>A continuación, su contraseña temporal, ingrésela junto con su correo institucional:</p> <b>"
-                         + contrasenna_generada + "</b>";
+                    string contenido =
+                    "<p>Se le ha creado un usuario en Opiniometro@UCR.</p>" +
+                    "<p>A continuación, su contraseña temporal, ingrésela junto con su correo institucional:</p> <b>"
+                    + contrasenna_generada + "</b>";
 
-                        // Envio correo con la contrasenna autogenerada
-                        EnviarCorreo(per.Usuario.CorreoInstitucional, "Usuario creado - Opiniómetro@UCR", contenido);
-                    }
+                    // Envio correo con la contrasenna autogenerada
+                    EnviarCorreo(per.Usuario.CorreoInstitucional, "Usuario creado - Opiniómetro@UCR", contenido);
+                    
                     return RedirectToAction("VerPersonas");
                 }
                 else
                 {
+                    return RedirectToAction("VerPersonas");
                     //Mensaje de error
                 }
             }
             catch (Exception)
             {
-
+                //return RedirectToAction("VerPersonas");
                 throw;
             }
 
