@@ -53,25 +53,25 @@
     {
         <tr>
             <td>
-                @item.persona.Cedula
+                @item.Persona.Cedula
             </td>
             <td>
-                @item.persona.Nombre1
+                @item.Persona.Nombre1
             </td>
             <td>
-                @item.persona.Nombre2
+                @item.Persona.Nombre2
             </td>
             <td>
-                @item.persona.Apellido1
+                @item.Persona.Apellido1
             </td>
             <td>
-                @item.persona.Apellido2
+                @item.Persona.Apellido2
             </td>
             <td>
-                @item.usuario.CorreoInstitucional
+                @item.Usuario.CorreoInstitucional
             </td>
             <td>
-                @Html.ActionLink("Editar", "Editar", new { id = item.persona.Cedula }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Editar", "Editar", new { id = item.Persona.Cedula }, new { @class = "btn btn-default" })
 
             </td>
         </tr>
