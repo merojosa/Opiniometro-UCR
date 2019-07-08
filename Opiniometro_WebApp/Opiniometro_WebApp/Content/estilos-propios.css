@@ -1,6 +1,5 @@
-.login-error
-{
-    color:red;
+.login-error {
+    color: red;
 }
 
 /*Navbar del logo ucr*/
@@ -43,6 +42,10 @@ ul.nav li a, ul.nav li a:visited {
 ul.nav li p{
     color: rgb(102,102,102);
     font-size: 16px;
+}
+
+.validation-summary-errors ul {
+    list-style: none;
 }
 
 #link_deshabilitado {

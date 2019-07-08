@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Cambiar contraseña";
+}
+
+<div align="center" style="padding-right:100px">
+    <h1>Opiniómetro@UCR</h1>
+    @using (Html.BeginForm("CambiarContrasenna", "Auth", FormMethod.Post))
+    {
+        <div class="login-container">
+            <div class="row">
+                <div class="panel panel-default" style="width: 400px ">
+                    <h3>Cambiar contraseña</h3>
+                    <div class="panel-body">
+                        <div class="input-group" style="width:250px">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+                            <input type="password" class="form-control" name="Contrasenna2" placeholder="Contraseña nueva">
+                        </div>
+                        <br />
+                        <div class="input-group" style="width:250px">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+                            <input type="password" class="form-control" name="Contrasenna1" placeholder="Repita contraseña">
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <input type="submit" value="Cambiar" class="btn btn-default" />
+                        </div>
+
+
+                        <div class="login-error">
+                            @Html.ValidationMessage("ErrorContrasenna")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

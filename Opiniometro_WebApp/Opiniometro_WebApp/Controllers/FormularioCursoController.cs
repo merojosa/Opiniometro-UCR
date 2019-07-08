@@ -20,28 +20,105 @@ namespace Opiniometro_WebApp.Controllers
         {
             var modelo = new FormularioPorCurso
             {
-                preguntasFormulario = obtenerPreguntasFormulario(cedulaEstudiante,codigoForm)
+                Secciones = obtenerPreguntasFormulario(cedulaEstudiante,codigoForm)
             };
             return View(modelo);
         }
 
-        public IQueryable<DatosFormulario> obtenerPreguntasFormulario(string cedulaEstudiante, string codigoForm)
+        public SeccionFormulario[] obtenerPreguntasFormulario(string cedulaEstudiante, string codigoForm)
         {
-
-            IQueryable<DatosFormulario> formulario =
-                from it in db.Item
-                join confSecItem in db.Conformado_Item_Sec_Form on it.ItemId equals confSecItem.ItemId
-                join sec in db.Seccion on confSecItem.TituloSeccion equals sec.Titulo
-                where (confSecItem.CodigoFormulario == codigoForm)
-
-                select new DatosFormulario
+            // Se recuperan las secciones del formulario con el código respectivo
+            IQueryable < SeccionFormulario > seccionesQuery =
+                from conf in db.Conformado_Item_Sec_Form
+                where conf.CodigoFormulario == codigoForm
+                select new SeccionFormulario
                 {
-                    tipoPregunta = it.TipoPregunta,
-                    item = it.TextoPregunta,
-                    tieneObservacion = it.TieneObservacion
+                    Titulo = conf.TituloSeccion
                 };
 
-            return formulario;
+            // Se crea el arreglo de secciones que se asignarán al modelo
+            SeccionFormulario[] secciones = new SeccionFormulario[0];
+            if(seccionesQuery != null)
+                secciones = seccionesQuery.Distinct().ToArray(); // Distinct: impedancia en la tabla Conf_Item_Sec_Form
+
+            // Para cada sección se recuperan sus preguntas
+            for (int seccion = 0; seccion < secciones.Count(); ++ seccion)
+            {
+                string titulo = secciones[seccion].Titulo;
+                IQueryable<Pregunta> preguntasQuery =
+                from it in db.Item
+                join confSecItem in db.Conformado_Item_Sec_Form on it.ItemId equals confSecItem.ItemId
+                join sec in db.Seccion on confSecItem.TituloSeccion equals titulo
+                where (confSecItem.CodigoFormulario == codigoForm && confSecItem.TituloSeccion == titulo)
+                select new Pregunta
+                {
+                    itemId = it.ItemId,
+                    item = it.TextoPregunta,
+                    tieneObservacion = it.TieneObservacion
+                    tipoPregunta = it.TipoPregunta
+                };
+
+                // Se crea el arreglo de preguntas que se asignarán a la sección y se asigna
+                Pregunta[] preguntas = new Pregunta[0];
+                if (preguntasQuery != null)
+                    preguntas = preguntasQuery.Distinct().ToArray();
+                secciones[seccion].PreguntasFormulario = preguntas;
+
+                // Si le sección no tiene preguntas asisgnadas
+                if (secciones[seccion].PreguntasFormulario != null)
+                {
+                    // Para cada pregunta se recuperan sus opciones, según su tipo
+                    for (int pregunta = 0; pregunta < secciones[seccion].PreguntasFormulario.Count(); ++pregunta)
+                    {
+                        if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 1)
+                        {
+                            // La pregunta de respuesta libre no tiene opciones, solo campo de texto
+                            ;
+                        }
+                        else if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 2)
+                        {
+                            string id = secciones[seccion].PreguntasFormulario[pregunta].itemId;
+                            IQueryable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Unica
+                                                          where ops.ItemId == id
+                                                          select ops.OpcionRespuesta;
+                            
+                            // Se asigna el arreglo de opciones
+                            secciones[seccion].PreguntasFormulario[pregunta].Opciones = opciones.ToArray();
+                        }
+
+
+                        //#############################################################
+                        // AQUI SEGUIR RECUPERANDO OPCIONES Y ASIGNARLAS A COVENIENCIA
+                        //#############################################################
+                    }
+                    
+                }
+                
+            }
+
+            // Para debuggear
+            /* 
+             foreach(SeccionFormulario s in secciones)
+             {
+                 Debug.WriteLine(s.Titulo);
+                 if(s.PreguntasFormulario != null)
+                 {
+                     foreach (Pregunta p in s.PreguntasFormulario)
+                     {
+                         Debug.WriteLine("\t" + p.item);
+
+                         if (p.Opciones != null)
+                         {
+                             foreach (String o in p.Opciones)
+                             {
+                                 Debug.WriteLine("\t\t" + o);
+                             }
+                         }
+                     }
+                 }
+             }*/
+
+            return secciones;
         }
 
         /* Llamar con:
@@ -93,6 +170,34 @@ namespace Opiniometro_WebApp.Controllers
 
             // tuplas contiene todas las tuplas por insertar a la base.
         }
-   
+
+        // Esto podria servir para empezar a romper el codigo (separar en metodos)
+        public string ObtenerOpcionesSelUnica(string id)
+        {
+            //Console.WriteLine(id);
+            //List<SeleccionUnica> preguntas = new List<SeleccionUnica>();
+        /*
+            string id = p.itemId;
+            string texto = p.item;
+            bool? observacion = p.tieneObservacion;
+            int tipo = p.tipoPregunta;*/
+            IEnumerable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Unica
+                                            where ops.ItemId == id
+                                            select ops.OpcionRespuesta;
+            /*preguntas.Add(new SeleccionUnica
+            {
+                itemId = id,
+                item = texto,
+                tieneObservacion = obs,
+                tipoPregunta = tipo,
+                Opciones = opciones.ToList()
+            });*/
+            //SeleccionUnica selec = new SeleccionUnica { itemId = id, item = texto, tieneObservacion = observacion, tipoPregunta = tipo, Opciones = opciones };
+            string[] op = opciones.ToArray();
+
+            //return PartialView("SeleccionUnica", selec);
+            var json = JsonConvert.SerializeObject(op);
+            return json;
+        }
     }
 }
