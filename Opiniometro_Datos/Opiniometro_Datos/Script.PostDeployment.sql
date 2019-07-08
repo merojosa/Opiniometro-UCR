@@ -334,9 +334,9 @@ CREATE PROCEDURE EditarPerfil
 	@Numero_Error	INT OUT
 AS
 begin
-	SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 	SET @Numero_Error = 0
 	BEGIN TRY
+	SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 	BEGIN TRANSACTION EditarPerfil;
 		update Perfil set
 		Perfil.Descripcion = @descripcion,
