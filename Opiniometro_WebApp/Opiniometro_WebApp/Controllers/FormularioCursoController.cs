@@ -199,5 +199,15 @@ namespace Opiniometro_WebApp.Controllers
             var json = JsonConvert.SerializeObject(op);
             return json;
         }
+
+
+        //public ActionResult ObtenerRangoEscalar(string id)
+        //{  
+        //    IEnumerable<String> rango = from range in db.Escalar
+        //                                   where range.ItemId == id
+        //                                   select range;
+
+        //    return PartialView("Escalar", rango);
+        //}
     }
 }
