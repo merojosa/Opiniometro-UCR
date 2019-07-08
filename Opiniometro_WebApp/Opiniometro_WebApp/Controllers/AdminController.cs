@@ -87,13 +87,10 @@ namespace Opiniometro_WebApp.Controllers
 
         public ActionResult Editar(string id)
         {
-            try
-            {
+
                 Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel modelPersona = new Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel();
                 modelPersona.Persona = db.Persona.Find(id);
 
-                try
-                {
                     String correoInstitucional = db.Usuario.Where(m => m.Cedula == id).First().CorreoInstitucional;
                     modelPersona.Persona = db.Persona.SingleOrDefault(u => u.Cedula == id);
                     modelPersona.usuario = db.Usuario.SingleOrDefault(u => u.Cedula == id);
@@ -101,20 +98,16 @@ namespace Opiniometro_WebApp.Controllers
                     modelPersona.PerfilDeUsuario = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
                     modelPersona.Perfil = db.Perfil.Select(n => n.Nombre).ToList();
                     modelPersona.perfilesAsignados = modelPersona.getAsignarPerfil(modelPersona.PerfilDeUsuario, modelPersona.Perfil);
-                    return View(modelPersona);
-                }
-                catch (Exception)
-                {
-                    return View(modelPersona);
-                }
+                    modelPersona.tienePerfil = new List<Boolean>();
+                    for (int contador = 0; contador < modelPersona.perfilesAsignados.Count; contador++)
+                    {
+                        modelPersona.tienePerfil.Add(modelPersona.perfilesAsignados.ElementAt(contador).asignar);
+                    }
+
+                        return View(modelPersona);
 
 
-            }
-            catch (Exception)
-            {
 
-                throw;
-            }
         }
 
         [HttpPost]

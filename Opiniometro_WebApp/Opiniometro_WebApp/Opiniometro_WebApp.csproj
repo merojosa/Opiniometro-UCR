@@ -248,6 +248,7 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DatosProvisionados.cs" />
+    <Compile Include="Models\EditarPerfil.cs" />
     <Compile Include="Models\Empadronado.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -526,6 +527,8 @@
     <Content Include="Views\Shared\EditorTemplates\ElegirFormularioEditorViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ElegirGrupoEditorViewModel.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Edit.cshtml" />
+    <Content Include="Views\Perfil\Detalles.cshtml" />
+    <Content Include="Views\Perfil\Editar.cshtml" />
     <Content Include="Views\Enfasis\VerEnfasis.cshtml" />
   </ItemGroup>
   <ItemGroup>

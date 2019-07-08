@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Opiniometro_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Opiniometro_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrativo">
           <Key>
             <PropertyRef Name="CedulaAdministrativo" />
@@ -127,6 +127,7 @@
           </Key>
           <Property Name="CodigoFormulario" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="25" />
+          <Property Name="CodigoUnidadAca" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Formulario_Respuesta">
           <Key>
@@ -586,6 +587,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_For_Uni">
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="0..1" />
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Formulario">
+              <PropertyRef Name="CodigoUnidadAca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ForRes_For">
           <End Role="Formulario" Type="Self.Formulario" Multiplicity="1" />
           <End Role="Formulario_Respuesta" Type="Self.Formulario_Respuesta" Multiplicity="*" />
@@ -1022,6 +1035,12 @@
         <Function Name="DatosEstudiante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="EditarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="nombreViejo" Type="varchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="Numero_Error" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="MostrarEstudiantes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="NombrePersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1290,6 +1309,10 @@
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
             <End Role="Facultad" EntitySet="Facultad" />
           </AssociationSet>
+          <AssociationSet Name="FK_For_Uni" Association="Self.FK_For_Uni">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Formulario" EntitySet="Formulario" />
+          </AssociationSet>
           <AssociationSet Name="FK_ForRes_For" Association="Self.FK_ForRes_For">
             <End Role="Formulario" EntitySet="Formulario" />
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
@@ -1415,8 +1438,7 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Opiniometro_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1564,6 +1586,8 @@
           <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_For" FromRole="Formulario" ToRole="Conformado_Item_Sec_Form" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_For" FromRole="Formulario" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Tiene_Grupo_Formulario" Relationship="Self.FK_Tie_For" FromRole="Formulario" ToRole="Tiene_Grupo_Formulario" />
+          <Property Name="CodigoUnidadAca" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Unidad_Academica" Relationship="Opiniometro_Model.FK_For_Uni" FromRole="Formulario" ToRole="Unidad_Academica" />
         </EntityType>
         <EntityType Name="Formulario_Respuesta">
           <Key>
@@ -1850,6 +1874,7 @@
           <NavigationProperty Name="Curso" Relationship="Self.FK_Cur_Uni" FromRole="Unidad_Academica" ToRole="Curso" />
           <NavigationProperty Name="Facultad" Relationship="Self.FK_Fac_Uni" FromRole="Unidad_Academica" ToRole="Facultad" />
           <NavigationProperty Name="Facultad1" Relationship="Self.Escuela" FromRole="Unidad_Academica" ToRole="Facultad" />
+          <NavigationProperty Name="Formulario" Relationship="Opiniometro_Model.FK_For_Uni" FromRole="Unidad_Academica" ToRole="Formulario" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -2628,29 +2653,29 @@
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
           <FunctionImport Name="CursosSegunAnno" ReturnType="Collection(Opiniometro_Model.CursosSegunAnno_Result)">
-            <Parameter Name="anno" Mode="In" Type="Int16" />
+          <Parameter Name="anno" Mode="In" Type="Int16" />
           </FunctionImport>
           <FunctionImport Name="CursosSegunCarrera" ReturnType="Collection(Opiniometro_Model.CursosSegunCarrera_Result)">
-            <Parameter Name="siglaCarrera" Mode="In" Type="String" />
+          <Parameter Name="siglaCarrera" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="CursosSegunSemestre" ReturnType="Collection(Opiniometro_Model.CursosSegunSemestre_Result)">
-            <Parameter Name="semestre" Mode="In" Type="Byte" />
+          <Parameter Name="semestre" Mode="In" Type="Byte" />
           </FunctionImport>
           <FunctionImport Name="DatosEstudiante">
-            <Parameter Name="Cedula" Mode="In" Type="String" />
+          <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_Model.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
-            <Parameter Name="Cedula" Mode="In" Type="String" />
+          <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPerfilesUsuario" ReturnType="Collection(Opiniometro_Model.ObtenerPerfilesUsuario_Result)">
-            <Parameter Name="Correo" Mode="In" Type="String" />
+          <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPerfilPorDefecto" ReturnType="Collection(String)">
-            <Parameter Name="correo" Mode="In" Type="String" />
+          <Parameter Name="correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPerfilUsuario" ReturnType="Collection(String)">
-            <Parameter Name="correo" Mode="In" Type="String" />
+          <Parameter Name="correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ProcIntroducirSeccion">
             <Parameter Name="titulo" Mode="In" Type="String" />
@@ -2781,7 +2806,7 @@
             <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ObtenerFormulario" ReturnType="Collection(String)">
-            <Parameter Name="cod" Mode="In" Type="String" />
+          <Parameter Name="cod" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ObtenerNombre">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -2798,6 +2823,16 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <AssociationSet Name="FK_For_Uni" Association="Opiniometro_Model.FK_For_Uni">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Formulario" EntitySet="Formulario" />
+          </AssociationSet>
+          <FunctionImport Name="EditarPerfil">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="nombreViejo" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+            <Parameter Name="Numero_Error" Mode="InOut" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CursosSegunAnno_Result">
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="75" />
@@ -2853,6 +2888,18 @@
           <Property Type="Byte" Name="NumeroEnfasis" Nullable="false" />
           <Property Type="Int16" Name="IdPermiso" Nullable="false" />
         </ComplexType>
+        <Association Name="FK_For_Uni">
+          <End Type="Opiniometro_Model.Unidad_Academica" Role="Unidad_Academica" Multiplicity="0..1" />
+          <End Type="Opiniometro_Model.Formulario" Role="Formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Formulario">
+              <PropertyRef Name="CodigoUnidadAca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2976,6 +3023,7 @@
           <EntitySetMapping Name="Formulario">
             <EntityTypeMapping TypeName="Opiniometro_Model.Formulario">
               <MappingFragment StoreEntitySet="Formulario">
+                <ScalarProperty Name="CodigoUnidadAca" ColumnName="CodigoUnidadAca" />
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
@@ -3351,6 +3399,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Opiniometro_Model.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Opiniometro_Model.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="EditarPerfil" FunctionName="Opiniometro_Model.Store.EditarPerfil" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

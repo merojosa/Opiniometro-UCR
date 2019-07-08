@@ -13,24 +13,50 @@
         </div>
     </p>
 }
-<table class="table">
-    <tr>
-        <th>
 
-            Nombre
-        </th>
+<br>
 
-    </tr>
+    @Html.ActionLink("Crear perfil", "Crear", "Perfil", "", new { @class = "btn btn-default" })
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @item.Nombre
-            </td>
-            <td></td>
-        </tr>
-    }
+    @Html.ActionLink("Borrar perfil", "Borrar", "Perfil", "", new { @class = "btn btn-default", @style = "margin-left: 5px"})
 
-</table>
-@Html.ActionLink("Volver", "Index", "Home", null, new { @class = "btn btn-default" })
+<br>
+<br>
+<br>
+    <div style="width: 600px ">
+        <table class="table">
+            <tr>
+                <th>
+
+                    Nombre
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+
+                    @item.Nombre
+
+                </td>
+
+                <td>
+                    @Html.ActionLink("Editar", "Editar", "Perfil", new { nombre = item.Nombre }, new { @class = "btn btn-default", @style = "margin-left: 5px" })
+
+
+                </td>
+
+            </tr>
+               
+                
+                
+                    
+
+              
+
+            }
+
+        </table>
+     </div>
