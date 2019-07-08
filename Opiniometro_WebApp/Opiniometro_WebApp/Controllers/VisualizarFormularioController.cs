@@ -8,10 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
 using System.Data.Entity.Core.Objects;
-using System.Web.Helpers; //Para graficos, borrar despues
+using System.Data.Entity.Infrastructure;
 
 namespace Opiniometro_WebApp.Controllers
 {
+    [Authorize]
     public class VisualizarFormularioController : Controller
     {
 
@@ -207,6 +208,9 @@ namespace Opiniometro_WebApp.Controllers
         [HttpGet]
         private ObjectResult<SP_ContarRespuestasPorGrupo_Result> ObtenerCantidadRespuestasPorPregunta(string codigoFormulario, string cedulaProfesor, short? annoGrupo, byte? semestreGrupo, byte? numeroGrupo, string siglaCurso, string itemId)
         {
+            //var result = ((IObjectContextAdapter)this).ObjectContext.TransactionHandler.ExecuteFunction<SP_ContarRespuestasPorGrupo_Result>("SP_ContarRespuestasPorGrupo", codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
+
+            //db.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, "EXEC SP_ContarRespuestasPorGrupo @codigoFormulario, @cedulaProfesor, @annoGrupo, @semestreGrupo, @numeroGrupo, @siglaCurso, @itemId", codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
             var result = db.SP_ContarRespuestasPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
             return result;
         }
