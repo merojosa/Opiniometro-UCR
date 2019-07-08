@@ -59,7 +59,7 @@ function ObtenerGruposAsignados() {
 $(document).ready(function () {
     document.getElementById("boton-efectuar").addEventListener("click",
         function () {
-            if (confirm("¿Seguro de que desea efectuar las asignaciones?")) {
+            if (true /*confirm("¿Seguro de que desea efectuar las asignaciones?")*/) {
                 var botonEfectuar = document.getElementById("efectuar");
                 botonEfectuar.disabled = true;
 
