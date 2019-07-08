@@ -136,7 +136,7 @@
                                                         $.ajax({
                                                             type: "POST",
                                                             url: "/VisualizarFormulario/GraficoPie/?itemId=@seccion.Item.ItemId",
-                                                            data: "{ 'codigoFormulario': '@codigoFormularioRec', 'cedulaProfesor': '@cedulaProfesorRec', 'annoGrupo': '@annoGrupoRec', 'semestreGrupo': '@semestreGrupoRec', 'numeroGrupo': '@numeroGrupoRec', 'siglaCurso': '@siglaCursoRec', 'itemId': '@seccion.Item.ItemId' }",
+                                                            data: "{ 'codigoFormulario': '@codigoFormularioRec', 'cedulaProfesor': '@cedulaProfesorRec', 'annoGrupo': '@annoGrupoRec', 'semestreGrupo': '@semestreGrupoRec', 'numeroGrupo': '@numeroGrupoRec', 'siglaCurso': '@siglaCursoRec', 'itemId': '@seccion.Item.ItemId', 'tipoPregunta': '@seccion.Item.TipoPregunta' }",
                                                             contentType: "application/json; charset=utf-8",
                                                             dataType: "json",
                                                             success: function (chData) {

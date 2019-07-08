@@ -242,26 +242,85 @@ namespace Opiniometro_WebApp.Controllers
             return result;
         }
 
+       
+
         //EFE:Crea un gráfico con la información de los resultados en la base de datos.
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso,
-        public JsonResult GraficoPie(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
-        {//"131313"
-            var result = ObtenerCantidadRespuestasPorPregunta(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId).ToList();//ObtenerCantidadRespuestasPorPregunta  "PRE303", codigoFormulario, "100000002", 2017, 2, 1, "CI1330", itemId
-            //int tamanio = result.Count;
+        public JsonResult GraficoPie(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId, byte tipoPregunta)
+        {          
+            var result = ObtenerCantidadRespuestasPorPregunta(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId).ToList();
             List<object> x = new List<object>();
             List<object> y = new List<object>();
-            //string[] leyenda = new string[tamanio];
-            //int?[] cntResps = new int?[tamanio];
-            //int iter = 0;
-            foreach (var itemR in result)
+            if (!Enumerable.Range(5, 6).Contains(tipoPregunta))
             {
-                //leyenda[iter] = itemR.Respuesta;
-                //cntResps[iter] = itemR.cntResp;
-                //iter++;
-                x.Add(itemR.Respuesta);
-                y.Add(itemR.cntResp);
+
+                var labels = db.SP_RecuperarEtiquetas(tipoPregunta, itemId).ToList();
+                bool encontrado;
+                
+                foreach (var label in labels)
+                {
+                    encontrado = false;
+                    x.Add(label);
+                    foreach (var resul in result)
+                    {
+                        if (resul.Respuesta == label)
+                        {
+                            y.Add(resul.cntResp);
+                            encontrado = true;
+                        }
+                    }
+                    if (encontrado == false)
+                    {
+                        y.Add(0);
+                    }
+                }
             }
+            else
+            {
+                var rango = db.SP_RecuperarEtiquetasEscalar(tipoPregunta, itemId).ToList();
+                int inicio = rango[0].Inicio;
+                int final = rango[0].Fin;
+                int incremento = rango[0].Incremento;
+                bool encontrado;
+                for (int i = inicio; i <= (final+1); i += incremento)
+                {
+                    encontrado = true;
+                    if (i == final + 1)
+                    {
+                        x.Add("No se/No Responde/No Aplica");
+                        foreach (var resul in result)
+                        {
+                            if (Int16.Parse(resul.Respuesta) == i)
+                            {
+                                encontrado = true;
+                                y.Add(resul.cntResp);
+                            }
+                        }
+                        if(encontrado == false)
+                        {
+                            y.Add(0);
+                        }
+                    }
+                    else
+                    {
+                        
+                        x.Add(i);
+                        foreach (var resul in result)
+                        {
+                            if (Int16.Parse(resul.Respuesta) == i)
+                            {
+                                encontrado = true;
+                                y.Add(resul.cntResp);
+                            }
+                        }
+                        if (encontrado == false)
+                        {
+                            y.Add(0);
+                        }
+                    }
+                }
+            }           
             List<object> lista = new List<object> { x, y };
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
