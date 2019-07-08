@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Opiniometro_WebApp.Models.Seccion>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<Opiniometro_WebApp.Models.Seccion>
 
 @{
     ViewBag.Title = "Banco de Secciones";
@@ -11,7 +14,7 @@
         }
 </script>
 <p>
-    <input type="submit" value="Crear Nueva Sección" class="btn btn-secondary"  id="botonNuevaSeccion" onclick="accionBotonNuevo()" />
+    <input type="submit" value="Crear Nueva Sección" class="btn btn-secondary" id="botonNuevaSeccion" onclick="accionBotonNuevo()" />
 </p>
 <table class="table">
     <tr>
@@ -27,20 +30,26 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Titulo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descripcion)
-        </td>
-        <td>
-@*            @Html.ActionLink("Edit", "Edit", new { id = item.Titulo }) |*@
-            @*@Html.ActionLink("Details", "Details", new { id = item.Titulo }) |*@
-            @*@Html.ActionLink("Delete", "Delete", new { id = item.Titulo })*@
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Titulo }) |*@
+                @*@Html.ActionLink("Details", "Details", new { id = item.Titulo }) |*@
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.Titulo })*@
+            </td>
+        </tr>
+    }
 
 </table>
+
+@* This code is used to navigate on the pages *@
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+    new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded,
+        DisplayPageCountAndCurrentLocation = true })

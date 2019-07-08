@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
+using PagedList.Mvc;
 using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
@@ -32,9 +34,10 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // GET: Formulario
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View("Index", db.Formulario.ToList());
+            var formulario = db.Formulario;
+            return View(formulario.ToList().ToPagedList(page ?? 1, 5));
         }
 
         // GET: Formulario/Details/5

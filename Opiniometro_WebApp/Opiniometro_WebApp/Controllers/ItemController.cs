@@ -10,6 +10,9 @@ using System.Web.UI.WebControls;
 using PagedList;
 using PagedList.Mvc;
 using Opiniometro_WebApp.Models;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Web.Script.Serialization;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -77,23 +80,54 @@ namespace Opiniometro_WebApp.Controllers
             return View("Create");
         }
 
-         //POST: Item/Create
-         //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-         //more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //POST: Item/Create
+        //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria,EtiquetaObservacion")] Item item)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Item.Add(item);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID", item.ItemId);
+        //    ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
+        //    return View("Create", item);
+        //}
+
+        //POST: Item/Create
+        // Método mejorado del Crear para cuando se selecciona el tipo pregunta Selección Única.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria,EtiquetaObservacion")] Item item)
+        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria,EtiquetaObservacion")] Item item, string[] DynamicTextBox)
         {
             if (ModelState.IsValid)
             {
                 db.Item.Add(item);
                 db.SaveChanges();
+
+                if (DynamicTextBox != null && item.TipoPregunta == 2)
+                {
+                    //Uso del procedimiento almacenado para insertar en una sección.
+                    db.SP_Insertar_Seleccion_Unica(item.ItemId, false);
+
+                    //Uso del procedimiento almancenado para insertar todas las opciones de respuesta en la tabla Selección Única.
+                    for (short index = 1; index <= DynamicTextBox.Length; ++index)
+                    {
+                        db.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica(item.ItemId, index, DynamicTextBox[index - 1]);
+                    }
+                }
+
+                ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID", item.ItemId);
+                ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID", item.ItemId);
-            ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
-            return View(item);
+            return View("Create", item);
         }
 
         //EFE:

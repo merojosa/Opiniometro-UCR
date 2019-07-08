@@ -33,12 +33,11 @@
         @Html.Label("Tipo Pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.TipoPregunta,
-             new SelectList(ViewBag.TipoPreguntaItems, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control", id = "comboboxtipopregunta",
-             placeholder = "TipoPregunta", data_width = "100%", onchange = "habilitarVistaParcialAgregarOpciones(this.value)"})
+             new SelectList(ViewBag.TipoPreguntaItems, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control",
+             id = "comboboxtipopregunta", placeholder = "TipoPregunta", data_width = "100%", onchange = "habilitarVistaParcialAgregarOpciones(this.value)"})
             @Html.ValidationMessageFor(model => model.TipoPregunta, "", new { @class = "text-danger" })
         </div>
     </div>
-
 
     <div class="form-group">
         @Html.Label("Texto Pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -48,7 +47,6 @@
         </div>
     </div>
 
-
     <div class="form-group">
         @Html.LabelFor(model => model.NombreCategoria, "Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -57,26 +55,25 @@
         </div>
     </div>
 
-
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         @Html.Label("Tiene Observación", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.TieneObservacion, new SelectList(ViewBag.BooleanItems, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.TieneObservacion, new SelectList(ViewBag.BooleanItems, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control", id = "comboboxtieneobservacion", placeholder="TieneObsevacion",
+           datawith ="100%", onchange = "habilitarVistaParcialEtiqueta(this.value)"})
             @Html.ValidationMessageFor(model => model.TieneObservacion, "", new { @class = "text-danger" })
         </div>
     </div>
 
-
-    <div class="form-group" ng-switch="">
+    <div class="form-group" id="etiqueta" hidden="hidden">
         @Html.Label("Etiqueta Observación", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.EtiquetaObservacion, new { htmlAttributes = new { @class = "form-control", @maxlength = "25" } })
+            @Html.EditorFor(model => model.EtiquetaObservacion, new { htmlAttributes = new { @class = "form-control", @maxlength = "25", @placeholder = "Ej: Explique" } })
             @Html.ValidationMessageFor(model => model.EtiquetaObservacion, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group" id="opciones" hidden="hidden">
-        <input type="button" value="Agregar Opciones" class="btn btn-secondary" p id="botonAsignarOpciones" onclick="accionBotonAgregarOpciones()" />
         @Html.Partial("AgregarOpcionesVParcial")
     </div>
 
@@ -89,23 +86,23 @@
         </div>
     </div>
 
-    @* La sección de código para habilitar el despliegue de la Vista Parcial AgregarOpciones *@
+    @*Sección que despliega la opción de introducir descripción cuando la pregunta tiene comentario adicional*@
     <script>
-        function habilitarVistaParcialAgregarOpciones(tipoPregunta)
-        {
-            document.getElementById("opciones").hidden = "hidden";
-
-            if (tipoPregunta.localeCompare("2") == 0) {
-                document.getElementById("opciones").hidden = "";
+        function habilitarVistaParcialEtiqueta(etiquetaV) {
+            document.getElementById("etiqueta").hidden = "hidden";
+            if (etiquetaV.localeCompare("true") == 0) {
+                document.getElementById("etiqueta").hidden = "";
             }
         }
     </script>
 
-    @* La accion que sucede al seleccionar boton AgregarOpciones *@
+    @* La sección de código para habilitar el despliegue de la Vista Parcial AgregarOpciones *@
     <script>
-        function accionBotonAgregarOpciones()
-        {
-            document.getElementById('opciones').innerHTML = "@Html.Partial("AgregarOpcionesVParcial")";
+        function habilitarVistaParcialAgregarOpciones(tipoPregunta) {
+            document.getElementById("opciones").hidden = "hidden";
+            if (tipoPregunta.localeCompare("2") == 0) {
+                document.getElementById("opciones").hidden = "";
+            }
         }
     </script>
 

@@ -17,8 +17,11 @@
         public Nullable<bool> TieneObservacion { get; set; }
         public byte TipoPregunta { get; set; }
         public string NombreCategoria { get; set; }
+        public string EtiquetaObservacion { get; set; }
 
+        public string Opcion { get; set; } 
         public List<string> Opciones { get; set; }
+
         public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Conformado_Item_Sec_Form> Conformado_Item_Sec_Form { get; set; }

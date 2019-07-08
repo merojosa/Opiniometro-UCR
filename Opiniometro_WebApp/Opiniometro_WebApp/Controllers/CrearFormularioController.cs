@@ -90,10 +90,17 @@ namespace Opiniometro_WebApp.Controllers
 
             if (ModelState.IsValid)
             {
+                Conformado_For_Sec conf_for_sec = new Conformado_For_Sec();
+                conf_for_sec.CodigoFormulario = conformado.CodigoFormulario; conf_for_sec.TituloSeccion = conformado.TituloSeccion;
                 List<Conformado_Item_Sec_Form> conf = db.Conformado_Item_Sec_Form.Where(m => m.ItemId == conformado.ItemId && m.TituloSeccion == conformado.TituloSeccion && m.CodigoFormulario == conformado.CodigoFormulario).ToList();
                 if (conf.Count == 0)
-                {
+                {   
                     db.Conformado_Item_Sec_Form.Add(conformado);
+                    if(db.Conformado_For_Sec.Where(m => m.TituloSeccion == conf_for_sec.TituloSeccion && m.CodigoFormulario == conf_for_sec.CodigoFormulario).Count() == 0)
+                    {
+                        db.Conformado_For_Sec.Add(conf_for_sec);
+                        db.SaveChanges();
+                    }
                     db.SaveChanges();
                 }
                 else
