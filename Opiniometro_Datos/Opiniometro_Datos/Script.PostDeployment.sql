@@ -222,7 +222,7 @@ BEGIN
 
 	BEGIN CATCH
 		PRINT 'ERROR: ' + ERROR_MESSAGE();
-		ROLLBACK TRANSACTION SP_CrearPerfil
+		ROLLBACK TRANSACTION ValidacionModificarUsuario
 	END CATCH	--Nivel 1: Try
 
 	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
@@ -377,6 +377,40 @@ as
 	WHERE CorreoInstitucional = @correo;
 go
 
+--Procedimiento almacenado de modificar (Poner o Quitar) Perfil a Usuario
+IF OBJECT_ID('SP_ModificarPerfilUsuario') IS NOT NULL
+	DROP PROCEDURE SP_ModificarPerfilUsuario
+GO
+CREATE PROCEDURE SP_ModificarPerfilUsuario
+	@correo		nvarchar(100),
+	@perfil		nvarchar(30),
+	@modifica	bit
+as
+BEGIN
+	BEGIN TRY	--Nivel 0: Try
+		SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;	--Nivel 1: Cambio de nivel de transacción
+		BEGIN TRANSACTION T_ModificarPerfilUsuario	--Nivel 2: Transaction
+			IF(@modifica = 1)
+			BEGIN
+				INSERT INTO Tiene_Usuario_Perfil_Enfasis
+				VALUES	(@correo, 0, 'SC-01234', @perfil) --Cuál "SiglaCarrera"?
+			END
+			ELSE --Si (modifica = 0) O (modifica = NULL)
+			BEGIN
+				DELETE FROM Tiene_Usuario_Perfil_Enfasis 
+				WHERE ((CorreoInstitucional = @correo) AND (NombrePerfil = @perfil)); 
+			END
+		COMMIT TRANSACTION T_ModificarPerfilUsuario	--Nivel 2: Transaction
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 1: Cambio de nivel de transacción
+	END TRY
+
+	BEGIN CATCH
+		PRINT 'ERROR: ' + ERROR_MESSAGE();
+		ROLLBACK TRANSACTION T_ModificarPerfilUsuario
+	END CATCH	--Nivel 0: Try
+END
+GO
+
 --JJAPH
 IF OBJECT_ID('MostrarEstudiantes', 'P') IS NOT NULL 
 	DROP PROC MostrarEstudiantes
@@ -461,6 +495,7 @@ GO
 
 IF OBJECT_ID('EditarPerfil') IS NOT NULL
 	DROP PROCEDURE EditarPerfil
+GO
 CREATE PROCEDURE EditarPerfil
 	@nombre varchar(30),
 	@nombreViejo varchar(30),
