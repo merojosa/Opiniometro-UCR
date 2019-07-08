@@ -64,8 +64,6 @@ namespace Opiniometro_WebApp.Controllers
             return View(model);
         }
 
-
-
         [HttpPost]
         public ActionResult Cambiar(PerfilesUsuario model)
         {
@@ -175,7 +173,6 @@ namespace Opiniometro_WebApp.Controllers
             if (ModelState.IsValid)
             {
                 string nombre = System.Text.RegularExpressions.Regex.Replace(perfil.Nombre.Trim(), @"\s+", " ");
-
                 string descripcion = System.Text.RegularExpressions.Regex.Replace(perfil.Descripcion.Trim(), @"\s+", " ");
 
                 // Parametros
@@ -202,6 +199,11 @@ namespace Opiniometro_WebApp.Controllers
             return View(perfil);
         }
 
+        /*
+         *  REQUIERE: el nombre del perfil.
+         *  EFECTUA: busca si el nombre brindado existe como llave primaria en la base de datos.
+         *  MODIFICA: n/a
+         */
         public JsonResult IsNombrePerfilAvailable(string Nombre)
         {
             return Json(!db.Perfil.Any(perfil => perfil.Nombre == Nombre), JsonRequestBehavior.AllowGet);

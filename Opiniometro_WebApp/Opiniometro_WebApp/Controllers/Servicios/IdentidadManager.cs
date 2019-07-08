@@ -24,13 +24,23 @@ namespace Opiniometro_WebApp.Controllers.Servicios
             lista_enfasis = obtener_enfasis_usuario();
         }
 
+        /*
+         *  REQUIERE: la sigla de la carrera y el numero del enfasis, junto con el permiso.
+         *  EFECTUA: busca en permisos_usuarios si esa llave pasada por parametro existe.
+         *  MODIFICA: n/a
+         */
         public bool verificar_permiso(string sigla_carrera, int enfasis, int id_permiso)
         {
             // Verifico si existe la llave de la combinacion (sigla de la carrera, su enfasis, un permiso en especifico).
             return permisos_usuario.Contains(sigla_carrera + ',' + enfasis + ',' + id_permiso);
         }
 
-        // Verificar permiso sin necesidad de pasar un enfasis
+
+        /*
+         *  REQUIERE: el permiso con el que se quiere pedir permiso.
+         *  EFECTUA: busca en permisos_usuarios si esta el permiso iterando en todos los enfasis que tiene actualmente.
+         *  MODIFICA: n/a
+         */
         public bool verificar_permiso(int id_permiso)
         {
             bool autorizado = false;
@@ -48,6 +58,11 @@ namespace Opiniometro_WebApp.Controllers.Servicios
             return autorizado;
         }
 
+        /*
+         *  REQUIERE: el correo del usuario autenticado.
+         *  EFECTUA: obtiene los enfasis de un usuario en particular.
+         *  MODIFICA: n/a
+         */
         private List<Enfasis> obtener_enfasis_usuario()
         {
             var identidad_autenticada = (ClaimsPrincipal)Thread.CurrentPrincipal;
