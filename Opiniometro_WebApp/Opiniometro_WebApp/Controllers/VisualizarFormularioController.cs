@@ -234,7 +234,7 @@ namespace Opiniometro_WebApp.Controllers
             List<object> lista = new List<object> { x, y };
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
-
+    /* Aun no esta en server.
         //EFE:Retorna las observaciones del item.
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--
@@ -268,5 +268,6 @@ namespace Opiniometro_WebApp.Controllers
             List<object> observaciones = new List<object> { obs, nom, ap1, ap2 };
             return Json(observaciones, JsonRequestBehavior.AllowGet);
         }
+        */
     }
 }
