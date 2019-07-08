@@ -10,12 +10,16 @@
 namespace Opiniometro_WebApp.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class CursosSegunAnno_Result
+    public partial class Escalar
     {
-        public string Nombre { get; set; }
-        public string Sigla { get; set; }
-        public byte Tipo { get; set; }
-        public string CodigoUnidad { get; set; }
+        public string ItemId { get; set; }
+        public short Inicio { get; set; }
+        public short Fin { get; set; }
+        public short Incremento { get; set; }
+        public Nullable<bool> IsaEstrella { get; set; }
+    
+        public virtual Item Item { get; set; }
     }
 }

@@ -40,7 +40,7 @@
         @for (int i = 0; i < Model.ListaPerfiles.Count; i++)
         {
             <td>
-                <input type="checkbox" value="check" id="@(i+"mult")" onchange="seleccionMultiple(this,@(Model.ListaPermisos.Count))" />
+                <input title="Seleccionar columna" type="checkbox" value="check" id="@(i+"mult")" onchange="seleccionMultiple(this,@(Model.ListaPermisos.Count))" />
                 @Html.DisplayFor(model => Model.ListaPerfiles.ElementAt(i).Nombre)
             </td>
         }
@@ -80,9 +80,8 @@
         <button class="btn btn-default" type="submit">Guardar</button>
 
         <!-- El boton cancelar refresca la pantalla -->
-        <button class="btn btn-default" onclick="location.href='@Url.Action("SeleccionarPermisos", "SeleccionPermisos")'; return false;"> Cancelar</button>
+        <button class="btn btn-default" onclick="location.href='@Url.Action("Index", "Home")'; return false;"> Cancelar</button>
     </p>
 
     <br />
-    @Html.Raw(TempData["msg"])
 }
