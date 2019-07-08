@@ -229,7 +229,7 @@ BEGIN
 END;
 
 --Revisar
-IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
+/*IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
 	DROP TRIGGER TR_InsertaPersona
 GO
 CREATE TRIGGER TR_InsertaPersona
@@ -262,7 +262,7 @@ BEGIN
 	BEGIN CATCH 
 		PRINT 'ERROR: ' + ERROR_MESSAGE( );
 	END CATCH
-END;
+END;*/
 
 IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
