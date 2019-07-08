@@ -27,7 +27,7 @@ namespace Opiniometro_WebApp.Controllers
 
         public SeccionFormulario[] obtenerPreguntasFormulario(string cedulaEstudiante, string codigoForm)
         {
-
+            // Se recuperan las secciones del formulario con el código respectivo
             IQueryable < SeccionFormulario > seccionesQuery =
                 from conf in db.Conformado_Item_Sec_Form
                 where conf.CodigoFormulario == codigoForm
@@ -36,8 +36,12 @@ namespace Opiniometro_WebApp.Controllers
                     Titulo = conf.TituloSeccion
                 };
 
-            SeccionFormulario[] secciones = seccionesQuery.Distinct().ToArray();
+            // Se crea el arreglo de secciones que se asignarán al modelo
+            SeccionFormulario[] secciones = new SeccionFormulario[0];
+            if(seccionesQuery != null)
+                secciones = seccionesQuery.Distinct().ToArray(); // Distinct: impedancia en la tabla Conf_Item_Sec_Form
 
+            // Para cada sección se recuperan sus preguntas
             for (int seccion = 0; seccion < secciones.Count(); ++ seccion)
             {
                 string titulo = secciones[seccion].Titulo;
@@ -54,17 +58,21 @@ namespace Opiniometro_WebApp.Controllers
                     tipoPregunta = it.TipoPregunta
                 };
 
-                Pregunta[] preguntas = preguntasQuery.Distinct().ToArray();
-
-                //secciones.ElementAt(seccion).PreguntasFormulario = preguntas.ToList();
+                // Se crea el arreglo de preguntas que se asignarán a la sección y se asigna
+                Pregunta[] preguntas = new Pregunta[0];
+                if (preguntasQuery != null)
+                    preguntas = preguntasQuery.Distinct().ToArray();
                 secciones[seccion].PreguntasFormulario = preguntas;
 
+                // Si le sección no tiene preguntas asisgnadas
                 if (secciones[seccion].PreguntasFormulario != null)
                 {
+                    // Para cada pregunta se recuperan sus opciones, según su tipo
                     for (int pregunta = 0; pregunta < secciones[seccion].PreguntasFormulario.Count(); ++pregunta)
                     {
                         if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 1)
                         {
+                            // La pregunta de respuesta libre no tiene opciones, solo campo de texto
                             ;
                         }
                         else if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 2)
@@ -73,76 +81,44 @@ namespace Opiniometro_WebApp.Controllers
                             IQueryable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Unica
                                                           where ops.ItemId == id
                                                           select ops.OpcionRespuesta;
+                            
+                            // Se asigna el arreglo de opciones
                             secciones[seccion].PreguntasFormulario[pregunta].Opciones = opciones.ToArray();
-                            //secciones.ElementAt(seccion).PreguntasFormulario.ElementAt(pregunta).Opciones = opciones.ToList();
                         }
+
+
+                        //#############################################################
+                        // AQUI SEGUIR RECUPERANDO OPCIONES Y ASIGNARLAS A COVENIENCIA
+                        //#############################################################
                     }
                     
                 }
                 
             }
 
-           
-            foreach(SeccionFormulario s in secciones)
-            {
-                Debug.WriteLine(s.Titulo);
-                if(s.PreguntasFormulario != null)
-                {
-                    foreach (Pregunta p in s.PreguntasFormulario)
-                    {
-                        Debug.WriteLine("\t" + p.item);
+            // Para debuggear
+            /* 
+             foreach(SeccionFormulario s in secciones)
+             {
+                 Debug.WriteLine(s.Titulo);
+                 if(s.PreguntasFormulario != null)
+                 {
+                     foreach (Pregunta p in s.PreguntasFormulario)
+                     {
+                         Debug.WriteLine("\t" + p.item);
 
-                        if (p.Opciones != null)
-                        {
-                            foreach (String o in p.Opciones)
-                            {
-                                Debug.WriteLine("\t\t" + o);
-
-                            }
-                        }
-                    }
-                }
-                
-            }
-
+                         if (p.Opciones != null)
+                         {
+                             foreach (String o in p.Opciones)
+                             {
+                                 Debug.WriteLine("\t\t" + o);
+                             }
+                         }
+                     }
+                 }
+             }*/
 
             return secciones;
-            /*
-            IQueryable < Pregunta > formulario =
-                from it in db.Item
-                join confSecItem in db.Conformado_Item_Sec_Form on it.ItemId equals confSecItem.ItemId
-                join sec in db.Seccion on confSecItem.TituloSeccion equals sec.Titulo
-                where (confSecItem.CodigoFormulario == codigoForm)
-
-                select new Pregunta
-                {
-                    itemId = it.ItemId,
-                    item = it.TextoPregunta,
-                    tieneObservacion = it.TieneObservacion,
-                    tipoPregunta = it.TipoPregunta
-                };
-
-            List<Pregunta> preguntas = new List<Pregunta>();
-            foreach (Pregunta p in formulario)
-            {
-                string id = p.itemId;
-                string texto = p.item;
-                bool? observacion = p.tieneObservacion;
-                int tipo = p.tipoPregunta;
-                if (p.tipoPregunta == 1)
-                    preguntas.Add(new Pregunta { itemId = id, item = texto, tieneObservacion = observacion, tipoPregunta = tipo });
-                else if (p.tipoPregunta == 2)
-                {
-                    IQueryable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Unica
-                                                  where ops.ItemId == id
-                                                  select ops.OpcionRespuesta;
-                    preguntas.Add(new Pregunta{ itemId = id, item = texto, tieneObservacion = observacion, tipoPregunta = tipo,
-                        Opciones = opciones.ToList() });
-                }
-            }
-            
-            return preguntas.AsQueryable();
-            */
         }
 
         /* Llamar con:
@@ -195,6 +171,7 @@ namespace Opiniometro_WebApp.Controllers
             // tuplas contiene todas las tuplas por insertar a la base.
         }
 
+        // Esto podria servir para empezar a romper el codigo (separar en metodos)
         public string ObtenerOpcionesSelUnica(string id)
         {
             //Console.WriteLine(id);

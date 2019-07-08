@@ -16,7 +16,8 @@ namespace Opiniometro_WebApp.Models
         public string[] Opciones;
 
     }
-
+    //      |   |   |
+    //      V   V   V
     public class SeccionFormulario
     {
         public string Titulo { set; get; }
@@ -24,7 +25,8 @@ namespace Opiniometro_WebApp.Models
         public Pregunta[] PreguntasFormulario;
 
     }
-
+    //      |   |   |
+    //      V   V   V
     public class FormularioPorCurso {
 
         public SeccionFormulario[] Secciones;
