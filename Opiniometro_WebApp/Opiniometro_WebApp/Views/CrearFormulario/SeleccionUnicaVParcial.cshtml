@@ -1,29 +1,18 @@
 ﻿@model Opiniometro_WebApp.Models.VistaPreviaPreguntaModel
 
 <div>
-    <dl class="dl-horizontal">
-        <dd>
-            @Html.DisplayFor(model => model.Item.TextoPregunta)
-        </dd>
+    <dl class="col-lg-5">
         <dd>
             <table>
                 @foreach (var option in Model.Opciones)
                 {
                     <tr>
-                        @if (Model.Item.TipoPregunta == 3)
-                        {
-                            <td>
-                                <input type="checkbox" disabled />
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                <input type="radio" disabled />
-                            </td>
-                        }
-
+               
                         <td>
+                            <input type="radio" disabled />
+                        </td>
+                     
+                        <td width="100%">
                             @Html.DisplayFor(model => option.OpcionRespuesta)
                         </td>
                     </tr>
