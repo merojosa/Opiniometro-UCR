@@ -394,7 +394,8 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public string EfectuarAsignaciones(string Grupos, string PeriodosIndicados)
         {
-            int asignacionesConcretadas = 0;
+            string mensajes = "";
+            int numErrores = 0;
             var FormulariosConPeriodos = JsonConvert.DeserializeObject<TipoPeriodosIndicados[]>(PeriodosIndicados);
             var GruposEnLista = JsonConvert.DeserializeObject<Grupo[]>(Grupos);
 
@@ -434,23 +435,35 @@ namespace Opiniometro_WebApp.Controllers
                             FechaInicio = inicioPeriodo,
                             FechaFinal = finPeriodo
                         });
-                        ++asignacionesConcretadas;
                     }
                 }
                 else
                 {
-                    Debug.Write("\n\nFecha incorrecta /\n\n");
+                    //Debug.Write("\n\nFecha incorrecta /\n\n");
+                    ++numErrores;
+                    mensajes += "                                             - " + fcp.CodigoForm + "\n";
                 }
             }
 
-            if (ModelState.IsValid)
+            if (numErrores > 0)
             {
-                db.Tiene_Grupo_Formulario.AddRange(asignaciones);
-                db.SaveChanges();
-                return JsonConvert.SerializeObject(asignacionesConcretadas);
+                mensajes = "Ingrese correctamente el periodo para los formularios:\n" + mensajes 
+                    + "\nPor favor corrija lo indicado antes de realizar las asignaciones.\n";
+            }
+            else
+            { 
+                if (ModelState.IsValid)
+                {
+                    db.Tiene_Grupo_Formulario.AddRange(asignaciones);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    mensajes += "Hubo un error al guardar las asignaciones. Por favor contacte a soporte técnico.\n";
+                }
             }
 
-            return JsonConvert.SerializeObject(-1);
+            return JsonConvert.SerializeObject(mensajes == ""? null : mensajes);
         }
     }
 }
