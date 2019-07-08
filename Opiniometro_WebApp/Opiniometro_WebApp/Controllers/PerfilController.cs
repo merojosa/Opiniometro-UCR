@@ -271,10 +271,5 @@ namespace Opiniometro_WebApp.Controllers
         {
             return Json(!db.Perfil.Any(perfil => perfil.Nombre == Nombre), JsonRequestBehavior.AllowGet);
         }
-
-        public JsonResult IsNombrePerfilValido(EditarPerfil perfilP)
-        {
-            return Json(!db.Perfil.Any(perfil => perfil.Nombre == perfilP.Nombre), JsonRequestBehavior.AllowGet);
-        }
     }
 }
