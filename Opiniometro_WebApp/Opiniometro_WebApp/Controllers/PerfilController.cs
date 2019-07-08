@@ -21,7 +21,7 @@ namespace Opiniometro_WebApp.Controllers
     public class PerfilController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
-        public ActionResult VerPerfiles(String nom)
+        public ActionResult VerPerfiles(string nom)
         {
             if (!String.IsNullOrEmpty(nom))
             {
@@ -61,7 +61,7 @@ namespace Opiniometro_WebApp.Controllers
             }
             // Si no es la primera vez, no se cambia el perfil porque ya hay uno elegido.
 
-            return View(model);
+            return View("Cambiar", model);
         }
 
         [HttpPost]
@@ -98,7 +98,7 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // Devuelve los perfiles del usuario loggeado.
-        public static ICollection<String> ObtenerPerfiles()
+        public static ICollection<string> ObtenerPerfiles()
         {
             Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
             string correo_autenticado = IdentidadManager.obtener_correo_actual();
@@ -154,13 +154,13 @@ namespace Opiniometro_WebApp.Controllers
 
         public ActionResult Borrar()
         {
-            return View(db.Perfil.ToList());
+            return View("Borrar", db.Perfil.ToList());
         }
 
         // GET: CRUDPERFILES/Create
         public ActionResult Crear()
         {
-            return View();
+            return View("Crear");
         }
 
         // POST: CRUDPERFILES/Create
