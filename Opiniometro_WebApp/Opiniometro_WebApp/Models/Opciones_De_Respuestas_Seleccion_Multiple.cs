@@ -10,12 +10,14 @@
 namespace Opiniometro_WebApp.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class MostrarEstudiantes_Result
+    public partial class Opciones_De_Respuestas_Seleccion_Multiple
     {
-        public string Nombre1 { get; set; }
-        public string Apellido1 { get; set; }
-        public string Apellido2 { get; set; }
-        public string Carne { get; set; }
+        public string ItemId { get; set; }
+        public short Orden { get; set; }
+        public string OpcionRespuesta { get; set; }
+    
+        public virtual Seleccion_Multiple Seleccion_Multiple { get; set; }
     }
 }

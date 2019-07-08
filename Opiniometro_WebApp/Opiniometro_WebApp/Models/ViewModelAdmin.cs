@@ -11,8 +11,8 @@ namespace Opiniometro_WebApp.Models
         public List<Usuario> listaUsuarios { get; set; }
         public List<Enfasis> listaEnfasis { get; set; }
 
-        public Persona persona { get; set; }
-        public Usuario usuario { get; set; }
-        public Enfasis enfasis { get; set; }
+        public Persona Persona { get; set; }
+        public Usuario Usuario { get; set; }
+        public Enfasis Enfasis { get; set; }
     }
 }

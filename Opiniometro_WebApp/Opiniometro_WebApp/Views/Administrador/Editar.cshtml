@@ -28,18 +28,18 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.usuario.CorreoInstitucional, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Usuario.CorreoInstitucional, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.EditorFor(model => model.usuario.CorreoInstitucional, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.usuario.CorreoInstitucional, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Usuario.CorreoInstitucional, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Usuario.CorreoInstitucional, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Persona.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Persona.Nombre1, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.EditorFor(model => model.Persona.Nombre, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Persona.Nombre, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Persona.Nombre1, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Persona.Nombre1, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -62,10 +62,12 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Persona.Direccion, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
-                    @Html.EditorFor(model => model.Persona.Direccion, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Persona.Direccion, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Usuario.Activo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-1">
+                    @if (Model.Usuario.Activo == true)
+                    {
+                        @Html.CheckBoxFor(model => model.Usuario.Activo, new { @checked = "checked" })
+                    }
                 </div>
             </div>
 
@@ -89,7 +91,8 @@
                                         {
                                             <tr>
                                                 <td>@Model.Perfil.ElementAt(i)</td>
-                                                <td>@Html.CheckBoxFor(model => Model.perfilesAsignados.ElementAt(i).asignar, new { @checked = "checked", @id = i }) <br></td>
+                                                <td>@Html.CheckBoxFor(model => Model.tienePerfil[i], new { @checked = "checked", @id = i }) <br></td>
+                                                @Html.HiddenFor(model => Model.Perfil[i])
                                             </tr>
                                         }
                                     }
@@ -104,7 +107,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-3">
                     <input type="submit" value="Guardar" class="btn btn-default" />
-                    @Html.ActionLink("Cancelar", "VerPersonas", "Administrador", "", new { @class = "btn btn-default" })
+                    @Html.ActionLink("Cancelar", "VerPersonas", "Admin", "", new { @class = "btn btn-default" })
                 </div>
             </div>
         </div>
