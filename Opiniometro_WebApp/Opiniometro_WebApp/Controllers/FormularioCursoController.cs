@@ -64,7 +64,7 @@ namespace Opiniometro_WebApp.Controllers
                     preguntas = preguntasQuery.Distinct().ToArray();
                 secciones[seccion].PreguntasFormulario = preguntas;
 
-                // Si le sección no tiene preguntas asisgnadas
+                // Si le sección no tiene preguntas asignadas
                 if (secciones[seccion].PreguntasFormulario != null)
                 {
                     // Para cada pregunta se recuperan sus opciones, según su tipo
