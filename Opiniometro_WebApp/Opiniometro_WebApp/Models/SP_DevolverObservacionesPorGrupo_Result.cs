@@ -11,10 +11,11 @@ namespace Opiniometro_WebApp.Models
 {
     using System;
     
-    public partial class DatosEstudiante_Result
+    public partial class SP_DevolverObservacionesPorGrupo_Result
     {
-        public string Nombre_Completo { get; set; }
-        public string Carne { get; set; }
-        public string Cedula { get; set; }
+        public string Observacion { get; set; }
+        public string Nombre1 { get; set; }
+        public string Apellido1 { get; set; }
+        public string Apellido2 { get; set; }
     }
 }

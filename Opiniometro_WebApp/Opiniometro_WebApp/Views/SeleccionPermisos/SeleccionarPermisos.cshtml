@@ -1,42 +1,87 @@
-﻿@{
+﻿@model Opiniometro_WebApp.Models.SeleccionPermisos
+
+@{
     ViewBag.Title = "Administrar Permisos";
 }
 
 <h2>Administrar Permisos</h2>
 
-<br/>
+<br />
+
+<!--Script para los checkboxes que se usan para seleccionar toda una columna-->
+<script type="text/javascript">
+    function seleccionMultiple(element, numPermisos) {
+        for (var i = 0; i < numPermisos; i++) {
+            if (element.checked) {
+                document.getElementById(i + '_' + element.id[0]).checked = true;//Posicion cero pues la hilera del id tiene el primer caracter el indice del perfil
+            }
+            else {
+                document.getElementById(i + '_' + element.id[0]).checked = false;
+            }
+        }
+    }
+</script>
 
 @using (Html.BeginForm("Guardar", "SeleccionPermisos"))
 {
-    <div style="width : 200px;">
-        @Html.Label("Perfil")
-        @Html.DropDownList("Perfiles", new SelectList(Model.ListaPerfilesId), "Elegir perfil", new { @class = "form-control" })
+    <table class="table" width="400">
+        <tr>
+            <th>
+                Permisos
+            </th>
+            <th></th>
+            <th>
+                Perfiles
+            </th>
+            <th></th>
+        </tr>
+        <th></th>
+        <!--Se despliegan los nombres de los Perfiles para cada columna de permisos-->
+        @for (int i = 0; i < Model.ListaPerfiles.Count; i++)
+        {
+            <td>
+                <input title="Seleccionar columna" type="checkbox" value="check" id="@(i+"mult")" onchange="seleccionMultiple(this,@(Model.ListaPermisos.Count))" />
+                @Html.DisplayFor(model => Model.ListaPerfiles.ElementAt(i).Nombre)
+            </td>
+        }
 
-        <br />
+        <tr> </tr>
 
-        <table class="table">
-            <tr>
-                <th>Permisos</th>
-            </tr>
+        @for (int i = 0; i < Model.ListaPermisos.Count; i++)
+        {
+            <!--Se muestra la descripcion de cada permiso-->
+            <td>
+                @Html.DisplayFor(model => model.ListaPermisos.ElementAt(i).Descripcion)
+            </td>
 
-            @for (int i = 0; i < Model.ListaPermisos.Count; i++)
+            for (int j = 0; j < Model.ListaPerfiles.Count; j++)
             {
-                <tr>
-                    <td>
-                        @Model.ListaPermisos[i].Descripcion
-                    </td>
-                </tr>
+                for (int k = 0; k < Model.ListaGuardar.Count; k++)
+                {
+                    <!--Revisar si existe permiso asociado a perfil mediante la lista que ya tiene las asociaciones comparando con todos los permisos-->
+                    if (Model.ListaGuardar.ElementAt(k).Permiso == Model.ListaPermisos.ElementAt(i).Id &&
+                        Model.ListaGuardar.ElementAt(k).Perfil == Model.ListaPerfiles.ElementAt(j).Nombre)
+                    {
+                        <!--Pone los checkboxes en checked cuando existe la relacion-->
+                        <td>
+                            @Html.CheckBoxFor(model => Model.ListaGuardar[k].Existe, new { @checked = "checked", @id = i + "_" + j })
+                            @Html.HiddenFor(model => Model.ListaGuardar[k].Permiso, i)
+                            @Html.HiddenFor(model => Model.ListaGuardar[k].Perfil, j)
+                        </td>
+                    }
+                }
             }
-        </table>
-    </div>
+            <tr></tr>
+        }
+
+    </table>
 
     <p align="right">
         <button class="btn btn-default" type="submit">Guardar</button>
 
         <!-- El boton cancelar refresca la pantalla -->
-        <button class="btn btn-default" onclick="location.href='@Url.Action("SeleccionarPermisos", "SeleccionPermisos")'; return false;"> Cancelar</button>
+        <button class="btn btn-default" onclick="location.href='@Url.Action("Index", "Home")'; return false;"> Cancelar</button>
     </p>
 
     <br />
-    @Html.Raw(TempData["msg"])
 }

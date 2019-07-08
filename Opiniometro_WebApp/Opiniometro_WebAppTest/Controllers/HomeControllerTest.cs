@@ -6,8 +6,6 @@ using Opiniometro_WebApp.Controllers;
 using Opiniometro_WebApp.Models;
 using Moq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using Opiniometro_WebApp.Controllers;
 using Opiniometro_WebApp.Controllers.Servicios;
 
 namespace Opiniometro_WebAppTest.Controllers
