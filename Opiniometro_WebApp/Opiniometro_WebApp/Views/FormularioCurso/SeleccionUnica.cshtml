@@ -1,0 +1,20 @@
+﻿@model IEnumerable<string>
+@*@model Opiniometro_WebApp.Models.SeleccionUnica*@
+
+@{
+    ViewBag.Title = "SeleccionUnica";
+}
+
+@*@foreach (var opcion in Model)
+    {
+        @Html.DisplayFor(modelItem => item.item)
+        <input type="checkbox" name="seleccion" value="seleccion">  @Html.DisplayFor(modelItem => opcion.OpcionRespuesta)<br>
+    }*@
+
+<fieldset>
+
+    @foreach (var opcion in Model)
+    {
+        <br><input type="radio" name="seleccion" value="@opcion" id="@opcion"><label>@opcion</label>
+    }
+</fieldset>

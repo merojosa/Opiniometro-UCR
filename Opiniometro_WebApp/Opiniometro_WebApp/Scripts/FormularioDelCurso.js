@@ -31,7 +31,7 @@ function TextoLibre(contTextoLibre) {
     var elemento = document.createElement("textarea");
     elemento.rows = "5";
     elemento.cols = "50";
-    elemento.maxLength = "160";
+    elemento.maxLength = "160";   
     contenido.appendChild(elemento);
 }
 
@@ -39,15 +39,37 @@ function TextoLibre(contTextoLibre) {
 //         --si tiene campo de observacion
 //modifica: vista en las preguntas que tienen seleccion unica
 //retorna--
-function seleccionUnica(contSelUnica/*,listaOpciones*/) {
-  
+function seleccionUnica(contSelUnica, item_id) {
+
+    var contenido = document.getElementById("preguntaSelUnica".concat(contSelUnica));
+    /*
+    $.get("/FormularioDelCurso/ObtenerOpcionesSelUnica", {
+        id: item_id
+    }, function (json_list) {
+        alert(json_list);
+
+        var list = JSON.parse(json_list);
+        foreach (var op in list)
+        {
+            var radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = op;
+            radio.id = op.concat(contSelUnica);
+            radio.value = "op";
+            contenido.appendChild(radio);
+        }
+});*/
+
+
 }
 
 ///recibe:-- si tiene campo de observacion
 //modifica: vista en las preguntas que tienen si o no
 //retorna--
 function RespondeSiNo(contSiNo) {
-
+    var x = document.createElement("INPUT");
+    x.setAttribute("type", "radio");
+    contenido.appendChild(x);
 }
 
 

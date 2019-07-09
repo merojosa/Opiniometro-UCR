@@ -210,7 +210,6 @@
     <Compile Include="Controllers\Servicios\IdentidadManager.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\VisualizarFormularioController.cs" />
-    <Compile Include="Controllers\SeleccionFormulariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -218,9 +217,7 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AsignarFormulariosModel.cs" />
-    <Compile Include="Models\Canton.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\BuscarCursoPorNombre_Result.cs" />
     <Compile Include="Models\Carrera.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -249,19 +246,14 @@
     <Compile Include="Models\CursosSegunSemestre_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C__RefactorLog.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DatosEstudiante_Result.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Distrito.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\DatosFormulario.cs" />
     <Compile Include="Models\Empadronado.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Enfasis.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Escalar.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Estudiante.cs">
@@ -276,14 +268,14 @@
     <Compile Include="Models\Formulario.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DatosFormulario.cs" />
     <Compile Include="Models\Formulario_Respuesta.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Grupo.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Imparte.cs">
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Imparte_View.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Item.cs">
@@ -293,6 +285,12 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MostrarEstudiantes_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObtenerPerfilesUsuario_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Opciones_De_Respuestas_Seleccion_Multiple.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Opciones_De_Respuestas_Seleccion_Unica.cs">
@@ -331,9 +329,6 @@
     <Compile Include="Models\Profesor.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Provincia.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Responde.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -342,13 +337,28 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SeleccionPermisos.cs" />
+    <Compile Include="Models\Seleccion_Multiple.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Seleccion_Unica.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_ContarRespuestasPorGrupo_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SP_DevolverObservacionesPorGrupo_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TelefonoPersona.cs">
@@ -372,10 +382,9 @@
     <Compile Include="Models\ValidacionJOFFI\Metadata.cs" />
     <Compile Include="Models\ValidacionJOFFI\PartialClasses.cs" />
     <Compile Include="Models\ViewModelAdmin.cs" />
-    <Compile Include="ViewModels\AsignarFormulariosViewModel.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AsignarFormulariosViewModel.cs" />
     <Compile Include="ViewModels\AsignarPeriodosViewModel.cs" />
     <Compile Include="ViewModels\ElegirFormularioEditorViewModel.cs" />
     <Compile Include="ViewModels\ElegirGrupoEditorViewModel.cs" />
@@ -387,13 +396,12 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\filter.css" />
     <Content Include="Content\firma-ucr-c.svg" />
     <Content Include="Content\img\minus.png" />
     <Content Include="Content\img\plus.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\scrollbar-tabla.css" />
-    <Content Include="Content\TablasHTML\FixedHeaderTable.css" />
+    <Content Include="Content\Formulario.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -408,7 +416,6 @@
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
       <LastGenOutput>Opiniometro_Model.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\AsignarFormularios.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\Opiniometro_Model.edmx">
@@ -429,8 +436,6 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -451,8 +456,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Formulario\Create.cshtml" />
@@ -476,16 +479,6 @@
     <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
     <Content Include="Views\Auth\Recuperar.cshtml" />
     <Content Include="Views\Shared\Auth\BarraLogin.cshtml" />
-    <Content Include="Views\Items\Create.cshtml" />
-    <Content Include="Views\Items\Delete.cshtml" />
-    <Content Include="Views\Items\Details.cshtml" />
-    <Content Include="Views\Items\Edit.cshtml" />
-    <Content Include="Views\Items\Index.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
     <Content Include="Views\VisualizarFormulario\Create.cshtml" />
     <Content Include="Views\VisualizarFormulario\Delete.cshtml" />
     <Content Include="Views\VisualizarFormulario\Details.cshtml" />
@@ -493,12 +486,6 @@
     <Content Include="Views\VisualizarFormulario\Index.cshtml" />
     <Content Include="Views\Admin\VerPersonas.cshtml" />
     <Content Include="Views\Admin\CrearUsuario.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
-    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
-    <Content Include="Views\LogInPerfiles\Index.cshtml" />
     <Content Include="Views\Administrador\CargarArchivo.cshtml" />
     <Content Include="Views\Administrador\Index.cshtml" />
     <Content Include="Views\Categoria\Create.cshtml" />
@@ -518,23 +505,32 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_Collapsible.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Perfil\Index.cshtml" />
     <Content Include="Views\SeleccionPermisos\SeleccionarPermisos.cshtml" />
     <Content Include="Views\CrearFormulario\ConformadoVParcial.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\ElegirGrupoEditorViewModel.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\ElegirFormularioEditorViewModel.cshtml" />
+    <Content Include="Views\Perfil\Borrar.cshtml" />
+    <Content Include="Views\Perfil\Cambiar.cshtml" />
+    <Content Include="Views\Perfil\ConfirmarBorrado.cshtml" />
+    <Content Include="Views\Perfil\Crear.cshtml" />
+    <Content Include="Views\Perfil\VerPerfiles.cshtml" />
+    <Content Include="Views\LlenarFormulario\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\AsignacionFormularioGrupo.cshtml" />
-    <Content Include="Views\Auth\Permisos.cshtml" />
     <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
     <Content Include="Views\CursosMatriculados\Index.cshtml" />
     <Content Include="Views\FormularioCurso\Index.cshtml" />
     <Content Include="Views\Asignacion_Formulario\Delete.cshtml" />
     <Content Include="Views\Asignacion_Formulario\Edit.cshtml" />
     <Content Include="Views\Asignacion_Formulario\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ElegirFormularioEditorViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ElegirGrupoEditorViewModel.cshtml" />
+    <Content Include="Views\Formulario_Respuesta\Edit.cshtml" />
+    <Content Include="Views\Auth\CambiarContrasenna.cshtml" />
+    <Content Include="Views\FormularioCurso\SeleccionUnica.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
     <Folder Include="Views\SeleccionFormularios\" />
+    <Folder Include="Views\Seleccion_Unica\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
