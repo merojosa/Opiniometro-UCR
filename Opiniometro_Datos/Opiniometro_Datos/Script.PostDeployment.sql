@@ -377,6 +377,16 @@ as
 	WHERE CorreoInstitucional = @correo;
 go
 
+select * from Tiene_Usuario_Perfil_Enfasis
+
+INSERT INTO Tiene_Usuario_Perfil_Enfasis
+VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Test1')
+
+INSERT INTO Perfil
+VALUES	('Test1', 'Perfil de prueba.')
+
+exec SP_ModificarPerfilUsuario @correo = 'jose.mejiasrojas@ucr.ac.cr', @perfil = 'Test1', @modifica = 0
+
 --Procedimiento almacenado de modificar (Poner o Quitar) Perfil a Usuario
 IF OBJECT_ID('SP_ModificarPerfilUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ModificarPerfilUsuario
