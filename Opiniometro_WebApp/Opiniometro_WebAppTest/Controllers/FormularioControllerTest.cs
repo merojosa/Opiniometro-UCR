@@ -16,6 +16,7 @@ namespace Opiniometro_WebAppTest.Controllers
         [TestMethod]
         public void TestCreateViewDataMock()
         {
+            
             // Arrange
             var mockDb = new Mock<Opiniometro_DatosEntities>();
             string codigo = "100001";
@@ -142,7 +143,7 @@ namespace Opiniometro_WebAppTest.Controllers
             FormularioController controller = new FormularioController(mockDb.Object);
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            ViewResult result = controller.Index(1) as ViewResult;
             List<Formulario> formulario = (List<Formulario>)result.ViewData.Model;
             // Assert
             Assert.AreEqual(4, formulario.Count);
@@ -152,7 +153,7 @@ namespace Opiniometro_WebAppTest.Controllers
         public void TestIndexNotNullAndView()
         {
             FormularioController controller = new FormularioController();
-            ViewResult result = controller.Index() as ViewResult;
+            ViewResult result = controller.Index(1) as ViewResult;
             Assert.IsNotNull(result, "Null");
             Assert.AreEqual("Index", result.ViewName, "ViewName");
         }

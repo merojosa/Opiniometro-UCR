@@ -251,6 +251,7 @@
     <Compile Include="Models\CursosSegunSemestre_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DatosFormulario.cs" />
     <Compile Include="Models\DatosProvisionados.cs" />
     <Compile Include="Models\EditarPerfil.cs" />
     <Compile Include="Models\Empadronado.cs">
@@ -364,6 +365,9 @@
     <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SP_RecuperarEtiquetasEscalar_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -389,7 +393,6 @@
     <Compile Include="Models\ValidacionJOFFI\PartialClasses.cs" />
     <Compile Include="Models\ViewEnfasis.cs" />
     <Compile Include="Models\ViewModelAdmin.cs" />
-    <Compile Include="ViewModels\AsignarFormulariosViewModel.cs" />
     <Compile Include="Models\VistaPreviaPreguntaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -559,7 +562,6 @@
     <Folder Include="App_Data\ArchivosCargados\" />
     <Folder Include="Views\Opciones_De_Respuestas_Seleccion_Unica\" />
     <Folder Include="Views\SeleccionFormularios\" />
-    <Folder Include="Views\Seleccion_Unica\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
