@@ -705,17 +705,12 @@ BEGIN
 	DECLARE @nombre1 NVARCHAR(51)
 	DECLARE @nombre2 NVARCHAR(51)
 	DECLARE @apellido1 NVARCHAR(51)
-	DECLARE @apellido2 NVARCHAR(51)
-	--DECLARE @correoInstitucional NVARCHAR(51)
-
-	--SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
-	
+	DECLARE @apellido2 NVARCHAR(51)	
 	SET @cedula					= (SELECT Cedula FROM inserted)
 	SET @nombre1				= (SELECT Nombre1 FROM inserted)
 	SET @nombre2				= (SELECT Nombre2 FROM inserted)
 	SET @apellido1				= (SELECT Apellido1 FROM inserted)
 	SET @apellido2				= (SELECT Apellido2 FROM inserted)
-
 	IF((@cedula NOT LIKE '') AND  (LEN(@cedula) = 9) AND (@nombre1 NOT LIKE '') AND (LEN(@nombre1) <= 50) 
 	AND  (LEN(@nombre2) <= 50)  AND (@apellido1 NOT LIKE '') AND (LEN(@apellido1) <= 50)  
 	AND (@apellido2 NOT LIKE '') AND (LEN(@apellido2) <= 50))
@@ -729,7 +724,6 @@ BEGIN
 		RETURN
 	END
 END;
-
 IF OBJECT_ID('TR_InsertaUsuario') IS NOT NULL
 	DROP TRIGGER TR_InsertaUsuario
 GO
@@ -743,7 +737,6 @@ BEGIN
 	DECLARE @activo BIT
 	DECLARE @id UNIQUEIDENTIFIER
 	DECLARE @recuperarContrasena BIT
-
 	SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
 	SET @cedula					= (SELECT Cedula FROM inserted)
 	SET @contrasena = (SELECT Contrasena FROM inserted)
