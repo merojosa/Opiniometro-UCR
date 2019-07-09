@@ -22,6 +22,7 @@ using System.Security.Cryptography;
 using Opiniometro_WebApp.Models;
 using System.Text;
 using System.Reflection;
+using System.Net.Mail;
 //using Microsoft.SqlServer.Dts;
 //using Microsoft.SqlServer.Dts.Runtime;
 
@@ -701,7 +702,7 @@ namespace Opiniometro_WebApp.Controllers
             }
             return Tipo;
         }
-    }
+    
  
         public Persona Persona { get; private set; }
 
@@ -855,11 +856,11 @@ namespace Opiniometro_WebApp.Controllers
             }
             catch (Exception)
             {
-                //return RedirectToAction("VerPersonas");
+                return RedirectToAction("VerPersonas");
                 throw;
             }
 
-            return null;
+            //return null;
         }
 
         private void EnviarCorreo(string receptor, string asunto, string contenido)

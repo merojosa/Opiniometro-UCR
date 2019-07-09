@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f291c28c5cf34336a730049296d58d84" Name="Diagram1">
+      <Diagram DiagramId="3016125d84a64698959025b89f1d31d1" Name="Diagram1">
         <EntityTypeShape EntityType="Opiniometro_Model.Administrativo" Width="1.5" PointX="3" PointY="34.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Opiniometro_Model.Carrera" Width="1.5" PointX="3.75" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Opiniometro_Model.Categoria" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
@@ -62,6 +62,7 @@
         <AssociationConnector Association="Opiniometro_Model.FK_Matricula_Profesor" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.FK_Fac_Uni" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.FK_Tie_Fec" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_Model.FK_For_Uni" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.FK_ForRes_For" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.FK_Tie_For" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.FK_ForRes_Gru" ManuallyRouted="false" />
@@ -86,7 +87,6 @@
         <AssociationConnector Association="Opiniometro_Model.Escuela" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.Imparte" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.Se_Encuentra_Curso_Enfasis" ManuallyRouted="false" />
-        <AssociationConnector Association="Opiniometro_Model.FK_For_Uni" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -129,7 +129,7 @@ namespace Opiniometro_WebApp.Models
 
         [Required]
         [StringLength(50, ErrorMessage = "El {o} debe contener hasta un máximo de {1} caracteres.")]
-        [RegularExpression(@"([\w]+\.)([\w])(@ucr.ac.cr)", ErrorMessage = "Formato de correo institucional invalido.")]
+        [RegularExpression(@"([\w]+\.)([\w]+)(@ucr.ac.cr)", ErrorMessage = "Formato de correo institucional invalido.")]
         [DataType(DataType.EmailAddress)]
         public string CorreoInstitucional; //6
 
@@ -184,7 +184,7 @@ namespace Opiniometro_WebApp.Models
     {
         [Required]
         [StringLength(50)]
-        [RegularExpression(@"([\w]+\.)([\w])(@ucr.ac.cr)")]
+        [RegularExpression(@"([\w]+\.)([\w]+)(@ucr.ac.cr)")]
         [DataType(DataType.EmailAddress)]
         public string CorreoInstitucional;
 
@@ -242,7 +242,7 @@ namespace Opiniometro_WebApp.Models
 
         [Required]
         [StringLength(50)]
-        [RegularExpression(@"([\w]+\.)([\w])(@ucr.ac.cr)")]
+        [RegularExpression(@"([\w]+\.)([\w]+)(@ucr.ac.cr)")]
         [DataType(DataType.EmailAddress)]
         public string CorreoInstitucional;
 
