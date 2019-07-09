@@ -38,7 +38,7 @@
 
                 <span style="float:right;">
                     <b>Profesor:</b>
-                    @Html.DisplayFor(modelItem => title.Profesor.Persona.Nombre)
+                    @Html.DisplayFor(modelItem => title.Profesor.Persona.Nombre1)
                     @Html.DisplayFor(modelItem => title.Profesor.Persona.Apellido1)
                     @Html.DisplayFor(modelItem => title.Profesor.Persona.Apellido2)
                 </span>
@@ -133,34 +133,47 @@
                                                         <script>
                                                         $.ajax({
                                                             type: "POST",
-                                                            url: "/VisualizarFormulario/GraficoPie",
-                                                            data: "{ 'codigoFormulario': '@codigoFormularioRec', 'cedulaProfesor': '@cedulaProfesorRec', 'annoGrupo': '@annoGrupoRec', 'semestreGrupo': '@semestreGrupoRec', 'numeroGrupo': '@numeroGrupoRec', 'siglaCurso': '@siglaCursoRec', 'itemId': '@seccion.Item.ItemId' }",
+                                                            url: "/VisualizarFormulario/GraficoPie/?itemId=@seccion.Item.ItemId",
+                                                            data: "{ 'codigoFormulario': '@codigoFormularioRec', 'cedulaProfesor': '@cedulaProfesorRec', 'annoGrupo': '@annoGrupoRec', 'semestreGrupo': '@semestreGrupoRec', 'numeroGrupo': '@numeroGrupoRec', 'siglaCurso': '@siglaCursoRec', 'itemId': '@seccion.Item.ItemId', 'tipoPregunta': '@seccion.Item.TipoPregunta' }",
                                                             contentType: "application/json; charset=utf-8",
                                                             dataType: "json",
                                                             success: function (chData) {
                                                                 var aData = chData;
                                                                 var aLabels = aData[0];
                                                                 var aDatasets1 = aData[1];
+                                                                var aPromedio = aData[2];
+                                                                var aMediana = aData[3];
+                                                                var aDesviacion = aData[4];
 
                                                                 var tamanio = 0;
-                                                                var cantidadOpciones = 0;
-                                                                var promedio = 0;
+                                                                var texto = "";
 
                                                                 for (var data in aDatasets1) {
                                                                     var valor = parseInt(aDatasets1[data]);
                                                                     tamanio = tamanio + valor;
-                                                                    cantidadOpciones++;
                                                                 }
 
-                                                                promedio = tamanio / cantidadOpciones;
-
                                                                 //for (var i = 0; i < tamanio; i++)
-                                                                document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: " + (tamanio).toString() + " ";
+                                                                //document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Cantidad de Estudiantes que respondieron: " + (tamanio).toString() + " ";
+                                                                texto = texto + "Cantidad de Estudiantes que respondieron: " + (tamanio).toString() + "<br>";
 
-                                                                //Promedio
-                                                                document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Promedio: " + (promedio).toString() + " ";
-                                                                //Mediana
-                                                                //Desviacion Estandar
+                                                                if ('@seccion.Item.TipoPregunta' == 5 || '@seccion.Item.TipoPregunta' == 6)
+                                                                {
+                                                                    //Promedio
+                                                                    //document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Promedio: " + (aPromedio).toString() + " ";
+                                                                    texto = texto + "Promedio: " + (aPromedio).toString() + "<br>";
+                                                                    //Mediana
+                                                                    //document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Mediana: " + (aMediana).toString() + " ";
+                                                                    texto = texto + "Mediana: " + (aMediana).toString() + "<br>";
+                                                                    //Desviacion Estandar
+                                                                    //document.getElementById("graf_@item_actual").innerHTML = document.getElementById("graf_@item_actual").innerText + "Desviacion estandar: " + (aDesviacion).toString() + " ";
+                                                                    texto = texto + "Desviacion estandar: " + (aDesviacion).toString() + "<br>";
+                                                                }
+                                                              
+                                                                document.getElementById("graf_@item_actual").innerHTML = texto;
+
+                                                                @*var iter = aLabels;
+                                                                <p>@seccion.Item.ItemId</p>*@
                                                                 var dataT = {
                                                                     labels: aLabels,
                                                                     datasets: [{
@@ -228,20 +241,34 @@
                                                     }
                                                     else
                                                     {
-                                                        <div style="height:180px; overflow-y: scroll;">
+                                                        <div id="rep_@item_actual" style="height:180px; overflow-y: scroll;">
 
-                                                            @foreach (var item in Model.Formulario_Respuesta)
+                                                            @foreach (var item in Model.Formulario_Respuesta.Take(1))
                                                             {
-                                                                <p>Respuesta de estudiante, texto para verificar que el tamanno para el cuadro de texto sea apropiado, lo cual indica que se pueda ver la suficiente informacion, a la vez que no se consuma mucho espacio en pantalla y evite al usuario concentrase en la respuesta de una pregunta. Tambien para comprobar con los companneros de equipo que les parece y si creen que el tamanno deber ser mas grande o mas pequenno, ya que se tiene que tomar un promedio del tamanno de una respuesta de un estudiante.</p>
-                                                                <hr>
+                                                            <script>
+                                                                $.ajax({
+                                                                    type: "POST",
+                                                                    url: "/VisualizarFormulario/ObtenerRespTexto",
+                                                                    data: "{ 'codigoFormulario': '@item.CodigoFormulario', 'cedulaProfesor': '@item.Profesor.CedulaProfesor', 'annoGrupo': '@item.Grupo.AnnoGrupo', 'semestreGrupo': '@item.Grupo.SemestreGrupo', 'numeroGrupo': '@item.Grupo.Numero', 'siglaCurso': '@item.Grupo.SiglaCurso', 'itemId': '@seccion.Item.ItemId' }" ,
+                                                                    contentType: "application/json; charset=utf-8",
+                                                                    dataType: "json",
+                                                                    success: function (chData) {
+                                                                    var aData = chData;
+                                                                    var obs = aData[0];
+                                                                        var texto = "";
+                                                                        for (var data in obs) {
+                                                                            texto = texto + (obs[data]).toString() + "<hr>";
+                                                                        }
+                                                                        document.getElementById("rep_@item_actual").innerHTML = texto;
+                                                                    }
+                                                                });
+                                                            </script>
                                                             }
 
                                                         </div>
                                                     }
                                                     <br />
                                                     <div class="panel-group" id="accordion3_@seccion_counter">
-
-
 
                                                         @if (seccion.Item.TieneObservacion == observation)
                                                         {
@@ -255,8 +282,8 @@
                                                                 </div>
                                                                 <div id="collapseThreeTwo_@seccion_counter" class="panel-collapse collapse">
                                                                     <div class="panel-body">
-                                                                        <div style="height:200px; overflow-y: scroll;">
-                                                                            <p id="obs_@item_actual" style="float:left"></p>
+                                                                        <div id="obs_@item_actual" style="height:200px; overflow-y: scroll;">
+                                                                            @*<p id="obs_@item_actual" style="float:left"></p>*@
 
                                                                             @foreach (var item in Model.Formulario_Respuesta.Take(1))
                                                                             {
@@ -272,18 +299,20 @@
                                                                                         var obs = aData[0];
                                                                                         var nom = aData[1];
                                                                                         var ap1 = aData[2];
-                                                                                        var ap2 = aData[3];
+                                                                                            var ap2 = aData[3];
+                                                                                            var texto = "";
 
                                                                                             for (var data in obs) {
-                                                                                                if ('@perfil_actual' == "Administrador") { //Cuando se incluye el if lo que esta dentro no se despliega incluso si la condicion es verdadera
-                                                                                                    document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + ".";
-
-                                                                                                } else if ('@perfil_actual' != "Administrador"){
-                                                                                                    document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + ".<br />";
-
+                                                                                                if ('@perfil_actual' == "Administrador") { @*Cuando se incluye el if lo que esta dentro no se despliega incluso si la condicion es verdadera*@
+                                                                                                    @*document.getElementById("obs_@item_actual").innerHTML = document.getElementById("obs_@item_actual").innerText + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + "xx";*@
+                                                                                                    texto = texto + (obs[data]).toString() + " - " + (nom[data]).toString() + " " + (ap1[data]).toString() + " " + (ap2[data]).toString() + "<hr>";
+                                                                                                } else if ('@perfil_actual' != "Administrador") {
+                                                                                                    texto = texto + (obs[data]).toString() + "<hr>";
                                                                                                 }
                                                                                                 // Si no se acomodan las observaciones se bloquea el collapse de mostrar observaciones
                                                                                             }
+
+                                                                                            document.getElementById("obs_@item_actual").innerHTML = texto;
                                                                                                 }
                                                                                             });
                                                                                 </script>

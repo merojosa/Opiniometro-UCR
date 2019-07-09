@@ -73,5 +73,10 @@ namespace Opiniometro_WebAppTest.Controllers
             //Assert
             Assert.IsNotNull(result, "Null");
         }
+        [TestMethod]
+        public void EtiquetasNotNull()
+        {
+
+        }
     }
 }

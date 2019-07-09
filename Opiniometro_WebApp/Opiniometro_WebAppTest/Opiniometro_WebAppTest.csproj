@@ -150,8 +150,10 @@
   <ItemGroup>
     <Compile Include="Controllers\AdminControllerTest.cs" />
     <Compile Include="Controllers\AuthControllerTest.cs" />
+    <Compile Include="Controllers\CrearFormularioControllerTest.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Controllers\PerfilControllerTest.cs" />
+    <Compile Include="Controllers\ItemControllerTest.cs" />
     <Compile Include="Controllers\VisualizarFormularioControllerTest.cs" />
     <Compile Include="Controllers\SeccionControllerTest.cs" />
     <Compile Include="Controllers\FormularioControllerTest.cs" />
@@ -204,6 +206,7 @@
       <Name>Opiniometro_WebApp</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

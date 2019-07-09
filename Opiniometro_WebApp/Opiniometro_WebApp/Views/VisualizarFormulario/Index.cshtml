@@ -13,11 +13,11 @@
                     <label>Curso&nbsp;</label> @Html.DropDownList("CursoID", null, "<Seleccione Curso>", new { @class = "form-control", @onChange = "document.getElementById('selectcurso').value = this.value; this.form.submit();" })
                 </th>
                 <th>
-                    <label>Ciclo&nbsp;</label>@Html.DropDownList("SemestreId", null, "<Seleccione el Semestre>", htmlAttributes: new { @class = "form-control", @onChange = "document.getElementsByName('selectsemestre').value = this.value; this.form.submit();" })
-                    <label>&nbsp;</label>@Html.DropDownList("AnnoId", null, "<Seleccione Año>", htmlAttributes: new { @class = "form-control", @onChange = "document.getElementsByName('selectanno').value = this.value; this.form.submit();" })
+                    <label>Ciclo&nbsp;</label>@Html.DropDownList("SemestreId", null, "<Seleccione el Semestre>", new { @class = "form-control", @onChange = "document.getElementById('selectsemestre').value = this.value; this.form.submit();" })
+                    <label>&nbsp;</label>@Html.DropDownList("AnnoId", null, "<Seleccione Año>", new { @class = "form-control", @onChange = "document.getElementById('selectanno').value = this.value; this.form.submit();" })
                 </th>
                 <th>
-                    <label>Grupo&nbsp;</label>@Html.DropDownList("GrupoID", null, "<Seleccione Grupo>", htmlAttributes: new { @class = "form-control", @onChange = "document.getElementsByName('selecgrupo').value = this.value; this.form.submit();" })
+                    <label>Grupo&nbsp;</label>@Html.DropDownList("GrupoID", null, "<Seleccione Grupo>", new { @class = "form-control", @onChange = "document.getElementById('selecgrupo').value = this.value; this.form.submit();" })
                 </th>
                 @using (Html.BeginForm())
                 {

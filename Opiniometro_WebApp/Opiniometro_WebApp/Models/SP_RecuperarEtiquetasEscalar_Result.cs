@@ -11,10 +11,10 @@ namespace Opiniometro_WebApp.Models
 {
     using System;
     
-    public partial class DatosEstudiante_Result
+    public partial class SP_RecuperarEtiquetasEscalar_Result
     {
-        public string Nombre_Completo { get; set; }
-        public string Carne { get; set; }
-        public string Cedula { get; set; }
+        public short Inicio { get; set; }
+        public short Fin { get; set; }
+        public short Incremento { get; set; }
     }
 }

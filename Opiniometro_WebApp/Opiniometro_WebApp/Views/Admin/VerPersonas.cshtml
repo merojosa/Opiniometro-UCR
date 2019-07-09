@@ -5,15 +5,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Personas registradas</h2>
+<h2>Usuarios registradas</h2>
+<br>
 @using (Html.BeginForm())
 {
     <p>
+
         <div class="form-group, form-inline">
+
+            Nombre:
             @Html.TextBox("nom")
+            Cédula:
+            @Html.TextBox("ced")
             <input type="submit" value="Buscar" class="btn btn-default" />
         </div>
     </p>
+
 }
 <table class="table">
     <tr>
@@ -22,7 +29,10 @@
             Cédula
         </th>
         <th>
-            Nombre
+            Primer nombre
+        </th>
+        <th>
+            Segundo nombre
         </th>
         <th>
 
@@ -36,10 +46,6 @@
 
             Correo Institucional
         </th>
-        <th>
-
-            Dirección
-        </th>
         <th></th>
     </tr>
 
@@ -50,7 +56,10 @@
                 @item.persona.Cedula
             </td>
             <td>
-                @item.persona.Nombre
+                @item.persona.Nombre1
+            </td>
+            <td>
+                @item.persona.Nombre2
             </td>
             <td>
                 @item.persona.Apellido1
@@ -60,9 +69,6 @@
             </td>
             <td>
                 @item.usuario.CorreoInstitucional
-            </td>
-            <td>
-                @item.persona.Direccion
             </td>
             <td>
                 @Html.ActionLink("Editar", "Editar", new { id = item.persona.Cedula }, new { @class = "btn btn-default" })
