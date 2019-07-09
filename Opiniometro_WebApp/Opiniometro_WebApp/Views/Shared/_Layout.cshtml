@@ -75,7 +75,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             @{
-                                if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VER_INFORMACION_PERSONAS))
+                                if (permisos_usuario.verificar_permiso(IdPermiso.VER_INFORMACION_PERSONAS))
                                 {
                                     <li>@Html.ActionLink("Ver información de usuarios", "VerPersonas", "Admin")</li>
                                 }
@@ -84,7 +84,7 @@
                                     <li class="disabled"><a id="link_deshabilitado">Ver información de personas</a></li>
                                 }
 
-                                if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.INSERTAR_USUARIO))
+                                if (permisos_usuario.verificar_permiso(IdPermiso.INSERTAR_USUARIO))
                                 {
                                     <li>@Html.ActionLink("Insertar usuario", "CrearUsuario", "Admin")</li>
                                 }
@@ -93,14 +93,13 @@
                                     <li class="disabled"><a id="link_deshabilitado">Insertar usuario</a></li>
                                 }
 
-                                if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.INSERTAR_USUARIO))
+                                if (permisos_usuario.verificar_permiso(IdPermiso.INSERTAR_USUARIO))
                                 {
                                     <li>@Html.ActionLink("Cargar Archivo", "CargarArchivo", "Administrador")</li>
                                 }
                                 else
                                 {                                    
-                                    <li>@Html.ActionLink("Cargar Archivo", "CargarArchivo", "Administrador")</li>
-                                    <!-- <li class="disabled"><a>Cargar Archivo</a></li> -->
+                                    <li class="disabled"><a id="link_deshabilitado">Cargar Archivo</a></li>
                                 }
                             }
                         </ul>
@@ -138,7 +137,7 @@
 
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VER_SECCIONES))
                                 {
-                                    <li>@Html.ActionLink("Ver Sección", "Index", "Seccion")</li>
+                                    <li>@Html.ActionLink("Insertar Secciones", "Index", "Seccion")</li>
                                 }
                                 else
                                 {
@@ -147,7 +146,7 @@
 
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VER_ITEMS))
                                 {
-                                    <li>@Html.ActionLink("Ver Ítem", "Index", "Item")</li>
+                                    <li>@Html.ActionLink("Insertar Items", "Index", "Item")</li>
                                 }
                                 else
                                 {

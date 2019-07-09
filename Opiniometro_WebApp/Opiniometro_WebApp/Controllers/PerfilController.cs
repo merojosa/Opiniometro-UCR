@@ -130,10 +130,8 @@ namespace Opiniometro_WebApp.Controllers
             }
             // Si no es la primera vez, no se cambia el perfil porque ya hay uno elegido.
 
-            return View(model);
+            return View("Cambiar", model);
         }
-
-
 
         [HttpPost]
         public ActionResult Cambiar(PerfilesUsuario model)
@@ -169,7 +167,7 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // Devuelve los perfiles del usuario loggeado.
-        public static ICollection<String> ObtenerPerfiles()
+        public static ICollection<string> ObtenerPerfiles()
         {
             Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
             string correo_autenticado = IdentidadManager.obtener_correo_actual();
@@ -225,13 +223,13 @@ namespace Opiniometro_WebApp.Controllers
 
         public ActionResult Borrar()
         {
-            return View(db.Perfil.ToList());
+            return View("Borrar", db.Perfil.ToList());
         }
 
         // GET: CRUDPERFILES/Create
         public ActionResult Crear()
         {
-            return View();
+            return View("Crear");
         }
 
         // POST: CRUDPERFILES/Create
@@ -243,9 +241,12 @@ namespace Opiniometro_WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                string nombre = System.Text.RegularExpressions.Regex.Replace(perfil.Nombre.Trim(), @"\s+", " ");
+                string descripcion = System.Text.RegularExpressions.Regex.Replace(perfil.Descripcion.Trim(), @"\s+", " ");
+
                 // Parametros
-                var Nombre = new SqlParameter("@Nombre", perfil.Nombre);
-                var Descripcion = new SqlParameter("@Descripcion", perfil.Descripcion);
+                var Nombre = new SqlParameter("@Nombre", nombre);
+                var Descripcion = new SqlParameter("@Descripcion", descripcion);
                 var Numero_Error = new SqlParameter("@Numero_Error", 0);
                 Numero_Error.Direction = ParameterDirection.Output;
                 Numero_Error.SqlDbType = SqlDbType.Int;
@@ -267,6 +268,11 @@ namespace Opiniometro_WebApp.Controllers
             return View(perfil);
         }
 
+        /*
+         *  REQUIERE: el nombre del perfil.
+         *  EFECTUA: busca si el nombre brindado existe como llave primaria en la base de datos.
+         *  MODIFICA: n/a
+         */
         public JsonResult IsNombrePerfilAvailable(string Nombre)
         {
             return Json(!db.Perfil.Any(perfil => perfil.Nombre == Nombre), JsonRequestBehavior.AllowGet);
