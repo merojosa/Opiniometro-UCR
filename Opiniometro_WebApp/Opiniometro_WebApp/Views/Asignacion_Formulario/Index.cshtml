@@ -49,12 +49,13 @@
                     @Html.DisplayFor(modelItem => item.Grupo.Numero)
                 </td>
                 <td>
-                   @*@foreach (var profe in item.Profesor)
+                    @foreach (var profe in item.Grupo.Profesor)
                     {
-                        @Html.DisplayFor(model => profe.Persona.Nombre) <span> </span>
+                        @Html.DisplayFor(model => profe.Persona.Nombre1) <span> </span>
+                        @Html.DisplayFor(model => profe.Persona.Nombre2) <span> </span>
                         @Html.DisplayFor(model => profe.Persona.Apellido1) <span> </span>
                         @Html.DisplayFor(model => profe.Persona.Apellido2) <br>
-                    }*@
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Formulario.CodigoFormulario) @Html.DisplayFor(modelItem => item.Formulario.Nombre)

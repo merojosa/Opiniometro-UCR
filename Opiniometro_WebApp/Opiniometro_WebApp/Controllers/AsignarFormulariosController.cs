@@ -99,9 +99,9 @@ namespace Opiniometro_WebApp.Controllers
         // Para el filtro por ciclos
         public IQueryable<Ciclo_Lectivo> ObtenerCiclos(String codigoUnidadAcadem)
         {
-            IQueryable<Ciclo_Lectivo> ciclo = (from c in db.Ciclo_Lectivo select c).Distinct();
-            ViewBag.semestre = new SelectList(ciclo, "Semestre", "Semestre");
-            ViewBag.ano = new SelectList(ciclo, "Anno", "Anno");
+            IQueryable<Ciclo_Lectivo> ciclo = (from c in db.Ciclo_Lectivo select c);
+            ViewBag.semestre = new SelectList(ciclo, "Semestre", "Semestre").Distinct();
+            ViewBag.ano = new SelectList(ciclo, "Anno", "Anno").Distinct();
             return ciclo;
         }
 
@@ -307,7 +307,7 @@ namespace Opiniometro_WebApp.Controllers
 
             grupos = FiltreGrupos(searchString, semestre, anno, codigoUnidadAcadem, siglaCarrera, nombreCurso, grupos);
 
-            return grupos.ToList();
+            return grupos.Distinct().ToList();
 
         }
 
