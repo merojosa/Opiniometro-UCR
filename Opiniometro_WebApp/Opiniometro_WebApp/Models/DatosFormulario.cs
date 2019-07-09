@@ -6,20 +6,30 @@ using System.Web.Mvc;
 
 namespace Opiniometro_WebApp.Models
 {
-    public class DatosFormulario
+    public class Pregunta
     {
+        public string itemId { set; get; }
         public string item { set; get; }
         public bool? tieneObservacion { get; set; }
         public int tipoPregunta { set; get;}
 
-        public List<string> opcionesPregunta { set; get; }
+        public string[] Opciones;
 
     }
+    //      |   |   |
+    //      V   V   V
+    public class SeccionFormulario
+    {
+        public string Titulo { set; get; }
 
+        public Pregunta[] PreguntasFormulario;
+
+    }
+    //      |   |   |
+    //      V   V   V
     public class FormularioPorCurso {
 
-        public IQueryable<DatosFormulario> preguntasFormulario;
+        public SeccionFormulario[] Secciones;
 
     }
-
 }
