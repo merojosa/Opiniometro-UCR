@@ -142,17 +142,19 @@ namespace Opiniometro_WebAppTest.Controllers
             FormularioController controller = new FormularioController(mockDb.Object);
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
-            List<Formulario> formulario = (List<Formulario>)result.ViewData.Model;
+            ViewResult result = controller.Index(1) as ViewResult;
+            //List<Formulario> formulario = (List<Formulario>)result.ViewData.Model;
+
             // Assert
-            Assert.AreEqual(4, formulario.Count);
+            //Assert.AreEqual(4, formulario.Count);
+            Assert.AreEqual("Index", result.ViewName, "ViewName");
         }
 
         [TestMethod]
         public void TestIndexNotNullAndView()
         {
             FormularioController controller = new FormularioController();
-            ViewResult result = controller.Index() as ViewResult;
+            ViewResult result = controller.Index(1) as ViewResult;
             Assert.IsNotNull(result, "Null");
             Assert.AreEqual("Index", result.ViewName, "ViewName");
         }
