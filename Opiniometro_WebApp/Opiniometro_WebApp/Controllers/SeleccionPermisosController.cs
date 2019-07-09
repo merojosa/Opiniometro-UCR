@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
 using Opiniometro_WebApp.Controllers.Servicios;
+using System.Data.Entity.Core.Objects;
+using System.Data.SqlClient;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -107,16 +109,23 @@ namespace Opiniometro_WebApp.Controllers
                             //Verificar si NO existe en la tabla para insertarlo
                             if (!model.ListaPosee.Any(tupla => tupla.NombrePerfil == item.Perfil && tupla.IdPermiso == item.Permiso && tupla.SiglaCarrera == enf.SiglaCarrera && tupla.NumeroEnfasis == enf.Numero))
                             {
-                                var nuevaTupla = new Posee_Enfasis_Perfil_Permiso()
-                                {
-                                    IdPermiso = item.Permiso,
-                                    NombrePerfil = item.Perfil,
-                                    SiglaCarrera = enf.SiglaCarrera,
-                                    NumeroEnfasis = enf.Numero,
-                                };
+                                var NumeroEnf = new SqlParameter("@NumeroEnf", enf.Numero);
+                                var Sigla = new SqlParameter("@Sigla", enf.SiglaCarrera);
+                                var NombrePerf = new SqlParameter("@NombrePerf", item.Perfil);
+                                var IdPermiso = new SqlParameter("@IdPermiso", item.Permiso);
+                                var Numero_Error = new SqlParameter("@Numero_Error", 0);
+                                Numero_Error.Direction = ParameterDirection.Output;
+                                Numero_Error.SqlDbType = SqlDbType.Int;
 
-                                context.Posee_Enfasis_Perfil_Permiso.Add(nuevaTupla);
+                                context.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction,
+                                    "EXEC SP_InsertaTablaPosee @NumeroEnf, @Sigla, @NombrePerf, @IdPermiso, @Numero_Error OUT", NumeroEnf, Sigla, NombrePerf, IdPermiso, Numero_Error);
+
+                                if ((int)Numero_Error.Value != 0)//Significa que hubo un error con la transaccion
+                                {
+                                    ModelState.AddModelError("ErrorInsertaPosee", "Error al insertar en tabla Posee");
+                                }
                             }
+
                         }
                     }
                     else//Si no fue seleccionado o fue deseleccionado intenta borrar la tupla si existe o no en la tabla
