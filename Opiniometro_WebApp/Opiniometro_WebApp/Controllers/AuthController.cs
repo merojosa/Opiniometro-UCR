@@ -35,13 +35,14 @@ namespace Opiniometro_WebApp.Controllers
             Session.Remove("recuperar");
 
             // Si esta autenticado, redireccione a Home.
-            if (IdentidadManager.obtener_correo_actual() != null)      
+            if (IdentidadManager.obtener_correo_actual() != null && IdentidadManager.verificar_sesion(this) == true)      
             {
                 return RedirectToAction("Index", "Home");
             }
             // Si no, retorne la vista para el login.
             else
             {
+                eliminar_privilegios(this);
                 return View("Login");
             }
         }
