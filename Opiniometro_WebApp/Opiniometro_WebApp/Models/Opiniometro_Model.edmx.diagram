@@ -62,7 +62,6 @@
         <AssociationConnector Association="Opiniometro_Model.FK_Matricula_Profesor" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.FK_Fac_Uni" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.FK_Tie_Fec" ManuallyRouted="false" />
-        <AssociationConnector Association="Opiniometro_Model.FK_For_Uni" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.FK_ForRes_For" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.FK_Tie_For" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.FK_ForRes_Gru" ManuallyRouted="false" />
@@ -87,6 +86,7 @@
         <AssociationConnector Association="Opiniometro_Model.Escuela" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.Imparte" ManuallyRouted="false" />
         <AssociationConnector Association="Opiniometro_Model.Se_Encuentra_Curso_Enfasis" ManuallyRouted="false" />
+        <AssociationConnector Association="Opiniometro_Model.FK_For_Uni" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
