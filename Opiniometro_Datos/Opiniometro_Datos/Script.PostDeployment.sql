@@ -722,7 +722,7 @@ BEGIN
 	SELECT e.Respuesta
 	FROM Responde as e
 	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
-	COMMIT TRANSACTION tc2
+	COMMIT TRANSACTION tc1
 END
 GO
 
