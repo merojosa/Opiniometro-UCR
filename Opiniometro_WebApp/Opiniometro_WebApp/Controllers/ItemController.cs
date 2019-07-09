@@ -10,9 +10,13 @@ using System.Web.UI.WebControls;
 using PagedList;
 using PagedList.Mvc;
 using Opiniometro_WebApp.Models;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Web.Script.Serialization;
 
 namespace Opiniometro_WebApp.Controllers
 {
+    [Authorize]
     public class ItemController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
@@ -30,7 +34,18 @@ namespace Opiniometro_WebApp.Controllers
             return View(item.ToList().ToPagedList(page ?? 1, 5));
         }
 
-         //GET: Item/Details/5
+        //GET: AgregarOpciones
+        public ActionResult AgregarOpciones()
+        {
+            return View("AgregarOpciones");
+        }
+
+        public ActionResult AgregarOpcionesVParcial()
+        {
+            return PartialView("AgregarOpcionesVParcial");
+        }
+
+        //GET: Item/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -51,7 +66,8 @@ namespace Opiniometro_WebApp.Controllers
             ViewBag.TipoPreguntaItems = new List<ListItem>
             {
                   new ListItem { Text = "Sí-No", Value="3" },
-                  new ListItem { Text = "Texto Libre", Value="1" }
+                  new ListItem { Text = "Texto Libre", Value="1" },
+                  new ListItem { Text = "Selección Única", Value="2" }
             };
             ViewBag.BooleanItems = new List<ListItem>
             {
@@ -61,29 +77,57 @@ namespace Opiniometro_WebApp.Controllers
             ViewBag.NombreCategoria = new SelectList(db.Categoria, "NombreCategoria", "NombreCategoria");
             ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID");
             ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId");
-            return View();
+            return View("Create");
         }
 
-         //POST: Item/Create
-         //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-         //more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //POST: Item/Create
+        //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria,EtiquetaObservacion")] Item item)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Item.Add(item);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID", item.ItemId);
+        //    ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
+        //    return View("Create", item);
+        //}
+
+        //POST: Item/Create
+        // Método mejorado del Crear para cuando se selecciona el tipo pregunta Selección Única.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria")] Item item)
+        public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria,EtiquetaObservacion")] Item item, string[] DynamicTextBox)
         {
-
-
-
             if (ModelState.IsValid)
             {
                 db.Item.Add(item);
                 db.SaveChanges();
+
+                if (DynamicTextBox != null && item.TipoPregunta == 2)
+                {
+                    //Uso del procedimiento almacenado para insertar en una sección.
+                    db.SP_Insertar_Seleccion_Unica(item.ItemId, false);
+
+                    //Uso del procedimiento almancenado para insertar todas las opciones de respuesta en la tabla Selección Única.
+                    for (short index = 1; index <= DynamicTextBox.Length; ++index)
+                    {
+                        db.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica(item.ItemId, index, DynamicTextBox[index - 1]);
+                    }
+                }
+
+                ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID", item.ItemId);
+                ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ItemID = new SelectList(db.Seleccion_Unica, "ItemID", "ItemID", item.ItemId);
-            ViewBag.ItemID = new SelectList(db.Texto_Libre, "ItemId", "ItemId", item.ItemId);
-            return View(item);
+            return View("Create", item);
         }
 
         //EFE:
@@ -95,12 +139,13 @@ namespace Opiniometro_WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Item.Find(id);
-            if (item == null)
+            VistaPreviaPreguntaModel vistaPrevia = new VistaPreviaPreguntaModel
             {
-                return HttpNotFound();
-            }
-            return PartialView(item);
+                Item = db.Item.Find(id),
+                Opciones = db.Opciones_De_Respuestas_Seleccion_Unica.Where(m => m.ItemId == id).ToList()
+            };
+            
+            return PartialView(vistaPrevia);
         }
 
         //GET: Item/Edit/5

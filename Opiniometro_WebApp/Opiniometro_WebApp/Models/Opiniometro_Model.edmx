@@ -127,6 +127,7 @@
           </Key>
           <Property Name="CodigoFormulario" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="25" />
+          <Property Name="CodigoUnidadAca" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Formulario_Respuesta">
           <Key>
@@ -392,8 +393,8 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RecuperarContrasenna" Type="bit" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Opiniometro.dbo.Imparte_View' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Opiniometro.dbo.Imparte_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Imparte_View">
           <Key>
             <PropertyRef Name="CedulaProfesor" />
@@ -408,8 +409,8 @@ advertencia 6002: La tabla o vista 'Opiniometro.dbo.Imparte_View' no tiene defin
           <Property Name="Anno" Type="smallint" Nullable="false" />
           <Property Name="Semestre" Type="tinyint" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
         <EntityType Name="ValorRandom">
           <Property Name="randomvalue" Type="varbinary" MaxLength="8000" />
         </EntityType>-->
@@ -604,6 +605,18 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
             </Principal>
             <Dependent Role="Facultad">
               <PropertyRef Name="CodigoUnidadAcademica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_For_Uni">
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="0..1" />
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Formulario">
+              <PropertyRef Name="CodigoUnidadAca" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1043,6 +1056,12 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
         <Function Name="DatosEstudiante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="EditarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="nombreViejo" Type="varchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="Numero_Error" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="MostrarEstudiantes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="NombrePersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1066,9 +1085,6 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
           <Parameter Name="nombre" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SF_GenerarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
-        <Function Name="SF_ObtenerCedula" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char">
-          <Parameter Name="correoInstit" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="SP_AgregarPersonaUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
@@ -1175,6 +1191,13 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
           <Parameter Name="itemid" Type="nvarchar" Mode="In" />
           <Parameter Name="isalikedislike" Type="bit" Mode="In" />
         </Function>
+        <Function Name="SP_InsertaTablaPosee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NumeroEnf" Type="tinyint" Mode="In" />
+          <Parameter Name="Sigla" Type="nvarchar" Mode="In" />
+          <Parameter Name="NombrePerfil" Type="varchar" Mode="In" />
+          <Parameter Name="IdPermiso" Type="smallint" Mode="In" />
+          <Parameter Name="Numero_Error" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="SP_LoginUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
@@ -1189,6 +1212,10 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
           <Parameter Name="Apellido2" Type="nvarchar" Mode="In" />
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="SP_ObtenerCedula" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correoInstit" Type="nvarchar" Mode="In" />
+          <Parameter Name="resultado" Type="char" Mode="InOut" />
+        </Function>
         <Function Name="SP_ObtenerFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cod" Type="char" Mode="In" />
         </Function>
@@ -1200,6 +1227,14 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
         <Function Name="SP_ObtenerPermisosUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Perfil" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_RecuperarEtiquetas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tipoPregunta" Type="int" Mode="In" />
+          <Parameter Name="idPregunta" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_RecuperarEtiquetasEscalar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tipoPregunta" Type="int" Mode="In" />
+          <Parameter Name="idPregunta" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -1319,6 +1354,10 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
           <AssociationSet Name="FK_Fac_Uni" Association="Self.FK_Fac_Uni">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
             <End Role="Facultad" EntitySet="Facultad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_For_Uni" Association="Self.FK_For_Uni">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Formulario" EntitySet="Formulario" />
           </AssociationSet>
           <AssociationSet Name="FK_ForRes_For" Association="Self.FK_ForRes_For">
             <End Role="Formulario" EntitySet="Formulario" />
@@ -1590,8 +1629,10 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
           </Key>
           <Property Name="CodigoFormulario" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoUnidadAca" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Conformado_For_Sec" Relationship="Self.FK_Conf_For" FromRole="Formulario" ToRole="Conformado_For_Sec" />
           <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_For" FromRole="Formulario" ToRole="Conformado_Item_Sec_Form" />
+          <NavigationProperty Name="Unidad_Academica" Relationship="Self.FK_For_Uni" FromRole="Formulario" ToRole="Unidad_Academica" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_For" FromRole="Formulario" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Tiene_Grupo_Formulario" Relationship="Self.FK_Tie_For" FromRole="Formulario" ToRole="Tiene_Grupo_Formulario" />
         </EntityType>
@@ -1879,6 +1920,7 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
           <NavigationProperty Name="Carrera" Relationship="Self.FK_Car_Uni" FromRole="Unidad_Academica" ToRole="Carrera" />
           <NavigationProperty Name="Curso" Relationship="Self.FK_Cur_Uni" FromRole="Unidad_Academica" ToRole="Curso" />
           <NavigationProperty Name="Facultad" Relationship="Self.FK_Fac_Uni" FromRole="Unidad_Academica" ToRole="Facultad" />
+          <NavigationProperty Name="Formulario" Relationship="Self.FK_For_Uni" FromRole="Unidad_Academica" ToRole="Formulario" />
           <NavigationProperty Name="Facultad1" Relationship="Self.Escuela" FromRole="Unidad_Academica" ToRole="Facultad" />
         </EntityType>
         <EntityType Name="Usuario">
@@ -2157,6 +2199,18 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
             <Dependent Role="Tiene_Grupo_Formulario">
               <PropertyRef Name="FechaInicio" />
               <PropertyRef Name="FechaFinal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_For_Uni">
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="0..1" />
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Formulario">
+              <PropertyRef Name="CodigoUnidadAca" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2576,6 +2630,10 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
             <End Role="Fecha_Corte" EntitySet="Fecha_Corte" />
             <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
           </AssociationSet>
+          <AssociationSet Name="FK_For_Uni" Association="Self.FK_For_Uni">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Formulario" EntitySet="Formulario" />
+          </AssociationSet>
           <AssociationSet Name="FK_ForRes_For" Association="Self.FK_ForRes_For">
             <End Role="Formulario" EntitySet="Formulario" />
             <End Role="Formulario_Respuesta" EntitySet="Formulario_Respuesta" />
@@ -2683,6 +2741,12 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
           </FunctionImport>
           <FunctionImport Name="DatosEstudiante">
             <Parameter Name="Cedula" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="EditarPerfil">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="nombreViejo" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+            <Parameter Name="Numero_Error" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_Model.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
@@ -2811,6 +2875,13 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
             <Parameter Name="itemid" Mode="In" Type="String" />
             <Parameter Name="isalikedislike" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="SP_InsertaTablaPosee">
+            <Parameter Name="NumeroEnf" Mode="In" Type="Byte" />
+            <Parameter Name="Sigla" Mode="In" Type="String" />
+            <Parameter Name="NombrePerfil" Mode="In" Type="String" />
+            <Parameter Name="IdPermiso" Mode="In" Type="Int16" />
+            <Parameter Name="Numero_Error" Mode="InOut" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="SP_LoginUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
@@ -2825,6 +2896,10 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
             <Parameter Name="Apellido2" Mode="In" Type="String" />
             <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ObtenerCedula">
+            <Parameter Name="correoInstit" Mode="In" Type="String" />
+            <Parameter Name="resultado" Mode="InOut" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SP_ObtenerFormulario" ReturnType="Collection(String)">
             <Parameter Name="cod" Mode="In" Type="String" />
           </FunctionImport>
@@ -2836,6 +2911,14 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
           <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(Opiniometro_Model.SP_ObtenerPermisosUsuario_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Perfil" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_RecuperarEtiquetas" ReturnType="Collection(String)">
+            <Parameter Name="tipoPregunta" Mode="In" Type="Int32" />
+            <Parameter Name="idPregunta" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_RecuperarEtiquetasEscalar" ReturnType="Collection(Opiniometro_Model.SP_RecuperarEtiquetasEscalar_Result)">
+            <Parameter Name="tipoPregunta" Mode="In" Type="Int32" />
+            <Parameter Name="idPregunta" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_renamediagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -2897,6 +2980,11 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
           <Property Type="String" Name="SiglaCarrera" Nullable="false" MaxLength="10" />
           <Property Type="Byte" Name="NumeroEnfasis" Nullable="false" />
           <Property Type="Int16" Name="IdPermiso" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_RecuperarEtiquetasEscalar_Result">
+          <Property Type="Int16" Name="Inicio" Nullable="false" />
+          <Property Type="Int16" Name="Fin" Nullable="false" />
+          <Property Type="Int16" Name="Incremento" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3023,6 +3111,7 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
               <MappingFragment StoreEntitySet="Formulario">
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CodigoUnidadAca" ColumnName="CodigoUnidadAca" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3317,6 +3406,7 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_Model.Store.DatosEstudiante" />
+          <FunctionImportMapping FunctionImportName="EditarPerfil" FunctionName="Opiniometro_Model.Store.EditarPerfil" />
           <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_Model.Store.MostrarEstudiantes">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Opiniometro_Model.MostrarEstudiantes_Result">
@@ -3392,8 +3482,10 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
           <FunctionImportMapping FunctionImportName="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" />
           <FunctionImportMapping FunctionImportName="SP_Insertar_Seccion" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seccion" />
           <FunctionImportMapping FunctionImportName="SP_Insertar_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seleccion_Unica" />
+          <FunctionImportMapping FunctionImportName="SP_InsertaTablaPosee" FunctionName="Opiniometro_Model.Store.SP_InsertaTablaPosee" />
           <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_Model.Store.SP_LoginUsuario" />
           <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_Model.Store.SP_ModificarPersona" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerCedula" FunctionName="Opiniometro_Model.Store.SP_ObtenerCedula" />
           <FunctionImportMapping FunctionImportName="SP_ObtenerFormulario" FunctionName="Opiniometro_Model.Store.SP_ObtenerFormulario" />
           <FunctionImportMapping FunctionImportName="SP_ObtenerNombre" FunctionName="Opiniometro_Model.Store.SP_ObtenerNombre" />
           <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_Model.Store.SP_ObtenerPermisosUsuario">
@@ -3402,6 +3494,16 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
                 <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_RecuperarEtiquetas" FunctionName="Opiniometro_Model.Store.SP_RecuperarEtiquetas" />
+          <FunctionImportMapping FunctionImportName="SP_RecuperarEtiquetasEscalar" FunctionName="Opiniometro_Model.Store.SP_RecuperarEtiquetasEscalar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Opiniometro_Model.SP_RecuperarEtiquetasEscalar_Result">
+                <ScalarProperty Name="Inicio" ColumnName="Inicio" />
+                <ScalarProperty Name="Fin" ColumnName="Fin" />
+                <ScalarProperty Name="Incremento" ColumnName="Incremento" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -3424,7 +3526,7 @@ advertencia 6013: La tabla o vista 'Opiniometro.dbo.ValorRandom' no tiene defini
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
