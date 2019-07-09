@@ -31,13 +31,14 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult Login()
         {
             // Si esta autenticado, redireccione a Home.
-            if (IdentidadManager.obtener_correo_actual() != null)      
+            if (IdentidadManager.obtener_correo_actual() != null )       //&& IdentidadManager.verificar_sesion(this) == true
             {
                 return RedirectToAction("Index", "Home");
             }
             // Si no, retorne la vista para el login.
             else
             {
+                CerrarSesion();
                 return View("Login");
             }
         }
