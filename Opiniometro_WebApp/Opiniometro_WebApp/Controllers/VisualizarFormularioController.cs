@@ -382,7 +382,7 @@ namespace Opiniometro_WebApp.Controllers
             List<object> lista = new List<object> { x, y, promedio, mediana, desviacion};
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
-
+    /* Aun no esta en server.
         //EFE:Retorna las observaciones del item.
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--

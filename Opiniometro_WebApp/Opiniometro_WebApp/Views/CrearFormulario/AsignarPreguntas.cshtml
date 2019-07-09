@@ -68,24 +68,7 @@
 </div>
 
 
-<div class="form-group">
 
-    @Html.Label("Orden de la Seccion", htmlAttributes: new { @class = "control-label col-md-2" })
-
-    <div class="col-md-4">
-        @Html.EditorFor(model => model.Orden_Seccion, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Orden_Seccion, "", new { @class = "text-danger" })
-
-    </div>
-    @Html.Label("Orden de la pregunta", htmlAttributes: new { @class = "control-label col-md-2" })
-
-    <div class="col-md-4">
-        @Html.EditorFor(model => model.Orden_Item, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Orden_Item, "", new { @class = "text-danger" })
-
-    </div>
-
-</div>
 
 
 
@@ -179,57 +162,53 @@
 
 
 </div>
+
 <div class="row form-group">
     <div class="col-sm-12 text-center">      
         <button id="btnSave" class="btn btn-secondary m-*-auto"><span class="oi oi-arrow-left"></span> Asignar pregunta</button>
     </div>
 </div>
-<div class="row" id="ConformadosID">
 
-    @Html.Partial("ConformadoVParcial", Model.Conformados)
+@*<div class="row">
+    @Html.Action("SeccionesAsignadas", new
+                    {CodForm = Model.Formulario.CodigoFormulario})
+</div>*@
 
-</div>
+@*<div class="row" id="ConformadosID">
+
+    @Html.Action("VistaFormularioVParcial", new { codForm = Model.Formulario.CodigoFormulario })
+
+</div>*@
+
+ <button id ="VistaPrevia" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalVistaPrevia">
+    Vista Previa
+</button>
+
+<div class="modal fade" id="modalVistaPrevia" tabindex="-1" role="dialog" aria-labelledby="modalVistaPrevia" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalVistaPrevia"> <centered><h1> Vista previa </h1> </centered></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("VistaFormularioVParcial", Model.FormularioCompleto)
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
         </div>
-
-<thead>
-
-    <tr>
-
-
-        <td>
+    </div>
+</div>
 
 
 
-            <div>
-                <div style="float: right; width: 500px; padding: 15px;">
 
 
-                </div>
+@Html.ActionLink("Terminar","Index", "Formulario", null, new { @class = "btn btn-default" })
 
-                <div style=" width: 500px; padding:  15px;">
-
-
-
-                </div>
-            </div>
-
-
-            <button disabled>
-                Añadir pregunta al formulario.
-            </button>
-
-            <div style="float: left; width: 1000px; padding: 50px;">
-                @*@Html.Action("SeccionesAsignadas", new
-                    {CodForm = Model.Formulario.CodigoFormulario})*@
-            </div>
-
-            <input type="submit" value="Generate report" />
-            <div style="clear: both;"></div>
-        </td>
-
-    </tr>
-
-</thead>
 
 
 <script>

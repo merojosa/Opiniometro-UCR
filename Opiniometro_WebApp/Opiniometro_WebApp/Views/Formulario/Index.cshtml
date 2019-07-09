@@ -1,5 +1,7 @@
-﻿@model IEnumerable<Opiniometro_WebApp.Models.Formulario>
-@using Opiniometro_WebApp.Controllers
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<Opiniometro_WebApp.Models.Formulario>
 
 @{
     ViewBag.Title = "Formularios";
@@ -13,11 +15,12 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Código Formulario")
+            @Html.Label("Código Formulario")
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.Nombre)
+            @Html.Label("Nombre")
+            @*@Html.DisplayNameFor(model => model.Nombre)*@
         </th>
         <th></th>
     </tr>
@@ -34,9 +37,10 @@
             </td>
             <td>
                 @*<input type="button" value="Asignar preguntas" class="btn btn-secondary" id="botonNuevaSeccion" onclick="accionBotonAsignarPregunta()"/>*@
-                
-                
-                @Html.ActionLink("Asignar Preguntas", "AsignarPreguntas", "CrearFormulario" ,new { codForm = item.CodigoFormulario}, new { @class = "btn btn-default" })
+
+                @*@Html.ActionLink("Vista previa", "VistaFormularioVParcial", "CrearFormularo", new { codForm = item.CodigoFormulario }, new { @class = "btn btn-default" })*@
+
+                @Html.ActionLink("Asignar Preguntas", "AsignarPreguntas", "CrearFormulario", new { codForm = item.CodigoFormulario }, new { @class = "btn btn-default" })
                 @*@Html.ActionLink("Details", "Details", new { id=item.CodigoFormulario }) |*@
                 @*@Html.ActionLink("Delete", "Delete", new { id=item.CodigoFormulario })*@
             </td>
@@ -44,6 +48,11 @@
     }
 
 </table>
+
+@* This code is used to navigate on the pages *@
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+    new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded,
+        DisplayPageCountAndCurrentLocation = true })
 
 <script>
         function accionBotonCrearNueva() {

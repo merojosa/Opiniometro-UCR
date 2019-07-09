@@ -45,16 +45,21 @@
 
 
         public virtual List<AsignarPerfil> perfilesAsignados { get; set; }
+
+        public virtual List <Boolean> tienePerfil { get; set; }
+
+
         public virtual ICollection<Enfasis> Enfasis { get; set; }
 
         public virtual ICollection<String> PerfilDeUsuario { get; set; }
 
-        public virtual ICollection<String> Perfil { get; set; }
+        public virtual List<String> Perfil { get; set; }
 
         public List<Persona> listaPersonas { get; set; }
         public List<Usuario> listaUsuarios { get; set; }
         
         public Persona Persona { get; set; }
+        public string viejaCedula { get; set; }
         public Usuario usuario { get; set; }
     }
 }
