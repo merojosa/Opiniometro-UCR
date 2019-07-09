@@ -510,15 +510,14 @@
     <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
     <Content Include="Views\LlenarFormulario\Index.cshtml" />
     <Content Include="Views\Item\AgregarOpciones.cshtml" />
-    <Content Include="Views\CrearFormulario\VistaPreviaPregunta.cshtml" />
-    <Content Include="Views\CrearFormulario\VistaFormularioVParcial.cshtml" />
     <Content Include="Views\Item\AgregarOpcionesVParcial.cshtml" />
     <Content Include="Views\CrearFormulario\AsignarSecciones.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ElegirFormularioEditorViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ElegirGrupoEditorViewModel.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Edit.cshtml" />
     <Content Include="Views\Auth\CambiarContrasenna.cshtml" />
-    <Content Include="Views\CrearFormulario\SeleccionUnicaVParcial.cshtml" />
+    <Content Include="Views\Shared\VistaFormularioVParcial.cshtml" />
+    <Content Include="Views\Shared\SeleccionUnicaVParcial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
