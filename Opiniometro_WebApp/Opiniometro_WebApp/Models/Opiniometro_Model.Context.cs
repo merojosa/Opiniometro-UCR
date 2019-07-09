@@ -181,7 +181,7 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProcIntroduFormulario", codigoParameter, nombreParameter);
         }
     
-        public virtual int SP_AgregarPersonaUsuario(string correo, string contrasenna, string cedula, string nombre, string apellido1, string apellido2, string direccion)
+        public virtual int SP_AgregarPersonaUsuario(string correo, string contrasenna, string cedula, string nombre1, string nombre2, string apellido1, string apellido2)
         {
             var correoParameter = correo != null ?
                 new ObjectParameter("Correo", correo) :
@@ -195,9 +195,13 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Cedula", cedula) :
                 new ObjectParameter("Cedula", typeof(string));
     
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("Nombre", nombre) :
-                new ObjectParameter("Nombre", typeof(string));
+            var nombre1Parameter = nombre1 != null ?
+                new ObjectParameter("Nombre1", nombre1) :
+                new ObjectParameter("Nombre1", typeof(string));
+    
+            var nombre2Parameter = nombre2 != null ?
+                new ObjectParameter("Nombre2", nombre2) :
+                new ObjectParameter("Nombre2", typeof(string));
     
             var apellido1Parameter = apellido1 != null ?
                 new ObjectParameter("Apellido1", apellido1) :
@@ -207,11 +211,7 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Apellido2", apellido2) :
                 new ObjectParameter("Apellido2", typeof(string));
     
-            var direccionParameter = direccion != null ?
-                new ObjectParameter("Direccion", direccion) :
-                new ObjectParameter("Direccion", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AgregarPersonaUsuario", correoParameter, contrasennaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, direccionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_AgregarPersonaUsuario", correoParameter, contrasennaParameter, cedulaParameter, nombre1Parameter, nombre2Parameter, apellido1Parameter, apellido2Parameter);
         }
     
         public virtual int SP_AgregarUsuario(string correo, string contrasenna, string cedula)
@@ -464,7 +464,7 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_LoginUsuario", correoParameter, contrasennaParameter, resultado);
         }
     
-        public virtual int SP_ModificarPersona(string cedulaBusqueda, string cedula, string nombre, string apellido1, string apellido2, string correo, string direccion)
+        public virtual int SP_ModificarPersona(string cedulaBusqueda, string cedula, string nombre1, string nombre2, string apellido1, string apellido2, string correo)
         {
             var cedulaBusquedaParameter = cedulaBusqueda != null ?
                 new ObjectParameter("CedulaBusqueda", cedulaBusqueda) :
@@ -474,9 +474,13 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Cedula", cedula) :
                 new ObjectParameter("Cedula", typeof(string));
     
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("Nombre", nombre) :
-                new ObjectParameter("Nombre", typeof(string));
+            var nombre1Parameter = nombre1 != null ?
+                new ObjectParameter("Nombre1", nombre1) :
+                new ObjectParameter("Nombre1", typeof(string));
+    
+            var nombre2Parameter = nombre2 != null ?
+                new ObjectParameter("Nombre2", nombre2) :
+                new ObjectParameter("Nombre2", typeof(string));
     
             var apellido1Parameter = apellido1 != null ?
                 new ObjectParameter("Apellido1", apellido1) :
@@ -490,11 +494,7 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Correo", correo) :
                 new ObjectParameter("Correo", typeof(string));
     
-            var direccionParameter = direccion != null ?
-                new ObjectParameter("Direccion", direccion) :
-                new ObjectParameter("Direccion", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombreParameter, apellido1Parameter, apellido2Parameter, correoParameter, direccionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombre1Parameter, nombre2Parameter, apellido1Parameter, apellido2Parameter, correoParameter);
         }
     
         public virtual ObjectResult<string> SP_ObtenerFormulario(string cod)

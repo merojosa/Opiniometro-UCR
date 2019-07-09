@@ -28,6 +28,8 @@ namespace Opiniometro_WebApp.Models
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
         public string Direccion { get; set; }
+        public string Nombre1 { get; set; }
+        public string Nombre2 { get; set; }
     
         public virtual Administrativo Administrativo { get; set; }
         public virtual Estudiante Estudiante { get; set; }

@@ -172,9 +172,10 @@ namespace Opiniometro_WebApp.Controllers
                     .ThenBy(m => m.Orden_Seccion)
                     .ToList()
             };
-     
+
             return PartialView(formularioVistaPrevia);
         }
+
         public ActionResult SeleccionUnicaVParcial(String id)
         {
             if(id == null)
