@@ -252,6 +252,17 @@ namespace Opiniometro_WebApp.Controllers
             var result = ObtenerCantidadRespuestasPorPregunta(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId).ToList();
             List<object> x = new List<object>();
             List<object> y = new List<object>();
+
+            List<int?> listaOrdenada = new List<int?>();
+            int size = 0;
+            double? mediana = 0;
+            double? tamanio = 0;
+            int counter = 0;
+            double? promedio = 0;
+            double? desviacion = 0;
+            double sumatoria = 0;
+            double actual = 0;
+
             if (!Enumerable.Range(5, 6).Contains(tipoPregunta))
             {
 
@@ -267,12 +278,18 @@ namespace Opiniometro_WebApp.Controllers
                         if (resul.Respuesta == label)
                         {
                             y.Add(resul.cntResp);
+                            listaOrdenada.Add(resul.cntResp);
+                            tamanio = tamanio + listaOrdenada[counter];
+                            counter++;
                             encontrado = true;
                         }
                     }
                     if (encontrado == false)
                     {
                         y.Add(0);
+                        listaOrdenada.Add(0);
+                        tamanio = tamanio + listaOrdenada[counter];
+                        counter++;
                     }
                 }
             }
@@ -295,11 +312,17 @@ namespace Opiniometro_WebApp.Controllers
                             {
                                 encontrado = true;
                                 y.Add(resul.cntResp);
+                                listaOrdenada.Add(resul.cntResp);
+                                tamanio = tamanio + listaOrdenada[counter];
+                                counter++;
                             }
                         }
                         if(encontrado == false)
                         {
                             y.Add(0);
+                            listaOrdenada.Add(0);
+                            tamanio = tamanio + listaOrdenada[counter];
+                            counter++;
                         }
                     }
                     else
@@ -312,16 +335,51 @@ namespace Opiniometro_WebApp.Controllers
                             {
                                 encontrado = true;
                                 y.Add(resul.cntResp);
+                                listaOrdenada.Add(resul.cntResp);
+                                tamanio = tamanio + listaOrdenada[counter];
+                                counter++;
                             }
                         }
                         if (encontrado == false)
                         {
                             y.Add(0);
+                            listaOrdenada.Add(0);
+                            tamanio = tamanio + listaOrdenada[counter];
+                            counter++;
                         }
                     }
                 }
-            }           
-            List<object> lista = new List<object> { x, y };
+            }
+
+            listaOrdenada.Sort();
+            size = listaOrdenada.Count();
+
+            //Calcular el promedio
+
+            promedio = tamanio / size;
+
+            //Calcular la mediana
+
+            if (size % 2 == 0)
+            {
+                mediana = (listaOrdenada[(size / 2) - 1] + listaOrdenada[(size / 2)]) / 2;
+            }
+            else
+            {
+                mediana = listaOrdenada[(size / 2)];
+            }
+
+            //Calcular la desviacion estandar
+
+            for (int i = 0; i < size; i++)
+            {
+                actual = (double)listaOrdenada[i];
+                sumatoria = sumatoria + Math.Pow(actual - (double)mediana, 2);
+            }
+
+            desviacion = Math.Sqrt(sumatoria / size);
+
+            List<object> lista = new List<object> { x, y, promedio, mediana, desviacion};
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
 
