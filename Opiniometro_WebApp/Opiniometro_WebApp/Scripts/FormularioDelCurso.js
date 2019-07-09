@@ -1,7 +1,4 @@
-﻿
-
-
-///Se crea elemento que agraga un salto de linea
+﻿///Se crea elemento que agraga un salto de linea
 
 function insertNueLinea(etiqueta) {
     var elemento = document.createElement("br");

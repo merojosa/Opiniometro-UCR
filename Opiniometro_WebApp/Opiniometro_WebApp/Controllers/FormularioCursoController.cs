@@ -86,7 +86,27 @@ namespace Opiniometro_WebApp.Controllers
                             secciones[seccion].PreguntasFormulario[pregunta].Opciones = opciones.ToArray();
                         }
 
+                        else if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 3)
+                        {
+                            string id = secciones[seccion].PreguntasFormulario[pregunta].itemId;
+                            IQueryable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Unica
+                                                          where ops.ItemId == id
+                                                          select ops.OpcionRespuesta;
 
+                            // Se asigna el arreglo de opciones
+                            secciones[seccion].PreguntasFormulario[pregunta].Opciones = opciones.ToArray();
+                        }
+
+                        else if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 4)
+                        {
+                            string id = secciones[seccion].PreguntasFormulario[pregunta].itemId;
+                            IQueryable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Multiple
+                                                          where ops.ItemId == id
+                                                          select ops.OpcionRespuesta;
+
+                            // Se asigna el arreglo de opciones
+                            secciones[seccion].PreguntasFormulario[pregunta].Opciones = opciones.ToArray();
+                        }
                         //#############################################################
                         // AQUI SEGUIR RECUPERANDO OPCIONES Y ASIGNARLAS A COVENIENCIA
                         //#############################################################
