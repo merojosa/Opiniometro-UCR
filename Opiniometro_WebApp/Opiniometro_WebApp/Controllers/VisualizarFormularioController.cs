@@ -386,7 +386,6 @@ namespace Opiniometro_WebApp.Controllers
             List<object> lista = new List<object> { x, y, promedio, mediana, desviacion};
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
-    /* Aun no esta en server.
         //EFE:Retorna las observaciones del item.
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--
@@ -412,7 +411,7 @@ namespace Opiniometro_WebApp.Controllers
             foreach (var itemO in result)
             {
                 obs.Add(itemO.Observacion);
-                nom.Add(itemO.Nombre);
+                nom.Add(itemO.Nombre1);
                 ap1.Add(itemO.Apellido1);
                 ap2.Add(itemO.Apellido2);
             }

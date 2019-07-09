@@ -327,6 +327,8 @@ GO
 
 IF OBJECT_ID('EditarPerfil') IS NOT NULL
 	DROP PROCEDURE EditarPerfil
+
+GO
 CREATE PROCEDURE EditarPerfil
 	@nombre varchar(30),
 	@nombreViejo varchar(30),
@@ -865,19 +867,24 @@ CREATE PROCEDURE [dbo].[SP_RecuperarEtiquetasEscalar]
 	@idPregunta NVARCHAR (10)
 AS
 BEGIN
+	SET IMPLICIT_TRANSACTIONS OFF;
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+	BEGIN TRANSACTION recuperarEscala
 	SET NOCOUNT ON
-	IF @tipoPregunta = 5 --Escalar
-		BEGIN
-		SELECT	e.Inicio,e.Fin,e.Incremento
-		FROM	Escalar as e
-		WHERE	e.ItemId = @idPregunta
-	END
-	ELSE IF @tipoPregunta = 6 --Escalar Estrella
-		BEGIN
-		SELECT	e.Inicio,e.Fin, e.Incremento
-		FROM	Escalar as e 
-		WHERE	e.ItemId = @idPregunta
-	END
+		IF @tipoPregunta = 5 --Escalar
+			BEGIN
+			SELECT	e.Inicio,e.Fin,e.Incremento
+			FROM	Escalar AS e
+			WHERE	e.ItemId = @idPregunta
+		END
+		ELSE IF @tipoPregunta = 6 --Escalar Estrella
+			BEGIN
+			SELECT	e.Inicio,e.Fin, e.Incremento
+			FROM	Escalar AS e 
+			WHERE	e.ItemId = @idPregunta
+		END
+	COMMIT TRANSACTION contarRespuestas
+	SET IMPLICIT_TRANSACTIONS ON;
 END
 GO
 
