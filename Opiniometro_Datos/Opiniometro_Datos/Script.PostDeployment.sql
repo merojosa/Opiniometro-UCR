@@ -743,7 +743,6 @@ BEGIN
 	SET @activo= (SELECT Activo FROM inserted)
 	SET @id = (SELECT Id FROM inserted)
 	SET @recuperarContrasena = (SELECT RecuperarContrasenna FROM inserted)
-
 	IF((@correoInstitucional LIKE '%@ucr.ac.cr') AND (@correoInstitucional NOT LIKE '') AND (@cedula NOT LIKE '') AND (LEN(@correoInstitucional) <= 50) AND  (LEN(@cedula) = 9))
 	BEGIN
 		INSERT INTO Usuario
