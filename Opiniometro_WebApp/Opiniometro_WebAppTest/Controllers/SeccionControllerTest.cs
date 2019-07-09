@@ -21,7 +21,6 @@ namespace Opiniometro_WebAppTest.Controllers
     public class SeccionControllerTest
     {
               
-        /*
         [TestMethod]
         public void TestIndexNotNullAndView()
         {
@@ -31,7 +30,6 @@ namespace Opiniometro_WebAppTest.Controllers
             Assert.AreEqual("Index", result.ViewName, "ViewName");
 
         }
-        */
 
         [TestMethod]
         public void TestEditViewDataMock()
