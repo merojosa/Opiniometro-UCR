@@ -86,8 +86,8 @@ function seleccionMultiple() {
 //         --si tiene campo de observacion
 //modifica: vista en las preguntas que tienen respuesta de tipo escalar
 //retorna--
-function Escalar(contEscalar, item_id) {
-    var contenido = document.getElementById("preguntaEscalar".concat(contSelUnica));
+//function Escalar(contEscalar, item_id) {
+//    var contenido = document.getElementById("preguntaEscalar".concat(contEscalar));
 
     //    $.get("/FormularioDelCurso/ObtenerOpcionEscalar", {
     //        id: item_id
@@ -105,7 +105,7 @@ function Escalar(contEscalar, item_id) {
     //            contenido.appendChild(radio);
     //        }
     //});
-}
+//}
 
 //recibe: si tiene campo de observacion
 //modifica: vista en las preguntas que tienen respouesta de estrella

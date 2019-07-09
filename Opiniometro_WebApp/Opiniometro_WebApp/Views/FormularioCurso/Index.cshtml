@@ -33,7 +33,7 @@
 
 
         <tr style="margin:100px">
-            <td >
+            <td>
                 @foreach (var seccion in Model.Secciones)
                 {
                     //secciones del formulario
@@ -60,13 +60,16 @@
                         }
 
                         // pregunta seleccion unica
-                        if (pregunta.Opciones != null) //IMPORTANTE
+                        else if (pregunta.tipoPregunta == 2)
                         {
-                            foreach (var opcion in pregunta.Opciones)
+                            if (pregunta.Opciones != null) //IMPORTANTE
                             {
-                                <label>&nbsp &nbsp @opcion</label>
-                                <br>
+                                foreach (var opcion in pregunta.Opciones)
+                                {
+                                    <label>&nbsp &nbsp @opcion</label>
+                                    <br>
 
+                                }
                             }
 
                             if (pregunta.tieneObservacion == true)
@@ -95,7 +98,7 @@
                         }
 
                         //pregunta...
-                        if (pregunta.tipoPregunta == 4)
+                        else if (pregunta.tipoPregunta == 4)
                         {
                             //...
 
@@ -110,14 +113,23 @@
                         }
 
 
-                        //pregunta...
-                        if (pregunta.tipoPregunta == 5)
+                        //pregunta Escalar
+                        else if (pregunta.tipoPregunta == 5)
                         {
 
-                            //...
+                            if (pregunta.Opciones != null)
+                            {
+                                foreach (var opcion in pregunta.Opciones)
+                                {
+
+                                    <input type="radio" name="rango" value="@opcion" id="@opcion" /> <label>@opcion</label>
+                                }
+                            }
 
                             if (pregunta.tieneObservacion == true)
                             {
+                                <br />
+                                <br />
                                 <label> Observaciones:</label><br />
                                 <textarea name="textarea" rows="5" cols="50" maxlength="495">
                                 </textarea>
@@ -141,11 +153,11 @@
                             }
 
                         }
-                        <hr style="width:50%;" align="left"/>
+                        <hr style="width:50%;" align="left" />
                         <br />
 
                     }
-                 }
+                }
             </td>
         </tr>
     </table>

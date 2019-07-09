@@ -443,7 +443,7 @@ namespace Opiniometro_WebApp.Controllers
 
                 Persona persona = new Persona();
                 persona = personas.Find(p => p.Cedula.Equals(ma.CedulaEstudiante));
-                string contenido = "<p>Estimado " + persona.Nombre + " " + persona.Apellido1 + ", se le solicita dedicar unos minutos de su tiempo para evaluar los cursos" +
+                string contenido = "<p>Estimado " + persona.Nombre1 + " " + persona.Apellido1 + ", se le solicita dedicar unos minutos de su tiempo para evaluar los cursos" +
                " en los cuales se encuentra matriculado. Favor ingresar a  Opiniómetro@UCR</p> <b>";
 
                 // Se le envía al usuario el correo con la notificación del formulario 

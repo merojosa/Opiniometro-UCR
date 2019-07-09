@@ -10,12 +10,10 @@
 namespace Opiniometro_WebApp.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class SP_DevolverObservacionesPorGrupo_Result
+    public partial class C__RefactorLog
     {
-        public string Observacion { get; set; }
-        public string Nombre1 { get; set; }
-        public string Apellido1 { get; set; }
-        public string Apellido2 { get; set; }
+        public System.Guid OperationKey { get; set; }
     }
 }

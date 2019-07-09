@@ -88,23 +88,25 @@ namespace Opiniometro_WebApp.Controllers
                         else if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 5)
                         {
                             string id = secciones[seccion].PreguntasFormulario[pregunta].itemId;
-                            var ini = from range in db.Escalar
-                                         where range.ItemId == id
-                                         select range.Inicio;
-                            var fin = from range in db.Escalar
-                                         where range.ItemId == id
-                                         select range.Fin;
+                            var ini = (from range in db.Escalar
+                                       where range.ItemId == id
+                                       select range.Inicio).First();
+                            var fin = (from range in db.Escalar
+                                       where range.ItemId == id
+                                       select range.Fin).First();
 
-                            int inicio = int.Parse(ini.ToString());
-                            int final = int.Parse(fin.ToString());
-                            int posicion = 0;
-                            string[] rango = new string[final-inicio];
-                            for (int valor = inicio; inicio >= final; valor++)
-                            {
-                                rango[posicion] = valor.ToString();
-                                posicion++;
-                            }
-                            secciones[seccion].PreguntasFormulario[pregunta].Opciones = rango;
+                                int inicio = Convert.ToInt32(ini);
+                                int final = Convert.ToInt32(fin);
+                                int posicion = inicio;
+
+                                string[] rango = new string[(final-inicio)+1];
+                               foreach (string r in rango)
+                                {
+                                    rango[posicion] = posicion.ToString();
+                                    posicion++;
+                                }
+                                secciones[seccion].PreguntasFormulario[pregunta].Opciones = rango;
+ 
                         }
 
 
@@ -221,14 +223,5 @@ namespace Opiniometro_WebApp.Controllers
             return json;
         }
 
-
-        //public ActionResult ObtenerRangoEscalar(string id)
-        //{  
-        //    IEnumerable<String> rango = from range in db.Escalar
-        //                                   where range.ItemId == id
-        //                                   select range;
-
-        //    return PartialView("Escalar", rango);
-        //}
     }
 }
