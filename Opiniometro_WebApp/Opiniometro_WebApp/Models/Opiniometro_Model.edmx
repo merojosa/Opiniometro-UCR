@@ -12,6 +12,14 @@
           <Property Name="CedulaAdministrativo" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Tipo" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
+        <EntityType Name="Canton">
+          <Key>
+            <PropertyRef Name="NombreProvincia" />
+            <PropertyRef Name="NombreCanton" />
+          </Key>
+          <Property Name="NombreProvincia" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NombreCanton" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Carrera">
           <Key>
             <PropertyRef Name="Sigla" />
@@ -64,6 +72,28 @@
           <Property Name="Nombre" Type="varchar" MaxLength="75" Nullable="false" />
           <Property Name="Tipo" Type="tinyint" Nullable="false" />
           <Property Name="CodigoUnidad" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Direccion_Persona">
+          <Key>
+            <PropertyRef Name="Cedula" />
+            <PropertyRef Name="Provincia" />
+            <PropertyRef Name="Canton" />
+            <PropertyRef Name="Distrito" />
+          </Key>
+          <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="Provincia" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Canton" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Distrito" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Distrito">
+          <Key>
+            <PropertyRef Name="NombreProvincia" />
+            <PropertyRef Name="NombreCanton" />
+            <PropertyRef Name="NombreDistrito" />
+          </Key>
+          <Property Name="NombreProvincia" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NombreCanton" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NombreDistrito" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Empadronado">
           <Key>
@@ -163,7 +193,7 @@
           <Property Name="CedulaProfesor" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="Numero" Type="tinyint" Nullable="false" />
           <Property Name="Sigla" Type="char" MaxLength="6" Nullable="false" />
-          <Property Name="Anno" Type="smallint" Nullable="false" />
+          <Property Name="Anno" Type="char" MaxLength="4" Nullable="false" />
           <Property Name="Semestre" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Item">
@@ -220,10 +250,10 @@
             <PropertyRef Name="Cedula" />
           </Key>
           <Property Name="Cedula" Type="char" MaxLength="9" Nullable="false" />
-          <Property Name="Nombre1" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Nombre2" Type="nvarchar" MaxLength="50" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Apellido1" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Apellido2" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="Posee_Enfasis_Perfil_Permiso">
           <Key>
@@ -243,6 +273,12 @@
           </Key>
           <Property Name="CedulaProfesor" Type="char" MaxLength="9" Nullable="false" />
         </EntityType>
+        <EntityType Name="Provincia">
+          <Key>
+            <PropertyRef Name="NombreProvincia" />
+          </Key>
+          <Property Name="NombreProvincia" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Responde">
           <Key>
             <PropertyRef Name="ItemId" />
@@ -255,7 +291,6 @@
             <PropertyRef Name="SemestreGrupoResp" />
             <PropertyRef Name="NumeroGrupoResp" />
             <PropertyRef Name="SiglaGrupoResp" />
-            <PropertyRef Name="Respuesta" />
           </Key>
           <Property Name="ItemId" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="TituloSeccion" Type="nvarchar" MaxLength="120" Nullable="false" />
@@ -268,7 +303,7 @@
           <Property Name="NumeroGrupoResp" Type="tinyint" Nullable="false" />
           <Property Name="SiglaGrupoResp" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="Observacion" Type="nvarchar" MaxLength="500" />
-          <Property Name="Respuesta" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Respuesta" Type="nvarchar" MaxLength="500" />
           <Property Name="RespuestaProfesor" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Se_Encuentra_Curso_Enfasis">
@@ -379,6 +414,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Can_Pro">
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
+          <End Role="Canton" Type="Self.Canton" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provincia">
+              <PropertyRef Name="NombreProvincia" />
+            </Principal>
+            <Dependent Role="Canton">
+              <PropertyRef Name="NombreProvincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Car_Uni">
           <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="1" />
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="*" />
@@ -474,6 +521,48 @@
             </Principal>
             <Dependent Role="Curso">
               <PropertyRef Name="CodigoUnidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dir_Dis">
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="1" />
+          <End Role="Direccion_Persona" Type="Self.Direccion_Persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Distrito">
+              <PropertyRef Name="NombreProvincia" />
+              <PropertyRef Name="NombreCanton" />
+              <PropertyRef Name="NombreDistrito" />
+            </Principal>
+            <Dependent Role="Direccion_Persona">
+              <PropertyRef Name="Provincia" />
+              <PropertyRef Name="Canton" />
+              <PropertyRef Name="Distrito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dir_Per">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Direccion_Persona" Type="Self.Direccion_Persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="Direccion_Persona">
+              <PropertyRef Name="Cedula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dis_Can">
+          <End Role="Canton" Type="Self.Canton" Multiplicity="1" />
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Canton">
+              <PropertyRef Name="NombreProvincia" />
+              <PropertyRef Name="NombreCanton" />
+            </Principal>
+            <Dependent Role="Distrito">
+              <PropertyRef Name="NombreProvincia" />
+              <PropertyRef Name="NombreCanton" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -655,24 +744,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Imparte_Grupo">
-          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
-          <End Role="Imparte" Type="Self.Imparte" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Grupo">
-              <PropertyRef Name="SiglaCurso" />
-              <PropertyRef Name="Numero" />
-              <PropertyRef Name="AnnoGrupo" />
-              <PropertyRef Name="SemestreGrupo" />
-            </Principal>
-            <Dependent Role="Imparte">
-              <PropertyRef Name="Sigla" />
-              <PropertyRef Name="Numero" />
-              <PropertyRef Name="Anno" />
-              <PropertyRef Name="Semestre" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Imparte_Profesor">
           <End Role="Profesor" Type="Self.Profesor" Multiplicity="1" />
           <End Role="Imparte" Type="Self.Imparte" Multiplicity="*" />
@@ -725,7 +796,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OpcResUni_Ite">
+        <Association Name="FK_OpcResMul_Ite">
           <End Role="Seleccion_Unica" Type="Self.Seleccion_Unica" Multiplicity="1" />
           <End Role="Opciones_De_Respuestas_Seleccion_Unica" Type="Self.Opciones_De_Respuestas_Seleccion_Unica" Multiplicity="*" />
           <ReferentialConstraint>
@@ -973,6 +1044,10 @@
         <Function Name="DatosEstudiante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="EliminarPreguntasDeSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoFormulario" Type="char" Mode="In" />
+          <Parameter Name="TituloSeccion" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="MostrarEstudiantes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="NombrePersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -996,14 +1071,17 @@
           <Parameter Name="nombre" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SF_GenerarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
+        <Function Name="SF_ObtenerCedula" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char">
+          <Parameter Name="correoInstit" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SP_AgregarPersonaUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
-          <Parameter Name="Nombre1" Type="nvarchar" Mode="In" />
-          <Parameter Name="Nombre2" Type="nvarchar" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido2" Type="nvarchar" Mode="In" />
+          <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SP_AgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
@@ -1087,11 +1165,11 @@
         <Function Name="SP_ModificarPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CedulaBusqueda" Type="varchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
-          <Parameter Name="Nombre1" Type="nvarchar" Mode="In" />
-          <Parameter Name="Nombre2" Type="nvarchar" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido2" Type="nvarchar" Mode="In" />
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Direccion" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SP_ObtenerFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cod" Type="char" Mode="In" />
@@ -1113,12 +1191,15 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="Opiniometro_ModelStoreContainer">
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Canton" EntityType="Self.Canton" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ciclo_Lectivo" EntityType="Self.Ciclo_Lectivo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Conformado_For_Sec" EntityType="Self.Conformado_For_Sec" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Conformado_Item_Sec_Form" EntityType="Self.Conformado_Item_Sec_Form" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Direccion_Persona" EntityType="Self.Direccion_Persona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Distrito" EntityType="Self.Distrito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empadronado" EntityType="Self.Empadronado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enfasis" EntityType="Self.Enfasis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Escuela" EntityType="Self.Escuela" Schema="dbo" store:Type="Tables" />
@@ -1137,6 +1218,7 @@
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Posee_Enfasis_Perfil_Permiso" EntityType="Self.Posee_Enfasis_Perfil_Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Provincia" EntityType="Self.Provincia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Responde" EntityType="Self.Responde" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Se_Encuentra_Curso_Enfasis" EntityType="Self.Se_Encuentra_Curso_Enfasis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
@@ -1151,6 +1233,10 @@
           <AssociationSet Name="FK_Adm_Per" Association="Self.FK_Adm_Per">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Administrativo" EntitySet="Administrativo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Can_Pro" Association="Self.FK_Can_Pro">
+            <End Role="Provincia" EntitySet="Provincia" />
+            <End Role="Canton" EntitySet="Canton" />
           </AssociationSet>
           <AssociationSet Name="FK_Car_Uni" Association="Self.FK_Car_Uni">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
@@ -1183,6 +1269,18 @@
           <AssociationSet Name="FK_Cur_Uni" Association="Self.FK_Cur_Uni">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
             <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dir_Dis" Association="Self.FK_Dir_Dis">
+            <End Role="Distrito" EntitySet="Distrito" />
+            <End Role="Direccion_Persona" EntitySet="Direccion_Persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dir_Per" Association="Self.FK_Dir_Per">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Direccion_Persona" EntitySet="Direccion_Persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dis_Can" Association="Self.FK_Dis_Can">
+            <End Role="Canton" EntitySet="Canton" />
+            <End Role="Distrito" EntitySet="Distrito" />
           </AssociationSet>
           <AssociationSet Name="FK_Empadronado_Estudiante" Association="Self.FK_Empadronado_Estudiante">
             <End Role="Estudiante" EntitySet="Estudiante" />
@@ -1240,10 +1338,6 @@
             <End Role="Perfil" EntitySet="Perfil" />
             <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
           </AssociationSet>
-          <AssociationSet Name="FK_Imparte_Grupo" Association="Self.FK_Imparte_Grupo">
-            <End Role="Grupo" EntitySet="Grupo" />
-            <End Role="Imparte" EntitySet="Imparte" />
-          </AssociationSet>
           <AssociationSet Name="FK_Imparte_Profesor" Association="Self.FK_Imparte_Profesor">
             <End Role="Profesor" EntitySet="Profesor" />
             <End Role="Imparte" EntitySet="Imparte" />
@@ -1260,7 +1354,7 @@
             <End Role="Enfasis" EntitySet="Enfasis" />
             <End Role="Tiene_Usuario_Perfil_Enfasis" EntitySet="Tiene_Usuario_Perfil_Enfasis" />
           </AssociationSet>
-          <AssociationSet Name="FK_OpcResUni_Ite" Association="Self.FK_OpcResUni_Ite">
+          <AssociationSet Name="FK_OpcResMul_Ite" Association="Self.FK_OpcResMul_Ite">
             <End Role="Seleccion_Unica" EntitySet="Seleccion_Unica" />
             <End Role="Opciones_De_Respuestas_Seleccion_Unica" EntitySet="Opciones_De_Respuestas_Seleccion_Unica" />
           </AssociationSet>
@@ -1532,7 +1626,6 @@
           <NavigationProperty Name="Curso" Relationship="Self.FK_Gru_Cur" FromRole="Grupo" ToRole="Curso" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Gru" FromRole="Grupo" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Tiene_Grupo_Formulario" Relationship="Self.FK_Tie_Gru" FromRole="Grupo" ToRole="Tiene_Grupo_Formulario" />
-          <NavigationProperty Name="Profesor" Relationship="Opiniometro_Model.Imparte1" FromRole="Grupo" ToRole="Profesor" />
         </EntityType>
         <EntityType Name="Imparte">
           <Key>
@@ -1545,7 +1638,7 @@
           <Property Name="CedulaProfesor" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Numero" Type="Byte" Nullable="false" />
           <Property Name="Sigla" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Anno" Type="String" Nullable="false" />
+          <Property Name="Anno" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Semestre" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK_Imparte_Profesor" FromRole="Imparte" ToRole="Profesor" />
         </EntityType>
@@ -1624,8 +1717,6 @@
           <NavigationProperty Name="TelefonoPersona" Relationship="Self.FK_Tel_Per" FromRole="Persona" ToRole="TelefonoPersona" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Usu_Per" FromRole="Persona" ToRole="Usuario" />
           <NavigationProperty Name="Distrito" Relationship="Self.Direccion_Persona" FromRole="Persona" ToRole="Distrito" />
-          <Property Name="Nombre1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Nombre2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Posee_Enfasis_Perfil_Permiso">
           <Key>
@@ -1650,7 +1741,6 @@
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_Pro" FromRole="Profesor" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Imparte" Relationship="Self.FK_Imparte_Profesor" FromRole="Profesor" ToRole="Imparte" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Pro_Per" FromRole="Profesor" ToRole="Persona" />
-          <NavigationProperty Name="Grupo" Relationship="Opiniometro_Model.Imparte1" FromRole="Profesor" ToRole="Grupo" />
         </EntityType>
         <EntityType Name="Provincia">
           <Key>
@@ -1683,7 +1773,7 @@
           <Property Name="NumeroGrupoResp" Type="Byte" Nullable="false" />
           <Property Name="SiglaGrupoResp" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Observacion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Respuesta" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Respuesta" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="RespuestaProfesor" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_Res_ForRes" FromRole="Responde" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Item" Relationship="Self.FK_Res_Ite" FromRole="Responde" ToRole="Item" />
@@ -2618,10 +2708,10 @@
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Cedula" Mode="In" Type="String" />
-            <Parameter Name="Nombre1" Mode="In" Type="String" />
-            <Parameter Name="Nombre2" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="Apellido1" Mode="In" Type="String" />
             <Parameter Name="Apellido2" Mode="In" Type="String" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_AgregarUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
@@ -2701,11 +2791,11 @@
           <FunctionImport Name="SP_ModificarPersona">
             <Parameter Name="CedulaBusqueda" Mode="In" Type="String" />
             <Parameter Name="Cedula" Mode="In" Type="String" />
-            <Parameter Name="Nombre1" Mode="In" Type="String" />
-            <Parameter Name="Nombre2" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="Apellido1" Mode="In" Type="String" />
             <Parameter Name="Apellido2" Mode="In" Type="String" />
             <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ObtenerFormulario" ReturnType="Collection(String)">
           <Parameter Name="cod" Mode="In" Type="String" />
@@ -2729,10 +2819,6 @@
             <Parameter Name="itemid" Mode="In" Type="String" />
             <Parameter Name="isalikedislike" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <AssociationSet Name="Imparte1" Association="Opiniometro_Model.Imparte1">
-            <End Role="Grupo" EntitySet="Grupo" />
-            <End Role="Profesor" EntitySet="Profesor" />
-          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="CursosSegunAnno_Result">
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="75" />
@@ -2787,10 +2873,6 @@
           <Property Type="Byte" Name="NumeroEnfasis" Nullable="false" />
           <Property Type="Int16" Name="IdPermiso" Nullable="false" />
         </ComplexType>
-        <Association Name="Imparte1">
-          <End Type="Opiniometro_Model.Grupo" Role="Grupo" Multiplicity="*" />
-          <End Type="Opiniometro_Model.Profesor" Role="Profesor" Multiplicity="*" />
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2802,6 +2884,14 @@
               <MappingFragment StoreEntitySet="Administrativo">
                 <ScalarProperty Name="CedulaAdministrativo" ColumnName="CedulaAdministrativo" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Canton">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Canton">
+              <MappingFragment StoreEntitySet="Canton">
+                <ScalarProperty Name="NombreProvincia" ColumnName="NombreProvincia" />
+                <ScalarProperty Name="NombreCanton" ColumnName="NombreCanton" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2857,6 +2947,15 @@
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
                 <ScalarProperty Name="CodigoUnidad" ColumnName="CodigoUnidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Distrito">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Distrito">
+              <MappingFragment StoreEntitySet="Distrito">
+                <ScalarProperty Name="NombreProvincia" ColumnName="NombreProvincia" />
+                <ScalarProperty Name="NombreCanton" ColumnName="NombreCanton" />
+                <ScalarProperty Name="NombreDistrito" ColumnName="NombreDistrito" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2996,11 +3095,11 @@
           <EntitySetMapping Name="Persona">
             <EntityTypeMapping TypeName="Opiniometro_Model.Persona">
               <MappingFragment StoreEntitySet="Persona">
-                <ScalarProperty Name="Nombre2" ColumnName="Nombre2" />
-                <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
                 <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3018,6 +3117,13 @@
             <EntityTypeMapping TypeName="Opiniometro_Model.Profesor">
               <MappingFragment StoreEntitySet="Profesor">
                 <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provincia">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Provincia">
+              <MappingFragment StoreEntitySet="Provincia">
+                <ScalarProperty Name="NombreProvincia" ColumnName="NombreProvincia" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3125,6 +3231,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="Direccion_Persona" TypeName="Opiniometro_Model.Direccion_Persona" StoreEntitySet="Direccion_Persona">
+            <EndProperty Name="Distrito">
+              <ScalarProperty Name="NombreProvincia" ColumnName="Provincia" />
+              <ScalarProperty Name="NombreCanton" ColumnName="Canton" />
+              <ScalarProperty Name="NombreDistrito" ColumnName="Distrito" />
+            </EndProperty>
+            <EndProperty Name="Persona">
+              <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+            </EndProperty>
+          </AssociationSetMapping>
           <AssociationSetMapping Name="Escuela" TypeName="Opiniometro_Model.Escuela" StoreEntitySet="Escuela">
             <EndProperty Name="Facultad">
               <ScalarProperty Name="CodigoUnidadAcademica" ColumnName="CodigoFacultad" />
@@ -3181,6 +3297,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EliminarPreguntasDeSeccion" FunctionName="Opiniometro_Model.Store.EliminarPreguntasDeSeccion" />
           <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_Model.Store.MostrarEstudiantes">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Opiniometro_Model.MostrarEstudiantes_Result">
@@ -3258,17 +3375,6 @@
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Opiniometro_Model.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Opiniometro_Model.Store.sp_upgraddiagrams" />
           <FunctionImportMapping FunctionImportName="SP_Insertar_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seleccion_Unica" />
-          <AssociationSetMapping Name="Imparte1" TypeName="Opiniometro_Model.Imparte1" StoreEntitySet="Imparte">
-            <EndProperty Name="Profesor">
-              <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
-            </EndProperty>
-            <EndProperty Name="Grupo">
-              <ScalarProperty Name="SemestreGrupo" ColumnName="Semestre" />
-              <ScalarProperty Name="AnnoGrupo" ColumnName="Anno" />
-              <ScalarProperty Name="Numero" ColumnName="Numero" />
-              <ScalarProperty Name="SiglaCurso" ColumnName="Sigla" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
