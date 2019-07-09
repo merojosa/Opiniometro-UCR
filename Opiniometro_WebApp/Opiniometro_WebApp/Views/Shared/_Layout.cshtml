@@ -119,8 +119,6 @@
                                 }
 
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.ASIGNAR_FORMULARIO))
-
-                                @*if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.ASIGNAR_FORMUALRIO))
                                 {
                                     <li>@Html.ActionLink("Ver asignaciones de formularios", "Index", "Asignacion_Formulario")</li>
                                 <li>@Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")</li>
@@ -129,7 +127,7 @@
                                 {
                                     <li class="disabled"><a id="link_deshabilitado">Ver asignaciones de formularios</a></li>
                                     <li class="disabled"><a id="link_deshabilitado">Asignar formulario</a></li>
-                                }*@
+                                }
 
                                 //if (permisos_usuario.verificar_permiso("SC-89457", 12, IdPermiso.CALIFICAR_CURSOS))
                                 //{
