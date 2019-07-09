@@ -623,13 +623,13 @@ VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-
 		--Segunda evaluacion
 		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'No', 'No fue necesario reponer clases'),
 		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Revisamos la carta del estudiante en la primera semana'),
-		('PRE101', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '', 'No estoy seguro de si en el ambiente laboral me servira la materia'),
-		('PRE202', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '', 'La profesora logro que las clases fueran muy entretenidas y dinámicas'),
+		('PRE101', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'No estoy seguro de si en el ambiente laboral me servira la materia', ''),
+		('PRE202', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'La profesora logro que las clases fueran muy entretenidas y dinámicas', ''),
 		--Tercera evaluacion
 		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Me repuso una clase a la que falte'),
 		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Sí se reviso'),
 		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Entretenido'),
-		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Muy buena profesora'),
+		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
 
 		--Agregado
 		--Cuarta Unica
@@ -744,13 +744,76 @@ CREATE PROCEDURE SP_DevolverObservacionesPorGrupo
 	@itemId NVARCHAR(10)
 AS
 BEGIN
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED
+	BEGIN TRANSACTION tc2
 	SET NOCOUNT ON
 	SELECT e.Observacion, a.Nombre, a.Apellido1, a.Apellido2
 	FROM Responde as e, Persona as a
 	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId AND e.CedulaPersona = a.Cedula
+	COMMIT TRANSACTION tc2
 END
 GO
 
+IF OBJECT_ID('SP_RecuperarEtiquetas') IS NOT NULL
+	DROP PROCEDURE [dbo].[SP_RecuperarEtiquetas]
+
+--REQ: La base de datos creada.
+--EFE: Retorna los Labels asociados a una pregunta en especifico
+--MOD: --
+GO
+CREATE PROCEDURE [dbo].[SP_RecuperarEtiquetas]
+	@tipoPregunta INT,
+	@idPregunta NVARCHAR (10)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
+	BEGIN TRANSACTION t1
+		IF @tipoPregunta = 2 --seleccion unica
+			BEGIN
+				SELECT	e.OpcionRespuesta AS Label
+				FROM	Opciones_De_Respuestas_Seleccion_Unica AS e
+				WHERE	e.ItemId = @idPregunta
+			END
+		ELSE IF @tipoPregunta = 3 --like dislike(si/no)
+			BEGIN
+				SELECT	e.OpcionRespuesta AS Label
+				FROM	Opciones_De_Respuestas_Seleccion_Unica AS e
+				WHERE	e.ItemId = @idPregunta
+			END
+		ELSE IF @tipoPregunta = 4 --seleccion multiple
+			BEGIN	
+				SELECT	e.OpcionRespuesta AS Label
+				FROM	Opciones_De_Respuestas_Seleccion_Multiple AS e
+				WHERE	e.ItemID = @idPregunta
+			END
+	COMMIT TRANSACTION t1
+END
+GO
+
+IF OBJECT_ID('SP_RecuperarEtiquetasEscalar') IS NOT NULL
+	DROP PROCEDURE [dbo].[SP_RecuperarEtiquetasEscalar]
+GO
+CREATE PROCEDURE [dbo].[SP_RecuperarEtiquetasEscalar]
+	@tipoPregunta INT,
+	@idPregunta NVARCHAR (10)
+AS
+BEGIN
+	SET NOCOUNT ON
+	IF @tipoPregunta = 5 --Escalar
+		BEGIN
+		SELECT	e.Inicio,e.Fin,e.Incremento
+		FROM	Escalar as e
+		WHERE	e.ItemId = @idPregunta
+	END
+	ELSE IF @tipoPregunta = 6 --Escalar Estrella
+		BEGIN
+		SELECT	e.Inicio,e.Fin, e.Incremento
+		FROM	Escalar as e 
+		WHERE	e.ItemId = @idPregunta
+	END
+END
+GO
 
 --Permisos
 INSERT INTO Permiso

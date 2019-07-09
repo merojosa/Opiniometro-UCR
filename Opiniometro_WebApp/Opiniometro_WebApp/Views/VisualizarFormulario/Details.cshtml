@@ -136,7 +136,7 @@
                                                         $.ajax({
                                                             type: "POST",
                                                             url: "/VisualizarFormulario/GraficoPie/?itemId=@seccion.Item.ItemId",
-                                                            data: "{ 'codigoFormulario': '@codigoFormularioRec', 'cedulaProfesor': '@cedulaProfesorRec', 'annoGrupo': '@annoGrupoRec', 'semestreGrupo': '@semestreGrupoRec', 'numeroGrupo': '@numeroGrupoRec', 'siglaCurso': '@siglaCursoRec', 'itemId': '@seccion.Item.ItemId' }",
+                                                            data: "{ 'codigoFormulario': '@codigoFormularioRec', 'cedulaProfesor': '@cedulaProfesorRec', 'annoGrupo': '@annoGrupoRec', 'semestreGrupo': '@semestreGrupoRec', 'numeroGrupo': '@numeroGrupoRec', 'siglaCurso': '@siglaCursoRec', 'itemId': '@seccion.Item.ItemId', 'tipoPregunta': '@seccion.Item.TipoPregunta' }",
                                                             contentType: "application/json; charset=utf-8",
                                                             dataType: "json",
                                                             success: function (chData) {
@@ -232,12 +232,28 @@
                                                     }
                                                     else
                                                     {
-                                                        <div style="height:180px; overflow-y: scroll;">
+                                                        <div id="rep_@item_actual" style="height:180px; overflow-y: scroll;">
 
-                                                            @foreach (var item in Model.Formulario_Respuesta)
+                                                            @foreach (var item in Model.Formulario_Respuesta.Take(1))
                                                             {
-                                                                <p>Respuesta de estudiante, texto para verificar que el tamanno para el cuadro de texto sea apropiado, lo cual indica que se pueda ver la suficiente informacion, a la vez que no se consuma mucho espacio en pantalla y evite al usuario concentrase en la respuesta de una pregunta. Tambien para comprobar con los companneros de equipo que les parece y si creen que el tamanno deber ser mas grande o mas pequenno, ya que se tiene que tomar un promedio del tamanno de una respuesta de un estudiante.</p>
-                                                                <hr>
+                                                            <script>
+                                                                $.ajax({
+                                                                    type: "POST",
+                                                                    url: "/VisualizarFormulario/ObtenerRespTexto",
+                                                                    data: "{ 'codigoFormulario': '@item.CodigoFormulario', 'cedulaProfesor': '@item.Profesor.CedulaProfesor', 'annoGrupo': '@item.Grupo.AnnoGrupo', 'semestreGrupo': '@item.Grupo.SemestreGrupo', 'numeroGrupo': '@item.Grupo.Numero', 'siglaCurso': '@item.Grupo.SiglaCurso', 'itemId': '@seccion.Item.ItemId' }" ,
+                                                                    contentType: "application/json; charset=utf-8",
+                                                                    dataType: "json",
+                                                                    success: function (chData) {
+                                                                    var aData = chData;
+                                                                    var obs = aData[0];
+                                                                        var texto = "";
+                                                                        for (var data in obs) {
+                                                                            texto = texto + (obs[data]).toString() + "<hr>";
+                                                                        }
+                                                                        document.getElementById("rep_@item_actual").innerHTML = texto;
+                                                                    }
+                                                                });
+                                                            </script>
                                                             }
 
                                                         </div>
