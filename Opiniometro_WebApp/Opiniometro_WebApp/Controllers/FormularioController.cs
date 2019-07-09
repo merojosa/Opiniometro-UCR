@@ -6,10 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
+using PagedList.Mvc;
 using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
 {
+    [Authorize]
     public class FormularioController : Controller
     {
         private Opiniometro_DatosEntities db;
@@ -31,9 +34,10 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         // GET: Formulario
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View("Index", db.Formulario.ToList());
+            var formulario = db.Formulario;
+            return View(formulario.ToList().ToPagedList(page ?? 1, 5));
         }
 
         // GET: Formulario/Details/5
@@ -54,6 +58,8 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Formulario/Create
         public ActionResult Create()
         {
+            ViewBag.CodigoUnidadAca = new SelectList(db.Unidad_Academica, "Codigo", "Codigo");
+
             return View("Create");
         }
 
@@ -62,7 +68,7 @@ namespace Opiniometro_WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CodigoFormulario,Nombre")] Formulario formulario)
+        public ActionResult Create([Bind(Include = "CodigoFormulario,Nombre, CodigoUnidadAca")] Formulario formulario)
         {
             if (ModelState.IsValid)
             {
@@ -139,5 +145,7 @@ namespace Opiniometro_WebApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+
     }
 }

@@ -19,8 +19,10 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressAnonymousAuthentication>
+    </IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>
+    </IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
@@ -197,6 +199,7 @@
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\Conformado_Item_Sec_FormController.cs" />
     <Compile Include="Controllers\CrearFormularioController.cs" />
+    <Compile Include="Controllers\EnfasisController.cs" />
     <Compile Include="Controllers\FormularioController.cs" />
     <Compile Include="Controllers\FormularioCursoController.cs" />
     <Compile Include="Controllers\Formulario_RespuestaController.cs" />
@@ -209,6 +212,7 @@
     <Compile Include="Controllers\Servicios\IdPermiso.cs" />
     <Compile Include="Controllers\Servicios\IdentidadManager.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
+    <Compile Include="Controllers\Servicios\ServicioCorreo.cs" />
     <Compile Include="Controllers\VisualizarFormularioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -234,6 +238,7 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CrearFormularioModel.cs" />
+    <Compile Include="Models\CrearItemModel.cs" />
     <Compile Include="Models\Curso.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -246,7 +251,8 @@
     <Compile Include="Models\CursosSegunSemestre_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DatosFormulario.cs" />
+    <Compile Include="Models\DatosProvisionados.cs" />
+    <Compile Include="Models\EditarPerfil.cs" />
     <Compile Include="Models\Empadronado.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -381,7 +387,10 @@
     </Compile>
     <Compile Include="Models\ValidacionJOFFI\Metadata.cs" />
     <Compile Include="Models\ValidacionJOFFI\PartialClasses.cs" />
+    <Compile Include="Models\ViewEnfasis.cs" />
     <Compile Include="Models\ViewModelAdmin.cs" />
+    <Compile Include="ViewModels\AsignarFormulariosViewModel.cs" />
+    <Compile Include="Models\VistaPreviaPreguntaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AsignarFormulariosViewModel.cs" />
@@ -456,6 +465,8 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Formulario\Create.cshtml" />
@@ -479,6 +490,11 @@
     <Content Include="Views\Formulario_Respuesta\Index.cshtml" />
     <Content Include="Views\Auth\Recuperar.cshtml" />
     <Content Include="Views\Shared\Auth\BarraLogin.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
     <Content Include="Views\VisualizarFormulario\Create.cshtml" />
     <Content Include="Views\VisualizarFormulario\Delete.cshtml" />
     <Content Include="Views\VisualizarFormulario\Details.cshtml" />
@@ -486,6 +502,11 @@
     <Content Include="Views\VisualizarFormulario\Index.cshtml" />
     <Content Include="Views\Admin\VerPersonas.cshtml" />
     <Content Include="Views\Admin\CrearUsuario.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Create.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Details.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
+    <Content Include="Views\Seleccion_Unica\Index.cshtml" />
     <Content Include="Views\Administrador\CargarArchivo.cshtml" />
     <Content Include="Views\Administrador\Index.cshtml" />
     <Content Include="Views\Categoria\Create.cshtml" />
@@ -494,8 +515,6 @@
     <Content Include="Views\Categoria\Edit.cshtml" />
     <Content Include="Views\Categoria\Index.cshtml" />
     <Content Include="Views\CrearFormulario\AsignarPreguntas.cshtml" />
-    <Content Include="Views\CrearFormulario\SeccionesAsignadas.cshtml" />
-    <Content Include="Views\CrearFormulario\PreguntasAsignadas.cshtml" />
     <Content Include="Views\CrearFormulario\preguntasVParcial.cshtml" />
     <Content Include="Views\CrearFormulario\seccionesVParcial.cshtml" />
     <Content Include="Views\Item\VistaPrevia.cshtml" />
@@ -516,6 +535,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\AsignacionFormularioGrupo.cshtml" />
     <Content Include="Views\Shared\SeleccionFormularios.cshtml" />
+    <Content Include="Views\LlenarFormulario\Index.cshtml" />
+    <Content Include="Views\Item\AgregarOpciones.cshtml" />
+    <Content Include="Views\CrearFormulario\VistaPreviaPregunta.cshtml" />
+    <Content Include="Views\CrearFormulario\VistaFormularioVParcial.cshtml" />
+    <Content Include="Views\Item\AgregarOpcionesVParcial.cshtml" />
+    <Content Include="Views\CrearFormulario\AsignarSecciones.cshtml" />
     <Content Include="Views\CursosMatriculados\Index.cshtml" />
     <Content Include="Views\FormularioCurso\Index.cshtml" />
     <Content Include="Views\Asignacion_Formulario\Delete.cshtml" />
@@ -524,11 +549,15 @@
     <Content Include="Views\Shared\EditorTemplates\ElegirFormularioEditorViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ElegirGrupoEditorViewModel.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Edit.cshtml" />
+    <Content Include="Views\Perfil\Detalles.cshtml" />
+    <Content Include="Views\Perfil\Editar.cshtml" />
+    <Content Include="Views\Enfasis\VerEnfasis.cshtml" />
     <Content Include="Views\Auth\CambiarContrasenna.cshtml" />
     <Content Include="Views\FormularioCurso\SeleccionUnica.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
+    <Folder Include="Views\Opciones_De_Respuestas_Seleccion_Unica\" />
     <Folder Include="Views\SeleccionFormularios\" />
     <Folder Include="Views\Seleccion_Unica\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />

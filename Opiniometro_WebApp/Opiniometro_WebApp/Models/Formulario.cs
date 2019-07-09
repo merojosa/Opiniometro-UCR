@@ -25,6 +25,7 @@ namespace Opiniometro_WebApp.Models
     
         public string CodigoFormulario { get; set; }
         public string Nombre { get; set; }
+        public string CodigoUnidadAca { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Conformado_For_Sec> Conformado_For_Sec { get; set; }
@@ -34,5 +35,6 @@ namespace Opiniometro_WebApp.Models
         public virtual ICollection<Formulario_Respuesta> Formulario_Respuesta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tiene_Grupo_Formulario> Tiene_Grupo_Formulario { get; set; }
+        public virtual Unidad_Academica Unidad_Academica { get; set; }
     }
 }

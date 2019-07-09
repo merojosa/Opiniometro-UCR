@@ -319,6 +319,36 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CrearPerfil", nombreParameter, descripcionParameter, numero_Error);
         }
     
+        public virtual int SP_CopiarSeccion(string codFormOrigen, string tituloSec, string codFormDest)
+        {
+            var codFormOrigenParameter = codFormOrigen != null ?
+                new ObjectParameter("CodFormOrigen", codFormOrigen) :
+                new ObjectParameter("CodFormOrigen", typeof(string));
+    
+            var tituloSecParameter = tituloSec != null ?
+                new ObjectParameter("TituloSec", tituloSec) :
+                new ObjectParameter("TituloSec", typeof(string));
+    
+            var codFormDestParameter = codFormDest != null ?
+                new ObjectParameter("CodFormDest", codFormDest) :
+                new ObjectParameter("CodFormDest", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CopiarSeccion", codFormOrigenParameter, tituloSecParameter, codFormDestParameter);
+        }
+    
+        public virtual int SP_CrearPerfil(string nombre, string descripcion, ObjectParameter numero_Error)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CrearPerfil", nombreParameter, descripcionParameter, numero_Error);
+        }
+    
         public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
             var diagramnameParameter = diagramname != null ?
@@ -620,6 +650,23 @@ namespace Opiniometro_WebApp.Models
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual int EditarPerfil(string nombre, string nombreViejo, string descripcion, ObjectParameter numero_Error)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var nombreViejoParameter = nombreViejo != null ?
+                new ObjectParameter("nombreViejo", nombreViejo) :
+                new ObjectParameter("nombreViejo", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("descripcion", descripcion) :
+                new ObjectParameter("descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EditarPerfil", nombreParameter, nombreViejoParameter, descripcionParameter, numero_Error);
         }
     }
 }
