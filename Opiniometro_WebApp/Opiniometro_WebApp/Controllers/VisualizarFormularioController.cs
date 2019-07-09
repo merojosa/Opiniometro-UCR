@@ -13,6 +13,7 @@ using System.Web.Helpers; //Para graficos, borrar despues
 
 namespace Opiniometro_WebApp.Controllers
 {
+    [Authorize]
     public class VisualizarFormularioController : Controller
     {
 
@@ -238,6 +239,9 @@ namespace Opiniometro_WebApp.Controllers
         [HttpGet]
         private ObjectResult<SP_ContarRespuestasPorGrupo_Result> ObtenerCantidadRespuestasPorPregunta(string codigoFormulario, string cedulaProfesor, short? annoGrupo, byte? semestreGrupo, byte? numeroGrupo, string siglaCurso, string itemId)
         {
+            //var result = ((IObjectContextAdapter)this).ObjectContext.TransactionHandler.ExecuteFunction<SP_ContarRespuestasPorGrupo_Result>("SP_ContarRespuestasPorGrupo", codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
+
+            //db.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, "EXEC SP_ContarRespuestasPorGrupo @codigoFormulario, @cedulaProfesor, @annoGrupo, @semestreGrupo, @numeroGrupo, @siglaCurso, @itemId", codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
             var result = db.SP_ContarRespuestasPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
             return result;
         }
@@ -382,7 +386,6 @@ namespace Opiniometro_WebApp.Controllers
             List<object> lista = new List<object> { x, y, promedio, mediana, desviacion};
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
-    /* Aun no esta en server.
         //EFE:Retorna las observaciones del item.
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--
@@ -408,7 +411,7 @@ namespace Opiniometro_WebApp.Controllers
             foreach (var itemO in result)
             {
                 obs.Add(itemO.Observacion);
-                nom.Add(itemO.Nombre);
+                nom.Add(itemO.Nombre1);
                 ap1.Add(itemO.Apellido1);
                 ap2.Add(itemO.Apellido2);
             }

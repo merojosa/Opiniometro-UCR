@@ -12,12 +12,12 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class Imparte_View
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public string CedulaProfesor { get; set; }
+        public byte Numero { get; set; }
+        public string Sigla { get; set; }
+        public short Anno { get; set; }
+        public byte Semestre { get; set; }
     }
 }
