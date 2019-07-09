@@ -399,6 +399,8 @@ namespace Opiniometro_WebApp.Controllers
             var FormulariosConPeriodos = JsonConvert.DeserializeObject<TipoPeriodosIndicados[]>(PeriodosIndicados);
             var GruposEnLista = JsonConvert.DeserializeObject<Grupo[]>(Grupos);
 
+            DateTime ahora = DateTime.Now;
+
             List<Tiene_Grupo_Formulario> asignaciones = new List<Tiene_Grupo_Formulario>();
             foreach (var fcp in FormulariosConPeriodos)
             {
@@ -408,47 +410,65 @@ namespace Opiniometro_WebApp.Controllers
 
                 //bool fechaIEsCorrecta = DateTime.TryParse(fcp.FechaInicio, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out inicioPeriodo);
                 //bool fechaFEsCorrecta = DateTime.TryParse(fcp.FechaFinal, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out finPeriodo);
+
                 if (fechaIEsCorrecta && fechaFEsCorrecta)
                 {
                     //Debug.WriteLine("Fecha inicio: {0}\nFecha fin: {1}\n\n", inicioPeriodo.ToString(), finPeriodo.ToString());
 
-                    if ((from fc in db.Fecha_Corte
-                         where (fc.FechaInicio == inicioPeriodo && fc.FechaFinal == finPeriodo)
-                         select fc).Count() == 0)
+                    if (ahora < inicioPeriodo)
                     {
-                        if (ModelState.IsValid)
+                        if (inicioPeriodo < finPeriodo)
                         {
-                            db.Fecha_Corte.Add(new Fecha_Corte { FechaInicio = inicioPeriodo, FechaFinal = finPeriodo });
-                            db.SaveChanges();
+
+                            if ((from fc in db.Fecha_Corte
+                                 where (fc.FechaInicio == inicioPeriodo && fc.FechaFinal == finPeriodo)
+                                 select fc).Count() == 0)
+                            {
+                                if (ModelState.IsValid)
+                                {
+                                    db.Fecha_Corte.Add(new Fecha_Corte { FechaInicio = inicioPeriodo, FechaFinal = finPeriodo });
+                                    db.SaveChanges();
+                                }
+                            }
+
+
+                            foreach (var g in GruposEnLista)
+                            {
+                                asignaciones.Add(new Tiene_Grupo_Formulario
+                                {
+                                    SiglaCurso = g.SiglaCurso,
+                                    Numero = g.Numero,
+                                    Anno = g.AnnoGrupo,
+                                    Ciclo = g.SemestreGrupo,
+                                    Codigo = fcp.CodigoForm,
+                                    FechaInicio = inicioPeriodo,
+                                    FechaFinal = finPeriodo
+                                });
+                            }
+                        }
+                        else // El periodo inicia después de que termina
+                        {
+                            ++numErrores;
+                            mensajes += "- El inicio del periodo para el formulario " + fcp.CodigoForm + " debe corresponder a una fecha anterior al final del mismo periodo.\n";
                         }
                     }
-                        
-                    foreach (var g in GruposEnLista)
+                    else // Inicio del periodo NO es posterior a la fecha actual
                     {
-                        asignaciones.Add(new Tiene_Grupo_Formulario
-                        {
-                            SiglaCurso = g.SiglaCurso,
-                            Numero = g.Numero,
-                            Anno = g.AnnoGrupo,
-                            Ciclo = g.SemestreGrupo,
-                            Codigo = fcp.CodigoForm,
-                            FechaInicio = inicioPeriodo,
-                            FechaFinal = finPeriodo
-                        });
+                        ++numErrores;
+                        mensajes += "- El periodo para el formulario " + fcp.CodigoForm + " debe comenzar en una fecha posterior a la actual\n";
                     }
                 }
                 else
                 {
                     //Debug.Write("\n\nFecha incorrecta /\n\n");
                     ++numErrores;
-                    mensajes += "                                             - " + fcp.CodigoForm + "\n";
+                    mensajes += "- Ingrese correctamente el periodo de aplicación para el formulario " + fcp.CodigoForm + "\n";
                 }
             }
 
             if (numErrores > 0)
             {
-                mensajes = "Ingrese correctamente el periodo para los formularios:\n" + mensajes 
-                    + "\nPor favor corrija lo indicado antes de realizar las asignaciones.\n";
+                mensajes += "\nPor favor corrija lo indicado antes de realizar las asignaciones.\n";
             }
             else
             { 
