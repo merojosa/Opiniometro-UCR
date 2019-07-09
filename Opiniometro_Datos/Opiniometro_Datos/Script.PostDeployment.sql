@@ -325,6 +325,34 @@ BEGIN
 END
 GO
 
+IF OBJECT_ID('EditarPerfil') IS NOT NULL
+	DROP PROCEDURE EditarPerfil
+CREATE PROCEDURE EditarPerfil
+	@nombre varchar(30),
+	@nombreViejo varchar(30),
+	@descripcion varchar(80),
+	@Numero_Error	INT OUT
+AS
+begin
+	SET @Numero_Error = 0
+	BEGIN TRY
+	SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+	BEGIN TRANSACTION EditarPerfil;
+		update Perfil set
+		Perfil.Descripcion = @descripcion,
+		Perfil.Nombre = @nombre
+		where Nombre = @nombreViejo
+		COMMIT TRANSACTION EditarPerfil
+	END TRY
+	BEGIN CATCH
+		SET @Numero_Error = (SELECT ERROR_NUMBER())
+		ROLLBACK TRANSACTION EditarPerfil	
+	END CATCH
+
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+end
+go
+
 --Inserciones
 
 INSERT INTO Persona

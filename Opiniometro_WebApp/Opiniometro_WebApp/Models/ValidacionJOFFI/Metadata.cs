@@ -16,6 +16,8 @@ namespace Opiniometro_WebApp.Models
         [StringLength(25, ErrorMessage = "El límite de este campo son 25 caracteres.")]
         [Required]
         public string Nombre { get; set; }
+        [Required(ErrorMessage = "Campo obligatorio: Seleccione la unidad academica.")]
+        public string CodigoUnidadAca { get; set; }
     }
 
     public class SeccionMetadata
@@ -71,6 +73,18 @@ namespace Opiniometro_WebApp.Models
         [StringLength(30, ErrorMessage = "El límite de este campo son de 30 caracteres.")]
         [Required(ErrorMessage = "Este campo es requerido.")]
         [RegularExpression("([a-zA-z0-9]*(\\s)*)*$", ErrorMessage = "Solo se permiten números y letras sin tilde.")]
+        public string Nombre { get; set; }
+
+        [StringLength(80, ErrorMessage = "El límite de este campo son de 80 caracteres.")]
+        [Required(ErrorMessage = "Este campo es requerido.")]
+        public string Descripcion { get; set; }
+    }
+
+    public class EditarPerfilMetadata
+    {
+        [Remote("IsNombrePerfilAvailable", "Perfil", ErrorMessage = "Este nombre ya está en uso.")]
+        [StringLength(30, ErrorMessage = "El límite de este campo son de 30 caracteres.")]
+        [Required(ErrorMessage = "Este campo es requerido.")]
         public string Nombre { get; set; }
 
         [StringLength(80, ErrorMessage = "El límite de este campo son de 80 caracteres.")]
