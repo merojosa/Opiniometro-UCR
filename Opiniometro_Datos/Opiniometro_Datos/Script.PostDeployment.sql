@@ -687,11 +687,16 @@ CREATE PROCEDURE SP_ContarRespuestasPorGrupo
 	@itemId				NVARCHAR(10)
 AS
 BEGIN
+	SET IMPLICIT_TRANSACTIONS OFF;
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+	BEGIN TRANSACTION contarRespuestas
 	SET NOCOUNT ON
-	SELECT e.Respuesta, COUNT(e.Respuesta) AS cntResp
-	FROM Responde as e
-	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
-	GROUP BY e.CodigoFormularioResp, e.CedulaProfesor, e.AnnoGrupoResp, e.SemestreGrupoResp, e.NumeroGrupoResp, e.SiglaGrupoResp, e.ItemId, e.Respuesta
+		SELECT e.Respuesta, COUNT(e.Respuesta) AS cntResp
+		FROM Responde as e
+		WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
+		GROUP BY e.CodigoFormularioResp, e.CedulaProfesor, e.AnnoGrupoResp, e.SemestreGrupoResp, e.NumeroGrupoResp, e.SiglaGrupoResp, e.ItemId, e.Respuesta
+	COMMIT TRANSACTION contarRespuestas
+	SET IMPLICIT_TRANSACTIONS ON;
 END
 GO
 
