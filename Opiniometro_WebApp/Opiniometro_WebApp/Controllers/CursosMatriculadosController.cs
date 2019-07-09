@@ -21,17 +21,10 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult Index()
         {
             DateTime fecha = DateTime.Now;
-            int anno = fecha.Year;
-            int mes = fecha.Month;
-            int ciclo = 0;
-
-            if (mes >= 3 && mes <= 7) { ciclo = 1; }
-            if (mes >= 8 && mes <= 12) { ciclo = 2; }
-            if (mes >= 1 && mes <= 2) { ciclo = 3; }
 
             var modelo = new EstudianteGruposMatriculado
             {
-                gruposMatriculado = ObtenerGrupoMatriculado(obtenerCedulaEstLoggeado(), ciclo, anno)
+                gruposMatriculado = ObtenerGrupoMatriculado( obtenerCedulaEstLoggeado(IdentidadManager.obtener_correo_actual()) , ciclo(fecha.Month), fecha.Year )
             };
             return View(modelo);
         }
@@ -86,13 +79,22 @@ namespace Opiniometro_WebApp.Controllers
         /// modifica:--
         /// </summary>
         /// <returns></returns>
-        public string obtenerCedulaEstLoggeado()
+        public string obtenerCedulaEstLoggeado(string correo)
         {
             ObjectParameter cedula = new ObjectParameter("resultado", "");
-            string correoUsLog = IdentidadManager.obtener_correo_actual();
-            db.SP_ObtenerCedula(correoUsLog, cedula);
+            db.SP_ObtenerCedula(correo, cedula);
             return cedula.Value.ToString();
         }
 
+        public int ciclo(int mes) {           
+            int ciclo = 0;
+
+            if (mes >= 3 && mes <= 7) { ciclo = 1; }
+            if (mes >= 8 && mes <= 12) { ciclo = 2; }
+            if (mes >= 1 && mes <= 2) { ciclo = 3; }
+
+            return ciclo;
+        }
+            
     }
 }
