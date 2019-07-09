@@ -243,6 +243,36 @@ as
 	WHERE CorreoInstitucional = @correo;
 go
 
+--Insertar la combinacion de permiso con perfil y enfasis
+IF OBJECT_ID('SP_InsertaTablaPosee') IS NOT NULL
+	DROP PROCEDURE SP_InsertaTablaPosee
+GO
+CREATE PROCEDURE SP_InsertaTablaPosee
+	@NumeroEnf tinyint,
+	@Sigla nvarchar(10),
+	@NombrePerfil varchar(30),
+	@IdPermiso smallint,
+	@Numero_Error int out
+AS
+BEGIN
+	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+	set @Numero_Error = 0
+
+	Begin try
+		begin transaction AgregaPosee
+			insert into Posee_Enfasis_Perfil_Permiso
+			values (@NumeroEnf, @Sigla, @NombrePerfil, @IdPermiso)
+		commit transaction AgregaPosee
+	end try
+	Begin catch
+		set @Numero_Error = (SELECT ERROR_NUMBER())
+		rollback transaction AgregaPosee
+	End catch
+
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+END
+go
+
 --JJAPH
 IF OBJECT_ID('MostrarEstudiantes', 'P') IS NOT NULL 
 	DROP PROC MostrarEstudiantes
