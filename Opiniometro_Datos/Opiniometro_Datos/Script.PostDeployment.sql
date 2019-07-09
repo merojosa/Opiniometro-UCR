@@ -129,41 +129,6 @@ BEGIN
 END
 GO
 
-IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
-	DROP TRIGGER TR_InsertaPersona
-GO
-CREATE TRIGGER TR_InsertaPersona
-ON Persona INSTEAD OF INSERT
-AS
-BEGIN
-	DECLARE @cedula CHAR(10)
-	DECLARE @nombre NVARCHAR(51)
-	DECLARE @apellido1 NVARCHAR(51)
-	DECLARE @apellido2 NVARCHAR(51)
-	
-	SET @cedula = (SELECT Cedula FROM inserted)
-	SET @nombre = (SELECT Nombre FROM inserted)
-	SET @apellido1 = (SELECT Apellido1 FROM inserted)
-	SET @apellido2 = (SELECT Apellido2 FROM inserted)
-
-	BEGIN TRY
-	IF(@cedula IS NOT NULL AND @nombre IS NOT NULL AND @apellido1 IS NOT NULL AND @apellido2 IS NOT NULL  AND (LEN(@cedula) = 9) AND (LEN(@nombre) < 50) AND (LEN(@apellido1) < 50) AND (LEN(@apellido2) < 50))
-	BEGIN
-		INSERT INTO Persona (Cedula, Nombre, Apellido1, Apellido2)
-		VALUES (@cedula, @nombre, @apellido1, @apellido2)
-	END
-	ELSE
-	BEGIN
-		RAISERROR('Datos incorrectos',16,1)
-		RETURN
-	END
-	END TRY
-
-	BEGIN CATCH 
-		PRINT 'ERROR: ' + ERROR_MESSAGE( );
-	END CATCH
-END;
-
 IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
 GO
@@ -844,6 +809,74 @@ VALUES	('San José', 'San José', 'Carmen'),
 		('Cartago', 'El Guarco', 'Tobosi'),
 		('Cartago', 'El Guarco', 'Patio de Agua')
 		
+IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
+	DROP TRIGGER TR_InsertaPersona
+GO
+CREATE TRIGGER TR_InsertaPersona
+ON Persona INSTEAD OF INSERT
+AS
+BEGIN
+	DECLARE @cedula CHAR(10)
+	DECLARE @nombre1 NVARCHAR(51)
+	DECLARE @nombre2 NVARCHAR(51)
+	DECLARE @apellido1 NVARCHAR(51)
+	DECLARE @apellido2 NVARCHAR(51)
+	--DECLARE @correoInstitucional NVARCHAR(51)
+
+	--SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
+	
+	SET @cedula					= (SELECT Cedula FROM inserted)
+	SET @nombre1				= (SELECT Nombre1 FROM inserted)
+	SET @nombre2				= (SELECT Nombre2 FROM inserted)
+	SET @apellido1				= (SELECT Apellido1 FROM inserted)
+	SET @apellido2				= (SELECT Apellido2 FROM inserted)
+
+	IF((@cedula NOT LIKE '') AND  (LEN(@cedula) = 9) AND (@nombre1 NOT LIKE '') AND (LEN(@nombre1) <= 50) 
+	AND  (LEN(@nombre2) <= 50)  AND (@apellido1 NOT LIKE '') AND (LEN(@apellido1) <= 50)  
+	AND (@apellido2 NOT LIKE '') AND (LEN(@apellido2) <= 50))
+	BEGIN
+		INSERT INTO Persona(Cedula, nombre1, nombre2, apellido1, apellido2)
+		VALUES (@cedula, @nombre1, @nombre2, @apellido1, @apellido2)
+	END
+	ELSE
+	BEGIN
+		RAISERROR('Hay campos no pueden estar vacíos o exceder el tamaño adecuado', 16, 1)
+		RETURN
+	END
+END;
+
+IF OBJECT_ID('TR_InsertaUsuario') IS NOT NULL
+	DROP TRIGGER TR_InsertaUsuario
+GO
+CREATE TRIGGER TR_InsertaUsuario
+ON Usuario INSTEAD OF INSERT
+AS
+BEGIN
+	DECLARE @correoInstitucional NVARCHAR(51)
+	DECLARE @cedula CHAR(10)
+	DECLARE @contrasena NVARCHAR(50)
+	DECLARE @activo BIT
+	DECLARE @id UNIQUEIDENTIFIER
+	DECLARE @recuperarContrasena BIT
+
+	SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
+	SET @cedula					= (SELECT Cedula FROM inserted)
+	SET @contrasena = (SELECT Contrasena FROM inserted)
+	SET @activo= (SELECT Activo FROM inserted)
+	SET @id = (SELECT Id FROM inserted)
+	SET @recuperarContrasena = (SELECT RecuperarContrasenna FROM inserted)
+
+	IF((@correoInstitucional LIKE '%@ucr.ac.cr') AND (@correoInstitucional NOT LIKE '') AND (@cedula NOT LIKE '') AND (LEN(@correoInstitucional) <= 50) AND  (LEN(@cedula) = 9))
+	BEGIN
+		INSERT INTO Usuario
+		VALUES (@correoInstitucional, @contrasena, @activo, @cedula, @id, @recuperarContrasena)
+	END
+	ELSE
+	BEGIN
+		RAISERROR('Hay campos no pueden estar vacíos o exceder el tamaño adecuado', 16, 1)
+		RETURN
+	END
+END;
 
 --select de prueba para la cnt de respuestas
 --SELECT e.Respuesta, COUNT(e.Respuesta) as cantidadRespuestas
