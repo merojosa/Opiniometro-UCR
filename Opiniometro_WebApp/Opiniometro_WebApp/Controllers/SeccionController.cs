@@ -37,7 +37,7 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult Index(int? page)
         {
             var seccion = db.Seccion;
-            return View(seccion.ToList().ToPagedList(page ?? 1, 5));
+            return View("Index", seccion.ToList().ToPagedList(page ?? 1, 5));
         }
 
         // GET: Seccion/Details/5

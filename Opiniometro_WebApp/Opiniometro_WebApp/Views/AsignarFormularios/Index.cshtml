@@ -23,25 +23,25 @@
                     <div class="panel-body">
                         <div style="height:17vh; overflow:auto;">
 
-                    <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
-                        <!-- Buscador -->
-                        <p>
-                            <div class="filter">
-                                <!--Toman el valor del dropdown list seleccionado-->
-                                @Html.Hidden("changeUnidad", null)
-                                @Html.Hidden("changeCarrera", null)
-                                @Html.Hidden("changeCurso", null)
-                                @Html.Hidden("changeAnno", null)
-                                @Html.Hidden("changeSemestre", null)
+                            <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
+                            <!-- Buscador -->
+                            <p>
+                                <div class="filter">
+                                    <!--Toman el valor del dropdown list seleccionado-->
+                                    @Html.Hidden("changeUnidad", null)
+                                    @Html.Hidden("changeCarrera", null)
+                                    @Html.Hidden("changeCurso", null)
+                                    @Html.Hidden("changeAnno", null)
+                                    @Html.Hidden("changeSemestre", null)
 
-                                <!--Desplegables para los filtros-->
-                                <a> @Html.DropDownList("semestre", null, "Semestre", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeSemestre').value = this.value; this.form.submit();" }) </a>
-                                <a> @Html.DropDownList("ano", null, "Año", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeAnno').value = this.value; this.form.submit();" }) </a>
-                                <a> @Html.DropDownList("unidadAcademica", null, "U. Académica", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" }) </a>
-                                <a> @Html.DropDownList("siglaCarrera", null, "Carrera", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" }) </a>
-                                <a> @Html.DropDownList("nombreCurso", null, "Curso", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCurso').value = this.value; this.form.submit();" }) </a>
-                                @*<b> @Html.DropDownList("profe", null, "Profesor", new { @class = "btn btn-default dropdown-toggle", style = "width:130px;" }) </b>*@
-                                @*<b> @Html.DropDownList("enfasis", null, "Énfasis", new { @class = "btn btn-default dropdown-toggle", style = "width:130px;" }) </b>*@
+                                    <!--Desplegables para los filtros-->
+                                    <a> @Html.DropDownList("semestre", null, "Semestre", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeSemestre').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("ano", null, "Año", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeAnno').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("unidadAcademica", null, "U. Académica", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("siglaCarrera", null, "Carrera", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("nombreCurso", null, "Curso", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCurso').value = this.value; this.form.submit();" }) </a>
+                                    @*<b> @Html.DropDownList("profe", null, "Profesor", new { @class = "btn btn-default dropdown-toggle", style = "width:130px;" }) </b>*@
+                                    @*<b> @Html.DropDownList("enfasis", null, "Énfasis", new { @class = "btn btn-default dropdown-toggle", style = "width:130px;" }) </b>*@
 
                                 </div>
 
@@ -72,7 +72,15 @@
         </div>
     }
 
-   @using (Ajax.BeginForm("AsignacionFormularioGrupo", "AsignarFormularios", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "asign-content" }))
+    @using (Html.BeginForm("EnviarCorreoFormulario", "AsignarFormularios"))
+    {
+        <div>
+            <!--Enviar correo (PRUEBA)-->
+            <input type="submit" value="Enviar Correo" />
+        </div>
+    }
+
+    @using (Ajax.BeginForm("AsignacionFormularioGrupo", "AsignarFormularios", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "asign-content" }))
     {
         <div class="row">
             <div class="col-sm-8">

@@ -252,6 +252,9 @@
     <Compile Include="Models\CursosSegunSemestre_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\C__RefactorLog.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DatosFormulario.cs" />
     <Compile Include="Models\DatosProvisionados.cs" />
     <Compile Include="Models\EditarPerfil.cs" />
@@ -417,6 +420,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\scrollbar-tabla.css" />
     <Content Include="Content\Formulario.css" />
+    <Content Include="Content\TablasHTML\FixedHeaderTable.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -452,6 +456,8 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -561,9 +567,11 @@
     <Content Include="Views\Enfasis\VerEnfasis.cshtml" />
     <Content Include="Views\Auth\CambiarContrasenna.cshtml" />
     <Content Include="Views\FormularioCurso\SeleccionUnica.cshtml" />
+    <Content Include="Views\FormularioCurso\Escalar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
+    <Folder Include="Views\LogInPerfiles\" />
     <Folder Include="Views\Opciones_De_Respuestas_Seleccion_Unica\" />
     <Folder Include="Views\SeleccionFormularios\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />

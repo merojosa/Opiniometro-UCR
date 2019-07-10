@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
 using System.Diagnostics;
+using System.Net.Mail;
+using System.Net;
+using System.Text;
 using Newtonsoft.Json;
 using System.Globalization;
 
@@ -455,6 +458,75 @@ namespace Opiniometro_WebApp.Controllers
 
             return PartialView("SeleccionFormularios", form);
         }
+
+        
+        //Efecto: Envía un correo al estudiante notificandole que existe un formulario que debe llenar.
+        //Requiere: el correo de la persona que va a recibir el recordatorio, el asunto del mensaje y el contenido del correo.
+        //Modifica: N/A.
+        private void EnviarCorreo(string correo_receptor, string asunto, string contenido)
+        {
+            string correo_emisor = System.Configuration.ConfigurationManager.AppSettings["CorreoEmisor"].ToString();
+            string contrasenna = System.Configuration.ConfigurationManager.AppSettings["ContrasennaEmisor"].ToString();
+
+            SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587);
+            cliente.EnableSsl = true;
+            cliente.Timeout = 100000;
+            cliente.DeliveryMethod = SmtpDeliveryMethod.Network;
+            cliente.UseDefaultCredentials = false;
+            cliente.Credentials = new NetworkCredential(correo_emisor, contrasenna);
+
+            MailMessage correo = new MailMessage(correo_emisor, correo_receptor, asunto, contenido);
+            correo.IsBodyHtml = true;
+            correo.BodyEncoding = UTF8Encoding.UTF8;
+            cliente.Send(correo);
+
+        }
+
+        //public ActionResult EnviarCorreoFormulario()
+        //{
+        //    return View("Index");
+        //}
+
+        //Efecto: Envía un correo a los estudiantes matriculados en cierto curso.
+        //Requiere: la sigla del curso.
+        //Modifica: N/A.
+        public ActionResult EnviarCorreoFormulario(Curso curso)
+        {
+            List<Usuario> usuarios = (from u in db.Usuario
+                                      select u).ToList();
+
+            List<Persona> personas = (from p in db.Persona
+                                      select p).ToList();
+
+            var matriculados = from m in db.Matricula
+                               where m.Sigla.Equals(curso.Sigla)
+                               select m;
+            foreach (var ma in matriculados)
+            {
+                Usuario usuario = new Usuario();
+                usuario = usuarios.Find(us => us.Cedula.Equals(ma.CedulaEstudiante));
+
+                Persona persona = new Persona();
+                persona = personas.Find(p => p.Cedula.Equals(ma.CedulaEstudiante));
+                string contenido = "<p>Estimado " + persona.Nombre1 + " " + persona.Apellido1 + ", se le solicita dedicar unos minutos de su tiempo para evaluar los cursos" +
+               " en los cuales se encuentra matriculado. Favor ingresar a  Opiniómetro@UCR</p> <b>";
+
+                // Se le envía al usuario el correo con la notificación del formulario 
+                EnviarCorreo(usuario.CorreoInstitucional, "Evaluación pendiente - Opiniómetro@UCR", contenido);
+            }
+            var modelo = new AsignarFormulariosViewModel
+            {
+                Ciclos = ObtenerCiclos("UC-023874"),
+                UnidadesAcademicas = ObtenerUnidadAcademica(2018, 2, "UC-023874"),
+                Carreras = ObtenerCarreras(2018, 2, "UC-023874"),
+                Grupos = ObtenerGrupos(2018, 2, "UC-023874", "SC - 01234", 255, "Programación 1", null),
+                Cursos = ObtenerCursos(2018,2, "UC-023874", "SC - 01234", null),
+                Formularios = ObtenerFormularios(),
+                Enfasis = ObtenerEnfasis(2018,2, "UC-023874", "SC - 01234")
+            };
+            return View("Index", modelo);
+        }
+     
 
         [HttpPost]
         public string EfectuarAsignaciones(string Grupos, string PeriodosIndicados)

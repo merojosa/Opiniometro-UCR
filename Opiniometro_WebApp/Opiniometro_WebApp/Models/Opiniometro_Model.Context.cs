@@ -27,6 +27,7 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Administrativo> Administrativo { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
@@ -572,6 +573,23 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Contrasenna", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_LoginUsuario", correoParameter, contrasennaParameter, resultado);
+        }
+    
+        public virtual int SP_ModificarPerfilUsuario(string correo, string perfil, Nullable<bool> modifica)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var perfilParameter = perfil != null ?
+                new ObjectParameter("perfil", perfil) :
+                new ObjectParameter("perfil", typeof(string));
+    
+            var modificaParameter = modifica.HasValue ?
+                new ObjectParameter("modifica", modifica) :
+                new ObjectParameter("modifica", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPerfilUsuario", correoParameter, perfilParameter, modificaParameter);
         }
     
         public virtual int SP_ModificarPersona(string cedulaBusqueda, string cedula, string nombre1, string nombre2, string apellido1, string apellido2, string correo)

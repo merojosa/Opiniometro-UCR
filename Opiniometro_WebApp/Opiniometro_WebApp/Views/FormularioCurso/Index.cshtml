@@ -11,6 +11,39 @@
 <head>
     <meta charset="utf-8" />
     <script src="~/Scripts/FormularioDelCurso.js"></script>
+
+    @*Estilo: checkbox tipo estrella*@
+    <style type="text/css">
+        .rating {
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .rating-input {
+            float: left;
+            width: 16px;
+            height: 16px;
+            padding: 0;
+            margin: 0 0 0 -16px;
+            opacity: 0;
+        }
+
+            .rating:hover .rating-star:hover,
+            .rating:hover .rating-star:hover ~ .rating-star,
+            .rating-input:checked ~ .rating-star {
+                background-position: 0 0;
+            }
+
+        .rating-star,
+        .rating:hover .rating-star {
+            position: relative;
+            display: block;
+            float: left;
+            width: 16px;
+            height: 16px;
+            background: url('https://www.everythingfrontend.com/samples/star-rating/star.png') 0 -16px;
+        }
+    </style>
 </head>
 <body>
     @*contadores usados para darle un id unico a los div que contiene el tipo de respuesta*@
@@ -23,6 +56,16 @@
         var contEstrella = 0;
     </script>
 
+    <label class="datos-grupo" style="display:none">@Model.anoGrupo</label>
+    <label class="datos-grupo" style="display:none">@Model.semestreGrupo</label>
+    <label class="datos-grupo" style="display:none">@Model.siglaCurso</label>
+    <label class="datos-grupo" style="display:none">@Model.numGrupo</label>
+
+    <label class="cedEstudiante" style="display:none">@Model.cedEst</label>
+    <label class="cedProfesor" style="display:none">@Model.cedProf</label>
+    <label class="codFormulario" style="display:none">@Model.codFormulario</label>
+
+
     @* Para mostrar que se recuperan los datos *@
 
     <table class="table table-responsive" align="center" border="1" style="border-color: black; width:1400px;">
@@ -31,72 +74,71 @@
             <td><b><font color="#000000"><h2><b>Formulario</b> </h2></font></b></td>
         </tr>
 
-
         <tr style="margin:100px">
             <td>
                 @foreach (var seccion in Model.Secciones)
                 {
-                <div class="seccion">
-                    <label class="titulo" style="display:none">@seccion.Titulo</label>
-                    @{
-                        //secciones del formulario
-                        <table>
-                            <tr>
-                                <td>
-                                    <h3><label>  @seccion.Titulo </label></h3>
-                                    <hr style="width: 800px; border-color:darkgray" />
-                                    <br>
-                                </td>
-                            </tr>
-                        </table>
-                        foreach (var pregunta in seccion.PreguntasFormulario)
-                        {
-                            <div class="pregunta">
+                    <div class="seccion">
+                        <label class="titulo" style="display:none">@seccion.Titulo</label>
+                        @{
+                            //secciones del formulario
+                            <table>
+                                <tr>
+                                    <td>
+                                        <h3><label>  @seccion.Titulo </label></h3>
+                                        <hr style="width: 800px; border-color:darkgray" />
+                                        <br>
+                                    </td>
+                                </tr>
+                            </table>
+                            foreach (var pregunta in seccion.PreguntasFormulario)
+                            {
+                                <div class="pregunta">
 
-                                <label class="tipo" style="display:none">@pregunta.tipoPregunta</label>
-                                <label class="id-bd" style="display:none">@pregunta.itemId</label>
+                                    <label class="tipo" style="display:none">@pregunta.tipoPregunta</label>
+                                    <label class="id-bd" style="display:none">@pregunta.itemId</label>
 
-                                @{
-                                    <label>@pregunta.numPregunta .&nbsp @pregunta.item (tipo: @pregunta.tipoPregunta)</label>
-                                    <br>
+                                    @{
+                                        <label>@pregunta.numPregunta .&nbsp @pregunta.item (tipo: @pregunta.tipoPregunta)</label>
+                                        <br>
 
-                                    //pregunta de texto libre
+                                        //pregunta de texto libre
 
 
-                                    if (pregunta.tipoPregunta == 1)
-                                    {
-                                        <textarea class="respuesta" name="textarea" rows="5" cols="50" maxlength="495">
-                            </textarea>
-                                        <br />
-                                    }
-
-                                    if (pregunta.Opciones != null)
-                                    {
-                                        // pregunta seleccion unica
-                                        if (pregunta.tipoPregunta == 2 || (pregunta.tipoPregunta == 3))
-                                        // if (pregunta.Opciones != null) //IMPORTANTE
+                                        if (pregunta.tipoPregunta == 1)
                                         {
-
-                                            foreach (var opcion in pregunta.Opciones)
-                                            {
-                                                <input class="respuesta" type="radio" name=@pregunta.numPregunta value=opcion>
-                                                <label class="contenido-opcion">&nbsp &nbsp @opcion</label>
-                                                <br />
-                                            }
-
-
-
-                                            if (pregunta.tieneObservacion == true)
-                                            {
-                                                <label> Observaciones:</label><br />
-                                                <textarea name="textarea" rows="5" cols="50" maxlength="495">
-                                </textarea>
-                                                <br />
-                                            }
+                                            <textarea class="respuesta" name="textarea" rows="5" cols="50" maxlength="495">
+                            </textarea>
+                                            <br />
                                         }
 
+                                        if (pregunta.Opciones != null)
+                                        {
+                                            // pregunta seleccion unica
+                                            if (pregunta.tipoPregunta == 2 || (pregunta.tipoPregunta == 3))
+                                            // if (pregunta.Opciones != null) //IMPORTANTE
+                                            {
+
+                                                foreach (var opcion in pregunta.Opciones)
+                                                {
+                                                    <input class="respuesta" type="radio" name=@pregunta.numPregunta value=opcion>
+                                                    <label class="contenido-opcion">&nbsp &nbsp @opcion</label>
+                                                    <br />
+                                                }
+
+
+
+                                                if (pregunta.tieneObservacion == true)
+                                                {
+                                                    <label> Observaciones:</label><br />
+                                                    <textarea name="textarea" rows="5" cols="50" maxlength="495">
+                                </textarea>
+                                                    <br />
+                                                }
+                                            }
+
                                         //opcion multiple
-                                        if (pregunta.tipoPregunta == 4)
+                                        else if (pregunta.tipoPregunta == 4)
                                         {
                                             foreach (var opcion in pregunta.Opciones)
                                             {
@@ -106,58 +148,79 @@
                                             }
 
 
-                                            if (pregunta.tieneObservacion == true)
-                                            {
-                                                <label> Observaciones:</label><br />
-                                                <textarea name="textarea" rows="5" cols="50" maxlength="495">
+                                                if (pregunta.tieneObservacion == true)
+                                                {
+                                                    <label> Observaciones:</label><br />
+                                                    <textarea name="textarea" rows="5" cols="50" maxlength="495">
                                 </textarea>
-                                                <br />
+                                                    <br />
+                                                }
+
                                             }
 
-                                        }
 
-
-                                        //pregunta...
-                                        if (pregunta.tipoPregunta == 5)
+                                        //pregunta tipo Escalar
+                                        else if (pregunta.tipoPregunta == 5)
                                         {
 
-                                            //...
+                                            if (pregunta.Opciones != null)
+                                            {
+                                                foreach (var opcion in pregunta.Opciones)
+                                                {
+
+                                                    <input type="radio" name="rango" value="@opcion" id="@opcion" /> <label>@opcion</label>
+                                                }
+                                            }
 
                                             if (pregunta.tieneObservacion == true)
                                             {
+                                                <br />
+                                                <br />
                                                 <label> Observaciones:</label><br />
                                                 <textarea name="textarea" rows="5" cols="50" maxlength="495">
                                 </textarea>
-                                                <br />
+                                                    <br />
+                                                }
+
                                             }
 
-                                        }
-
-                                        //pregunta...
-                                        if (pregunta.tipoPregunta == 6)
+                                        //pregunta tipo Estrella
+                                        else if (pregunta.tipoPregunta == 6)
                                         {
 
-                                            //...
+                                            if (pregunta.Opciones != null)
+                                            {
+                                                foreach (var opcion in pregunta.Opciones)
+                                                {
+                                                    <span class="rating">
+                                                        <input type="radio" class="rating-input"
+                                                               id="rating-input-1-5" name="rating-input-1">
+                                                        <label for="rating-input-1-5" class="rating-star"></label>
+                                                    </span>
+                                                }
+                                            }
 
                                             if (pregunta.tieneObservacion == true)
                                             {
+                                                <br />
+                                                <br />
                                                 <label> Observaciones:</label><br />
                                                 <textarea name="textarea" rows="5" cols="50" maxlength="495">
                                 </textarea>
-                                                <br />
+                                                    <br />
+                                                }
+
                                             }
 
                                         }
-
                                     }
-                                }
-                            </div>
-                            <hr style="width:50%;" align="left" />
-                            <br />
+                                </div>
+                                <hr style="width:50%;" align="left" />
+                                <br />
 
+                            }
                         }
-                    }
-                </div>
+                    </div>
                 }
             </td>
         </tr>
