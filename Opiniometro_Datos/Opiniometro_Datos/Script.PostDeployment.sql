@@ -231,43 +231,6 @@ BEGIN
 END;
 GO
 
---Revisar
-IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
-	DROP TRIGGER TR_InsertaPersona
-GO
-CREATE TRIGGER TR_InsertaPersona
-ON Persona INSTEAD OF INSERT
-AS
-BEGIN
-	DECLARE @cedula CHAR(10)
-	DECLARE @nombre1 NVARCHAR(51)
-	DECLARE @apellido1 NVARCHAR(51)
-	DECLARE @apellido2 NVARCHAR(51)
-	
-	SET @cedula = (SELECT Cedula FROM inserted)
-	SET @nombre1 = (SELECT Nombre1 FROM inserted)
-	SET @apellido1 = (SELECT Apellido1 FROM inserted)
-	SET @apellido2 = (SELECT Apellido2 FROM inserted)
-
-	BEGIN TRY
-	IF(@cedula IS NOT NULL AND @nombre1 IS NOT NULL AND @apellido1 IS NOT NULL AND @apellido2 IS NOT NULL  AND (LEN(@cedula) = 9) AND (LEN(@nombre1) < 50) AND (LEN(@apellido1) < 50) AND (LEN(@apellido2) < 50))
-	BEGIN
-		INSERT INTO Persona (Cedula, Nombre1, Apellido1, Apellido2)
-		VALUES (@cedula, @nombre1, @apellido1, @apellido2)
-	END
-	ELSE
-	BEGIN
-		RAISERROR('Datos incorrectos',16,1)
-		RETURN
-	END
-	END TRY
-
-	BEGIN CATCH 
-		PRINT 'ERROR: ' + ERROR_MESSAGE( );
-	END CATCH
-END;
-GO
-
 IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
 GO
