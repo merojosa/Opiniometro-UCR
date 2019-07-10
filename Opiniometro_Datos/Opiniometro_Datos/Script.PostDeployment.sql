@@ -715,40 +715,40 @@ VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-
 		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
 		--
 		--Cuarta evaluacion
-		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
-		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Sí se reviso'),
-		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Bastante interesante', ''),
-		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profe', ''),
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Sí se reviso'),
+		('PRE101', 'Opinion general del curso', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Bastante interesante', ''),
+		('PRE202', 'Opinion general del curso', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profe', ''),
 		--Quinta evaluacion
-		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
-		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Sí se reviso'),
-		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Mucho que investigar y poca guía', ''),
-		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Preferiria que de más ejemplos de como hacer las cosas', ''),
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Sí se reviso'),
+		('PRE101', 'Opinion general del curso', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Mucho que investigar y poca guía', ''),
+		('PRE202', 'Opinion general del curso', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Preferiria que de más ejemplos de como hacer las cosas', ''),
 		--Sexta evaluacion
-		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'No', ''),
-		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'No', 'No se envio la carta'),
-		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Fácil y entretenido', ''),
-		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'No', ''),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'No', 'No se envio la carta'),
+		('PRE101', 'Opinion general del curso', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Fácil y entretenido', ''),
+		('PRE202', 'Opinion general del curso', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
 		--Septima evaluacion
-		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
-		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Sí', ''),
-		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Entretenido', ''),
-		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Sí', ''),
+		('PRE101', 'Opinion general del curso', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Entretenido', ''),
+		('PRE202', 'Opinion general del curso', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
 		--Octava evaluacion
-		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
-		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Sí la revisamos'),
-		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Entretenido', ''),
-		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Sí la revisamos'),
+		('PRE101', 'Opinion general del curso', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Entretenido', ''),
+		('PRE202', 'Opinion general del curso', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
 		--Novena evaluacion
-		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
-		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
-		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Entretenido', ''),
-		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
+		('PRE101', 'Opinion general del curso', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Entretenido', ''),
+		('PRE202', 'Opinion general del curso', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
 		--Decima evaluacion
-		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
-		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Sí', ''),
-		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Entretenido', ''),
-		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Sí', ''),
+		('PRE101', 'Opinion general del curso', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Entretenido', ''),
+		('PRE202', 'Opinion general del curso', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
 		--
 		--Agregado
 		--Cuarta Unica
@@ -756,38 +756,38 @@ VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-
 		('PRE505', 'Información del o la estudiante', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Segundo', ''),
 		('PRE505', 'Información del o la estudiante', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Tercero', ''),
 		--
-		('PRE505', 'Información del o la estudiante', '2017-4-5', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Tercero', ''),
-		('PRE505', 'Información del o la estudiante', '2017-4-5', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Segunda', ''),
-		('PRE505', 'Información del o la estudiante', '2017-4-5', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Segunda', ''),
-		('PRE505', 'Información del o la estudiante', '2017-4-5', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Tercero', ''),
-		('PRE505', 'Información del o la estudiante', '2017-4-5', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Tercero', ''),
-		('PRE505', 'Información del o la estudiante', '2017-4-5', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Cuarto', ''),
-		('PRE505', 'Información del o la estudiante', '2017-4-5', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Cuarto', ''),
+		('PRE505', 'Información del o la estudiante', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Tercero', ''),
+		('PRE505', 'Información del o la estudiante', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Segunda', ''),
+		('PRE505', 'Información del o la estudiante', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Segunda', ''),
+		('PRE505', 'Información del o la estudiante', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Tercero', ''),
+		('PRE505', 'Información del o la estudiante', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Tercero', ''),
+		('PRE505', 'Información del o la estudiante', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Cuarto', ''),
+		('PRE505', 'Información del o la estudiante', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Cuarto', ''),
 		
 		--
 		('PRE606', 'Información del o la estudiante', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'No Trabaja', ''),
 		('PRE606', 'Información del o la estudiante', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja mas de 20 horas semanales', ''),
 		('PRE606', 'Información del o la estudiante', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja 20 horas semanales o menos', ''),
 		--
-		('PRE606', 'Información del o la estudiante', '2017-4-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'No Trabaja', ''),
-		('PRE606', 'Información del o la estudiante', '2017-4-18', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja 20 horas semanales o menos', ''),
-		('PRE606', 'Información del o la estudiante', '2017-4-18', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'No Trabaja', ''),
-		('PRE606', 'Información del o la estudiante', '2017-4-18', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja 20 horas semanales o menos', ''),
-		('PRE606', 'Información del o la estudiante', '2017-4-18', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja 20 horas semanales o menos', ''),
-		('PRE606', 'Información del o la estudiante', '2017-4-18', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja mas de 20 horas semanales', ''),
-		('PRE606', 'Información del o la estudiante', '2017-4-18', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'No Trabaja', ''),
+		('PRE606', 'Información del o la estudiante', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'No Trabaja', ''),
+		('PRE606', 'Información del o la estudiante', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja 20 horas semanales o menos', ''),
+		('PRE606', 'Información del o la estudiante', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'No Trabaja', ''),
+		('PRE606', 'Información del o la estudiante', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja 20 horas semanales o menos', ''),
+		('PRE606', 'Información del o la estudiante', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja 20 horas semanales o menos', ''),
+		('PRE606', 'Información del o la estudiante', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja mas de 20 horas semanales', ''),
+		('PRE606', 'Información del o la estudiante', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'No Trabaja', ''),
 		--Escalar 5 y 10
 		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '5', 'Soy un sapazo'),
 		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '2', 'Me da pereza estudiar'),
 		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '4', 'Siempre le pongo'),
 		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', '2', 'Sí se reviso'),
 		--
-		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-20', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', '2', 'Sí se reviso'),
-		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-20', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', '4', 'Sí se reviso'),
-		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', '4', 'Sí se reviso'),
-		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-20', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', '5', 'Sí se reviso'),
-		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', '3', 'Sí se reviso'),
-		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-20', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', '4', 'Sí se reviso'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', '2', 'Sí se reviso'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', '4', 'Sí se reviso'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', '4', 'Sí se reviso'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', '5', 'Sí se reviso'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', '3', 'Sí se reviso'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', '4', 'Sí se reviso'),
 		
 		/*'Demasiado'
 		'Poco'
@@ -800,10 +800,10 @@ VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-
 		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', '7', 'Me encanta la materia'),
 		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', '5', 'Mucho que investigar'),
 		--
-		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-20', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', '8', 'Me encanta la materia'),
-		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-20', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', '9', 'Me encanta la materia'),
-		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', '8', 'Me encanta la materia'),
-		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-20', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', '5', 'Mucho que investigar'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', '8', 'Me encanta la materia'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', '9', 'Me encanta la materia'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', '8', 'Me encanta la materia'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', '5', 'Mucho que investigar'),
 		
 		--Multiple
 		('PRE909', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Soy un sapazo'),
@@ -813,26 +813,26 @@ VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-
 		('PRE909', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Fácil', 'No me quedo claro la metodología'),
 		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
 		--
-		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
-		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Fácil', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Fácil', 'Fue una materia en la que me gustaría especializarme'),
 		
-		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Práctico', 'Fue una materia en la que me gustaría especializarme'),
-		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Complicado', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Práctico', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Complicado', 'Fue una materia en la que me gustaría especializarme'),
 		
-		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Poco Práctico', 'Fue una materia en la que me gustaría especializarme'),
-		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Fácil', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Poco Práctico', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Fácil', 'Fue una materia en la que me gustaría especializarme'),
 		
-		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Complicado', 'Fue una materia en la que me gustaría especializarme'),
-		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Complicado', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
 		
-		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
-		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Complicado', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Complicado', 'Fue una materia en la que me gustaría especializarme'),
 		
-		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
-		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Práctico', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Práctico', 'Fue una materia en la que me gustaría especializarme'),
 		
-		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Aburrido', 'Fue una materia en la que me gustaría especializarme'),
-		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Poco Práctico', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Aburrido', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Poco Práctico', 'Fue una materia en la que me gustaría especializarme'),
 
 		--
 		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
@@ -842,26 +842,26 @@ VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-
 		('PRE110', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones tienen cierta relación con la materia vista en clase', 'Con prestar atención en clase me parecion suficiente'),
 		('PRE110', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Preguntando bastante en consulta se sale bien'),
 		--
-		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
-		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
 		
-		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones más fáciles que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
-		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones tienen cierta relación con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones más fáciles que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones tienen cierta relación con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
 		
-		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones más difíciles que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
-		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones más difíciles que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
 		
-		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
-		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
 		
-		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
-		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
 		
-		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones más difíciles que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
-		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones tienen cierta relación con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones más difíciles que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones tienen cierta relación con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
 		
-		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
-		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones');
+		('PRE110', 'Opinion general del curso', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones');
 
 GO
 IF OBJECT_ID('SP_ContarRespuestasPorGrupo') IS NOT NULL

@@ -1,0 +1,671 @@
+<?xml version="1.0"?>
+<UITest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="" Id="a56c0501-28c5-48a5-8736-ff1cc38a3a91" AssemblyVersion="15.0.26208.0" Version="1.0" xmlns="http://schemas.microsoft.com/VisualStudio/TeamTest/UITest/2010">
+  <Configuration>
+    <Group Name="IE">
+      <Setting Name="Version" Value="9.11.17134.0" WarningLevel="1" />
+      <Setting Name="InformationBar" WarningLevel="1" />
+      <Setting Name="AutoCompletePassword" WarningLevel="1" />
+      <Setting Name="AutoCompleteForm" WarningLevel="1" />
+      <Setting Name="DefaultBrowser" Value="IEXPLORE.EXE" WarningLevel="1" />
+      <Setting Name="PopupBlocker" Value="yes" WarningLevel="1" />
+      <Setting Name="TabbedBrowsing" WarningLevel="2" />
+      <Setting Name="InternetZoneSecurity" Value="66816" WarningLevel="2" />
+      <Setting Name="IntranetZoneSecurity" Value="69632" WarningLevel="2" />
+      <Setting Name="TrustedZoneSecurity" Value="70912" WarningLevel="2" />
+      <Setting Name="RestrictedZoneSecurity" Value="73728" WarningLevel="2" />
+      <Setting Name="PhishingFilter" WarningLevel="1" />
+      <Setting Name="EnhancedSecurityConfiguration" WarningLevel="1" />
+    </Group>
+    <Group Name="OS">
+      <Setting Name="Name" Value="Microsoft Windows 10 Pro" WarningLevel="2" />
+      <Setting Name="Version" Value="Microsoft Windows NT 10.0.17134.0" WarningLevel="2" />
+      <Setting Name="IsUserAdmin" Value="True" WarningLevel="2" />
+      <Setting Name="Is64BitOperatingSystem" Value="True" WarningLevel="2" />
+      <Setting Name="IsTerminalServerSession" Value="False" WarningLevel="2" />
+      <Setting Name="OSLanguage" Value="1033" WarningLevel="1" />
+      <Setting Name="UserLocale" Value="5130" WarningLevel="1" />
+      <Setting Name="DragFullWindows" Value="True" WarningLevel="2" />
+      <Setting Name="ScreenResolutionWidth" Value="1920" WarningLevel="2" />
+      <Setting Name="ScreenResolutionHeight" Value="1080" WarningLevel="2" />
+      <Setting Name="SystemDPIX" Value="96" WarningLevel="2" />
+      <Setting Name="SystemDPIY" Value="96" WarningLevel="2" />
+      <Setting Name="Aero" Value="1" WarningLevel="1" />
+      <Setting Name="UACEnabled" Value="1" WarningLevel="2" />
+      <Setting Name="UACPromptEnabled" Value="5" WarningLevel="1" />
+    </Group>
+    <Group Name="TechnologyManagers">
+      <Setting Name="Web" WarningLevel="1" />
+      <Setting Name="Web" WarningLevel="1" />
+      <Setting Name="UIA" WarningLevel="1" />
+      <Setting Name="Web" WarningLevel="1" />
+    </Group>
+  </Configuration>
+  <InitializeActions />
+  <ExecuteActions>
+    <NavigateToUrlAction UIObjectName="UIMap.UIOpiniómetroUCRInternWindow">
+      <ParameterName />
+      <Url>http://localhost/Opiniometro_WebApp</Url>
+      <NewInstance>false</NewInstance>
+    </NavigateToUrlAction>
+    <SetValueAction UIObjectName="UIMap.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UICorreoInstitucionalEdit">
+      <ParameterName />
+      <Value Encoded="false">admin@ucr.ac.cr</Value>
+      <Type>String</Type>
+    </SetValueAction>
+    <SendKeysAction UIObjectName="UIMap.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UICorreoInstitucionalEdit">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Text Encoded="false">{Tab}</Text>
+    </SendKeysAction>
+    <SetValueAction UIObjectName="UIMap.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UIContrasenaEdit">
+      <ParameterName />
+      <Value Encoded="true">FBDi3f2Ote0gIx1VA4772+xzH6vlnBrKhcNPXWpSp98=</Value>
+      <Type>String</Type>
+    </SetValueAction>
+    <MouseAction UIObjectName="UIMap.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UIIngresarButton">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="68" Y="16" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <MouseAction UIObjectName="UIMap.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument1.UIAceptarButton">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="32" Y="22" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <MouseAction UIObjectName="UIMap.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument2.UIEvaluacionesHyperlink">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="114" Y="23" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <MouseAction UIObjectName="UIMap.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument2.UIVisualizarresultadosHyperlink">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="106" Y="16" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <MouseAction UIObjectName="UIMap.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument3.UIVisualizarformularioHyperlink">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="98" Y="4" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <MouseAction UIObjectName="UIMap.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIAccordion1Pane.UIItem2EvaluacióndeaspHyperlink">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="106" Y="15" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <MouseAction UIObjectName="UIMap.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIAccordion2_1Pane.UIItem1PRE303ElprofesoHyperlink">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="105" Y="11" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <TestStepMarkerAction Comment="Ingresa a la página web para llegar al formulario a visualizar." MarkerInformation="IngresarAlFormulario">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Action</MarkerRegionType>
+    </TestStepMarkerAction>
+    <AssertAction UIObjectName="UIMap.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIPie_chart_PRE303Custom">
+      <ParameterName />
+      <PropertyName>ControlDefinition</PropertyName>
+      <MessageOnValidationFailure>No se envio la información necesaria al método.</MessageOnValidationFailure>
+      <PropertyCondition>IsNotNull</PropertyCondition>
+    </AssertAction>
+    <TestStepMarkerAction Comment="Revisa que el grafico si se despliega en la pantalla una vez ingresado al formulario." MarkerInformation="GráficoExiste">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Assertion</MarkerRegionType>
+    </TestStepMarkerAction>
+    <AssertAction UIObjectName="UIMap.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIAccordion2_1Pane.UIItem1PRE303ElprofesoHyperlink1">
+      <ParameterName />
+      <PropertyName>InnerText</PropertyName>
+      <ExpectedValue> 1 - PRE303.¿El profesor repuso clases cuando fue necesario? </ExpectedValue>
+      <MessageOnValidationFailure>La pregunta a sido cambiada o el orden fue alterado incorrectamente</MessageOnValidationFailure>
+      <Type>String</Type>
+      <PropertyCondition>AreEqual</PropertyCondition>
+    </AssertAction>
+    <TestStepMarkerAction Comment="Revisa si el item desplegado es el indicado." MarkerInformation="DespliegueDeItemCorrecto">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Assertion</MarkerRegionType>
+    </TestStepMarkerAction>
+    <NavigateToUrlAction UIObjectName="UIMap.UIHotmailOutlooknoticiWindow">
+      <ParameterName />
+      <Url>http://localhost/Opiniometro_WebApp</Url>
+      <NewInstance>false</NewInstance>
+    </NavigateToUrlAction>
+    <TestStepMarkerAction Comment="Inicializa el explorador para las pruebas." MarkerInformation="InicializarExplorador">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Action</MarkerRegionType>
+    </TestStepMarkerAction>
+  </ExecuteActions>
+  <CleanupActions />
+  <OnErrorActions />
+  <Maps>
+    <UIMap Id="UIMap">
+      <TopLevelWindows>
+        <TopLevelWindow ControlType="Window" Id="UIOpiniómetroUCRInternWindow" FriendlyName="Opiniómetro@UCR - Internet Explorer" SpecialControlType="BrowserWindow" SessionId="460322">
+          <TechnologyName>MSAA</TechnologyName>
+          <WindowTitles>
+            <WindowTitle>Opiniómetro@UCR</WindowTitle>
+            <WindowTitle>http://localhost/Opiniometro_WebApp/Auth/Login?ReturnUrl=%2FOpiniometro_WebApp%2F</WindowTitle>
+          </WindowTitles>
+          <SearchConfigurations>
+            <SearchConfiguration>VisibleOnly</SearchConfiguration>
+          </SearchConfigurations>
+          <AndCondition Id="SearchCondition">
+            <PropertyCondition Name="Name">Opiniómetro@UCR</PropertyCondition>
+            <PropertyCondition Name="ClassName">IEFrame</PropertyCondition>
+            <PropertyCondition Name="ControlType">Window</PropertyCondition>
+          </AndCondition>
+          <SupportLevel>0</SupportLevel>
+          <Descendants>
+            <UIObject ControlType="Document" Id="UIOpiniómetroUCRDocument" FriendlyName="Opiniómetro@UCR" SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>Opiniómetro@UCR</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="Id" />
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title">Opiniómetro@UCR</PropertyCondition>
+                  <PropertyCondition Name="AbsolutePath">/Opiniometro_WebApp/Auth/Login</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">http://localhost/Opiniometro_WebApp/Auth/Login?ReturnUrl=%2FOpiniometro_WebApp%2F</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Edit" Id="UICorreoInstitucionalEdit" FriendlyName="CorreoInstitucional" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Opiniómetro@UCR</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Edit</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="Name">CorreoInstitucional</PropertyCondition>
+                      <PropertyCondition Name="LabeledBy" />
+                      <PropertyCondition Name="Type">SINGLELINE</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">form-control</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">name="CorreoInstitucional" class="form-c</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Edit" Id="UIContrasenaEdit" FriendlyName="Contrasena" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Opiniómetro@UCR</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Edit</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="Name">Contrasena</PropertyCondition>
+                      <PropertyCondition Name="LabeledBy" />
+                      <PropertyCondition Name="Type">PASSWORD</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">form-control</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">name="Contrasena" class="form-control" t</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">2</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Button" Id="UIIngresarButton" FriendlyName="Ingresar" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Opiniómetro@UCR</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="Name">Ingresar</PropertyCondition>
+                      <PropertyCondition Name="DisplayText">Ingresar</PropertyCondition>
+                      <PropertyCondition Name="Type">submit</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">btn btn-default</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">name="Ingresar" class="btn btn-default" </PropertyCondition>
+                      <PropertyCondition Name="TagInstance">3</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+              </Descendants>
+            </UIObject>
+            <UIObject ControlType="Document" Id="UIOpiniómetroUCRDocument1" FriendlyName="Opiniómetro@UCR" SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>Opiniómetro@UCR</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="Id" />
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title">Opiniómetro@UCR</PropertyCondition>
+                  <PropertyCondition Name="AbsolutePath">/Opiniometro_WebApp/Perfil/Cambiar</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">http://localhost/Opiniometro_WebApp/Perfil/Cambiar</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Button" Id="UIAceptarButton" FriendlyName="Aceptar" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Opiniómetro@UCR</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="Name" />
+                      <PropertyCondition Name="DisplayText">Aceptar</PropertyCondition>
+                      <PropertyCondition Name="Type">submit</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">btn btn-default</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">class="btn btn-default" style="margin-ri</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+              </Descendants>
+            </UIObject>
+            <UIObject ControlType="Document" Id="UIOpiniómetroUCRDocument2" FriendlyName="Opiniómetro@UCR" SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>Opiniómetro@UCR</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="Id" />
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title">Opiniómetro@UCR</PropertyCondition>
+                  <PropertyCondition Name="AbsolutePath">/Opiniometro_WebApp/</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">http://localhost/Opiniometro_WebApp/</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Hyperlink" Id="UIEvaluacionesHyperlink" FriendlyName="Evaluaciones" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Opiniómetro@UCR</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Hyperlink</PropertyCondition>
+                      <PropertyCondition Name="TagName">A</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="Name" />
+                      <PropertyCondition Name="Target" />
+                      <PropertyCondition Name="InnerText">Evaluaciones</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="AbsolutePath">/Opiniometro_WebApp/</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Href">http://localhost/Opiniometro_WebApp/#</PropertyCondition>
+                      <PropertyCondition Name="Class">dropdown-toggle</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">class="dropdown-toggle" role="button" ar</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">13</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Hyperlink" Id="UIVisualizarresultadosHyperlink" FriendlyName="Visualizar resultados de evaluaciones" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Opiniómetro@UCR</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Hyperlink</PropertyCondition>
+                      <PropertyCondition Name="TagName">A</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="Name" />
+                      <PropertyCondition Name="Target" />
+                      <PropertyCondition Name="InnerText">Visualizar resultados de evaluaciones</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="AbsolutePath">/Opiniometro_WebApp/VisualizarFormulario</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Href">http://localhost/Opiniometro_WebApp/VisualizarFormulario</PropertyCondition>
+                      <PropertyCondition Name="Class" />
+                      <PropertyCondition Name="ControlDefinition">href="/Opiniometro_WebApp/VisualizarForm</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">16</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+              </Descendants>
+            </UIObject>
+            <UIObject ControlType="Document" Id="UIOpiniómetroUCRDocument3" FriendlyName="Opiniómetro@UCR" SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>Opiniómetro@UCR</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="Id" />
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title">Opiniómetro@UCR</PropertyCondition>
+                  <PropertyCondition Name="AbsolutePath">/Opiniometro_WebApp/VisualizarFormulario</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">http://localhost/Opiniometro_WebApp/VisualizarFormulario</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Hyperlink" Id="UIVisualizarformularioHyperlink" FriendlyName="Visualizar formulario" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Opiniómetro@UCR</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Hyperlink</PropertyCondition>
+                      <PropertyCondition Name="TagName">A</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="Name" />
+                      <PropertyCondition Name="Target" />
+                      <PropertyCondition Name="InnerText">Visualizar formulario</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="AbsolutePath">/Opiniometro_WebApp/VisualizarFormulario/Details/131313</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Href">http://localhost/Opiniometro_WebApp/VisualizarFormulario/Details/131313</PropertyCondition>
+                      <PropertyCondition Name="Class" />
+                      <PropertyCondition Name="ControlDefinition">href="/Opiniometro_WebApp/VisualizarForm</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">20</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+              </Descendants>
+            </UIObject>
+            <UIObject ControlType="Document" Id="UIOpiniómetroUCRDocument4" FriendlyName="Opiniómetro@UCR" SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>Opiniómetro@UCR</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="Id" />
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title">Opiniómetro@UCR</PropertyCondition>
+                  <PropertyCondition Name="AbsolutePath">/Opiniometro_WebApp/VisualizarFormulario/Details/131313</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">http://localhost/Opiniometro_WebApp/VisualizarFormulario/Details/131313</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Pane" Id="UIAccordion1Pane" FriendlyName="accordion1" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Opiniómetro@UCR</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                      <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                      <PropertyCondition Name="Id">accordion1</PropertyCondition>
+                      <PropertyCondition Name="Name" />
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="InnerText">1 - Opinion general del curso  
+
+
+
+</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">panel-group</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">class="panel-group" id="accordion1"</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">5</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="Hyperlink" Id="UIItem2EvaluacióndeaspHyperlink" FriendlyName=" 2 - Evaluación de aspectos reglamentarios del pro..." SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>Opiniómetro@UCR</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Hyperlink</PropertyCondition>
+                          <PropertyCondition Name="TagName">A</PropertyCondition>
+                          <PropertyCondition Name="Id" />
+                          <PropertyCondition Name="Name" />
+                          <PropertyCondition Name="Target" />
+                          <PropertyCondition Name="InnerText"> 2 - Evaluación de aspectos reglamentarios del profesor </PropertyCondition>
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="AbsolutePath">/Opiniometro_WebApp/VisualizarFormulario/Details/131313</PropertyCondition>
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Href">http://localhost/Opiniometro_WebApp/VisualizarFormulario/Details/131313#collapseThree_1</PropertyCondition>
+                          <PropertyCondition Name="Class" />
+                          <PropertyCondition Name="ControlDefinition">href="#collapseThree_1" data-toggle="col</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">8</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+                <UIObject ControlType="Pane" Id="UIAccordion2_1Pane" FriendlyName="accordion2_1" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Opiniómetro@UCR</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                      <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                      <PropertyCondition Name="Id">accordion2_1</PropertyCondition>
+                      <PropertyCondition Name="Name" />
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="InnerText">1 - PRE303.¿El profesor repuso clases cu</PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">panel-group</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">class="panel-group" id="accordion2_1"</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">49</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="Hyperlink" Id="UIItem1PRE303ElprofesoHyperlink" FriendlyName=" 1 - PRE303.¿El profesor repuso clases cuando fue ..." SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>Opiniómetro@UCR</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Hyperlink</PropertyCondition>
+                          <PropertyCondition Name="TagName">A</PropertyCondition>
+                          <PropertyCondition Name="Id" />
+                          <PropertyCondition Name="Name" />
+                          <PropertyCondition Name="Target" />
+                          <PropertyCondition Name="InnerText"> 1 - PRE303.¿El profesor repuso clases cuando fue necesario? </PropertyCondition>
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="AbsolutePath">/Opiniometro_WebApp/VisualizarFormulario/Details/131313</PropertyCondition>
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Href">http://localhost/Opiniometro_WebApp/VisualizarFormulario/Details/131313#collapseThreeOne_4</PropertyCondition>
+                          <PropertyCondition Name="Class" />
+                          <PropertyCondition Name="ControlDefinition">href="#collapseThreeOne_4" data-toggle="</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                    <UIObject ControlType="Hyperlink" Id="UIItem1PRE303ElprofesoHyperlink1" FriendlyName=" 1 - PRE303.¿El profesor repuso clases cuando fue ..." SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>Opiniómetro@UCR</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Hyperlink</PropertyCondition>
+                          <PropertyCondition Name="TagName">A</PropertyCondition>
+                          <PropertyCondition Name="Id" />
+                          <PropertyCondition Name="Name" />
+                          <PropertyCondition Name="Target" />
+                          <PropertyCondition Name="InnerText"> 1 - PRE303.¿El profesor repuso clases cuando fue necesario? </PropertyCondition>
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="AbsolutePath">/Opiniometro_WebApp/VisualizarFormulario/Details/131313</PropertyCondition>
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Href">http://localhost/Opiniometro_WebApp/VisualizarFormulario/Details/131313#collapseThreeOne_4</PropertyCondition>
+                          <PropertyCondition Name="Class" />
+                          <PropertyCondition Name="ControlDefinition">aria-expanded="true" href="#collapseThre</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+                <UIObject ControlType="Custom" Id="UIPie_chart_PRE303Custom" FriendlyName="pie_chart_PRE303" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Opiniómetro@UCR</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Custom</PropertyCondition>
+                      <PropertyCondition Name="TagName">CANVAS</PropertyCondition>
+                      <PropertyCondition Name="Id">pie_chart_PRE303</PropertyCondition>
+                      <PropertyCondition Name="Name" />
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Class">chartjs-render-monitor</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">width="1078" height="498" class="chartjs</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">3</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+              </Descendants>
+            </UIObject>
+          </Descendants>
+        </TopLevelWindow>
+        <TopLevelWindow ControlType="Window" Id="UIHotmailOutlooknoticiWindow" FriendlyName="Hotmail, Outlook, noticias en video, viajes, autos..." SpecialControlType="BrowserWindow" SessionId="1312556">
+          <TechnologyName>MSAA</TechnologyName>
+          <WindowTitles>
+            <WindowTitle>Hotmail, Outlook, noticias en video, viajes, autos, vacaciones, moda y mucho más - MSN Latinoam</WindowTitle>
+            <WindowTitle>http://localhost/Opiniometro_WebApp</WindowTitle>
+          </WindowTitles>
+          <SearchConfigurations>
+            <SearchConfiguration>VisibleOnly</SearchConfiguration>
+          </SearchConfigurations>
+          <AndCondition Id="SearchCondition">
+            <PropertyCondition Name="Name">Hotmail, Outlook, noticias en video, viajes, autos, vacaciones, moda y mucho más - MSN Latinoam</PropertyCondition>
+            <PropertyCondition Name="ClassName">IEFrame</PropertyCondition>
+            <PropertyCondition Name="ControlType">Window</PropertyCondition>
+          </AndCondition>
+          <SupportLevel>0</SupportLevel>
+          <Descendants />
+        </TopLevelWindow>
+      </TopLevelWindows>
+    </UIMap>
+  </Maps>
+  <ValueMap>
+    <ParameterList />
+  </ValueMap>
+</UITest>
