@@ -11,6 +11,38 @@
 <head>
     <meta charset="utf-8" />
     <script src="~/Scripts/FormularioDelCurso.js"></script>
+
+    <style type="text/css">
+        .rating {
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .rating-input {
+            float: left;
+            width: 16px;
+            height: 16px;
+            padding: 0;
+            margin: 0 0 0 -16px;
+            opacity: 0;
+        }
+
+            .rating:hover .rating-star:hover,
+            .rating:hover .rating-star:hover ~ .rating-star,
+            .rating-input:checked ~ .rating-star {
+                background-position: 0 0;
+            }
+
+        .rating-star,
+        .rating:hover .rating-star {
+            position: relative;
+            display: block;
+            float: left;
+            width: 16px;
+            height: 16px;
+            background: url('https://www.everythingfrontend.com/samples/star-rating/star.png') 0 -16px;
+        }
+    </style>
 </head>
 <body>
     @*contadores usados para darle un id unico a los div que contiene el tipo de respuesta*@
@@ -138,14 +170,26 @@
 
                         }
 
-                        //pregunta...
+                        //pregunta Escalar tipo Estrella
                         if (pregunta.tipoPregunta == 6)
                         {
 
-                            //...
+                            if (pregunta.Opciones != null)
+                            {
+                                foreach (var opcion in pregunta.Opciones)
+                                {
+                                <span class="rating">
+                                    <input type="radio" class="rating-input"
+                                           id="rating-input-1-5" name="rating-input-1">
+                                    <label for="rating-input-1-5" class="rating-star"></label>
+                                </span>                                   
+                                }
+                            }
 
                             if (pregunta.tieneObservacion == true)
                             {
+                                <br />
+                                <br />
                                 <label> Observaciones:</label><br />
                                 <textarea name="textarea" rows="5" cols="50" maxlength="495">
                                 </textarea>

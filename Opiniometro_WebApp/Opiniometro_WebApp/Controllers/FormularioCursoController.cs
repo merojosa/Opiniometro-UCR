@@ -85,7 +85,8 @@ namespace Opiniometro_WebApp.Controllers
                             // Se asigna el arreglo de opciones
                             secciones[seccion].PreguntasFormulario[pregunta].Opciones = opciones.ToArray();
                         }
-                        else if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 5)
+                        else if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 5 ||
+                            secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 6)
                         {
                             string id = secciones[seccion].PreguntasFormulario[pregunta].itemId;
                             var ini = (from range in db.Escalar
@@ -97,13 +98,15 @@ namespace Opiniometro_WebApp.Controllers
 
                                 int inicio = Convert.ToInt32(ini);
                                 int final = Convert.ToInt32(fin);
-                                int posicion = inicio;
+                                int valor = inicio;
+                                int posicion = 0;
 
                                 string[] rango = new string[(final-inicio)+1];
                                foreach (string r in rango)
                                 {
-                                    rango[posicion] = posicion.ToString();
-                                    posicion++;
+                                    rango[posicion] = valor.ToString();
+                                    valor++;
+                                    posicion++;        
                                 }
                                 secciones[seccion].PreguntasFormulario[pregunta].Opciones = rango;
  
