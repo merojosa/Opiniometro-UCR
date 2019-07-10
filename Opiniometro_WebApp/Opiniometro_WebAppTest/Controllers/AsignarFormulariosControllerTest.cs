@@ -39,6 +39,17 @@ namespace Opiniometro_WebAppTest.Controllers
             Assert.IsNull(result);
         }
 
+        [TestMethod]
+        public void TestObtenerCursos()
+        {
+            //Arrange
+            AsignarFormulariosController asignar = new AsignarFormulariosController();
+            //Act
+            IQueryable<Curso> lista = asignar.ObtenerCursos(null, null, "UC-023874", "SC-01234", null);
+            //Assert
+            Assert.IsNotNull(lista);
+        }
+
         /*
         [TestMethod]
         public void TestSeleccionFormulariosPartialView()
