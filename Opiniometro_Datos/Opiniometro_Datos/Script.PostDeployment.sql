@@ -358,7 +358,7 @@ exec SP_ModificarPerfilUsuario @correo = 'jose.mejiasrojas@ucr.ac.cr', @perfil =
 IF OBJECT_ID('SP_ModificarPerfilUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ModificarPerfilUsuario
 GO
-CREATE PROCEDURE SP_ModificarPerfilUsuario
+ALTER PROCEDURE SP_ModificarPerfilUsuario
 	@correo		nvarchar(100),
 	@perfil		nvarchar(30),
 	@modifica	bit
@@ -369,8 +369,16 @@ BEGIN
 		BEGIN TRANSACTION T_ModificarPerfilUsuario	--Nivel 2: Transaction
 			IF(@modifica = 1)
 			BEGIN
-				INSERT INTO Tiene_Usuario_Perfil_Enfasis
-				VALUES	(@correo, 0, 'SC-01234', @perfil) --Cuál "SiglaCarrera"?
+				
+				IF(0 = (select count(*)
+						from Tiene_Usuario_Perfil_Enfasis
+						where CorreoInstitucional = @correo and NombrePerfil = @perfil))
+				BEGIN
+					INSERT INTO Tiene_Usuario_Perfil_Enfasis
+					VALUES	(@correo, 0, 'SC-01234', @perfil) --Sigla que tienen todos los usuarios"
+				END
+
+
 			END
 			ELSE --Si (modifica = 0) O (modifica = NULL)
 			BEGIN
@@ -382,8 +390,11 @@ BEGIN
 	END TRY
 
 	BEGIN CATCH
-		PRINT 'ERROR: ' + ERROR_MESSAGE();
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 1: Cambio de nivel de transacción
 		ROLLBACK TRANSACTION T_ModificarPerfilUsuario
+		PRINT 'ERROR: ' + ERROR_MESSAGE();
+
+
 	END CATCH	--Nivel 0: Try
 END
 GO
