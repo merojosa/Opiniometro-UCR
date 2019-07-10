@@ -114,16 +114,32 @@ function Estrella() {
 
 function recolectarRespuestas()
 {
+    var cedEst = document.getElementsByClassName("cedEstudiante")[0].textContent;
+    //var cedProf = document.getElementsByClassName("cedProfesor")[0].textContent;
+    var codigoFormulario = document.getElementsByClassName("codFormulario")[0].textContent;
+
+    var datosGrupo = document.getElementsByClassName("datos-grupo");
+    var grupo = {
+        Anno: datosGrupo[0].textContent,
+        Semestre: datosGrupo[1].textContent,
+        SiglaCurso: datosGrupo[2].textContent,
+        NumeroGrupo: datosGrupo[3].textContent
+    }
     var respuestasFormulario = [];
+
+
+    alert(`Enviando respuestas para: ${grupo.Anno} ${grupo.Semestre} ${grupo.SiglaCurso} ${grupo.NumeroGrupo}`);
+
     var secciones = document.getElementsByClassName("seccion");
     for (var s = 0; s < secciones.length; s++) {
         var titulo = secciones[s].getElementsByClassName("titulo")[0].textContent;
+
         var preguntas = secciones[s].getElementsByClassName("pregunta");
         for (var p = 0; p < preguntas.length; p++) {
 
             var tipo = preguntas[p].getElementsByClassName("tipo")[0].textContent;
             //alert(tipo);
-            var idBd = preguntas[p].getElementsByClassName("id-bd")[0].textContent;
+            var idBD = preguntas[p].getElementsByClassName("id-bd")[0].textContent;
             var respuestas = [];
             if (tipo == 1) {
                 respuestas.push(preguntas[p].getElementsByClassName("respuesta")[0].value);
@@ -168,34 +184,27 @@ function recolectarRespuestas()
 
             }
 
-            var cedEst = document.getElementsByClassName("cedEstudiante")[0].textContent;
-            var cedProf = document.getElementsByClassName("cedProfesor")[0].textContent;
-            var codigoFormulario = document.getElementsByClassName("codFormulario")[0].textContent;
-
-            var datosGrupo = document.getElementsByClassName("datos-grupo");
-            var grupo = {
-                Anno: datosGrupo[0].textContent,
-                Semestre: datosGrupo[1].textContent,
-                SiglaCurso: datosGrupo[2].textContent,
-                NumeroGrupo: datosGrupo[3].textContent
-            }
-
             respuestasFormulario.push({ idItem: idBD, TituloSeccion: titulo, HilerasDeRespuesta: respuestas, Observacion: "" });
 
-            $.post("GuardarRespuesta",
-                {
-                    PeriodosIndicados: JSON.stringify(cedEst),
-                    CedulaProfesor: JSON.stringify(cedProf),
-                    Grupo: JSON.stringify(grupo),
-                    CodigoFormulario: codigoFormulario,
-                    Respuestas: respuestasFormulario
-                },
-                function (data, status) {
-                    alert("Gracias por brindar su respuesta.");
-                    window.location.href = "/CursosMatriculados/Index";
-                }
-            );
+        } // for (var p = 0; p < preguntas.length; p++)
+        
+    } // for (var s = 0; s < secciones.length; s++)
+
+    /*for (var i = 0; i < respuestasFormulario.length; ++i) {
+        alert(respuestasFormulario[i].idItem);
+    }*/
+    $.post("FormularioCurso/GuardarRespuestas",
+        {
+            CedulaEstudiante: JSON.stringify(cedEst),
+            //CedulaProfesor: JSON.stringify(cedProf),
+            Grupo: JSON.stringify(grupo),
+            CodigoFormulario: JSON.stringify(codigoFormulario),
+            Respuestas: JSON.stringify(respuestasFormulario)
+        },
+        function (data, status) {
+            alert("Gracias por brindar su respuesta.");
+            window.location.href = "/CursosMatriculados/Index";
         }
-    }
+    );
 
 }

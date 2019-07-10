@@ -1,4 +1,4 @@
-﻿@model Opiniometro_WebApp.Models.EstudianteGruposMatriculado
+﻿@model Opiniometro_WebApp.Models.CursosMatriculadoModel
 
 @{
     ViewBag.Title = "Index";
@@ -55,7 +55,7 @@
                             @Html.DisplayFor(model => item.apellido2Profe)
                         </td>
                         <td>
-                           @Html.ActionLink(item.formulario, "Index", "FormularioCurso", new { cedulaProfesor = Model.cedulaProf, cedulaEstudiante = item.cedEst , codigoForm = item.codFormulario, anno = Model.anoGrupo, semestre = Model.semestreGrupo, siglaCurso = Model.siglaCursoMatriculado, numGrupo = Model.numGrupo}, null)
+                           @Html.ActionLink(item.formulario, "Index", "FormularioCurso", new { cedulaProfesor = item.cedulaProf, cedulaEstudiante = item.cedEst , codigoForm = item.codFormulario, anno = item.anoGrupo, semestre = item.semestreGrupo, siglaCurso = item.siglaCursoMatriculado, numGrupo = item.numGrupo}, null)
                         </td>
                     </tr>               
             }

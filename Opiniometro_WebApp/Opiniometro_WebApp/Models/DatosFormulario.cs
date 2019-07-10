@@ -32,9 +32,9 @@ namespace Opiniometro_WebApp.Models
 
         public string cedProf { set; get; }
         public string siglaCurso { set; get; }
-        public int anoGrupo { get; set; }
+        public short anoGrupo { get; set; }
         public int semestreGrupo { set; get; }
-        public int numGrupo { get; set; }
+        public byte numGrupo { get; set; }
         public string cedEst { get; set; }
         public string codFormulario { get; set; }
 

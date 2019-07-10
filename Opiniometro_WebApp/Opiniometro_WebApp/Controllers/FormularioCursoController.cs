@@ -25,7 +25,7 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index( string cedulaProfesor, string cedulaEstudiante, string codigoForm, int anno, int semestre, string siglaCurso, int numGrupo)
+        public ActionResult Index( string cedulaProfesor, string cedulaEstudiante, string codigoForm, short anno, int semestre, string siglaCurso, byte numGrupo)
         {
             var modelo = new FormularioPorCurso
             {
@@ -188,28 +188,44 @@ namespace Opiniometro_WebApp.Controllers
             return secciones;
         }
 
-        /* Llamar con:
-         
-           $.post("GuardarRespuestas",
-                {
-                    PeriodosIndicados: JSON.stringify(cedEst),
-                    CedulaProfesor: JSON.stringify(cedProf),
-                    Grupo: ...
-                },
-                function (data, status) {
-                    // qué hacer cuando termina 
-                }
-            );
-         */
-        public void GuardarRespuestas (string CedulaEstudiante, string CedulaProfesor, string Grupo, 
-            string CodigoFormulario, string FechaRespuestas, string Respuestas)
+        public void GuardarRespuestas (string CedulaEstudiante, string Grupo, string CodigoFormulario, string Respuestas)
         {
+            Debug.WriteLine("\n\nGrupo: \"" + Grupo + "\"\n\n");
             var cedulaEst = JsonConvert.DeserializeObject<string>(CedulaEstudiante);
-            var cedulaProf = JsonConvert.DeserializeObject<string>(CedulaProfesor);
             var grupoEval = JsonConvert.DeserializeObject<Grupo>(Grupo);
             var codigoF = JsonConvert.DeserializeObject<string>(CodigoFormulario);
-            var fecha = JsonConvert.DeserializeObject<DateTime>(FechaRespuestas);
+            var fecha = DateTime.Now;
             var listaRespuestas = JsonConvert.DeserializeObject<RespuestaModel[]>(Respuestas);
+
+            /*if(grupoEval.Profesor.Count < 1)
+            {
+                return;
+            }
+            var cedulaProf = grupoEval.Profesor.ElementAt(0).CedulaProfesor;*/
+            var listaForms = from g in db.Grupo
+                               where grupoEval.AnnoGrupo == g.AnnoGrupo && grupoEval.SemestreGrupo == g.SemestreGrupo && grupoEval.SiglaCurso == g.SiglaCurso && grupoEval.Numero == g.Numero 
+                               select g;
+            if (listaForms.Count() < 1)
+            {
+                Debug.WriteLine("\n\n\n\n\n\nAIUDAAA");
+                Debug.WriteLine(grupoEval.AnnoGrupo + " " + grupoEval.SemestreGrupo + " " + grupoEval.SiglaCurso + " " + grupoEval.Numero + "\n\n\n\n\n");
+                return;
+            }
+            var cedulaProf = listaForms.ElementAt(0).Profesor.ElementAt(0).CedulaProfesor;
+
+            Debug.WriteLine("\n\nEstudiante: " + cedulaEst + "\nProfesor: " + cedulaProf + "\nGrupo: " + grupoEval.AnnoGrupo + " " + grupoEval.SemestreGrupo + " " + grupoEval.SiglaCurso + " " + grupoEval.Numero);
+            Debug.WriteLine("Formulario: " + codigoF + "\nFecha: " + fecha.ToShortDateString() + "\n\nRespuestas:");
+
+            foreach(var r in listaRespuestas)
+            {
+                Debug.WriteLine("Item " + r.IdItem + " en sección " + r.TituloSeccion + ": ");
+                foreach(var h in r.HilerasDeRespuesta)
+                {
+                    Debug.WriteLine("   \""+h+"\"");
+                }
+                Debug.WriteLine("  Observación: \"" + r.Observacion + "\"");
+            }
+            return;
 
             var tuplas = new List<Responde>();
 
