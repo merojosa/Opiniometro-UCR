@@ -541,6 +541,27 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Insertar_Seleccion_Unica", itemidParameter, isalikedislikeParameter);
         }
     
+        public virtual int SP_InsertaTablaPosee(Nullable<byte> numeroEnf, string sigla, string nombrePerfil, Nullable<short> idPermiso, ObjectParameter numero_Error)
+        {
+            var numeroEnfParameter = numeroEnf.HasValue ?
+                new ObjectParameter("NumeroEnf", numeroEnf) :
+                new ObjectParameter("NumeroEnf", typeof(byte));
+    
+            var siglaParameter = sigla != null ?
+                new ObjectParameter("Sigla", sigla) :
+                new ObjectParameter("Sigla", typeof(string));
+    
+            var nombrePerfilParameter = nombrePerfil != null ?
+                new ObjectParameter("NombrePerfil", nombrePerfil) :
+                new ObjectParameter("NombrePerfil", typeof(string));
+    
+            var idPermisoParameter = idPermiso.HasValue ?
+                new ObjectParameter("IdPermiso", idPermiso) :
+                new ObjectParameter("IdPermiso", typeof(short));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertaTablaPosee", numeroEnfParameter, siglaParameter, nombrePerfilParameter, idPermisoParameter, numero_Error);
+        }
+    
         public virtual int SP_LoginUsuario(string correo, string contrasenna, ObjectParameter resultado)
         {
             var correoParameter = correo != null ?
@@ -625,6 +646,32 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Perfil", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ObtenerPermisosUsuario_Result>("SP_ObtenerPermisosUsuario", correoParameter, perfilParameter);
+        }
+    
+        public virtual ObjectResult<string> SP_RecuperarEtiquetas(Nullable<int> tipoPregunta, string idPregunta)
+        {
+            var tipoPreguntaParameter = tipoPregunta.HasValue ?
+                new ObjectParameter("tipoPregunta", tipoPregunta) :
+                new ObjectParameter("tipoPregunta", typeof(int));
+    
+            var idPreguntaParameter = idPregunta != null ?
+                new ObjectParameter("idPregunta", idPregunta) :
+                new ObjectParameter("idPregunta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_RecuperarEtiquetas", tipoPreguntaParameter, idPreguntaParameter);
+        }
+    
+        public virtual ObjectResult<SP_RecuperarEtiquetasEscalar_Result> SP_RecuperarEtiquetasEscalar(Nullable<int> tipoPregunta, string idPregunta)
+        {
+            var tipoPreguntaParameter = tipoPregunta.HasValue ?
+                new ObjectParameter("tipoPregunta", tipoPregunta) :
+                new ObjectParameter("tipoPregunta", typeof(int));
+    
+            var idPreguntaParameter = idPregunta != null ?
+                new ObjectParameter("idPregunta", idPregunta) :
+                new ObjectParameter("idPregunta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_RecuperarEtiquetasEscalar_Result>("SP_RecuperarEtiquetasEscalar", tipoPreguntaParameter, idPreguntaParameter);
         }
     
         public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)

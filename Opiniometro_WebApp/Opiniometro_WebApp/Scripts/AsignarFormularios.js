@@ -59,7 +59,7 @@ function ObtenerGruposAsignados() {
 $(document).ready(function () {
     document.getElementById("boton-efectuar").addEventListener("click",
         function () {
-            if (confirm("¿Seguro de que desea efectuar las asignaciones?")) {
+            if (true /*confirm("¿Seguro de que desea efectuar las asignaciones?")*/) {
                 var botonEfectuar = document.getElementById("efectuar");
                 botonEfectuar.disabled = true;
 
@@ -80,34 +80,20 @@ $(document).ready(function () {
                         PeriodosIndicados: JSON.stringify(FormulariosYPeriodos)
                     },
                     success: function (data, status) {
-                        var d = JSON.parse(data);
-                        if (d == 0) {
-                            alert("Asignaciones fallidas. Por favor revise el formato de los periodos seleccionados.");
+                        var m = JSON.parse(data);
+                        if (m == null) {
+                            alert("Se concretó exitosamente todas las asignaciones.");
+                            window.location.href = "/Asignacion_Formulario/index";
                         }
                         else {
-                            if (d == -1) {
-                                alert("Hubo un problema con la base de datos. Por favor contacte a soporte técnico.");
-                            }
-                            else {
-                                if (d < FormulariosYPeriodos.length * Grupos.length) {
-                                    alert("Se ha realizado algunas asignaciones. Es posible que algunas fallaran. Por favor revise los periodos seleccionados y vuelva a intentarlo.")
-                                }
-                                else {
-                                    alert("Se concretó exitosamente todas las asignaciones.");
-                                }
-
-                                window.location.href = "/Asignacion_Formulario/index";
-                            }
+                            alert(m);
                         }
                     },
                     error: function (data, status) {
-                        alert(`Ha ocurrido un error. Por favor intente de nuevo.\nStatus: ${status}`);
+                        alert(`Ha ocurrido un error de comunicación. Por favor intente de nuevo.\nStatus: ${status}`);
                         botonEfectuar.disabled = false;
                     }
                 });
-            }
-            else {
-                // No hacer nada: se cancela la asignación.
             }
         });
 });

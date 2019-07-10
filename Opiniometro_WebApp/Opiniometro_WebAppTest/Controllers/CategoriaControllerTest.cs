@@ -1,127 +1,169 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
+﻿﻿using System;
 using System.Web.Mvc;
+using Moq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Opiniometro_WebApp.Controllers;
 using Opiniometro_WebApp.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Data.Entity;
 
-namespace Opiniometro_WebApp.Controllers
+namespace Opiniometro_WebAppTest.Controllers
 {
-    public class CategoriaController : Controller
+    [TestClass]
+    public class CategoriaControllerTest
     {
-        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
-
-        // GET: Categoria
-        public ActionResult Index()
+        [TestMethod]
+        public void TestCreateViewDataMock()
         {
-            return View(db.Categoria.ToList());
+            // Arrange
+            var mockDb = new Mock<Opiniometro_DatosEntities>();
+            string nombreCategoria = "Profesor";
+            Categoria categoria = new Categoria() { NombreCategoria = "Profesor" };
+            mockDb.Setup(m => m.Categoria.Find(nombreCategoria)).Returns(categoria);
+            CategoriaController controller = new CategoriaController(mockDb.Object);
+
+            // Act
+            controller.Create(categoria);
+            ViewResult result = controller.Details(nombreCategoria) as ViewResult;
+
+            // Assert
+            Assert.AreEqual(result.Model, categoria);
         }
 
-        // GET: Categoria/Details/5
-        public ActionResult Details(string id)
+        [TestMethod]
+        public void TestEditViewDataMock()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Categoria categoria = db.Categoria.Find(id);
-            if (categoria == null)
-            {
-                return HttpNotFound();
-            }
-            return View(categoria);
+            // Arrange
+            var mockDb = new Mock<Opiniometro_DatosEntities>();
+            string nombreCategoria = "Profesor";
+            Categoria categoria = new Categoria() { NombreCategoria = "Profesor" };
+            mockDb.Setup(m => m.Categoria.Find(nombreCategoria)).Returns(categoria);
+            CategoriaController controller = new CategoriaController(mockDb.Object);
+
+            // Act
+            ViewResult result = controller.Edit(nombreCategoria) as ViewResult;
+
+            // Assert
+            Assert.AreEqual(result.Model, categoria);
         }
 
-        // GET: Categoria/Create
-        public ActionResult Create()
+        [TestMethod]
+        public void TestEditViewDataMock2()
         {
-            return View();
+            // Arrange
+            var mockDb = new Mock<Opiniometro_DatosEntities>();
+            string nombreCategoria = "Profesor";
+            Categoria categoria = new Categoria() { NombreCategoria = "Profesor" };
+            mockDb.Setup(m => m.Categoria.Find(nombreCategoria)).Returns(categoria);
+            CategoriaController controller = new CategoriaController(mockDb.Object);
+
+            // Act
+            controller.Edit(categoria);
+            ViewResult result = controller.Details(nombreCategoria) as ViewResult;
+
+            // Assert
+            Assert.AreEqual(result.Model, categoria);
         }
 
-        // POST: Categoria/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NombreCategoria")] Categoria categoria)
+        [TestMethod]
+        public void TestDetailsViewDataMock()
         {
-            if (ModelState.IsValid)
-            {
-                db.Categoria.Add(categoria);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            // Arrange
+            var mockDb = new Mock<Opiniometro_DatosEntities>();
+            string nombreCategoria = "Profesor";
+            Categoria categoria = new Categoria() { NombreCategoria = "Profesor" };
+            mockDb.Setup(m => m.Categoria.Find(nombreCategoria)).Returns(categoria);
+            CategoriaController controller = new CategoriaController(mockDb.Object);
 
-            return View(categoria);
+            // Act
+            ViewResult result = controller.Details(nombreCategoria) as ViewResult;
+
+            // Assert
+            Assert.AreEqual(result.Model, categoria);
         }
 
-        // GET: Categoria/Edit/5
-        public ActionResult Edit(string id)
+        [TestMethod]
+        public void TestDeleteViewDataMock()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Categoria categoria = db.Categoria.Find(id);
-            if (categoria == null)
-            {
-                return HttpNotFound();
-            }
-            return View(categoria);
+            // Arrange
+            var mockDb = new Mock<Opiniometro_DatosEntities>();
+            string nombreCategoria = "Profesor";
+            Categoria categoria = new Categoria() { NombreCategoria = "Profesor" };
+            mockDb.Setup(m => m.Categoria.Find(nombreCategoria)).Returns(categoria);
+            CategoriaController controller = new CategoriaController(mockDb.Object);
+
+            // Act
+            ViewResult result = controller.Delete(nombreCategoria) as ViewResult;
+
+            // Assert
+            Assert.AreEqual(result.Model, categoria);
         }
 
-        // POST: Categoria/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "NombreCategoria")] Categoria categoria)
+        [TestMethod]
+        public void TestDeleteViewDataMock2()
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(categoria).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(categoria);
+            // Arrange
+            var mockDb = new Mock<Opiniometro_DatosEntities>();
+            string nombreCategoria = "Profesor";
+            Categoria categoria = new Categoria() { NombreCategoria = "Profesor" };
+            mockDb.Setup(m => m.Categoria.Find(nombreCategoria)).Returns(categoria);
+            CategoriaController controller = new CategoriaController(mockDb.Object);
+
+            // Act
+            controller.DeleteConfirmed(categoria.NombreCategoria);
+            ViewResult result = controller.Details(nombreCategoria) as ViewResult;
+
+            // Assert
+            Assert.AreEqual(result.Model, categoria);
         }
 
-        // GET: Categoria/Delete/5
-        public ActionResult Delete(string id)
+        [TestMethod]
+        public void TestIndexViewDataMock()
         {
-            if (id == null)
+            // Arrange
+            var categorias = new List<Categoria>
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Categoria categoria = db.Categoria.Find(id);
-            if (categoria == null)
-            {
-                return HttpNotFound();
-            }
-            return View(categoria);
+                new Categoria() { NombreCategoria = "Profesor" },
+                new Categoria() { NombreCategoria = "Estudiante" },
+                new Categoria() { NombreCategoria = "Asistente" },
+                new Categoria() { NombreCategoria = "Curso" }
+            }.AsQueryable();
+
+            var mockDbSet = new Mock<DbSet<Categoria>>();
+
+            mockDbSet.As<IQueryable<Categoria>>().Setup(m => m.Provider).Returns(categorias.Provider);
+            mockDbSet.As<IQueryable<Categoria>>().Setup(m => m.Expression).Returns(categorias.Expression);
+            mockDbSet.As<IQueryable<Categoria>>().Setup(m => m.ElementType).Returns(categorias.ElementType);
+            mockDbSet.As<IQueryable<Categoria>>().Setup(m => m.GetEnumerator()).Returns(categorias.GetEnumerator());
+
+            var mockDb = new Mock<Opiniometro_DatosEntities>();
+            mockDb.Setup(m => m.Categoria).Returns(mockDbSet.Object);
+            CategoriaController controller = new CategoriaController(mockDb.Object);
+
+            // Act
+            ViewResult result = controller.Index() as ViewResult;
+            List<Categoria> categoria = (List<Categoria>)result.ViewData.Model;
+            // Assert
+            Assert.AreEqual(4, categoria.Count);
         }
 
-        // POST: Categoria/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        [TestMethod]
+        public void TestIndexNotNullAndView()
         {
-            Categoria categoria = db.Categoria.Find(id);
-            db.Categoria.Remove(categoria);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            CategoriaController controller = new CategoriaController();
+            ViewResult result = controller.Index() as ViewResult;
+            Assert.IsNotNull(result, "Null");
+            Assert.AreEqual("Index", result.ViewName, "ViewName");
         }
 
-        protected override void Dispose(bool disposing)
+        [TestMethod]
+        public void TestCreateNotNullAndView()
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            CategoriaController controller = new CategoriaController();
+            ViewResult result = controller.Create() as ViewResult;
+            Assert.IsNotNull(result, "Null");
+            Assert.AreEqual("Create", result.ViewName, "ViewName");
         }
     }
 }

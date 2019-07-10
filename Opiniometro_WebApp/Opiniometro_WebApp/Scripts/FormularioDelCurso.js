@@ -1,7 +1,4 @@
-﻿
-
-
-///Se crea elemento que agraga un salto de linea
+﻿///Se crea elemento que agraga un salto de linea
 
 function insertNueLinea(etiqueta) {
     var elemento = document.createElement("br");
@@ -97,5 +94,43 @@ function Escalar() {
 //retorna--
 function Estrella() {
 
+
+}
+
+function recolectarRespuestas()
+{
+    var secciones = document.getElementsByClassName("seccion");
+    for (var s = 0; s < secciones.length; s++) {
+        var titulo = secciones[s].getElementsByClassName("titulo")[0].textContent;
+        var preguntas = secciones[s].getElementsByClassName("pregunta");
+        for (var p = 0; p < preguntas.length; p++) {
+
+            var tipo = preguntas[p].getElementsByClassName("tipo")[0].textContent;
+            //alert(tipo);
+
+            var respuestas = []
+            if (tipo == 1) {
+                respuestas.push(preguntas[p].getElementsByClassName("respuesta")[0].value);
+                //alert(respuestaLibre);
+            } else if (tipo == 2) {
+                var radios = preguntas[p].getElementsByClassName("respuesta");
+                var contenidos = preguntas[p].getElementsByClassName("contenido-opcion");
+                for (var r = 0; r < radios.length; r++) {
+                    if (radios[r].checked) {
+                        respuestas.push(contenidos[r].textContent);
+                        alert(contenidos[r].textContent);
+                    }      
+                }
+            } else if (tipo == 3) {
+
+            } else if (tipo == 4) {
+
+            } else if (tipo == 5) {
+
+            } else if (tipo == 6) {
+
+            } 
+        }
+    }
 
 }

@@ -41,6 +41,7 @@ namespace Opiniometro_WebApp.Controllers
             if(seccionesQuery != null)
                 secciones = seccionesQuery.Distinct().ToArray(); // Distinct: impedancia en la tabla Conf_Item_Sec_Form
 
+            int preguntaActual = 1;
             // Para cada sección se recuperan sus preguntas
             for (int seccion = 0; seccion < secciones.Count(); ++ seccion)
             {
@@ -64,12 +65,14 @@ namespace Opiniometro_WebApp.Controllers
                     preguntas = preguntasQuery.Distinct().ToArray();
                 secciones[seccion].PreguntasFormulario = preguntas;
 
-                // Si le sección no tiene preguntas asignadas
+                // Si le sección tiene preguntas asignadas
                 if (secciones[seccion].PreguntasFormulario != null)
                 {
                     // Para cada pregunta se recuperan sus opciones, según su tipo
                     for (int pregunta = 0; pregunta < secciones[seccion].PreguntasFormulario.Count(); ++pregunta)
                     {
+                        secciones[seccion].PreguntasFormulario[pregunta].numPregunta = preguntaActual;
+                        ++preguntaActual;
                         if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 1)
                         {
                             // La pregunta de respuesta libre no tiene opciones, solo campo de texto
@@ -86,7 +89,27 @@ namespace Opiniometro_WebApp.Controllers
                             secciones[seccion].PreguntasFormulario[pregunta].Opciones = opciones.ToArray();
                         }
 
+                        else if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 3)
+                        {
+                            string id = secciones[seccion].PreguntasFormulario[pregunta].itemId;
+                            IQueryable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Unica
+                                                          where ops.ItemId == id
+                                                          select ops.OpcionRespuesta;
 
+                            // Se asigna el arreglo de opciones
+                            secciones[seccion].PreguntasFormulario[pregunta].Opciones = opciones.ToArray();
+                        }
+
+                        else if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 4)
+                        {
+                            string id = secciones[seccion].PreguntasFormulario[pregunta].itemId;
+                            IQueryable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Multiple
+                                                          where ops.ItemId == id
+                                                          select ops.OpcionRespuesta;
+
+                            // Se asigna el arreglo de opciones
+                            secciones[seccion].PreguntasFormulario[pregunta].Opciones = opciones.ToArray();
+                        }
                         //#############################################################
                         // AQUI SEGUIR RECUPERANDO OPCIONES Y ASIGNARLAS A COVENIENCIA
                         //#############################################################
