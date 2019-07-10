@@ -13,7 +13,7 @@ using System.Globalization;
 
 namespace Opiniometro_WebApp.Controllers
 {
-
+    [Authorize]
     public class AsignarFormulariosController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
