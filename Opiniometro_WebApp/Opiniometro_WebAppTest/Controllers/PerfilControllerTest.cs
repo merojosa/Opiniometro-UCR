@@ -12,6 +12,47 @@ namespace Opiniometro_WebAppTest.Controllers
     [TestClass]
     public class PerfilControllerTest
     {
+
+        [TestMethod]
+        public void VerPerfilesNull()
+        {
+            PerfilController controller = new PerfilController();
+
+            ActionResult result = controller.VerPerfiles("");
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void VerPerfiles()
+        {
+            PerfilController controller = new PerfilController();
+
+            ActionResult result = controller.VerPerfiles("Jose");
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestEditarPerfil()
+        {
+            PerfilController controller = new PerfilController();
+
+            ActionResult result = controller.Editar("Profesor");
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestEditarNullPerfil()
+        {
+            PerfilController controller = new PerfilController();
+
+            ActionResult result = controller.Editar("");
+
+            Assert.IsNotNull(result);
+        }
+
         [TestMethod]
         public void TestCrearNotNull()
         {

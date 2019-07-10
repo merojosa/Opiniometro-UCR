@@ -1064,9 +1064,6 @@
           <Parameter Name="nombre" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SF_GenerarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
-        <Function Name="SF_ObtenerCedula" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char">
-          <Parameter Name="correoInstit" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="SP_AgregarPersonaUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
@@ -1177,6 +1174,11 @@
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ModificarPerfilUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correo" Type="nvarchar" Mode="In" />
+          <Parameter Name="perfil" Type="nvarchar" Mode="In" />
+          <Parameter Name="modifica" Type="bit" Mode="In" />
         </Function>
         <Function Name="SP_ModificarPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CedulaBusqueda" Type="varchar" Mode="In" />
@@ -2833,6 +2835,11 @@
             <Parameter Name="descripcion" Mode="In" Type="String" />
             <Parameter Name="Numero_Error" Mode="InOut" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_ModificarPerfilUsuario">
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="modifica" Mode="In" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CursosSegunAnno_Result">
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="75" />
@@ -3400,6 +3407,7 @@
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Opiniometro_Model.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Opiniometro_Model.Store.sp_upgraddiagrams" />
           <FunctionImportMapping FunctionImportName="EditarPerfil" FunctionName="Opiniometro_Model.Store.EditarPerfil" />
+          <FunctionImportMapping FunctionImportName="SP_ModificarPerfilUsuario" FunctionName="Opiniometro_Model.Store.SP_ModificarPerfilUsuario" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
