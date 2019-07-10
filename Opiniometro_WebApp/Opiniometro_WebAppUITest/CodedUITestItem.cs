@@ -26,7 +26,16 @@ namespace Opiniometro_WebAppUITest
         public void CodedUITestCrearItem()
         {
             this.UIMap.PruebaIngresoAplicacion();
+            
             this.UIMap.PruebaIntentoCrearPregunta();
+        }
+
+        [TestMethod]
+        public void CodedUITestDespliegueDescripcion()
+        {
+            this.UIMap.PruebaIngresoAplicacion();
+            this.UIMap.PruebaIntentoCrearPregunta();
+            this.UIMap.DespliegueDescripcionComentario();
         }
 
         #region Additional test attributes
