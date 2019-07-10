@@ -100,7 +100,7 @@ namespace Opiniometro_WebApp.Controllers
                             IQueryable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Unica
                                                           where ops.ItemId == id
                                                           select ops.OpcionRespuesta;
-                            
+
                             // Se asigna el arreglo de opciones
                             secciones[seccion].PreguntasFormulario[pregunta].Opciones = opciones.ToArray();
                         }
@@ -126,6 +126,34 @@ namespace Opiniometro_WebApp.Controllers
                             // Se asigna el arreglo de opciones
                             secciones[seccion].PreguntasFormulario[pregunta].Opciones = opciones.ToArray();
                         }
+
+                        else if (secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 5 ||
+                           secciones[seccion].PreguntasFormulario[pregunta].tipoPregunta == 6)
+                        {
+                            string id = secciones[seccion].PreguntasFormulario[pregunta].itemId;
+                            var ini = (from range in db.Escalar
+                                       where range.ItemId == id
+                                       select range.Inicio).First();
+                            var fin = (from range in db.Escalar
+                                       where range.ItemId == id
+                                       select range.Fin).First();
+
+                            int inicio = Convert.ToInt32(ini);
+                            int final = Convert.ToInt32(fin);
+                            int valor = inicio;
+                            int posicion = 0;
+
+                            string[] rango = new string[(final - inicio) + 1];
+                            foreach (string r in rango)
+                            {
+                                rango[posicion] = valor.ToString();
+                                valor++;
+                                posicion++;
+                            }
+                            secciones[seccion].PreguntasFormulario[pregunta].Opciones = rango;
+
+                        }
+
                         //#############################################################
                         // AQUI SEGUIR RECUPERANDO OPCIONES Y ASIGNARLAS A COVENIENCIA
                         //#############################################################
