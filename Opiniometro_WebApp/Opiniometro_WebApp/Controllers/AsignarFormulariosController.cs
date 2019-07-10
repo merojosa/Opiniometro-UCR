@@ -110,9 +110,43 @@ namespace Opiniometro_WebApp.Controllers
         // Para el filtro por ciclos
         public IQueryable<Ciclo_Lectivo> ObtenerCiclos(String codigoUnidadAcadem)
         {
-            IQueryable<Ciclo_Lectivo> ciclo = (from c in db.Ciclo_Lectivo select c);
-            ViewBag.semestre = new SelectList(ciclo, "Semestre", "Semestre").Distinct();
-            ViewBag.ano = new SelectList(ciclo, "Anno", "Anno").Distinct();
+            IQueryable<Ciclo_Lectivo> ciclo = (from c in db.Ciclo_Lectivo orderby c.Semestre select c);
+            
+            var listaEditable = new SelectList(ciclo, "Semestre", "Semestre").ToList();
+            int index = 0;
+            while (index < listaEditable.Count()-1)
+            {
+                if (listaEditable.ElementAt(index).Value == listaEditable.ElementAt(index+1).Value)
+                {
+                    listaEditable.RemoveAt(index + 1);
+                }
+                else
+                {
+                    ++index;
+                }
+            }
+            //listaSemestres.ElementAt(1).Selected = true;
+            ViewBag.semestre = listaEditable.AsEnumerable();
+
+            ciclo = from c in ciclo orderby c.Anno select c;
+            
+            listaEditable = new SelectList(ciclo, "Anno", "Anno").ToList();
+            index = 0;
+            while (index < listaEditable.Count() - 1)
+            {
+                if (listaEditable.ElementAt(index).Value == listaEditable.ElementAt(index + 1).Value)
+                {
+                    listaEditable.RemoveAt(index + 1);
+                }
+                else
+                {
+                    ++index;
+                }
+            }
+
+            //listaAnnos.ElementAt(1).Selected = true;
+            ViewBag.ano = listaEditable.AsEnumerable();
+
             return ciclo;
         }
 
@@ -299,7 +333,7 @@ namespace Opiniometro_WebApp.Controllers
                 (from cur in db.Curso
                 join gru in db.Grupo on cur.Sigla equals gru.SiglaCurso
                 join uni in db.Unidad_Academica on cur.CodigoUnidad equals uni.Codigo
-                join car in db.Carrera on uni.Codigo equals car.CodigoUnidadAcademica
+                //join car in db.Carrera on uni.Codigo equals car.CodigoUnidadAcademica
 
             select new ElegirGrupoEditorViewModel
             {
@@ -308,18 +342,17 @@ namespace Opiniometro_WebApp.Controllers
                 Numero = gru.Numero,
                 Anno = gru.AnnoGrupo,
                 Semestre = gru.SemestreGrupo,
-                //Profesores = gru.Profesor.ToList(),
+                Profesores = gru.Profesor.ToList(),
                 NombreCurso = gru.Curso.Nombre,
                 NombreUnidadAcademica = gru.Curso.Unidad_Academica.Nombre,
                 CodigoUnidadAcademica = cur.CodigoUnidad,
-                SiglaCarrera = car.Sigla
-                //NombresCarreras =  cur.Enfasis.
+                Enfasis = cur.Enfasis.ToList()
             });
-
+            Debug.WriteLine("\n\n\nPre-filtrado: "+grupos.Count()+" grupos\n");
             grupos = FiltreGrupos(searchString, semestre, anno, codigoUnidadAcadem, siglaCarrera, nombreCurso, grupos);
+            Debug.WriteLine("Pre-filtrado: " + grupos.Count() + " grupos\n\n\n");
 
-            return grupos.Distinct().ToList();
-
+            return grupos.ToList();
         }
 
         /// <summary>
@@ -343,9 +376,32 @@ namespace Opiniometro_WebApp.Controllers
                 grupos = grupos.Where(c => c.CodigoUnidadAcademica.Equals(CodigoUnidadAcad));
             }
 
+            /*if (!String.IsNullOrEmpty(siglaCarrera))
+            {
+                //grupos = grupos.Where(c => c.SiglaCarrera.Equals(siglaCarrera));
+                var cs = from carr in db.Carrera where carr.Sigla == siglaCarrera select new Carrera { CodigoUnidadAcademica=carr.CodigoUnidadAcademica,  };
+                Carrera carrera = 
+                grupos = grupos.Where(c => c.Enfasis.Contains())
+            }*/
             if (!String.IsNullOrEmpty(siglaCarrera))
             {
-                grupos = grupos.Where(c => c.SiglaCarrera.Equals(siglaCarrera));
+                foreach (var gru in grupos)
+                {
+                    bool grupoEstaEnLaCarrera = false;
+                    foreach (var enf in gru.Enfasis)
+                    {
+                        if (enf.SiglaCarrera == siglaCarrera)
+                        {
+                            grupoEstaEnLaCarrera = true;
+                            break;
+                        }
+                    }
+                    // Remueve el grupo de un curso que no está en la carrera seleccionada
+                    if (!grupoEstaEnLaCarrera)
+                    {
+                        grupos = grupos.Where(g => g != gru);
+                    }
+                }
             }
 
             //if (!String.IsNullOrEmpty(nombCarrera))
