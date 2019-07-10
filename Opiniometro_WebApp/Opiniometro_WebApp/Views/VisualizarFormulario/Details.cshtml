@@ -19,7 +19,18 @@
     </style>
 </head>
 
-@{string perfil_actual = Opiniometro_WebApp.Controllers.Servicios.IdentidadManager.obtener_perfil_actual(); }
+@{
+    string perfil_actual = Opiniometro_WebApp.Controllers.Servicios.IdentidadManager.obtener_perfil_actual();
+    var mySite = " ";
+    if(HttpContext.Current.Request.ApplicationPath.Length == 1)
+    {
+        mySite = "/VisualizarFormulario/GraficoPie";
+    }
+    else
+    {
+        mySite = HttpContext.Current.Request.ApplicationPath + "/VisualizarFormulario/GraficoPie";
+    }
+    }
 
 <div class="container">
     @{ string codigoFormularioRec = ""; string cedulaProfesorRec = ""; short annoGrupoRec = 0; byte semestreGrupoRec = 0; byte numeroGrupoRec = 0; string siglaCursoRec = ""; }
@@ -133,7 +144,7 @@
                                                         <script>
                                                         $.ajax({
                                                             type: "POST",
-                                                            url: "/VisualizarFormulario/GraficoPie/?itemId=@seccion.Item.ItemId",
+                                                            url: "@mySite",
                                                             data: "{ 'codigoFormulario': '@codigoFormularioRec', 'cedulaProfesor': '@cedulaProfesorRec', 'annoGrupo': '@annoGrupoRec', 'semestreGrupo': '@semestreGrupoRec', 'numeroGrupo': '@numeroGrupoRec', 'siglaCurso': '@siglaCursoRec', 'itemId': '@seccion.Item.ItemId', 'tipoPregunta': '@seccion.Item.TipoPregunta' }",
                                                             contentType: "application/json; charset=utf-8",
                                                             dataType: "json",

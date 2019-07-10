@@ -1062,6 +1062,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Parameter Name="descripcion" Type="varchar" Mode="In" />
           <Parameter Name="Numero_Error" Type="int" Mode="InOut" />
         </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="MostrarEstudiantes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="NombrePersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
@@ -1098,6 +1099,12 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
         </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
         <Function Name="SP_CambiarContrasenna" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna_Nueva" Type="nvarchar" Mode="In" />
@@ -1122,6 +1129,12 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Parameter Name="Descripcion" Type="varchar" Mode="In" />
           <Parameter Name="Numero_Error" Type="int" Mode="InOut" />
         </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
         <Function Name="SP_DevolverObservacionesPorGrupo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigoFormulario" Type="char" Mode="In" />
           <Parameter Name="cedulaProfesor" Type="char" Mode="In" />
@@ -1140,6 +1153,10 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Parameter Name="siglaCurso" Type="char" Mode="In" />
           <Parameter Name="itemId" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_EliminarSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoFormulario" Type="char" Mode="In" />
           <Parameter Name="TituloSeccion" Type="nvarchar" Mode="In" />
@@ -1152,6 +1169,14 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Parameter Name="id" Type="nvarchar" Mode="In" />
           <Parameter Name="contrasena" Type="nvarchar" Mode="In" />
           <Parameter Name="contrasenaHash" Type="varbinary" Mode="InOut" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="itemid" Type="nvarchar" Mode="In" />
@@ -1211,6 +1236,12 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Parameter Name="tipoPregunta" Type="int" Mode="In" />
           <Parameter Name="idPregunta" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="Opiniometro_ModelStoreContainer">
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
@@ -2752,6 +2783,12 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
           <FunctionImport Name="SP_CambiarContrasenna">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna_Nueva" Mode="In" Type="String" />
@@ -2776,6 +2813,12 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="Descripcion" Mode="In" Type="String" />
             <Parameter Name="Numero_Error" Mode="InOut" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
           <FunctionImport Name="SP_DevolverObservacionesPorGrupo" ReturnType="Collection(Opiniometro_Model.SP_DevolverObservacionesPorGrupo_Result)">
             <Parameter Name="codigoFormulario" Mode="In" Type="String" />
             <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
@@ -2794,6 +2837,10 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="siglaCurso" Mode="In" Type="String" />
             <Parameter Name="itemId" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="SP_EliminarSeccion">
             <Parameter Name="CodigoFormulario" Mode="In" Type="String" />
             <Parameter Name="TituloSeccion" Mode="In" Type="String" />
@@ -2806,6 +2853,14 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="id" Mode="In" Type="String" />
             <Parameter Name="contrasena" Mode="In" Type="String" />
             <Parameter Name="contrasenaHash" Mode="InOut" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Opiniometro_Model.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Opiniometro_Model.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica">
             <Parameter Name="itemid" Mode="In" Type="String" />
@@ -2865,6 +2920,12 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="tipoPregunta" Mode="In" Type="Int32" />
             <Parameter Name="idPregunta" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
         <ComplexType Name="CursosSegunAnno_Result">
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="75" />
@@ -2903,6 +2964,17 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Property Type="String" Name="Nombre1" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Apellido1" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Apellido2" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SP_ObtenerPermisosUsuario_Result">
           <Property Type="String" Name="SiglaCarrera" Nullable="false" MaxLength="10" />
@@ -3360,6 +3432,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <FunctionImportMapping FunctionImportName="ProcIntroduFormulario" FunctionName="Opiniometro_Model.Store.ProcIntroduFormulario" />
           <FunctionImportMapping FunctionImportName="SP_AgregarPersonaUsuario" FunctionName="Opiniometro_Model.Store.SP_AgregarPersonaUsuario" />
           <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_Model.Store.SP_AgregarUsuario" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Opiniometro_Model.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="Opiniometro_Model.Store.SP_CambiarContrasenna" />
           <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="Opiniometro_Model.Store.SP_ContarRespuestasPorGrupo">
             <ResultMapping>
@@ -3371,6 +3444,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_CopiarSeccion" FunctionName="Opiniometro_Model.Store.SP_CopiarSeccion" />
           <FunctionImportMapping FunctionImportName="SP_CrearPerfil" FunctionName="Opiniometro_Model.Store.SP_CrearPerfil" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Opiniometro_Model.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_Model.Store.SP_DevolverObservacionesPorGrupo">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Opiniometro_Model.SP_DevolverObservacionesPorGrupo_Result">
@@ -3382,9 +3456,29 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_DevolverRespuestasPorGrupo" FunctionName="Opiniometro_Model.Store.SP_DevolverRespuestasPorGrupo" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Opiniometro_Model.Store.sp_dropdiagram" />
           <FunctionImportMapping FunctionImportName="SP_EliminarSeccion" FunctionName="Opiniometro_Model.Store.SP_EliminarSeccion" />
           <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_Model.Store.SP_ExistenciaCorreo" />
           <FunctionImportMapping FunctionImportName="SP_GenerarContrasenaHash" FunctionName="Opiniometro_Model.Store.SP_GenerarContrasenaHash" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Opiniometro_Model.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Opiniometro_Model.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Opiniometro_Model.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Opiniometro_Model.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" />
           <FunctionImportMapping FunctionImportName="SP_Insertar_Seccion" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seccion" />
           <FunctionImportMapping FunctionImportName="SP_Insertar_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seleccion_Unica" />
@@ -3413,6 +3507,8 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Opiniometro_Model.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Opiniometro_Model.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
