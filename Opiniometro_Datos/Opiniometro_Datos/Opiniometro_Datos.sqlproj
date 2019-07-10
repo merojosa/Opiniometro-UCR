@@ -108,6 +108,7 @@
     <Build Include="Seleccion_Multiple.sql" />
     <Build Include="Opciones_De_Respuestas_Seleccion_Unica.sql" />
     <Build Include="Escalar.sql" />
+    <Build Include="SP_Insertar_Seleccion_Unica.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ScriptGenerarContrasena.sql" />
