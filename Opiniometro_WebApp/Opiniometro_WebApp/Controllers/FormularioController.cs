@@ -37,7 +37,7 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult Index(int? page)
         {
             var formulario = db.Formulario;
-            return View(formulario.ToList().ToPagedList(page ?? 1, 5));
+            return View("Index", formulario.ToList().ToPagedList(page ?? 1, 5));
         }
 
         // GET: Formulario/Details/5

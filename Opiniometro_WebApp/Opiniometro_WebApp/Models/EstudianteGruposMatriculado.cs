@@ -8,7 +8,7 @@ namespace Opiniometro_WebApp.Models
 {
     public class EstudianteGruposMatriculado
     {
-
+        public string cedulaProf { set; get; }
         public string nombreCursoMatriculado { set; get; }
         public string siglaCursoMatriculado { set; get; }
         public string nombreProfeCurso { set; get; }
@@ -16,6 +16,7 @@ namespace Opiniometro_WebApp.Models
         public string apellido2Profe { get; set; }
         public short anoGrupo { get; set; }
         public int semestreGrupo { set; get; }
+        public byte numGrupo { get; set; }
         public string formulario { set; get; }
         public string cedEst { get; set; }
         public string codFormulario { get; set; }

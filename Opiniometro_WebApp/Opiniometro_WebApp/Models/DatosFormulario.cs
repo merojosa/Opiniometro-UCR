@@ -30,6 +30,14 @@ namespace Opiniometro_WebApp.Models
     //      V   V   V
     public class FormularioPorCurso {
 
+        public string cedProf { set; get; }
+        public string siglaCurso { set; get; }
+        public int anoGrupo { get; set; }
+        public int semestreGrupo { set; get; }
+        public int numGrupo { get; set; }
+        public string cedEst { get; set; }
+        public string codFormulario { get; set; }
+
         public SeccionFormulario[] Secciones;
 
     }

@@ -13,19 +13,35 @@ namespace Opiniometro_WebApp.Controllers
     [Authorize]
     public class FormularioCursoController: Controller
     {
-        private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        private Opiniometro_DatosEntities db;
+
+        public FormularioCursoController()
+        {
+            this.db = new Opiniometro_DatosEntities();
+        }
+        public FormularioCursoController(Opiniometro_DatosEntities db)
+        {
+            this.db = db;
+        }
 
         [HttpGet]
-        public ActionResult Index(string cedulaEstudiante, string codigoForm)
+        public ActionResult Index( string cedulaProfesor, string cedulaEstudiante, string codigoForm, int anno, int semestre, string siglaCurso, int numGrupo)
         {
             var modelo = new FormularioPorCurso
             {
-                Secciones = obtenerPreguntasFormulario(cedulaEstudiante,codigoForm)
+                cedProf = cedulaProfesor,
+                cedEst = cedulaEstudiante,
+                codFormulario = codigoForm,
+                anoGrupo = anno,
+                semestreGrupo = semestre,
+                siglaCurso = siglaCurso,
+                numGrupo = numGrupo,
+                Secciones = obtenerPreguntasFormulario(codigoForm)
             };
             return View(modelo);
         }
 
-        public SeccionFormulario[] obtenerPreguntasFormulario(string cedulaEstudiante, string codigoForm)
+        public SeccionFormulario[] obtenerPreguntasFormulario(string codigoForm)
         {
             // Se recuperan las secciones del formulario con el código respectivo
             IQueryable < SeccionFormulario > seccionesQuery =
