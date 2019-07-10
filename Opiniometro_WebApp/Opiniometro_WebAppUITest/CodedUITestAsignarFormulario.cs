@@ -18,22 +18,24 @@ namespace Opiniometro_WebAppUITest
         [TestMethod]
         public void ValidarTituloAsignacion()
         {
-            this.UIMap.loginUsuario();
+            this.UIMap.loginUsuarioAF();
             this.UIMap.IngresoAsignacionFormularios();
+
             this.UIMap.validacionTituloAsignacionFormularios();
         }
 
         [TestMethod]
         public void ValidarFiltros()  //valida los títulos de los filtros
         {
-            this.UIMap.loginUsuario();
-            this.UIMap.IngresoAsignacionFormularios();
+            this.UIMap.loginUsuarioAF();
 
+            this.UIMap.IngresoAsignacionFormularios();
             this.UIMap.validacionTextoFiltroSemestre();
             this.UIMap.validacionTextoFiltroAnno();
             this.UIMap.validacionTextoFiltroUnidadAcademica();
             this.UIMap.validacionTextoFiltroCarrera();
             this.UIMap.validacionTextoFiltroCurso();
+
         }
 
 
@@ -48,7 +50,7 @@ namespace Opiniometro_WebAppUITest
         ////Use TestCleanup to run code after each test has run         
         [TestCleanup()]
         public void MyTestCleanup()
-        {   
+        {
             // To generate code for this test, select "Generate Code for Coded UI Test" from the shortcut menu and select one of the menu items.         
         }
 
@@ -81,6 +83,5 @@ namespace Opiniometro_WebAppUITest
         private UIMap map;
     }
 }
-
 
 

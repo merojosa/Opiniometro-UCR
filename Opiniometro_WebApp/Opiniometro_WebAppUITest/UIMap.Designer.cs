@@ -102,6 +102,159 @@ namespace Opiniometro_WebAppUITest
             uIEtiquetaObservacionEdit1.Text = this.DespliegueDescripcionComentarioParams.UIEtiquetaObservacionEdit1Text;
         }
         
+        /// <summary>
+        /// Valida el ingreso a la página de asignacion de formulario
+        /// </summary>
+        public void IngresoAsignacionFormularios()
+        {
+            #region Variable Declarations
+            HtmlComboBox uIPerfilSeleccionadoComboBox = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument1.UIPerfilSeleccionadoComboBox;
+            HtmlInputButton uIAceptarButton = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument1.UIAceptarButton;
+            HtmlHyperlink uIEvaluacionesHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument2.UIEvaluacionesHyperlink;
+            HtmlHyperlink uIAsignarformularioHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument2.UIAsignarformularioHyperlink;
+            #endregion
+
+            // Select 'Administrador' in 'perfilSeleccionado' combo box
+            uIPerfilSeleccionadoComboBox.SelectedItem = this.IngresoAsignacionFormulariosParams.UIPerfilSeleccionadoComboBoxSelectedItem;
+
+            // Click 'Aceptar' button
+            Mouse.Click(uIAceptarButton, new Point(38, 13));
+
+            // Click 'Evaluaciones' link
+            Mouse.Click(uIEvaluacionesHyperlink, new Point(40, 20));
+
+            // Click 'Asignar formulario' link
+            Mouse.Click(uIAsignarformularioHyperlink, new Point(140, 20));
+        }
+        
+        /// <summary>
+        /// Valida el titulo de asignacion de formularios
+        /// </summary>
+        public void validacionTituloAsignacionFormularios()
+        {
+            #region Variable Declarations
+            HtmlDiv uIAsignacióndeFormularPane = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIAsignacióndeFormularPane;
+            #endregion
+
+            // Verify that the 'TagName' property of 'Asignación de Formularios' pane equals 'DIV'
+            Assert.AreEqual(this.validacionTituloAsignacionFormulariosExpectedValues.UIAsignacióndeFormularPaneTagName, uIAsignacióndeFormularPane.TagName, "Error: No se encuentra el título de la página");
+        }
+        
+        /// <summary>
+        /// Inicializa el explorador
+        /// </summary>
+        public void InicializarExplorador()
+        {
+            #region Variable Declarations
+            WinMenuItem uIAddressMenuItem = this.UIHomePageInternetExplWindow.UIAddressComboControlToolBar.UIAddressMenuItem;
+            BrowserWindow uIHomePageInternetExplWindow = this.UIHomePageInternetExplWindow;
+            #endregion
+
+            // Go to web page 'http://www.google.com/' using new browser instance
+            this.UIHomePageInternetExplWindow.LaunchUrl(new System.Uri(this.InicializarExploradorParams.UIHomePageInternetExplWindowUrl));
+
+            // Click 'Address' menu item
+            Mouse.Click(uIAddressMenuItem, new Point(250, 4));
+
+            // Go to web page 'http://localhost/Opiniometro_WebApp'
+            uIHomePageInternetExplWindow.NavigateToUrl(new System.Uri(this.InicializarExploradorParams.UIHomePageInternetExplWindowUrl1));
+        }
+        
+        /// <summary>
+        /// Valida el texto del filtro semestre
+        /// </summary>
+        public void validacionTextoFiltroSemestre()
+        {
+            #region Variable Declarations
+            HtmlComboBox uISemestreComboBox = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UISemestreComboBox;
+            #endregion
+
+            // Verify that the 'Id' property of 'semestre' combo box equals 'semestre'
+            Assert.AreEqual(this.validacionTextoFiltroSemestreExpectedValues.UISemestreComboBoxId, uISemestreComboBox.Id, "Error en texto del filtro (\"Semestre\")");
+        }
+        
+        /// <summary>
+        /// Validacion en el texto del filtro año
+        /// </summary>
+        public void validacionTextoFiltroAnno()
+        {
+            #region Variable Declarations
+            HtmlComboBox uIAnoComboBox = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIAnoComboBox;
+            #endregion
+
+            // Verify that the 'Id' property of 'ano' combo box equals 'ano'
+            Assert.AreEqual(this.validacionTextoFiltroAnnoExpectedValues.UIAnoComboBoxId, uIAnoComboBox.Id, "Error en el texto del filtro(\"Año\")");
+        }
+        
+        /// <summary>
+        /// Login usuario para asignarformulario
+        /// </summary>
+        public void loginUsuarioAF()
+        {
+            #region Variable Declarations
+            HtmlEdit uICorreoInstitucionalEdit = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UICorreoInstitucionalEdit;
+            HtmlEdit uIContrasenaEdit = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UIContrasenaEdit;
+            HtmlInputButton uIIngresarButton = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UIIngresarButton;
+            #endregion
+
+            // Type 'jose.mejiasrojas' in 'CorreoInstitucional' text box
+            uICorreoInstitucionalEdit.Text = this.loginUsuarioAFParams.UICorreoInstitucionalEditText;
+
+            // Type 'Alt, Control + q' in 'CorreoInstitucional' text box
+            Keyboard.SendKeys(uICorreoInstitucionalEdit, this.loginUsuarioAFParams.UICorreoInstitucionalEditSendKeys, (ModifierKeys.Alt | ModifierKeys.Control));
+
+            // Type 'jose.mejiasrojas@ucr.ac.cr' in 'CorreoInstitucional' text box
+            uICorreoInstitucionalEdit.Text = this.loginUsuarioAFParams.UICorreoInstitucionalEditText1;
+
+            // Type '{Tab}' in 'CorreoInstitucional' text box
+            Keyboard.SendKeys(uICorreoInstitucionalEdit, this.loginUsuarioAFParams.UICorreoInstitucionalEditSendKeys1, ModifierKeys.None);
+
+            // Type '********' in 'Contrasena' text box
+            uIContrasenaEdit.Password = this.loginUsuarioAFParams.UIContrasenaEditPassword;
+
+            // Click 'Ingresar' button
+            Mouse.Click(uIIngresarButton, new Point(29, 16));
+        }
+        
+        /// <summary>
+        /// Valida el texto del filtro unidad academica
+        /// </summary>
+        public void validacionTextoFiltroUnidadAcademica()
+        {
+            #region Variable Declarations
+            HtmlComboBox uIUnidadAcademicaComboBox = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIUnidadAcademicaComboBox;
+            #endregion
+
+            // Verify that the 'Id' property of 'unidadAcademica' combo box equals 'unidadAcademica'
+            Assert.AreEqual(this.validacionTextoFiltroUnidadAcademicaExpectedValues.UIUnidadAcademicaComboBoxId, uIUnidadAcademicaComboBox.Id, "Error en el texto del filtro(\"Unidad Academica\")");
+        }
+        
+        /// <summary>
+        /// Valida el texto del filtro carrera
+        /// </summary>
+        public void validacionTextoFiltroCarrera()
+        {
+            #region Variable Declarations
+            HtmlComboBox uISiglaCarreraComboBox = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UISiglaCarreraComboBox;
+            #endregion
+
+            // Verify that the 'Id' property of 'siglaCarrera' combo box equals 'siglaCarrera'
+            Assert.AreEqual(this.validacionTextoFiltroCarreraExpectedValues.UISiglaCarreraComboBoxId, uISiglaCarreraComboBox.Id, "Error en el texto del filtro(\"Carrera\")");
+        }
+        
+        /// <summary>
+        /// Valida el texto del filtro Curso
+        /// </summary>
+        public void validacionTextoFiltroCurso()
+        {
+            #region Variable Declarations
+            HtmlComboBox uINombreCursoComboBox = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UINombreCursoComboBox;
+            #endregion
+
+            // Verify that the 'Id' property of 'nombreCurso' combo box equals 'nombreCurso'
+            Assert.AreEqual(this.validacionTextoFiltroCursoExpectedValues.UINombreCursoComboBoxId, uINombreCursoComboBox.Id, "Error en el texto del filtro(\"Curso\")");
+        }
+        
         #region Properties
         public virtual PruebaIngresoAplicacionParams PruebaIngresoAplicacionParams
         {
@@ -136,6 +289,114 @@ namespace Opiniometro_WebAppUITest
                     this.mDespliegueDescripcionComentarioParams = new DespliegueDescripcionComentarioParams();
                 }
                 return this.mDespliegueDescripcionComentarioParams;
+            }
+        }
+        
+        public virtual IngresoAsignacionFormulariosParams IngresoAsignacionFormulariosParams
+        {
+            get
+            {
+                if ((this.mIngresoAsignacionFormulariosParams == null))
+                {
+                    this.mIngresoAsignacionFormulariosParams = new IngresoAsignacionFormulariosParams();
+                }
+                return this.mIngresoAsignacionFormulariosParams;
+            }
+        }
+        
+        public virtual validacionTituloAsignacionFormulariosExpectedValues validacionTituloAsignacionFormulariosExpectedValues
+        {
+            get
+            {
+                if ((this.mvalidacionTituloAsignacionFormulariosExpectedValues == null))
+                {
+                    this.mvalidacionTituloAsignacionFormulariosExpectedValues = new validacionTituloAsignacionFormulariosExpectedValues();
+                }
+                return this.mvalidacionTituloAsignacionFormulariosExpectedValues;
+            }
+        }
+        
+        public virtual InicializarExploradorParams InicializarExploradorParams
+        {
+            get
+            {
+                if ((this.mInicializarExploradorParams == null))
+                {
+                    this.mInicializarExploradorParams = new InicializarExploradorParams();
+                }
+                return this.mInicializarExploradorParams;
+            }
+        }
+        
+        public virtual validacionTextoFiltroSemestreExpectedValues validacionTextoFiltroSemestreExpectedValues
+        {
+            get
+            {
+                if ((this.mvalidacionTextoFiltroSemestreExpectedValues == null))
+                {
+                    this.mvalidacionTextoFiltroSemestreExpectedValues = new validacionTextoFiltroSemestreExpectedValues();
+                }
+                return this.mvalidacionTextoFiltroSemestreExpectedValues;
+            }
+        }
+        
+        public virtual validacionTextoFiltroAnnoExpectedValues validacionTextoFiltroAnnoExpectedValues
+        {
+            get
+            {
+                if ((this.mvalidacionTextoFiltroAnnoExpectedValues == null))
+                {
+                    this.mvalidacionTextoFiltroAnnoExpectedValues = new validacionTextoFiltroAnnoExpectedValues();
+                }
+                return this.mvalidacionTextoFiltroAnnoExpectedValues;
+            }
+        }
+        
+        public virtual loginUsuarioAFParams loginUsuarioAFParams
+        {
+            get
+            {
+                if ((this.mloginUsuarioAFParams == null))
+                {
+                    this.mloginUsuarioAFParams = new loginUsuarioAFParams();
+                }
+                return this.mloginUsuarioAFParams;
+            }
+        }
+        
+        public virtual validacionTextoFiltroUnidadAcademicaExpectedValues validacionTextoFiltroUnidadAcademicaExpectedValues
+        {
+            get
+            {
+                if ((this.mvalidacionTextoFiltroUnidadAcademicaExpectedValues == null))
+                {
+                    this.mvalidacionTextoFiltroUnidadAcademicaExpectedValues = new validacionTextoFiltroUnidadAcademicaExpectedValues();
+                }
+                return this.mvalidacionTextoFiltroUnidadAcademicaExpectedValues;
+            }
+        }
+        
+        public virtual validacionTextoFiltroCarreraExpectedValues validacionTextoFiltroCarreraExpectedValues
+        {
+            get
+            {
+                if ((this.mvalidacionTextoFiltroCarreraExpectedValues == null))
+                {
+                    this.mvalidacionTextoFiltroCarreraExpectedValues = new validacionTextoFiltroCarreraExpectedValues();
+                }
+                return this.mvalidacionTextoFiltroCarreraExpectedValues;
+            }
+        }
+        
+        public virtual validacionTextoFiltroCursoExpectedValues validacionTextoFiltroCursoExpectedValues
+        {
+            get
+            {
+                if ((this.mvalidacionTextoFiltroCursoExpectedValues == null))
+                {
+                    this.mvalidacionTextoFiltroCursoExpectedValues = new validacionTextoFiltroCursoExpectedValues();
+                }
+                return this.mvalidacionTextoFiltroCursoExpectedValues;
             }
         }
         
@@ -182,6 +443,24 @@ namespace Opiniometro_WebAppUITest
         private PruebaIntentoCrearPreguntaParams mPruebaIntentoCrearPreguntaParams;
         
         private DespliegueDescripcionComentarioParams mDespliegueDescripcionComentarioParams;
+        
+        private IngresoAsignacionFormulariosParams mIngresoAsignacionFormulariosParams;
+        
+        private validacionTituloAsignacionFormulariosExpectedValues mvalidacionTituloAsignacionFormulariosExpectedValues;
+        
+        private InicializarExploradorParams mInicializarExploradorParams;
+        
+        private validacionTextoFiltroSemestreExpectedValues mvalidacionTextoFiltroSemestreExpectedValues;
+        
+        private validacionTextoFiltroAnnoExpectedValues mvalidacionTextoFiltroAnnoExpectedValues;
+        
+        private loginUsuarioAFParams mloginUsuarioAFParams;
+        
+        private validacionTextoFiltroUnidadAcademicaExpectedValues mvalidacionTextoFiltroUnidadAcademicaExpectedValues;
+        
+        private validacionTextoFiltroCarreraExpectedValues mvalidacionTextoFiltroCarreraExpectedValues;
+        
+        private validacionTextoFiltroCursoExpectedValues mvalidacionTextoFiltroCursoExpectedValues;
         
         private UIStartWindow mUIStartWindow;
         
@@ -253,6 +532,166 @@ namespace Opiniometro_WebAppUITest
         /// Type 'Despliegue' in 'EtiquetaObservacion' text box
         /// </summary>
         public string UIEtiquetaObservacionEdit1Text = "Despliegue";
+        #endregion
+    }
+    
+    /// <summary>
+    /// Parameters to be passed into 'IngresoAsignacionFormularios'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class IngresoAsignacionFormulariosParams
+    {
+        
+        #region Fields
+        /// <summary>
+        /// Select 'Administrador' in 'perfilSeleccionado' combo box
+        /// </summary>
+        public string UIPerfilSeleccionadoComboBoxSelectedItem = "Administrador";
+        #endregion
+    }
+    
+    /// <summary>
+    /// Parameters to be passed into 'validacionTituloAsignacionFormularios'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class validacionTituloAsignacionFormulariosExpectedValues
+    {
+        
+        #region Fields
+        /// <summary>
+        /// Verify that the 'TagName' property of 'Asignación de Formularios' pane equals 'DIV'
+        /// </summary>
+        public string UIAsignacióndeFormularPaneTagName = "DIV";
+        #endregion
+    }
+    
+    /// <summary>
+    /// Parameters to be passed into 'InicializarExplorador'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class InicializarExploradorParams
+    {
+        
+        #region Fields
+        /// <summary>
+        /// Go to web page 'http://www.google.com/' using new browser instance
+        /// </summary>
+        public string UIHomePageInternetExplWindowUrl = "http://www.google.com/";
+        
+        /// <summary>
+        /// Go to web page 'http://localhost/Opiniometro_WebApp'
+        /// </summary>
+        public string UIHomePageInternetExplWindowUrl1 = "http://localhost/Opiniometro_WebApp";
+        #endregion
+    }
+    
+    /// <summary>
+    /// Parameters to be passed into 'validacionTextoFiltroSemestre'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class validacionTextoFiltroSemestreExpectedValues
+    {
+        
+        #region Fields
+        /// <summary>
+        /// Verify that the 'Id' property of 'semestre' combo box equals 'semestre'
+        /// </summary>
+        public string UISemestreComboBoxId = "semestre";
+        #endregion
+    }
+    
+    /// <summary>
+    /// Parameters to be passed into 'validacionTextoFiltroAnno'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class validacionTextoFiltroAnnoExpectedValues
+    {
+        
+        #region Fields
+        /// <summary>
+        /// Verify that the 'Id' property of 'ano' combo box equals 'ano'
+        /// </summary>
+        public string UIAnoComboBoxId = "ano";
+        #endregion
+    }
+    
+    /// <summary>
+    /// Parameters to be passed into 'loginUsuarioAF'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class loginUsuarioAFParams
+    {
+        
+        #region Fields
+        /// <summary>
+        /// Type 'jose.mejiasrojas' in 'CorreoInstitucional' text box
+        /// </summary>
+        public string UICorreoInstitucionalEditText = "jose.mejiasrojas";
+        
+        /// <summary>
+        /// Type 'Alt, Control + q' in 'CorreoInstitucional' text box
+        /// </summary>
+        public string UICorreoInstitucionalEditSendKeys = "q";
+        
+        /// <summary>
+        /// Type 'jose.mejiasrojas@ucr.ac.cr' in 'CorreoInstitucional' text box
+        /// </summary>
+        public string UICorreoInstitucionalEditText1 = "jose.mejiasrojas@ucr.ac.cr";
+        
+        /// <summary>
+        /// Type '{Tab}' in 'CorreoInstitucional' text box
+        /// </summary>
+        public string UICorreoInstitucionalEditSendKeys1 = "{Tab}";
+        
+        /// <summary>
+        /// Type '********' in 'Contrasena' text box
+        /// </summary>
+        public string UIContrasenaEditPassword = "MTnqGLWWNjOWwjF8wGxtdQhZ43ocezNy";
+        #endregion
+    }
+    
+    /// <summary>
+    /// Parameters to be passed into 'validacionTextoFiltroUnidadAcademica'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class validacionTextoFiltroUnidadAcademicaExpectedValues
+    {
+        
+        #region Fields
+        /// <summary>
+        /// Verify that the 'Id' property of 'unidadAcademica' combo box equals 'unidadAcademica'
+        /// </summary>
+        public string UIUnidadAcademicaComboBoxId = "unidadAcademica";
+        #endregion
+    }
+    
+    /// <summary>
+    /// Parameters to be passed into 'validacionTextoFiltroCarrera'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class validacionTextoFiltroCarreraExpectedValues
+    {
+        
+        #region Fields
+        /// <summary>
+        /// Verify that the 'Id' property of 'siglaCarrera' combo box equals 'siglaCarrera'
+        /// </summary>
+        public string UISiglaCarreraComboBoxId = "siglaCarrera";
+        #endregion
+    }
+    
+    /// <summary>
+    /// Parameters to be passed into 'validacionTextoFiltroCurso'
+    /// </summary>
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class validacionTextoFiltroCursoExpectedValues
+    {
+        
+        #region Fields
+        /// <summary>
+        /// Verify that the 'Id' property of 'nombreCurso' combo box equals 'nombreCurso'
+        /// </summary>
+        public string UINombreCursoComboBoxId = "nombreCurso";
         #endregion
     }
     
@@ -581,6 +1020,18 @@ namespace Opiniometro_WebAppUITest
                 return this.mUIOpiniómetroUCRDocument3;
             }
         }
+        
+        public UIOpiniómetroUCRDocument4 UIOpiniómetroUCRDocument4
+        {
+            get
+            {
+                if ((this.mUIOpiniómetroUCRDocument4 == null))
+                {
+                    this.mUIOpiniómetroUCRDocument4 = new UIOpiniómetroUCRDocument4(this);
+                }
+                return this.mUIOpiniómetroUCRDocument4;
+            }
+        }
         #endregion
         
         #region Fields
@@ -595,6 +1046,8 @@ namespace Opiniometro_WebAppUITest
         private UIOpiniómetroUCRDocument11 mUIOpiniómetroUCRDocument11;
         
         private UIOpiniómetroUCRDocument3 mUIOpiniómetroUCRDocument3;
+        
+        private UIOpiniómetroUCRDocument4 mUIOpiniómetroUCRDocument4;
         #endregion
     }
     
@@ -663,12 +1116,37 @@ namespace Opiniometro_WebAppUITest
                 return this.mUIIngresarButton;
             }
         }
+        
+        public HtmlEdit UIContrasenaEdit
+        {
+            get
+            {
+                if ((this.mUIContrasenaEdit == null))
+                {
+                    this.mUIContrasenaEdit = new HtmlEdit(this);
+                    #region Search Criteria
+                    this.mUIContrasenaEdit.SearchProperties[HtmlEdit.PropertyNames.Id] = null;
+                    this.mUIContrasenaEdit.SearchProperties[HtmlEdit.PropertyNames.Name] = "Contrasena";
+                    this.mUIContrasenaEdit.SearchProperties[HtmlEdit.PropertyNames.LabeledBy] = null;
+                    this.mUIContrasenaEdit.SearchProperties[HtmlEdit.PropertyNames.Type] = "PASSWORD";
+                    this.mUIContrasenaEdit.FilterProperties[HtmlEdit.PropertyNames.Title] = null;
+                    this.mUIContrasenaEdit.FilterProperties[HtmlEdit.PropertyNames.Class] = "form-control";
+                    this.mUIContrasenaEdit.FilterProperties[HtmlEdit.PropertyNames.ControlDefinition] = "name=\"Contrasena\" class=\"form-control\" t";
+                    this.mUIContrasenaEdit.FilterProperties[HtmlEdit.PropertyNames.TagInstance] = "2";
+                    this.mUIContrasenaEdit.WindowTitles.Add("Opiniómetro@UCR");
+                    #endregion
+                }
+                return this.mUIContrasenaEdit;
+            }
+        }
         #endregion
         
         #region Fields
         private HtmlEdit mUICorreoInstitucionalEdit;
         
         private HtmlInputButton mUIIngresarButton;
+        
+        private HtmlEdit mUIContrasenaEdit;
         #endregion
     }
     
@@ -713,10 +1191,36 @@ namespace Opiniometro_WebAppUITest
                 return this.mUIAceptarButton;
             }
         }
+        
+        public HtmlComboBox UIPerfilSeleccionadoComboBox
+        {
+            get
+            {
+                if ((this.mUIPerfilSeleccionadoComboBox == null))
+                {
+                    this.mUIPerfilSeleccionadoComboBox = new HtmlComboBox(this);
+                    #region Search Criteria
+                    this.mUIPerfilSeleccionadoComboBox.SearchProperties[HtmlComboBox.PropertyNames.Id] = "perfilSeleccionado";
+                    this.mUIPerfilSeleccionadoComboBox.SearchProperties[HtmlComboBox.PropertyNames.Name] = "perfilSeleccionado";
+                    this.mUIPerfilSeleccionadoComboBox.FilterProperties[HtmlComboBox.PropertyNames.LabeledBy] = null;
+                    this.mUIPerfilSeleccionadoComboBox.FilterProperties[HtmlComboBox.PropertyNames.Size] = "0";
+                    this.mUIPerfilSeleccionadoComboBox.FilterProperties[HtmlComboBox.PropertyNames.Title] = null;
+                    this.mUIPerfilSeleccionadoComboBox.FilterProperties[HtmlComboBox.PropertyNames.ItemCount] = "3";
+                    this.mUIPerfilSeleccionadoComboBox.FilterProperties[HtmlComboBox.PropertyNames.Class] = "form-control";
+                    this.mUIPerfilSeleccionadoComboBox.FilterProperties[HtmlComboBox.PropertyNames.ControlDefinition] = "name=\"perfilSeleccionado\" class=\"form-co";
+                    this.mUIPerfilSeleccionadoComboBox.FilterProperties[HtmlComboBox.PropertyNames.TagInstance] = "1";
+                    this.mUIPerfilSeleccionadoComboBox.WindowTitles.Add("Opiniómetro@UCR");
+                    #endregion
+                }
+                return this.mUIPerfilSeleccionadoComboBox;
+            }
+        }
         #endregion
         
         #region Fields
         private HtmlInputButton mUIAceptarButton;
+        
+        private HtmlComboBox mUIPerfilSeleccionadoComboBox;
         #endregion
     }
     
@@ -824,12 +1328,39 @@ namespace Opiniometro_WebAppUITest
                 return this.mUIInsertarItemsHyperlink;
             }
         }
+        
+        public HtmlHyperlink UIAsignarformularioHyperlink
+        {
+            get
+            {
+                if ((this.mUIAsignarformularioHyperlink == null))
+                {
+                    this.mUIAsignarformularioHyperlink = new HtmlHyperlink(this);
+                    #region Search Criteria
+                    this.mUIAsignarformularioHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Id] = null;
+                    this.mUIAsignarformularioHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Name] = null;
+                    this.mUIAsignarformularioHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Target] = null;
+                    this.mUIAsignarformularioHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.InnerText] = "Asignar formulario";
+                    this.mUIAsignarformularioHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/AsignarFormularios";
+                    this.mUIAsignarformularioHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Title] = null;
+                    this.mUIAsignarformularioHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Href] = "http://localhost/Opiniometro_WebApp/AsignarFormularios";
+                    this.mUIAsignarformularioHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Class] = null;
+                    this.mUIAsignarformularioHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.ControlDefinition] = "href=\"/Opiniometro_WebApp/AsignarFormula";
+                    this.mUIAsignarformularioHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.TagInstance] = "16";
+                    this.mUIAsignarformularioHyperlink.WindowTitles.Add("Opiniómetro@UCR");
+                    #endregion
+                }
+                return this.mUIAsignarformularioHyperlink;
+            }
+        }
         #endregion
         
         #region Fields
         private HtmlHyperlink mUIEvaluacionesHyperlink;
         
         private HtmlHyperlink mUIInsertarItemsHyperlink;
+        
+        private HtmlHyperlink mUIAsignarformularioHyperlink;
         #endregion
     }
     
@@ -1016,6 +1547,183 @@ namespace Opiniometro_WebAppUITest
         private HtmlComboBox mUITieneObservacionComboBox;
         
         private HtmlEdit mUIEtiquetaObservacionEdit1;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class UIOpiniómetroUCRDocument4 : HtmlDocument
+    {
+        
+        public UIOpiniómetroUCRDocument4(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlDocument.PropertyNames.Id] = null;
+            this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
+            this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
+            this.FilterProperties[HtmlDocument.PropertyNames.Title] = "Opiniómetro@UCR";
+            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/AsignarFormularios";
+            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://localhost/Opiniometro_WebApp/AsignarFormularios";
+            this.WindowTitles.Add("Opiniómetro@UCR");
+            #endregion
+        }
+        
+        #region Properties
+        public HtmlDiv UIAsignacióndeFormularPane
+        {
+            get
+            {
+                if ((this.mUIAsignacióndeFormularPane == null))
+                {
+                    this.mUIAsignacióndeFormularPane = new HtmlDiv(this);
+                    #region Search Criteria
+                    this.mUIAsignacióndeFormularPane.SearchProperties[HtmlDiv.PropertyNames.Id] = null;
+                    this.mUIAsignacióndeFormularPane.SearchProperties[HtmlDiv.PropertyNames.Name] = null;
+                    this.mUIAsignacióndeFormularPane.FilterProperties[HtmlDiv.PropertyNames.InnerText] = "Asignación de Formularios";
+                    this.mUIAsignacióndeFormularPane.FilterProperties[HtmlDiv.PropertyNames.Title] = null;
+                    this.mUIAsignacióndeFormularPane.FilterProperties[HtmlDiv.PropertyNames.Class] = null;
+                    this.mUIAsignacióndeFormularPane.FilterProperties[HtmlDiv.PropertyNames.ControlDefinition] = null;
+                    this.mUIAsignacióndeFormularPane.FilterProperties[HtmlDiv.PropertyNames.TagInstance] = "4";
+                    this.mUIAsignacióndeFormularPane.WindowTitles.Add("Opiniómetro@UCR");
+                    #endregion
+                }
+                return this.mUIAsignacióndeFormularPane;
+            }
+        }
+        
+        public HtmlComboBox UISemestreComboBox
+        {
+            get
+            {
+                if ((this.mUISemestreComboBox == null))
+                {
+                    this.mUISemestreComboBox = new HtmlComboBox(this);
+                    #region Search Criteria
+                    this.mUISemestreComboBox.SearchProperties[HtmlComboBox.PropertyNames.Id] = "semestre";
+                    this.mUISemestreComboBox.SearchProperties[HtmlComboBox.PropertyNames.Name] = "semestre";
+                    this.mUISemestreComboBox.FilterProperties[HtmlComboBox.PropertyNames.LabeledBy] = null;
+                    this.mUISemestreComboBox.FilterProperties[HtmlComboBox.PropertyNames.Size] = "0";
+                    this.mUISemestreComboBox.FilterProperties[HtmlComboBox.PropertyNames.Title] = null;
+                    this.mUISemestreComboBox.FilterProperties[HtmlComboBox.PropertyNames.ItemCount] = "5";
+                    this.mUISemestreComboBox.FilterProperties[HtmlComboBox.PropertyNames.Class] = "btn btn-default dropdown-toggle";
+                    this.mUISemestreComboBox.FilterProperties[HtmlComboBox.PropertyNames.ControlDefinition] = "name=\"semestre\" class=\"btn btn-default d";
+                    this.mUISemestreComboBox.FilterProperties[HtmlComboBox.PropertyNames.TagInstance] = "1";
+                    this.mUISemestreComboBox.WindowTitles.Add("Opiniómetro@UCR");
+                    #endregion
+                }
+                return this.mUISemestreComboBox;
+            }
+        }
+        
+        public HtmlComboBox UIAnoComboBox
+        {
+            get
+            {
+                if ((this.mUIAnoComboBox == null))
+                {
+                    this.mUIAnoComboBox = new HtmlComboBox(this);
+                    #region Search Criteria
+                    this.mUIAnoComboBox.SearchProperties[HtmlComboBox.PropertyNames.Id] = "ano";
+                    this.mUIAnoComboBox.SearchProperties[HtmlComboBox.PropertyNames.Name] = "ano";
+                    this.mUIAnoComboBox.FilterProperties[HtmlComboBox.PropertyNames.LabeledBy] = null;
+                    this.mUIAnoComboBox.FilterProperties[HtmlComboBox.PropertyNames.Size] = "0";
+                    this.mUIAnoComboBox.FilterProperties[HtmlComboBox.PropertyNames.Title] = null;
+                    this.mUIAnoComboBox.FilterProperties[HtmlComboBox.PropertyNames.ItemCount] = "5";
+                    this.mUIAnoComboBox.FilterProperties[HtmlComboBox.PropertyNames.Class] = "btn btn-default dropdown-toggle";
+                    this.mUIAnoComboBox.FilterProperties[HtmlComboBox.PropertyNames.ControlDefinition] = "name=\"ano\" class=\"btn btn-default dropdo";
+                    this.mUIAnoComboBox.FilterProperties[HtmlComboBox.PropertyNames.TagInstance] = "2";
+                    this.mUIAnoComboBox.WindowTitles.Add("Opiniómetro@UCR");
+                    #endregion
+                }
+                return this.mUIAnoComboBox;
+            }
+        }
+        
+        public HtmlComboBox UIUnidadAcademicaComboBox
+        {
+            get
+            {
+                if ((this.mUIUnidadAcademicaComboBox == null))
+                {
+                    this.mUIUnidadAcademicaComboBox = new HtmlComboBox(this);
+                    #region Search Criteria
+                    this.mUIUnidadAcademicaComboBox.SearchProperties[HtmlComboBox.PropertyNames.Id] = "unidadAcademica";
+                    this.mUIUnidadAcademicaComboBox.SearchProperties[HtmlComboBox.PropertyNames.Name] = "unidadAcademica";
+                    this.mUIUnidadAcademicaComboBox.FilterProperties[HtmlComboBox.PropertyNames.LabeledBy] = null;
+                    this.mUIUnidadAcademicaComboBox.FilterProperties[HtmlComboBox.PropertyNames.Size] = "0";
+                    this.mUIUnidadAcademicaComboBox.FilterProperties[HtmlComboBox.PropertyNames.Title] = null;
+                    this.mUIUnidadAcademicaComboBox.FilterProperties[HtmlComboBox.PropertyNames.ItemCount] = "3";
+                    this.mUIUnidadAcademicaComboBox.FilterProperties[HtmlComboBox.PropertyNames.Class] = "btn btn-default dropdown-toggle";
+                    this.mUIUnidadAcademicaComboBox.FilterProperties[HtmlComboBox.PropertyNames.ControlDefinition] = "name=\"unidadAcademica\" class=\"btn btn-de";
+                    this.mUIUnidadAcademicaComboBox.FilterProperties[HtmlComboBox.PropertyNames.TagInstance] = "3";
+                    this.mUIUnidadAcademicaComboBox.WindowTitles.Add("Opiniómetro@UCR");
+                    #endregion
+                }
+                return this.mUIUnidadAcademicaComboBox;
+            }
+        }
+        
+        public HtmlComboBox UISiglaCarreraComboBox
+        {
+            get
+            {
+                if ((this.mUISiglaCarreraComboBox == null))
+                {
+                    this.mUISiglaCarreraComboBox = new HtmlComboBox(this);
+                    #region Search Criteria
+                    this.mUISiglaCarreraComboBox.SearchProperties[HtmlComboBox.PropertyNames.Id] = "siglaCarrera";
+                    this.mUISiglaCarreraComboBox.SearchProperties[HtmlComboBox.PropertyNames.Name] = "siglaCarrera";
+                    this.mUISiglaCarreraComboBox.FilterProperties[HtmlComboBox.PropertyNames.LabeledBy] = null;
+                    this.mUISiglaCarreraComboBox.FilterProperties[HtmlComboBox.PropertyNames.Size] = "0";
+                    this.mUISiglaCarreraComboBox.FilterProperties[HtmlComboBox.PropertyNames.Title] = null;
+                    this.mUISiglaCarreraComboBox.FilterProperties[HtmlComboBox.PropertyNames.ItemCount] = "4";
+                    this.mUISiglaCarreraComboBox.FilterProperties[HtmlComboBox.PropertyNames.Class] = "btn btn-default dropdown-toggle";
+                    this.mUISiglaCarreraComboBox.FilterProperties[HtmlComboBox.PropertyNames.ControlDefinition] = "name=\"siglaCarrera\" class=\"btn btn-defau";
+                    this.mUISiglaCarreraComboBox.FilterProperties[HtmlComboBox.PropertyNames.TagInstance] = "4";
+                    this.mUISiglaCarreraComboBox.WindowTitles.Add("Opiniómetro@UCR");
+                    #endregion
+                }
+                return this.mUISiglaCarreraComboBox;
+            }
+        }
+        
+        public HtmlComboBox UINombreCursoComboBox
+        {
+            get
+            {
+                if ((this.mUINombreCursoComboBox == null))
+                {
+                    this.mUINombreCursoComboBox = new HtmlComboBox(this);
+                    #region Search Criteria
+                    this.mUINombreCursoComboBox.SearchProperties[HtmlComboBox.PropertyNames.Id] = "nombreCurso";
+                    this.mUINombreCursoComboBox.SearchProperties[HtmlComboBox.PropertyNames.Name] = "nombreCurso";
+                    this.mUINombreCursoComboBox.FilterProperties[HtmlComboBox.PropertyNames.LabeledBy] = null;
+                    this.mUINombreCursoComboBox.FilterProperties[HtmlComboBox.PropertyNames.Size] = "0";
+                    this.mUINombreCursoComboBox.FilterProperties[HtmlComboBox.PropertyNames.Title] = null;
+                    this.mUINombreCursoComboBox.FilterProperties[HtmlComboBox.PropertyNames.ItemCount] = "10";
+                    this.mUINombreCursoComboBox.FilterProperties[HtmlComboBox.PropertyNames.Class] = "btn btn-default dropdown-toggle";
+                    this.mUINombreCursoComboBox.FilterProperties[HtmlComboBox.PropertyNames.ControlDefinition] = "name=\"nombreCurso\" class=\"btn btn-defaul";
+                    this.mUINombreCursoComboBox.FilterProperties[HtmlComboBox.PropertyNames.TagInstance] = "5";
+                    this.mUINombreCursoComboBox.WindowTitles.Add("Opiniómetro@UCR");
+                    #endregion
+                }
+                return this.mUINombreCursoComboBox;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private HtmlDiv mUIAsignacióndeFormularPane;
+        
+        private HtmlComboBox mUISemestreComboBox;
+        
+        private HtmlComboBox mUIAnoComboBox;
+        
+        private HtmlComboBox mUIUnidadAcademicaComboBox;
+        
+        private HtmlComboBox mUISiglaCarreraComboBox;
+        
+        private HtmlComboBox mUINombreCursoComboBox;
         #endregion
     }
 }
