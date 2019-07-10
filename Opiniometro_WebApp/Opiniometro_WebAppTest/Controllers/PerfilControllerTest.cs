@@ -18,5 +18,44 @@ namespace Opiniometro_WebAppTest.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
+
+
+        [TestMethod]
+        public void TestListaPerfiles()
+        {
+            // Arrange
+            PerfilController controller = new PerfilController();
+            // Act
+            ViewResult result = controller.VerPerfiles(null) as ViewResult;
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void TestFiltroListaPerfiles()
+        {
+            // Arrange
+            PerfilController controller = new PerfilController();
+            // Act
+            ViewResult result = controller.VerPerfiles("admin") as ViewResult;
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+
+
+        [TestMethod]
+        public void TestDetallesPerfiles()
+        {
+            // Arrange
+            PerfilController controller = new PerfilController();
+            // Act
+            ViewResult result = controller.Detalles("Administrador") as ViewResult;
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+
+
     }
 }

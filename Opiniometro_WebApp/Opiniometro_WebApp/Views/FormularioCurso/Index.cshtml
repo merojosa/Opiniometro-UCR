@@ -57,9 +57,9 @@
 
     @* Para mostrar que se recuperan los datos *@
 
-    <table class="table table-responsive" align="center" border="1" style="border-color: black; width:1400px;" >
+    <table class="table table-responsive" align="center" border="1" style="border-color: black; width:1400px;">
         @*titulo de formulario*@
-        <tr  bgcolor="#EDE6E4" align="center">
+        <tr bgcolor="#EDE6E4" align="center">
             <td><b><font color="#000000"><h2><b>Formulario</b> </h2></font></b></td>
         </tr>
 
@@ -68,81 +68,86 @@
             <td>
                 @foreach (var seccion in Model.Secciones)
                 {
-                    //secciones del formulario
-                    <table>
-                        <tr>
-                            <td>
-                                <h3><label>  @seccion.Titulo </label></h3>
-                                <hr style="width: 800px; border-color:darkgray" />
-                                <br>
-                            </td>
-                        </tr>
-                    </table>
-                    foreach (var pregunta in seccion.PreguntasFormulario)
-                    {
-                        <label>&nbsp @pregunta.item (tipo: @pregunta.tipoPregunta)</label>
-                        <br>
-
-                        //pregunta de texto libre
-                        if (pregunta.tipoPregunta == 1)
-                        {
-                            <textarea name="textarea" rows="5" cols="50" maxlength="495">
-                            </textarea>
-                            <br />
-                        }
-
-                        // pregunta seleccion unica
-                        else if (pregunta.tipoPregunta == 2)
-                        {
-                            if (pregunta.Opciones != null) //IMPORTANTE
-                            {
-                                foreach (var opcion in pregunta.Opciones)
-                                {
-                                    <label>&nbsp &nbsp @opcion</label>
+                <div class="seccion">
+                    <label class="titulo" style="display:none">@seccion.Titulo</label>
+                    @{
+                        //secciones del formulario
+                        <table>
+                            <tr>
+                                <td>
+                                    <h3><label>  @seccion.Titulo </label></h3>
+                                    <hr style="width: 800px; border-color:darkgray" />
                                     <br>
+                                </td>
+                            </tr>
+                        </table>
+                        foreach (var pregunta in seccion.PreguntasFormulario)
+                        {
+                            <div class="pregunta">
+
+                                <label class="tipo" style="display:none">@pregunta.tipoPregunta</label>
+                                <label class="id-bd" style="display:none">@pregunta.itemId</label>
+
+                                @{
+                                    <label>@pregunta.numPregunta .&nbsp @pregunta.item (tipo: @pregunta.tipoPregunta)</label>
+                                    <br>
+
+                                    //pregunta de texto libre
+
+
+                                    if (pregunta.tipoPregunta == 1)
+                                    {
+                                        <textarea class="respuesta" name="textarea" rows="5" cols="50" maxlength="495">
+                            </textarea>
+                                        <br />
+                                    }
+
+                                   
+                                        // pregunta seleccion unica
+                                        else if (pregunta.tipoPregunta == 2 || (pregunta.tipoPregunta == 3))
+                                         if (pregunta.Opciones != null) //IMPORTANTE
+                                        {
+
+                                            foreach (var opcion in pregunta.Opciones)
+                                            {
+                                                <input class="respuesta" type="radio" name=@pregunta.numPregunta value=opcion>
+                                                <label class="contenido-opcion">&nbsp &nbsp @opcion</label>
+                                                <br />
+                                            }
+
 
                                 }
                             }
 
-                            if (pregunta.tieneObservacion == true)
-                            {
-                                <label> Observaciones:</label><br />
-                                <textarea name="textarea" rows="5" cols="50" maxlength="495">
+                                            if (pregunta.tieneObservacion == true)
+                                            {
+                                                <label> Observaciones:</label><br />
+                                                <textarea name="textarea" rows="5" cols="50" maxlength="495">
                                 </textarea>
-                                <br />
-                            }
-                        }
+                                                <br />
+                                            }
+                                        }
 
-                        //pregunta...
-                        if (pregunta.tipoPregunta == 3)
-                        {
+                                        //opcion multiple
+                                        else if (pregunta.tipoPregunta == 4)
+                                        {
+                                            foreach (var opcion in pregunta.Opciones)
+                                            {
+                                                <input class="respuesta" type="checkbox" name=@pregunta.itemId value=opcion>
+                                                <label>&nbsp &nbsp @opcion</label>
+                                                <br />
+                                            }
 
-                            //...
 
-                            if (pregunta.tieneObservacion == true)
-                            {
-                                <label> Observaciones:</label><br />
-                                <textarea name="textarea" rows="5" cols="50" maxlength="495">
+                                            if (pregunta.tieneObservacion == true)
+                                            {
+                                                <label> Observaciones:</label><br />
+                                                <textarea name="textarea" rows="5" cols="50" maxlength="495">
                                 </textarea>
-                                <br />
-                            }
+                                                <br />
+                                            }
 
-                        }
-
-                        //pregunta...
-                        else if (pregunta.tipoPregunta == 4)
-                        {
-                            //...
-
-                            if (pregunta.tieneObservacion == true)
-                            {
-                                <label> Observaciones:</label><br />
-                                <textarea name="textarea" rows="5" cols="50" maxlength="495">
-                                </textarea>
-                                <br />
-                            }
-
-                        }
+                                        }
 
 
                         //pregunta Escalar
@@ -165,13 +170,13 @@
                                 <label> Observaciones:</label><br />
                                 <textarea name="textarea" rows="5" cols="50" maxlength="495">
                                 </textarea>
-                                <br />
-                            }
+                                                <br />
+                                            }
 
-                        }
+                                        }
 
                         //pregunta Escalar tipo Estrella
-                        if (pregunta.tipoPregunta == 6)
+                        else if (pregunta.tipoPregunta == 6)
                         {
 
                             if (pregunta.Opciones != null)
@@ -193,81 +198,87 @@
                                 <label> Observaciones:</label><br />
                                 <textarea name="textarea" rows="5" cols="50" maxlength="495">
                                 </textarea>
-                                <br />
-                            }
+                                                <br />
+                                            }
+
+                                        }
+
+                                    }
+                                }
+                            </div>
+                            <hr style="width:50%;" align="left" />
+                            <br />
 
                         }
-                        <hr style="width:50%;" align="left" />
-                        <br />
-
                     }
+                </div>
                 }
             </td>
         </tr>
     </table>
 
-        @*
-            <table class="table table-responsive" align="center" border="1">
-                <tr id="pyr" bgcolor="#FFFFFF" align="center">
-                    <td><b><font color="#000000"><h3><b>Formulario</b> </h3></font></b></td>
-                </tr>
-                <tr bgcolor="#FFFFFF" align="left">
-                    <td>
-                        <table class="table table-responsive" border="1" >
-                           <tr bgcolor="#FFFFFF" >
-                                <td>
+    @*
+        <table class="table table-responsive" align="center" border="1">
+            <tr id="pyr" bgcolor="#FFFFFF" align="center">
+                <td><b><font color="#000000"><h3><b>Formulario</b> </h3></font></b></td>
+            </tr>
+            <tr bgcolor="#FFFFFF" align="left">
+                <td>
+                    <table class="table table-responsive" border="1" >
+                       <tr bgcolor="#FFFFFF" >
+                            <td>
 
-            @foreach (var dato in Model.preguntasFormulario)
+        @foreach (var dato in Model.preguntasFormulario)
+        {
+            if (dato.tipoPregunta == 1)
             {
-                if (dato.tipoPregunta == 1)
-                {
-                    <div id="preguntaTextoLibre" class="pregunta">
-                    </div>
+                <div id="preguntaTextoLibre" class="pregunta">
+                </div>
 
 
-                    <script type="text/javascript">
-                        crearElemento("campoTexto", contTextoLibre, @Html.Raw(Json.Encode(dato.item)) , "preguntaTextoLibre");
-                        insertNueLinea("campoTexto".concat(contTextoLibre));
-                        TextoLibre(contTextoLibre);
-                        lineaHor("campoTexto".concat(contTextoLibre));
-                        contTextoLibre++;
-                    </script>
-                }
+                <script type="text/javascript">
+                    crearElemento("campoTexto", contTextoLibre, @Html.Raw(Json.Encode(dato.item)) , "preguntaTextoLibre");
+                    insertNueLinea("campoTexto".concat(contTextoLibre));
+                    TextoLibre(contTextoLibre);
+                    lineaHor("campoTexto".concat(contTextoLibre));
+                    contTextoLibre++;
+                </script>
+            }
 
-                if (dato.tipoPregunta == 2)
-                {
+            if (dato.tipoPregunta == 2)
+            {
 
-                    <script>
-                        crearElemento("selUnica", contSelUnica, @Html.Raw(Json.Encode(dato.item)), "preguntaSelUnica");
-                        insertNueLinea("selUnica".concat(contSelUnica));
-                        //seleccionUnica(contSelUnica/*, listaOpciones*/ );
-                        lineaHor("selUnica".concat(contSelUnica));
-                        contSelUnica++;
-                    </script>
+                <script>
+                    crearElemento("selUnica", contSelUnica, @Html.Raw(Json.Encode(dato.item)), "preguntaSelUnica");
+                    insertNueLinea("selUnica".concat(contSelUnica));
+                    //seleccionUnica(contSelUnica/*, listaOpciones*/ );
+                    lineaHor("selUnica".concat(contSelUnica));
+                    contSelUnica++;
+                </script>
 
-                    <div id="preguntaSelUnica" class="pregunta">
+                <div id="preguntaSelUnica" class="pregunta">
 
-                    </div>
+                </div>
 
-                    //Campo de observacion de la opcion de seleccion unica
-                    //if (dato.tieneObservacion == true) {
-                    //        <script>
-                    //            TextoLibre();
-                    //        </script>
-                    //}
-                }
+                //Campo de observacion de la opcion de seleccion unica
+                //if (dato.tieneObservacion == true) {
+                //        <script>
+                //            TextoLibre();
+                //        </script>
+                //}
+            }
 
-                if (dato.tipoPregunta == 3)
-                {
-                    <div id="preguntaSiNo" class="pregunta"> </div>
+            if (dato.tipoPregunta == 3)
+            {
+                <div id="preguntaSiNo" class="pregunta"> </div>
 
-                    <script>
-                        crearElemento("SiNo", contSiNo, @Html.Raw(Json.Encode(dato.item)), "preguntaSiNo");
-                        insertNueLinea("SiNo".concat(contSiNo));
-                        RespondeSiNo(contSiNo);
-                        lineaHor("SiNo".concat(contSiNo));
-                        contSiNo++;
-                    </script>
+                <script>
+                    crearElemento("SiNo", contSiNo, @Html.Raw(Json.Encode(dato.item)), "preguntaSiNo");
+                    insertNueLinea("SiNo".concat(contSiNo));
+                    RespondeSiNo(contSiNo);
+                    lineaHor("SiNo".concat(contSiNo));
+                    contSiNo++;
+                </script>
 
                                }
                                if (dato.tipoPregunta == 5)
@@ -287,13 +298,13 @@
 
                                }
 
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        *@
-
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    *@
+    <button onclick="recolectarRespuestas()">Enviar</button>
 </body>
 </html>

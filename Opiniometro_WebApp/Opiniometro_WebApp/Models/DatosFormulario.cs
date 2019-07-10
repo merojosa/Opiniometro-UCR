@@ -8,6 +8,7 @@ namespace Opiniometro_WebApp.Models
 {
     public class Pregunta
     {
+        public int numPregunta { set; get; }
         public string itemId { set; get; }
         public string item { set; get; }
         public bool? tieneObservacion { get; set; }

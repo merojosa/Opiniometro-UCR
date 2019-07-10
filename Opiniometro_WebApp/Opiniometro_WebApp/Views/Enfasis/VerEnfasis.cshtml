@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "VerEnfasis";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Enfasis existentes</h2>
+
+<table class="table" style="width: 900px">
+    <tr>
+        <th>
+            Nombre de unidad académica
+        </th>
+
+        <th>
+            Nombre de Carrera
+        </th>
+
+        <th>
+            Codigo de Carrera
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.unidad.Nombre
+            </td>
+
+            <td>
+                @item.carrera.Nombre
+            </td>
+
+            <td>
+                @item.carrera.Sigla
+            </td>
+        </tr>
+    }
+
+</table>
