@@ -209,7 +209,6 @@
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\CursosMatriculadosController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
-    <Compile Include="Controllers\SeleccionFormulariosController.cs" />
     <Compile Include="Controllers\SeleccionPermisosController.cs" />
     <Compile Include="Controllers\Servicios\IdPermiso.cs" />
     <Compile Include="Controllers\Servicios\IdentidadManager.cs" />
@@ -299,7 +298,6 @@
     <Compile Include="Models\MostrarEstudiantes_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MSreplication_options.cs" />
     <Compile Include="Models\ObtenerPerfilesUsuario_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
