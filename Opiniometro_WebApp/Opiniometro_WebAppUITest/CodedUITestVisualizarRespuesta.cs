@@ -16,15 +16,18 @@ namespace Opiniometro_WebAppUITest
     /// Summary description for CodedUITest1
     /// </summary>
     [CodedUITest]
-    public class CodedUITest1
+    public class CodedUITestVisualizarRespuesta
     {
-        public CodedUITest1()
+        public CodedUITestVisualizarRespuesta()
         {
         }
 
         [TestMethod]
-        public void CodedUITestMethod1()
+        public void CodedUITestMethodVerGraficoPie()
         {
+            this.UIMap.IngresarAlFormulario();
+            this.UIMap.DespliegueDeItemCorrecto();
+            this.UIMap.GráficoExiste();
             // To generate code for this test, select "Generate Code for Coded UI Test" from the shortcut menu and select one of the menu items.
         }
 
@@ -33,11 +36,13 @@ namespace Opiniometro_WebAppUITest
         // You can use the following additional attributes as you write your tests:
 
         ////Use TestInitialize to run code before running each test 
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{        
-        //    // To generate code for this test, select "Generate Code for Coded UI Test" from the shortcut menu and select one of the menu items.
-        //}
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            BrowserWindow.CurrentBrowser = "ie";
+            this.UIMap.InicializarExplorador();
+            // To generate code for this test, select "Generate Code for Coded UI Test" from the shortcut menu and select one of the menu items.
+        }
 
         ////Use TestCleanup to run code after each test has run
         //[TestCleanup()]

@@ -239,9 +239,6 @@ namespace Opiniometro_WebApp.Controllers
         [HttpGet]
         private ObjectResult<SP_ContarRespuestasPorGrupo_Result> ObtenerCantidadRespuestasPorPregunta(string codigoFormulario, string cedulaProfesor, short? annoGrupo, byte? semestreGrupo, byte? numeroGrupo, string siglaCurso, string itemId)
         {
-            //var result = ((IObjectContextAdapter)this).ObjectContext.TransactionHandler.ExecuteFunction<SP_ContarRespuestasPorGrupo_Result>("SP_ContarRespuestasPorGrupo", codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
-
-            //db.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, "EXEC SP_ContarRespuestasPorGrupo @codigoFormulario, @cedulaProfesor, @annoGrupo, @semestreGrupo, @numeroGrupo, @siglaCurso, @itemId", codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
             var result = db.SP_ContarRespuestasPorGrupo(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
             return result;
         }
@@ -303,10 +300,10 @@ namespace Opiniometro_WebApp.Controllers
                 int inicio = rango[0].Inicio;
                 int final = rango[0].Fin;
                 int incremento = rango[0].Incremento;
-                bool encontrado;
+                bool encontrado = false;
                 for (int i = inicio; i <= (final+1); i += incremento)
                 {
-                    encontrado = true;
+                    encontrado = false;
                     if (i == final + 1)
                     {
                         x.Add("No se/No Responde/No Aplica");

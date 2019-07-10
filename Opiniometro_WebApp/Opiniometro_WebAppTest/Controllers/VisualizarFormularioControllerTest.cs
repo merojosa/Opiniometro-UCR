@@ -78,5 +78,13 @@ namespace Opiniometro_WebAppTest.Controllers
         {
 
         }
+
+        [TestMethod]
+        public void ListasNotNull()
+        {
+            VisualizarFormularioController controller = new VisualizarFormularioController();
+            var result = controller.GraficoPie("131313", "100000002", 2017, 2, 1, "CI1330", "PRE303", 3);
+            Assert.IsNotNull(result);
+        }
     }
 }
