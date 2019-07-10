@@ -522,20 +522,6 @@ values('DE1007',4,2019,1,'123789',18-06-19 ,28-06-19 )
 insert into Fecha_Corte(FechaInicio,FechaFinal)
 values (18-06-19, 28-06-19)
 
-insert into Conformado_Item_Sec_Form(ItemId,CodigoFormulario,TituloSeccion,NombreFormulario)
-values ('PRE101','131313','Opinion general del curso','Evaluación de Profesores');
-
-insert into Conformado_Item_Sec_Form(ItemId,CodigoFormulario,TituloSeccion,NombreFormulario)
-values ('PRE202','131313','Opinion general del curso','Evaluación de Profesores');
-
-insert into Conformado_Item_Sec_Form(ItemId,CodigoFormulario,TituloSeccion,NombreFormulario)
-values ('PRE303','131313','Opinion general del curso','Evaluación de Profesores');
-
-insert into Conformado_Item_Sec_Form(ItemId,CodigoFormulario,TituloSeccion,NombreFormulario)
-values ('PRE808','131313','Evaluación de aspectos reglamentarios del profesor','Evaluación de Profesores');
-
-insert into Conformado_Item_Sec_Form(ItemId,CodigoFormulario,TituloSeccion,NombreFormulario)
-values ('WE300','131313','Evaluación de aspectos reglamentarios del profesor','Evaluación de Profesores');
 
 --DROP PROCEDURE CursosSegunCarrera
 --Obtiene la lista de cursos que pertenecen a cierta carrera
