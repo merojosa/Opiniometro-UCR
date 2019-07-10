@@ -17,6 +17,14 @@ namespace Opiniometro_WebApp.Controllers
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
+        public CursosMatriculadosController()
+        {
+            db = new Opiniometro_DatosEntities();
+        }
+        public CursosMatriculadosController(Opiniometro_DatosEntities db) {
+            this.db = db;
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -26,7 +34,7 @@ namespace Opiniometro_WebApp.Controllers
             {
                 gruposMatriculado = ObtenerGrupoMatriculado( obtenerCedulaEstLoggeado(IdentidadManager.obtener_correo_actual()) , ciclo(fecha.Month), fecha.Year )
             };
-            return View(modelo);
+            return View("Index",modelo);
         }
 
         /// <summary>

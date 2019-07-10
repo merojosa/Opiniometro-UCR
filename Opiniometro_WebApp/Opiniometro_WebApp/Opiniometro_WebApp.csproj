@@ -205,6 +205,7 @@
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\CursosMatriculadosController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
+    <Compile Include="Controllers\SeleccionFormulariosController.cs" />
     <Compile Include="Controllers\SeleccionPermisosController.cs" />
     <Compile Include="Controllers\Servicios\IdPermiso.cs" />
     <Compile Include="Controllers\Servicios\IdentidadManager.cs" />
@@ -290,6 +291,7 @@
     <Compile Include="Models\MostrarEstudiantes_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MSreplication_options.cs" />
     <Compile Include="Models\ObtenerPerfilesUsuario_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -405,6 +407,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\scrollbar-tabla.css" />
     <Content Include="Content\Formulario.css" />
+    <Content Include="Content\TablasHTML\FixedHeaderTable.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -419,6 +422,7 @@
       <DependentUpon>Opiniometro_Model.edmx</DependentUpon>
       <LastGenOutput>Opiniometro_Model.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\AsignarFormularios.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\Opiniometro_Model.edmx">
@@ -439,6 +443,8 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -532,6 +538,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
+    <Folder Include="Views\LogInPerfiles\" />
+    <Folder Include="Views\Opciones_De_Respuestas_Seleccion_Unica\" />
     <Folder Include="Views\SeleccionFormularios\" />
     <Folder Include="Views\Seleccion_Unica\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
