@@ -16,12 +16,25 @@ namespace Opiniometro_WebAppTest.Controllers
     {
         [TestMethod]
         public void EditIsNotNull()
-        {
-            //Arrange
+        {          
             AdministradorController controller = new AdministradorController();
-            //Act
             ViewResult result = controller.Editar("116720500") as ViewResult;
-            //Assert
+            Assert.IsNotNull(result, "Null");
+        }
+
+        [TestMethod]
+        public void TestVerPersonasNotNull()
+        {
+            AdministradorController controller = new AdministradorController();
+            ViewResult result = controller.VerPersonas("","") as ViewResult;
+            Assert.IsNotNull(result, "Null");
+        }
+
+        [TestMethod]
+        public void TestCrearUsuarioNotNull()
+        {
+            AdministradorController controller = new AdministradorController();
+            ViewResult result = controller.CrearUsuario() as ViewResult;
             Assert.IsNotNull(result, "Null");
         }
     }
