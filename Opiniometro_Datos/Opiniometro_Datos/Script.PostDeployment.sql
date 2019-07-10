@@ -509,6 +509,34 @@ VALUES ('CI1330', 100, 'SC-01234'),
 	   ('DE1001', 12, 'SC-89457'),
 	   ('DE2001', 12, 'SC-89457');
 
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('123456', 'Evaluacion Derecho 1')
+
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('987654', 'Historia Der. 1')
+
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('123789', 'Form. Investigacion')
+
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('159753', 'Derecho Priv. 1')
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE1001',1,2019,1,'123456',18-06-19 ,28-06-19 )
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE2001',3,2019,1,'159753',18-06-19 ,28-06-19 )
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE1002',7,2019,1,'987654',18-06-19 ,28-06-19 )
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE1007',4,2019,1,'123789',18-06-19 ,28-06-19 )
+
+insert into Fecha_Corte(FechaInicio,FechaFinal)
+values (18-06-19, 28-06-19)
+
+
 --DROP PROCEDURE CursosSegunCarrera
 --Obtiene la lista de cursos que pertenecen a cierta carrera
 
@@ -557,6 +585,13 @@ WHERE C.Sigla IN (SELECT G.SiglaCurso
 				FROM Grupo G
 				WHERE G.AnnoGrupo = @anno)
 END
+GO
+
+-- Vista (SQL) de la tabla Imparte, para que pueda ser creada como entidad en el model
+CREATE VIEW Imparte_View
+AS
+SELECT *
+FROM Imparte
 GO
 
 
@@ -943,7 +978,7 @@ BEGIN
 	SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 	BEGIN TRANSACTION tc2
 	SET NOCOUNT ON
-	SELECT e.Observacion, a.Nombre, a.Apellido1, a.Apellido2
+	SELECT e.Observacion, a.Nombre1, a.Apellido1, a.Apellido2
 	FROM Responde as e, Persona as a
 	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId AND e.CedulaPersona = a.Cedula
 	COMMIT TRANSACTION tc2

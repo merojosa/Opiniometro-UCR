@@ -1,0 +1,14 @@
+﻿@*@model Opiniometro_WebApp.Models.FormularioPorCurso*@
+
+@{
+    ViewBag.Title = "Escalar";
+}
+
+@*<script src="~/Scripts/FormularioDelCurso.js"></script>*@
+
+<fieldset>
+    @foreach (var opcion in Model)
+    {
+        @*<br><input type="radio" name="rango" value="@opcion" id="@opcion"><label>@opcion</label>*@
+    }
+</fieldset>

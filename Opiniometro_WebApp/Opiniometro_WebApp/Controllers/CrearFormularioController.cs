@@ -53,7 +53,6 @@ namespace Opiniometro_WebApp.Controllers
                     .ThenBy(m => m.Orden_Seccion)
                     .ToList()
             }
-
         };
             
             return View(crearFormulario);
@@ -173,10 +172,23 @@ namespace Opiniometro_WebApp.Controllers
                     .ThenBy(m => m.Orden_Seccion)
                     .ToList()
             };
-     
+
             return PartialView(formularioVistaPrevia);
         }
 
+        public ActionResult SeleccionUnicaVParcial(String id)
+        {
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            VistaPreviaPreguntaModel vistaPrevia = new VistaPreviaPreguntaModel
+            {
+                Item = db.Item.Find(id),
+                Opciones = db.Opciones_De_Respuestas_Seleccion_Unica.Where(m => m.ItemId == id).ToList()
+            };
+            return PartialView(vistaPrevia);
+        }
         public ActionResult VistaPreviaPregunta(string id)
         {
             if (id == null)
