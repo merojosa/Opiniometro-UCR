@@ -144,6 +144,11 @@ namespace Opiniometro_WebApp.Controllers
                             int posicion = 0;
 
                             string[] rango = new string[(final - inicio) + 1];
+
+                            if(inicio == 0)
+                            {
+                                rango = new string[(final - inicio)];
+                            }
                             foreach (string r in rango)
                             {
                                 rango[posicion] = valor.ToString();
