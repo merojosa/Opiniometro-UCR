@@ -141,25 +141,26 @@ BEGIN
 	BEGIN
 		--DECLARE @CedulaBusqueda		CHAR(10) --modificar
 		DECLARE @Cedula				CHAR(10)
-		DECLARE @Nombre				NVARCHAR(51)
+		DECLARE @Nombre1			NVARCHAR(51)
+		DECLARE @Nombre2			NVARCHAR(51)
 		DECLARE @Apellido1			NVARCHAR(51)
 		DECLARE @Apellido2			NVARCHAR(51)
 		DECLARE @Direccion			NVARCHAR(257)
 		DECLARE @CedulaUpdate		CHAR(10)
 
 		SET @Cedula				= (SELECT Cedula FROM inserted)
-		SET @Nombre				= (SELECT Nombre FROM inserted)
+		SET @Nombre1			= (SELECT Nombre1 FROM inserted)
+		SET @Nombre2			= (SELECT Nombre2 FROM inserted)
 		SET @Apellido1			= (SELECT Apellido1 FROM inserted)
 		SET @Apellido2			= (SELECT Apellido2 FROM inserted)
-		SET @Direccion			= (SELECT Direccion FROM inserted)
 		SET @CedulaUpdate		= (SELECT Cedula FROM deleted)
 
 		BEGIN TRY
-			IF((@nombre IS NOT NULL) AND (@Apellido1 IS NOT NULL) AND (@Apellido2 IS NOT NULL) AND (@Direccion IS NOT NULL) 
-				AND (LEN(@Cedula) <= 9) AND (LEN(@Nombre) <= 50) AND (LEN(@Apellido1) <= 50) AND (LEN(@Apellido2) <= 50) AND (LEN(@Direccion) <= 256))
+			IF((@nombre1 IS NOT NULL) AND (@Apellido1 IS NOT NULL) AND (@Apellido2 IS NOT NULL) AND (LEN(@Cedula) <= 9) 
+				AND (LEN(@Nombre1) <= 50) AND (LEN(@Nombre2) <= 50) AND (LEN(@Apellido1) <= 50) AND (LEN(@Apellido2) <= 50))
 			BEGIN
 				UPDATE Persona
-				SET Cedula = @Cedula, Nombre = @Nombre, Apellido1 = @Apellido1, Apellido2 = @Apellido2, Direccion = @Direccion
+				SET Cedula = @Cedula, Nombre1 = @Nombre1, Nombre2 = @Nombre2, Apellido1 = @Apellido1, Apellido2 = @Apellido2
 				WHERE Cedula = @Cedula;
 
 				IF(@Cedula = @CedulaUpdate)
@@ -181,6 +182,7 @@ BEGIN
 		END CATCH
 	END
 END;
+GO
 
 --Trigger de validación de modificar Usuario
 IF OBJECT_ID('TR_ValidacionModificarUsuario') IS NOT NULL
@@ -227,9 +229,10 @@ BEGIN
 
 	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
 END;
+GO
 
 --Revisar
-/*IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
+IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
 	DROP TRIGGER TR_InsertaPersona
 GO
 CREATE TRIGGER TR_InsertaPersona
@@ -237,20 +240,20 @@ ON Persona INSTEAD OF INSERT
 AS
 BEGIN
 	DECLARE @cedula CHAR(10)
-	DECLARE @nombre NVARCHAR(51)
+	DECLARE @nombre1 NVARCHAR(51)
 	DECLARE @apellido1 NVARCHAR(51)
 	DECLARE @apellido2 NVARCHAR(51)
 	
 	SET @cedula = (SELECT Cedula FROM inserted)
-	SET @nombre = (SELECT Nombre FROM inserted)
+	SET @nombre1 = (SELECT Nombre1 FROM inserted)
 	SET @apellido1 = (SELECT Apellido1 FROM inserted)
 	SET @apellido2 = (SELECT Apellido2 FROM inserted)
 
 	BEGIN TRY
-	IF(@cedula IS NOT NULL AND @nombre IS NOT NULL AND @apellido1 IS NOT NULL AND @apellido2 IS NOT NULL  AND (LEN(@cedula) = 9) AND (LEN(@nombre) < 50) AND (LEN(@apellido1) < 50) AND (LEN(@apellido2) < 50))
+	IF(@cedula IS NOT NULL AND @nombre1 IS NOT NULL AND @apellido1 IS NOT NULL AND @apellido2 IS NOT NULL  AND (LEN(@cedula) = 9) AND (LEN(@nombre1) < 50) AND (LEN(@apellido1) < 50) AND (LEN(@apellido2) < 50))
 	BEGIN
-		INSERT INTO Persona (Cedula, Nombre, Apellido1, Apellido2)
-		VALUES (@cedula, @nombre, @apellido1, @apellido2)
+		INSERT INTO Persona (Cedula, Nombre1, Apellido1, Apellido2)
+		VALUES (@cedula, @nombre1, @apellido1, @apellido2)
 	END
 	ELSE
 	BEGIN
@@ -262,7 +265,8 @@ BEGIN
 	BEGIN CATCH 
 		PRINT 'ERROR: ' + ERROR_MESSAGE( );
 	END CATCH
-END;*/
+END;
+GO
 
 IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
@@ -377,7 +381,7 @@ as
 	WHERE CorreoInstitucional = @correo;
 go
 
-select * from Tiene_Usuario_Perfil_Enfasis
+/*select * from Tiene_Usuario_Perfil_Enfasis
 
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Test1')
@@ -385,7 +389,7 @@ VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Test1')
 INSERT INTO Perfil
 VALUES	('Test1', 'Perfil de prueba.')
 
-exec SP_ModificarPerfilUsuario @correo = 'jose.mejiasrojas@ucr.ac.cr', @perfil = 'Test1', @modifica = 0
+exec SP_ModificarPerfilUsuario @correo = 'jose.mejiasrojas@ucr.ac.cr', @perfil = 'Test1', @modifica = 0*/
 
 --Procedimiento almacenado de modificar (Poner o Quitar) Perfil a Usuario
 IF OBJECT_ID('SP_ModificarPerfilUsuario') IS NOT NULL
