@@ -2,20 +2,24 @@
 <nav class="navbar navbar-principal navbar-fixed-top" style="z-index:999">
     <div class="container-fluid">
         <ul class="navbar-header">
+            @*
+                HttpContext.Current.Request.ApplicationPath hace que se obtenga el url de la pagina principal,
+                tanto si es localhost:xxxxx como localhost/Opiniometro_WebApp.  Esto para que funcione en ambos casos.
+            *@
             @if (Request.Browser.Type.Contains("Firefox"))
             {
                 // Firefox se comporta distinto con los margenes.
                 <li style="height:105px; width: 570px; margin-left:30px; margin-top:-8px; overflow: hidden" text-align="center">
-                    <a class="navbar-brand-barra-login" href="/">
+                    <a class="navbar-brand-barra-login" href="@HttpContext.Current.Request.ApplicationPath">
                         <img src="~/Content/firma-ucr-c.svg" width="1100">
                     </a>
                 </li>
-               
+
             }
             else
             {
                 <li style="height:105px; width: 570px; margin-left:30px; margin-top:-25px; overflow: hidden" text-align="center">
-                    <a class="navbar-brand-barra-login" href="/">
+                    <a class="navbar-brand-barra-login" href="@HttpContext.Current.Request.ApplicationPath">
                         <img src="~/Content/firma-ucr-c.svg" width="1100">
                     </a>
                 </li>
