@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OpiniometroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Opiniometro_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__RefactorLog">
           <Key>
             <PropertyRef Name="OperationKey" />
@@ -1253,7 +1253,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="OpiniometroModelStoreContainer">
+        <EntityContainer Name="Opiniometro_ModelStoreContainer">
           <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
@@ -1500,7 +1500,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="OpiniometroModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Opiniometro_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="C__RefactorLog">
           <Key>
             <PropertyRef Name="OperationKey" />
@@ -3015,9 +3015,9 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="OpiniometroModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities">
+        <EntityContainerMapping StorageEntityContainer="Opiniometro_ModelStoreContainer" CdmEntityContainer="Opiniometro_DatosEntities">
           <EntitySetMapping Name="C__RefactorLog">
-            <EntityTypeMapping TypeName="OpiniometroModel.C__RefactorLog">
+            <EntityTypeMapping TypeName="Opiniometro_Model.C__RefactorLog">
               <MappingFragment StoreEntitySet="__RefactorLog">
                 <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
               </MappingFragment>
@@ -3510,17 +3510,17 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" FunctionName="OpiniometroModel.Store.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" />
-          <FunctionImportMapping FunctionImportName="SP_Insertar_Seccion" FunctionName="OpiniometroModel.Store.SP_Insertar_Seccion" />
-          <FunctionImportMapping FunctionImportName="SP_Insertar_Seleccion_Unica" FunctionName="OpiniometroModel.Store.SP_Insertar_Seleccion_Unica" />
-          <FunctionImportMapping FunctionImportName="SP_InsertaTablaPosee" FunctionName="OpiniometroModel.Store.SP_InsertaTablaPosee" />
-          <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="OpiniometroModel.Store.SP_LoginUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_ModificarPerfilUsuario" FunctionName="OpiniometroModel.Store.SP_ModificarPerfilUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="OpiniometroModel.Store.SP_ModificarPersona" />
-          <FunctionImportMapping FunctionImportName="SP_ObtenerCedula" FunctionName="OpiniometroModel.Store.SP_ObtenerCedula" />
-          <FunctionImportMapping FunctionImportName="SP_ObtenerFormulario" FunctionName="OpiniometroModel.Store.SP_ObtenerFormulario" />
-          <FunctionImportMapping FunctionImportName="SP_ObtenerNombre" FunctionName="OpiniometroModel.Store.SP_ObtenerNombre" />
-          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="OpiniometroModel.Store.SP_ObtenerPermisosUsuario">
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" />
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Seccion" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seccion" />
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seleccion_Unica" />
+          <FunctionImportMapping FunctionImportName="SP_InsertaTablaPosee" FunctionName="Opiniometro_Model.Store.SP_InsertaTablaPosee" />
+          <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_Model.Store.SP_LoginUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_ModificarPerfilUsuario" FunctionName="Opiniometro_Model.Store.SP_ModificarPerfilUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_Model.Store.SP_ModificarPersona" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerCedula" FunctionName="Opiniometro_Model.Store.SP_ObtenerCedula" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerFormulario" FunctionName="Opiniometro_Model.Store.SP_ObtenerFormulario" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerNombre" FunctionName="Opiniometro_Model.Store.SP_ObtenerNombre" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_Model.Store.SP_ObtenerPermisosUsuario">
             <ResultMapping>
               <ComplexTypeMapping TypeName="OpiniometroModel.SP_ObtenerPermisosUsuario_Result">
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
