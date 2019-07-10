@@ -137,50 +137,56 @@ CREATE TRIGGER TR_ValidacionModificarPersona
 ON Persona INSTEAD OF UPDATE
 AS
 BEGIN
-	--IF(UPDATE(Nombre) OR UPDATE(Apellido1) OR UPDATE(Apellido2) OR UPDATE(Direccion)) --quitar
-	BEGIN
-		--DECLARE @CedulaBusqueda		CHAR(10) --modificar
-		DECLARE @Cedula				CHAR(10)
-		DECLARE @Nombre1			NVARCHAR(51)
-		DECLARE @Nombre2			NVARCHAR(51)
-		DECLARE @Apellido1			NVARCHAR(51)
-		DECLARE @Apellido2			NVARCHAR(51)
-		DECLARE @Direccion			NVARCHAR(257)
-		DECLARE @CedulaUpdate		CHAR(10)
-
-		SET @Cedula				= (SELECT Cedula FROM inserted)
-		SET @Nombre1			= (SELECT Nombre1 FROM inserted)
-		SET @Nombre2			= (SELECT Nombre2 FROM inserted)
-		SET @Apellido1			= (SELECT Apellido1 FROM inserted)
-		SET @Apellido2			= (SELECT Apellido2 FROM inserted)
-		SET @CedulaUpdate		= (SELECT Cedula FROM deleted)
-
-		BEGIN TRY
-			IF((@nombre1 IS NOT NULL) AND (@Apellido1 IS NOT NULL) AND (@Apellido2 IS NOT NULL) AND (LEN(@Cedula) <= 9) 
-				AND (LEN(@Nombre1) <= 50) AND (LEN(@Nombre2) <= 50) AND (LEN(@Apellido1) <= 50) AND (LEN(@Apellido2) <= 50))
+	BEGIN TRY
+		SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;	--Nivel 0: Cambio de nivel de transacción
+		BEGIN TRANSACTION ValidacionModificarPersona	--Nivel 2: Transaction
 			BEGIN
-				UPDATE Persona
-				SET Cedula = @Cedula, Nombre1 = @Nombre1, Nombre2 = @Nombre2, Apellido1 = @Apellido1, Apellido2 = @Apellido2
-				WHERE Cedula = @Cedula;
+				DECLARE @Cedula				CHAR(10)
+				DECLARE @Nombre1			NVARCHAR(51)
+				DECLARE @Nombre2			NVARCHAR(51)
+				DECLARE @Apellido1			NVARCHAR(51)
+				DECLARE @Apellido2			NVARCHAR(51)
+				DECLARE @Direccion			NVARCHAR(257)
+				DECLARE @CedulaUpdate		CHAR(10)
 
-				IF(@Cedula = @CedulaUpdate)
+				SET @Cedula				= (SELECT Cedula FROM inserted)
+				SET @Nombre1			= (SELECT Nombre1 FROM inserted)
+				SET @Nombre2			= (SELECT Nombre2 FROM inserted)
+				SET @Apellido1			= (SELECT Apellido1 FROM inserted)
+				SET @Apellido2			= (SELECT Apellido2 FROM inserted)
+				SET @CedulaUpdate		= (SELECT Cedula FROM deleted)
+
+				IF((@nombre1 IS NOT NULL) AND (@Apellido1 IS NOT NULL) AND (@Apellido2 IS NOT NULL) AND (LEN(@Cedula) <= 9) 
+					AND (LEN(@Nombre1) <= 50) AND (LEN(@Nombre2) <= 50) AND (LEN(@Apellido1) <= 50) AND (LEN(@Apellido2) <= 50))
 				BEGIN
-					UPDATE Usuario
-					SET @Cedula = Cedula
-					WHERE Cedula = @CedulaUpdate;
+					UPDATE Persona
+					SET Cedula = @Cedula, Nombre1 = @Nombre1, Nombre2 = @Nombre2, Apellido1 = @Apellido1, Apellido2 = @Apellido2
+					WHERE Cedula = @Cedula;
+
+					IF(@Cedula = @CedulaUpdate)
+					BEGIN
+						UPDATE Usuario
+						SET @Cedula = Cedula
+						WHERE Cedula = @CedulaUpdate;
+					END
+				END
+				ELSE
+				BEGIN
+					Raiserror('Los campos no pueden estar vacíos o exceden el tamaño permitido.', 16, 1)  
+					Return  
 				END
 			END
-			ELSE
-			BEGIN
-				Raiserror('Los campos no pueden estar vacíos o exceden el tamaño permitido.', 16, 1)  
-				Return  
-			END
-		END TRY
+		COMMIT TRANSACTION ValidacionModificarPersona	--Nivel 2: Transaction
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
+	END TRY
 
-		BEGIN CATCH
-			PRINT 'ERROR: ' + ERROR_MESSAGE();
-		END CATCH
-	END
+	BEGIN CATCH
+		PRINT 'ERROR: ' + ERROR_MESSAGE();
+		ROLLBACK TRANSACTION ValidacionModificarPersona
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
+	END CATCH
+
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
 END;
 GO
 
@@ -192,13 +198,11 @@ CREATE TRIGGER TR_ValidacionModificarUsuario
 ON Usuario INSTEAD OF UPDATE
 AS
 BEGIN
-	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;	--Nivel 0: Cambio de nivel de transacción
-
 	BEGIN TRY	--Nivel 1: Try
+		SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;	--Nivel 0: Cambio de nivel de transacción
 		BEGIN TRANSACTION ValidacionModificarUsuario	--Nivel 2: Transaction
-			ALTER TABLE Usuario NOCHECK CONSTRAINT FK_Usu_Per --revisar
+			ALTER TABLE Usuario NOCHECK CONSTRAINT FK_Usu_Per
 			
-			--IF(UPDATE(CorreoInstitucional)) --quitar
 			BEGIN
 				DECLARE @CedulaBusqueda		CHAR(10)
 				DECLARE @Correo				NVARCHAR(101)
@@ -218,13 +222,15 @@ BEGIN
 				END
 			END
 
-			ALTER TABLE Usuario CHECK CONSTRAINT FK_Usu_Per --revisar
+			ALTER TABLE Usuario CHECK CONSTRAINT FK_Usu_Per
 		COMMIT TRANSACTION ValidacionModificarUsuario	--Nivel 2: Transaction
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
 	END TRY
 
 	BEGIN CATCH
 		PRINT 'ERROR: ' + ERROR_MESSAGE();
 		ROLLBACK TRANSACTION ValidacionModificarUsuario
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
 	END CATCH	--Nivel 1: Try
 
 	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
@@ -344,21 +350,11 @@ as
 	WHERE CorreoInstitucional = @correo;
 go
 
-/*select * from Tiene_Usuario_Perfil_Enfasis
-
-INSERT INTO Tiene_Usuario_Perfil_Enfasis
-VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Test1')
-
-INSERT INTO Perfil
-VALUES	('Test1', 'Perfil de prueba.')
-
-exec SP_ModificarPerfilUsuario @correo = 'jose.mejiasrojas@ucr.ac.cr', @perfil = 'Test1', @modifica = 0*/
-
 --Procedimiento almacenado de modificar (Poner o Quitar) Perfil a Usuario
 IF OBJECT_ID('SP_ModificarPerfilUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ModificarPerfilUsuario
 GO
-ALTER PROCEDURE SP_ModificarPerfilUsuario
+CREATE PROCEDURE SP_ModificarPerfilUsuario
 	@correo		nvarchar(100),
 	@perfil		nvarchar(30),
 	@modifica	bit
