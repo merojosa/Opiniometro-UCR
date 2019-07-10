@@ -1,4 +1,4 @@
-﻿	-- Borrar todas las tuplas existentes en la base de datos para evitar repeticion de llaves primarias.
+﻿﻿	-- Borrar todas las tuplas existentes en la base de datos para evitar repeticion de llaves primarias.
 EXEC sp_MSForEachTable 'DISABLE TRIGGER ALL ON ?'
 GO
 EXEC sp_MSForEachTable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL'
@@ -1046,7 +1046,7 @@ BEGIN
 			FROM	Escalar AS e 
 			WHERE	e.ItemId = @idPregunta
 		END
-	COMMIT TRANSACTION contarRespuestas
+	COMMIT TRANSACTION recuperarEscala
 	SET IMPLICIT_TRANSACTIONS ON;
 END
 GO
