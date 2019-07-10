@@ -52,6 +52,43 @@
 
                 });
 
+        });
+        $("#btncopiarsecc").click(function () {
+            console.log("prueba")
+            $.ajax(
+            {
+                type: "POST", //HTTP POST Method
+                    url: "CopiarSeccion", // Controller/View
+                    
+                data: { //Passing data
+                    Cod_Form_Origen: @Html.Raw(Json.Encode(Model.Formulario.CodigoFormulario)),
+                    Nom_Form_Dest:  @Html.Raw(Json.Encode(Model.Formulario.Nombre)),
+                    Titulo_Seccion: $('dropTitulo').dropselect(),
+                    Cod_Form_Origen: $('dropCodigo').dropselect()
+                    },
+                    success: function (result) {
+                        console.log("prueba2")
+                        console.log(result.console)
+                        if (result) {
+                            alert("Se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
+                                + $("input:radio[name=seccion]:checked").val()),
+                                $('#ConformadosID').html(result);
+                        } else {
+                            alert("No se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
+                                + $("input:radio[name=seccion]:checked").val()
+                                + " porque la pregunta ya se asigno a esa sección.")
+                        }
+                    },
+                    error: function () {
+                        console.log("prueba3")
+                        alert("No se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
+                            + $("input:radio[name=seccion]:checked").val()
+                            + "porque la pregunta ya se asigno a esa sección")
+                    }
+
+
+                });
+
             });
         });
 
@@ -191,10 +228,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                @Html.Partial("AsignarSecciones")
+                @Html.Partial("AsignarSecciones", Model.CopiarSeccion)
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Copiar</button>
+                <button type="button" id="btncopiarsecc" class="btn btn-secondary" data-dismiss="modal">Copiar</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
