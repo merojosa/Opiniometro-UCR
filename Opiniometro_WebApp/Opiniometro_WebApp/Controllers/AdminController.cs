@@ -113,8 +113,8 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public ActionResult Editar(PersonaPerfilEnfasisModel per)
         {
-            try
-            {
+            //try
+            //{
                 if ((per.Persona.Cedula != null) && (per.Persona.Cedula != null) && (per.Persona.Nombre1 != null) && (per.Persona.Apellido1 != null) && (per.Persona.Apellido2 != null)
                     && (per.usuario.CorreoInstitucional != null) 
                     && (per.Persona.Cedula.Length == 9) && (per.Persona.Nombre1.Length <= 50) && (per.Persona.Apellido1.Length <= 50) && (per.Persona.Apellido2.Length <= 50)
@@ -123,6 +123,10 @@ namespace Opiniometro_WebApp.Controllers
                     using (db)
                     {
                         db.SP_ModificarPersona(per.Persona.Cedula, per.Persona.Cedula, per.Persona.Nombre1, "",per.Persona.Apellido1, per.Persona.Apellido2, per.usuario.CorreoInstitucional);
+                        for (int i = 0; i < per.Perfil.Count(); i++)
+                        {
+                            db.SP_ModificarPerfilUsuario(per.usuario.CorreoInstitucional, per.Perfil.ElementAt(i), per.tienePerfil.ElementAt(i));
+                        }
                     }
                 }
                 else
@@ -130,11 +134,13 @@ namespace Opiniometro_WebApp.Controllers
                     //Mensaje de error
                 }
                 return RedirectToAction("VerPersonas");
+                /*
             }
             catch (Exception)
             {
-                throw;
-            }
+                TempData["msg"] = "<script>alert('No se pudo editar el perfil  ');</script>";
+                return RedirectToAction("VerPersonas");
+            }*/
         }
 
         public ActionResult Borrar(string id)
