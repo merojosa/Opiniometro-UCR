@@ -22,6 +22,20 @@ namespace Opiniometro_WebAppTest.Controllers
             Assert.IsNotNull(result, "Null");
         }
 
+        /*[TestMethod]
+        public void TestEdit()
+        {
+            AdministradorController controller = new AdministradorController();
+            PersonaPerfilEnfasisModel mockModel = new PersonaPerfilEnfasisModel();
+            mockModel.Persona = new Persona() {Cedula = "000999111", Nombre1 = "Juan", Nombre2 = "Miguel", Apellido1 = "Hernandez", Apellido2 = "Herrera"};
+            mockModel.Usuario = new Usuario() { CorreoInstitucional = "juan.miguelh@ucr.ac.cr" };
+            mockModel.viejaCedula = "000999111";
+
+            ViewResult result = controller.Editar(mockModel) as ViewResult;
+
+            Assert.AreEqual(result.Model, mockModel);
+        }*/
+
         [TestMethod]
         public void TestVerPersonasNotNull()
         {
@@ -37,5 +51,18 @@ namespace Opiniometro_WebAppTest.Controllers
             ViewResult result = controller.CrearUsuario() as ViewResult;
             Assert.IsNotNull(result, "Null");
         }
+
+        /*[TestMethod]
+        public void TestCrearUsuario()
+        {
+            AdministradorController controller = new AdministradorController();
+            ViewModelAdmin mockModel = new ViewModelAdmin();
+            mockModel.Persona = new Persona() { Cedula = "000999111", Nombre1 = "Juan", Nombre2 = "Miguel", Apellido1 = "Hernandez", Apellido2 = "Herrera" };
+            mockModel.Usuario = new Usuario() { CorreoInstitucional = "juan.miguelh@ucr.ac.cr" };
+
+            ViewResult result = controller.CrearUsuario(mockModel) as ViewResult;
+
+            Assert.AreEqual(result.Model, mockModel);
+        }*/
     }
 }

@@ -946,6 +946,8 @@ CREATE TRIGGER TR_InsertaPersona
 ON Persona INSTEAD OF INSERT
 AS
 BEGIN
+	set transaction isolation level serializable;
+	begin transaction tInsertaPersona;
 	DECLARE @cedula CHAR(10)
 	DECLARE @nombre1 NVARCHAR(51)
 	DECLARE @nombre2 NVARCHAR(51)
@@ -968,7 +970,9 @@ BEGIN
 		RAISERROR('Hay campos no pueden estar vacíos o exceder el tamaño adecuado', 16, 1)
 		RETURN
 	END
+	commit transaction tInsertaPersona;
 END;
+
 
 IF OBJECT_ID('TR_InsertaUsuario') IS NOT NULL
 	DROP TRIGGER TR_InsertaUsuario
