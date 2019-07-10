@@ -2749,13 +2749,13 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <End Role="Curso" EntitySet="Curso" />
             <End Role="Enfasis" EntitySet="Enfasis" />
           </AssociationSet>
-          <FunctionImport Name="CursosSegunAnno" ReturnType="Collection(OpiniometroModel.CursosSegunAnno_Result)">
+          <FunctionImport Name="CursosSegunAnno" ReturnType="Collection(Opiniometro_Model.CursosSegunAnno_Result)">
             <Parameter Name="anno" Mode="In" Type="Int16" />
           </FunctionImport>
-          <FunctionImport Name="CursosSegunCarrera" ReturnType="Collection(OpiniometroModel.CursosSegunCarrera_Result)">
+          <FunctionImport Name="CursosSegunCarrera" ReturnType="Collection(Opiniometro_Model.CursosSegunCarrera_Result)">
             <Parameter Name="siglaCarrera" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="CursosSegunSemestre" ReturnType="Collection(OpiniometroModel.CursosSegunSemestre_Result)">
+          <FunctionImport Name="CursosSegunSemestre" ReturnType="Collection(Opiniometro_Model.CursosSegunSemestre_Result)">
             <Parameter Name="semestre" Mode="In" Type="Byte" />
           </FunctionImport>
           <FunctionImport Name="DatosEstudiante">
@@ -2767,11 +2767,11 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="descripcion" Mode="In" Type="String" />
             <Parameter Name="Numero_Error" Mode="InOut" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(OpiniometroModel.MostrarEstudiantes_Result)" />
+          <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_Model.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="ObtenerPerfilesUsuario" ReturnType="Collection(OpiniometroModel.ObtenerPerfilesUsuario_Result)">
+          <FunctionImport Name="ObtenerPerfilesUsuario" ReturnType="Collection(Opiniometro_Model.ObtenerPerfilesUsuario_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerPerfilPorDefecto" ReturnType="Collection(String)">
@@ -2813,7 +2813,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="Contrasenna_Nueva" Mode="In" Type="String" />
             <Parameter Name="RecuperarContrasenna" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="SP_ContarRespuestasPorGrupo" ReturnType="Collection(OpiniometroModel.SP_ContarRespuestasPorGrupo_Result)">
+          <FunctionImport Name="SP_ContarRespuestasPorGrupo" ReturnType="Collection(Opiniometro_Model.SP_ContarRespuestasPorGrupo_Result)">
             <Parameter Name="codigoFormulario" Mode="In" Type="String" />
             <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
             <Parameter Name="annoGrupo" Mode="In" Type="Int16" />
@@ -2838,7 +2838,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="version" Mode="In" Type="Int32" />
             <Parameter Name="definition" Mode="In" Type="Binary" />
           </FunctionImport>
-          <FunctionImport Name="SP_DevolverObservacionesPorGrupo" ReturnType="Collection(OpiniometroModel.SP_DevolverObservacionesPorGrupo_Result)">
+          <FunctionImport Name="SP_DevolverObservacionesPorGrupo" ReturnType="Collection(Opiniometro_Model.SP_DevolverObservacionesPorGrupo_Result)">
             <Parameter Name="codigoFormulario" Mode="In" Type="String" />
             <Parameter Name="cedulaProfesor" Mode="In" Type="String" />
             <Parameter Name="annoGrupo" Mode="In" Type="Int16" />
@@ -2873,11 +2873,11 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="contrasena" Mode="In" Type="String" />
             <Parameter Name="contrasenaHash" Mode="InOut" Type="Binary" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(OpiniometroModel.sp_helpdiagramdefinition_Result)">
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Opiniometro_Model.sp_helpdiagramdefinition_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(OpiniometroModel.sp_helpdiagrams_Result)">
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Opiniometro_Model.sp_helpdiagrams_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -2932,7 +2932,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="Nombre" Mode="InOut" Type="String" />
             <Parameter Name="Apellido" Mode="InOut" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(OpiniometroModel.SP_ObtenerPermisosUsuario_Result)">
+          <FunctionImport Name="SP_ObtenerPermisosUsuario" ReturnType="Collection(Opiniometro_Model.SP_ObtenerPermisosUsuario_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Perfil" Mode="In" Type="String" />
           </FunctionImport>
@@ -2940,7 +2940,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="tipoPregunta" Mode="In" Type="Int32" />
             <Parameter Name="idPregunta" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_RecuperarEtiquetasEscalar" ReturnType="Collection(OpiniometroModel.SP_RecuperarEtiquetasEscalar_Result)">
+          <FunctionImport Name="SP_RecuperarEtiquetasEscalar" ReturnType="Collection(Opiniometro_Model.SP_RecuperarEtiquetasEscalar_Result)">
             <Parameter Name="tipoPregunta" Mode="In" Type="Int32" />
             <Parameter Name="idPregunta" Mode="In" Type="String" />
           </FunctionImport>
@@ -3024,7 +3024,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Administrativo">
-            <EntityTypeMapping TypeName="OpiniometroModel.Administrativo">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Administrativo">
               <MappingFragment StoreEntitySet="Administrativo">
                 <ScalarProperty Name="CedulaAdministrativo" ColumnName="CedulaAdministrativo" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
@@ -3032,7 +3032,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Carrera">
-            <EntityTypeMapping TypeName="OpiniometroModel.Carrera">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Carrera">
               <MappingFragment StoreEntitySet="Carrera">
                 <ScalarProperty Name="Sigla" ColumnName="Sigla" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -3041,14 +3041,14 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Categoria">
-            <EntityTypeMapping TypeName="OpiniometroModel.Categoria">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Categoria">
               <MappingFragment StoreEntitySet="Categoria">
                 <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ciclo_Lectivo">
-            <EntityTypeMapping TypeName="OpiniometroModel.Ciclo_Lectivo">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Ciclo_Lectivo">
               <MappingFragment StoreEntitySet="Ciclo_Lectivo">
                 <ScalarProperty Name="Anno" ColumnName="Anno" />
                 <ScalarProperty Name="Semestre" ColumnName="Semestre" />
@@ -3056,7 +3056,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Conformado_For_Sec">
-            <EntityTypeMapping TypeName="OpiniometroModel.Conformado_For_Sec">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Conformado_For_Sec">
               <MappingFragment StoreEntitySet="Conformado_For_Sec">
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
                 <ScalarProperty Name="TituloSeccion" ColumnName="TituloSeccion" />
@@ -3065,7 +3065,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Conformado_Item_Sec_Form">
-            <EntityTypeMapping TypeName="OpiniometroModel.Conformado_Item_Sec_Form">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Conformado_Item_Sec_Form">
               <MappingFragment StoreEntitySet="Conformado_Item_Sec_Form">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
@@ -3077,7 +3077,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Curso">
-            <EntityTypeMapping TypeName="OpiniometroModel.Curso">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Curso">
               <MappingFragment StoreEntitySet="Curso">
                 <ScalarProperty Name="Sigla" ColumnName="Sigla" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -3087,7 +3087,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Empadronado">
-            <EntityTypeMapping TypeName="OpiniometroModel.Empadronado">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Empadronado">
               <MappingFragment StoreEntitySet="Empadronado">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
@@ -3096,7 +3096,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Enfasis">
-            <EntityTypeMapping TypeName="OpiniometroModel.Enfasis">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Enfasis">
               <MappingFragment StoreEntitySet="Enfasis">
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
@@ -3104,7 +3104,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Escalar">
-            <EntityTypeMapping TypeName="OpiniometroModel.Escalar">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Escalar">
               <MappingFragment StoreEntitySet="Escalar">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="Inicio" ColumnName="Inicio" />
@@ -3115,7 +3115,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Estudiante">
-            <EntityTypeMapping TypeName="OpiniometroModel.Estudiante">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Estudiante">
               <MappingFragment StoreEntitySet="Estudiante">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
                 <ScalarProperty Name="Carne" ColumnName="Carne" />
@@ -3123,14 +3123,14 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Facultad">
-            <EntityTypeMapping TypeName="OpiniometroModel.Facultad">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Facultad">
               <MappingFragment StoreEntitySet="Facultad">
                 <ScalarProperty Name="CodigoUnidadAcademica" ColumnName="CodigoUnidadAcademica" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Fecha_Corte">
-            <EntityTypeMapping TypeName="OpiniometroModel.Fecha_Corte">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Fecha_Corte">
               <MappingFragment StoreEntitySet="Fecha_Corte">
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
                 <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
@@ -3138,7 +3138,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Formulario">
-            <EntityTypeMapping TypeName="OpiniometroModel.Formulario">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Formulario">
               <MappingFragment StoreEntitySet="Formulario">
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -3147,7 +3147,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Formulario_Respuesta">
-            <EntityTypeMapping TypeName="OpiniometroModel.Formulario_Respuesta">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Formulario_Respuesta">
               <MappingFragment StoreEntitySet="Formulario_Respuesta">
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
@@ -3162,7 +3162,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Grupo">
-            <EntityTypeMapping TypeName="OpiniometroModel.Grupo">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Grupo">
               <MappingFragment StoreEntitySet="Grupo">
                 <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -3172,7 +3172,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Item">
-            <EntityTypeMapping TypeName="OpiniometroModel.Item">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Item">
               <MappingFragment StoreEntitySet="Item">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="TextoPregunta" ColumnName="TextoPregunta" />
@@ -3184,7 +3184,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Matricula">
-            <EntityTypeMapping TypeName="OpiniometroModel.Matricula">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Matricula">
               <MappingFragment StoreEntitySet="Matricula">
                 <ScalarProperty Name="CedulaEstudiante" ColumnName="CedulaEstudiante" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -3195,7 +3195,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Opciones_De_Respuestas_Seleccion_Multiple">
-            <EntityTypeMapping TypeName="OpiniometroModel.Opciones_De_Respuestas_Seleccion_Multiple">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Opciones_De_Respuestas_Seleccion_Multiple">
               <MappingFragment StoreEntitySet="Opciones_De_Respuestas_Seleccion_Multiple">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
@@ -3204,7 +3204,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Opciones_De_Respuestas_Seleccion_Unica">
-            <EntityTypeMapping TypeName="OpiniometroModel.Opciones_De_Respuestas_Seleccion_Unica">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Opciones_De_Respuestas_Seleccion_Unica">
               <MappingFragment StoreEntitySet="Opciones_De_Respuestas_Seleccion_Unica">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
@@ -3213,7 +3213,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Perfil">
-            <EntityTypeMapping TypeName="OpiniometroModel.Perfil">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Perfil">
               <MappingFragment StoreEntitySet="Perfil">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -3221,7 +3221,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Permiso">
-            <EntityTypeMapping TypeName="OpiniometroModel.Permiso">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Permiso">
               <MappingFragment StoreEntitySet="Permiso">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -3229,7 +3229,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Persona">
-            <EntityTypeMapping TypeName="OpiniometroModel.Persona">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Persona">
               <MappingFragment StoreEntitySet="Persona">
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
                 <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
@@ -3240,7 +3240,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Posee_Enfasis_Perfil_Permiso">
-            <EntityTypeMapping TypeName="OpiniometroModel.Posee_Enfasis_Perfil_Permiso">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Posee_Enfasis_Perfil_Permiso">
               <MappingFragment StoreEntitySet="Posee_Enfasis_Perfil_Permiso">
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
@@ -3250,14 +3250,14 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Profesor">
-            <EntityTypeMapping TypeName="OpiniometroModel.Profesor">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Profesor">
               <MappingFragment StoreEntitySet="Profesor">
                 <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Responde">
-            <EntityTypeMapping TypeName="OpiniometroModel.Responde">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Responde">
               <MappingFragment StoreEntitySet="Responde">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="TituloSeccion" ColumnName="TituloSeccion" />
@@ -3276,7 +3276,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Seccion">
-            <EntityTypeMapping TypeName="OpiniometroModel.Seccion">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Seccion">
               <MappingFragment StoreEntitySet="Seccion">
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -3284,14 +3284,14 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Seleccion_Multiple">
-            <EntityTypeMapping TypeName="OpiniometroModel.Seleccion_Multiple">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Seleccion_Multiple">
               <MappingFragment StoreEntitySet="Seleccion_Multiple">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Seleccion_Unica">
-            <EntityTypeMapping TypeName="OpiniometroModel.Seleccion_Unica">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Seleccion_Unica">
               <MappingFragment StoreEntitySet="Seleccion_Unica">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="IsaLikeDislike" ColumnName="IsaLikeDislike" />
@@ -3299,7 +3299,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="OpiniometroModel.sysdiagrams">
+            <EntityTypeMapping TypeName="Opiniometro_Model.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -3310,7 +3310,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TelefonoPersona">
-            <EntityTypeMapping TypeName="OpiniometroModel.TelefonoPersona">
+            <EntityTypeMapping TypeName="Opiniometro_Model.TelefonoPersona">
               <MappingFragment StoreEntitySet="TelefonoPersona">
                 <ScalarProperty Name="CedulaPersona" ColumnName="CedulaPersona" />
                 <ScalarProperty Name="NumeroTelefono" ColumnName="NumeroTelefono" />
@@ -3318,14 +3318,14 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Texto_Libre">
-            <EntityTypeMapping TypeName="OpiniometroModel.Texto_Libre">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Texto_Libre">
               <MappingFragment StoreEntitySet="Texto_Libre">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tiene_Grupo_Formulario">
-            <EntityTypeMapping TypeName="OpiniometroModel.Tiene_Grupo_Formulario">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Tiene_Grupo_Formulario">
               <MappingFragment StoreEntitySet="Tiene_Grupo_Formulario">
                 <ScalarProperty Name="SiglaCurso" ColumnName="SiglaCurso" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -3338,7 +3338,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tiene_Usuario_Perfil_Enfasis">
-            <EntityTypeMapping TypeName="OpiniometroModel.Tiene_Usuario_Perfil_Enfasis">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Tiene_Usuario_Perfil_Enfasis">
               <MappingFragment StoreEntitySet="Tiene_Usuario_Perfil_Enfasis">
                 <ScalarProperty Name="CorreoInstitucional" ColumnName="CorreoInstitucional" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
@@ -3348,7 +3348,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Unidad_Academica">
-            <EntityTypeMapping TypeName="OpiniometroModel.Unidad_Academica">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Unidad_Academica">
               <MappingFragment StoreEntitySet="Unidad_Academica">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -3356,7 +3356,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="OpiniometroModel.Usuario">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
                 <ScalarProperty Name="CorreoInstitucional" ColumnName="CorreoInstitucional" />
                 <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
@@ -3368,7 +3368,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Imparte_View">
-            <EntityTypeMapping TypeName="OpiniometroModel.Imparte_View">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Imparte_View">
               <MappingFragment StoreEntitySet="Imparte_View">
                 <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -3378,7 +3378,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Escuela" TypeName="OpiniometroModel.Escuela" StoreEntitySet="Escuela">
+          <AssociationSetMapping Name="Escuela" TypeName="Opiniometro_Model.Escuela" StoreEntitySet="Escuela">
             <EndProperty Name="Facultad">
               <ScalarProperty Name="CodigoUnidadAcademica" ColumnName="CodigoFacultad" />
             </EndProperty>
@@ -3386,7 +3386,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               <ScalarProperty Name="Codigo" ColumnName="CodigoUnidadAcademica" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Imparte" TypeName="OpiniometroModel.Imparte" StoreEntitySet="Imparte">
+          <AssociationSetMapping Name="Imparte" TypeName="Opiniometro_Model.Imparte" StoreEntitySet="Imparte">
             <EndProperty Name="Grupo">
               <ScalarProperty Name="SiglaCurso" ColumnName="Sigla" />
               <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -3397,7 +3397,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Se_Encuentra_Curso_Enfasis" TypeName="OpiniometroModel.Se_Encuentra_Curso_Enfasis" StoreEntitySet="Se_Encuentra_Curso_Enfasis">
+          <AssociationSetMapping Name="Se_Encuentra_Curso_Enfasis" TypeName="Opiniometro_Model.Se_Encuentra_Curso_Enfasis" StoreEntitySet="Se_Encuentra_Curso_Enfasis">
             <EndProperty Name="Curso">
               <ScalarProperty Name="Sigla" ColumnName="SiglaCurso" />
             </EndProperty>
@@ -3406,9 +3406,9 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="CursosSegunAnno" FunctionName="OpiniometroModel.Store.CursosSegunAnno">
+          <FunctionImportMapping FunctionImportName="CursosSegunAnno" FunctionName="Opiniometro_Model.Store.CursosSegunAnno">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.CursosSegunAnno_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.CursosSegunAnno_Result">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Sigla" ColumnName="Sigla" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
@@ -3416,9 +3416,9 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="CursosSegunCarrera" FunctionName="OpiniometroModel.Store.CursosSegunCarrera">
+          <FunctionImportMapping FunctionImportName="CursosSegunCarrera" FunctionName="Opiniometro_Model.Store.CursosSegunCarrera">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.CursosSegunCarrera_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.CursosSegunCarrera_Result">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Sigla" ColumnName="Sigla" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
@@ -3426,9 +3426,9 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="CursosSegunSemestre" FunctionName="OpiniometroModel.Store.CursosSegunSemestre">
+          <FunctionImportMapping FunctionImportName="CursosSegunSemestre" FunctionName="Opiniometro_Model.Store.CursosSegunSemestre">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.CursosSegunSemestre_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.CursosSegunSemestre_Result">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Sigla" ColumnName="Sigla" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
@@ -3436,11 +3436,11 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="OpiniometroModel.Store.DatosEstudiante" />
-          <FunctionImportMapping FunctionImportName="EditarPerfil" FunctionName="OpiniometroModel.Store.EditarPerfil" />
-          <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="OpiniometroModel.Store.MostrarEstudiantes">
+          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_Model.Store.DatosEstudiante" />
+          <FunctionImportMapping FunctionImportName="EditarPerfil" FunctionName="Opiniometro_Model.Store.EditarPerfil" />
+          <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_Model.Store.MostrarEstudiantes">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.MostrarEstudiantes_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.MostrarEstudiantes_Result">
                 <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
                 <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
                 <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
@@ -3448,37 +3448,37 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="OpiniometroModel.Store.NombrePersona" />
-          <FunctionImportMapping FunctionImportName="ObtenerPerfilesUsuario" FunctionName="OpiniometroModel.Store.ObtenerPerfilesUsuario">
+          <FunctionImportMapping FunctionImportName="NombrePersona" FunctionName="Opiniometro_Model.Store.NombrePersona" />
+          <FunctionImportMapping FunctionImportName="ObtenerPerfilesUsuario" FunctionName="Opiniometro_Model.Store.ObtenerPerfilesUsuario">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.ObtenerPerfilesUsuario_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.ObtenerPerfilesUsuario_Result">
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ObtenerPerfilPorDefecto" FunctionName="OpiniometroModel.Store.ObtenerPerfilPorDefecto" />
-          <FunctionImportMapping FunctionImportName="ObtenerPerfilUsuario" FunctionName="OpiniometroModel.Store.ObtenerPerfilUsuario" />
-          <FunctionImportMapping FunctionImportName="ProcIntroducirSeccion" FunctionName="OpiniometroModel.Store.ProcIntroducirSeccion" />
-          <FunctionImportMapping FunctionImportName="ProcIntroduFormulario" FunctionName="OpiniometroModel.Store.ProcIntroduFormulario" />
-          <FunctionImportMapping FunctionImportName="SP_AgregarPersonaUsuario" FunctionName="OpiniometroModel.Store.SP_AgregarPersonaUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="OpiniometroModel.Store.SP_AgregarUsuario" />
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="OpiniometroModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="OpiniometroModel.Store.SP_CambiarContrasenna" />
-          <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="OpiniometroModel.Store.SP_ContarRespuestasPorGrupo">
+          <FunctionImportMapping FunctionImportName="ObtenerPerfilPorDefecto" FunctionName="Opiniometro_Model.Store.ObtenerPerfilPorDefecto" />
+          <FunctionImportMapping FunctionImportName="ObtenerPerfilUsuario" FunctionName="Opiniometro_Model.Store.ObtenerPerfilUsuario" />
+          <FunctionImportMapping FunctionImportName="ProcIntroducirSeccion" FunctionName="Opiniometro_Model.Store.ProcIntroducirSeccion" />
+          <FunctionImportMapping FunctionImportName="ProcIntroduFormulario" FunctionName="Opiniometro_Model.Store.ProcIntroduFormulario" />
+          <FunctionImportMapping FunctionImportName="SP_AgregarPersonaUsuario" FunctionName="Opiniometro_Model.Store.SP_AgregarPersonaUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_AgregarUsuario" FunctionName="Opiniometro_Model.Store.SP_AgregarUsuario" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Opiniometro_Model.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="SP_CambiarContrasenna" FunctionName="Opiniometro_Model.Store.SP_CambiarContrasenna" />
+          <FunctionImportMapping FunctionImportName="SP_ContarRespuestasPorGrupo" FunctionName="Opiniometro_Model.Store.SP_ContarRespuestasPorGrupo">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.SP_ContarRespuestasPorGrupo_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.SP_ContarRespuestasPorGrupo_Result">
                 <ScalarProperty Name="Respuesta" ColumnName="Respuesta" />
                 <ScalarProperty Name="cntResp" ColumnName="cntResp" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_CopiarSeccion" FunctionName="OpiniometroModel.Store.SP_CopiarSeccion" />
-          <FunctionImportMapping FunctionImportName="SP_CrearPerfil" FunctionName="OpiniometroModel.Store.SP_CrearPerfil" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="OpiniometroModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="OpiniometroModel.Store.SP_DevolverObservacionesPorGrupo">
+          <FunctionImportMapping FunctionImportName="SP_CopiarSeccion" FunctionName="Opiniometro_Model.Store.SP_CopiarSeccion" />
+          <FunctionImportMapping FunctionImportName="SP_CrearPerfil" FunctionName="Opiniometro_Model.Store.SP_CrearPerfil" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Opiniometro_Model.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="SP_DevolverObservacionesPorGrupo" FunctionName="Opiniometro_Model.Store.SP_DevolverObservacionesPorGrupo">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.SP_DevolverObservacionesPorGrupo_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.SP_DevolverObservacionesPorGrupo_Result">
                 <ScalarProperty Name="Observacion" ColumnName="Observacion" />
                 <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
                 <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
@@ -3486,22 +3486,22 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_DevolverRespuestasPorGrupo" FunctionName="OpiniometroModel.Store.SP_DevolverRespuestasPorGrupo" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="OpiniometroModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="SP_EliminarSeccion" FunctionName="OpiniometroModel.Store.SP_EliminarSeccion" />
-          <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="OpiniometroModel.Store.SP_ExistenciaCorreo" />
-          <FunctionImportMapping FunctionImportName="SP_GenerarContrasenaHash" FunctionName="OpiniometroModel.Store.SP_GenerarContrasenaHash" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="OpiniometroModel.Store.sp_helpdiagramdefinition">
+          <FunctionImportMapping FunctionImportName="SP_DevolverRespuestasPorGrupo" FunctionName="Opiniometro_Model.Store.SP_DevolverRespuestasPorGrupo" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Opiniometro_Model.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="SP_EliminarSeccion" FunctionName="Opiniometro_Model.Store.SP_EliminarSeccion" />
+          <FunctionImportMapping FunctionImportName="SP_ExistenciaCorreo" FunctionName="Opiniometro_Model.Store.SP_ExistenciaCorreo" />
+          <FunctionImportMapping FunctionImportName="SP_GenerarContrasenaHash" FunctionName="Opiniometro_Model.Store.SP_GenerarContrasenaHash" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Opiniometro_Model.Store.sp_helpdiagramdefinition">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.sp_helpdiagramdefinition_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.sp_helpdiagramdefinition_Result">
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="OpiniometroModel.Store.sp_helpdiagrams">
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Opiniometro_Model.Store.sp_helpdiagrams">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.sp_helpdiagrams_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.sp_helpdiagrams_Result">
                 <ScalarProperty Name="Database" ColumnName="Database" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -3522,25 +3522,25 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <FunctionImportMapping FunctionImportName="SP_ObtenerNombre" FunctionName="Opiniometro_Model.Store.SP_ObtenerNombre" />
           <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_Model.Store.SP_ObtenerPermisosUsuario">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.SP_ObtenerPermisosUsuario_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.SP_ObtenerPermisosUsuario_Result">
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
                 <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_RecuperarEtiquetas" FunctionName="OpiniometroModel.Store.SP_RecuperarEtiquetas" />
-          <FunctionImportMapping FunctionImportName="SP_RecuperarEtiquetasEscalar" FunctionName="OpiniometroModel.Store.SP_RecuperarEtiquetasEscalar">
+          <FunctionImportMapping FunctionImportName="SP_RecuperarEtiquetas" FunctionName="Opiniometro_Model.Store.SP_RecuperarEtiquetas" />
+          <FunctionImportMapping FunctionImportName="SP_RecuperarEtiquetasEscalar" FunctionName="Opiniometro_Model.Store.SP_RecuperarEtiquetasEscalar">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.SP_RecuperarEtiquetasEscalar_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.SP_RecuperarEtiquetasEscalar_Result">
                 <ScalarProperty Name="Inicio" ColumnName="Inicio" />
                 <ScalarProperty Name="Fin" ColumnName="Fin" />
                 <ScalarProperty Name="Incremento" ColumnName="Incremento" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="OpiniometroModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="OpiniometroModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Opiniometro_Model.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Opiniometro_Model.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
