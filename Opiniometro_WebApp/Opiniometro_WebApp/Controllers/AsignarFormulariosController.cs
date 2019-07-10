@@ -436,7 +436,7 @@ namespace Opiniometro_WebApp.Controllers
         //Efecto: Envía un correo a los estudiantes matriculados en cierto curso.
         //Requiere: la sigla del curso.
         //Modifica: N/A.
-        public ActionResult EnviarCorreoFormulario(Curso curso)
+        public void EnviarCorreoFormulario(Curso curso)
         {
             List<Usuario> usuarios = (from u in db.Usuario
                                       select u).ToList();
@@ -454,23 +454,16 @@ namespace Opiniometro_WebApp.Controllers
 
                 Persona persona = new Persona();
                 persona = personas.Find(p => p.Cedula.Equals(ma.CedulaEstudiante));
-                string contenido = "<p>Estimado " + persona.Nombre1 + " " + persona.Apellido1 + ", se le solicita dedicar unos minutos de su tiempo para evaluar los cursos" +
-               " en los cuales se encuentra matriculado. Favor ingresar a  Opiniómetro@UCR</p> <b>";
 
-                // Se le envía al usuario el correo con la notificación del formulario 
-                EnviarCorreo(usuario.CorreoInstitucional, "Evaluación pendiente - Opiniómetro@UCR", contenido);
-            }
-            var modelo = new AsignarFormulariosViewModel
-            {
-                Ciclos = ObtenerCiclos("UC-023874"),
-                UnidadesAcademicas = ObtenerUnidadAcademica(2018, 2, "UC-023874"),
-                Carreras = ObtenerCarreras(2018, 2, "UC-023874"),
-                Grupos = ObtenerGrupos(2018, 2, "UC-023874", "SC - 01234", 255, "Programación 1", null),
-                Cursos = ObtenerCursos(2018,2, "UC-023874", "SC - 01234", null),
-                Formularios = ObtenerFormularios(),
-                Enfasis = ObtenerEnfasis(2018,2, "UC-023874", "SC - 01234")
-            };
-            return View("Index", modelo);
+                if(usuario != null && persona != null)
+                {
+                    string contenido = "<p>Estimado/a " + persona.Nombre1 + " " + persona.Apellido1 + ", se le solicita dedicar unos minutos de su tiempo para evaluar los cursos" +
+                                   " en los cuales se encuentra matriculado/a. Favor ingresar a  Opiniómetro@UCR.</p> <b>";
+
+                    // Se le envía al usuario el correo con la notificación del formulario 
+                    EnviarCorreo(usuario.CorreoInstitucional, "Evaluación pendiente - Opiniómetro@UCR", contenido);
+                }              
+            }           
         }
      
 
@@ -481,8 +474,10 @@ namespace Opiniometro_WebApp.Controllers
             int numErrores = 0;
             var FormulariosConPeriodos = JsonConvert.DeserializeObject<TipoPeriodosIndicados[]>(PeriodosIndicados);
             var GruposEnLista = JsonConvert.DeserializeObject<Grupo[]>(Grupos);
-
             DateTime ahora = DateTime.Now;
+
+            //Almacena los cursos a los que se le deben enviar los correos.
+            List<Curso> CursosCorreos = new List<Curso>();    
 
             List<Tiene_Grupo_Formulario> asignaciones = new List<Tiene_Grupo_Formulario>();
             foreach (var fcp in FormulariosConPeriodos)
@@ -527,6 +522,9 @@ namespace Opiniometro_WebApp.Controllers
                                     FechaInicio = inicioPeriodo,
                                     FechaFinal = finPeriodo
                                 });
+                                //Para enviar los correos a los cursos respectivos
+                                Curso curso = db.Curso.Find(g.SiglaCurso);
+                                CursosCorreos.Add(curso);
                             }
                         }
                         else // El periodo inicia después de que termina
@@ -554,12 +552,18 @@ namespace Opiniometro_WebApp.Controllers
                 mensajes += "\nPor favor corrija lo indicado antes de realizar las asignaciones.\n";
             }
             else
-            { 
+            {
                 if (ModelState.IsValid)
                 {
                     db.Tiene_Grupo_Formulario.AddRange(asignaciones);
                     db.SaveChanges();
-                }
+
+                    //Se envían los correos
+                    foreach (var e in CursosCorreos)
+                    {
+                        EnviarCorreoFormulario(e);
+                    }
+                }  
                 else
                 {
                     mensajes += "Hubo un error al guardar las asignaciones. Por favor contacte a soporte técnico.\n";
