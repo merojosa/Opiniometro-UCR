@@ -946,7 +946,6 @@ CREATE TRIGGER TR_InsertaPersona
 ON Persona INSTEAD OF INSERT
 AS
 BEGIN
-	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 	DECLARE @cedula CHAR(10)
 	DECLARE @nombre1 NVARCHAR(51)
 	DECLARE @nombre2 NVARCHAR(51)
@@ -957,12 +956,13 @@ BEGIN
 	SET @nombre2				= (SELECT Nombre2 FROM inserted)
 	SET @apellido1				= (SELECT Apellido1 FROM inserted)
 	SET @apellido2				= (SELECT Apellido2 FROM inserted)
-
+	SET IMPLICIT_TRANSACTIONS OFF;
+	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 	IF((@cedula NOT LIKE '') AND  (LEN(@cedula) = 9) AND (@nombre1 NOT LIKE '') AND (LEN(@nombre1) <= 50) 
 	AND (@apellido1 NOT LIKE '') AND (LEN(@apellido1) <= 50)  
 	AND (@apellido2 NOT LIKE '') AND (LEN(@apellido2) <= 50))
 	BEGIN
-		BEGIN TRY
+		BEGIN TRY		
 			BEGIN TRANSACTION tInsertaPersona;
 			INSERT INTO Persona(Cedula, nombre1, nombre2, apellido1, apellido2)
 			VALUES (@cedula, @nombre1, @nombre2, @apellido1, @apellido2)
@@ -975,8 +975,8 @@ BEGIN
 	ELSE
 	BEGIN
 		RAISERROR('Hay campos no pueden estar vacíos o exceder el tamaño adecuado', 16, 1)
-		RETURN
 	END
+	SET IMPLICIT_TRANSACTIONS ON;
 	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 END;
 

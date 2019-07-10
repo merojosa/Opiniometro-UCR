@@ -798,7 +798,11 @@ namespace Opiniometro_WebApp.Controllers
                 {
                     using (db)
                     {
-                        db.SP_ModificarPersona(per.viejaCedula, per.Persona.Cedula, per.Persona.Nombre1, "", per.Persona.Apellido1, per.Persona.Apellido2, per.Usuario.CorreoInstitucional);
+                        db.SP_ModificarPersona(per.viejaCedula, per.Persona.Cedula, per.Persona.Nombre1, per.Persona.Nombre2, per.Persona.Apellido1, per.Persona.Apellido2, per.Usuario.CorreoInstitucional);
+                        for (int i = 0; i < per.Perfil.Count(); i++)
+                        {
+                            //db.SP_ModificarPerfilUsuario(per.usuario.CorreoInstitucional, per.Perfil.ElementAt(i), per.tienePerfil.ElementAt(i));
+                        }
                     }
                 }
                 else
@@ -810,6 +814,8 @@ namespace Opiniometro_WebApp.Controllers
             catch (Exception)
             {
                 throw;
+                TempData["msg"] = "<script>alert('No se pudo editar el perfil  ');</script>";
+                return RedirectToAction("VerPersonas");
             }
         }
 
