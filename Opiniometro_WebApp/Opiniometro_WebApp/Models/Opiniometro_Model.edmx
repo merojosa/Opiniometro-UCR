@@ -1209,6 +1209,11 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
         </Function>
+        <Function Name="SP_ModificarPerfilUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correo" Type="nvarchar" Mode="In" />
+          <Parameter Name="perfil" Type="nvarchar" Mode="In" />
+          <Parameter Name="modifica" Type="bit" Mode="In" />
+        </Function>
         <Function Name="SP_ModificarPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CedulaBusqueda" Type="varchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
@@ -2762,7 +2767,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="descripcion" Mode="In" Type="String" />
             <Parameter Name="Numero_Error" Mode="InOut" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_Model.MostrarEstudiantes_Result)" />
+          <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(OpiniometroModel.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
@@ -2901,6 +2906,11 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="SP_ModificarPerfilUsuario">
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="modifica" Mode="In" Type="Boolean" />
+          </FunctionImport>
           <FunctionImport Name="SP_ModificarPersona">
             <Parameter Name="CedulaBusqueda" Mode="In" Type="String" />
             <Parameter Name="Cedula" Mode="In" Type="String" />
@@ -2930,7 +2940,7 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="tipoPregunta" Mode="In" Type="Int32" />
             <Parameter Name="idPregunta" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_RecuperarEtiquetasEscalar" ReturnType="Collection(Opiniometro_Model.SP_RecuperarEtiquetasEscalar_Result)">
+          <FunctionImport Name="SP_RecuperarEtiquetasEscalar" ReturnType="Collection(OpiniometroModel.SP_RecuperarEtiquetasEscalar_Result)">
             <Parameter Name="tipoPregunta" Mode="In" Type="Int32" />
             <Parameter Name="idPregunta" Mode="In" Type="String" />
           </FunctionImport>
@@ -3426,9 +3436,9 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_Model.Store.DatosEstudiante" />
-          <FunctionImportMapping FunctionImportName="EditarPerfil" FunctionName="Opiniometro_Model.Store.EditarPerfil" />
-          <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_Model.Store.MostrarEstudiantes">
+          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="OpiniometroModel.Store.DatosEstudiante" />
+          <FunctionImportMapping FunctionImportName="EditarPerfil" FunctionName="OpiniometroModel.Store.EditarPerfil" />
+          <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="OpiniometroModel.Store.MostrarEstudiantes">
             <ResultMapping>
               <ComplexTypeMapping TypeName="OpiniometroModel.MostrarEstudiantes_Result">
                 <ScalarProperty Name="Nombre1" ColumnName="Nombre1" />
@@ -3500,16 +3510,17 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" />
-          <FunctionImportMapping FunctionImportName="SP_Insertar_Seccion" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seccion" />
-          <FunctionImportMapping FunctionImportName="SP_Insertar_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seleccion_Unica" />
-          <FunctionImportMapping FunctionImportName="SP_InsertaTablaPosee" FunctionName="Opiniometro_Model.Store.SP_InsertaTablaPosee" />
-          <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_Model.Store.SP_LoginUsuario" />
-          <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_Model.Store.SP_ModificarPersona" />
-          <FunctionImportMapping FunctionImportName="SP_ObtenerCedula" FunctionName="Opiniometro_Model.Store.SP_ObtenerCedula" />
-          <FunctionImportMapping FunctionImportName="SP_ObtenerFormulario" FunctionName="Opiniometro_Model.Store.SP_ObtenerFormulario" />
-          <FunctionImportMapping FunctionImportName="SP_ObtenerNombre" FunctionName="Opiniometro_Model.Store.SP_ObtenerNombre" />
-          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_Model.Store.SP_ObtenerPermisosUsuario">
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" FunctionName="OpiniometroModel.Store.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" />
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Seccion" FunctionName="OpiniometroModel.Store.SP_Insertar_Seccion" />
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Seleccion_Unica" FunctionName="OpiniometroModel.Store.SP_Insertar_Seleccion_Unica" />
+          <FunctionImportMapping FunctionImportName="SP_InsertaTablaPosee" FunctionName="OpiniometroModel.Store.SP_InsertaTablaPosee" />
+          <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="OpiniometroModel.Store.SP_LoginUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_ModificarPerfilUsuario" FunctionName="OpiniometroModel.Store.SP_ModificarPerfilUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="OpiniometroModel.Store.SP_ModificarPersona" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerCedula" FunctionName="OpiniometroModel.Store.SP_ObtenerCedula" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerFormulario" FunctionName="OpiniometroModel.Store.SP_ObtenerFormulario" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerNombre" FunctionName="OpiniometroModel.Store.SP_ObtenerNombre" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="OpiniometroModel.Store.SP_ObtenerPermisosUsuario">
             <ResultMapping>
               <ComplexTypeMapping TypeName="OpiniometroModel.SP_ObtenerPermisosUsuario_Result">
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
@@ -3518,18 +3529,18 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_RecuperarEtiquetas" FunctionName="Opiniometro_Model.Store.SP_RecuperarEtiquetas" />
-          <FunctionImportMapping FunctionImportName="SP_RecuperarEtiquetasEscalar" FunctionName="Opiniometro_Model.Store.SP_RecuperarEtiquetasEscalar">
+          <FunctionImportMapping FunctionImportName="SP_RecuperarEtiquetas" FunctionName="OpiniometroModel.Store.SP_RecuperarEtiquetas" />
+          <FunctionImportMapping FunctionImportName="SP_RecuperarEtiquetasEscalar" FunctionName="OpiniometroModel.Store.SP_RecuperarEtiquetasEscalar">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_Model.SP_RecuperarEtiquetasEscalar_Result">
+              <ComplexTypeMapping TypeName="OpiniometroModel.SP_RecuperarEtiquetasEscalar_Result">
                 <ScalarProperty Name="Inicio" ColumnName="Inicio" />
                 <ScalarProperty Name="Fin" ColumnName="Fin" />
                 <ScalarProperty Name="Incremento" ColumnName="Incremento" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Opiniometro_Model.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Opiniometro_Model.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="OpiniometroModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="OpiniometroModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -12,6 +12,7 @@
     <meta charset="utf-8" />
     <script src="~/Scripts/FormularioDelCurso.js"></script>
 
+    @*Estilo: checkbox tipo estrella*@
     <style type="text/css">
         .rating {
             overflow: hidden;
@@ -68,21 +69,21 @@
             <td>
                 @foreach (var seccion in Model.Secciones)
                 {
-                <div class="seccion">
-                    <label class="titulo" style="display:none">@seccion.Titulo</label>
-                    @{
-                        //secciones del formulario
-                        <table>
-                            <tr>
-                                <td>
-                                    <h3><label>  @seccion.Titulo </label></h3>
-                                    <hr style="width: 800px; border-color:darkgray" />
-                                    <br>
-                                </td>
-                            </tr>
-                        </table>
-                        foreach (var pregunta in seccion.PreguntasFormulario)
-                        {
+                    <div class="seccion">
+                        <label class="titulo" style="display:none">@seccion.Titulo</label>
+                        @{
+                            //secciones del formulario
+                            <table>
+                                <tr>
+                                    <td>
+                                        <h3><label>  @seccion.Titulo </label></h3>
+                                        <hr style="width: 800px; border-color:darkgray" />
+                                        <br>
+                                    </td>
+                                </tr>
+                            </table>
+                            foreach (var pregunta in seccion.PreguntasFormulario)
+                            {
                             <div class="pregunta">
 
                                 <label class="tipo" style="display:none">@pregunta.tipoPregunta</label>
@@ -102,10 +103,11 @@
                                         <br />
                                     }
 
-                                   
+                                    if (pregunta.Opciones != null)
+                                    {
                                         // pregunta seleccion unica
-                                        else if (pregunta.tipoPregunta == 2 || (pregunta.tipoPregunta == 3))
-                                         if (pregunta.Opciones != null) //IMPORTANTE
+                                        if (pregunta.tipoPregunta == 2 || (pregunta.tipoPregunta == 3))
+                                        // if (pregunta.Opciones != null) //IMPORTANTE
                                         {
 
                                             foreach (var opcion in pregunta.Opciones)
@@ -116,8 +118,6 @@
                                             }
 
 
-                                }
-                            }
 
                                             if (pregunta.tieneObservacion == true)
                                             {
@@ -150,53 +150,53 @@
                                         }
 
 
-                        //pregunta Escalar
-                        else if (pregunta.tipoPregunta == 5)
-                        {
+                                        //pregunta tipo Escalar
+                                        else if (pregunta.tipoPregunta == 5)
+                                        {
 
-                            if (pregunta.Opciones != null)
-                            {
-                                foreach (var opcion in pregunta.Opciones)
-                                {
+                                            if (pregunta.Opciones != null)
+                                            {
+                                                foreach (var opcion in pregunta.Opciones)
+                                                {
 
-                                    <input type="radio" name="rango" value="@opcion" id="@opcion" /> <label>@opcion</label>
-                                }
-                            }
+                                                    <input type="radio" name="rango" value="@opcion" id="@opcion" /> <label>@opcion</label>
+                                                }
+                                            }
 
-                            if (pregunta.tieneObservacion == true)
-                            {
-                                <br />
-                                <br />
-                                <label> Observaciones:</label><br />
-                                <textarea name="textarea" rows="5" cols="50" maxlength="495">
+                                            if (pregunta.tieneObservacion == true)
+                                            {
+                                                <br />
+                                                <br />
+                                                <label> Observaciones:</label><br />
+                                                <textarea name="textarea" rows="5" cols="50" maxlength="495">
                                 </textarea>
                                                 <br />
                                             }
 
                                         }
 
-                        //pregunta Escalar tipo Estrella
-                        else if (pregunta.tipoPregunta == 6)
-                        {
+                                        //pregunta tipo Estrella
+                                        else if (pregunta.tipoPregunta == 6)
+                                        {
 
-                            if (pregunta.Opciones != null)
-                            {
-                                foreach (var opcion in pregunta.Opciones)
-                                {
-                                <span class="rating">
-                                    <input type="radio" class="rating-input"
-                                           id="rating-input-1-5" name="rating-input-1">
-                                    <label for="rating-input-1-5" class="rating-star"></label>
-                                </span>                                   
-                                }
-                            }
+                                            if (pregunta.Opciones != null)
+                                            {
+                                                foreach (var opcion in pregunta.Opciones)
+                                                {
+                                                    <span class="rating">
+                                                        <input type="radio" class="rating-input"
+                                                               id="rating-input-1-5" name="rating-input-1">
+                                                        <label for="rating-input-1-5" class="rating-star"></label>
+                                                    </span>
+                                                }
+                                            }
 
-                            if (pregunta.tieneObservacion == true)
-                            {
-                                <br />
-                                <br />
-                                <label> Observaciones:</label><br />
-                                <textarea name="textarea" rows="5" cols="50" maxlength="495">
+                                            if (pregunta.tieneObservacion == true)
+                                            {
+                                                <br />
+                                                <br />
+                                                <label> Observaciones:</label><br />
+                                                <textarea name="textarea" rows="5" cols="50" maxlength="495">
                                 </textarea>
                                                 <br />
                                             }
@@ -206,12 +206,12 @@
                                     }
                                 }
                             </div>
-                            <hr style="width:50%;" align="left" />
-                            <br />
+                                <hr style="width:50%;" align="left" />
+                                <br />
 
+                            }
                         }
-                    }
-                </div>
+                    </div>
                 }
             </td>
         </tr>
@@ -280,23 +280,10 @@
                     contSiNo++;
                 </script>
 
-                               }
-                               if (dato.tipoPregunta == 5)
-                               {
-                               <div id="preguntaEscalar"> </div>
-
-                               <script>
-                 crearElemento("Escalar", contEscalar, @Html.Raw(Json.Encode(dato.item)), "preguntaEscalar");
-                 insertNueLinea("Escalar".concat(contEscalar));
-                 preguntaEscalar(contEscalar);
-                 lineaHor("Escalar".concat(contEscalar));
-                 contEscalar++;
-                               </script>
-
-                               }
+            }
 
 
-                               }
+        }
 
                             </td>
                         </tr>
