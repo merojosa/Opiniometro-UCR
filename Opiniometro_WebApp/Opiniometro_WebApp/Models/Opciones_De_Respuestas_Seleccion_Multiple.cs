@@ -12,13 +12,12 @@ namespace Opiniometro_WebApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class MSreplication_options
+    public partial class Opciones_De_Respuestas_Seleccion_Multiple
     {
-        public string optname { get; set; }
-        public bool value { get; set; }
-        public int major_version { get; set; }
-        public int minor_version { get; set; }
-        public int revision { get; set; }
-        public int install_failures { get; set; }
+        public string ItemId { get; set; }
+        public short Orden { get; set; }
+        public string OpcionRespuesta { get; set; }
+    
+        public virtual Seleccion_Multiple Seleccion_Multiple { get; set; }
     }
 }
