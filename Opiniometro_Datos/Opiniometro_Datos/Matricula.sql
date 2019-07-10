@@ -3,7 +3,7 @@
 	[CedulaEstudiante]	CHAR(9)	NOT NULL,
 	[Numero]		TINYINT	NOT NULL,
 	[Sigla]				CHAR(6)	NOT NULL,
-	[Anno]				CHAR(4)	NOT NULL,
+	[Anno]				SMALLINT	NOT NULL,
 	[Semestre]			TINYINT	NOT NULL,
 	CONSTRAINT PK_Matricula
 		PRIMARY KEY (CedulaEstudiante, Numero, Sigla, Anno, Semestre),

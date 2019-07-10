@@ -1,0 +1,72 @@
+﻿@model Opiniometro_WebApp.Models.Tiene_Grupo_Formulario
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>¿Seguro de que desea eliminar esta asignación?</h3>
+    <div>
+        <h4>Tiene_Grupo_Formulario</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Ciclo
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Grupo.SemestreGrupo)-@Html.DisplayFor(model => model.Grupo.AnnoGrupo)
+            </dd>
+
+            <dt>
+                Curso
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Grupo.SiglaCurso) @Html.DisplayFor(model => model.Grupo.Curso.Nombre)
+            </dd>
+
+            <dt>
+                Grupo
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Grupo.Numero)
+            </dd>
+
+            <dt>
+                Formulario
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Formulario.CodigoFormulario) @Html.DisplayFor(model => model.Formulario.Nombre)
+            </dd>
+
+            <dt>
+                Periodo de aplización
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Fecha_Corte.FechaInicio) a @Html.DisplayFor(model => model.Fecha_Corte.FechaFinal)
+            </dd>
+
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>
