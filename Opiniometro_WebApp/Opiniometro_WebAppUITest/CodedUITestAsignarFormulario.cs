@@ -13,7 +13,7 @@ namespace Opiniometro_WebAppUITest
 {
 
     [CodedUITest]
-    public class AsignarFormulario
+    public class CodedUITestAsignarFormulario
     {
         [TestMethod]
         public void ValidarTituloAsignacion()
