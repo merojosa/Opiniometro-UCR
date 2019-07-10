@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,6 +8,7 @@ using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
 using System.Diagnostics;
 using Opiniometro_WebApp.Controllers.Servicios;
+using System.Data.Entity.Core.Objects;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -14,14 +17,24 @@ namespace Opiniometro_WebApp.Controllers
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
 
+        public CursosMatriculadosController()
+        {
+            db = new Opiniometro_DatosEntities();
+        }
+        public CursosMatriculadosController(Opiniometro_DatosEntities db) {
+            this.db = db;
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
+            DateTime fecha = DateTime.Now;
+
             var modelo = new EstudianteGruposMatriculado
             {
-                gruposMatriculado = ObtenerGrupoMatriculado(obtenerCedulaEstLoggeado(), 1, 2019)               
+                gruposMatriculado = ObtenerGrupoMatriculado( obtenerCedulaEstLoggeado(IdentidadManager.obtener_correo_actual()) , ciclo(fecha.Month), fecha.Year )
             };
-            return View(modelo);
+            return View("Index",modelo);
         }
 
         /// <summary>
@@ -34,37 +47,40 @@ namespace Opiniometro_WebApp.Controllers
         /// <param name="ano">recibe el año actual </param>
         /// modifica--
         /// <returns></returns>
-        public IQueryable<EstudianteGruposMatriculado> ObtenerGrupoMatriculado(string cedulaDelEstudiante, int semestre, int ano) {
+        public IQueryable<EstudianteGruposMatriculado> ObtenerGrupoMatriculado(string cedulaDelEstudiante, int semestre, int ano)
+        {
             IQueryable<EstudianteGruposMatriculado> grupos =
             from mat in db.Matricula
             join est in db.Estudiante on mat.CedulaEstudiante equals est.CedulaEstudiante
             join gru in db.Grupo on new { a = mat.Semestre, b = mat.Numero,/*c=mat.Anno,*/d = mat.Sigla }
             equals new { a = gru.SemestreGrupo, b = gru.Numero,/*c=gru.AnnoGrupo,*/d = gru.SiglaCurso }
             join cur in db.Curso on gru.SiglaCurso equals cur.Sigla
-            join imp in db.Imparte_View on new { par1 = gru.SemestreGrupo, par2 = gru.Numero,/*par3=gru.AnnoGrupo,*/par4 = gru.SiglaCurso }
-            equals new { par1 = imp.Semestre, par2 = imp.Numero,/*par3=imp.Anno,*/par4 = imp.Sigla }
+            join imp in db.Imparte_View on new { par1 = gru.SemestreGrupo, par2 = gru.Numero, par3 = gru.AnnoGrupo, par4 = gru.SiglaCurso }
+            equals new { par1 = imp.Semestre, par2 = imp.Numero, par3 = imp.Anno, par4 = imp.Sigla }
             join prof in db.Profesor on imp.CedulaProfesor equals prof.CedulaProfesor
             join tiene in db.Tiene_Grupo_Formulario on new { p1 = gru.AnnoGrupo, p2 = gru.SemestreGrupo, p3 = gru.Numero, p4 = gru.SiglaCurso }
             equals new { p1 = tiene.Anno, p2 = tiene.Ciclo, p3 = tiene.Numero, p4 = tiene.SiglaCurso }
             join form in db.Formulario on tiene.Codigo equals form.CodigoFormulario
-            where (est.CedulaEstudiante == cedulaDelEstudiante /*&& mat.Semestre == semestre && ano == gru.AnnoGrupo*/)
+            where (est.CedulaEstudiante == cedulaDelEstudiante && mat.Semestre == semestre /*&& ano == mat.Anno*/)
             //MUESTRA DATOS INCORRECTOS EN UN CASO, SE ARREGLARA HASTA QUE SE CAMBIE EL TIPO DE DATO DEL ATRIBUTO AÑO EN LA TABLA IMPARTE
             //debe modificarse y comparar con la tabla de matricula no con la de grupo
 
             select new EstudianteGruposMatriculado
             {
+                cedulaProf = prof.CedulaProfesor,
                 siglaCursoMatriculado = mat.Sigla,
                 nombreCursoMatriculado = cur.Nombre,
                 semestreGrupo = gru.SemestreGrupo,
                 anoGrupo = gru.AnnoGrupo,
+                numGrupo = gru.Numero,
                 nombreProfeCurso = prof.Persona.Nombre1,
                 apellido1Profe = prof.Persona.Apellido1,
                 apellido2Profe = prof.Persona.Apellido2,
                 formulario = form.Nombre,
-                cedEst=cedulaDelEstudiante, // se guarda muchas veces, no es necesario
+                cedEst = cedulaDelEstudiante,
                 codFormulario = form.CodigoFormulario
-            };            
-            
+            };
+
             return grupos;
         }
         /// <summary>
@@ -73,14 +89,22 @@ namespace Opiniometro_WebApp.Controllers
         /// modifica:--
         /// </summary>
         /// <returns></returns>
-        public string obtenerCedulaEstLoggeado()
-        {            
-            string correoUsLog = IdentidadManager.obtener_correo_actual();
-            string cedula = (from us in db.Usuario
-                             where us.CorreoInstitucional == correoUsLog
-                             select us).First().Cedula.ToString();
-            return cedula;
+        public string obtenerCedulaEstLoggeado(string correo)
+        {
+            ObjectParameter cedula = new ObjectParameter("resultado", "");
+            db.SP_ObtenerCedula(correo, cedula);
+            return cedula.Value.ToString();
         }
 
+        public int ciclo(int mes) {           
+            int ciclo = 0;
+
+            if (mes >= 3 && mes <= 7) { ciclo = 1; }
+            if (mes >= 8 && mes <= 12) { ciclo = 2; }
+            if (mes >= 1 && mes <= 2) { ciclo = 3; }
+
+            return ciclo;
+        }
+            
     }
 }
