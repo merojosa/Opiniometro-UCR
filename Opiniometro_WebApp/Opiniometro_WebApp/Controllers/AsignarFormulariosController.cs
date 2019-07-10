@@ -348,9 +348,7 @@ namespace Opiniometro_WebApp.Controllers
                 CodigoUnidadAcademica = cur.CodigoUnidad,
                 Enfasis = cur.Enfasis.ToList()
             });
-            Debug.WriteLine("\n\n\nPre-filtrado: "+grupos.Count()+" grupos\n");
             grupos = FiltreGrupos(searchString, semestre, anno, codigoUnidadAcadem, siglaCarrera, nombreCurso, grupos);
-            Debug.WriteLine("Pre-filtrado: " + grupos.Count() + " grupos\n\n\n");
 
             return grupos.ToList();
         }
