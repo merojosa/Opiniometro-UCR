@@ -1,19 +1,24 @@
-﻿@model Opiniometro_WebApp.Models.CrearFormularioModel
+﻿@model Opiniometro_WebApp.Models.CopiarSeccionModel
 
 
 
 <h2>Copiar Secciones</h2>
 
+<div class="row ">
+    <div class="col-sm-4"><h4><strong>Codigo:</strong> @Model.Cod_Form_Dest </h4></div>
+    <div class="col-sm-8"><h4><strong>Nombre:</strong> @Model.Nom_Form_Dest</h4></div>
+</div>
+
 <div class="form-group">
     @Html.Label("Formulario", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownList("Formulario", new SelectList(ViewBag.CodigoFormulario, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control", @onchange = "" })
+        @Html.DropDownList("Formulario", new SelectList(ViewBag.CodigoFormulario, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control", @id="dropCodigo" ,@onchange = "" })
 
     </div>
 
     @Html.Label("Sección", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownList("Sección", new SelectList(ViewBag.TituloSeccion, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control", @onchange = "" })
+        @Html.DropDownList("Sección", new SelectList(ViewBag.TituloSeccion, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control", @id = "dropTitulo", @onchange = "" })
 
     </div>
 
