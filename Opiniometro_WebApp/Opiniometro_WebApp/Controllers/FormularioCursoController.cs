@@ -38,7 +38,7 @@ namespace Opiniometro_WebApp.Controllers
                 numGrupo = numGrupo,
                 Secciones = obtenerPreguntasFormulario(codigoForm)
             };
-            return View(modelo);
+            return View("Index",modelo);
         }
 
         public SeccionFormulario[] obtenerPreguntasFormulario(string codigoForm)
@@ -241,28 +241,11 @@ namespace Opiniometro_WebApp.Controllers
         // Esto podria servir para empezar a romper el codigo (separar en metodos)
         public string ObtenerOpcionesSelUnica(string id)
         {
-            //Console.WriteLine(id);
-            //List<SeleccionUnica> preguntas = new List<SeleccionUnica>();
-        /*
-            string id = p.itemId;
-            string texto = p.item;
-            bool? observacion = p.tieneObservacion;
-            int tipo = p.tipoPregunta;*/
             IEnumerable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Unica
                                             where ops.ItemId == id
                                             select ops.OpcionRespuesta;
-            /*preguntas.Add(new SeleccionUnica
-            {
-                itemId = id,
-                item = texto,
-                tieneObservacion = obs,
-                tipoPregunta = tipo,
-                Opciones = opciones.ToList()
-            });*/
-            //SeleccionUnica selec = new SeleccionUnica { itemId = id, item = texto, tieneObservacion = observacion, tipoPregunta = tipo, Opciones = opciones };
             string[] op = opciones.ToArray();
 
-            //return PartialView("SeleccionUnica", selec);
             var json = JsonConvert.SerializeObject(op);
             return json;
         }

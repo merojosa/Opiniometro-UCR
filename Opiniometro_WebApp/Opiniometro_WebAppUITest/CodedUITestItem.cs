@@ -13,19 +13,29 @@ using Keyboard = Microsoft.VisualStudio.TestTools.UITesting.Keyboard;
 namespace Opiniometro_WebAppUITest
 {
     /// <summary>
-    /// Summary description for CodedUITest1
+    /// Summary description for CodedUITest2
     /// </summary>
     [CodedUITest]
-    public class CodedUITest1
+    public class CodedUITestItem
     {
-        public CodedUITest1()
+        public CodedUITestItem()
         {
         }
 
         [TestMethod]
-        public void CodedUITestMethod1()
+        public void CodedUITestCrearItem()
         {
-            // To generate code for this test, select "Generate Code for Coded UI Test" from the shortcut menu and select one of the menu items.
+            this.UIMap.PruebaIngresoAplicacion();
+            
+            this.UIMap.PruebaIntentoCrearPregunta();
+        }
+
+        [TestMethod]
+        public void CodedUITestDespliegueDescripcion()
+        {
+            this.UIMap.PruebaIngresoAplicacion();
+            this.UIMap.PruebaIntentoCrearPregunta();
+            this.UIMap.DespliegueDescripcionComentario();
         }
 
         #region Additional test attributes

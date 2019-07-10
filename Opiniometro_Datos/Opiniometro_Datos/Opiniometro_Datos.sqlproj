@@ -110,6 +110,9 @@
     <Build Include="Escalar.sql" />
     <Build Include="AlmacenarRespuesta.sql" />
     <Build Include="AlmacenarVariasRespuestas.sql" />
+    <Build Include="SP_Insertar_Seleccion_Unica.sql" />
+    <Build Include="TR_AsignarPreguntas.sql" />
+    <Build Include="TR_AsignarSecciones.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ScriptGenerarContrasena.sql" />
