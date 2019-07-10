@@ -53,10 +53,12 @@ namespace Opiniometro_WebApp.Controllers
 
             select new EstudianteGruposMatriculado
             {
+                cedulaProf = prof.CedulaProfesor,
                 siglaCursoMatriculado = mat.Sigla,
                 nombreCursoMatriculado = cur.Nombre,
                 semestreGrupo = gru.SemestreGrupo,
                 anoGrupo = gru.AnnoGrupo,
+                numGrupo = gru.Numero,
                 nombreProfeCurso = prof.Persona.Nombre1,
                 apellido1Profe = prof.Persona.Apellido1,
                 apellido2Profe = prof.Persona.Apellido2,
