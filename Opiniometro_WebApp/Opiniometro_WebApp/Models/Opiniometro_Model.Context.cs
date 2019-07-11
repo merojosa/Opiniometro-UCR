@@ -62,6 +62,7 @@ namespace Opiniometro_WebApp.Models
         public virtual DbSet<Tiene_Usuario_Perfil_Enfasis> Tiene_Usuario_Perfil_Enfasis { get; set; }
         public virtual DbSet<Unidad_Academica> Unidad_Academica { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<Imparte_View> Imparte_View { get; set; }
     
         public virtual ObjectResult<CursosSegunAnno_Result> CursosSegunAnno(Nullable<short> anno)
         {
@@ -97,6 +98,23 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Cedula", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DatosEstudiante_Result>("DatosEstudiante", cedulaParameter);
+        }
+    
+        public virtual int EditarPerfil(string nombre, string nombreViejo, string descripcion, ObjectParameter numero_Error)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var nombreViejoParameter = nombreViejo != null ?
+                new ObjectParameter("nombreViejo", nombreViejo) :
+                new ObjectParameter("nombreViejo", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("descripcion", descripcion) :
+                new ObjectParameter("descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EditarPerfil", nombreParameter, nombreViejoParameter, descripcionParameter, numero_Error);
         }
     
         public virtual ObjectResult<MostrarEstudiantes_Result> MostrarEstudiantes()
@@ -372,6 +390,83 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_GenerarIdUnico", id);
         }
     
+        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica(string itemid, Nullable<short> orden, string opcionrespuesta)
+        {
+            var itemidParameter = itemid != null ?
+                new ObjectParameter("itemid", itemid) :
+                new ObjectParameter("itemid", typeof(string));
+    
+            var ordenParameter = orden.HasValue ?
+                new ObjectParameter("orden", orden) :
+                new ObjectParameter("orden", typeof(short));
+    
+            var opcionrespuestaParameter = opcionrespuesta != null ?
+                new ObjectParameter("opcionrespuesta", opcionrespuesta) :
+                new ObjectParameter("opcionrespuesta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica", itemidParameter, ordenParameter, opcionrespuestaParameter);
+        }
+    
+        public virtual int SP_Insertar_Seccion(string titulo, string descripcion)
+        {
+            var tituloParameter = titulo != null ?
+                new ObjectParameter("titulo", titulo) :
+                new ObjectParameter("titulo", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("descripcion", descripcion) :
+                new ObjectParameter("descripcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Insertar_Seccion", tituloParameter, descripcionParameter);
+        }
+    
+        public virtual int SP_Insertar_Seleccion_Unica(string itemid, Nullable<bool> isalikedislike)
+        {
+            var itemidParameter = itemid != null ?
+                new ObjectParameter("itemid", itemid) :
+                new ObjectParameter("itemid", typeof(string));
+    
+            var isalikedislikeParameter = isalikedislike.HasValue ?
+                new ObjectParameter("isalikedislike", isalikedislike) :
+                new ObjectParameter("isalikedislike", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Insertar_Seleccion_Unica", itemidParameter, isalikedislikeParameter);
+        }
+    
+        public virtual int SP_InsertaTablaPosee(Nullable<byte> numeroEnf, string sigla, string nombrePerfil, Nullable<short> idPermiso, ObjectParameter numero_Error)
+        {
+            var numeroEnfParameter = numeroEnf.HasValue ?
+                new ObjectParameter("NumeroEnf", numeroEnf) :
+                new ObjectParameter("NumeroEnf", typeof(byte));
+    
+            var siglaParameter = sigla != null ?
+                new ObjectParameter("Sigla", sigla) :
+                new ObjectParameter("Sigla", typeof(string));
+    
+            var nombrePerfilParameter = nombrePerfil != null ?
+                new ObjectParameter("NombrePerfil", nombrePerfil) :
+                new ObjectParameter("NombrePerfil", typeof(string));
+    
+            var idPermisoParameter = idPermiso.HasValue ?
+                new ObjectParameter("IdPermiso", idPermiso) :
+                new ObjectParameter("IdPermiso", typeof(short));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertaTablaPosee", numeroEnfParameter, siglaParameter, nombrePerfilParameter, idPermisoParameter, numero_Error);
+        }
+    
         public virtual int SP_LoginUsuario(string correo, string contrasenna, ObjectParameter resultado)
         {
             var correoParameter = correo != null ?
@@ -383,6 +478,23 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Contrasenna", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_LoginUsuario", correoParameter, contrasennaParameter, resultado);
+        }
+    
+        public virtual int SP_ModificarPerfilUsuario(string correo, string perfil, Nullable<bool> modifica)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var perfilParameter = perfil != null ?
+                new ObjectParameter("perfil", perfil) :
+                new ObjectParameter("perfil", typeof(string));
+    
+            var modificaParameter = modifica.HasValue ?
+                new ObjectParameter("modifica", modifica) :
+                new ObjectParameter("modifica", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPerfilUsuario", correoParameter, perfilParameter, modificaParameter);
         }
     
         public virtual int SP_ModificarPersona(string cedulaBusqueda, string cedula, string nombre1, string nombre2, string apellido1, string apellido2, string correo)
@@ -418,6 +530,15 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPersona", cedulaBusquedaParameter, cedulaParameter, nombre1Parameter, nombre2Parameter, apellido1Parameter, apellido2Parameter, correoParameter);
         }
     
+        public virtual int SP_ObtenerCedula(string correoInstit, ObjectParameter resultado)
+        {
+            var correoInstitParameter = correoInstit != null ?
+                new ObjectParameter("correoInstit", correoInstit) :
+                new ObjectParameter("correoInstit", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ObtenerCedula", correoInstitParameter, resultado);
+        }
+    
         public virtual ObjectResult<string> SP_ObtenerFormulario(string cod)
         {
             var codParameter = cod != null ?
@@ -447,6 +568,54 @@ namespace Opiniometro_WebApp.Models
                 new ObjectParameter("Perfil", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ObtenerPermisosUsuario_Result>("SP_ObtenerPermisosUsuario", correoParameter, perfilParameter);
+        }
+    
+        public virtual ObjectResult<string> SP_RecuperarEtiquetas(Nullable<int> tipoPregunta, string idPregunta)
+        {
+            var tipoPreguntaParameter = tipoPregunta.HasValue ?
+                new ObjectParameter("tipoPregunta", tipoPregunta) :
+                new ObjectParameter("tipoPregunta", typeof(int));
+    
+            var idPreguntaParameter = idPregunta != null ?
+                new ObjectParameter("idPregunta", idPregunta) :
+                new ObjectParameter("idPregunta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_RecuperarEtiquetas", tipoPreguntaParameter, idPreguntaParameter);
+        }
+    
+        public virtual ObjectResult<SP_RecuperarEtiquetasEscalar_Result> SP_RecuperarEtiquetasEscalar(Nullable<int> tipoPregunta, string idPregunta)
+        {
+            var tipoPreguntaParameter = tipoPregunta.HasValue ?
+                new ObjectParameter("tipoPregunta", tipoPregunta) :
+                new ObjectParameter("tipoPregunta", typeof(int));
+    
+            var idPreguntaParameter = idPregunta != null ?
+                new ObjectParameter("idPregunta", idPregunta) :
+                new ObjectParameter("idPregunta", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_RecuperarEtiquetasEscalar_Result>("SP_RecuperarEtiquetasEscalar", tipoPreguntaParameter, idPreguntaParameter);
+        }
+    
+        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var new_diagramnameParameter = new_diagramname != null ?
+                new ObjectParameter("new_diagramname", new_diagramname) :
+                new ObjectParameter("new_diagramname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
+        }
+    
+        public virtual int sp_upgraddiagrams()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     }
 }

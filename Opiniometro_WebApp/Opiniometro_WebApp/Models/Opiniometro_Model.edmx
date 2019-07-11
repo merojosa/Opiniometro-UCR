@@ -124,6 +124,7 @@
           </Key>
           <Property Name="CodigoFormulario" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="25" />
+          <Property Name="CodigoUnidadAca" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Formulario_Respuesta">
           <Key>
@@ -379,6 +380,27 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RecuperarContrasenna" Type="bit" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Opiniometro.dbo.Imparte_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Imparte_View">
+          <Key>
+            <PropertyRef Name="CedulaProfesor" />
+            <PropertyRef Name="Numero" />
+            <PropertyRef Name="Sigla" />
+            <PropertyRef Name="Anno" />
+            <PropertyRef Name="Semestre" />
+          </Key>
+          <Property Name="CedulaProfesor" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="Numero" Type="tinyint" Nullable="false" />
+          <Property Name="Sigla" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="Anno" Type="smallint" Nullable="false" />
+          <Property Name="Semestre" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="ValorRandom">
+          <Property Name="randomvalue" Type="varbinary" MaxLength="8000" />
+        </EntityType>-->
         <Association Name="FK_Adm_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Administrativo" Type="Self.Administrativo" Multiplicity="0..1" />
@@ -546,6 +568,18 @@
             </Principal>
             <Dependent Role="Facultad">
               <PropertyRef Name="CodigoUnidadAcademica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_For_Uni">
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="0..1" />
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Formulario">
+              <PropertyRef Name="CodigoUnidadAca" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -985,6 +1019,13 @@
         <Function Name="DatosEstudiante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="EditarPerfil" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="nombreViejo" Type="varchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="Numero_Error" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="MostrarEstudiantes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="NombrePersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Cedula" Type="varchar" Mode="In" />
@@ -998,6 +1039,15 @@
         <Function Name="ObtenerPerfilUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correo" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="ProcIntroducirSeccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="titulo" Type="nvarchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ProcIntroduFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="char" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SF_GenerarContrasena" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
         <Function Name="SP_AgregarPersonaUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
@@ -1064,10 +1114,39 @@
         <Function Name="SP_GenerarIdUnico" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="uniqueidentifier" Mode="InOut" />
         </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="itemid" Type="nvarchar" Mode="In" />
+          <Parameter Name="orden" Type="smallint" Mode="In" />
+          <Parameter Name="opcionrespuesta" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Insertar_Seccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="titulo" Type="nvarchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Insertar_Seleccion_Unica" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="itemid" Type="nvarchar" Mode="In" />
+          <Parameter Name="isalikedislike" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SP_InsertaTablaPosee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NumeroEnf" Type="tinyint" Mode="In" />
+          <Parameter Name="Sigla" Type="nvarchar" Mode="In" />
+          <Parameter Name="NombrePerfil" Type="varchar" Mode="In" />
+          <Parameter Name="IdPermiso" Type="smallint" Mode="In" />
+          <Parameter Name="Numero_Error" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="SP_LoginUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
+        </Function>
+        <Function Name="SP_ModificarPerfilUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correo" Type="nvarchar" Mode="In" />
+          <Parameter Name="perfil" Type="nvarchar" Mode="In" />
+          <Parameter Name="modifica" Type="bit" Mode="In" />
         </Function>
         <Function Name="SP_ModificarPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CedulaBusqueda" Type="varchar" Mode="In" />
@@ -1077,6 +1156,10 @@
           <Parameter Name="Apellido1" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido2" Type="nvarchar" Mode="In" />
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ObtenerCedula" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correoInstit" Type="nvarchar" Mode="In" />
+          <Parameter Name="resultado" Type="char" Mode="InOut" />
         </Function>
         <Function Name="SP_ObtenerFormulario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cod" Type="char" Mode="In" />
@@ -1090,8 +1173,21 @@
           <Parameter Name="Correo" Type="nvarchar" Mode="In" />
           <Parameter Name="Perfil" Type="varchar" Mode="In" />
         </Function>
-        <EntityContainer Name="Opiniometro_DatosModelStoreContainer">
-          <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
+        <Function Name="SP_RecuperarEtiquetas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tipoPregunta" Type="int" Mode="In" />
+          <Parameter Name="idPregunta" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_RecuperarEtiquetasEscalar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tipoPregunta" Type="int" Mode="In" />
+          <Parameter Name="idPregunta" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="Opiniometro_ModelStoreContainer">
           <EntitySet Name="Administrativo" EntityType="Self.Administrativo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
@@ -1129,6 +1225,15 @@
           <EntitySet Name="Tiene_Usuario_Perfil_Enfasis" EntityType="Self.Tiene_Usuario_Perfil_Enfasis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unidad_Academica" EntityType="Self.Unidad_Academica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Imparte_View" EntityType="Self.Imparte_View" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Imparte_View].[CedulaProfesor] AS [CedulaProfesor], 
+    [Imparte_View].[Numero] AS [Numero], 
+    [Imparte_View].[Sigla] AS [Sigla], 
+    [Imparte_View].[Anno] AS [Anno], 
+    [Imparte_View].[Semestre] AS [Semestre]
+    FROM [dbo].[Imparte_View] AS [Imparte_View]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Adm_Per" Association="Self.FK_Adm_Per">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Administrativo" EntitySet="Administrativo" />
@@ -1184,6 +1289,10 @@
           <AssociationSet Name="FK_Fac_Uni" Association="Self.FK_Fac_Uni">
             <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
             <End Role="Facultad" EntitySet="Facultad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_For_Uni" Association="Self.FK_For_Uni">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Formulario" EntitySet="Formulario" />
           </AssociationSet>
           <AssociationSet Name="FK_ForRes_For" Association="Self.FK_ForRes_For">
             <End Role="Formulario" EntitySet="Formulario" />
@@ -1450,7 +1559,10 @@
           </Key>
           <Property Name="CodigoFormulario" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoUnidadAca" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Conformado_For_Sec" Relationship="Self.FK_Conf_For" FromRole="Formulario" ToRole="Conformado_For_Sec" />
           <NavigationProperty Name="Conformado_Item_Sec_Form" Relationship="Self.FK_Con_For" FromRole="Formulario" ToRole="Conformado_Item_Sec_Form" />
+          <NavigationProperty Name="Unidad_Academica" Relationship="Self.FK_For_Uni" FromRole="Formulario" ToRole="Unidad_Academica" />
           <NavigationProperty Name="Formulario_Respuesta" Relationship="Self.FK_ForRes_For" FromRole="Formulario" ToRole="Formulario_Respuesta" />
           <NavigationProperty Name="Tiene_Grupo_Formulario" Relationship="Self.FK_Tie_For" FromRole="Formulario" ToRole="Tiene_Grupo_Formulario" />
         </EntityType>
@@ -1727,6 +1839,7 @@
           <NavigationProperty Name="Carrera" Relationship="Self.FK_Car_Uni" FromRole="Unidad_Academica" ToRole="Carrera" />
           <NavigationProperty Name="Curso" Relationship="Self.FK_Cur_Uni" FromRole="Unidad_Academica" ToRole="Curso" />
           <NavigationProperty Name="Facultad" Relationship="Self.FK_Fac_Uni" FromRole="Unidad_Academica" ToRole="Facultad" />
+          <NavigationProperty Name="Formulario" Relationship="Self.FK_For_Uni" FromRole="Unidad_Academica" ToRole="Formulario" />
           <NavigationProperty Name="Facultad1" Relationship="Self.Escuela" FromRole="Unidad_Academica" ToRole="Facultad" />
         </EntityType>
         <EntityType Name="Usuario">
@@ -1741,6 +1854,20 @@
           <Property Name="RecuperarContrasenna" Type="Boolean" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Usu_Per" FromRole="Usuario" ToRole="Persona" />
           <NavigationProperty Name="Tiene_Usuario_Perfil_Enfasis" Relationship="Self.FK_CorreoInstitucional_Tiene_Usuario_Perfil_Enfasis" FromRole="Usuario" ToRole="Tiene_Usuario_Perfil_Enfasis" />
+        </EntityType>
+        <EntityType Name="Imparte_View">
+          <Key>
+            <PropertyRef Name="CedulaProfesor" />
+            <PropertyRef Name="Numero" />
+            <PropertyRef Name="Sigla" />
+            <PropertyRef Name="Anno" />
+            <PropertyRef Name="Semestre" />
+          </Key>
+          <Property Name="CedulaProfesor" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Numero" Type="Byte" Nullable="false" />
+          <Property Name="Sigla" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Anno" Type="Int16" Nullable="false" />
+          <Property Name="Semestre" Type="Byte" Nullable="false" />
         </EntityType>
         <Association Name="FK_Adm_Per">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
@@ -1967,6 +2094,18 @@
             <Dependent Role="Tiene_Grupo_Formulario">
               <PropertyRef Name="FechaInicio" />
               <PropertyRef Name="FechaFinal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_For_Uni">
+          <End Role="Unidad_Academica" Type="Self.Unidad_Academica" Multiplicity="0..1" />
+          <End Role="Formulario" Type="Self.Formulario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidad_Academica">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Formulario">
+              <PropertyRef Name="CodigoUnidadAca" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2304,6 +2443,7 @@
           <EntitySet Name="Tiene_Usuario_Perfil_Enfasis" EntityType="Self.Tiene_Usuario_Perfil_Enfasis" />
           <EntitySet Name="Unidad_Academica" EntityType="Self.Unidad_Academica" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <EntitySet Name="Imparte_View" EntityType="Self.Imparte_View" />
           <AssociationSet Name="FK_Adm_Per" Association="Self.FK_Adm_Per">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Administrativo" EntitySet="Administrativo" />
@@ -2375,6 +2515,10 @@
           <AssociationSet Name="FK_Tie_Fec" Association="Self.FK_Tie_Fec">
             <End Role="Fecha_Corte" EntitySet="Fecha_Corte" />
             <End Role="Tiene_Grupo_Formulario" EntitySet="Tiene_Grupo_Formulario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_For_Uni" Association="Self.FK_For_Uni">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Formulario" EntitySet="Formulario" />
           </AssociationSet>
           <AssociationSet Name="FK_ForRes_For" Association="Self.FK_ForRes_For">
             <End Role="Formulario" EntitySet="Formulario" />
@@ -2484,7 +2628,13 @@
           <FunctionImport Name="DatosEstudiante" ReturnType="Collection(Opiniometro_DatosModel.DatosEstudiante_Result)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_DatosModel.MostrarEstudiantes_Result)" />
+          <FunctionImport Name="EditarPerfil">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="nombreViejo" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+            <Parameter Name="Numero_Error" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="MostrarEstudiantes" ReturnType="Collection(Opiniometro_Model.MostrarEstudiantes_Result)" />
           <FunctionImport Name="NombrePersona" ReturnType="Collection(String)">
             <Parameter Name="Cedula" Mode="In" Type="String" />
           </FunctionImport>
@@ -2569,10 +2719,39 @@
           <FunctionImport Name="SP_GenerarIdUnico">
             <Parameter Name="id" Mode="InOut" Type="Guid" />
           </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Opiniometro_Model.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica">
+            <Parameter Name="itemid" Mode="In" Type="String" />
+            <Parameter Name="orden" Mode="In" Type="Int16" />
+            <Parameter Name="opcionrespuesta" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insertar_Seccion">
+            <Parameter Name="titulo" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insertar_Seleccion_Unica">
+            <Parameter Name="itemid" Mode="In" Type="String" />
+            <Parameter Name="isalikedislike" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InsertaTablaPosee">
+            <Parameter Name="NumeroEnf" Mode="In" Type="Byte" />
+            <Parameter Name="Sigla" Mode="In" Type="String" />
+            <Parameter Name="NombrePerfil" Mode="In" Type="String" />
+            <Parameter Name="IdPermiso" Mode="In" Type="Int16" />
+            <Parameter Name="Numero_Error" Mode="InOut" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="SP_LoginUsuario">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Resultado" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ModificarPerfilUsuario">
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="modifica" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="SP_ModificarPersona">
             <Parameter Name="CedulaBusqueda" Mode="In" Type="String" />
@@ -2582,6 +2761,10 @@
             <Parameter Name="Apellido1" Mode="In" Type="String" />
             <Parameter Name="Apellido2" Mode="In" Type="String" />
             <Parameter Name="Correo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ObtenerCedula">
+            <Parameter Name="correoInstit" Mode="In" Type="String" />
+            <Parameter Name="resultado" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ObtenerFormulario" ReturnType="Collection(String)">
             <Parameter Name="cod" Mode="In" Type="String" />
@@ -2595,6 +2778,20 @@
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Perfil" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_RecuperarEtiquetas" ReturnType="Collection(String)">
+            <Parameter Name="tipoPregunta" Mode="In" Type="Int32" />
+            <Parameter Name="idPregunta" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_RecuperarEtiquetasEscalar" ReturnType="Collection(Opiniometro_Model.SP_RecuperarEtiquetasEscalar_Result)">
+            <Parameter Name="tipoPregunta" Mode="In" Type="Int32" />
+            <Parameter Name="idPregunta" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
         <ComplexType Name="CursosSegunAnno_Result">
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="75" />
@@ -2647,6 +2844,11 @@
           <Property Type="String" Name="SiglaCarrera" Nullable="false" MaxLength="10" />
           <Property Type="Byte" Name="NumeroEnfasis" Nullable="false" />
           <Property Type="Int16" Name="IdPermiso" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_RecuperarEtiquetasEscalar_Result">
+          <Property Type="Int16" Name="Inicio" Nullable="false" />
+          <Property Type="Int16" Name="Fin" Nullable="false" />
+          <Property Type="Int16" Name="Incremento" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2771,6 +2973,7 @@
               <MappingFragment StoreEntitySet="Formulario">
                 <ScalarProperty Name="CodigoFormulario" ColumnName="CodigoFormulario" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CodigoUnidadAca" ColumnName="CodigoUnidadAca" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2984,7 +3187,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Escuela" TypeName="Opiniometro_DatosModel.Escuela" StoreEntitySet="Escuela">
+          <EntitySetMapping Name="Imparte_View">
+            <EntityTypeMapping TypeName="Opiniometro_Model.Imparte_View">
+              <MappingFragment StoreEntitySet="Imparte_View">
+                <ScalarProperty Name="CedulaProfesor" ColumnName="CedulaProfesor" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
+                <ScalarProperty Name="Anno" ColumnName="Anno" />
+                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Escuela" TypeName="Opiniometro_Model.Escuela" StoreEntitySet="Escuela">
             <EndProperty Name="Facultad">
               <ScalarProperty Name="CodigoUnidadAcademica" ColumnName="CodigoFacultad" />
             </EndProperty>
@@ -3042,7 +3256,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_DatosModel.Store.DatosEstudiante">
+          <FunctionImportMapping FunctionImportName="DatosEstudiante" FunctionName="Opiniometro_Model.Store.DatosEstudiante" />
+          <FunctionImportMapping FunctionImportName="EditarPerfil" FunctionName="Opiniometro_Model.Store.EditarPerfil" />
+          <FunctionImportMapping FunctionImportName="MostrarEstudiantes" FunctionName="Opiniometro_Model.Store.MostrarEstudiantes">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Opiniometro_DatosModel.DatosEstudiante_Result">
                 <ScalarProperty Name="Nombre_Completo" ColumnName="Nombre Completo" />
@@ -3122,13 +3338,46 @@
           <FunctionImportMapping FunctionImportName="SP_ObtenerNombre" FunctionName="Opiniometro_DatosModel.Store.SP_ObtenerNombre" />
           <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_DatosModel.Store.SP_ObtenerPermisosUsuario">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Opiniometro_DatosModel.SP_ObtenerPermisosUsuario_Result">
+              <ComplexTypeMapping TypeName="Opiniometro_Model.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica" />
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Seccion" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seccion" />
+          <FunctionImportMapping FunctionImportName="SP_Insertar_Seleccion_Unica" FunctionName="Opiniometro_Model.Store.SP_Insertar_Seleccion_Unica" />
+          <FunctionImportMapping FunctionImportName="SP_InsertaTablaPosee" FunctionName="Opiniometro_Model.Store.SP_InsertaTablaPosee" />
+          <FunctionImportMapping FunctionImportName="SP_LoginUsuario" FunctionName="Opiniometro_Model.Store.SP_LoginUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_ModificarPerfilUsuario" FunctionName="Opiniometro_Model.Store.SP_ModificarPerfilUsuario" />
+          <FunctionImportMapping FunctionImportName="SP_ModificarPersona" FunctionName="Opiniometro_Model.Store.SP_ModificarPersona" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerCedula" FunctionName="Opiniometro_Model.Store.SP_ObtenerCedula" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerFormulario" FunctionName="Opiniometro_Model.Store.SP_ObtenerFormulario" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerNombre" FunctionName="Opiniometro_Model.Store.SP_ObtenerNombre" />
+          <FunctionImportMapping FunctionImportName="SP_ObtenerPermisosUsuario" FunctionName="Opiniometro_Model.Store.SP_ObtenerPermisosUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Opiniometro_Model.SP_ObtenerPermisosUsuario_Result">
                 <ScalarProperty Name="SiglaCarrera" ColumnName="SiglaCarrera" />
                 <ScalarProperty Name="NumeroEnfasis" ColumnName="NumeroEnfasis" />
                 <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_RecuperarEtiquetas" FunctionName="Opiniometro_Model.Store.SP_RecuperarEtiquetas" />
+          <FunctionImportMapping FunctionImportName="SP_RecuperarEtiquetasEscalar" FunctionName="Opiniometro_Model.Store.SP_RecuperarEtiquetasEscalar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Opiniometro_Model.SP_RecuperarEtiquetasEscalar_Result">
+                <ScalarProperty Name="Inicio" ColumnName="Inicio" />
+                <ScalarProperty Name="Fin" ColumnName="Fin" />
+                <ScalarProperty Name="Incremento" ColumnName="Incremento" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Opiniometro_Model.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Opiniometro_Model.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

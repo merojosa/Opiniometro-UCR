@@ -31,11 +31,11 @@ namespace Opiniometro_WebApp.Controllers
          */
         public ActionResult Login()
         {
-            // Eliminar el correo de recuperar en caso de que se devuelva al login se haber cambiado la contrasenna.
+            // Eliminar el correo de recuperar en caso de que se devuelva al login de haber cambiado la contrasenna.
             Session.Remove("recuperar");
 
             // Si esta autenticado, redireccione a Home.
-            if (IdentidadManager.obtener_correo_actual() != null)      
+            if (IdentidadManager.obtener_correo_actual() != null && IdentidadManager.verificar_sesion(this) == true)      
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -48,7 +48,7 @@ namespace Opiniometro_WebApp.Controllers
 
         /*  
          *  EFECTO: verificar los datos brindados en la base de datos.
-         *  REQUIERE: correo y contrasenna en "empaquetado" en la clase Usuario.
+         *  REQUIERE: correo y contrasenna "empaquetado" en la clase Usuario.
          *  MODIFICA: la identidad para que el usario este loggeado en el sistema.
          *  
          *  Basado en:
@@ -59,6 +59,7 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public ActionResult Login(Usuario usuario)
         {
+            eliminar_privilegios(this);
             ObjectParameter exito = new ObjectParameter("Resultado", 0);
             bool error_conexion = false;
             try

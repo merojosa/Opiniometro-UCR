@@ -40,6 +40,15 @@
                                 {
                                     <li class="disabled"><a id="link_deshabilitado">Asignar/Revocar permisos</a></li>
                                 }
+                                if (permisos_usuario.verificar_permiso(IdPermiso.VER_INFORMACION_PERSONAS))
+                                {
+                                    <li>@Html.ActionLink("Ver perfiles", "VerPerfiles", "Perfil")</li>
+                                }
+                                else
+                                {
+                                    <li class="disabled"><a id="link_deshabilitado">Ver información de personas</a></li>
+                                }
+
                                 if (permisos_usuario.verificar_permiso(IdPermiso.CREAR_PERFIL))
                                 {
                                     <li>@Html.ActionLink("Crear perfil", "Crear", "Perfil")</li>
@@ -49,14 +58,7 @@
                                     <li class="disabled"><a id="link_deshabilitado">Crear perfil</a></li>
                                 }
 
-                                if (permisos_usuario.verificar_permiso(IdPermiso.VER_INFORMACION_PERSONAS))
-                                {
-                                    <li>@Html.ActionLink("Ver perfiles", "VerPerfiles", "Perfil")</li>
-                                }
-                                else
-                                {
-                                    <li class="disabled"><a id="link_deshabilitado">Ver información de personas</a></li>
-                                }
+
 
                                 if (permisos_usuario.verificar_permiso(IdPermiso.ELIMINAR_PERFILES))
                                 {
@@ -73,32 +75,31 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             @{
-                                if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VER_INFORMACION_PERSONAS))
+                                if (permisos_usuario.verificar_permiso(IdPermiso.VER_INFORMACION_PERSONAS))
                                 {
-                                    <li>@Html.ActionLink("Ver información de personas", "VerPersonas", "Admin")</li>
+                                    <li>@Html.ActionLink("Ver información de personas", "VerPersonas", "Administrador")</li>
                                 }
                                 else
                                 {
                                     <li class="disabled"><a id="link_deshabilitado">Ver información de personas</a></li>
                                 }
 
-                                if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.INSERTAR_USUARIO))
+                                if (permisos_usuario.verificar_permiso(IdPermiso.INSERTAR_USUARIO))
                                 {
-                                    <li>@Html.ActionLink("Insertar usuario", "CrearUsuario", "Admin")</li>
+                                    <li>@Html.ActionLink("Insertar usuario", "CrearUsuario", "Administrador")</li>
                                 }
                                 else
                                 {
                                     <li class="disabled"><a id="link_deshabilitado">Insertar usuario</a></li>
                                 }
 
-                                if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.INSERTAR_USUARIO))
+                                if (permisos_usuario.verificar_permiso(IdPermiso.INSERTAR_USUARIO))
                                 {
                                     <li>@Html.ActionLink("Cargar Usuarios", "CargarUsuarios", "Administrador")</li>
                                 }
                                 else
                                 {                                    
-                                    <li>@Html.ActionLink("Cargar Usuarios", "CargarUsuarios", "Administrador")</li>
-                                    <!-- <li class="disabled"><a>Cargar Archivo</a></li> -->
+                                    <li class="disabled"><a id="link_deshabilitado">Cargar Archivo</a></li>
                                 }
                             }
                         </ul>
@@ -136,7 +137,7 @@
 
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VER_SECCIONES))
                                 {
-                                    <li>@Html.ActionLink("Sección", "Index", "Seccion")</li>
+                                    <li>@Html.ActionLink("Insertar Secciones", "Index", "Seccion")</li>
                                 }
                                 else
                                 {
@@ -145,7 +146,7 @@
 
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VER_ITEMS))
                                 {
-                                    <li>@Html.ActionLink("Ítem", "Index", "Item")</li>
+                                    <li>@Html.ActionLink("Insertar Items", "Index", "Item")</li>
                                 }
                                 else
                                 {
