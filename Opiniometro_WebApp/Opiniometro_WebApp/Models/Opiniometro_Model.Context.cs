@@ -574,6 +574,23 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_LoginUsuario", correoParameter, contrasennaParameter, resultado);
         }
     
+        public virtual int SP_ModificarPerfilUsuario(string correo, string perfil, Nullable<bool> modifica)
+        {
+            var correoParameter = correo != null ?
+                new ObjectParameter("correo", correo) :
+                new ObjectParameter("correo", typeof(string));
+    
+            var perfilParameter = perfil != null ?
+                new ObjectParameter("perfil", perfil) :
+                new ObjectParameter("perfil", typeof(string));
+    
+            var modificaParameter = modifica.HasValue ?
+                new ObjectParameter("modifica", modifica) :
+                new ObjectParameter("modifica", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPerfilUsuario", correoParameter, perfilParameter, modificaParameter);
+        }
+    
         public virtual int SP_ModificarPersona(string cedulaBusqueda, string cedula, string nombre1, string nombre2, string apellido1, string apellido2, string correo)
         {
             var cedulaBusquedaParameter = cedulaBusqueda != null ?
@@ -693,40 +710,6 @@ namespace Opiniometro_WebApp.Models
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
-        }
-    
-        public virtual int EditarPerfil(string nombre, string nombreViejo, string descripcion, ObjectParameter numero_Error)
-        {
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("nombre", nombre) :
-                new ObjectParameter("nombre", typeof(string));
-    
-            var nombreViejoParameter = nombreViejo != null ?
-                new ObjectParameter("nombreViejo", nombreViejo) :
-                new ObjectParameter("nombreViejo", typeof(string));
-    
-            var descripcionParameter = descripcion != null ?
-                new ObjectParameter("descripcion", descripcion) :
-                new ObjectParameter("descripcion", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EditarPerfil", nombreParameter, nombreViejoParameter, descripcionParameter, numero_Error);
-        }
-    
-        public virtual int SP_ModificarPerfilUsuario(string correo, string perfil, Nullable<bool> modifica)
-        {
-            var correoParameter = correo != null ?
-                new ObjectParameter("correo", correo) :
-                new ObjectParameter("correo", typeof(string));
-    
-            var perfilParameter = perfil != null ?
-                new ObjectParameter("perfil", perfil) :
-                new ObjectParameter("perfil", typeof(string));
-    
-            var modificaParameter = modifica.HasValue ?
-                new ObjectParameter("modifica", modifica) :
-                new ObjectParameter("modifica", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ModificarPerfilUsuario", correoParameter, perfilParameter, modificaParameter);
         }
     }
 }
