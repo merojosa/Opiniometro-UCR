@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.CodeDom;
 using System.IO;
 using System.Collections.Generic;
@@ -599,8 +599,7 @@ namespace Opiniometro_WebApp.Controllers
 
         private void InsertarEnUsuarioBD(DataRow filaAInsertar, DataTable usuarioBD)
         {
-            /*string hileraConexion =
-                "data source=(localdb)\\ProjectsV13;initial catalog=Opiniometro_Datos;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;";*/
+            
             DataRow filaNueva = usuarioBD.NewRow();
             filaNueva["CorreoInstitucional"] = filaAInsertar["CorreoInstitucional"];
 
