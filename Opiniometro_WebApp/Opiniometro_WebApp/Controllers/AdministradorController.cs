@@ -597,8 +597,8 @@ namespace Opiniometro_WebApp.Controllers
 
         private void InsertarEnUsuarioBD(DataRow filaAInsertar, DataTable usuarioBD)
         {
-            string hileraConexion =
-                "data source=(localdb)\\ProjectsV13;initial catalog=Opiniometro_Datos;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;";
+            /*string hileraConexion =
+                "data source=(localdb)\\ProjectsV13;initial catalog=Opiniometro_Datos;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;";*/
             DataRow filaNueva = usuarioBD.NewRow();
             filaNueva["CorreoInstitucional"] = filaAInsertar["CorreoInstitucional"];
 
@@ -719,11 +719,10 @@ namespace Opiniometro_WebApp.Controllers
         {
 
             //HILERA SERVIDOR UCR
-            //string hileraConexion = "data source=10.1.4.55;initial catalog=Opiniometro;persist security info=True;user id=DeveloperOp;password=devop2019;multipleactiveresultsets=True;application name=EntityFramework&quot;";
+            string hileraConexion = "data source=10.1.4.55;initial catalog=Opiniometro;persist security info=True;user id=DeveloperOp;password=devop2019;multipleactiveresultsets=True;application name=EntityFramework&quot;";
 
             //HILERA LOCAL
-            string hileraConexion =
-                "data source=(localdb)\\ProjectsV13;initial catalog=Opiniometro_Datos;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;";
+            //string hileraConexion = "data source=(localdb)\\ProjectsV13;initial catalog=Opiniometro_Datos;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;";
             using (SqlConnection conexionBD = new SqlConnection(hileraConexion))
             {
                 
