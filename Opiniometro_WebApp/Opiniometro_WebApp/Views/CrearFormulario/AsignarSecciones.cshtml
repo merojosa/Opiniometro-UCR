@@ -10,6 +10,90 @@
 </div>
 
 <div class="form-group">
+    @*<div class="row">
+        <div class="col-sm-6">
+            <h4 align='center'><strong>@Html.Label("Secciones")</strong></h4>
+            <table class="table table-bordered table-striped fixed_header">
+                <tr>
+                    <td>
+                        @Html.Label("Seleccione la sección")
+                    </td>
+                    <td>
+                        @Html.Label("Titulo")
+                    </td>
+                    <td>
+                        @Html.Label("Descripción")
+                    </td>
+                </tr>
+
+
+                @foreach (var seccion in Model.Secciones)
+                {
+                    <tr>
+                        <td>
+                            <input type="radio" id="seccion" name="seccion" value="@seccion.Titulo" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => seccion.Titulo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => seccion.Descripcion)
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+
+        </div>
+
+        <div class="col-sm-6">
+            <h4 align='center'><strong>@Html.Label("Banco de Preguntas")</strong></h4>
+            <table class="table table-bordered table-striped fixed_header">
+                <tr>
+                    <td></td>
+                    <td>
+                        @Html.Label("Código")
+                    </td>
+                    <td>
+                        @Html.Label("Planteamiento")
+                    </td>
+                    <td>
+                        @Html.Label("Tipo")
+                    </td>
+                </tr>
+
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <input type="radio" name="item" id="item" value="@item.ItemId" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.I)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TextoPregunta)
+                        </td>
+                        <td>
+                          
+
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+        </div>
+
+
+
+
+
+
+    </div>*@
+    
     @Html.Label("Formulario", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.DropDownList("Formulario", new SelectList(ViewBag.CodigoFormulario, "Value", "Text"), "Seleccione", htmlAttributes: new { @class = "form-control", @id="dropCodigo" ,@onchange = "" })
