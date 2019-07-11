@@ -28,6 +28,9 @@
             @Html.Label("Nombre")
             @*@Html.DisplayNameFor(model => model.Nombre)*@
         </th>
+        <th>
+            @Html.Label("Unidad Academica Asignada")
+        </th>
         <th></th>
     </tr>
 
@@ -40,6 +43,9 @@
 
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoUnidadAca)
             </td>
             <td>
                 @*<input type="button" value="Asignar preguntas" class="btn btn-secondary" id="botonNuevaSeccion" onclick="accionBotonAsignarPregunta()"/>*@
