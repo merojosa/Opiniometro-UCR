@@ -366,9 +366,6 @@
     <Compile Include="Models\SP_RecuperarEtiquetasEscalar_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SP_RecuperarEtiquetasEscalar_Result.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
