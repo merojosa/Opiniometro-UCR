@@ -90,7 +90,7 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public PartialViewResult CopiarSeccion(CopiarSeccionModel copiarSeccion)
         {
-            db.SP_CopiarSeccion(copiarSeccion.Cod_Form_Origen, copiarSeccion.Titulo_Seccion, copiarSeccion.Cod_Form_Dest);
+            //db.SP_CopiarSeccion(copiarSeccion.Cod_Form_Origen, copiarSeccion.Titulo_Seccion, copiarSeccion.Cod_Form_Dest);
 
             return null;
         }
