@@ -39,6 +39,34 @@ namespace Opiniometro_WebAppTest.Controllers
             Assert.IsNull(result);
         }
 
+        [TestMethod]
+        public void TestObtenerCursos()
+        {
+            //Arrange
+            AsignarFormulariosController asignar = new AsignarFormulariosController();
+            //Act
+            IQueryable<Curso> lista = asignar.ObtenerCursos(null, null, "UC-023874", "SC-01234", null);
+            //Assert
+            Assert.IsNotNull(lista);
+        }
+
+        //[TestMethod]
+        //public void TestMockControllerObtenerCarreras()
+        //{
+        //    var mockDb = new Mock<Opiniometro_DatosEntities>();
+
+        //    Carrera C = new Carrera() { Sigla = "Sigla", Nombre = "Nombre", CodigoUnidadAcademica = "Codigo" };
+
+        //    mockDb.Object.Carrera.Add(C);
+        //    IQueryable<Carrera> ListaC = from car in mockDb.Object.Carrera select car;
+
+        //    var mockContr = new Mock<AsignarFormulariosController>(mockDb);
+
+        //    mockContr.Setup(m => m.ObtenerCarreras(0, 0, "")).Returns(ListaC);  //anno, semestre, nombre de unidad academica
+
+        //    Assert.AreEqual(ListaC, mockContr.Object.ObtenerCarreras(0, 0, ""));
+        //}
+
         /*
         [TestMethod]
         public void TestSeleccionFormulariosPartialView()

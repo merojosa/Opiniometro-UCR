@@ -20,8 +20,11 @@ namespace Opiniometro_WebApp.Models
         public string formulario { set; get; }
         public string cedEst { get; set; }
         public string codFormulario { get; set; }
-        public IQueryable<EstudianteGruposMatriculado> gruposMatriculado { set; get; }
+    }
 
+    public class CursosMatriculadoModel
+    {
+        public IQueryable<EstudianteGruposMatriculado> gruposMatriculado { set; get; }
     }
 
 }

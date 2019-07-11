@@ -10,6 +10,7 @@ using Opiniometro_WebApp.Models;
 
 namespace Opiniometro_WebApp.Controllers
 {
+    [Authorize]
     public class Asignacion_FormularioController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();

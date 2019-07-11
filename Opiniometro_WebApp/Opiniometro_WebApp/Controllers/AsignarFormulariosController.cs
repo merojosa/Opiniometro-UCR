@@ -13,7 +13,7 @@ using System.Globalization;
 
 namespace Opiniometro_WebApp.Controllers
 {
-
+    [Authorize]
     public class AsignarFormulariosController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
@@ -113,9 +113,43 @@ namespace Opiniometro_WebApp.Controllers
         // Para el filtro por ciclos
         public IQueryable<Ciclo_Lectivo> ObtenerCiclos(String codigoUnidadAcadem)
         {
-            IQueryable<Ciclo_Lectivo> ciclo = (from c in db.Ciclo_Lectivo select c);
-            ViewBag.semestre = new SelectList(ciclo, "Semestre", "Semestre").Distinct();
-            ViewBag.ano = new SelectList(ciclo, "Anno", "Anno").Distinct();
+            IQueryable<Ciclo_Lectivo> ciclo = (from c in db.Ciclo_Lectivo orderby c.Semestre select c);
+            
+            var listaEditable = new SelectList(ciclo, "Semestre", "Semestre").ToList();
+            int index = 0;
+            while (index < listaEditable.Count()-1)
+            {
+                if (listaEditable.ElementAt(index).Value == listaEditable.ElementAt(index+1).Value)
+                {
+                    listaEditable.RemoveAt(index + 1);
+                }
+                else
+                {
+                    ++index;
+                }
+            }
+            //listaSemestres.ElementAt(1).Selected = true;
+            ViewBag.semestre = listaEditable.AsEnumerable();
+
+            ciclo = from c in ciclo orderby c.Anno select c;
+            
+            listaEditable = new SelectList(ciclo, "Anno", "Anno").ToList();
+            index = 0;
+            while (index < listaEditable.Count() - 1)
+            {
+                if (listaEditable.ElementAt(index).Value == listaEditable.ElementAt(index + 1).Value)
+                {
+                    listaEditable.RemoveAt(index + 1);
+                }
+                else
+                {
+                    ++index;
+                }
+            }
+
+            //listaAnnos.ElementAt(1).Selected = true;
+            ViewBag.ano = listaEditable.AsEnumerable();
+
             return ciclo;
         }
 
@@ -302,7 +336,7 @@ namespace Opiniometro_WebApp.Controllers
                 (from cur in db.Curso
                 join gru in db.Grupo on cur.Sigla equals gru.SiglaCurso
                 join uni in db.Unidad_Academica on cur.CodigoUnidad equals uni.Codigo
-                join car in db.Carrera on uni.Codigo equals car.CodigoUnidadAcademica
+                //join car in db.Carrera on uni.Codigo equals car.CodigoUnidadAcademica
 
             select new ElegirGrupoEditorViewModel
             {
@@ -311,18 +345,15 @@ namespace Opiniometro_WebApp.Controllers
                 Numero = gru.Numero,
                 Anno = gru.AnnoGrupo,
                 Semestre = gru.SemestreGrupo,
-                //Profesores = gru.Profesor.ToList(),
+                Profesores = gru.Profesor.ToList(),
                 NombreCurso = gru.Curso.Nombre,
                 NombreUnidadAcademica = gru.Curso.Unidad_Academica.Nombre,
                 CodigoUnidadAcademica = cur.CodigoUnidad,
-                SiglaCarrera = car.Sigla
-                //NombresCarreras =  cur.Enfasis.
+                Enfasis = cur.Enfasis.ToList()
             });
-
             grupos = FiltreGrupos(searchString, semestre, anno, codigoUnidadAcadem, siglaCarrera, nombreCurso, grupos);
 
-            return grupos.Distinct().ToList();
-
+            return grupos.ToList();
         }
 
         /// <summary>
@@ -346,9 +377,32 @@ namespace Opiniometro_WebApp.Controllers
                 grupos = grupos.Where(c => c.CodigoUnidadAcademica.Equals(CodigoUnidadAcad));
             }
 
+            /*if (!String.IsNullOrEmpty(siglaCarrera))
+            {
+                //grupos = grupos.Where(c => c.SiglaCarrera.Equals(siglaCarrera));
+                var cs = from carr in db.Carrera where carr.Sigla == siglaCarrera select new Carrera { CodigoUnidadAcademica=carr.CodigoUnidadAcademica,  };
+                Carrera carrera = 
+                grupos = grupos.Where(c => c.Enfasis.Contains())
+            }*/
             if (!String.IsNullOrEmpty(siglaCarrera))
             {
-                grupos = grupos.Where(c => c.SiglaCarrera.Equals(siglaCarrera));
+                foreach (var gru in grupos)
+                {
+                    bool grupoEstaEnLaCarrera = false;
+                    foreach (var enf in gru.Enfasis)
+                    {
+                        if (enf.SiglaCarrera == siglaCarrera)
+                        {
+                            grupoEstaEnLaCarrera = true;
+                            break;
+                        }
+                    }
+                    // Remueve el grupo de un curso que no está en la carrera seleccionada
+                    if (!grupoEstaEnLaCarrera)
+                    {
+                        grupos = grupos.Where(g => g != gru);
+                    }
+                }
             }
 
             //if (!String.IsNullOrEmpty(nombCarrera))
@@ -436,7 +490,7 @@ namespace Opiniometro_WebApp.Controllers
         //Efecto: Envía un correo a los estudiantes matriculados en cierto curso.
         //Requiere: la sigla del curso.
         //Modifica: N/A.
-        public ActionResult EnviarCorreoFormulario(Curso curso)
+        public void EnviarCorreoFormulario(Curso curso)
         {
             List<Usuario> usuarios = (from u in db.Usuario
                                       select u).ToList();
@@ -454,23 +508,16 @@ namespace Opiniometro_WebApp.Controllers
 
                 Persona persona = new Persona();
                 persona = personas.Find(p => p.Cedula.Equals(ma.CedulaEstudiante));
-                string contenido = "<p>Estimado " + persona.Nombre1 + " " + persona.Apellido1 + ", se le solicita dedicar unos minutos de su tiempo para evaluar los cursos" +
-               " en los cuales se encuentra matriculado. Favor ingresar a  Opiniómetro@UCR</p> <b>";
 
-                // Se le envía al usuario el correo con la notificación del formulario 
-                EnviarCorreo(usuario.CorreoInstitucional, "Evaluación pendiente - Opiniómetro@UCR", contenido);
-            }
-            var modelo = new AsignarFormulariosViewModel
-            {
-                Ciclos = ObtenerCiclos("UC-023874"),
-                UnidadesAcademicas = ObtenerUnidadAcademica(2018, 2, "UC-023874"),
-                Carreras = ObtenerCarreras(2018, 2, "UC-023874"),
-                Grupos = ObtenerGrupos(2018, 2, "UC-023874", "SC - 01234", 255, "Programación 1", null),
-                Cursos = ObtenerCursos(2018,2, "UC-023874", "SC - 01234", null),
-                Formularios = ObtenerFormularios(),
-                Enfasis = ObtenerEnfasis(2018,2, "UC-023874", "SC - 01234")
-            };
-            return View("Index", modelo);
+                if(usuario != null && persona != null)
+                {
+                    string contenido = "<p>Estimado/a " + persona.Nombre1 + " " + persona.Apellido1 + ", se le solicita dedicar unos minutos de su tiempo para evaluar los cursos" +
+                                   " en los cuales se encuentra matriculado/a. Favor ingresar a  Opiniómetro@UCR.</p> <b>";
+
+                    // Se le envía al usuario el correo con la notificación del formulario 
+                    EnviarCorreo(usuario.CorreoInstitucional, "Evaluación pendiente - Opiniómetro@UCR", contenido);
+                }              
+            }           
         }
      
 
@@ -481,8 +528,10 @@ namespace Opiniometro_WebApp.Controllers
             int numErrores = 0;
             var FormulariosConPeriodos = JsonConvert.DeserializeObject<TipoPeriodosIndicados[]>(PeriodosIndicados);
             var GruposEnLista = JsonConvert.DeserializeObject<Grupo[]>(Grupos);
-
             DateTime ahora = DateTime.Now;
+
+            //Almacena los cursos a los que se le deben enviar los correos.
+            List<Curso> CursosCorreos = new List<Curso>();    
 
             List<Tiene_Grupo_Formulario> asignaciones = new List<Tiene_Grupo_Formulario>();
             foreach (var fcp in FormulariosConPeriodos)
@@ -527,6 +576,9 @@ namespace Opiniometro_WebApp.Controllers
                                     FechaInicio = inicioPeriodo,
                                     FechaFinal = finPeriodo
                                 });
+                                //Para enviar los correos a los cursos respectivos
+                                Curso curso = db.Curso.Find(g.SiglaCurso);
+                                CursosCorreos.Add(curso);
                             }
                         }
                         else // El periodo inicia después de que termina
@@ -554,12 +606,18 @@ namespace Opiniometro_WebApp.Controllers
                 mensajes += "\nPor favor corrija lo indicado antes de realizar las asignaciones.\n";
             }
             else
-            { 
+            {
                 if (ModelState.IsValid)
                 {
                     db.Tiene_Grupo_Formulario.AddRange(asignaciones);
                     db.SaveChanges();
-                }
+
+                    //Se envían los correos
+                    foreach (var e in CursosCorreos)
+                    {
+                        EnviarCorreoFormulario(e);
+                    }
+                }  
                 else
                 {
                     mensajes += "Hubo un error al guardar las asignaciones. Por favor contacte a soporte técnico.\n";

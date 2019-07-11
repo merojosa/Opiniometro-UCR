@@ -5,7 +5,7 @@ using System;
 
 namespace Opiniometro_WebApp.Models
 {
-    public class ElegirGrupoEditorViewModel : IEquatable<ElegirGrupoEditorViewModel>
+    public class ElegirGrupoEditorViewModel
     {
         // Atributo que salva si un grupo se encuentra seleccionado o no:
         public bool Seleccionado { get; set; }
@@ -20,38 +20,18 @@ namespace Opiniometro_WebApp.Models
         public List<Profesor> Profesores { get; set; }
         public string NombreCurso { get; set; }
        
-        public string Enfasis { get; set; }
+        //public string Enfasis { get; set; }
 
         // Atributos que no se muestran pero se utilizan para consultar y filtrar
         public string NombreUnidadAcademica { get; set; }
-        public IQueryable<string> NombresCarreras { get; set; }
+        //public IQueryable<string> NombresCarreras { get; set; }
         public string CodigoUnidadAcademica { get; set; }
-        public string SiglaCarrera { get; set; }
+        public List<Enfasis> Enfasis { get; set; }
 
         public ElegirGrupoEditorViewModel()
         {
             Profesores = new List<Profesor>();
-        }
-
-        public bool Equals(ElegirGrupoEditorViewModel otro)
-        {
-            if (this == null && otro == null)
-                return true;
-            else if (this == null || otro == null)
-                return false;
-            else if (this.Anno == otro.Anno
-                && this.Semestre == otro.Semestre
-                && this.SiglaCurso == otro.SiglaCurso
-                && this.Numero == otro.Numero)
-                return true;
-            else
-                return false;
-        }
-
-        public int GetHashCode(ElegirGrupoEditorViewModel gr)
-        {
-            int hCode = ((gr.Anno.GetHashCode() * 17 + gr.Semestre.GetHashCode()) * 17 + gr.Numero.GetHashCode()) * 17 + gr.SiglaCurso.GetHashCode();
-            return GetHashCode();
+            Enfasis = new List<Enfasis>();
         }
     }
 }

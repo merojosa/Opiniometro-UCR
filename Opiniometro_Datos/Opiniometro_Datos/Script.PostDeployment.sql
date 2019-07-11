@@ -767,8 +767,45 @@ WHERE C.Sigla IN (SELECT G.SiglaCurso
 				WHERE G.AnnoGrupo = @anno)
 END
 GO
+ 
+--Trigger para cuando tratamos de insertar una asignación, que no choquen las fechas (para que no se ingresen fechas sobre un mismo curso/periodo que instersequen)
+GO
+CREATE TRIGGER InsertarAsignacionFormulario
+ ON Tiene_Grupo_Formulario INSTEAD OF Insert AS
+ Declare
+  @Sigla  char(6),
+  @Num    tinyint,
+  @An     smallint,
+  @Cicl   tinyint,
+  @Cod    char(6),
+  @Fecini datetime,
+  @Fecfin datetime,
+  @Cant   int
+
+  Declare CursorTieneGF Cursor for
+  Select SiglaCurso, Numero, Anno, Ciclo, Codigo, FechaInicio, FechaFinal From inserted
+
+  OPEN CursorTieneGF
+  FETCH NEXT From CursorTieneGF INTO @Sigla, @Num, @An, @Cicl, @Cod, @Fecini, @Fecfin
+  WHILE @@FETCH_STATUS = 0
+  BEGIN
+  set @Cant = (Select COUNT(*)
+               From Tiene_Grupo_Formulario
+               Where @Sigla = SiglaCurso and @Num = Numero and @An = Anno and @Cicl = Ciclo and @Cod = Codigo and @Fecini < FechaFinal)
+
+  IF(@Cant = 0)
+    BEGIN
+	  INSERT INTO Tiene_Grupo_Formulario (SiglaCurso, Numero, Anno, Ciclo, Codigo, FechaInicio, FechaFinal)
+	  VALUES(@Sigla, @Num, @An, @Cicl, @Cod, @Fecini, @Fecfin)
+    END
+
+  FETCH NEXT FROM CursorTieneGF INTO @Sigla, @Num, @An, @Cicl, @Cod, @Fecini, @Fecfin
+  END
+  CLOSE CursorTieneGF
+  DEALLOCATE CursorTieneGF
 
 -- Vista (SQL) de la tabla Imparte, para que pueda ser creada como entidad en el model
+GO
 CREATE VIEW Imparte_View
 AS
 SELECT *

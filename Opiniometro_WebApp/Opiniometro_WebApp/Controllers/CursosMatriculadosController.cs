@@ -30,10 +30,13 @@ namespace Opiniometro_WebApp.Controllers
         {
             DateTime fecha = DateTime.Now;
 
-            var modelo = new EstudianteGruposMatriculado
+            var modelo = new CursosMatriculadoModel
             {
                 gruposMatriculado = ObtenerGrupoMatriculado( obtenerCedulaEstLoggeado(IdentidadManager.obtener_correo_actual()) , ciclo(fecha.Month), fecha.Year )
+
             };
+            var grupo = modelo.gruposMatriculado.ToList().ElementAt(0);
+            Debug.WriteLine("\n\nEn EstudiantesGruposMatriculado: " + grupo.anoGrupo + " " +  grupo.semestreGrupo + " " + grupo.siglaCursoMatriculado + " " + grupo.numGrupo + ".\n");
             return View("Index",modelo);
         }
 
