@@ -192,7 +192,6 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\AsignarFormulariosController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
@@ -278,6 +277,9 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Imparte_View.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Item.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -355,6 +357,9 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_RecuperarEtiquetasEscalar_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
@@ -489,8 +494,6 @@
     <Content Include="Views\VisualizarFormulario\Details.cshtml" />
     <Content Include="Views\VisualizarFormulario\Edit.cshtml" />
     <Content Include="Views\VisualizarFormulario\Index.cshtml" />
-    <Content Include="Views\Admin\VerPersonas.cshtml" />
-    <Content Include="Views\Admin\CrearUsuario.cshtml" />
     <Content Include="Views\Seleccion_Unica\Create.cshtml" />
     <Content Include="Views\Seleccion_Unica\Delete.cshtml" />
     <Content Include="Views\Seleccion_Unica\Details.cshtml" />
@@ -508,7 +511,6 @@
     <Content Include="Views\CrearFormulario\seccionesVParcial.cshtml" />
     <Content Include="Views\Item\VistaPrevia.cshtml" />
     <Content Include="Views\Item\itemVParcial.cshtml" />
-    <Content Include="Views\Admin\Editar.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_Collapsible.cshtml" />
@@ -533,9 +535,10 @@
     <Content Include="Views\Shared\EditorTemplates\ElegirFormularioEditorViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ElegirGrupoEditorViewModel.cshtml" />
     <Content Include="Views\Formulario_Respuesta\Edit.cshtml" />
-    <Content Include="Views\Perfil\Detalles.cshtml" />
-    <Content Include="Views\Perfil\Editar.cshtml" />
-    <Content Include="Views\Enfasis\VerEnfasis.cshtml" />
+    <Content Include="Views\Auth\CambiarContrasenna.cshtml" />
+    <Content Include="Views\Administrador\VerPersonas.cshtml" />
+    <Content Include="Views\Administrador\Editar.cshtml" />
+    <Content Include="Views\Administrador\CrearUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

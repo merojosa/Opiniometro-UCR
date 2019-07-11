@@ -10,12 +10,14 @@
 namespace Opiniometro_WebApp.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class SP_DevolverObservacionesPorGrupo_Result
+    public partial class Imparte_View
     {
-        public string Observacion { get; set; }
-        public string Nombre1 { get; set; }
-        public string Apellido1 { get; set; }
-        public string Apellido2 { get; set; }
+        public string CedulaProfesor { get; set; }
+        public byte Numero { get; set; }
+        public string Sigla { get; set; }
+        public short Anno { get; set; }
+        public byte Semestre { get; set; }
     }
 }

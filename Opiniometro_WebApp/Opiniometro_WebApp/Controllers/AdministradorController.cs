@@ -22,6 +22,7 @@ using System.Security.Cryptography;
 using Opiniometro_WebApp.Models;
 using System.Text;
 using System.Reflection;
+using System.Net.Mail;
 //using Microsoft.SqlServer.Dts;
 //using Microsoft.SqlServer.Dts.Runtime;
 
@@ -33,6 +34,7 @@ namespace Opiniometro_WebApp.Controllers
     public class AdministradorController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+        private const string caracteres_aleatorios = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         // GET: Administrador
         public ActionResult Index()
@@ -635,7 +637,7 @@ namespace Opiniometro_WebApp.Controllers
             dt.Columns.Add("carne", typeof(string));
             dt.Columns.Add("sigla_carrera", typeof(string));
             dt.Columns.Add("enfasis", typeof(string));
-            
+
             return dt;
         }
 
@@ -700,6 +702,215 @@ namespace Opiniometro_WebApp.Controllers
             }
             return Tipo;
         }
-    }
+    
  
+        public Persona Persona { get; private set; }
+
+        public ActionResult VerPersonas(string nom, string ced)
+        {
+            if (!String.IsNullOrEmpty(nom) && !String.IsNullOrEmpty(ced))
+            {
+                ViewModelAdmin model = new ViewModelAdmin();
+                List<Persona> listaPersonas = db.Persona.ToList();
+                List<Usuario> listaUsuarios = db.Usuario.ToList();
+                var query = from p in listaPersonas
+                            join u in listaUsuarios on p.Cedula equals u.Cedula into table1
+                            from u in table1
+                            where p.Nombre1.Contains(nom)
+                            where p.Cedula.Contains(ced)
+                            select new ViewModelAdmin { Persona = p, Usuario = u };
+                return View(query);
+            }
+            else if (!String.IsNullOrEmpty(ced))
+            {
+                ViewModelAdmin model = new ViewModelAdmin();
+                List<Persona> listaPersonas = db.Persona.ToList();
+                List<Usuario> listaUsuarios = db.Usuario.ToList();
+                var query = from p in listaPersonas
+                            join u in listaUsuarios on p.Cedula equals u.Cedula into table1
+                            from u in table1
+                            where p.Cedula.Contains(ced)
+                            select new ViewModelAdmin { Persona = p, Usuario = u };
+                return View(query);
+            }
+            else if (!String.IsNullOrEmpty(nom))
+            {
+                ViewModelAdmin model = new ViewModelAdmin();
+                List<Persona> listaPersonas = db.Persona.ToList();
+                List<Usuario> listaUsuarios = db.Usuario.ToList();
+                var query = from p in listaPersonas
+                            join u in listaUsuarios on p.Cedula equals u.Cedula into table1
+                            from u in table1
+                            where p.Nombre1.Contains(nom)
+                            select new ViewModelAdmin { Persona = p, Usuario = u };
+                return View(query);
+            }
+            else
+            {
+                ViewModelAdmin model = new ViewModelAdmin();
+                List<Persona> listaPersonas = db.Persona.ToList();
+                List<Usuario> listaUsuarios = db.Usuario.ToList();
+                var query = from p in listaPersonas
+                            join u in listaUsuarios on p.Cedula equals u.Cedula into table1
+                            from u in table1
+                            select new ViewModelAdmin { Persona = p, Usuario = u };
+                return View(query);
+            }
+
+
+        }
+
+
+        public ActionResult Editar(string id)
+        {
+
+            Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel modelPersona = new Opiniometro_WebApp.Models.PersonaPerfilEnfasisModel();
+            modelPersona.Persona = db.Persona.Find(id);
+
+            String correoInstitucional = db.Usuario.Where(m => m.Cedula == id).First().CorreoInstitucional;
+            modelPersona.Persona = db.Persona.SingleOrDefault(u => u.Cedula == id);
+            modelPersona.Usuario = db.Usuario.SingleOrDefault(u => u.Cedula == id);
+            modelPersona.viejaCedula = id;
+            modelPersona.PerfilDeUsuario = db.ObtenerPerfilUsuario(correoInstitucional).ToList();
+            modelPersona.Perfil = db.Perfil.Select(n => n.Nombre).ToList();
+            modelPersona.perfilesAsignados = modelPersona.getAsignarPerfil(modelPersona.PerfilDeUsuario, modelPersona.Perfil);
+            modelPersona.tienePerfil = new List<Boolean>();
+            for (int contador = 0; contador < modelPersona.perfilesAsignados.Count; contador++)
+            {
+                modelPersona.tienePerfil.Add(modelPersona.perfilesAsignados.ElementAt(contador).asignar);
+            }
+
+            return View(modelPersona);
+
+
+
+        }
+
+        [HttpPost]
+        public ActionResult Editar(PersonaPerfilEnfasisModel per)
+        {
+            try
+            {
+                if ((per.Persona.Cedula != null) && (per.Persona.Cedula != null) && (per.Persona.Nombre1 != null) && (per.Persona.Apellido1 != null) && (per.Persona.Apellido2 != null)
+                    && (per.Usuario.CorreoInstitucional != null)
+                    && (per.Persona.Cedula.Length == 9) && (per.Persona.Nombre1.Length <= 50) && (per.Persona.Apellido1.Length <= 50) && (per.Persona.Apellido2.Length <= 50)
+                    && (per.Usuario.CorreoInstitucional.Length <= 100))
+                {
+                    using (db)
+                    {
+                        db.SP_ModificarPersona(per.viejaCedula, per.Persona.Cedula, per.Persona.Nombre1, per.Persona.Nombre2, per.Persona.Apellido1, per.Persona.Apellido2, per.Usuario.CorreoInstitucional);
+                        for (int i = 0; i < per.Perfil.Count(); i++)
+                        {
+                            //db.SP_ModificarPerfilUsuario(per.usuario.CorreoInstitucional, per.Perfil.ElementAt(i), per.tienePerfil.ElementAt(i));
+                        }
+                    }
+                }
+                else
+                {
+                    //Mensaje de error
+                }
+                return RedirectToAction("VerPersonas");
+            }
+            catch (Exception)
+            {
+                throw;
+                TempData["msg"] = "<script>alert('No se pudo editar el perfil  ');</script>";
+                return RedirectToAction("VerPersonas");
+            }
+        }
+
+        public ActionResult Borrar(string id)
+        {
+            // db.SP_EliminarPersona(id);
+            return RedirectToAction("VerPersonas");
+        }
+
+        public ActionResult CrearUsuario()
+        {
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult CrearUsuario(ViewModelAdmin per)
+        {
+            try
+            {
+                if ((per.Persona.Cedula != null) && (per.Persona.Cedula != null) && (per.Persona.Nombre1 != null) && (per.Persona.Apellido1 != null) && (per.Persona.Apellido2 != null)
+                    && (per.Usuario.CorreoInstitucional != null)
+                    && (per.Persona.Cedula.Length == 9) && (per.Persona.Nombre1.Length <= 50) && (per.Persona.Apellido1.Length <= 50) && (per.Persona.Apellido2.Length <= 50)
+                    && (per.Usuario.CorreoInstitucional.Length <= 100))
+                {
+                    string contrasenna_generada = GenerarContrasenna(10);
+                    db.SP_AgregarPersonaUsuario(per.Usuario.CorreoInstitucional, contrasenna_generada, per.Persona.Cedula, per.Persona.Nombre1, per.Persona.Nombre2, per.Persona.Apellido1, per.Persona.Apellido2);
+
+                    string contenido =
+                    "<p>Se le ha creado un usuario en Opiniometro@UCR.</p>" +
+                    "<p>A continuación, su contraseña temporal, ingrésela junto con su correo institucional:</p> <b>"
+                    + contrasenna_generada + "</b>";
+
+                    // Envio correo con la contrasenna autogenerada
+                    EnviarCorreo(per.Usuario.CorreoInstitucional, "Usuario creado - Opiniómetro@UCR", contenido);
+                    
+                    return RedirectToAction("VerPersonas");
+                }
+                else
+                {
+                    return RedirectToAction("VerPersonas");
+                    //Mensaje de error
+                }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("VerPersonas");
+                throw;
+            }
+
+            //return null;
+        }
+
+        private void EnviarCorreo(string receptor, string asunto, string contenido)
+        {
+            string autor = System.Configuration.ConfigurationManager.AppSettings["CorreoEmisor"].ToString();
+            string contrasenna = System.Configuration.ConfigurationManager.AppSettings["ContrasennaEmisor"].ToString();
+
+            SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587);
+            cliente.EnableSsl = true;
+            cliente.Timeout = 100000;
+            cliente.DeliveryMethod = SmtpDeliveryMethod.Network;
+            cliente.UseDefaultCredentials = false;
+            cliente.Credentials = new NetworkCredential(autor, contrasenna);
+
+            MailMessage correo = new MailMessage(autor, receptor, asunto, contenido);
+            correo.IsBodyHtml = true;
+            correo.BodyEncoding = UTF8Encoding.UTF8;
+            cliente.Send(correo);
+
+        }
+
+        /*
+         * EFECTO:
+         * REQUIERE:
+         * MODIFICA:
+         * 
+         * Basado en: https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings
+         */
+        private string GenerarContrasenna(int tamanno)
+        {
+            byte[] datos = new byte[tamanno];
+            using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider())
+            {
+                crypto.GetBytes(datos);
+            }
+
+            StringBuilder contrasenna = new StringBuilder(tamanno);
+
+            foreach (byte byte_aleatorio in datos)
+            {
+                contrasenna.Append(caracteres_aleatorios[byte_aleatorio % (caracteres_aleatorios.Length)]);
+            }
+            return contrasenna.ToString();
+        }
+
+    }
 }
