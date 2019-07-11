@@ -53,11 +53,22 @@ namespace Opiniometro_WebApp.Controllers
                     .ThenBy(m => m.Orden_Seccion)
                     .ToList()
                 },
-                CopiarSeccion = new CopiarSeccionModel()
+                CopiarSeccionModel = new CopiarSeccionModel()
                 {
                     Cod_Form_Dest = codForm,
                     Nom_Form_Dest = db.Formulario.Find(codForm).Nombre
+                },
+                CopiarSeccion = new CopiarSeccion()
+                {
+                    CopiarSeccionModel = new CopiarSeccionModel(),
+
+                    Formulario = db.Formulario.Find(codForm),
+
+                    Formularios = db.Formulario.Where(m => m.CodigoFormulario != codForm).ToList(),
+
+                    Secciones = db.Seccion.ToList()
                 }
+
 
         };
             //ViewBag.CodigoFormulario = new SelectList(db.Conformado_For_Sec.Distinct(), "CodigoFormulario", "CodigoFormulario");
@@ -90,7 +101,7 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public PartialViewResult CopiarSeccion(CopiarSeccionModel copiarSeccion)
         {
-            //db.SP_CopiarSeccion(copiarSeccion.Cod_Form_Origen, copiarSeccion.Titulo_Seccion, copiarSeccion.Cod_Form_Dest);
+            db.SP_CopiarSeccion(copiarSeccion.Cod_Form_Origen, copiarSeccion.Titulo_Seccion, copiarSeccion.Cod_Form_Dest);
 
             return null;
         }
