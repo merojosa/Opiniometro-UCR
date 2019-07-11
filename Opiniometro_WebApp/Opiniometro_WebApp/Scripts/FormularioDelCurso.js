@@ -127,7 +127,7 @@ function recolectarRespuestas()
     }
     var respuestasFormulario = [];
 
-    alert(`Profesor: ${cedProf}`);
+    //alert(`Profesor: ${cedProf}`);
     //alert(`Enviando respuestas para: ${grupo.Anno} ${grupo.Semestre} ${grupo.SiglaCurso} ${grupo.NumeroGrupo}`);
 
     var secciones = document.getElementsByClassName("seccion");
@@ -184,7 +184,13 @@ function recolectarRespuestas()
 
             }
 
-            respuestasFormulario.push({ idItem: idBD, TituloSeccion: titulo, HilerasDeRespuesta: respuestas, Observacion: "" });
+            var hayObs = document.getElementsByClassName("bool-observacion")[0].textContent;
+            var obs = "";
+            if (hayObs == 'true') {
+                obs = document.getElementsByClassName("observacion")[0].textContent;
+                alert(`Jeje ${obs}`);
+            }
+            respuestasFormulario.push({ idItem: idBD, TituloSeccion: titulo, HilerasDeRespuesta: respuestas, Observacion: obs });
 
         } // for (var p = 0; p < preguntas.length; p++)
         
