@@ -22,9 +22,10 @@
 
     @*Profesores*@
     <td align='left'>
-       @foreach (var profe in Model.Profesores)
+        @foreach (var profe in Model.Profesores)
         {
-            @Html.DisplayFor(model => profe.Persona.Nombre) <span> </span>
+            @Html.DisplayFor(model => profe.Persona.Nombre1) <span> </span>
+            @Html.DisplayFor(model => profe.Persona.Nombre2) <span> </span>
             @Html.DisplayFor(model => profe.Persona.Apellido1) <span> </span>
             @Html.DisplayFor(model => profe.Persona.Apellido2) <br>
         }

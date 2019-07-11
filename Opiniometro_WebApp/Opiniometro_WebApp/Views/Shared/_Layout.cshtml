@@ -77,7 +77,7 @@
                             @{
                                 if (permisos_usuario.verificar_permiso(IdPermiso.VER_INFORMACION_PERSONAS))
                                 {
-                                    <li>@Html.ActionLink("Ver información de usuarios", "VerPersonas", "Admin")</li>
+                                    <li>@Html.ActionLink("Ver información de personas", "VerPersonas", "Administrador")</li>
                                 }
                                 else
                                 {
@@ -86,7 +86,7 @@
 
                                 if (permisos_usuario.verificar_permiso(IdPermiso.INSERTAR_USUARIO))
                                 {
-                                    <li>@Html.ActionLink("Insertar usuario", "CrearUsuario", "Admin")</li>
+                                    <li>@Html.ActionLink("Insertar usuario", "CrearUsuario", "Administrador")</li>
                                 }
                                 else
                                 {
@@ -95,7 +95,7 @@
 
                                 if (permisos_usuario.verificar_permiso(IdPermiso.INSERTAR_USUARIO))
                                 {
-                                    <li>@Html.ActionLink("Cargar Archivo", "CargarArchivo", "Administrador")</li>
+                                    <li>@Html.ActionLink("Cargar Usuarios", "CargarUsuarios", "Administrador")</li>
                                 }
                                 else
                                 {                                    
@@ -119,12 +119,23 @@
 
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.ASIGNAR_FORMULARIO))
                                 {
-                                    <li>@Html.ActionLink("Asignar formulario", "Index", "AsignarFormularios")</li>
+                                    <li>@Html.ActionLink("Ver asignaciones", "Index", "Asignacion_Formulario")</li>
+                                <li>@Html.ActionLink("Asignar formularios", "Index", "AsignarFormularios")</li>
                                 }
                                 else
                                 {
+                                    <li class="disabled"><a id="link_deshabilitado">Ver asignaciones</a></li>
                                     <li class="disabled"><a id="link_deshabilitado">Asignar formulario</a></li>
                                 }
+
+                                //if (permisos_usuario.verificar_permiso("SC-89457", 12, IdPermiso.CALIFICAR_CURSOS))
+                                //{
+                                <li>@Html.ActionLink("Evaluar tus cursos", "Index", "CursosMatriculados")</li>
+                                @*}
+            else
+            {
+                <li class="disabled"><a id="link_deshabilitado">Evaluar profesores</a></li>
+            }*@
 
                                 if (permisos_usuario.verificar_permiso("SC-01234", 0, IdPermiso.VISUALIZAR_RESULTADOS_DE_EVALUACIONES))
                                 {
