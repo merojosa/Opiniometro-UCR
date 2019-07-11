@@ -11,12 +11,11 @@ namespace Opiniometro_WebApp.Models
 {
     using System;
     
-    public partial class sp_helpdiagrams_Result
+    public partial class SP_DevolverObservacionesPorGrupo_Result
     {
-        public string Database { get; set; }
-        public string Name { get; set; }
-        public int ID { get; set; }
-        public string Owner { get; set; }
-        public int OwnerID { get; set; }
+        public string Observacion { get; set; }
+        public string Nombre1 { get; set; }
+        public string Apellido1 { get; set; }
+        public string Apellido2 { get; set; }
     }
 }
