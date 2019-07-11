@@ -138,7 +138,82 @@ namespace Opiniometro_WebAppUITest
                 return this.mDespliegueDescripcionComentarioParams;
             }
         }
-        
+
+        public void IngresarAlFormulario()
+        {
+            #region Variable Declarations
+            BrowserWindow uIOpiniómetroUCRInternWindow = this.UIOpiniómetroUCRInternWindow;
+            HtmlEdit uICorreoInstitucionalEdit = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UICorreoInstitucionalEdit;
+            HtmlEdit uIContrasenaEdit = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UIContrasenaEdit;
+            HtmlInputButton uIIngresarButton = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UIIngresarButton;
+            HtmlInputButton uIAceptarButton = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument1.UIAceptarButton;
+            HtmlHyperlink uIEvaluacionesHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument2.UIEvaluacionesHyperlink;
+            HtmlHyperlink uIVisualizarresultadosHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument2.UIVisualizarresultadosHyperlink;
+            HtmlHyperlink uIVisualizarformularioHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument3.UIVisualizarformularioHyperlink;
+            HtmlHyperlink uIItem2EvaluacióndeaspHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIAccordion1Pane.UIItem2EvaluacióndeaspHyperlink;
+            HtmlHyperlink uIItem1PRE303ElprofesoHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIAccordion2_1Pane.UIItem1PRE303ElprofesoHyperlink;
+            #endregion
+
+            // Go to web page 'http://localhost/Opiniometro_WebApp'
+            uIOpiniómetroUCRInternWindow.NavigateToUrl(new System.Uri(this.IngresarAlFormularioParams.UIOpiniómetroUCRInternWindowUrl));
+
+            // Type 'admin@ucr.ac.cr' in 'CorreoInstitucional' text box
+            uICorreoInstitucionalEdit.Text = this.IngresarAlFormularioParams.UICorreoInstitucionalEditText;
+
+            // Type '{Tab}' in 'CorreoInstitucional' text box
+            Keyboard.SendKeys(uICorreoInstitucionalEdit, this.IngresarAlFormularioParams.UICorreoInstitucionalEditSendKeys, ModifierKeys.None);
+
+            // Type '********' in 'Contrasena' text box
+            uIContrasenaEdit.Password = this.IngresarAlFormularioParams.UIContrasenaEditPassword;
+
+            // Click 'Ingresar' button
+            Mouse.Click(uIIngresarButton, new Point(68, 16));
+
+            // Click 'Aceptar' button
+            Mouse.Click(uIAceptarButton, new Point(32, 22));
+
+            // Click 'Evaluaciones' link
+            Mouse.Click(uIEvaluacionesHyperlink, new Point(114, 23));
+
+            // Click 'Visualizar resultados de evaluaciones' link
+            Mouse.Click(uIVisualizarresultadosHyperlink, new Point(106, 16));
+
+            // Click 'Visualizar formulario' link
+            Mouse.Click(uIVisualizarformularioHyperlink, new Point(98, 4));
+
+            // Click '2 - Evaluación de aspectos reglamentarios del pro...' link
+            Mouse.Click(uIItem2EvaluacióndeaspHyperlink, new Point(106, 15));
+
+            // Click '1 - PRE303.¿El profesor repuso clases cuando fue ...' link
+            Mouse.Click(uIItem1PRE303ElprofesoHyperlink, new Point(105, 11));
+        }
+
+        /// <summary>
+        /// Revisa que el grafico si se despliega en la pantalla una vez ingresado al formulario.
+        /// </summary>
+        public void GráficoExiste()
+        {
+            #region Variable Declarations
+            HtmlCustom uIPie_chart_PRE303Custom = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIPie_chart_PRE303Custom;
+            #endregion
+
+            // Verify that the 'ControlDefinition' property of 'pie_chart_PRE303' custom control is not equal to 'null'
+            Assert.IsNotNull(uIPie_chart_PRE303Custom.ControlDefinition, "No se envio la información necesaria al método.");
+        }
+
+        /// <summary>
+        /// Revisa si el item desplegado es el indicado.
+        /// </summary>
+        public void DespliegueDeItemCorrecto()
+        {
+            #region Variable Declarations
+            HtmlHyperlink uIItem1PRE303ElprofesoHyperlink1 = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIAccordion2_1Pane.UIItem1PRE303ElprofesoHyperlink1;
+            #endregion
+
+            // Verify that the 'InnerText' property of '1 - PRE303.¿El profesor repuso clases cuando fue ...' link equals ' 1 - PRE303.¿El profesor repuso clases cuando fue necesario? '
+            Assert.AreEqual(this.DespliegueDeItemCorrectoExpectedValues.UIItem1PRE303ElprofesoHyperlink1InnerText, uIItem1PRE303ElprofesoHyperlink1.InnerText, "La pregunta a sido cambiada o el orden fue alterado incorrectamente");
+        }
+
         public UIStartWindow UIStartWindow
         {
             get
