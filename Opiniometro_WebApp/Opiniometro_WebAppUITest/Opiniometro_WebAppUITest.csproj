@@ -53,6 +53,8 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodedUITestItem.cs" />
+    <Compile Include="CodedUITestVisualizarRespuesta.cs" />
     <Compile Include="PerfilCodedUITest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIMap.cs">

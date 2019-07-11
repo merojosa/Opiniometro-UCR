@@ -16,6 +16,7 @@ namespace Opiniometro_WebAppTest.Controllers
         [TestMethod]
         public void TestCreateViewDataMock()
         {
+            
             // Arrange
             var mockDb = new Mock<Opiniometro_DatosEntities>();
             string codigo = "100001";

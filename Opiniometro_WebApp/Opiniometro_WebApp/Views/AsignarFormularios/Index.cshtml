@@ -10,7 +10,7 @@
 
 
 <div>
-    <h1 align="center">Asignación de herramientas de evaluación</h1>
+    <h1 align="center">Asignación de Formularios</h1>
 </div>
 
 <div class="container">
@@ -23,32 +23,32 @@
                     <div class="panel-body">
                         <div style="height:17vh; overflow:auto;">
 
-                    <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
-                        <!-- Buscador -->
-                        <p>
-                            <div class="filter">
-                                <!--Toman el valor del dropdown list seleccionado-->
-                                @Html.Hidden("changeUnidad", null)
-                                @Html.Hidden("changeCarrera", null)
-                                @Html.Hidden("changeCurso", null)
-                                @Html.Hidden("changeAnno", null)
-                                @Html.Hidden("changeSemestre", null)
+                            <!-- Esta forma también recarga la página, pero no muestra los criterios de busqueda en el URL. -->
+                            <!-- Buscador -->
+                            <p>
+                                <div class="filter">
+                                    <!--Toman el valor del dropdown list seleccionado-->
+                                    @Html.Hidden("changeUnidad", null)
+                                    @Html.Hidden("changeCarrera", null)
+                                    @Html.Hidden("changeCurso", null)
+                                    @Html.Hidden("changeAnno", null)
+                                    @Html.Hidden("changeSemestre", null)
 
-                                <!--Desplegables para los filtros-->
-                                <a> @Html.DropDownList("semestre", null, "Semestre", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeSemestre').value = this.value; this.form.submit();" }) </a>
-                                <a> @Html.DropDownList("ano", null, "Año", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeAnno').value = this.value; this.form.submit();" }) </a>
-                                <a> @Html.DropDownList("unidadAcademica", null, "Unidad Academica", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" }) </a>
-                                <a> @Html.DropDownList("siglaCarrera", null, "Carrera", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" }) </a>
-                                <a> @Html.DropDownList("nombreCurso", null, "Curso", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCurso').value = this.value; this.form.submit();" }) </a>
-                                @*<b> @Html.DropDownList("profe", null, "Profesor", new { @class = "btn btn-default dropdown-toggle", style = "width:130px;" }) </b>*@
-                                @*<b> @Html.DropDownList("enfasis", null, "Énfasis", new { @class = "btn btn-default dropdown-toggle", style = "width:130px;" }) </b>*@
+                                    <!--Desplegables para los filtros-->
+                                    <a> @Html.DropDownList("semestre", null, "Semestre", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeSemestre').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("ano", null, "Año", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeAnno').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("unidadAcademica", null, "U. Académica", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("siglaCarrera", null, "Carrera", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("nombreCurso", null, "Curso", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCurso').value = this.value; this.form.submit();" }) </a>
+                                    @*<b> @Html.DropDownList("profe", null, "Profesor", new { @class = "btn btn-default dropdown-toggle", style = "width:130px;" }) </b>*@
+                                    @*<b> @Html.DropDownList("enfasis", null, "Énfasis", new { @class = "btn btn-default dropdown-toggle", style = "width:130px;" }) </b>*@
 
                                 </div>
 
                                 <div>
                                     <!--Campo de busqueda-->
                                     <br> @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
-                                    <input type="submit" value="Buscar" />
+                                    <input type="submit" class="btn btn-secondary" value="Buscar grupos" />
                                 </div>
                             </p>
                         </div>
@@ -64,7 +64,7 @@
                     <div class="panel-body">
                         <div style="height:17vh; overflow:auto;">
                             @Html.TextBox("FormSearchString", "", new { placeholder = "Nombre del formulario" })
-                            <input type="submit" value="Buscar formularios" />
+                            <input type="submit" class="btn btn-secondary" value="Buscar formularios" />
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                                             Grupo
                                         </th>
                                         <th align='left'>
-                                            Profesor
+                                            Profesor(es)
                                         </th>
                                     </tr>
                                 </thead>
@@ -155,39 +155,45 @@
             </div>*@
 
         <div align='center'>
-            <input type="submit" id="boton-asignar" value="Asignar" />
+            <input type="submit" id="boton-asignar" class="btn btn-secondary" value="Asignar" />
             <button type="button" style="display:none" id="boton-abrir-modal" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalReporte">Reporte de asignaciones</button>
         </div>
 
+    }
 
+    <!-- Modal -->
+    <div id="modalReporte" class="modal fade" role="dialog">
 
-        <!-- Modal -->
-        <div id="modalReporte" class="modal fade" role="dialog">
-            <div class="modal-dialog" style="height:63vh; width:73vw;">
+        <div class="modal-dialog" style="height:73vh; width:73vw;">
 
-                <!-- Modal content-->
-                <div class="modal-content">
+            <!-- Modal content-->
+            <div class="modal-content">
 
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Asignaciones de formularios realizadas para el SEMESTRE-AÑO</h4>
-                    </div>
-
-                    <div class="modal-body">
-                        <div id="asign-content" style="height:60vh; width:70vw; overflow:auto;">
-                            @Html.Partial("AsignacionFormularioGrupo", Model.GruFormsSeleccionados)
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    </div>
-
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Asignaciones de formularios por realizar</h4>
                 </div>
 
+                <div class="modal-body">
+                    <div id="asign-content" style="height:70vh; width:70vw;">
+                        @Html.EditorFor(Model => Model.GruFormsSeleccionados, "~/Views/Shared/AsignacionFormularioGrupos.cshtml")
+                    </div>
+                </div>
+
+                <div class="modal-footer" align="center">
+                    <div>Recuerde ingresar los periodos incluyendo la hora. Ejemplo de formato válido: 09:30 AM</div>
+                    <button type="button" id="boton-efectuar" class="btn btn-default">Efectuar asignaciones</button>
+                    <span> </span>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+
+                <input type="submit" class="btn btn-default" style="display:none" id="efectuar" value="ASIGNAR"/>
+
             </div>
+
         </div>
-    }
+
+    </div>
 
 </div>
 

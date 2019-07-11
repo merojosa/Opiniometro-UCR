@@ -1,0 +1,105 @@
+﻿
+
+@model Opiniometro_WebApp.Models.FormularioCompletoModel
+
+<table class="table" align="left" style="border:none" border="0"  cellspacing="0" >
+    <tr>
+        <th>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+    </tr>
+
+    @foreach (var item in Model.ConformadoS.OrderBy(item => item.Orden_Seccion))//Deberia imprimir solo una vez las secciones del formulario.
+    {
+        <tr>
+            <td style="border:solid">
+                <u>Seccion</u>:
+                @Html.DisplayFor(modelItem => item.Orden_Seccion)
+            </td>
+            <td  style="border:solid">
+                <b>@Html.DisplayFor(modelItem => item.TituloSeccion)</b>
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+        </tr>
+        foreach (var pregunta in Model.Conformados.OrderBy(pregunta => pregunta.Orden_Item).Where(pregunta => pregunta.Seccion == item.Seccion))
+        {
+            <tr>
+                <td >
+                    <b>@Html.DisplayFor(modelItem => pregunta.Orden_Item) - </b>
+                </td>
+
+                <td colspan ="2" >
+                    @Html.DisplayFor(modelItem => pregunta.Item.TextoPregunta)
+                </td>
+
+                <td style="border:none">
+                    <tr>
+                        <td style="border:none"></td>
+                        <td colspan="2" style="border:none">
+
+                            @{
+                                int tipoPregunta = pregunta.Item.TipoPregunta; //Pasamos el tipo de pregunta a int.
+                                switch (tipoPregunta)
+                                {
+                                    case 1://Tipo de pregunta si o no.
+
+                                        <dl class="col-md-2" >
+
+                                            <dd>
+                                                <textarea name="comentarioAdicional" rows="5" cols="40" style="resize:none" disabled>Escriba su respuesta aquí</textarea>
+                                            </dd>
+
+                                            @if (pregunta.Item.TieneObservacion == true)
+                                            {
+                                                @Html.Label("Comentario Adicional")
+                                                <dd>
+                                                    <textarea name="comentarioAdicional" rows="5" cols="40" style="resize:none" disabled>Escriba su comentario aqui</textarea>
+                                                </dd>
+                                            }
+                                        </dl>
+
+                                        break;
+                                    case 2:
+                                        @Html.Action("SeleccionUnicaVParcial", new { id = pregunta.ItemId })
+                                        break;
+                                    case 3://Tipo de pregunta texto libre.
+                                        <div>
+                                            <dl class="col-md-4">
+
+                                                <dd>
+                                                    <input type="checkbox" name="Si" value='Si' disabled> Sí<br>
+                                                    <input type="checkbox" name="No" value='No' disabled> No<br>
+                                                    <input type="checkbox" name="NoSe" value='NoSe' disabled> No sé/ No respondo/ No aplica<br>
+                                                </dd>
+                                                @if (pregunta.Item.TieneObservacion == true)
+                                                {
+                                                    <dd>
+                                                        <textarea name="comentarioAdicional" rows="5" cols="40" style="resize:none" disabled>Escriba su comentario aqui</textarea>
+
+                                                    </dd>
+                                                }
+
+                                            </dl>
+                                        </div>
+                                        break;
+                                }
+                            }
+                        </td>
+                    </tr>
+            </tr>
+        }
+    }
+
+</table>
+

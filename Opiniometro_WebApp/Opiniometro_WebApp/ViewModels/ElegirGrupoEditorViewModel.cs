@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Opiniometro_WebApp.Models;
+using System;
 
 namespace Opiniometro_WebApp.Models
 {
@@ -19,17 +20,18 @@ namespace Opiniometro_WebApp.Models
         public List<Profesor> Profesores { get; set; }
         public string NombreCurso { get; set; }
        
-        public string Enfasis { get; set; }
+        //public string Enfasis { get; set; }
 
         // Atributos que no se muestran pero se utilizan para consultar y filtrar
         public string NombreUnidadAcademica { get; set; }
-        public IQueryable<string> NombresCarreras { get; set; }
+        //public IQueryable<string> NombresCarreras { get; set; }
         public string CodigoUnidadAcademica { get; set; }
-        public string SiglaCarrera { get; set; }
+        public List<Enfasis> Enfasis { get; set; }
 
         public ElegirGrupoEditorViewModel()
         {
             Profesores = new List<Profesor>();
+            Enfasis = new List<Enfasis>();
         }
     }
 }

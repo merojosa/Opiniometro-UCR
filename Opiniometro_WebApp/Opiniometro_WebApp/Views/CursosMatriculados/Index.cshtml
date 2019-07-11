@@ -1,0 +1,66 @@
+﻿@model Opiniometro_WebApp.Models.CursosMatriculadoModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>My page</title>
+</head>
+<body>
+    <h2> Cursos en los que está matriculado</h2>     
+
+    <table id="tabla-gruposMatriculado" class="table table-sm table-hover" cellspacing="0" width="100">
+        <tr>
+            <th align='left'>
+                Sigla
+            </th>
+            <th align='left'>
+                Curso
+            </th>
+            <th align='left'>
+                Semestre
+            </th>
+            <th align='left'>
+                Año
+            </th>
+            <th align='left'>
+                Nombre Profesor
+            </th>
+            <th align='left'>
+                Formulario
+            </th>
+        </tr>
+            <!-- Despliega los cursos eh los que esta matriculado el estudiante-->
+            @foreach (var item in Model.gruposMatriculado)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.siglaCursoMatriculado)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.nombreCursoMatriculado)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.semestreGrupo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.anoGrupo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.nombreProfeCurso)
+                            @Html.DisplayFor(model => item.apellido1Profe)
+                            @Html.DisplayFor(model => item.apellido2Profe)
+                        </td>
+                        <td>
+                           @Html.ActionLink(item.formulario, "Index", "FormularioCurso", new { cedulaProfesor = item.cedulaProf, cedulaEstudiante = item.cedEst , codigoForm = item.codFormulario, anno = item.anoGrupo, semestre = item.semestreGrupo, siglaCurso = item.siglaCursoMatriculado, numGrupo = item.numGrupo}, null)
+                        </td>
+                    </tr>               
+            }
+    </table>
+
+
+</body>
+</html>

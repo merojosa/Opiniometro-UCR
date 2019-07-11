@@ -39,13 +39,6 @@ namespace Opiniometro_WebApp.Controllers
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
         private const string caracteres_aleatorios = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        // GET: Administrador
-        public ActionResult Index()
-        {
-
-            return View();
-        }
-
         [HttpGet]
         public ActionResult CargarUsuarios()
         {
