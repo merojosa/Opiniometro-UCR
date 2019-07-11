@@ -360,10 +360,13 @@
     <Compile Include="Models\SP_DevolverObservacionesPorGrupo_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SP_RecuperarEtiquetasEscalar_Result.cs">
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_RecuperarEtiquetasEscalar_Result.cs">
