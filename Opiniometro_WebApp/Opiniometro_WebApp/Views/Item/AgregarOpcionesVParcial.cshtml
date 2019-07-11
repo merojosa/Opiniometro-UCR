@@ -35,6 +35,9 @@
 
             var textBox = $("<input />").attr("type", "textbox").attr("name", "DynamicTextBox");
             textBox.val(value);
+            textBox.attr("maxlength", "30");
+            textBox.attr("required", true);
+            textBox.attr("placeholder", "Escriba su opción aquí:");
             div.append(textBox);
 
             var button = $("<input />").attr("type", "button").attr("value", "Eliminar");
@@ -64,5 +67,6 @@
             }
         });
     </script>
+
 </body>
 </html>

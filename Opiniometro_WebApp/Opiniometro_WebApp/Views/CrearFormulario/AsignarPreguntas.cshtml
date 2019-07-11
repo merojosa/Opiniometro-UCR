@@ -18,6 +18,7 @@
 
     $(document).ready(function () {
         $("#btnSave").click(function () {
+            
             $.ajax(
             {
                 type: "POST", //HTTP POST Method
@@ -37,11 +38,13 @@
                             alert("Se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
                                 + $("input:radio[name=seccion]:checked").val()),
                                 $('#ConformadosID').html(result);
+                                location.reload();
                         } else {
                             alert("No se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
                                 + $("input:radio[name=seccion]:checked").val()
                                 + " porque la pregunta ya se asigno a esa sección.")
                         }
+                        
                     },
                     error: function () {
                         alert("No se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
@@ -240,7 +243,7 @@
     </div>
 </div>
 
- <button id ="VistaPrevia" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalVistaPrevia">
+<button id="VistaPrevia" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalVistaPrevia">
     Vista Previa
 </button>
 
@@ -254,7 +257,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                @Html.Partial("VistaFormularioVParcial", Model.FormularioCompleto)
+                @Html.Action("VistaFormularioVParcial", new { CodForm = Model.Formulario.CodigoFormulario })
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -278,6 +281,16 @@
 </script>
 
 
+<script>
+    jQuery(document).ready(function () {
+
+        jQuery('#modalVistaPrevia').on('show.bs.modal', function (e) {
+            jQuery(this).removeData('bs.modal');
+                               
+        })
+
+    })
+</script>
 
 
 

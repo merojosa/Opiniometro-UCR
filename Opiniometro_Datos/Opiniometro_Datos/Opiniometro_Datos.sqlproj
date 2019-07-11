@@ -101,14 +101,16 @@
     <None Include="FiltrarUsuarios.sql" />
     <None Include="Script.EliminarPersona.sql" />
     <Build Include="Tiene_Usuario_Perfil_Enfasis.sql" />
-    <Build Include="Canton.sql" />
-    <Build Include="Distrito.sql" />
-    <Build Include="Provincia.sql" />
-    <Build Include="Direccion_Persona.sql" />
     <Build Include="SP_ObtenerFormulario.sql" />
     <Build Include="ProcIntroducirSeccion.sql" />
     <Build Include="SP_ObtenerConformado_Item_Sec_Form.sql" />
     <Build Include="Conformado_For_Sec.sql" />
+    <Build Include="Seleccion_Multiple.sql" />
+    <Build Include="Opciones_De_Respuestas_Seleccion_Unica.sql" />
+    <Build Include="Escalar.sql" />
+    <Build Include="SP_Insertar_Seleccion_Unica.sql" />
+    <Build Include="TR_AsignarPreguntas.sql" />
+    <Build Include="TR_AsignarSecciones.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ScriptGenerarContrasena.sql" />

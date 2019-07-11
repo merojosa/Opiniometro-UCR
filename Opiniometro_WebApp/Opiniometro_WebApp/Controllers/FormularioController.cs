@@ -37,7 +37,7 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult Index(int? page)
         {
             var formulario = db.Formulario;
-            return View(formulario.ToList().ToPagedList(page ?? 1, 5));
+            return View("Index", formulario.ToList().ToPagedList(page ?? 1, 5));
         }
 
         // GET: Formulario/Details/5
@@ -136,7 +136,39 @@ namespace Opiniometro_WebApp.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult VistaFormularioVParcial(String codForm)
+        {
+            FormularioCompletoModel formularioVistaPrevia = new FormularioCompletoModel()//Modelo donde obtenemos las 
+            {
+                Conformados = db.Conformado_Item_Sec_Form
 
+                    .Where(m => m.CodigoFormulario == codForm)
+                    .OrderBy(m => m.TituloSeccion)
+                    .ThenBy(m => m.Orden_Item)
+                    .ToList(),
+
+                ConformadoS = db.Conformado_For_Sec//Llenamos nuestra lista de secciones del formulario.                   
+                    .Where(m => m.CodigoFormulario == codForm)
+                    .OrderBy(m => m.TituloSeccion)
+                    .ThenBy(m => m.Orden_Seccion)
+                    .ToList()
+            };
+
+            return PartialView(formularioVistaPrevia);
+        }
+        public ActionResult SeleccionUnicaVParcial(String id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            VistaPreviaPreguntaModel vistaPrevia = new VistaPreviaPreguntaModel
+            {
+                Item = db.Item.Find(id),
+                Opciones = db.Opciones_De_Respuestas_Seleccion_Unica.Where(m => m.ItemId == id).ToList()
+            };
+            return PartialView(vistaPrevia);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

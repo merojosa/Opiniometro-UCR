@@ -1,4 +1,4 @@
-﻿-- Borrar todas las tuplas existentes en la base de datos para evitar repeticion de llaves primarias.
+﻿	-- Borrar todas las tuplas existentes en la base de datos para evitar repeticion de llaves primarias.
 EXEC sp_MSForEachTable 'DISABLE TRIGGER ALL ON ?'
 GO
 EXEC sp_MSForEachTable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL'
@@ -25,7 +25,7 @@ BEGIN
 	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
 
 	INSERT INTO Usuario
-	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id, 0)
 END
 GO
 
@@ -103,30 +103,32 @@ BEGIN
 		WHERE CorreoInstitucional = @CorreoBuscar
 	END	
 END
+GO
 
 -- Modificar Persona
 IF OBJECT_ID('SP_ModificarPersona') IS NOT NULL
 	DROP PROCEDURE SP_ModificarPersona
 GO
 CREATE PROCEDURE SP_ModificarPersona
-	@CedulaBusqueda		VARCHAR(9),
-	@Cedula				CHAR(9),
-	@Nombre				NVARCHAR(50),
-	@Apellido1			NVARCHAR(50),
-	@Apellido2			NVARCHAR(50),
-	@Correo				NVARCHAR(100),
-	@Direccion			NVARCHAR(256)
+	@CedulaBusqueda		VARCHAR(10),
+	@Cedula				CHAR(10),
+	@Nombre1			NVARCHAR(51),
+	@Nombre2			NVARCHAR(51),
+	@Apellido1			NVARCHAR(51),
+	@Apellido2			NVARCHAR(51),
+	@Correo				NVARCHAR(51)
 AS
 BEGIN
 	UPDATE Persona
-	SET Cedula = @Cedula, Nombre = @Nombre, Apellido1 = @Apellido1, Apellido2 = @Apellido2, Direccion = @Direccion
+	SET Cedula = @Cedula, Nombre1 = @Nombre1, Nombre2 = @Nombre2, Apellido1 = @Apellido1, Apellido2 = @Apellido2
 	WHERE Cedula = @CedulaBusqueda;
 
 	UPDATE Usuario
 	SET CorreoInstitucional = @Correo
-	WHERE Cedula = @CedulaBusqueda;
+	WHERE Cedula = @Cedula;
 END
 GO
+
 
 IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
@@ -145,14 +147,14 @@ IF OBJECT_ID('SP_ObtenerNombre') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerNombre
 GO
 CREATE PROCEDURE SP_ObtenerNombre
-	@Correo			NVARCHAR(50),
-	@Nombre			NVARCHAR(50) OUT,
-	@Apellido		NVARCHAR(50) OUT
+	@Correo			NVARCHAR(51),
+	@Nombre			NVARCHAR(51) OUT,
+	@Apellido		NVARCHAR(51) OUT
 AS
 BEGIN
 	SET NOCOUNT ON
 	
-	SET @Nombre = (SELECT Nombre
+	SET @Nombre = (SELECT Nombre1
 	FROM Usuario U	JOIN Persona P ON U.Cedula = p.Cedula
 	WHERE U.CorreoInstitucional=@Correo)
 
@@ -162,7 +164,7 @@ BEGIN
 END
 GO
 
---EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre='Barry2', @Apellido1='Allen2', @Apellido2='Garcia2', @Direccion='Central City2';
+--EXEC SP_ModificarPersona @CedulaBusqueda = '987654321', @Cedula='987654321', @Nombre1='Barry2', @Nombre2='', @Apellido1='Allen2', @Apellido2='Garcia2', @DireccionDetallada='Central City2';
 
 IF OBJECT_ID('ValorRandom') IS NOT NULL
 	DROP VIEW ValorRandom
@@ -198,25 +200,27 @@ IF OBJECT_ID('SP_AgregarPersonaUsuario') IS NOT NULL
 	DROP PROCEDURE SP_AgregarPersonaUsuario
 GO
 CREATE PROCEDURE SP_AgregarPersonaUsuario
-	@Correo			NVARCHAR(50),
-	@Contrasenna	NVARCHAR(50),
-	@Cedula			CHAR(9),
-	@Nombre			NVARCHAR(50),
-	@Apellido1		NVARCHAR(50),
-	@Apellido2		NVARCHAR(50),
-	@Direccion		NVARCHAR(256)
+	@Correo			NVARCHAR(51),
+	@Contrasenna	NVARCHAR(51),
+	@Cedula			CHAR(10),
+	@Nombre1		NVARCHAR(51),
+	@Nombre2		NVARCHAR(51),
+	@Apellido1		NVARCHAR(51),
+	@Apellido2		NVARCHAR(51)
 AS
 BEGIN
 	SET NOCOUNT ON
 	DECLARE @Id UNIQUEIDENTIFIER=NEWID()
 
 	INSERT INTO Persona
-	VALUES (@Cedula, @Nombre, @Apellido1, @Apellido2, @Direccion)
-
+	VALUES (@Cedula, @Nombre1, @Nombre2, @Apellido1, @Apellido2)
+	SET @Contrasenna = (SELECT dbo.SF_GenerarContrasena());
 	INSERT INTO Usuario
-	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id)
+	VALUES (@Correo, HASHBYTES('SHA2_512', @Contrasenna+CAST(@Id AS NVARCHAR(36))), 1, @Cedula, @Id, 0)
 END
 GO
+
+
 
 
 IF OBJECT_ID('ObtenerPerfilUsuario') IS NOT NULL
@@ -253,7 +257,7 @@ GO
 --Pantalla 1, Home
 CREATE PROCEDURE MostrarEstudiantes
 AS 
-	SELECT Nombre, Apellido1, Apellido2, Carne
+	SELECT Nombre1, Apellido1, Apellido2, Carne
 	FROM Persona P JOIN Estudiante E ON P.Cedula = E.CedulaEstudiante;
 GO
 
@@ -262,7 +266,7 @@ GO
 CREATE PROCEDURE NombrePersona 
 @Cedula VARCHAR(9)
 AS
-	SELECT Nombre
+	SELECT Nombre1
 	FROM Persona
 	WHERE Cedula = @Cedula;
 
@@ -271,11 +275,14 @@ GO
 CREATE PROCEDURE DatosEstudiante
 @Cedula VARCHAR(9)
 AS
-	SELECT CONCAT(Nombre, ' ' ,Apellido1, ' ', Apellido2) as 'Nombre Completo', Carne, Cedula
+	SELECT CONCAT(Nombre1, ' ' ,Apellido1, ' ', Apellido2) as 'Nombre Completo', Carne, Cedula
 	FROM Persona P JOIN Estudiante E ON P.Cedula = E.CedulaEstudiante
 	WHERE Cedula = @Cedula;
 GO
 
+GO
+IF OBJECT_ID('ObtenerPerfilesUsuario') IS NOT NULL
+	DROP PROCEDURE ObtenerPerfilesUsuario
 GO
 CREATE PROC ObtenerPerfilesUsuario
 	@Correo	NVARCHAR(50)
@@ -285,24 +292,85 @@ AS
 	WHERE CorreoInstitucional= @Correo
 GO
 
+
+IF OBJECT_ID('SP_CrearPerfil') IS NOT NULL
+	DROP PROCEDURE SP_CrearPerfil
+GO
+CREATE PROCEDURE SP_CrearPerfil
+	@Nombre			VARCHAR(30),
+	@Descripcion	VARCHAR(80),
+	@Numero_Error	INT OUT
+AS
+BEGIN
+	SET @Numero_Error = 0
+
+	BEGIN TRY
+		-- Configuro todo para hacer la transaccion manualmente.
+		SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+		SET IMPLICIT_TRANSACTIONS OFF;
+
+		BEGIN TRANSACTION CrearPerfil
+			INSERT INTO Perfil
+			VALUES(@Nombre, @Descripcion)
+		COMMIT TRANSACTION CrearPerfil
+		
+		-- Revierto configuracion para que todo quede como estaba por default.
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+		SET IMPLICIT_TRANSACTIONS ON;
+	END TRY
+	BEGIN CATCH
+		SET @Numero_Error = (SELECT ERROR_NUMBER())
+		ROLLBACK TRANSACTION CrearPerfil
+	END CATCH
+END
+GO
+
+IF OBJECT_ID('EditarPerfil') IS NOT NULL
+	DROP PROCEDURE EditarPerfil
+CREATE PROCEDURE EditarPerfil
+	@nombre varchar(30),
+	@nombreViejo varchar(30),
+	@descripcion varchar(80),
+	@Numero_Error	INT OUT
+AS
+begin
+	SET @Numero_Error = 0
+	BEGIN TRY
+	SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+	BEGIN TRANSACTION EditarPerfil;
+		update Perfil set
+		Perfil.Descripcion = @descripcion,
+		Perfil.Nombre = @nombre
+		where Nombre = @nombreViejo
+		COMMIT TRANSACTION EditarPerfil
+	END TRY
+	BEGIN CATCH
+		SET @Numero_Error = (SELECT ERROR_NUMBER())
+		ROLLBACK TRANSACTION EditarPerfil	
+	END CATCH
+
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+end
+go
+
 --Inserciones
 
 INSERT INTO Persona
-VALUES	('116720500', 'Jose Andrés', 'Mejías', 'Rojas', 'Desamparados de Alajuela.'),
-		('115003456', 'Daniel', 'Escalante', 'Perez', 'Desamparados de San José.'),
-		('117720910', 'Jose Andrés', 'Mejías', 'Rojas', 'La Fortuna de San Carlos.'),
-		('236724507', 'Jose Andrés', 'Mejías', 'Rojas', 'Sarchí, Alajuela.'),
+VALUES	('116720500', 'Jose Andrés', NULL,'Mejías', 'Rojas'),
+		('115003456', 'Daniel', NULL, 'Escalante', 'Perez'),
+		('117720910', 'Jose Andrés', NULL, 'Mejías', 'Rojas'),
+		('236724507', 'Jose Andrés', NULL, 'Mejías', 'Rojas'),
 		--Agregado de datos para visualizacion a cargo de CX Solutions
-		('100000001', 'CX', 'Solutions', 'S.A.', 'San Pedro Montes de Oca'),
-		('100000002', 'Marta', 'Rojas', 'Sanches', '300 metros norte de Pulmitan'),--Profesora
+		('100000001', 'CX', NULL, 'Solutions', 'S.A.'),
+		('100000002', 'Marta', NULL, 'Rojas', 'Sanches'),--Profesora
 		--Estudiantes
-		('100000003', 'Juan', 'Briceño', 'Lupon', '400 metros norte del Heraldo de la Grieta'),
-		('100000005', 'Pepito', 'Fonsi', 'Monge', '20 metros norte del Blue del lado Rojo'),
-		('100000004', 'Maria', 'Fallas', 'Merdi', 'Costado este del estandarte de top'),
-		('117720912', 'Jorge', 'Solano', 'Carrillo', 'La Fortuna de San Carlos.'),
-		('236724501', 'Carolina', 'Gutierrez', 'Lozano', 'Sarchí, Alajuela.'),
-		('123456789', 'Ortencia', 'Cañas', 'Griezman', 'San Pedro de Montes de Oca');
-		
+		('100000003', 'Juan', NULL, 'Briceño', 'Lupon'),
+		('100000005', 'Pepito', NULL, 'Fonsi', 'Monge'),
+		('100000004', 'Maria', NULL, 'Fallas', 'Merdi'),
+		('117720912', 'Jorge', NULL, 'Solano', 'Carrillo'),
+		('236724501', 'Carolina', NULL, 'Gutierrez', 'Lozano'),
+		('123456789', 'Ortencia', NULL, 'Cañas', 'Griezman');
+
 INSERT INTO Estudiante VALUES 
  ('116720500', 'B11111')
 ,('115003456', 'B22222')
@@ -429,6 +497,9 @@ VALUES ('CI1330', 100, 'SC-01234'),
 
 --DROP PROCEDURE CursosSegunCarrera
 --Obtiene la lista de cursos que pertenecen a cierta carrera
+
+IF OBJECT_ID('CursosSegunCarrera') IS NOT NULL
+	DROP PROCEDURE CursosSegunCarrera
 GO
 CREATE PROCEDURE CursosSegunCarrera
 @siglaCarrera NVARCHAR(10)
@@ -443,6 +514,9 @@ END
 GO
 
 --Obtiene la lista de cursos que pertenecen a cierto semestre
+IF OBJECT_ID('CursosSegunSemestre') IS NOT NULL
+	DROP PROCEDURE CursosSegunSemestre
+GO
 CREATE PROCEDURE CursosSegunSemestre
 @semestre TINYINT
 AS
@@ -456,6 +530,9 @@ END
 GO
 
 --Obtiene la lista de cursos que pertenecen a cierto año
+IF OBJECT_ID('CursosSegunAnno') IS NOT NULL
+	DROP PROCEDURE CursosSegunAnno
+GO
 CREATE PROCEDURE CursosSegunAnno
 @anno SMALLINT
 AS
@@ -491,12 +568,15 @@ VALUES  ('PRE303', '¿El profesor repuso clases cuando fue necesario?', 1, 3, 'R
 		('PRE404', '¿El profesor entrego la carta del estudiante en las fechas indicadas por el reglamento?', 1, 3, 'Reglamento'),
 		('PRE101', '¿Que opina del curso?', 0, 1, 'Opinion'),
 		('PRE202', '¿Que opina del profesor?', 0, 1, 'Opinion'),
-		---Se agregó
-		('PRE505', 'Año de carrera que cursa', 0, 4, 'Opinion'),
-		('PRE606', 'Condicion laboral', 0, 4, 'Opinion'),
+		---Se agregó Selección Unica
+		('PRE505', 'Año de carrera que cursa', 0, 2, 'Opinion'),
+		('PRE606', 'Condicion laboral', 0, 2, 'Opinion'),
 		--Escalar y Escalar Estrella
 		('PRE707', '¿Se prepara adecuadamente para las evaluaciones?', 1, 5, 'Opinion'),
-		('PRE808', '¿Propone actividades que involucren investigacion?', 1, 6, 'Reglamento');
+		('PRE808', '¿Propone actividades que involucren investigacion?', 1, 6, 'Reglamento'),
+		--Seleccion Multiple
+		('PRE909', '¿Que opciones describen mejor el curso?', 1, 4, 'Curso'),
+		('PRE110', '¿Que opciones describen mejor la relación entre materia y evaluaciones?', 1, 4, 'Curso');
 
 --Item-Texto Libre
 INSERT INTO Texto_Libre (ItemId)
@@ -506,7 +586,58 @@ VALUES  ('PRE101'),
 --Item-Si/no
 INSERT INTO Seleccion_Unica (ItemId, IsaLikeDislike)
 VALUES  ('PRE303', 1),
-		('PRE404', 1);
+		('PRE404', 1),
+		('PRE505', 0),
+		('PRE606', 0);
+
+--Item-Opciones Seleccion Única
+INSERT INTO Opciones_De_Respuestas_Seleccion_Unica (ItemId, OpcionRespuesta, Orden)
+VALUES  ('PRE303', 'Sí', 1),
+		('PRE303', 'No', 2),
+		('PRE303', 'NS/NR', 3),
+		('PRE404', 'Sí', 1),
+		('PRE404', 'No', 2),
+		('PRE404', 'NS/NR', 3),
+		('PRE505', 'Primero', 1),
+		('PRE505', 'Segundo', 2),
+		('PRE505', 'Tercero', 3),
+		('PRE505', 'Cuarto', 4),
+		('PRE505', 'Quinto', 5),
+		('PRE505', 'Otro', 6),
+		('PRE505', 'NS/NR', 7),
+		('PRE606', 'No trabaja', 1),
+		('PRE606', 'Trabaja 20 horas semanales o menos', 2),
+		('PRE606', 'Trabaja más de 20 horas semanales', 3),
+		('PRE606', 'NS/NR', 4);
+
+--Item-Escalar
+INSERT INTO Escalar (ItemId, Inicio, Fin, Incremento, IsaEstrella)
+VALUES	('PRE707', 0, 10, 1, 0),
+		('PRE808', 1, 5, 1, 1);
+
+--Item-Seleccion Multiple
+INSERT INTO Seleccion_Multiple (ItemId)
+VALUES	('PRE909'),
+		('PRE110');
+
+--Item-Opciones Seleccion Multiple
+--('PRE909', '¿Que opciones describen mejor el curso?', 1, 4, 'Curso'),
+--('PRE110', '¿Que opciones describen mejor la relación entre materia y evaluaciones?', 1, 4, 'Curso');
+INSERT INTO Opciones_De_Respuestas_Seleccion_Multiple (ItemId, OpcionRespuesta, Orden)
+VALUES	('PRE909', 'Interesante', 1),
+		('PRE909', 'Aburrido', 2),
+		('PRE909', 'Práctico', 3),
+		('PRE909', 'Poco Práctico', 4),
+		('PRE909', 'Fácil', 5),
+		('PRE909', 'Complicado', 6),
+		('PRE909', 'NS/NR', 7),
+		('PRE110', 'Evaluaciones más difíciles que la materia vista en clase', 1),
+		('PRE110', 'Evaluaciones más fáciles que la materia vista en clase', 2),
+		('PRE110', 'Evaluaciones con difícultad similar que la materia vista en clase', 3),
+		('PRE110', 'Evaluaciones muy relacionadas con la materia vista en clase', 4),
+		('PRE110', 'Evaluaciones poco relacionadas con la materia vista en clase', 5),
+		('PRE110', 'Evaluaciones tienen cierta relación con la materia vista en clase', 6),
+		('PRE110', 'NS/NR', 7);
 
 --Seccion
 INSERT INTO Seccion (Titulo, Descripcion)
@@ -535,53 +666,72 @@ VALUES  ('2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 1
 		('2017-3-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 1);
 
  --Conformado_Item_Sec_Form
-INSERT INTO Conformado_Item_Sec_Form (ItemId, CodigoFormulario, TituloSeccion, NombreFormulario)
-VALUES	('PRE101', '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
-		('PRE202', '131313', 'Opinion general del curso', 'Evaluación de Profesores'),
-		('PRE303', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores'),	
-		('PRE404', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores'),
-		('PRE505', '131313', 'Información del o la estudiante', 'Evaluación de Profesores'),
-		('PRE606', '131313', 'Información del o la estudiante', 'Evaluación de Profesores'),
-		('PRE707', '131313', 'Evaluacion de la participacion estudiantil', 'Evaluación de Profesores'),
-		('PRE808', '131313', 'Tematicas transversales de la Universidad de Costa Rica', 'Evaluación de Profesores');
+INSERT INTO Conformado_Item_Sec_Form (ItemId, CodigoFormulario, TituloSeccion, NombreFormulario, Orden_Seccion, Orden_Item)
+VALUES	('PRE101', '131313', 'Opinion general del curso', 'Evaluación de Profesores', 1, 1),
+		('PRE202', '131313', 'Opinion general del curso', 'Evaluación de Profesores', 1, 3),
+		('PRE303', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores', 2, 1),	
+		('PRE404', '131313', 'Evaluación de aspectos reglamentarios del profesor', 'Evaluación de Profesores', 2, 2),
+		('PRE707', '131313', 'Evaluacion de la participacion estudiantil', 'Evaluación de Profesores', 4, 1),
+		('PRE808', '131313', 'Tematicas transversales de la Universidad de Costa Rica', 'Evaluación de Profesores', 5, 1),
+		('PRE909', '131313', 'Opinion general del curso', 'Evaluación de Profesores', 1, 4),
+		('PRE505', '131313', 'Información del o la estudiante', 'Evaluación de Profesores', 3, 1),
+		('PRE606', '131313', 'Información del o la estudiante', 'Evaluación de Profesores', 3, 2),
+		('PRE110', '131313', 'Opinion general del curso', 'Evaluación de Profesores', 1, 2);
 
 --Responde
 INSERT INTO Responde (ItemId, TituloSeccion, FechaRespuesta, CodigoFormularioResp, CedulaPersona, CedulaProfesor, AnnoGrupoResp, SemestreGrupoResp, NumeroGrupoResp, SiglaGrupoResp, Respuesta, Observacion)
-VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '3', 'Nunca tuvimos que reponer clases'),
-		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '2', 'La profesora olvido enviar la carta del estudiante pero si la revisamos en la primera semana de clases'),
-		('PRE101', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '', 'La materia estuvo muy interesante y espero poder aplicarla en el futuro en el trabajo'),
-		('PRE202', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '', 'La profesora tardo mucho para devolver las evaluaciones'),
+VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'NS/NR', 'Nunca tuvimos que reponer clases'),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'No', 'La profesora olvido enviar la carta del estudiante pero si la revisamos en la primera semana de clases'),
+		('PRE101', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'La materia estuvo muy interesante y espero poder aplicarla en el futuro en el trabajo', ''),
+		('PRE202', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'La profesora tardo mucho para devolver las evaluaciones', ''),
 		--Segunda evaluacion
-		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '2', 'No fue necesario reponer clases'),
-		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '1', 'Revisamos la carta del estudiante en la primera semana'),
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'No', 'No fue necesario reponer clases'),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Revisamos la carta del estudiante en la primera semana'),
 		('PRE101', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '', 'No estoy seguro de si en el ambiente laboral me servira la materia'),
 		('PRE202', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '', 'La profesora logro que las clases fueran muy entretenidas y dinámicas'),
 		--Tercera evaluacion
-		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '1', 'Me repuso una clase a la que falte'),
-		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '1', 'Sí se reviso'),
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Me repuso una clase a la que falte'),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Sí se reviso'),
 		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Entretenido'),
 		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Muy buena profesora'),
 
 		--Agregado
-		--Cuarta Multiple
+		--Cuarta Unica
 		('PRE505', 'Información del o la estudiante', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Primero', ''),
-		('PRE606', 'Información del o la estudiante', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'No Trabajo', ''),
+		('PRE606', 'Información del o la estudiante', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'No Trabaja', ''),
 		('PRE505', 'Información del o la estudiante', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Segundo', ''),
 		('PRE505', 'Información del o la estudiante', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Tercero', ''),
-		('PRE606', 'Información del o la estudiante', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Trabajo mas de 20 horas semanales', ''),
-		('PRE606', 'Información del o la estudiante', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Trabajo menos de 20 horas semanales', ''),
+		('PRE606', 'Información del o la estudiante', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja mas de 20 horas semanales', ''),
+		('PRE606', 'Información del o la estudiante', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja 20 horas semanales o menos', ''),
 		--Escalar 5 y 10
-		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Demasiado', 'Soy un sapazo'),
-		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Poco', 'Me da pereza estudiar'),
-		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'A veces', 'Siempre le pongo'),
-		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Poco', 'Sí se reviso'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '5', 'Soy un sapazo'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '2', 'Me da pereza estudiar'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '4', 'Siempre le pongo'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', '2', 'Sí se reviso'),
+		/*'Demasiado'
+		'Poco'
+		'A veces'*/
 		--1 a 10
 		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '8', 'Me encanta la materia'),
 		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', '4', 'Mucho que investigar'),
 		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '3', 'Soy muy vago'),
 		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '1', 'Demasiado trabajo'),
 		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', '7', 'Me encanta la materia'),
-		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', '5', 'Mucho que investigar');
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', '5', 'Mucho que investigar'),
+		--Multiple
+		('PRE909', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Soy un sapazo'),
+		('PRE909', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Poco Práctico', 'No me quedo claro la metodología'),
+		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Complicado', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Práctico', 'Soy un sapazo'),
+		('PRE909', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Fácil', 'No me quedo claro la metodología'),
+		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
+
+		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones más fáciles que la materia vista en clase', 'Con prestar atención en clase me parecion suficiente'),
+		('PRE110', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Preguntando bastante en consulta se sale bien'),
+		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones tienen cierta relación con la materia vista en clase', 'Con prestar atención en clase me parecion suficiente'),
+		('PRE110', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Preguntando bastante en consulta se sale bien');
 
 GO
 IF OBJECT_ID('SP_ContarRespuestasPorGrupo') IS NOT NULL
@@ -610,6 +760,31 @@ END
 GO
 
 GO
+IF OBJECT_ID('SP_DevolverRespuestasPorGrupo') IS NOT NULL
+	DROP PROCEDURE SP_DevolverRespuestasPorGrupo
+
+--REQ: La Base de datos creada.
+--EFE: Retorna las respuestas de texto libre de un grupo especifico.
+--MOD:--
+GO
+CREATE PROCEDURE SP_DevolverRespuestasPorGrupo
+	@codigoFormulario	CHAR(6),
+	@cedulaProfesor		CHAR(9),
+	@annoGrupo			SMALLINT,
+	@semestreGrupo		TINYINT,
+	@numeroGrupo		TINYINT,
+	@siglaCurso			CHAR(6),
+	@itemId				NVARCHAR(10)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT e.Respuesta
+	FROM Responde as e
+	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
+END
+GO
+
+GO
 IF OBJECT_ID('SP_DevolverObservacionesPorGrupo') IS NOT NULL
 	DROP PROCEDURE SP_DevolverObservacionesPorGrupo
 
@@ -628,9 +803,9 @@ CREATE PROCEDURE SP_DevolverObservacionesPorGrupo
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT e.Observacion
-	FROM Responde as e
-	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
+	SELECT e.Observacion, a.Nombre, a.Apellido1, a.Apellido2
+	FROM Responde as e, Persona as a
+	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId AND e.CedulaPersona = a.Cedula
 END
 GO
 
@@ -648,7 +823,9 @@ VALUES	(1, 'Hacer todo'),
 		(206, 'VerSecciones'),
 		(207, 'VerItems'),
 		(208, 'InsertarFormulario'),
-		(209, 'Eliminar perfiles');
+		(209, 'Eliminar perfiles'),
+		(210, 'Crear perfil'),
+		(211, 'Asignar y revocar permisos');
 
 INSERT INTO Perfil
 VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
@@ -658,7 +835,7 @@ VALUES	('Estudiante', 'Calificar y ver evaluaciones.'),
 
 INSERT INTO Tiene_Usuario_Perfil_Enfasis
 VALUES	('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Estudiante'),
-		('admin@ucr.ac.cr', 0, 'SC-01234', 'Admin'),
+		('admin@ucr.ac.cr', 0, 'SC-01234', 'Administrador'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Profesor'),
 		('jose.mejiasrojas@ucr.ac.cr', 0, 'SC-01234', 'Administrador')
 
@@ -679,123 +856,118 @@ VALUES	(0, 'SC-01234', 'Estudiante', 3),
 		(0,'SC-01234', 'Estudiante', 205),
 		(0,'SC-01234', 'Administrador', 208),
 		(0,'SC-01234', 'Profesor', 208),
-		(0, 'SC-01234', 'Administrador', 209)
+		(0, 'SC-01234', 'Administrador', 209),
+		(0, 'SC-01234', 'Administrador', 210),
+		(0, 'SC-01234', 'Administrador', 211)
 
-INSERT INTO Provincia
-VALUES	('San José'),
-		('Cartago'),
-		('Heredia'),
-		('Alajuela'),
-		('Puntarenas'),
-		('Guanacaste'),
-		('Limón');
+--Función:
+--Retorna Unique Identifier [Ver SP_agregarPersonaUsuario]
+IF OBJECT_ID('SP_GenerarContrasena') IS NOT NULL
+	DROP PROCEDURE SP_GenerarContrasena
+GO
+CREATE PROCEDURE SP_GenerarContrasena
+@resultado	NVARCHAR(10) OUTPUT 
+AS
+BEGIN
+	DECLARE @contrasenaRandom NVARCHAR(10);
+	DECLARE @infoBinario VARBINARY(10);
+	DECLARE @datosCaracteres NVARCHAR(10);
 
-INSERT INTO Canton
-VALUES	('San José', 'Acosta'),
-		('San José', 'Alajuelita'),
-		('San José', 'Aserrí'),
-		('San José', 'Desamparados'),
-		('San José', 'Curridabat'),
-		('San José', 'Dota'),
-		('San José', 'Escazú'),
-		('San José', 'Goicoechea'),
-		('San José', 'León Cortés Castro'),
-		('San José', 'Montes de Oca'),
-		('San José', 'Mora'),
-		('San José', 'Moravia'),
-		('San José', 'Puriscal'),
-		('San José', 'San José'),
-		('San José', 'Tarrazú'),
-		('San José', 'Turrubares'),
-		('San José', 'Vazquez de Coronado'),
-		('Cartago', 'Cartago'),
-		('Cartago', 'Paraíso'),
-		('Cartago', 'La Unión'),
-		('Cartago', 'Jiménez'),
-		('Cartago', 'Turrialba'),
-		('Cartago', 'Alvarado'),
-		('Cartago', 'Oreamuno'),
-		('Cartago', 'El Guarco')
+	SELECT @infoBinario = randomvalue FROM ValorRandom;
 
-INSERT INTO Distrito
-VALUES	('San José', 'San José', 'Carmen'),
-		('San José', 'San José', 'Merced'),
-		('San José', 'San José', 'Hospital'),
-		('San José', 'San José', 'Catedral'),
-		('San José', 'San José', 'Zapote'),
-		('San José', 'San José', 'San Francisco de Dos Ríos'),
-		('San José', 'San José', 'Uruca'),
-		('San José', 'San José', 'Mata Redonda'),
-		('San José', 'San José', 'Pavas'),
-		('San José', 'San José', 'Hatillo'),
-		('San José', 'San José', 'San Sebastián'),
-		('San José', 'Escazú', 'Escazú'),
-		('San José', 'Escazú', 'San Antonio'),
-		('San José', 'Escazú', 'San Rafael'),
-		('San José', 'Desamparados', 'Desamparados'),
-		('San José', 'Desamparados', 'San Miguel'),
-		('San José', 'Desamparados', 'San Juan de Dios'),
-		('San José', 'Desamparados', 'San Rafael Arriba'),
-		('San José', 'Desamparados', 'San Rafael Abajo'),
-		('San José', 'Desamparados', 'San Antonio'),
-		('San José', 'Desamparados', 'Frailes'),
-		('San José', 'Desamparados', 'Patarrá'),
-		('San José', 'Desamparados', 'San Cristóbal'),
-		('San José', 'Desamparados', 'Rosario'),
-		('San José', 'Desamparados', 'Damas'),
-		('San José', 'Desamparados', 'Gravilias'),
-		('Cartago', 'Cartago', 'Oriental'),
-		('Cartago', 'Cartago', 'Occidental'),
-		('Cartago', 'Cartago', 'Carmen'),
-		('Cartago', 'Cartago', 'San Nicilás'),
-		('Cartago', 'Cartago', 'Agua Caliente'),
-		('Cartago', 'Cartago', 'Guadalupe'),
-		('Cartago', 'Cartago', 'Corralillo'),
-		('Cartago', 'Cartago', 'Tierra Blanca'),
-		('Cartago', 'Cartago', 'Dulce Nombre'),
-		('Cartago', 'Cartago', 'Llano Grande'),
-		('Cartago', 'Cartago', 'Quebradilla'),
-		('Cartago', 'Paraíso', 'Paraíso'),
-		('Cartago', 'Paraíso', 'Santiago'),
-		('Cartago', 'Paraíso', 'Orosi'),
-		('Cartago', 'Paraíso', 'Cachí'),
-		('Cartago', 'Paraíso', 'Llanps de Santa Lucía'),
-		('Cartago', 'La Unión', 'Tres Ríos'),
-		('Cartago', 'La Unión', 'San Diego'),
-		('Cartago', 'La Unión', 'San Juan'),
-		('Cartago', 'La Unión', 'San Rafael'),
-		('Cartago', 'La Unión', 'Concepción'),
-		('Cartago', 'La Unión', 'Dulce Nombre'),
-		('Cartago', 'La Unión', 'San Ramón'),
-		('Cartago', 'La Unión', 'Río Azul'),
-		('Cartago', 'Jiménez', 'Juan Viñas'),
-		('Cartago', 'Jiménez', 'Tucurrique'),
-		('Cartago', 'Jiménez', 'Pejibaye'),
-		('Cartago', 'Turrialba', 'Turrialba'),
-		('Cartago', 'Turrialba', 'La Suiza'),
-		('Cartago', 'Turrialba', 'Peralta'),
-		('Cartago', 'Turrialba', 'San Cruz'),
-		('Cartago', 'Turrialba', 'Santa Teresita'),
-		('Cartago', 'Turrialba', 'Pavones'),
-		('Cartago', 'Turrialba', 'Tuis'),
-		('Cartago', 'Turrialba', 'Tayitic'),
-		('Cartago', 'Turrialba', 'Santa Rosa'),
-		('Cartago', 'Turrialba', 'Tres Equis'),
-		('Cartago', 'Turrialba', 'La Isabel'),
-		('Cartago', 'Turrialba', 'Chirripó'),
-		('Cartago', 'Alvarado', 'Pacayas'),
-		('Cartago', 'Alvarado', 'Cervantes'),
-		('Cartago', 'Alvarado', 'Capellades'),
-		('Cartago', 'Oreamuno', 'San Rafael'),
-		('Cartago', 'Oreamuno', 'Cot'),
-		('Cartago', 'Oreamuno', 'Potrero Cerrado'),
-		('Cartago', 'Oreamuno', 'Cipreses'),
-		('Cartago', 'Oreamuno', 'Santa Rosa'),
-		('Cartago', 'El Guarco', 'El Tejar'),
-		('Cartago', 'El Guarco', 'San Isidro'),
-		('Cartago', 'El Guarco', 'Tobosi'),
-		('Cartago', 'El Guarco', 'Patio de Agua')
-		
+	SET @datosCaracteres = CAST ('' as xml).value('xs:base64Binary(sql:variable("@InfoBinario"))', 'varchar (max)');
+
+	SET @resultado = @datosCaracteres;
+
+END
+GO
+
+--Genera un Id único
+IF OBJECT_ID('SP_GenerarIdUnico') IS NOT NULL
+	DROP PROCEDURE SP_GenerarIdUnico
+GO
+CREATE PROCEDURE SP_GenerarIdUnico
+@id	UNIQUEIDENTIFIER OUTPUT
+AS
+BEGIN
+	SET @id = NEWID()
+END
+GO
+
+--Devuelve un GUID generado por la base
+IF OBJECT_ID('SP_GenerarContrasenaHash') IS NOT NULL
+	DROP PROCEDURE SP_GenerarContrasenaHash
+GO
+CREATE PROCEDURE SP_GenerarContrasenaHash
+@id	NVARCHAR(50),
+@contrasena	NVARCHAR(10),
+@contrasenaHash VARBINARY(50) OUTPUT
+AS
+BEGIN
+	SET @contrasenaHash = HASHBYTES('SHA2_512', @contrasena+CAST(@id AS NVARCHAR(36)))
+END
+GO
+
+IF OBJECT_ID('TR_InsertaUsuario') IS NOT NULL
+	DROP TRIGGER TR_InsertaUsuario
+GO
+CREATE TRIGGER TR_InsertaUsuario
+ON Usuario INSTEAD OF INSERT
+AS
+BEGIN
+	DECLARE @correoInstitucional NVARCHAR(51)
+	DECLARE @cedula CHAR(10)
+
+	SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
+	SET @cedula					= (SELECT Cedula FROM inserted)
+
+	IF((@correoInstitucional LIKE '%@ucr.ac.cr') AND (@correoInstitucional NOT LIKE '') AND (@cedula NOT LIKE '') AND (LEN(@correoInstitucional) <= 50) AND  (LEN(@cedula) = 9))
+	BEGIN
+		INSERT INTO Usuario (Cedula, CorreoInstitucional)
+		VALUES (@cedula, @correoInstitucional)
+	END
+	ELSE
+	BEGIN
+		RAISERROR('Hay campos no pueden estar vacíos o exceder el tamaño adecuado', 16, 1)
+		RETURN
+	END
+END;
+
+IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
+	DROP TRIGGER TR_InsertaPersona
+GO
+CREATE TRIGGER TR_InsertaPersona
+ON Persona INSTEAD OF INSERT
+AS
+BEGIN
+	DECLARE @cedula CHAR(10)
+	DECLARE @nombre1 NVARCHAR(51)
+	DECLARE @nombre2 NVARCHAR(51)
+	DECLARE @apellido1 NVARCHAR(51)
+	DECLARE @apellido2 NVARCHAR(51)
+	--DECLARE @correoInstitucional NVARCHAR(51)
+
+	--SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
+	
+	SET @cedula					= (SELECT Cedula FROM inserted)
+	SET @nombre1				= (SELECT Nombre1 FROM inserted)
+	SET @nombre2				= (SELECT Nombre2 FROM inserted)
+	SET @apellido1				= (SELECT Apellido1 FROM inserted)
+	SET @apellido2				= (SELECT Apellido2 FROM inserted)
+
+	IF((@cedula NOT LIKE '') AND  (LEN(@cedula) = 9) AND (@nombre1 NOT LIKE '') AND (LEN(@nombre1) <= 50) 
+	AND  (LEN(@nombre2) <= 50)  AND (@apellido1 NOT LIKE '') AND (LEN(@apellido1) <= 50)  
+	AND (@apellido2 NOT LIKE '') AND (LEN(@apellido2) <= 50))
+	BEGIN
+		INSERT INTO PerPersona(Cedula, nombre1, nombre2, apellido1, apellido2)
+		VALUES (@cedula, @nombre1, @nombre2, @apellido1, @apellido2)
+	END
+	ELSE
+	BEGIN
+		RAISERROR('Hay campos no pueden estar vacíos o exceder el tamaño adecuado', 16, 1)
+		RETURN
+	END
+END;
 
 --select de prueba para la cnt de respuestas
 --SELECT e.Respuesta, COUNT(e.Respuesta) as cantidadRespuestas

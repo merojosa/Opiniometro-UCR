@@ -36,4 +36,28 @@ namespace Opiniometro_WebApp.Models
     public partial class Perfil
     {
     }
+
+    [MetadataType(typeof(PersonaMetadata))]
+    public partial class Persona
+    { }
+
+    [MetadataType(typeof(UsuarioMetadata))]
+    public partial class Usuario
+    { }
+
+    [MetadataType(typeof(EstudianteMetadata))]
+    public partial class Estudiante
+    { }
+
+    [MetadataType(typeof(EmpadronadoMetadata))]
+    public partial class Empadronado
+    { }
+
+    [MetadataType(typeof(ProfesorMetadata))]
+    public partial class Profesor
+    { }
+
+    [MetadataType(typeof(Tiene_Usuario_Perfil_EnfasisMetadata))]
+    public partial class Tiene_Usuario_Perfil_Enfasis
+    { }
 }
