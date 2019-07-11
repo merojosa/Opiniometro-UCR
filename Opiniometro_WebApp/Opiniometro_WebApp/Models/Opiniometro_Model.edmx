@@ -1203,6 +1203,11 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
           <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
           <Parameter Name="Resultado" Type="bit" Mode="InOut" />
         </Function>
+        <Function Name="SP_ModificarPerfilUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="correo" Type="nvarchar" Mode="In" />
+          <Parameter Name="perfil" Type="nvarchar" Mode="In" />
+          <Parameter Name="modifica" Type="bit" Mode="In" />
+        </Function>
         <Function Name="SP_ModificarPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CedulaBusqueda" Type="varchar" Mode="In" />
           <Parameter Name="Cedula" Type="char" Mode="In" />
@@ -2926,6 +2931,21 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <AssociationSet Name="FK_For_Uni" Association="Opiniometro_Model.FK_For_Uni">
+            <End Role="Unidad_Academica" EntitySet="Unidad_Academica" />
+            <End Role="Formulario" EntitySet="Formulario" />
+          </AssociationSet>
+          <FunctionImport Name="EditarPerfil">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="nombreViejo" Mode="In" Type="String" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+            <Parameter Name="Numero_Error" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ModificarPerfilUsuario">
+            <Parameter Name="correo" Mode="In" Type="String" />
+            <Parameter Name="perfil" Mode="In" Type="String" />
+            <Parameter Name="modifica" Mode="In" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CursosSegunAnno_Result">
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="75" />
@@ -3497,18 +3517,10 @@ warning 6013: The table/view 'Opiniometro.dbo.ValorRandom' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_RecuperarEtiquetas" FunctionName="OpiniometroModel.Store.SP_RecuperarEtiquetas" />
-          <FunctionImportMapping FunctionImportName="SP_RecuperarEtiquetasEscalar" FunctionName="OpiniometroModel.Store.SP_RecuperarEtiquetasEscalar">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="OpiniometroModel.SP_RecuperarEtiquetasEscalar_Result">
-                <ScalarProperty Name="Inicio" ColumnName="Inicio" />
-                <ScalarProperty Name="Fin" ColumnName="Fin" />
-                <ScalarProperty Name="Incremento" ColumnName="Incremento" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="OpiniometroModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="OpiniometroModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Opiniometro_Model.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Opiniometro_Model.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="EditarPerfil" FunctionName="Opiniometro_Model.Store.EditarPerfil" />
+          <FunctionImportMapping FunctionImportName="SP_ModificarPerfilUsuario" FunctionName="Opiniometro_Model.Store.SP_ModificarPerfilUsuario" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

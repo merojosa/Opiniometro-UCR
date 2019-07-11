@@ -153,6 +153,8 @@
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Controllers\PerfilControllerTest.cs" />
     <Compile Include="Controllers\ItemControllerTest.cs" />
+    <Compile Include="Controllers\SeleccionPermisosTest.cs" />
+    <Compile Include="Controllers\EnfasisControllerTest.cs" />
     <Compile Include="Controllers\AdministradorControllerTest.cs" />
     <Compile Include="Controllers\VisualizarFormularioControllerTest.cs" />
     <Compile Include="Controllers\SeccionControllerTest.cs" />
