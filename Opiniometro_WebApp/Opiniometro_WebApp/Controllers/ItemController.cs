@@ -13,6 +13,7 @@ using Opiniometro_WebApp.Models;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Web.Script.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -27,7 +28,7 @@ namespace Opiniometro_WebApp.Controllers
             return Json(!db.Item.Any(item => item.ItemId == ItemId), JsonRequestBehavior.AllowGet);
         }
 
-         //GET: Item
+        //GET: Item
         public ActionResult Index(int? page)
         {
             var item = db.Item.Include(i => i.Seleccion_Unica).Include(i => i.Texto_Libre);
@@ -60,7 +61,7 @@ namespace Opiniometro_WebApp.Controllers
             return View(item);
         }
 
-         //GET: Item/Create
+        //GET: Item/Create
         public ActionResult Create()
         {
             ViewBag.TipoPreguntaItems = new List<ListItem>
@@ -105,6 +106,7 @@ namespace Opiniometro_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ItemID,TextoPregunta,TieneObservacion,TipoPregunta,NombreCategoria,EtiquetaObservacion")] Item item, string[] DynamicTextBox)
         {
+            item.ItemId = item.ItemId.ToString().Replace(" ","");
             if (ModelState.IsValid)
             {
                 db.Item.Add(item);
@@ -144,7 +146,7 @@ namespace Opiniometro_WebApp.Controllers
                 Item = db.Item.Find(id),
                 Opciones = db.Opciones_De_Respuestas_Seleccion_Unica.Where(m => m.ItemId == id).ToList()
             };
-            
+
             return PartialView(vistaPrevia);
         }
 
@@ -165,9 +167,9 @@ namespace Opiniometro_WebApp.Controllers
             return View(item);
         }
 
-         //POST: Item/Edit/5
-         //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-         //more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //POST: Item/Edit/5
+        //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ItemID,TextoPregunta,Categoria,TieneObservacion")] Item item)
@@ -183,7 +185,7 @@ namespace Opiniometro_WebApp.Controllers
             return View(item);
         }
 
-         //GET: Item/Delete/5
+        //GET: Item/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -197,8 +199,8 @@ namespace Opiniometro_WebApp.Controllers
             }
             return View(item);
         }
-        
-         //POST: Item/Delete/5
+
+        //POST: Item/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -223,7 +225,7 @@ namespace Opiniometro_WebApp.Controllers
             }
             base.Dispose(disposing);
         }
- 
+
 
     }
 
