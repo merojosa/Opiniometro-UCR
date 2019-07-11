@@ -40,13 +40,50 @@
                                 $('#ConformadosID').html(result);
                                 location.reload();
                         } else {
-                            alert("No se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
-                                + $("input:radio[name=seccion]:checked").val()
-                                + " porque la pregunta ya se asigno a esa sección.")
+                            alert("No se asigno la pregunta a la sección")
                         }
                         
                     },
                     error: function () {
+                        alert("No se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
+                            + $("input:radio[name=seccion]:checked").val()
+                            + "porque la pregunta ya se asigno a esa sección")
+                    }
+
+
+                });
+
+        });
+    });
+    $(document).ready(function () {
+        $("#btncopiarsecc").click(function () {
+            console.log("prueba")
+            $.ajax(
+            {
+                type: "POST", //HTTP POST Method
+                    url: "CopiarSeccion", // Controller/View
+                    
+                data: { //Passing data
+                    Cod_Form_Dest: @Html.Raw(Json.Encode(Model.Formulario.CodigoFormulario)),
+                    Nom_Form_Dest:  @Html.Raw(Json.Encode(Model.Formulario.Nombre)),
+                    Titulo_Seccion: $("input:radio[name=seccionC]:checked").val(),
+                    Cod_Form_Origen: $("input:radio[name=Formu]:checked").val()
+                    },
+                    success: function (result) {
+                        console.log("prueba2")
+                        console.log(result.console)
+                        if (result) {
+                            alert("Se copio correctamente la sección: " + $("input:radio[name=seccionC]:checked").val() + ", en el formulario: "
+                                + @Html.Raw(Json.Encode(Model.Formulario.Nombre))),
+                                $('#ConformadosID').html(result);
+                            location.reload();
+                        } else {
+                            alert("No se copio ningúna sección en el formulario: " + @Html.Raw(Json.Encode(Model.Formulario.Nombre)))
+                                
+                        }
+                    },
+                    error: function () {
+                        console.log("prueba3")
                         alert("No se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
                             + $("input:radio[name=seccion]:checked").val()
                             + "porque la pregunta ya se asigno a esa sección")
@@ -116,7 +153,7 @@
         <h4 align='center'><strong>@Html.Label("Banco de Preguntas")</strong></h4>
         <table class="table table-bordered table-striped fixed_header">
             <tr>
-                <td></td>
+                <td> @Html.Label("Seleccione la pregunta")</td>
                 <td>
                     @Html.Label("Código")
                 </td>
@@ -146,9 +183,17 @@
                         {
                             case 1:@Html.Raw("Texto Libre");
                             break;
-                        case 3: @Html.Raw("Sí-No");
-                        break;
-                }
+                            case 2: @Html.Raw("Selección Única");
+                            break;
+                            case 3: @Html.Raw("Sí-No");
+                            break;
+                            case 4: @Html.Raw("Selección Múltiple");
+                            break;
+                            case 5: @Html.Raw("Escalar");
+                            break;
+                            case 6: @Html.Raw("Escalar especial");
+                            break;
+                        }
 
 
                     </td>
@@ -172,18 +217,31 @@
     </div>
 </div>
 
-@*<div class="row">
-        @Html.Action("SeccionesAsignadas", new
-                        {CodForm = Model.Formulario.CodigoFormulario})
-    </div>*@
+<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalCopiarSeccion">
+    Copiar Secciones
+</button>
 
-@*<div class="row" id="ConformadosID">
+<div class="modal fade" id="modalCopiarSeccion" tabindex="-1" role="dialog" aria-labelledby="modalCopiarSeccion" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCopiarSeccion"> <b> Copiar Seccion </b> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("AsignarSecciones", Model.CopiarSeccion)
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btncopiarsecc" class="btn btn-secondary" data-dismiss="modal">Copiar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-        @Html.Action("VistaFormularioVParcial", new { codForm = Model.Formulario.CodigoFormulario })
-
-    </div>*@
-
-<button id="VistaPrevia" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalVistaPrevia">
+<button id="VistaPrevia" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalVistaPrevia">
     Vista Previa
 </button>
 

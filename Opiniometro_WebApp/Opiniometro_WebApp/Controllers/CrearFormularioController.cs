@@ -19,16 +19,16 @@ namespace Opiniometro_WebApp.Controllers
         Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
         // GET: CrearFormulario
         public ActionResult AsignarPreguntas(string codForm)
-        {  
-            
-            CrearFormularioModel crearFormulario = new CrearFormularioModel 
+        {
+
+            CrearFormularioModel crearFormulario = new CrearFormularioModel
             {
-                
+
                 Secciones = db.Seccion.ToList(),
                 Items = db.Item.ToList(),
                 Formulario = db.Formulario.Find(codForm),// le pasamos
                 Conformados = db.Conformado_Item_Sec_Form
-            
+
                     .Where(m => m.CodigoFormulario == codForm)
                     .OrderBy(m => m.TituloSeccion)
                     .ThenBy(m => m.Orden_Item)
@@ -39,22 +39,42 @@ namespace Opiniometro_WebApp.Controllers
                     .OrderBy(m => m.TituloSeccion)
                     .ThenBy(m => m.Orden_Seccion)
                     .ToList(),
-            FormularioCompleto = new FormularioCompletoModel()//Modelo donde obtenemos las 
-            {
-                     Conformados = db.Conformado_Item_Sec_Form
+                FormularioCompleto = new FormularioCompletoModel()//Modelo donde obtenemos las 
+                {
+                    Conformados = db.Conformado_Item_Sec_Form
                     .Where(m => m.CodigoFormulario == codForm)
                     .OrderBy(m => m.TituloSeccion)
                     .ThenBy(m => m.Orden_Item)
                     .ToList(),
 
-                     ConformadoS = db.Conformado_For_Sec//Llenamos nuestra lista de secciones del formulario.                   
+                    ConformadoS = db.Conformado_For_Sec//Llenamos nuestra lista de secciones del formulario.                   
                     .Where(m => m.CodigoFormulario == codForm)
                     .OrderBy(m => m.TituloSeccion)
                     .ThenBy(m => m.Orden_Seccion)
                     .ToList()
-            }
+                },
+                CopiarSeccionModel = new CopiarSeccionModel()
+                {
+                    Cod_Form_Dest = codForm,
+                    Nom_Form_Dest = db.Formulario.Find(codForm).Nombre
+                },
+                CopiarSeccion = new CopiarSeccion()
+                {
+                    CopiarSeccionModel = new CopiarSeccionModel(),
+
+                    Formulario = db.Formulario.Find(codForm),
+
+                    Formularios = db.Formulario.Where(m => m.CodigoFormulario != codForm).ToList(),
+
+                    Secciones = db.Seccion.ToList()
+                }
+
+
         };
-            
+            //ViewBag.CodigoFormulario = new SelectList(db.Conformado_For_Sec.Distinct(), "CodigoFormulario", "CodigoFormulario");
+            ViewBag.CodigoFormulario = new SelectList(db.Formulario.Where(m => m.CodigoFormulario != codForm), "CodigoFormulario", "Nombre");
+            ViewBag.TituloSeccion = new SelectList(db.Conformado_For_Sec.Where(m => m.CodigoFormulario != codForm), "TituloSeccion", "TituloSeccion");
+
             return View(crearFormulario);
         }
 
@@ -62,21 +82,53 @@ namespace Opiniometro_WebApp.Controllers
         public ActionResult AsignarSecciones(string codForm)
         {
 
-            CrearFormularioModel crearFormulario = new CrearFormularioModel
+            
+            CopiarSeccionModel copiarSeccion = new CopiarSeccionModel()
             {
 
-                Secciones = db.Seccion.ToList(),
-                Formulario = db.Formulario.Find(codForm),// le pasamos
-                Conformados = db.Conformado_Item_Sec_Form
+                
+                Cod_Form_Dest = codForm,
+                Nom_Form_Dest = db.Formulario.Find(codForm).Nombre
 
-                    .Where(m => m.CodigoFormulario == codForm)
-                    .OrderBy(m => m.TituloSeccion)
-                    .ThenBy(m => m.Orden_Item)
-                    .ToList()
 
             };
 
-            return View(crearFormulario);
+            //ViewBag.CodigoFormulario = new SelectList(db.Formulario, "Codigo", "Codigo");
+
+            return View(copiarSeccion);
+        }
+
+        [HttpPost]
+        public PartialViewResult CopiarSeccion(CopiarSeccionModel copiarSeccion)
+        {
+            if (copiarSeccion.Cod_Form_Origen != null && copiarSeccion.Titulo_Seccion != null)
+            {
+                List<Conformado_Item_Sec_Form> conformado = db.Conformado_Item_Sec_Form.Where(m => m.CodigoFormulario == copiarSeccion.Cod_Form_Dest
+                                                                && m.TituloSeccion == copiarSeccion.Titulo_Seccion).ToList();
+                if (conformado.Count == 0)
+                {
+                    conformado = db.Conformado_Item_Sec_Form.Where(m => m.CodigoFormulario == copiarSeccion.Cod_Form_Origen
+                                                                && m.TituloSeccion == copiarSeccion.Titulo_Seccion).ToList();
+                    if (conformado.Count != 0)
+                    {
+                        db.SP_CopiarSeccion(copiarSeccion.Cod_Form_Origen, copiarSeccion.Titulo_Seccion, copiarSeccion.Cod_Form_Dest);
+
+                        List<Conformado_Item_Sec_Form> conformados =
+                          db.Conformado_Item_Sec_Form
+                          .Include("Item")
+                            .Where(m => m.CodigoFormulario == copiarSeccion.Cod_Form_Dest && m.TituloSeccion == copiarSeccion.Titulo_Seccion)
+                            .OrderBy(m => m.Orden_Item)
+                            .ToList();
+
+                        return PartialView("ConformadoVParcial", conformados);
+                    }
+                }
+                else return null;
+
+            }
+            else return null;
+            return null;
+     
         }
 
         [HttpPost]
@@ -87,23 +139,27 @@ namespace Opiniometro_WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                Conformado_For_Sec conf_for_sec = new Conformado_For_Sec();
-                conf_for_sec.CodigoFormulario = conformado.CodigoFormulario; conf_for_sec.TituloSeccion = conformado.TituloSeccion;
-                List<Conformado_Item_Sec_Form> conf = db.Conformado_Item_Sec_Form.Where(m => m.ItemId == conformado.ItemId && m.TituloSeccion == conformado.TituloSeccion && m.CodigoFormulario == conformado.CodigoFormulario).ToList();
-                if (conf.Count == 0)
-                {   
-                    db.Conformado_Item_Sec_Form.Add(conformado);
-                    if(db.Conformado_For_Sec.Where(m => m.TituloSeccion == conf_for_sec.TituloSeccion && m.CodigoFormulario == conf_for_sec.CodigoFormulario).Count() == 0)
+                if (conformado.ItemId != null && conformado.TituloSeccion != null)
+                {
+                    Conformado_For_Sec conf_for_sec = new Conformado_For_Sec();
+                    conf_for_sec.CodigoFormulario = conformado.CodigoFormulario; conf_for_sec.TituloSeccion = conformado.TituloSeccion;
+                    List<Conformado_Item_Sec_Form> conf = db.Conformado_Item_Sec_Form.Where(m => m.ItemId == conformado.ItemId && m.TituloSeccion == conformado.TituloSeccion && m.CodigoFormulario == conformado.CodigoFormulario).ToList();
+                    if (conf.Count == 0)
                     {
-                        db.Conformado_For_Sec.Add(conf_for_sec);
+                        db.Conformado_Item_Sec_Form.Add(conformado);
+                        if (db.Conformado_For_Sec.Where(m => m.TituloSeccion == conf_for_sec.TituloSeccion && m.CodigoFormulario == conf_for_sec.CodigoFormulario).Count() == 0)
+                        {
+                            db.Conformado_For_Sec.Add(conf_for_sec);
+                            db.SaveChanges();
+                        }
                         db.SaveChanges();
                     }
-                    db.SaveChanges();
+                    else
+                    {
+                        return null;
+                    }
                 }
-                else
-                {
-                    return null;
-                }                
+                else return null;
             }
             //A
             List<Conformado_Item_Sec_Form> conformados =

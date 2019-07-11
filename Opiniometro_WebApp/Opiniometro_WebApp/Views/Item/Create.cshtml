@@ -68,7 +68,7 @@
     <div class="form-group" id="etiqueta" hidden="hidden">
         @Html.Label("Etiqueta Observación", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.EtiquetaObservacion, new { htmlAttributes = new { @class = "form-control", @maxlength = "25", @placeholder = "Ej: Explique" } })
+            @Html.EditorFor(model => model.EtiquetaObservacion, new { htmlAttributes = new { @class = "form-control", @maxlength = "25", @placeholder = "Ej: Explique", @id = "etiquetaEditor" } })
             @Html.ValidationMessageFor(model => model.EtiquetaObservacion, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -89,9 +89,13 @@
     @*Sección que despliega la opción de introducir descripción cuando la pregunta tiene comentario adicional*@
     <script>
         function habilitarVistaParcialEtiqueta(etiquetaV) {
-            document.getElementById("etiqueta").hidden = "hidden";
             if (etiquetaV.localeCompare("true") == 0) {
                 document.getElementById("etiqueta").hidden = "";
+            } 
+
+            if (etiquetaV.localeCompare("false") == 0) {
+                document.getElementById("etiqueta").hidden = "hidden";
+                document.getElementById("etiquetaEditor").val("");
             }
         }
     </script>
@@ -113,6 +117,14 @@
             document.location = '@Url.Action("Index")';
         }
     </script>
+
+    @*<script type="text/javascript">
+
+        $('.form-control').on('blur click', function () {
+            $(this).val("");
+        });
+
+    </script>*@
 
 </div>
 }
