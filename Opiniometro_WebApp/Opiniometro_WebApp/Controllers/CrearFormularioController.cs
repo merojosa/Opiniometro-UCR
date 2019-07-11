@@ -105,7 +105,8 @@ namespace Opiniometro_WebApp.Controllers
             {
                 List<Conformado_Item_Sec_Form> conformado = db.Conformado_Item_Sec_Form.Where(m => m.CodigoFormulario == copiarSeccion.Cod_Form_Dest
                                                                 && m.TituloSeccion == copiarSeccion.Titulo_Seccion).ToList();
-                if (conformado.Count == 0)
+                List<Conformado_For_Sec> conf = db.Conformado_For_Sec.Where(m => m.CodigoFormulario == copiarSeccion.Cod_Form_Dest && m.TituloSeccion == copiarSeccion.Titulo_Seccion).ToList();
+                if (conformado.Count == 0 && conf.Count == 0)
                 {
                     conformado = db.Conformado_Item_Sec_Form.Where(m => m.CodigoFormulario == copiarSeccion.Cod_Form_Origen
                                                                 && m.TituloSeccion == copiarSeccion.Titulo_Seccion).ToList();

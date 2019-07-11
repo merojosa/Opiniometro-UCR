@@ -58,7 +58,7 @@ namespace Opiniometro_WebApp.Controllers
         // GET: Formulario/Create
         public ActionResult Create()
         {
-            ViewBag.CodigoUnidadAca = new SelectList(db.Unidad_Academica, "Codigo", "Codigo");
+            ViewBag.CodigoUnidadAca = new SelectList(db.Unidad_Academica,"Codigo", "Nombre");
 
             return View("Create");
         }
