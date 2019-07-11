@@ -77,7 +77,7 @@
                             @{
                                 if (permisos_usuario.verificar_permiso(IdPermiso.VER_INFORMACION_PERSONAS))
                                 {
-                                    <li>@Html.ActionLink("Ver información de usuarios", "VerPersonas", "Admin")</li>
+                                    <li>@Html.ActionLink("Ver información de personas", "VerPersonas", "Administrador")</li>
                                 }
                                 else
                                 {
@@ -86,7 +86,7 @@
 
                                 if (permisos_usuario.verificar_permiso(IdPermiso.INSERTAR_USUARIO))
                                 {
-                                    <li>@Html.ActionLink("Insertar usuario", "CrearUsuario", "Admin")</li>
+                                    <li>@Html.ActionLink("Insertar usuario", "CrearUsuario", "Administrador")</li>
                                 }
                                 else
                                 {
