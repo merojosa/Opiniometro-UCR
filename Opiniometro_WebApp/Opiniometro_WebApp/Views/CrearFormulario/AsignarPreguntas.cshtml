@@ -40,9 +40,7 @@
                                 $('#ConformadosID').html(result);
                                 location.reload();
                         } else {
-                            alert("No se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
-                                + $("input:radio[name=seccion]:checked").val()
-                                + " porque la pregunta ya se asigno a esa sección.")
+                            alert("No se asigno la pregunta a la sección")
                         }
                         
                     },
@@ -66,22 +64,22 @@
                     url: "CopiarSeccion", // Controller/View
                     
                 data: { //Passing data
-                    Cod_Form_Origen: @Html.Raw(Json.Encode(Model.Formulario.CodigoFormulario)),
+                    Cod_Form_Dest: @Html.Raw(Json.Encode(Model.Formulario.CodigoFormulario)),
                     Nom_Form_Dest:  @Html.Raw(Json.Encode(Model.Formulario.Nombre)),
-                    Titulo_Seccion:$("dropTitulo option:selected").val(),
-                    Cod_Form_Origen: "131313"//$('dropCodigo').dropselect()
+                    Titulo_Seccion: $("input:radio[name=seccionC]:checked").val(),
+                    Cod_Form_Origen: $("input:radio[name=Formu]:checked").val()
                     },
                     success: function (result) {
                         console.log("prueba2")
                         console.log(result.console)
                         if (result) {
-                            alert("Se copio correctamente " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
-                                + $("input:radio[name=seccion]:checked").val()),
+                            alert("Se copio correctamente la sección: " + $("input:radio[name=seccionC]:checked").val() + ", en el formulario: "
+                                + @Html.Raw(Json.Encode(Model.Formulario.Nombre))),
                                 $('#ConformadosID').html(result);
+                            location.reload();
                         } else {
-                            alert("No se asigno la pregunta: " + $("input:radio[name=item]:checked").val() + ", en la seccíon: "
-                                + $("input:radio[name=seccion]:checked").val()
-                                + " porque la pregunta ya se asigno a esa sección.")
+                            alert("No se copio ningúna sección en el formulario: " + @Html.Raw(Json.Encode(Model.Formulario.Nombre)))
+                                
                         }
                     },
                     error: function () {
@@ -155,7 +153,7 @@
         <h4 align='center'><strong>@Html.Label("Banco de Preguntas")</strong></h4>
         <table class="table table-bordered table-striped fixed_header">
             <tr>
-                <td></td>
+                <td> @Html.Label("Seleccione la pregunta")</td>
                 <td>
                     @Html.Label("Código")
                 </td>
