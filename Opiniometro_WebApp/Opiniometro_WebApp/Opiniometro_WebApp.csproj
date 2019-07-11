@@ -538,12 +538,13 @@
     <Content Include="Views\Enfasis\VerEnfasis.cshtml" />
     <Content Include="Views\Auth\CambiarContrasenna.cshtml" />
     <Content Include="Views\CrearFormulario\SeleccionUnicaVParcial.cshtml" />
+    <Content Include="Views\Shared\SeleccionUnicaVParcial.cshtml" />
+    <Content Include="Views\Shared\VistaFormularioVParcial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />
     <Folder Include="Views\Opciones_De_Respuestas_Seleccion_Unica\" />
     <Folder Include="Views\SeleccionFormularios\" />
-    <Folder Include="Views\Seleccion_Unica\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
