@@ -31,160 +31,78 @@ namespace Opiniometro_WebAppUITest
     {
         
         /// <summary>
-        /// Inicializar Explorardor Web
-        /// </summary>
-        public void InicializarExplorador()
-        {
-
-            // Go to web page 'http://localhost/Opiniometro_WebApp/' using new browser instance
-            BrowserWindow localhostBrowser = BrowserWindow.Launch(new System.Uri(this.InicializarExploradorParams.Url));
-        }
-        
-        /// <summary>
-        /// Prueba de ingreso a la aplicacion
+        /// Prueba para Ingreso a la Aplicacion
         /// </summary>
         public void PruebaIngresoAplicacion()
         {
+            #region Variable Declarations
+            WinMenuItem uIAddressMenuItem = this.UIHomePageInternetExplWindow.UIAddressComboControlToolBar.UIAddressMenuItem;
+            BrowserWindow uIHomePageInternetExplWindow = this.UIHomePageInternetExplWindow;
+            #endregion
 
-            // Go to web page 'http://localhost/Opiniometro_WebApp/' using new browser instance
-            BrowserWindow localhostBrowser = BrowserWindow.Launch(new System.Uri(this.PruebaIngresoAplicacionParams.Url));
+            // Go to web page 'http://go.microsoft.com/fwlink/p/?LinkId=255141' using new browser instance
+            this.UIHomePageInternetExplWindow.LaunchUrl(new System.Uri(this.PruebaIngresoAplicacionParams.UIHomePageInternetExplWindowUrl));
+
+            // Click 'Address' menu item
+            Mouse.Click(uIAddressMenuItem, new Point(230, 4));
+
+            // Go to web page 'http://localhost/Opiniometro_WebApp'
+            uIHomePageInternetExplWindow.NavigateToUrl(new System.Uri(this.PruebaIngresoAplicacionParams.UIHomePageInternetExplWindowUrl1));
         }
         
         /// <summary>
-        /// Validación del botón para loggearse.
+        /// Se intenta crear una pregunta
         /// </summary>
-        public void ValidarBotonLogin()
+        public void PruebaIntentoCrearPregunta()
         {
             #region Variable Declarations
+            HtmlEdit uICorreoInstitucionalEdit = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UICorreoInstitucionalEdit;
             HtmlInputButton uIIngresarButton = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UIIngresarButton;
+            HtmlInputButton uIAceptarButton = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument1.UIAceptarButton;
+            WinMenuItem uIAddressMenuItem = this.UIOpiniómetroUCRInternWindow.UIAddressComboControlToolBar.UIAddressMenuItem;
+            BrowserWindow uIOpiniómetroUCRInternWindow = this.UIOpiniómetroUCRInternWindow;
             #endregion
 
-            // Verify that the 'TagName' property of 'Ingresar' button equals 'INPUT'
-            Assert.AreEqual(this.ValidarBotonLoginExpectedValues.UIIngresarButtonTagName, uIIngresarButton.TagName, "El botón para hacer login ha sido modificado.");
-        }
-        
-        /// <summary>
-        /// Se valida con admin@ucr.ac.cr
-        /// </summary>
-        public void ValidarLoginAdmin()
-        {
-            #region Variable Declarations
-            HtmlEdit uICorreoInstitucionalEdit = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument1.UICorreoInstitucionalEdit;
-            HtmlEdit uIContrasenaEdit = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument1.UIContrasenaEdit;
-            HtmlDiv uIItemPane = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument1.UIItemPane;
-            HtmlInputButton uIIngresarButton = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument1.UIIngresarButton;
-            #endregion
+            // Type '' in 'CorreoInstitucional' text box
+            uICorreoInstitucionalEdit.Text = this.PruebaIntentoCrearPreguntaParams.UICorreoInstitucionalEditText;
 
-            // Type 'admin' in 'CorreoInstitucional' text box
-            uICorreoInstitucionalEdit.Text = this.ValidarLoginAdminParams.UICorreoInstitucionalEditText;
-
-            // Type 'Alt + {NumPad6}' in 'CorreoInstitucional' text box
-            Keyboard.SendKeys(uICorreoInstitucionalEdit, this.ValidarLoginAdminParams.UICorreoInstitucionalEditSendKeys, ModifierKeys.Alt);
-
-            // Type 'Alt + {NumPad4}' in 'CorreoInstitucional' text box
-            Keyboard.SendKeys(uICorreoInstitucionalEdit, this.ValidarLoginAdminParams.UICorreoInstitucionalEditSendKeys1, ModifierKeys.Alt);
+            // Click 'CorreoInstitucional' text box
+            Mouse.Click(uICorreoInstitucionalEdit, new Point(39, 13));
 
             // Type 'admin@ucr.ac.cr' in 'CorreoInstitucional' text box
-            uICorreoInstitucionalEdit.Text = this.ValidarLoginAdminParams.UICorreoInstitucionalEditText1;
-
-            // Type '********' in 'Contrasena' text box
-            uIContrasenaEdit.Password = this.ValidarLoginAdminParams.UIContrasenaEditPassword;
-
-            // Click pane
-            Mouse.Click(uIItemPane, new Point(309, 25));
+            uICorreoInstitucionalEdit.Text = this.PruebaIntentoCrearPreguntaParams.UICorreoInstitucionalEditText1;
 
             // Click 'Ingresar' button
-            Mouse.Click(uIIngresarButton, new Point(37, 24));
+            Mouse.Click(uIIngresarButton, new Point(20, 25));
+
+            // Click 'Aceptar' button
+            Mouse.Click(uIAceptarButton, new Point(24, 11));
+
+            // Click 'Address' menu item
+            Mouse.Click(uIAddressMenuItem, new Point(234, 3));
+
+            // Go to web page 'http://localhost/Opiniometro_WebApp/Item/create'
+            uIOpiniómetroUCRInternWindow.NavigateToUrl(new System.Uri(this.PruebaIntentoCrearPreguntaParams.UIOpiniómetroUCRInternWindowUrl));
         }
         
         /// <summary>
-        /// Validación de la existencia del perfil administrador.
+        /// Despliegue de la Descripcion del Comentario Adicional
         /// </summary>
-        public void ValidarPerfilAdministrador()
+        public void DespliegueDescripcionComentario()
         {
             #region Variable Declarations
-            HtmlCell uIAdministradorCell = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument3.UIItemTable.UIAdministradorCell;
+            HtmlComboBox uITieneObservacionComboBox = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument3.UITieneObservacionComboBox;
+            HtmlEdit uIEtiquetaObservacionEdit1 = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument3.UIEtiquetaObservacionEdit1;
             #endregion
 
-            // Verify that the 'InnerText' property of 'Administrador' cell equals 'Administrador '
-            Assert.AreEqual(this.ValidarPerfilAdministradorExpectedValues.UIAdministradorCellInnerText, uIAdministradorCell.InnerText, "Se modificó o eliminó el perfil administrador.");
+            // Select 'Sí' in 'TieneObservacion' combo box
+            uITieneObservacionComboBox.SelectedItem = this.DespliegueDescripcionComentarioParams.UITieneObservacionComboBoxSelectedItem;
 
-            // Verify that the 'InnerText' property of 'Administrador' cell equals 'Administrador '
-            Assert.AreEqual(this.ValidarPerfilAdministradorExpectedValues.UIAdministradorCellInnerText1, uIAdministradorCell.InnerText, "Se eliminó o modificó el perfil \"Administrador\".");
-        }
-        
-        /// <summary>
-        /// Validación del link hacia la recuperarción de la contraseña.
-        /// </summary>
-        public void ValidarRecuperarContrasennaLink()
-        {
-            #region Variable Declarations
-            HtmlHyperlink uIOlvidósucontraseñaHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UIOlvidósucontraseñaHyperlink;
-            #endregion
-
-            // Verify that the 'InnerText' property of '¿Olvidó su contraseña?' link equals '¿Olvidó su contraseña?'
-            Assert.AreEqual(this.ValidarRecuperarContrasennaLinkExpectedValues.UIOlvidósucontraseñaHyperlinkInnerText, uIOlvidósucontraseñaHyperlink.InnerText, "Se modificó el link para cambiar la contraseña.");
-
-            // Verify that the 'InnerText' property of '¿Olvidó su contraseña?' link equals '¿Olvidó su contraseña?'
-            Assert.AreEqual(this.ValidarRecuperarContrasennaLinkExpectedValues.UIOlvidósucontraseñaHyperlinkInnerText1, uIOlvidósucontraseñaHyperlink.InnerText, "Se modificó el link para recuperar contraseña.");
-        }
-        
-        /// <summary>
-        /// Validación de la página para ver perfiles.
-        /// </summary>
-        public void ValidarVerPerfiles()
-        {
-            #region Variable Declarations
-            HtmlCustom uIItemCustom = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument2.UIItemCustom;
-            HtmlHyperlink uIVerperfilesHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument2.UIVerperfilesHyperlink;
-            #endregion
-
-            // Click custom control
-            Mouse.Click(uIItemCustom, new Point(65, 30));
-
-            // Click 'Ver perfiles' link
-            Mouse.Click(uIVerperfilesHyperlink, new Point(53, 7));
-        }
-        
-        /// <summary>
-        /// Validación de la página para recuperar contraseña.
-        /// </summary>
-        public void ValidarRecuperarContrasenna()
-        {
-            #region Variable Declarations
-            HtmlHyperlink uIOlvidósucontraseñaHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument1.UIOlvidósucontraseñaHyperlink;
-            #endregion
-
-            // Click '¿Olvidó su contraseña?' link
-            Mouse.Click(uIOlvidósucontraseñaHyperlink, new Point(38, 12));
-        }
-        
-        /// <summary>
-        /// Validación para el botón de enviar un correo para recuperar contraseña.
-        /// </summary>
-        public void ValidarBotonEnviarCorreo()
-        {
-            #region Variable Declarations
-            HtmlInputButton uIEnviarCorreoButton = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIEnviarCorreoButton;
-            #endregion
-
-            // Verify that the 'DisplayText' property of 'Enviar Correo' button equals 'Enviar Correo'
-            Assert.AreEqual(this.ValidarBotonEnviarCorreoExpectedValues.UIEnviarCorreoButtonDisplayText, uIEnviarCorreoButton.DisplayText, "El botón para enviar el correo se ha modificado o eliminado.");
+            // Type 'Despliegue' in 'EtiquetaObservacion' text box
+            uIEtiquetaObservacionEdit1.Text = this.DespliegueDescripcionComentarioParams.UIEtiquetaObservacionEdit1Text;
         }
         
         #region Properties
-        public virtual InicializarExploradorParams InicializarExploradorParams
-        {
-            get
-            {
-                if ((this.mInicializarExploradorParams == null))
-                {
-                    this.mInicializarExploradorParams = new InicializarExploradorParams();
-                }
-                return this.mInicializarExploradorParams;
-            }
-        }
-        
         public virtual PruebaIngresoAplicacionParams PruebaIngresoAplicacionParams
         {
             get
@@ -197,75 +115,126 @@ namespace Opiniometro_WebAppUITest
             }
         }
         
-        public virtual ValidarBotonLoginExpectedValues ValidarBotonLoginExpectedValues
+        public virtual PruebaIntentoCrearPreguntaParams PruebaIntentoCrearPreguntaParams
         {
             get
             {
-                if ((this.mValidarBotonLoginExpectedValues == null))
+                if ((this.mPruebaIntentoCrearPreguntaParams == null))
                 {
-                    this.mValidarBotonLoginExpectedValues = new ValidarBotonLoginExpectedValues();
+                    this.mPruebaIntentoCrearPreguntaParams = new PruebaIntentoCrearPreguntaParams();
                 }
-                return this.mValidarBotonLoginExpectedValues;
+                return this.mPruebaIntentoCrearPreguntaParams;
             }
         }
         
-        public virtual ValidarLoginAdminParams ValidarLoginAdminParams
+        public virtual DespliegueDescripcionComentarioParams DespliegueDescripcionComentarioParams
         {
             get
             {
-                if ((this.mValidarLoginAdminParams == null))
+                if ((this.mDespliegueDescripcionComentarioParams == null))
                 {
-                    this.mValidarLoginAdminParams = new ValidarLoginAdminParams();
+                    this.mDespliegueDescripcionComentarioParams = new DespliegueDescripcionComentarioParams();
                 }
-                return this.mValidarLoginAdminParams;
+                return this.mDespliegueDescripcionComentarioParams;
+            }
+        }
+
+        public void IngresarAlFormulario()
+        {
+            #region Variable Declarations
+            BrowserWindow uIOpiniómetroUCRInternWindow = this.UIOpiniómetroUCRInternWindow;
+            HtmlEdit uICorreoInstitucionalEdit = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UICorreoInstitucionalEdit;
+            HtmlEdit uIContrasenaEdit = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UIContrasenaEdit;
+            HtmlInputButton uIIngresarButton = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UIIngresarButton;
+            HtmlInputButton uIAceptarButton = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument1.UIAceptarButton;
+            HtmlHyperlink uIEvaluacionesHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument2.UIEvaluacionesHyperlink;
+            HtmlHyperlink uIVisualizarresultadosHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument2.UIVisualizarresultadosHyperlink;
+            HtmlHyperlink uIVisualizarformularioHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument3.UIVisualizarformularioHyperlink;
+            HtmlHyperlink uIItem2EvaluacióndeaspHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIAccordion1Pane.UIItem2EvaluacióndeaspHyperlink;
+            HtmlHyperlink uIItem1PRE303ElprofesoHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIAccordion2_1Pane.UIItem1PRE303ElprofesoHyperlink;
+            #endregion
+
+            // Go to web page 'http://localhost/Opiniometro_WebApp'
+            uIOpiniómetroUCRInternWindow.NavigateToUrl(new System.Uri(this.IngresarAlFormularioParams.UIOpiniómetroUCRInternWindowUrl));
+
+            // Type 'admin@ucr.ac.cr' in 'CorreoInstitucional' text box
+            uICorreoInstitucionalEdit.Text = this.IngresarAlFormularioParams.UICorreoInstitucionalEditText;
+
+            // Type '{Tab}' in 'CorreoInstitucional' text box
+            Keyboard.SendKeys(uICorreoInstitucionalEdit, this.IngresarAlFormularioParams.UICorreoInstitucionalEditSendKeys, ModifierKeys.None);
+
+            // Type '********' in 'Contrasena' text box
+            uIContrasenaEdit.Password = this.IngresarAlFormularioParams.UIContrasenaEditPassword;
+
+            // Click 'Ingresar' button
+            Mouse.Click(uIIngresarButton, new Point(68, 16));
+
+            // Click 'Aceptar' button
+            Mouse.Click(uIAceptarButton, new Point(32, 22));
+
+            // Click 'Evaluaciones' link
+            Mouse.Click(uIEvaluacionesHyperlink, new Point(114, 23));
+
+            // Click 'Visualizar resultados de evaluaciones' link
+            Mouse.Click(uIVisualizarresultadosHyperlink, new Point(106, 16));
+
+            // Click 'Visualizar formulario' link
+            Mouse.Click(uIVisualizarformularioHyperlink, new Point(98, 4));
+
+            // Click '2 - Evaluación de aspectos reglamentarios del pro...' link
+            Mouse.Click(uIItem2EvaluacióndeaspHyperlink, new Point(106, 15));
+
+            // Click '1 - PRE303.¿El profesor repuso clases cuando fue ...' link
+            Mouse.Click(uIItem1PRE303ElprofesoHyperlink, new Point(105, 11));
+        }
+
+        /// <summary>
+        /// Revisa que el grafico si se despliega en la pantalla una vez ingresado al formulario.
+        /// </summary>
+        public void GráficoExiste()
+        {
+            #region Variable Declarations
+            HtmlCustom uIPie_chart_PRE303Custom = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIPie_chart_PRE303Custom;
+            #endregion
+
+            // Verify that the 'ControlDefinition' property of 'pie_chart_PRE303' custom control is not equal to 'null'
+            Assert.IsNotNull(uIPie_chart_PRE303Custom.ControlDefinition, "No se envio la información necesaria al método.");
+        }
+
+        /// <summary>
+        /// Revisa si el item desplegado es el indicado.
+        /// </summary>
+        public void DespliegueDeItemCorrecto()
+        {
+            #region Variable Declarations
+            HtmlHyperlink uIItem1PRE303ElprofesoHyperlink1 = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIAccordion2_1Pane.UIItem1PRE303ElprofesoHyperlink1;
+            #endregion
+
+            // Verify that the 'InnerText' property of '1 - PRE303.¿El profesor repuso clases cuando fue ...' link equals ' 1 - PRE303.¿El profesor repuso clases cuando fue necesario? '
+            Assert.AreEqual(this.DespliegueDeItemCorrectoExpectedValues.UIItem1PRE303ElprofesoHyperlink1InnerText, uIItem1PRE303ElprofesoHyperlink1.InnerText, "La pregunta a sido cambiada o el orden fue alterado incorrectamente");
+        }
+
+        public UIStartWindow UIStartWindow
+        {
+            get
+            {
+                if ((this.mUIStartWindow == null))
+                {
+                    this.mUIStartWindow = new UIStartWindow();
+                }
+                return this.mUIStartWindow;
             }
         }
         
-        public virtual ValidarPerfilAdministradorExpectedValues ValidarPerfilAdministradorExpectedValues
+        public UIHomePageInternetExplWindow UIHomePageInternetExplWindow
         {
             get
             {
-                if ((this.mValidarPerfilAdministradorExpectedValues == null))
+                if ((this.mUIHomePageInternetExplWindow == null))
                 {
-                    this.mValidarPerfilAdministradorExpectedValues = new ValidarPerfilAdministradorExpectedValues();
+                    this.mUIHomePageInternetExplWindow = new UIHomePageInternetExplWindow();
                 }
-                return this.mValidarPerfilAdministradorExpectedValues;
-            }
-        }
-        
-        public virtual ValidarRecuperarContrasennaLinkExpectedValues ValidarRecuperarContrasennaLinkExpectedValues
-        {
-            get
-            {
-                if ((this.mValidarRecuperarContrasennaLinkExpectedValues == null))
-                {
-                    this.mValidarRecuperarContrasennaLinkExpectedValues = new ValidarRecuperarContrasennaLinkExpectedValues();
-                }
-                return this.mValidarRecuperarContrasennaLinkExpectedValues;
-            }
-        }
-        
-        public virtual ValidarBotonEnviarCorreoExpectedValues ValidarBotonEnviarCorreoExpectedValues
-        {
-            get
-            {
-                if ((this.mValidarBotonEnviarCorreoExpectedValues == null))
-                {
-                    this.mValidarBotonEnviarCorreoExpectedValues = new ValidarBotonEnviarCorreoExpectedValues();
-                }
-                return this.mValidarBotonEnviarCorreoExpectedValues;
-            }
-        }
-        
-        public UINuevapestañaGoogleChWindow UINuevapestañaGoogleChWindow
-        {
-            get
-            {
-                if ((this.mUINuevapestañaGoogleChWindow == null))
-                {
-                    this.mUINuevapestañaGoogleChWindow = new UINuevapestañaGoogleChWindow();
-                }
-                return this.mUINuevapestañaGoogleChWindow;
+                return this.mUIHomePageInternetExplWindow;
             }
         }
         
@@ -283,38 +252,17 @@ namespace Opiniometro_WebAppUITest
         #endregion
         
         #region Fields
-        private InicializarExploradorParams mInicializarExploradorParams;
-        
         private PruebaIngresoAplicacionParams mPruebaIngresoAplicacionParams;
         
-        private ValidarBotonLoginExpectedValues mValidarBotonLoginExpectedValues;
+        private PruebaIntentoCrearPreguntaParams mPruebaIntentoCrearPreguntaParams;
         
-        private ValidarLoginAdminParams mValidarLoginAdminParams;
+        private DespliegueDescripcionComentarioParams mDespliegueDescripcionComentarioParams;
         
-        private ValidarPerfilAdministradorExpectedValues mValidarPerfilAdministradorExpectedValues;
+        private UIStartWindow mUIStartWindow;
         
-        private ValidarRecuperarContrasennaLinkExpectedValues mValidarRecuperarContrasennaLinkExpectedValues;
-        
-        private ValidarBotonEnviarCorreoExpectedValues mValidarBotonEnviarCorreoExpectedValues;
-        
-        private UINuevapestañaGoogleChWindow mUINuevapestañaGoogleChWindow;
+        private UIHomePageInternetExplWindow mUIHomePageInternetExplWindow;
         
         private UIOpiniómetroUCRInternWindow mUIOpiniómetroUCRInternWindow;
-        #endregion
-    }
-    
-    /// <summary>
-    /// Parameters to be passed into 'InicializarExplorador'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
-    public class InicializarExploradorParams
-    {
-        
-        #region Fields
-        /// <summary>
-        /// Go to web page 'http://localhost/Opiniometro_WebApp/' using new browser instance
-        /// </summary>
-        public string Url = "http://localhost/Opiniometro_WebApp/";
         #endregion
     }
     
@@ -327,49 +275,29 @@ namespace Opiniometro_WebAppUITest
         
         #region Fields
         /// <summary>
-        /// Go to web page 'http://localhost/Opiniometro_WebApp/' using new browser instance
+        /// Go to web page 'http://go.microsoft.com/fwlink/p/?LinkId=255141' using new browser instance
         /// </summary>
-        public string Url = "http://localhost/Opiniometro_WebApp/";
+        public string UIHomePageInternetExplWindowUrl = "http://go.microsoft.com/fwlink/p/?LinkId=255141";
+        
+        /// <summary>
+        /// Go to web page 'http://localhost/Opiniometro_WebApp'
+        /// </summary>
+        public string UIHomePageInternetExplWindowUrl1 = "http://localhost/Opiniometro_WebApp";
         #endregion
     }
     
     /// <summary>
-    /// Parameters to be passed into 'ValidarBotonLogin'
+    /// Parameters to be passed into 'PruebaIntentoCrearPregunta'
     /// </summary>
     [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
-    public class ValidarBotonLoginExpectedValues
+    public class PruebaIntentoCrearPreguntaParams
     {
         
         #region Fields
         /// <summary>
-        /// Verify that the 'TagName' property of 'Ingresar' button equals 'INPUT'
+        /// Type '' in 'CorreoInstitucional' text box
         /// </summary>
-        public string UIIngresarButtonTagName = "INPUT";
-        #endregion
-    }
-    
-    /// <summary>
-    /// Parameters to be passed into 'ValidarLoginAdmin'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
-    public class ValidarLoginAdminParams
-    {
-        
-        #region Fields
-        /// <summary>
-        /// Type 'admin' in 'CorreoInstitucional' text box
-        /// </summary>
-        public string UICorreoInstitucionalEditText = "admin";
-        
-        /// <summary>
-        /// Type 'Alt + {NumPad6}' in 'CorreoInstitucional' text box
-        /// </summary>
-        public string UICorreoInstitucionalEditSendKeys = "{NumPad6}";
-        
-        /// <summary>
-        /// Type 'Alt + {NumPad4}' in 'CorreoInstitucional' text box
-        /// </summary>
-        public string UICorreoInstitucionalEditSendKeys1 = "{NumPad4}";
+        public string UICorreoInstitucionalEditText = "";
         
         /// <summary>
         /// Type 'admin@ucr.ac.cr' in 'CorreoInstitucional' text box
@@ -377,134 +305,263 @@ namespace Opiniometro_WebAppUITest
         public string UICorreoInstitucionalEditText1 = "admin@ucr.ac.cr";
         
         /// <summary>
-        /// Type '********' in 'Contrasena' text box
+        /// Go to web page 'http://localhost/Opiniometro_WebApp/Item/create'
         /// </summary>
-        public string UIContrasenaEditPassword = "FBDi3f2Ote0gIx1VA4772+xzH6vlnBrKhcNPXWpSp98=";
+        public string UIOpiniómetroUCRInternWindowUrl = "http://localhost/Opiniometro_WebApp/Item/create";
         #endregion
     }
     
     /// <summary>
-    /// Parameters to be passed into 'ValidarPerfilAdministrador'
+    /// Parameters to be passed into 'DespliegueDescripcionComentario'
     /// </summary>
     [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
-    public class ValidarPerfilAdministradorExpectedValues
+    public class DespliegueDescripcionComentarioParams
     {
         
         #region Fields
         /// <summary>
-        /// Verify that the 'InnerText' property of 'Administrador' cell equals 'Administrador '
+        /// Select 'Sí' in 'TieneObservacion' combo box
         /// </summary>
-        public string UIAdministradorCellInnerText = "Administrador ";
+        public string UITieneObservacionComboBoxSelectedItem = "Sí";
         
         /// <summary>
-        /// Verify that the 'InnerText' property of 'Administrador' cell equals 'Administrador '
+        /// Type 'Despliegue' in 'EtiquetaObservacion' text box
         /// </summary>
-        public string UIAdministradorCellInnerText1 = "Administrador ";
-        #endregion
-    }
-    
-    /// <summary>
-    /// Parameters to be passed into 'ValidarRecuperarContrasennaLink'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
-    public class ValidarRecuperarContrasennaLinkExpectedValues
-    {
-        
-        #region Fields
-        /// <summary>
-        /// Verify that the 'InnerText' property of '¿Olvidó su contraseña?' link equals '¿Olvidó su contraseña?'
-        /// </summary>
-        public string UIOlvidósucontraseñaHyperlinkInnerText = "¿Olvidó su contraseña?";
-        
-        /// <summary>
-        /// Verify that the 'InnerText' property of '¿Olvidó su contraseña?' link equals '¿Olvidó su contraseña?'
-        /// </summary>
-        public string UIOlvidósucontraseñaHyperlinkInnerText1 = "¿Olvidó su contraseña?";
-        #endregion
-    }
-    
-    /// <summary>
-    /// Parameters to be passed into 'ValidarBotonEnviarCorreo'
-    /// </summary>
-    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
-    public class ValidarBotonEnviarCorreoExpectedValues
-    {
-        
-        #region Fields
-        /// <summary>
-        /// Verify that the 'DisplayText' property of 'Enviar Correo' button equals 'Enviar Correo'
-        /// </summary>
-        public string UIEnviarCorreoButtonDisplayText = "Enviar Correo";
+        public string UIEtiquetaObservacionEdit1Text = "Despliegue";
         #endregion
     }
     
     [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
-    public class UINuevapestañaGoogleChWindow : WinWindow
+    public class UIStartWindow : WinWindow
     {
         
-        public UINuevapestañaGoogleChWindow()
+        public UIStartWindow()
         {
             #region Search Criteria
-            this.SearchProperties[WinWindow.PropertyNames.Name] = "Nueva pestaña - Google Chrome";
-            this.SearchProperties[WinWindow.PropertyNames.ClassName] = "Chrome_WidgetWin_1";
-            this.WindowTitles.Add("Nueva pestaña - Google Chrome");
-            this.WindowTitles.Add("Opiniómetro@UCR - Google Chrome");
+            this.SearchProperties[WinWindow.PropertyNames.Name] = "Start";
+            this.SearchProperties[WinWindow.PropertyNames.ClassName] = "Start";
+            this.WindowTitles.Add("Start");
             #endregion
         }
         
         #region Properties
-        public UIItemGroup UIItemGroup
+        public WinButton UIStartButton
         {
             get
             {
-                if ((this.mUIItemGroup == null))
+                if ((this.mUIStartButton == null))
                 {
-                    this.mUIItemGroup = new UIItemGroup(this);
+                    this.mUIStartButton = new WinButton(this);
+                    #region Search Criteria
+                    this.mUIStartButton.SearchProperties[WinButton.PropertyNames.Name] = "Start";
+                    this.mUIStartButton.WindowTitles.Add("Start");
+                    #endregion
                 }
-                return this.mUIItemGroup;
+                return this.mUIStartButton;
             }
         }
         #endregion
         
         #region Fields
-        private UIItemGroup mUIItemGroup;
+        private WinButton mUIStartButton;
         #endregion
     }
     
     [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
-    public class UIItemGroup : WinGroup
+    public class UIHomePageInternetExplWindow : BrowserWindow
     {
         
-        public UIItemGroup(UITestControl searchLimitContainer) : 
+        public UIHomePageInternetExplWindow()
+        {
+            #region Search Criteria
+            this.SearchProperties[UITestControl.PropertyNames.Name] = "Home Page";
+            this.SearchProperties[UITestControl.PropertyNames.ClassName] = "IEFrame";
+            this.WindowTitles.Add("Home Page");
+            this.WindowTitles.Add("Hotmail, Outlook, noticias en video, viajes, autos, vacaciones, moda y mucho más " +
+                    "- MSN Latinoam");
+            this.WindowTitles.Add("Blank Page");
+            this.WindowTitles.Add("http://localhost/Opiniometro_WebApp");
+            #endregion
+        }
+        
+        public void LaunchUrl(System.Uri url)
+        {
+            this.CopyFrom(BrowserWindow.Launch(url));
+        }
+        
+        #region Properties
+        public UIAddressBarClient UIAddressBarClient
+        {
+            get
+            {
+                if ((this.mUIAddressBarClient == null))
+                {
+                    this.mUIAddressBarClient = new UIAddressBarClient(this);
+                }
+                return this.mUIAddressBarClient;
+            }
+        }
+        
+        public UIHotmailOutlooknoticiDocument UIHotmailOutlooknoticiDocument
+        {
+            get
+            {
+                if ((this.mUIHotmailOutlooknoticiDocument == null))
+                {
+                    this.mUIHotmailOutlooknoticiDocument = new UIHotmailOutlooknoticiDocument(this);
+                }
+                return this.mUIHotmailOutlooknoticiDocument;
+            }
+        }
+        
+        public UIAddressComboControlToolBar UIAddressComboControlToolBar
+        {
+            get
+            {
+                if ((this.mUIAddressComboControlToolBar == null))
+                {
+                    this.mUIAddressComboControlToolBar = new UIAddressComboControlToolBar(this);
+                }
+                return this.mUIAddressComboControlToolBar;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private UIAddressBarClient mUIAddressBarClient;
+        
+        private UIHotmailOutlooknoticiDocument mUIHotmailOutlooknoticiDocument;
+        
+        private UIAddressComboControlToolBar mUIAddressComboControlToolBar;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class UIAddressBarClient : WinClient
+    {
+        
+        public UIAddressBarClient(UITestControl searchLimitContainer) : 
                 base(searchLimitContainer)
         {
             #region Search Criteria
-            this.WindowTitles.Add("Nueva pestaña - Google Chrome");
-            this.WindowTitles.Add("Opiniómetro@UCR - Google Chrome");
+            this.SearchProperties[WinControl.PropertyNames.Name] = "Address Bar";
+            this.WindowTitles.Add("Home Page");
+            this.WindowTitles.Add("Hotmail, Outlook, noticias en video, viajes, autos, vacaciones, moda y mucho más " +
+                    "- MSN Latinoam");
+            this.WindowTitles.Add("Blank Page");
             #endregion
         }
         
         #region Properties
-        public WinEdit UIBarradedireccionesydEdit
+        public WinEdit UIAddressandsearchusinEdit
         {
             get
             {
-                if ((this.mUIBarradedireccionesydEdit == null))
+                if ((this.mUIAddressandsearchusinEdit == null))
                 {
-                    this.mUIBarradedireccionesydEdit = new WinEdit(this);
+                    this.mUIAddressandsearchusinEdit = new WinEdit(this);
                     #region Search Criteria
-                    this.mUIBarradedireccionesydEdit.SearchProperties[WinEdit.PropertyNames.Name] = "Barra de direcciones y de búsqueda";
-                    this.mUIBarradedireccionesydEdit.WindowTitles.Add("Nueva pestaña - Google Chrome");
-                    this.mUIBarradedireccionesydEdit.WindowTitles.Add("Opiniómetro@UCR - Google Chrome");
+                    this.mUIAddressandsearchusinEdit.SearchProperties[WinEdit.PropertyNames.Name] = "Address and search using Bing";
+                    this.mUIAddressandsearchusinEdit.WindowTitles.Add("Home Page");
+                    this.mUIAddressandsearchusinEdit.WindowTitles.Add("Hotmail, Outlook, noticias en video, viajes, autos, vacaciones, moda y mucho más " +
+                            "- MSN Latinoam");
+                    this.mUIAddressandsearchusinEdit.WindowTitles.Add("Blank Page");
                     #endregion
                 }
-                return this.mUIBarradedireccionesydEdit;
+                return this.mUIAddressandsearchusinEdit;
             }
         }
         #endregion
         
         #region Fields
-        private WinEdit mUIBarradedireccionesydEdit;
+        private WinEdit mUIAddressandsearchusinEdit;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class UIHotmailOutlooknoticiDocument : HtmlDocument
+    {
+        
+        public UIHotmailOutlooknoticiDocument(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlDocument.PropertyNames.Id] = null;
+            this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
+            this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
+            this.FilterProperties[HtmlDocument.PropertyNames.Title] = "Hotmail, Outlook, noticias en video, viajes, autos, vacaciones, moda y mucho más " +
+                "- MSN Latinoamérica";
+            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/es-xl/";
+            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://www.msn.com/es-xl/?ocid=iehp";
+            this.WindowTitles.Add("Hotmail, Outlook, noticias en video, viajes, autos, vacaciones, moda y mucho más " +
+                    "- MSN Latinoam");
+            #endregion
+        }
+        
+        #region Properties
+        public HtmlCustom UIHeadercommonCustom
+        {
+            get
+            {
+                if ((this.mUIHeadercommonCustom == null))
+                {
+                    this.mUIHeadercommonCustom = new HtmlCustom(this);
+                    #region Search Criteria
+                    this.mUIHeadercommonCustom.SearchProperties["TagName"] = "HEADER";
+                    this.mUIHeadercommonCustom.SearchProperties["Id"] = "header-common";
+                    this.mUIHeadercommonCustom.SearchProperties[UITestControl.PropertyNames.Name] = null;
+                    this.mUIHeadercommonCustom.FilterProperties["Class"] = "no-overlay";
+                    this.mUIHeadercommonCustom.FilterProperties["ControlDefinition"] = "class=\"no-overlay\" id=\"header-common\" ro";
+                    this.mUIHeadercommonCustom.FilterProperties["TagInstance"] = "1";
+                    this.mUIHeadercommonCustom.WindowTitles.Add("Hotmail, Outlook, noticias en video, viajes, autos, vacaciones, moda y mucho más " +
+                            "- MSN Latinoam");
+                    #endregion
+                }
+                return this.mUIHeadercommonCustom;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private HtmlCustom mUIHeadercommonCustom;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class UIAddressComboControlToolBar : WinToolBar
+    {
+        
+        public UIAddressComboControlToolBar(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[WinToolBar.PropertyNames.Name] = "Address Combo Control";
+            this.WindowTitles.Add("Hotmail, Outlook, noticias en video, viajes, autos, vacaciones, moda y mucho más " +
+                    "- MSN Latinoam");
+            #endregion
+        }
+        
+        #region Properties
+        public WinMenuItem UIAddressMenuItem
+        {
+            get
+            {
+                if ((this.mUIAddressMenuItem == null))
+                {
+                    this.mUIAddressMenuItem = new WinMenuItem(this);
+                    #region Search Criteria
+                    this.mUIAddressMenuItem.SearchProperties[WinMenuItem.PropertyNames.Name] = "Address";
+                    this.mUIAddressMenuItem.WindowTitles.Add("Hotmail, Outlook, noticias en video, viajes, autos, vacaciones, moda y mucho más " +
+                            "- MSN Latinoam");
+                    #endregion
+                }
+                return this.mUIAddressMenuItem;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private WinMenuItem mUIAddressMenuItem;
         #endregion
     }
     
@@ -518,6 +575,7 @@ namespace Opiniometro_WebAppUITest
             this.SearchProperties[UITestControl.PropertyNames.Name] = "Opiniómetro@UCR";
             this.SearchProperties[UITestControl.PropertyNames.ClassName] = "IEFrame";
             this.WindowTitles.Add("Opiniómetro@UCR");
+            this.WindowTitles.Add("http://localhost/Opiniometro_WebApp/Item/create");
             #endregion
         }
         
@@ -551,6 +609,18 @@ namespace Opiniometro_WebAppUITest
             }
         }
         
+        public UIAddressComboControlToolBar1 UIAddressComboControlToolBar
+        {
+            get
+            {
+                if ((this.mUIAddressComboControlToolBar == null))
+                {
+                    this.mUIAddressComboControlToolBar = new UIAddressComboControlToolBar1(this);
+                }
+                return this.mUIAddressComboControlToolBar;
+            }
+        }
+        
         public UIOpiniómetroUCRDocument2 UIOpiniómetroUCRDocument2
         {
             get
@@ -560,6 +630,18 @@ namespace Opiniometro_WebAppUITest
                     this.mUIOpiniómetroUCRDocument2 = new UIOpiniómetroUCRDocument2(this);
                 }
                 return this.mUIOpiniómetroUCRDocument2;
+            }
+        }
+        
+        public UIOpiniómetroUCRDocument11 UIOpiniómetroUCRDocument11
+        {
+            get
+            {
+                if ((this.mUIOpiniómetroUCRDocument11 == null))
+                {
+                    this.mUIOpiniómetroUCRDocument11 = new UIOpiniómetroUCRDocument11(this);
+                }
+                return this.mUIOpiniómetroUCRDocument11;
             }
         }
         
@@ -574,18 +656,6 @@ namespace Opiniometro_WebAppUITest
                 return this.mUIOpiniómetroUCRDocument3;
             }
         }
-        
-        public UIOpiniómetroUCRDocument4 UIOpiniómetroUCRDocument4
-        {
-            get
-            {
-                if ((this.mUIOpiniómetroUCRDocument4 == null))
-                {
-                    this.mUIOpiniómetroUCRDocument4 = new UIOpiniómetroUCRDocument4(this);
-                }
-                return this.mUIOpiniómetroUCRDocument4;
-            }
-        }
         #endregion
         
         #region Fields
@@ -593,11 +663,13 @@ namespace Opiniometro_WebAppUITest
         
         private UIOpiniómetroUCRDocument1 mUIOpiniómetroUCRDocument1;
         
+        private UIAddressComboControlToolBar1 mUIAddressComboControlToolBar;
+        
         private UIOpiniómetroUCRDocument2 mUIOpiniómetroUCRDocument2;
         
-        private UIOpiniómetroUCRDocument3 mUIOpiniómetroUCRDocument3;
+        private UIOpiniómetroUCRDocument11 mUIOpiniómetroUCRDocument11;
         
-        private UIOpiniómetroUCRDocument4 mUIOpiniómetroUCRDocument4;
+        private UIOpiniómetroUCRDocument3 mUIOpiniómetroUCRDocument3;
         #endregion
     }
     
@@ -616,81 +688,6 @@ namespace Opiniometro_WebAppUITest
             this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/Auth/Login";
             this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://localhost/Opiniometro_WebApp/Auth/Login?ReturnUrl=%2FOpiniometro_WebApp%2F" +
                 "";
-            this.WindowTitles.Add("Opiniómetro@UCR");
-            #endregion
-        }
-        
-        #region Properties
-        public HtmlInputButton UIIngresarButton
-        {
-            get
-            {
-                if ((this.mUIIngresarButton == null))
-                {
-                    this.mUIIngresarButton = new HtmlInputButton(this);
-                    #region Search Criteria
-                    this.mUIIngresarButton.SearchProperties[HtmlButton.PropertyNames.Id] = null;
-                    this.mUIIngresarButton.SearchProperties[HtmlButton.PropertyNames.Name] = "Ingresar";
-                    this.mUIIngresarButton.SearchProperties[HtmlButton.PropertyNames.DisplayText] = "Ingresar";
-                    this.mUIIngresarButton.SearchProperties[HtmlButton.PropertyNames.Type] = "submit";
-                    this.mUIIngresarButton.FilterProperties[HtmlButton.PropertyNames.Title] = null;
-                    this.mUIIngresarButton.FilterProperties[HtmlButton.PropertyNames.Class] = "btn btn-default";
-                    this.mUIIngresarButton.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "name=\"Ingresar\" class=\"btn btn-default\" ";
-                    this.mUIIngresarButton.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "3";
-                    this.mUIIngresarButton.WindowTitles.Add("Opiniómetro@UCR");
-                    #endregion
-                }
-                return this.mUIIngresarButton;
-            }
-        }
-        
-        public HtmlHyperlink UIOlvidósucontraseñaHyperlink
-        {
-            get
-            {
-                if ((this.mUIOlvidósucontraseñaHyperlink == null))
-                {
-                    this.mUIOlvidósucontraseñaHyperlink = new HtmlHyperlink(this);
-                    #region Search Criteria
-                    this.mUIOlvidósucontraseñaHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Id] = null;
-                    this.mUIOlvidósucontraseñaHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Name] = null;
-                    this.mUIOlvidósucontraseñaHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Target] = null;
-                    this.mUIOlvidósucontraseñaHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.InnerText] = "¿Olvidó su contraseña?";
-                    this.mUIOlvidósucontraseñaHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/Auth/Recuperar";
-                    this.mUIOlvidósucontraseñaHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Title] = null;
-                    this.mUIOlvidósucontraseñaHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Href] = "http://localhost/Opiniometro_WebApp/Auth/Recuperar";
-                    this.mUIOlvidósucontraseñaHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Class] = null;
-                    this.mUIOlvidósucontraseñaHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.ControlDefinition] = "href=\"/Opiniometro_WebApp/Auth/Recuperar";
-                    this.mUIOlvidósucontraseñaHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.TagInstance] = "2";
-                    this.mUIOlvidósucontraseñaHyperlink.WindowTitles.Add("Opiniómetro@UCR");
-                    #endregion
-                }
-                return this.mUIOlvidósucontraseñaHyperlink;
-            }
-        }
-        #endregion
-        
-        #region Fields
-        private HtmlInputButton mUIIngresarButton;
-        
-        private HtmlHyperlink mUIOlvidósucontraseñaHyperlink;
-        #endregion
-    }
-    
-    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
-    public class UIOpiniómetroUCRDocument1 : HtmlDocument
-    {
-        
-        public UIOpiniómetroUCRDocument1(UITestControl searchLimitContainer) : 
-                base(searchLimitContainer)
-        {
-            #region Search Criteria
-            this.SearchProperties[HtmlDocument.PropertyNames.Id] = null;
-            this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
-            this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
-            this.FilterProperties[HtmlDocument.PropertyNames.Title] = "Opiniómetro@UCR";
-            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/Auth/Login";
-            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://localhost/Opiniometro_WebApp/Auth/Login";
             this.WindowTitles.Add("Opiniómetro@UCR");
             #endregion
         }
@@ -719,51 +716,6 @@ namespace Opiniometro_WebAppUITest
             }
         }
         
-        public HtmlEdit UIContrasenaEdit
-        {
-            get
-            {
-                if ((this.mUIContrasenaEdit == null))
-                {
-                    this.mUIContrasenaEdit = new HtmlEdit(this);
-                    #region Search Criteria
-                    this.mUIContrasenaEdit.SearchProperties[HtmlEdit.PropertyNames.Id] = null;
-                    this.mUIContrasenaEdit.SearchProperties[HtmlEdit.PropertyNames.Name] = "Contrasena";
-                    this.mUIContrasenaEdit.SearchProperties[HtmlEdit.PropertyNames.LabeledBy] = null;
-                    this.mUIContrasenaEdit.SearchProperties[HtmlEdit.PropertyNames.Type] = "PASSWORD";
-                    this.mUIContrasenaEdit.FilterProperties[HtmlEdit.PropertyNames.Title] = null;
-                    this.mUIContrasenaEdit.FilterProperties[HtmlEdit.PropertyNames.Class] = "form-control";
-                    this.mUIContrasenaEdit.FilterProperties[HtmlEdit.PropertyNames.ControlDefinition] = "name=\"Contrasena\" class=\"form-control\" t";
-                    this.mUIContrasenaEdit.FilterProperties[HtmlEdit.PropertyNames.TagInstance] = "2";
-                    this.mUIContrasenaEdit.WindowTitles.Add("Opiniómetro@UCR");
-                    #endregion
-                }
-                return this.mUIContrasenaEdit;
-            }
-        }
-        
-        public HtmlDiv UIItemPane
-        {
-            get
-            {
-                if ((this.mUIItemPane == null))
-                {
-                    this.mUIItemPane = new HtmlDiv(this);
-                    #region Search Criteria
-                    this.mUIItemPane.SearchProperties[HtmlDiv.PropertyNames.Id] = null;
-                    this.mUIItemPane.SearchProperties[HtmlDiv.PropertyNames.Name] = null;
-                    this.mUIItemPane.FilterProperties[HtmlDiv.PropertyNames.InnerText] = null;
-                    this.mUIItemPane.FilterProperties[HtmlDiv.PropertyNames.Title] = null;
-                    this.mUIItemPane.FilterProperties[HtmlDiv.PropertyNames.Class] = "form-group";
-                    this.mUIItemPane.FilterProperties[HtmlDiv.PropertyNames.ControlDefinition] = "class=\"form-group\"";
-                    this.mUIItemPane.FilterProperties[HtmlDiv.PropertyNames.TagInstance] = "10";
-                    this.mUIItemPane.WindowTitles.Add("Opiniómetro@UCR");
-                    #endregion
-                }
-                return this.mUIItemPane;
-            }
-        }
-        
         public HtmlInputButton UIIngresarButton
         {
             get
@@ -786,43 +738,96 @@ namespace Opiniometro_WebAppUITest
                 return this.mUIIngresarButton;
             }
         }
-        
-        public HtmlHyperlink UIOlvidósucontraseñaHyperlink
-        {
-            get
-            {
-                if ((this.mUIOlvidósucontraseñaHyperlink == null))
-                {
-                    this.mUIOlvidósucontraseñaHyperlink = new HtmlHyperlink(this);
-                    #region Search Criteria
-                    this.mUIOlvidósucontraseñaHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Id] = null;
-                    this.mUIOlvidósucontraseñaHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Name] = null;
-                    this.mUIOlvidósucontraseñaHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Target] = null;
-                    this.mUIOlvidósucontraseñaHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.InnerText] = "¿Olvidó su contraseña?";
-                    this.mUIOlvidósucontraseñaHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/Auth/Recuperar";
-                    this.mUIOlvidósucontraseñaHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Title] = null;
-                    this.mUIOlvidósucontraseñaHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Href] = "http://localhost/Opiniometro_WebApp/Auth/Recuperar";
-                    this.mUIOlvidósucontraseñaHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Class] = null;
-                    this.mUIOlvidósucontraseñaHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.ControlDefinition] = "href=\"/Opiniometro_WebApp/Auth/Recuperar";
-                    this.mUIOlvidósucontraseñaHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.TagInstance] = "2";
-                    this.mUIOlvidósucontraseñaHyperlink.WindowTitles.Add("Opiniómetro@UCR");
-                    #endregion
-                }
-                return this.mUIOlvidósucontraseñaHyperlink;
-            }
-        }
         #endregion
         
         #region Fields
         private HtmlEdit mUICorreoInstitucionalEdit;
         
-        private HtmlEdit mUIContrasenaEdit;
-        
-        private HtmlDiv mUIItemPane;
-        
         private HtmlInputButton mUIIngresarButton;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class UIOpiniómetroUCRDocument1 : HtmlDocument
+    {
         
-        private HtmlHyperlink mUIOlvidósucontraseñaHyperlink;
+        public UIOpiniómetroUCRDocument1(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlDocument.PropertyNames.Id] = null;
+            this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
+            this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
+            this.FilterProperties[HtmlDocument.PropertyNames.Title] = "Opiniómetro@UCR";
+            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/Perfil/Cambiar";
+            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://localhost/Opiniometro_WebApp/Perfil/Cambiar";
+            this.WindowTitles.Add("Opiniómetro@UCR");
+            #endregion
+        }
+        
+        #region Properties
+        public HtmlInputButton UIAceptarButton
+        {
+            get
+            {
+                if ((this.mUIAceptarButton == null))
+                {
+                    this.mUIAceptarButton = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUIAceptarButton.SearchProperties[HtmlButton.PropertyNames.Id] = null;
+                    this.mUIAceptarButton.SearchProperties[HtmlButton.PropertyNames.Name] = null;
+                    this.mUIAceptarButton.SearchProperties[HtmlButton.PropertyNames.DisplayText] = "Aceptar";
+                    this.mUIAceptarButton.SearchProperties[HtmlButton.PropertyNames.Type] = "submit";
+                    this.mUIAceptarButton.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUIAceptarButton.FilterProperties[HtmlButton.PropertyNames.Class] = "btn btn-default";
+                    this.mUIAceptarButton.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "class=\"btn btn-default\" style=\"margin-ri";
+                    this.mUIAceptarButton.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "1";
+                    this.mUIAceptarButton.WindowTitles.Add("Opiniómetro@UCR");
+                    #endregion
+                }
+                return this.mUIAceptarButton;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private HtmlInputButton mUIAceptarButton;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class UIAddressComboControlToolBar1 : WinToolBar
+    {
+        
+        public UIAddressComboControlToolBar1(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[WinToolBar.PropertyNames.Name] = "Address Combo Control";
+            this.WindowTitles.Add("Opiniómetro@UCR");
+            #endregion
+        }
+        
+        #region Properties
+        public WinMenuItem UIAddressMenuItem
+        {
+            get
+            {
+                if ((this.mUIAddressMenuItem == null))
+                {
+                    this.mUIAddressMenuItem = new WinMenuItem(this);
+                    #region Search Criteria
+                    this.mUIAddressMenuItem.SearchProperties[WinMenuItem.PropertyNames.Name] = "Address";
+                    this.mUIAddressMenuItem.WindowTitles.Add("Opiniómetro@UCR");
+                    #endregion
+                }
+                return this.mUIAddressMenuItem;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private WinMenuItem mUIAddressMenuItem;
         #endregion
     }
     
@@ -838,64 +843,180 @@ namespace Opiniometro_WebAppUITest
             this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
             this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
             this.FilterProperties[HtmlDocument.PropertyNames.Title] = "Opiniómetro@UCR";
-            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/Perfil/Cambiar";
-            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://localhost/Opiniometro_WebApp/Perfil/Cambiar";
+            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/";
+            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://localhost/Opiniometro_WebApp/";
             this.WindowTitles.Add("Opiniómetro@UCR");
             #endregion
         }
         
         #region Properties
-        public HtmlCustom UIItemCustom
+        public HtmlHyperlink UIEvaluacionesHyperlink
         {
             get
             {
-                if ((this.mUIItemCustom == null))
+                if ((this.mUIEvaluacionesHyperlink == null))
                 {
-                    this.mUIItemCustom = new HtmlCustom(this);
+                    this.mUIEvaluacionesHyperlink = new HtmlHyperlink(this);
                     #region Search Criteria
-                    this.mUIItemCustom.SearchProperties["TagName"] = "A";
-                    this.mUIItemCustom.SearchProperties["Id"] = null;
-                    this.mUIItemCustom.SearchProperties[UITestControl.PropertyNames.Name] = null;
-                    this.mUIItemCustom.FilterProperties["Class"] = "dropdown-toggle";
-                    this.mUIItemCustom.FilterProperties["ControlDefinition"] = "class=\"dropdown-toggle\" role=\"button\" ar";
-                    this.mUIItemCustom.FilterProperties["TagInstance"] = "3";
-                    this.mUIItemCustom.WindowTitles.Add("Opiniómetro@UCR");
+                    this.mUIEvaluacionesHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Id] = null;
+                    this.mUIEvaluacionesHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Name] = null;
+                    this.mUIEvaluacionesHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Target] = null;
+                    this.mUIEvaluacionesHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.InnerText] = "Evaluaciones";
+                    this.mUIEvaluacionesHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/";
+                    this.mUIEvaluacionesHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Title] = null;
+                    this.mUIEvaluacionesHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Href] = "http://localhost/Opiniometro_WebApp/#";
+                    this.mUIEvaluacionesHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Class] = "dropdown-toggle";
+                    this.mUIEvaluacionesHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.ControlDefinition] = "class=\"dropdown-toggle\" role=\"button\" ar";
+                    this.mUIEvaluacionesHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.TagInstance] = "13";
+                    this.mUIEvaluacionesHyperlink.WindowTitles.Add("Opiniómetro@UCR");
                     #endregion
                 }
-                return this.mUIItemCustom;
+                return this.mUIEvaluacionesHyperlink;
             }
         }
         
-        public HtmlHyperlink UIVerperfilesHyperlink
+        public HtmlHyperlink UIInsertarItemsHyperlink
         {
             get
             {
-                if ((this.mUIVerperfilesHyperlink == null))
+                if ((this.mUIInsertarItemsHyperlink == null))
                 {
-                    this.mUIVerperfilesHyperlink = new HtmlHyperlink(this);
+                    this.mUIInsertarItemsHyperlink = new HtmlHyperlink(this);
                     #region Search Criteria
-                    this.mUIVerperfilesHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Id] = null;
-                    this.mUIVerperfilesHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Name] = null;
-                    this.mUIVerperfilesHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Target] = null;
-                    this.mUIVerperfilesHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.InnerText] = "Ver perfiles";
-                    this.mUIVerperfilesHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/Perfil/VerPerfiles";
-                    this.mUIVerperfilesHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Title] = null;
-                    this.mUIVerperfilesHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Href] = "http://localhost/Opiniometro_WebApp/Perfil/VerPerfiles";
-                    this.mUIVerperfilesHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Class] = null;
-                    this.mUIVerperfilesHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.ControlDefinition] = "href=\"/Opiniometro_WebApp/Perfil/VerPerf";
-                    this.mUIVerperfilesHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.TagInstance] = "6";
-                    this.mUIVerperfilesHyperlink.WindowTitles.Add("Opiniómetro@UCR");
+                    this.mUIInsertarItemsHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Id] = null;
+                    this.mUIInsertarItemsHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Name] = null;
+                    this.mUIInsertarItemsHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.Target] = null;
+                    this.mUIInsertarItemsHyperlink.SearchProperties[HtmlHyperlink.PropertyNames.InnerText] = "Insertar Items";
+                    this.mUIInsertarItemsHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/Item";
+                    this.mUIInsertarItemsHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Title] = null;
+                    this.mUIInsertarItemsHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Href] = "http://localhost/Opiniometro_WebApp/Item";
+                    this.mUIInsertarItemsHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.Class] = null;
+                    this.mUIInsertarItemsHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.ControlDefinition] = "href=\"/Opiniometro_WebApp/Item\"";
+                    this.mUIInsertarItemsHyperlink.FilterProperties[HtmlHyperlink.PropertyNames.TagInstance] = "18";
+                    this.mUIInsertarItemsHyperlink.WindowTitles.Add("Opiniómetro@UCR");
                     #endregion
                 }
-                return this.mUIVerperfilesHyperlink;
+                return this.mUIInsertarItemsHyperlink;
             }
         }
         #endregion
         
         #region Fields
-        private HtmlCustom mUIItemCustom;
+        private HtmlHyperlink mUIEvaluacionesHyperlink;
         
-        private HtmlHyperlink mUIVerperfilesHyperlink;
+        private HtmlHyperlink mUIInsertarItemsHyperlink;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class UIOpiniómetroUCRDocument11 : HtmlDocument
+    {
+        
+        public UIOpiniómetroUCRDocument11(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlDocument.PropertyNames.Id] = null;
+            this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
+            this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
+            this.FilterProperties[HtmlDocument.PropertyNames.Title] = "Opiniómetro@UCR";
+            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/Item";
+            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://localhost/Opiniometro_WebApp/Item";
+            this.WindowTitles.Add("Opiniómetro@UCR");
+            #endregion
+        }
+        
+        #region Properties
+        public UIVistaitemTable UIVistaitemTable
+        {
+            get
+            {
+                if ((this.mUIVistaitemTable == null))
+                {
+                    this.mUIVistaitemTable = new UIVistaitemTable(this);
+                }
+                return this.mUIVistaitemTable;
+            }
+        }
+        
+        public HtmlInputButton UICrearNuevaPreguntaButton
+        {
+            get
+            {
+                if ((this.mUICrearNuevaPreguntaButton == null))
+                {
+                    this.mUICrearNuevaPreguntaButton = new HtmlInputButton(this);
+                    #region Search Criteria
+                    this.mUICrearNuevaPreguntaButton.SearchProperties[HtmlButton.PropertyNames.Id] = "botonNuevaPregunta";
+                    this.mUICrearNuevaPreguntaButton.SearchProperties[HtmlButton.PropertyNames.Name] = null;
+                    this.mUICrearNuevaPreguntaButton.SearchProperties[HtmlButton.PropertyNames.DisplayText] = "Crear Nueva Pregunta";
+                    this.mUICrearNuevaPreguntaButton.SearchProperties[HtmlButton.PropertyNames.Type] = "submit";
+                    this.mUICrearNuevaPreguntaButton.FilterProperties[HtmlButton.PropertyNames.Title] = null;
+                    this.mUICrearNuevaPreguntaButton.FilterProperties[HtmlButton.PropertyNames.Class] = "btn btn-secondary";
+                    this.mUICrearNuevaPreguntaButton.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "class=\"btn btn-secondary\" id=\"botonNueva";
+                    this.mUICrearNuevaPreguntaButton.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "1";
+                    this.mUICrearNuevaPreguntaButton.WindowTitles.Add("Opiniómetro@UCR");
+                    #endregion
+                }
+                return this.mUICrearNuevaPreguntaButton;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private UIVistaitemTable mUIVistaitemTable;
+        
+        private HtmlInputButton mUICrearNuevaPreguntaButton;
+        #endregion
+    }
+    
+    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
+    public class UIVistaitemTable : HtmlTable
+    {
+        
+        public UIVistaitemTable(UITestControl searchLimitContainer) : 
+                base(searchLimitContainer)
+        {
+            #region Search Criteria
+            this.SearchProperties[HtmlTable.PropertyNames.Id] = "vistaitem";
+            this.SearchProperties[HtmlTable.PropertyNames.Name] = null;
+            this.FilterProperties[HtmlTable.PropertyNames.InnerText] = "Código \r\n\r\nPlanteamiento de la pregunta ";
+            this.FilterProperties[HtmlTable.PropertyNames.ControlDefinition] = "class=\"table\" id=\"vistaitem\"";
+            this.FilterProperties[HtmlTable.PropertyNames.RowCount] = "11";
+            this.FilterProperties[HtmlTable.PropertyNames.ColumnCount] = "5";
+            this.FilterProperties[HtmlTable.PropertyNames.Class] = "table";
+            this.FilterProperties[HtmlTable.PropertyNames.TagInstance] = "1";
+            this.WindowTitles.Add("Opiniómetro@UCR");
+            #endregion
+        }
+        
+        #region Properties
+        public HtmlImage UIOpiniometro_WebAppCoImage
+        {
+            get
+            {
+                if ((this.mUIOpiniometro_WebAppCoImage == null))
+                {
+                    this.mUIOpiniometro_WebAppCoImage = new HtmlImage(this);
+                    #region Search Criteria
+                    this.mUIOpiniometro_WebAppCoImage.SearchProperties[HtmlImage.PropertyNames.Id] = null;
+                    this.mUIOpiniometro_WebAppCoImage.SearchProperties[HtmlImage.PropertyNames.Name] = null;
+                    this.mUIOpiniometro_WebAppCoImage.SearchProperties[HtmlImage.PropertyNames.Alt] = null;
+                    this.mUIOpiniometro_WebAppCoImage.FilterProperties[HtmlImage.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/Content/img/plus.png";
+                    this.mUIOpiniometro_WebAppCoImage.FilterProperties[HtmlImage.PropertyNames.Src] = "http://localhost/Opiniometro_WebApp/Content/img/plus.png";
+                    this.mUIOpiniometro_WebAppCoImage.FilterProperties[HtmlImage.PropertyNames.Class] = null;
+                    this.mUIOpiniometro_WebAppCoImage.FilterProperties[HtmlImage.PropertyNames.ControlDefinition] = "src=\"/Opiniometro_WebApp/Content/img/plu";
+                    this.mUIOpiniometro_WebAppCoImage.FilterProperties[HtmlImage.PropertyNames.TagInstance] = "1";
+                    this.mUIOpiniometro_WebAppCoImage.WindowTitles.Add("Opiniómetro@UCR");
+                    #endregion
+                }
+                return this.mUIOpiniometro_WebAppCoImage;
+            }
+        }
+        #endregion
+        
+        #region Fields
+        private HtmlImage mUIOpiniometro_WebAppCoImage;
         #endregion
     }
     
@@ -911,127 +1032,65 @@ namespace Opiniometro_WebAppUITest
             this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
             this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
             this.FilterProperties[HtmlDocument.PropertyNames.Title] = "Opiniómetro@UCR";
-            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/Perfil/VerPerfiles";
-            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://localhost/Opiniometro_WebApp/Perfil/VerPerfiles";
+            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/Item/Create";
+            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://localhost/Opiniometro_WebApp/Item/Create";
             this.WindowTitles.Add("Opiniómetro@UCR");
             #endregion
         }
         
         #region Properties
-        public UIItemTable UIItemTable
+        public HtmlComboBox UITieneObservacionComboBox
         {
             get
             {
-                if ((this.mUIItemTable == null))
+                if ((this.mUITieneObservacionComboBox == null))
                 {
-                    this.mUIItemTable = new UIItemTable(this);
-                }
-                return this.mUIItemTable;
-            }
-        }
-        #endregion
-        
-        #region Fields
-        private UIItemTable mUIItemTable;
-        #endregion
-    }
-    
-    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
-    public class UIItemTable : HtmlTable
-    {
-        
-        public UIItemTable(UITestControl searchLimitContainer) : 
-                base(searchLimitContainer)
-        {
-            #region Search Criteria
-            this.SearchProperties[HtmlTable.PropertyNames.Id] = null;
-            this.SearchProperties[HtmlTable.PropertyNames.Name] = null;
-            this.FilterProperties[HtmlTable.PropertyNames.InnerText] = "Nombre \r\n\r\nAdministrador Editar \r\neST Ed";
-            this.FilterProperties[HtmlTable.PropertyNames.ControlDefinition] = "class=\"table\"";
-            this.FilterProperties[HtmlTable.PropertyNames.RowCount] = "7";
-            this.FilterProperties[HtmlTable.PropertyNames.ColumnCount] = "1";
-            this.FilterProperties[HtmlTable.PropertyNames.Class] = "table";
-            this.FilterProperties[HtmlTable.PropertyNames.TagInstance] = "1";
-            this.WindowTitles.Add("Opiniómetro@UCR");
-            #endregion
-        }
-        
-        #region Properties
-        public HtmlCell UIAdministradorCell
-        {
-            get
-            {
-                if ((this.mUIAdministradorCell == null))
-                {
-                    this.mUIAdministradorCell = new HtmlCell(this);
+                    this.mUITieneObservacionComboBox = new HtmlComboBox(this);
                     #region Search Criteria
-                    this.mUIAdministradorCell.SearchProperties[HtmlCell.PropertyNames.Id] = null;
-                    this.mUIAdministradorCell.SearchProperties[HtmlCell.PropertyNames.Name] = null;
-                    this.mUIAdministradorCell.SearchProperties[HtmlCell.PropertyNames.MaxDepth] = "3";
-                    this.mUIAdministradorCell.SearchProperties[HtmlCell.PropertyNames.InnerText] = "Administrador ";
-                    this.mUIAdministradorCell.FilterProperties[HtmlCell.PropertyNames.ControlDefinition] = null;
-                    this.mUIAdministradorCell.FilterProperties[HtmlCell.PropertyNames.RowIndex] = "1";
-                    this.mUIAdministradorCell.FilterProperties[HtmlCell.PropertyNames.ColumnIndex] = "0";
-                    this.mUIAdministradorCell.FilterProperties[HtmlCell.PropertyNames.Class] = null;
-                    this.mUIAdministradorCell.FilterProperties[HtmlCell.PropertyNames.TagInstance] = "1";
-                    this.mUIAdministradorCell.WindowTitles.Add("Opiniómetro@UCR");
+                    this.mUITieneObservacionComboBox.SearchProperties[HtmlComboBox.PropertyNames.Id] = "comboboxtieneobservacion";
+                    this.mUITieneObservacionComboBox.SearchProperties[HtmlComboBox.PropertyNames.Name] = "TieneObservacion";
+                    this.mUITieneObservacionComboBox.FilterProperties[HtmlComboBox.PropertyNames.LabeledBy] = null;
+                    this.mUITieneObservacionComboBox.FilterProperties[HtmlComboBox.PropertyNames.Size] = "0";
+                    this.mUITieneObservacionComboBox.FilterProperties[HtmlComboBox.PropertyNames.Title] = null;
+                    this.mUITieneObservacionComboBox.FilterProperties[HtmlComboBox.PropertyNames.ItemCount] = "3";
+                    this.mUITieneObservacionComboBox.FilterProperties[HtmlComboBox.PropertyNames.Class] = "form-control valid";
+                    this.mUITieneObservacionComboBox.FilterProperties[HtmlComboBox.PropertyNames.ControlDefinition] = "name=\"TieneObservacion\" class=\"form-cont";
+                    this.mUITieneObservacionComboBox.FilterProperties[HtmlComboBox.PropertyNames.TagInstance] = "3";
+                    this.mUITieneObservacionComboBox.WindowTitles.Add("Opiniómetro@UCR");
                     #endregion
                 }
-                return this.mUIAdministradorCell;
+                return this.mUITieneObservacionComboBox;
             }
         }
-        #endregion
         
-        #region Fields
-        private HtmlCell mUIAdministradorCell;
-        #endregion
-    }
-    
-    [GeneratedCode("Coded UITest Builder", "15.0.26208.0")]
-    public class UIOpiniómetroUCRDocument4 : HtmlDocument
-    {
-        
-        public UIOpiniómetroUCRDocument4(UITestControl searchLimitContainer) : 
-                base(searchLimitContainer)
-        {
-            #region Search Criteria
-            this.SearchProperties[HtmlDocument.PropertyNames.Id] = null;
-            this.SearchProperties[HtmlDocument.PropertyNames.RedirectingPage] = "False";
-            this.SearchProperties[HtmlDocument.PropertyNames.FrameDocument] = "False";
-            this.FilterProperties[HtmlDocument.PropertyNames.Title] = "Opiniómetro@UCR";
-            this.FilterProperties[HtmlDocument.PropertyNames.AbsolutePath] = "/Opiniometro_WebApp/Auth/Recuperar";
-            this.FilterProperties[HtmlDocument.PropertyNames.PageUrl] = "http://localhost/Opiniometro_WebApp/Auth/Recuperar";
-            this.WindowTitles.Add("Opiniómetro@UCR");
-            #endregion
-        }
-        
-        #region Properties
-        public HtmlInputButton UIEnviarCorreoButton
+        public HtmlEdit UIEtiquetaObservacionEdit1
         {
             get
             {
-                if ((this.mUIEnviarCorreoButton == null))
+                if ((this.mUIEtiquetaObservacionEdit1 == null))
                 {
-                    this.mUIEnviarCorreoButton = new HtmlInputButton(this);
+                    this.mUIEtiquetaObservacionEdit1 = new HtmlEdit(this);
                     #region Search Criteria
-                    this.mUIEnviarCorreoButton.SearchProperties[HtmlButton.PropertyNames.Id] = null;
-                    this.mUIEnviarCorreoButton.SearchProperties[HtmlButton.PropertyNames.Name] = "Enviar";
-                    this.mUIEnviarCorreoButton.SearchProperties[HtmlButton.PropertyNames.DisplayText] = "Enviar Correo";
-                    this.mUIEnviarCorreoButton.SearchProperties[HtmlButton.PropertyNames.Type] = "submit";
-                    this.mUIEnviarCorreoButton.FilterProperties[HtmlButton.PropertyNames.Title] = null;
-                    this.mUIEnviarCorreoButton.FilterProperties[HtmlButton.PropertyNames.Class] = "btn btn-default";
-                    this.mUIEnviarCorreoButton.FilterProperties[HtmlButton.PropertyNames.ControlDefinition] = "name=\"Enviar\" class=\"btn btn-default\" ty";
-                    this.mUIEnviarCorreoButton.FilterProperties[HtmlButton.PropertyNames.TagInstance] = "2";
-                    this.mUIEnviarCorreoButton.WindowTitles.Add("Opiniómetro@UCR");
+                    this.mUIEtiquetaObservacionEdit1.SearchProperties[HtmlEdit.PropertyNames.Id] = "EtiquetaObservacion";
+                    this.mUIEtiquetaObservacionEdit1.SearchProperties[HtmlEdit.PropertyNames.Name] = "EtiquetaObservacion";
+                    this.mUIEtiquetaObservacionEdit1.FilterProperties[HtmlEdit.PropertyNames.LabeledBy] = null;
+                    this.mUIEtiquetaObservacionEdit1.FilterProperties[HtmlEdit.PropertyNames.Type] = "SINGLELINE";
+                    this.mUIEtiquetaObservacionEdit1.FilterProperties[HtmlEdit.PropertyNames.Title] = null;
+                    this.mUIEtiquetaObservacionEdit1.FilterProperties[HtmlEdit.PropertyNames.Class] = "form-control text-box single-line valid";
+                    this.mUIEtiquetaObservacionEdit1.FilterProperties[HtmlEdit.PropertyNames.ControlDefinition] = "name=\"EtiquetaObservacion\" class=\"form-c";
+                    this.mUIEtiquetaObservacionEdit1.FilterProperties[HtmlEdit.PropertyNames.TagInstance] = "4";
+                    this.mUIEtiquetaObservacionEdit1.WindowTitles.Add("Opiniómetro@UCR");
                     #endregion
                 }
-                return this.mUIEnviarCorreoButton;
+                return this.mUIEtiquetaObservacionEdit1;
             }
         }
         #endregion
         
         #region Fields
-        private HtmlInputButton mUIEnviarCorreoButton;
+        private HtmlComboBox mUITieneObservacionComboBox;
+        
+        private HtmlEdit mUIEtiquetaObservacionEdit1;
         #endregion
     }
 }

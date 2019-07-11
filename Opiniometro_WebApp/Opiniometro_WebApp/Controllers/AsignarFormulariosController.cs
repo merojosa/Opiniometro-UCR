@@ -5,6 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
 using System.Diagnostics;
+using System.Net.Mail;
+using System.Net;
+using System.Text;
+using Newtonsoft.Json;
+using System.Globalization;
 
 namespace Opiniometro_WebApp.Controllers
 {
@@ -12,6 +17,19 @@ namespace Opiniometro_WebApp.Controllers
     public class AsignarFormulariosController : Controller
     {
         private Opiniometro_DatosEntities db = new Opiniometro_DatosEntities();
+
+        //prueba para mocking tests
+        public AsignarFormulariosController()
+        {
+            db = new Opiniometro_DatosEntities();
+        }
+
+        public AsignarFormulariosController(Opiniometro_DatosEntities db)
+        {
+            this.db = db;
+        }
+
+        public class TipoPeriodosIndicados { public string CodigoForm; public string FechaInicio; public string FechaFinal; };
 
         // Para la vista completa
         [HttpGet]
@@ -68,35 +86,36 @@ namespace Opiniometro_WebApp.Controllers
 
             return View(modelo);
         }
-        
-        public void Asignar(GruposYFormsSeleccionados gruFormsSeleccionados)
-        {
-            ;
-        }
 
         public ActionResult AsignacionFormularioGrupo (List<ElegirGrupoEditorViewModel> grupos, List<ElegirFormularioEditorViewModel> formularios)
         {
             GruposYFormsSeleccionados gruFormsSeleccionados;
             if (grupos != null && formularios != null)
             {
+                /// Fecha por defecto usada para aplicar un formulario. (Desde hoy en 1 semana hasta dentro de 2 semanas)
+                Fecha_Corte fechaPorDefecto = new Fecha_Corte { FechaInicio = DateTime.Now.AddDays(7), FechaFinal = DateTime.Now.AddDays(14) };
+
+                foreach (var form in formularios)
+                {
+                    form.FechaDeCorte = fechaPorDefecto;
+                }
+
                 gruFormsSeleccionados
                     = new GruposYFormsSeleccionados(grupos, formularios);
-                Asignar(gruFormsSeleccionados);
             }
             else
             {
                 gruFormsSeleccionados = new GruposYFormsSeleccionados();
             }
-
             return PartialView("AsignacionFormularioGrupo", gruFormsSeleccionados);
         }
 
         // Para el filtro por ciclos
         public IQueryable<Ciclo_Lectivo> ObtenerCiclos(String codigoUnidadAcadem)
         {
-            IQueryable<Ciclo_Lectivo> ciclo = (from c in db.Ciclo_Lectivo select c).Distinct();
-            ViewBag.semestre = new SelectList(ciclo, "Semestre", "Semestre");
-            ViewBag.ano = new SelectList(ciclo, "Anno", "Anno");
+            IQueryable<Ciclo_Lectivo> ciclo = (from c in db.Ciclo_Lectivo select c);
+            ViewBag.semestre = new SelectList(ciclo, "Semestre", "Semestre").Distinct();
+            ViewBag.ano = new SelectList(ciclo, "Anno", "Anno").Distinct();
             return ciclo;
         }
 
@@ -301,9 +320,8 @@ namespace Opiniometro_WebApp.Controllers
             });
 
             grupos = FiltreGrupos(searchString, semestre, anno, codigoUnidadAcadem, siglaCarrera, nombreCurso, grupos);
-            //grupos = FiltreGrupos(searchString, semestre, nomUnidadAcad, nombCarrera, nombreCurso, grupos.AsQueryable()).ToList();
 
-            return grupos.ToList();
+            return grupos.Distinct().ToList();
 
         }
 
@@ -362,16 +380,17 @@ namespace Opiniometro_WebApp.Controllers
         // Para la vista de los formularios
         public List<ElegirFormularioEditorViewModel> ObtenerFormularios()
         {
-            IQueryable<ElegirFormularioEditorViewModel> formularios =
-                from formul in db.Formulario
+            List<ElegirFormularioEditorViewModel> formularios =
+                (from formul in db.Formulario
                 select new ElegirFormularioEditorViewModel
                 {
                     Seleccionado = false,
                     CodigoFormulario = formul.CodigoFormulario,
-                    NombreFormulario = formul.Nombre
-                };
+                    NombreFormulario = formul.Nombre,
+                    FechaDeCorte = null
+                }).ToList();
 
-            return formularios.ToList();
+            return formularios;
         }
 
         public ActionResult SeleccionFormularios(string formulario)
@@ -384,6 +403,170 @@ namespace Opiniometro_WebApp.Controllers
             }
 
             return PartialView("SeleccionFormularios", form);
+        }
+
+        
+        //Efecto: Envía un correo al estudiante notificandole que existe un formulario que debe llenar.
+        //Requiere: el correo de la persona que va a recibir el recordatorio, el asunto del mensaje y el contenido del correo.
+        //Modifica: N/A.
+        private void EnviarCorreo(string correo_receptor, string asunto, string contenido)
+        {
+            string correo_emisor = System.Configuration.ConfigurationManager.AppSettings["CorreoEmisor"].ToString();
+            string contrasenna = System.Configuration.ConfigurationManager.AppSettings["ContrasennaEmisor"].ToString();
+
+            SmtpClient cliente = new SmtpClient("smtp.gmail.com", 587);
+            cliente.EnableSsl = true;
+            cliente.Timeout = 100000;
+            cliente.DeliveryMethod = SmtpDeliveryMethod.Network;
+            cliente.UseDefaultCredentials = false;
+            cliente.Credentials = new NetworkCredential(correo_emisor, contrasenna);
+
+            MailMessage correo = new MailMessage(correo_emisor, correo_receptor, asunto, contenido);
+            correo.IsBodyHtml = true;
+            correo.BodyEncoding = UTF8Encoding.UTF8;
+            cliente.Send(correo);
+
+        }
+
+        //public ActionResult EnviarCorreoFormulario()
+        //{
+        //    return View("Index");
+        //}
+
+        //Efecto: Envía un correo a los estudiantes matriculados en cierto curso.
+        //Requiere: la sigla del curso.
+        //Modifica: N/A.
+        public ActionResult EnviarCorreoFormulario(Curso curso)
+        {
+            List<Usuario> usuarios = (from u in db.Usuario
+                                      select u).ToList();
+
+            List<Persona> personas = (from p in db.Persona
+                                      select p).ToList();
+
+            var matriculados = from m in db.Matricula
+                               where m.Sigla.Equals(curso.Sigla)
+                               select m;
+            foreach (var ma in matriculados)
+            {
+                Usuario usuario = new Usuario();
+                usuario = usuarios.Find(us => us.Cedula.Equals(ma.CedulaEstudiante));
+
+                Persona persona = new Persona();
+                persona = personas.Find(p => p.Cedula.Equals(ma.CedulaEstudiante));
+                string contenido = "<p>Estimado " + persona.Nombre1 + " " + persona.Apellido1 + ", se le solicita dedicar unos minutos de su tiempo para evaluar los cursos" +
+               " en los cuales se encuentra matriculado. Favor ingresar a  Opiniómetro@UCR</p> <b>";
+
+                // Se le envía al usuario el correo con la notificación del formulario 
+                EnviarCorreo(usuario.CorreoInstitucional, "Evaluación pendiente - Opiniómetro@UCR", contenido);
+            }
+            var modelo = new AsignarFormulariosViewModel
+            {
+                Ciclos = ObtenerCiclos("UC-023874"),
+                UnidadesAcademicas = ObtenerUnidadAcademica(2018, 2, "UC-023874"),
+                Carreras = ObtenerCarreras(2018, 2, "UC-023874"),
+                Grupos = ObtenerGrupos(2018, 2, "UC-023874", "SC - 01234", 255, "Programación 1", null),
+                Cursos = ObtenerCursos(2018,2, "UC-023874", "SC - 01234", null),
+                Formularios = ObtenerFormularios(),
+                Enfasis = ObtenerEnfasis(2018,2, "UC-023874", "SC - 01234")
+            };
+            return View("Index", modelo);
+        }
+     
+
+        [HttpPost]
+        public string EfectuarAsignaciones(string Grupos, string PeriodosIndicados)
+        {
+            string mensajes = "";
+            int numErrores = 0;
+            var FormulariosConPeriodos = JsonConvert.DeserializeObject<TipoPeriodosIndicados[]>(PeriodosIndicados);
+            var GruposEnLista = JsonConvert.DeserializeObject<Grupo[]>(Grupos);
+
+            DateTime ahora = DateTime.Now;
+
+            List<Tiene_Grupo_Formulario> asignaciones = new List<Tiene_Grupo_Formulario>();
+            foreach (var fcp in FormulariosConPeriodos)
+            {
+                DateTime inicioPeriodo = new DateTime(), finPeriodo = new DateTime();
+                bool fechaIEsCorrecta = DateTime.TryParseExact(fcp.FechaInicio, "yyyy-MM-ddThh:mm", CultureInfo.CurrentCulture, DateTimeStyles.None, out inicioPeriodo);
+                bool fechaFEsCorrecta = DateTime.TryParseExact(fcp.FechaFinal, "yyyy-MM-ddThh:mm", CultureInfo.CurrentCulture, DateTimeStyles.None, out finPeriodo);
+
+                //bool fechaIEsCorrecta = DateTime.TryParse(fcp.FechaInicio, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out inicioPeriodo);
+                //bool fechaFEsCorrecta = DateTime.TryParse(fcp.FechaFinal, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal, out finPeriodo);
+
+                if (fechaIEsCorrecta && fechaFEsCorrecta)
+                {
+                    //Debug.WriteLine("Fecha inicio: {0}\nFecha fin: {1}\n\n", inicioPeriodo.ToString(), finPeriodo.ToString());
+
+                    if (ahora < inicioPeriodo)
+                    {
+                        if (inicioPeriodo < finPeriodo)
+                        {
+
+                            if ((from fc in db.Fecha_Corte
+                                 where (fc.FechaInicio == inicioPeriodo && fc.FechaFinal == finPeriodo)
+                                 select fc).Count() == 0)
+                            {
+                                if (ModelState.IsValid)
+                                {
+                                    db.Fecha_Corte.Add(new Fecha_Corte { FechaInicio = inicioPeriodo, FechaFinal = finPeriodo });
+                                    db.SaveChanges();
+                                }
+                            }
+
+
+                            foreach (var g in GruposEnLista)
+                            {
+                                asignaciones.Add(new Tiene_Grupo_Formulario
+                                {
+                                    SiglaCurso = g.SiglaCurso,
+                                    Numero = g.Numero,
+                                    Anno = g.AnnoGrupo,
+                                    Ciclo = g.SemestreGrupo,
+                                    Codigo = fcp.CodigoForm,
+                                    FechaInicio = inicioPeriodo,
+                                    FechaFinal = finPeriodo
+                                });
+                            }
+                        }
+                        else // El periodo inicia después de que termina
+                        {
+                            ++numErrores;
+                            mensajes += "- El inicio del periodo para el formulario " + fcp.CodigoForm + " debe corresponder a una fecha anterior al final del mismo periodo.\n";
+                        }
+                    }
+                    else // Inicio del periodo NO es posterior a la fecha actual
+                    {
+                        ++numErrores;
+                        mensajes += "- El periodo para el formulario " + fcp.CodigoForm + " debe comenzar en una fecha posterior a la actual\n";
+                    }
+                }
+                else
+                {
+                    //Debug.Write("\n\nFecha incorrecta /\n\n");
+                    ++numErrores;
+                    mensajes += "- Ingrese correctamente el periodo de aplicación para el formulario " + fcp.CodigoForm + "\n";
+                }
+            }
+
+            if (numErrores > 0)
+            {
+                mensajes += "\nPor favor corrija lo indicado antes de realizar las asignaciones.\n";
+            }
+            else
+            { 
+                if (ModelState.IsValid)
+                {
+                    db.Tiene_Grupo_Formulario.AddRange(asignaciones);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    mensajes += "Hubo un error al guardar las asignaciones. Por favor contacte a soporte técnico.\n";
+                }
+            }
+
+            return JsonConvert.SerializeObject(mensajes == ""? null : mensajes);
         }
     }
 }

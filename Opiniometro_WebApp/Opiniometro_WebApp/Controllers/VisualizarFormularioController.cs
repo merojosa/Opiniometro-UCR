@@ -8,10 +8,12 @@ using System.Web;
 using System.Web.Mvc;
 using Opiniometro_WebApp.Models;
 using System.Data.Entity.Core.Objects;
+using System.Text;
 using System.Web.Helpers; //Para graficos, borrar despues
 
 namespace Opiniometro_WebApp.Controllers
 {
+    [Authorize]
     public class VisualizarFormularioController : Controller
     {
 
@@ -31,7 +33,6 @@ namespace Opiniometro_WebApp.Controllers
         // GET: VisualizarFormulario
         public ActionResult Index()
         {
-            ViewBag.CursoID = new SelectList(db.Curso, "Sigla", "Nombre");
             var semestres = (from sem in db.Ciclo_Lectivo select sem.Semestre).AsEnumerable().Distinct();
             ViewBag.SemestreId = new SelectList(semestres);
             var annos = (from ann in db.Ciclo_Lectivo select ann.Anno).AsEnumerable().Distinct();
@@ -39,23 +40,48 @@ namespace Opiniometro_WebApp.Controllers
 
             var grupos = (from grup in db.Grupo select grup.Numero).AsEnumerable().Distinct();
             ViewBag.GrupoID = new SelectList(grupos);
+            
+            IQueryable<Responde> formularios = from form in db.Responde select form;
+            List<Curso> cursosConFormularios = new List<Curso>();
+            foreach (var c in formularios)
+            {
+                Curso nuevo = db.Curso.Find(c.SiglaGrupoResp);
 
-            IQueryable<Formulario> formularios = from form in db.Formulario select form;
-            return View(formularios);
+                cursosConFormularios.Add(nuevo);
+            }
+            ViewBag.CursoID = new SelectList(cursosConFormularios.Distinct(), "Sigla", "Nombre");
+
+            List<Formulario> formulariosfiltrados = new List<Formulario>();
+            foreach (var f in formularios)
+            {
+                Formulario nuevo = db.Formulario.Find(f.CodigoFormularioResp);
+
+                formulariosfiltrados.Add(nuevo);
+            }
+            return View(formulariosfiltrados);
         }
 
         [HttpPost]
         public ActionResult Index(int? x)
         {
-            ViewBag.CursoID = new SelectList(db.Curso, "Sigla", "Nombre");
+            IQueryable<Responde> formularios = from form in db.Responde select form;
+            List<Formulario> formulariosfiltrados = new List<Formulario>();
+            List<Curso> cursosConFormularios = new List<Curso>();
+
+            foreach (var c in formularios)
+            {
+                Curso nuevo = db.Curso.Find(c.SiglaGrupoResp);
+
+                cursosConFormularios.Add(nuevo);
+            }
+
+            ViewBag.CursoID = new SelectList(cursosConFormularios.Distinct(), "Sigla", "Nombre");
             var semestres = (from sem in db.Ciclo_Lectivo select sem.Semestre).AsEnumerable().Distinct();
             ViewBag.SemestreId = new SelectList(semestres);
             var annos = (from ann in db.Ciclo_Lectivo select ann.Anno).AsEnumerable().Distinct();
             ViewBag.AnnoId = new SelectList(annos);
             var grupos = (from grup in db.Grupo select grup.Numero).AsEnumerable().Distinct();
             ViewBag.GrupoID = new SelectList(grupos);
-
-            IQueryable<Formulario> formulariosO = from form in db.Formulario select form;
 
             String selectcurso = Request.Form["selectcurso"];
             String selectsemestre = Request.Form["selectsemestre"];
@@ -63,25 +89,25 @@ namespace Opiniometro_WebApp.Controllers
             String selecgrupo = Request.Form["selecgrupo"];
             if (!String.IsNullOrEmpty(selectsemestre) || !String.IsNullOrEmpty(selectcurso) || !String.IsNullOrEmpty(selectanno) || !String.IsNullOrEmpty(selecgrupo))
             {
-                IQueryable<Responde> formularios = from form in db.Responde select form;
-
                 if (!String.IsNullOrEmpty(selectcurso))
                 {
                     formularios = formularios.Where(f => f.SiglaGrupoResp.Equals(selectcurso));
                 }
                 if (!String.IsNullOrEmpty(selectsemestre))
                 {
-                    formularios = formularios.Where(f => f.SemestreGrupoResp.Equals(Int32.Parse(selectsemestre)));
+                    byte semestre = byte.Parse(selectsemestre);
+                    formularios = formularios.Where(f => f.SemestreGrupoResp.Equals( semestre ));
                 }
                 if (!String.IsNullOrEmpty(selectanno))
                 {
-                    formularios = formularios.Where(f => f.AnnoGrupoResp.Equals(Int32.Parse(selectanno)));
+                    short anno = short.Parse(selectanno);
+                    formularios = formularios.Where(f => f.AnnoGrupoResp.Equals( anno ));
                 }
                 if (!String.IsNullOrEmpty(selecgrupo))
                 {
-                    formularios = formularios.Where(f => f.NumeroGrupoResp.Equals(Int32.Parse(selecgrupo)));
+                    byte grupo = byte.Parse(selecgrupo);
+                    formularios = formularios.Where(f => f.NumeroGrupoResp.Equals( grupo ));
                 }
-                List<Formulario> formulariosfiltrados = new List<Formulario>();
                 foreach (var f in formularios)
                 {
                     Formulario nuevo = db.Formulario.Find(f.CodigoFormularioResp);
@@ -92,7 +118,13 @@ namespace Opiniometro_WebApp.Controllers
             }
             else
             {
-                return View(formulariosO);
+                foreach (var f in formularios)
+                {
+                    Formulario nuevo = db.Formulario.Find(f.CodigoFormularioResp);
+
+                    formulariosfiltrados.Add(nuevo);
+                }
+                return View(formulariosfiltrados);
             }
         }
 
@@ -211,30 +243,146 @@ namespace Opiniometro_WebApp.Controllers
             return result;
         }
 
+       
+
         //EFE:Crea un gráfico con la información de los resultados en la base de datos.
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso,
-        public JsonResult GraficoPie(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
-        {//"131313"
-            var result = ObtenerCantidadRespuestasPorPregunta(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId).ToList();//ObtenerCantidadRespuestasPorPregunta  "PRE303", codigoFormulario, "100000002", 2017, 2, 1, "CI1330", itemId
-            //int tamanio = result.Count;
+        public JsonResult GraficoPie(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId, byte tipoPregunta)
+        {          
+            var result = ObtenerCantidadRespuestasPorPregunta(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId).ToList();
             List<object> x = new List<object>();
             List<object> y = new List<object>();
-            //string[] leyenda = new string[tamanio];
-            //int?[] cntResps = new int?[tamanio];
-            //int iter = 0;
-            foreach (var itemR in result)
+
+            List<int?> listaOrdenada = new List<int?>();
+            int size = 0;
+            double? mediana = 0;
+            double? tamanio = 0;
+            int counter = 0;
+            double? promedio = 0;
+            double? desviacion = 0;
+            double sumatoria = 0;
+            double actual = 0;
+
+            if (!Enumerable.Range(5, 6).Contains(tipoPregunta))
             {
-                //leyenda[iter] = itemR.Respuesta;
-                //cntResps[iter] = itemR.cntResp;
-                //iter++;
-                x.Add(itemR.Respuesta);
-                y.Add(itemR.cntResp);
+
+                var labels = db.SP_RecuperarEtiquetas(tipoPregunta, itemId).ToList();
+                bool encontrado;
+                
+                foreach (var label in labels)
+                {
+                    encontrado = false;
+                    x.Add(label);
+                    foreach (var resul in result)
+                    {
+                        if (resul.Respuesta == label)
+                        {
+                            y.Add(resul.cntResp);
+                            listaOrdenada.Add(resul.cntResp);
+                            tamanio = tamanio + listaOrdenada[counter];
+                            counter++;
+                            encontrado = true;
+                        }
+                    }
+                    if (encontrado == false)
+                    {
+                        y.Add(0);
+                        listaOrdenada.Add(0);
+                        tamanio = tamanio + listaOrdenada[counter];
+                        counter++;
+                    }
+                }
             }
-            List<object> lista = new List<object> { x, y };
+            else
+            {
+                var rango = db.SP_RecuperarEtiquetasEscalar(tipoPregunta, itemId).ToList();
+                int inicio = rango[0].Inicio;
+                int final = rango[0].Fin;
+                int incremento = rango[0].Incremento;
+                bool encontrado = false;
+                for (int i = inicio; i <= (final+1); i += incremento)
+                {
+                    encontrado = false;
+                    if (i == final + 1)
+                    {
+                        x.Add("No se/No Responde/No Aplica");
+                        foreach (var resul in result)
+                        {
+                            if (Int16.Parse(resul.Respuesta) == i)
+                            {
+                                encontrado = true;
+                                y.Add(resul.cntResp);
+                                listaOrdenada.Add(resul.cntResp);
+                                tamanio = tamanio + listaOrdenada[counter];
+                                counter++;
+                            }
+                        }
+                        if(encontrado == false)
+                        {
+                            y.Add(0);
+                            listaOrdenada.Add(0);
+                            tamanio = tamanio + listaOrdenada[counter];
+                            counter++;
+                        }
+                    }
+                    else
+                    {
+                        
+                        x.Add(i);
+                        foreach (var resul in result)
+                        {
+                            if (Int16.Parse(resul.Respuesta) == i)
+                            {
+                                encontrado = true;
+                                y.Add(resul.cntResp);
+                                listaOrdenada.Add(resul.cntResp);
+                                tamanio = tamanio + listaOrdenada[counter];
+                                counter++;
+                            }
+                        }
+                        if (encontrado == false)
+                        {
+                            y.Add(0);
+                            listaOrdenada.Add(0);
+                            tamanio = tamanio + listaOrdenada[counter];
+                            counter++;
+                        }
+                    }
+                }
+            }
+
+            listaOrdenada.Sort();
+            size = listaOrdenada.Count();
+
+            //Calcular el promedio
+
+            promedio = tamanio / size;
+
+            //Calcular la mediana
+
+            if (size % 2 == 0)
+            {
+                mediana = (listaOrdenada[(size / 2) - 1] + listaOrdenada[(size / 2)]) / 2;
+            }
+            else
+            {
+                mediana = listaOrdenada[(size / 2)];
+            }
+
+            //Calcular la desviacion estandar
+
+            for (int i = 0; i < size; i++)
+            {
+                actual = (double)listaOrdenada[i];
+                sumatoria = sumatoria + Math.Pow(actual - (double)mediana, 2);
+            }
+
+            desviacion = Math.Sqrt(sumatoria / size);
+
+            List<object> lista = new List<object> { x, y, promedio, mediana, desviacion};
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
-    /* Aun no esta en server.
         //EFE:Retorna las observaciones del item.
         //REQ:Que exista una conexion a la base de datos.
         //MOD:--
@@ -260,7 +408,7 @@ namespace Opiniometro_WebApp.Controllers
             foreach (var itemO in result)
             {
                 obs.Add(itemO.Observacion);
-                nom.Add(itemO.Nombre);
+                nom.Add(itemO.Nombre1);
                 ap1.Add(itemO.Apellido1);
                 ap2.Add(itemO.Apellido2);
             }
@@ -268,6 +416,23 @@ namespace Opiniometro_WebApp.Controllers
             List<object> observaciones = new List<object> { obs, nom, ap1, ap2 };
             return Json(observaciones, JsonRequestBehavior.AllowGet);
         }
-        */
+        
+        //EFE:Devuelve las preguntas de tipo texto libre.
+        //REQ:Que exista una conexion a la base de datos.
+        //MOD:--
+        public JsonResult ObtenerRespTexto(string codigoFormulario, string cedulaProfesor, short annoGrupo, byte semestreGrupo, byte numeroGrupo, string siglaCurso, string itemId)
+        {
+            var result = ObtenerCantidadRespuestasPorPregunta(codigoFormulario, cedulaProfesor, annoGrupo, semestreGrupo, numeroGrupo, siglaCurso, itemId);
+
+            List<object> respuestas = new List<object>();
+
+            foreach (var item in result)
+            {
+                respuestas.Add(item.Respuesta);
+            }
+
+            List<object> respuestasTexto = new List<object> { respuestas };
+            return Json(respuestasTexto, JsonRequestBehavior.AllowGet);
+        }
     }
 }

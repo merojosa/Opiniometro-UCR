@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Opiniometro_WebApp.Models;
+using System;
 
 namespace Opiniometro_WebApp.Models
 {
-    public class ElegirGrupoEditorViewModel
+    public class ElegirGrupoEditorViewModel : IEquatable<ElegirGrupoEditorViewModel>
     {
         // Atributo que salva si un grupo se encuentra seleccionado o no:
         public bool Seleccionado { get; set; }
@@ -30,6 +31,27 @@ namespace Opiniometro_WebApp.Models
         public ElegirGrupoEditorViewModel()
         {
             Profesores = new List<Profesor>();
+        }
+
+        public bool Equals(ElegirGrupoEditorViewModel otro)
+        {
+            if (this == null && otro == null)
+                return true;
+            else if (this == null || otro == null)
+                return false;
+            else if (this.Anno == otro.Anno
+                && this.Semestre == otro.Semestre
+                && this.SiglaCurso == otro.SiglaCurso
+                && this.Numero == otro.Numero)
+                return true;
+            else
+                return false;
+        }
+
+        public int GetHashCode(ElegirGrupoEditorViewModel gr)
+        {
+            int hCode = ((gr.Anno.GetHashCode() * 17 + gr.Semestre.GetHashCode()) * 17 + gr.Numero.GetHashCode()) * 17 + gr.SiglaCurso.GetHashCode();
+            return GetHashCode();
         }
     }
 }

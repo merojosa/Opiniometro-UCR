@@ -1,4 +1,4 @@
-﻿	-- Borrar todas las tuplas existentes en la base de datos para evitar repeticion de llaves primarias.
+﻿﻿	-- Borrar todas las tuplas existentes en la base de datos para evitar repeticion de llaves primarias.
 EXEC sp_MSForEachTable 'DISABLE TRIGGER ALL ON ?'
 GO
 EXEC sp_MSForEachTable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL'
@@ -357,6 +357,8 @@ GO
 
 IF OBJECT_ID('EditarPerfil') IS NOT NULL
 	DROP PROCEDURE EditarPerfil
+
+GO
 CREATE PROCEDURE EditarPerfil
 	@nombre varchar(30),
 	@nombreViejo varchar(30),
@@ -399,13 +401,25 @@ VALUES	('116720500', 'Jose Andrés', NULL,'Mejías', 'Rojas'),
 		('100000004', 'Maria', NULL, 'Fallas', 'Merdi'),
 		('117720912', 'Jorge', NULL, 'Solano', 'Carrillo'),
 		('236724501', 'Carolina', NULL, 'Gutierrez', 'Lozano'),
-		('123456789', 'Ortencia', NULL, 'Cañas', 'Griezman');
+		('123456789', 'Ortencia', NULL, 'Cañas', 'Griezman'),
+		('100000006', 'Lorena', NULL, 'Furcado', 'Desan'),
+		('100000007', 'Miguelito', NULL, 'Baptis', 'Risueño'),
+		('100000008', 'Guillermo', NULL, 'Loria', 'Apreciado'),
+		('100000009', 'Edgar', NULL, 'Mora', 'Mora');
 
 INSERT INTO Estudiante VALUES 
- ('116720500', 'B11111')
-,('115003456', 'B22222')
-,('117720910', 'B33333') 
-,('236724501', 'B44444');
+ ('116720500', 'B11111'),
+ ('115003456', 'B22222'),
+ ('117720910', 'B33333'),
+ ('236724501', 'B44444'),
+ ('100000003', 'B55555'),
+ ('100000005', 'B66666'),
+ ('100000004', 'B77777'),
+ --
+ ('100000006', 'B46666'),
+ ('100000007', 'B58888'),
+ ('100000008', 'B32222'),
+ ('100000009', 'B45555');
 
 --INSERT INTO Responde (ItemId,TituloSeccion, FechaRespuesta, CodigoFormularioResp, CedulaPersona, CedulaProfesor, AnnoGrupoResp, SemestreGrupoResp, NumeroGrupoResp, SiglaGrupoResp)
 --VALUES (3,'Titulo Seccion 1','8-12-1994','CodF01','123456789','987654321',54,01,21,'SG1234'),
@@ -525,6 +539,34 @@ VALUES ('CI1330', 100, 'SC-01234'),
 	   ('DE1001', 12, 'SC-89457'),
 	   ('DE2001', 12, 'SC-89457');
 
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('123456', 'Evaluacion Derecho 1')
+
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('987654', 'Historia Der. 1')
+
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('123789', 'Form. Investigacion')
+
+INSERT INTO Formulario(CodigoFormulario,Nombre)
+values('159753', 'Derecho Priv. 1')
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE1001',1,2019,1,'123456',18-06-19 ,28-06-19 )
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE2001',3,2019,1,'159753',18-06-19 ,28-06-19 )
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE1002',7,2019,1,'987654',18-06-19 ,28-06-19 )
+
+insert into Tiene_Grupo_Formulario(SiglaCurso,Numero,Anno,Ciclo,Codigo,FechaInicio,FechaFinal)
+values('DE1007',4,2019,1,'123789',18-06-19 ,28-06-19 )
+
+insert into Fecha_Corte(FechaInicio,FechaFinal)
+values (18-06-19, 28-06-19)
+
+
 --DROP PROCEDURE CursosSegunCarrera
 --Obtiene la lista de cursos que pertenecen a cierta carrera
 
@@ -573,6 +615,13 @@ WHERE C.Sigla IN (SELECT G.SiglaCurso
 				FROM Grupo G
 				WHERE G.AnnoGrupo = @anno)
 END
+GO
+
+-- Vista (SQL) de la tabla Imparte, para que pueda ser creada como entidad en el model
+CREATE VIEW Imparte_View
+AS
+SELECT *
+FROM Imparte
 GO
 
 
@@ -627,18 +676,18 @@ VALUES  ('PRE303', 'Sí', 1),
 		('PRE303', 'NS/NR', 3),
 		('PRE404', 'Sí', 1),
 		('PRE404', 'No', 2),
-		('PRE404', 'NS/NR', 3),
+		('PRE404', 'No se/No Responde/No Aplica', 3),
 		('PRE505', 'Primero', 1),
 		('PRE505', 'Segundo', 2),
 		('PRE505', 'Tercero', 3),
 		('PRE505', 'Cuarto', 4),
 		('PRE505', 'Quinto', 5),
 		('PRE505', 'Otro', 6),
-		('PRE505', 'NS/NR', 7),
+		('PRE505', 'No se/No Responde/No Aplica', 7),
 		('PRE606', 'No trabaja', 1),
 		('PRE606', 'Trabaja 20 horas semanales o menos', 2),
 		('PRE606', 'Trabaja más de 20 horas semanales', 3),
-		('PRE606', 'NS/NR', 4);
+		('PRE606', 'No se/No Responde/No Aplica', 4);
 
 --Item-Escalar
 INSERT INTO Escalar (ItemId, Inicio, Fin, Incremento, IsaEstrella)
@@ -660,14 +709,14 @@ VALUES	('PRE909', 'Interesante', 1),
 		('PRE909', 'Poco Práctico', 4),
 		('PRE909', 'Fácil', 5),
 		('PRE909', 'Complicado', 6),
-		('PRE909', 'NS/NR', 7),
+		('PRE909', 'No se/No Responde/No Aplica', 7),
 		('PRE110', 'Evaluaciones más difíciles que la materia vista en clase', 1),
 		('PRE110', 'Evaluaciones más fáciles que la materia vista en clase', 2),
 		('PRE110', 'Evaluaciones con difícultad similar que la materia vista en clase', 3),
 		('PRE110', 'Evaluaciones muy relacionadas con la materia vista en clase', 4),
 		('PRE110', 'Evaluaciones poco relacionadas con la materia vista en clase', 5),
 		('PRE110', 'Evaluaciones tienen cierta relación con la materia vista en clase', 6),
-		('PRE110', 'NS/NR', 7);
+		('PRE110', 'No se/No Responde/No Aplica', 7);
 
 --Seccion
 INSERT INTO Seccion (Titulo, Descripcion)
@@ -693,7 +742,12 @@ VALUES  ('2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 1
 		('2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 1),
 		('2017-3-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 1),
 		('2017-3-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 1),
-		('2017-3-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 1);
+		('2017-3-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 1),
+		--
+		('2017-3-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 1),
+		('2017-4-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 1),
+		('2017-5-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 1),
+		('2017-4-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 1);
 
  --Conformado_Item_Sec_Form
 INSERT INTO Conformado_Item_Sec_Form (ItemId, CodigoFormulario, TituloSeccion, NombreFormulario, Orden_Seccion, Orden_Item)
@@ -717,27 +771,89 @@ VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-
 		--Segunda evaluacion
 		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'No', 'No fue necesario reponer clases'),
 		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Revisamos la carta del estudiante en la primera semana'),
-		('PRE101', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '', 'No estoy seguro de si en el ambiente laboral me servira la materia'),
-		('PRE202', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '', 'La profesora logro que las clases fueran muy entretenidas y dinámicas'),
+		('PRE101', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'No estoy seguro de si en el ambiente laboral me servira la materia', ''),
+		('PRE202', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'La profesora logro que las clases fueran muy entretenidas y dinámicas', ''),
 		--Tercera evaluacion
 		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Me repuso una clase a la que falte'),
 		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Sí se reviso'),
-		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Entretenido'),
-		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '', 'Muy buena profesora'),
-
+		('PRE101', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Entretenido', ''),
+		('PRE202', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
+		--
+		--Cuarta evaluacion
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Sí se reviso'),
+		('PRE101', 'Opinion general del curso', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Bastante interesante', ''),
+		('PRE202', 'Opinion general del curso', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profe', ''),
+		--Quinta evaluacion
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Sí se reviso'),
+		('PRE101', 'Opinion general del curso', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Mucho que investigar y poca guía', ''),
+		('PRE202', 'Opinion general del curso', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Preferiria que de más ejemplos de como hacer las cosas', ''),
+		--Sexta evaluacion
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'No', ''),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'No', 'No se envio la carta'),
+		('PRE101', 'Opinion general del curso', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Fácil y entretenido', ''),
+		('PRE202', 'Opinion general del curso', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
+		--Septima evaluacion
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Sí', ''),
+		('PRE101', 'Opinion general del curso', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Entretenido', ''),
+		('PRE202', 'Opinion general del curso', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
+		--Octava evaluacion
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Sí', 'Sí la revisamos'),
+		('PRE101', 'Opinion general del curso', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Entretenido', ''),
+		('PRE202', 'Opinion general del curso', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
+		--Novena evaluacion
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
+		('PRE101', 'Opinion general del curso', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Entretenido', ''),
+		('PRE202', 'Opinion general del curso', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
+		--Decima evaluacion
+		('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'No se/No Responde/No Aplica', ''),
+		('PRE404', 'Evaluación de aspectos reglamentarios del profesor', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Sí', ''),
+		('PRE101', 'Opinion general del curso', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Entretenido', ''),
+		('PRE202', 'Opinion general del curso', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Muy buena profesora', ''),
+		--
 		--Agregado
 		--Cuarta Unica
 		('PRE505', 'Información del o la estudiante', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Primero', ''),
-		('PRE606', 'Información del o la estudiante', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'No Trabaja', ''),
 		('PRE505', 'Información del o la estudiante', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Segundo', ''),
 		('PRE505', 'Información del o la estudiante', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Tercero', ''),
+		--
+		('PRE505', 'Información del o la estudiante', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Tercero', ''),
+		('PRE505', 'Información del o la estudiante', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Segunda', ''),
+		('PRE505', 'Información del o la estudiante', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Segunda', ''),
+		('PRE505', 'Información del o la estudiante', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Tercero', ''),
+		('PRE505', 'Información del o la estudiante', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Tercero', ''),
+		('PRE505', 'Información del o la estudiante', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Cuarto', ''),
+		('PRE505', 'Información del o la estudiante', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Cuarto', ''),
+		
+		--
+		('PRE606', 'Información del o la estudiante', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'No Trabaja', ''),
 		('PRE606', 'Información del o la estudiante', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja mas de 20 horas semanales', ''),
 		('PRE606', 'Información del o la estudiante', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja 20 horas semanales o menos', ''),
+		--
+		('PRE606', 'Información del o la estudiante', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'No Trabaja', ''),
+		('PRE606', 'Información del o la estudiante', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja 20 horas semanales o menos', ''),
+		('PRE606', 'Información del o la estudiante', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'No Trabaja', ''),
+		('PRE606', 'Información del o la estudiante', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja 20 horas semanales o menos', ''),
+		('PRE606', 'Información del o la estudiante', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja 20 horas semanales o menos', ''),
+		('PRE606', 'Información del o la estudiante', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Trabaja mas de 20 horas semanales', ''),
+		('PRE606', 'Información del o la estudiante', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'No Trabaja', ''),
 		--Escalar 5 y 10
 		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', '5', 'Soy un sapazo'),
 		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', '2', 'Me da pereza estudiar'),
 		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '4', 'Siempre le pongo'),
 		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-3-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', '2', 'Sí se reviso'),
+		--
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', '2', 'Sí se reviso'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', '4', 'Sí se reviso'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', '4', 'Sí se reviso'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', '5', 'Sí se reviso'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', '3', 'Sí se reviso'),
+		('PRE707', 'Evaluacion de la participacion estudiantil', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', '4', 'Sí se reviso'),
+		
 		/*'Demasiado'
 		'Poco'
 		'A veces'*/
@@ -748,6 +864,12 @@ VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-
 		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', '1', 'Demasiado trabajo'),
 		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', '7', 'Me encanta la materia'),
 		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-3-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', '5', 'Mucho que investigar'),
+		--
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', '8', 'Me encanta la materia'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', '9', 'Me encanta la materia'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', '8', 'Me encanta la materia'),
+		('PRE808', 'Tematicas transversales de la Universidad de Costa Rica', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', '5', 'Mucho que investigar'),
+		
 		--Multiple
 		('PRE909', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Soy un sapazo'),
 		('PRE909', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Poco Práctico', 'No me quedo claro la metodología'),
@@ -755,13 +877,56 @@ VALUES  ('PRE303', 'Evaluación de aspectos reglamentarios del profesor', '2017-
 		('PRE909', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Práctico', 'Soy un sapazo'),
 		('PRE909', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Fácil', 'No me quedo claro la metodología'),
 		('PRE909', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
+		--
+		('PRE909', 'Opinion general del curso', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Fácil', 'Fue una materia en la que me gustaría especializarme'),
+		
+		('PRE909', 'Opinion general del curso', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Práctico', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Complicado', 'Fue una materia en la que me gustaría especializarme'),
+		
+		('PRE909', 'Opinion general del curso', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Poco Práctico', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Fácil', 'Fue una materia en la que me gustaría especializarme'),
+		
+		('PRE909', 'Opinion general del curso', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Complicado', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
+		
+		('PRE909', 'Opinion general del curso', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Complicado', 'Fue una materia en la que me gustaría especializarme'),
+		
+		('PRE909', 'Opinion general del curso', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Interesante', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Práctico', 'Fue una materia en la que me gustaría especializarme'),
+		
+		('PRE909', 'Opinion general del curso', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Aburrido', 'Fue una materia en la que me gustaría especializarme'),
+		('PRE909', 'Opinion general del curso', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Poco Práctico', 'Fue una materia en la que me gustaría especializarme'),
 
+		--
 		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
 		('PRE110', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones más fáciles que la materia vista en clase', 'Con prestar atención en clase me parecion suficiente'),
 		('PRE110', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Preguntando bastante en consulta se sale bien'),
 		('PRE110', 'Opinion general del curso', '2017-4-18', '131313', '100000005', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
 		('PRE110', 'Opinion general del curso', '2017-3-6', '131313', '100000004', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones tienen cierta relación con la materia vista en clase', 'Con prestar atención en clase me parecion suficiente'),
-		('PRE110', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Preguntando bastante en consulta se sale bien');
+		('PRE110', 'Opinion general del curso', '2017-4-5', '131313', '100000003', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Preguntando bastante en consulta se sale bien'),
+		--
+		('PRE110', 'Opinion general del curso', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-03-18', '131313', '100000006', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		
+		('PRE110', 'Opinion general del curso', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones más fáciles que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-04-21', '131313', '100000007', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones tienen cierta relación con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		
+		('PRE110', 'Opinion general del curso', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones más difíciles que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-05-20', '131313', '100000008', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		
+		('PRE110', 'Opinion general del curso', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-04-02', '131313', '100000009', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		
+		('PRE110', 'Opinion general del curso', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-03-20', '131313', '117720912', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		
+		('PRE110', 'Opinion general del curso', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones más difíciles que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-03-20', '131313', '236724501', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones tienen cierta relación con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		
+		('PRE110', 'Opinion general del curso', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones muy relacionadas con la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones'),
+		('PRE110', 'Opinion general del curso', '2017-03-21', '131313', '123456789', '100000002', 2017, 2, 1, 'CI1330', 'Evaluaciones con difícultad similar que la materia vista en clase', 'Leyendo la materia y prácticando se consigue salir bien en las evaluaciones');
 
 GO
 IF OBJECT_ID('SP_ContarRespuestasPorGrupo') IS NOT NULL
@@ -781,11 +946,16 @@ CREATE PROCEDURE SP_ContarRespuestasPorGrupo
 	@itemId				NVARCHAR(10)
 AS
 BEGIN
+	SET IMPLICIT_TRANSACTIONS OFF;
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+	BEGIN TRANSACTION contarRespuestas
 	SET NOCOUNT ON
-	SELECT e.Respuesta, COUNT(e.Respuesta) AS cntResp
-	FROM Responde as e
-	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
-	GROUP BY e.CodigoFormularioResp, e.CedulaProfesor, e.AnnoGrupoResp, e.SemestreGrupoResp, e.NumeroGrupoResp, e.SiglaGrupoResp, e.ItemId, e.Respuesta
+		SELECT e.Respuesta, COUNT(e.Respuesta) AS cntResp
+		FROM Responde as e
+		WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
+		GROUP BY e.CodigoFormularioResp, e.CedulaProfesor, e.AnnoGrupoResp, e.SemestreGrupoResp, e.NumeroGrupoResp, e.SiglaGrupoResp, e.ItemId, e.Respuesta
+	COMMIT TRANSACTION contarRespuestas
+	SET IMPLICIT_TRANSACTIONS ON;
 END
 GO
 
@@ -807,10 +977,13 @@ CREATE PROCEDURE SP_DevolverRespuestasPorGrupo
 	@itemId				NVARCHAR(10)
 AS
 BEGIN
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED
+	BEGIN TRANSACTION tc1
 	SET NOCOUNT ON
 	SELECT e.Respuesta
 	FROM Responde as e
 	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId
+	COMMIT TRANSACTION tc1
 END
 GO
 
@@ -832,13 +1005,81 @@ CREATE PROCEDURE SP_DevolverObservacionesPorGrupo
 	@itemId NVARCHAR(10)
 AS
 BEGIN
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED
+	BEGIN TRANSACTION tc2
 	SET NOCOUNT ON
-	SELECT e.Observacion, a.Nombre, a.Apellido1, a.Apellido2
+	SELECT e.Observacion, a.Nombre1, a.Apellido1, a.Apellido2
 	FROM Responde as e, Persona as a
 	WHERE e.CodigoFormularioResp= @codigoFormulario AND e.CedulaProfesor= @cedulaProfesor AND e.AnnoGrupoResp= @annoGrupo AND e.SemestreGrupoResp= @semestreGrupo AND e.NumeroGrupoResp= @numeroGrupo AND e.SiglaGrupoResp= @siglaCurso AND e.ItemId= @itemId AND e.CedulaPersona = a.Cedula
+	COMMIT TRANSACTION tc2
 END
 GO
 
+IF OBJECT_ID('SP_RecuperarEtiquetas') IS NOT NULL
+	DROP PROCEDURE [dbo].[SP_RecuperarEtiquetas]
+
+--REQ: La base de datos creada.
+--EFE: Retorna los Labels asociados a una pregunta en especifico
+--MOD: --
+GO
+CREATE PROCEDURE [dbo].[SP_RecuperarEtiquetas]
+	@tipoPregunta INT,
+	@idPregunta NVARCHAR (10)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
+	BEGIN TRANSACTION t1
+		IF @tipoPregunta = 2 --seleccion unica
+			BEGIN
+				SELECT	e.OpcionRespuesta AS Label
+				FROM	Opciones_De_Respuestas_Seleccion_Unica AS e
+				WHERE	e.ItemId = @idPregunta
+			END
+		ELSE IF @tipoPregunta = 3 --like dislike(si/no)
+			BEGIN
+				SELECT	e.OpcionRespuesta AS Label
+				FROM	Opciones_De_Respuestas_Seleccion_Unica AS e
+				WHERE	e.ItemId = @idPregunta
+			END
+		ELSE IF @tipoPregunta = 4 --seleccion multiple
+			BEGIN	
+				SELECT	e.OpcionRespuesta AS Label
+				FROM	Opciones_De_Respuestas_Seleccion_Multiple AS e
+				WHERE	e.ItemID = @idPregunta
+			END
+	COMMIT TRANSACTION t1
+END
+GO
+
+IF OBJECT_ID('SP_RecuperarEtiquetasEscalar') IS NOT NULL
+	DROP PROCEDURE [dbo].[SP_RecuperarEtiquetasEscalar]
+GO
+CREATE PROCEDURE [dbo].[SP_RecuperarEtiquetasEscalar]
+	@tipoPregunta INT,
+	@idPregunta NVARCHAR (10)
+AS
+BEGIN
+	SET IMPLICIT_TRANSACTIONS OFF;
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+	BEGIN TRANSACTION recuperarEscala
+	SET NOCOUNT ON
+		IF @tipoPregunta = 5 --Escalar
+			BEGIN
+			SELECT	e.Inicio,e.Fin,e.Incremento
+			FROM	Escalar AS e
+			WHERE	e.ItemId = @idPregunta
+		END
+		ELSE IF @tipoPregunta = 6 --Escalar Estrella
+			BEGIN
+			SELECT	e.Inicio,e.Fin, e.Incremento
+			FROM	Escalar AS e 
+			WHERE	e.ItemId = @idPregunta
+		END
+	COMMIT TRANSACTION recuperarEscala
+	SET IMPLICIT_TRANSACTIONS ON;
+END
+GO
 
 --Permisos
 INSERT INTO Permiso
