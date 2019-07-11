@@ -48,5 +48,13 @@ namespace Opiniometro_WebApp.Models
         public string Titulo_Seccion { get; set; }
     }
 
+    public class CopiarSeccion
+    {
+        public List<Conformado_For_Sec> Conformado_For_Secs { get; set; }
+
+        public List<Formulario> Formularios { get; set; }
+
+        //public CopiarSeccionModel
+    }
 
 }
