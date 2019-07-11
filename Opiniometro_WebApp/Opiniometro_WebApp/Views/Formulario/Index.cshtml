@@ -12,7 +12,7 @@
 <p>
     <input type="button" value="Crear Nuevo Formulario" class="btn btn-secondary" id="botonNuevaSeccion" onclick="accionBotonCrearNueva()" />
 </p>
-<table class="table">
+<table class="table" >
     <tr>
         <th>
             @Html.Label("Código Formulario")
@@ -39,7 +39,26 @@
                 @*<input type="button" value="Asignar preguntas" class="btn btn-secondary" id="botonNuevaSeccion" onclick="accionBotonAsignarPregunta()"/>*@
 
                 @*@Html.ActionLink("Vista previa", "VistaFormularioVParcial", "CrearFormularo", new { codForm = item.CodigoFormulario }, new { @class = "btn btn-default" })*@
+                <button id="VistaPrevia" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalVistaPrevia"> Vista Previa </button>
 
+                <div class="modal fade" id="modalVistaPrevia" tabindex="-1" role="dialog" aria-labelledby="modalVistaPrevia" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalVistaPrevia"> <centered><h1> Vista previa </h1> </centered></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                @Html.Action("VistaFormularioVParcial", new { CodForm = item.CodigoFormulario})
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @Html.ActionLink("Asignar Preguntas", "AsignarPreguntas", "CrearFormulario", new { codForm = item.CodigoFormulario }, new { @class = "btn btn-default" })
                 @*@Html.ActionLink("Details", "Details", new { id=item.CodigoFormulario }) |*@
                 @*@Html.ActionLink("Delete", "Delete", new { id=item.CodigoFormulario })*@
@@ -48,6 +67,7 @@
     }
 
 </table>
+
 
 @* This code is used to navigate on the pages *@
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
