@@ -101,9 +101,34 @@ namespace Opiniometro_WebApp.Controllers
         [HttpPost]
         public PartialViewResult CopiarSeccion(CopiarSeccionModel copiarSeccion)
         {
-            db.SP_CopiarSeccion(copiarSeccion.Cod_Form_Origen, copiarSeccion.Titulo_Seccion, copiarSeccion.Cod_Form_Dest);
+            if (copiarSeccion.Cod_Form_Origen != null && copiarSeccion.Titulo_Seccion != null)
+            {
+                List<Conformado_Item_Sec_Form> conformado = db.Conformado_Item_Sec_Form.Where(m => m.CodigoFormulario == copiarSeccion.Cod_Form_Dest
+                                                                && m.TituloSeccion == copiarSeccion.Titulo_Seccion).ToList();
+                if (conformado.Count == 0)
+                {
+                    conformado = db.Conformado_Item_Sec_Form.Where(m => m.CodigoFormulario == copiarSeccion.Cod_Form_Origen
+                                                                && m.TituloSeccion == copiarSeccion.Titulo_Seccion).ToList();
+                    if (conformado.Count != 0)
+                    {
+                        db.SP_CopiarSeccion(copiarSeccion.Cod_Form_Origen, copiarSeccion.Titulo_Seccion, copiarSeccion.Cod_Form_Dest);
 
+                        List<Conformado_Item_Sec_Form> conformados =
+                          db.Conformado_Item_Sec_Form
+                          .Include("Item")
+                            .Where(m => m.CodigoFormulario == copiarSeccion.Cod_Form_Dest && m.TituloSeccion == copiarSeccion.Titulo_Seccion)
+                            .OrderBy(m => m.Orden_Item)
+                            .ToList();
+
+                        return PartialView("ConformadoVParcial", conformados);
+                    }
+                }
+                else return null;
+
+            }
+            else return null;
             return null;
+     
         }
 
         [HttpPost]
@@ -114,7 +139,7 @@ namespace Opiniometro_WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                if (conformado.ItemId != null || conformado.TituloSeccion != null)
+                if (conformado.ItemId != null && conformado.TituloSeccion != null)
                 {
                     Conformado_For_Sec conf_for_sec = new Conformado_For_Sec();
                     conf_for_sec.CodigoFormulario = conformado.CodigoFormulario; conf_for_sec.TituloSeccion = conformado.TituloSeccion;
