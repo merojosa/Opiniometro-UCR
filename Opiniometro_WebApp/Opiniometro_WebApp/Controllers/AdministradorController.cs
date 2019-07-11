@@ -580,7 +580,16 @@ namespace Opiniometro_WebApp.Controllers
             
             filaNueva["Cedula"] = filaAInsertar["Cedula"];
             filaNueva["Nombre1"] = filaAInsertar["Nombre1"];
-            filaNueva["Nombre2"] = filaAInsertar["Nombre2"];
+
+            if (filaAInsertar["Nombre2"].ToString().IsEmpty())
+            {
+                filaNueva["Nombre2"] = null;
+            }
+            else
+            {
+                filaNueva["Nombre2"] = filaAInsertar["Nombre2"];
+            }
+            
             filaNueva["Apellido1"] = filaAInsertar["Apellido1"];
             filaNueva["Apellido2"] = filaAInsertar["Apellido2"];
             
@@ -595,13 +604,13 @@ namespace Opiniometro_WebApp.Controllers
             DataRow filaNueva = usuarioBD.NewRow();
             filaNueva["CorreoInstitucional"] = filaAInsertar["CorreoInstitucional"];
 
-
-
-
+            /*UTILICE COMO CONTRASENA PARA NUEVOS USUARIOS: hjjaadbegd */
             //Insercion de un usuario requiere que tenga un contrasena cifrada con un guid
-            string contrasenaRandom = GenerarContrasenaRandom(10, null);
-            Guid guid = ObtenerIdUnico();
-            byte[] resultadoHash;
+            //string contrasenaRandom = GenerarContrasenaRandom(10, null);
+            Guid guid = Guid.Parse("db8f24c976a54db786a8e40b82fef13a");//ObtenerIdUnico();
+            //string contrasenaHash = "坨毹ῡ仹舱眿띫囌譝퐌廒�严塝㋢뜌⁥廦㶸㼒헑숕呭ᾋ턁✬餉";
+            string contrasenaHash = "坨毹ῡ仹舱眿띫囌譝퐌廒�严塝㋢뜌⁥廦㶸㼒헑숕呭ᾋ턁✬餉誼ȸ";
+            //byte[] resultadoHash;
             /*using (SqlConnection conexionBD = new SqlConnection(hileraConexion))
             {
                 conexionBD.Open();
@@ -617,21 +626,41 @@ namespace Opiniometro_WebApp.Controllers
             */
 
 
-            ObjectParameter contrasenaHash = new ObjectParameter("contrasenaHash", typeof(SqlBinary));
-            db.SP_GenerarContrasenaHash(guid.ToString().Substring(0,36), contrasenaRandom, contrasenaHash);
-            //string contrasenaHash = GenerarContrasenaCifrada(contrasenaRandom += guid.ToString().Substring(0, 36));
+            //ObjectParameter contrasenaHash = new ObjectParameter("contrasenaHash", typeof(String));
+            //byte[] guidBytes = Encoding.Unicode.GetBytes(guid.ToString().ToCharArray());
+            //byte[] contrasenaRandomBytes = Encoding.Unicode.GetBytes(contrasenaRandom.ToCharArray());
+
+            //db.SP_GenerarContrasenaHash(guid.ToString(), contrasenaRandom, contrasenaHash);
+            //db.SP_GenerarContrasenaHash(Encoding.Unicode.GetString(guidBytes), Encoding.Unicode.GetString(contrasenaRandomBytes), contrasenaHash);
+            //string contrasenaHash = GenerarContrasenaCifrada(contrasenaRandom += guid.ToString());
             //SqlChars chars = new SqlChars((char[])contrasenaHash.Value);
             //SqlChars chars = new SqlChars(contrasenaHash.ToCharArray());
             //string contrasenaString = Encoding.Unicode.GetString(contrasenaCifrada, 0, contrasenaCifrada.Length);
             //SqlBinary datosCifrados = (SqlBinary)contrasenaHash.Value;
             //string contrasenaCifrada = Convert.ToString(contrasenaHash.Value);
-            resultadoHash = (byte[])contrasenaHash.Value;
-            string contrasenaCifrada = resultadoHash.ToString();
-            filaNueva["Contrasena"] = contrasenaCifrada; //contrasenaHash;//contrasenaHash.Substring(0,50);//
+            //resultadoHash = (byte[])contrasenaHash.Value;
+            //string contrasenaCifrada = String.Empty;
+            /*for (int i = 0; i < resultadoHash.Length; ++i)
+            {
+                //contrasenaCifrada += (char)resultadoHash[i];
+               
+            }*/
+            //contrasenaCifrada = (string) contrasenaHash.Value;
+            /*StringBuilder sb = new StringBuilder();
+            foreach (byte b in resultadoHash)
+            {
+                sb.Append(b.ToString("X2"));
+            }*/
+
+            //string passwd = sb.ToString();
+            //contrasenaCifrada = Encoding.Unicode.GetString(resultadoHash, 0, resultadoHash.Length);
+            //string contrasenaCifrada = resultadoHash.ToString();
+            filaNueva["Contrasena"] = contrasenaHash; //contrasenaHash;//contrasenaHash.Substring(0,50);//
             filaNueva["Activo"] = true;
             filaNueva["Cedula"] = filaAInsertar["Cedula"];
             //filaNueva["id"] = new SqlGuid(guid.ToString());
             filaNueva["Id"] = guid;
+            filaNueva["RecuperarContrasenna"] = false;
             usuarioBD.Rows.Add(filaNueva);
             usuarioBD.AcceptChanges();
             
@@ -695,9 +724,8 @@ namespace Opiniometro_WebApp.Controllers
                 datosCifrados = sha.ComputeHash(datosCrudos);
                 
             }
-            string base64 = System.Convert.ToBase64String(datosCifrados);
-            byte[] base64bytes = System.Convert.FromBase64String(base64);
-            return Encoding.Unicode.GetString(base64bytes, 0, base64bytes.Length);
+            
+            return Encoding.Unicode.GetString(datosCifrados, 0, datosCifrados.Length);
             //return System.Convert.ToBase64String(datosCifrados);
             
             //Encoding.Unicode.GetString()
@@ -733,7 +761,7 @@ namespace Opiniometro_WebApp.Controllers
         private Guid ObtenerIdUnico()
         {
             //return Guid.NewGuid();
-            return Guid.Parse("db8f24c9-76a5-4db7-86a8-e40b82fef13a");
+            return Guid.Parse("db8f24c976a54db786a8e40b82fef13a");
         }
         /*
          * EFECTO: Realiza una insercion en bloque en una tabla de base de datos.
@@ -742,8 +770,11 @@ namespace Opiniometro_WebApp.Controllers
          */
         private void InsercionEnBloque(DataTable tablaAInsertar)
         {
-            //string hileraConexion = ConfigurationManager.ConnectionStrings["Opiniometro_DatosEntities"].ConnectionString;
+
+            //HILERA SERVIDOR UCR
             //string hileraConexion = "data source=10.1.4.55;initial catalog=Opiniometro;persist security info=True;user id=DeveloperOp;password=devop2019;multipleactiveresultsets=True;application name=EntityFramework&quot;";
+
+            //HILERA LOCAL
             string hileraConexion =
                 "data source=(localdb)\\ProjectsV13;initial catalog=Opiniometro_Datos;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;";
             using (SqlConnection conexionBD = new SqlConnection(hileraConexion))
@@ -819,6 +850,7 @@ namespace Opiniometro_WebApp.Controllers
                     insercionEnBloque.ColumnMappings.Add("Activo", "Activo");
                     insercionEnBloque.ColumnMappings.Add("Cedula", "Cedula");
                     insercionEnBloque.ColumnMappings.Add("Id", "Id");
+                    insercionEnBloque.ColumnMappings.Add("RecuperarContrasenna", "RecuperarContrasenna");
                 }
                 break;
                 case "Estudiante":

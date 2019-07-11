@@ -26,7 +26,7 @@
         <span style="color: green">@ViewBag.Message</span>
     }
 
-@if (Model != null)
+@if (Model != null && Model.Rows.Count > 0)
 {
     <table class="table">
         <thead>
