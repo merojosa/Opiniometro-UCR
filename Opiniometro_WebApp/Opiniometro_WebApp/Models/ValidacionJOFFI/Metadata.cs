@@ -203,6 +203,9 @@ namespace Opiniometro_WebApp.Models
 
         [Required]
         public System.Guid Id;
+
+
+        public bool RecuperarContrasenna;
     }
 
     public class EstudianteMetadata

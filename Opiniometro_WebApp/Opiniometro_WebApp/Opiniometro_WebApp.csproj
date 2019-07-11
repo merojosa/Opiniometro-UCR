@@ -19,10 +19,8 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication>
-    </IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>
-    </IISExpressWindowsAuthentication>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
@@ -232,9 +230,6 @@
     <Compile Include="Models\Ciclo_Lectivo.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Conformado_For_Sec.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Conformado_Item_Sec_Form.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
@@ -255,7 +250,9 @@
     <Compile Include="Models\C__RefactorLog.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DatosFormulario.cs" />
+    <Compile Include="Models\DatosEstudiante_Result.cs">
+      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DatosProvisionados.cs" />
     <Compile Include="Models\EditarPerfil.cs" />
     <Compile Include="Models\Empadronado.cs">
@@ -361,9 +358,6 @@
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Opiniometro_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>Opiniometro_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_ObtenerPermisosUsuario_Result.cs">
@@ -520,7 +514,7 @@
     <Content Include="Views\Seleccion_Unica\Details.cshtml" />
     <Content Include="Views\Seleccion_Unica\Edit.cshtml" />
     <Content Include="Views\Seleccion_Unica\Index.cshtml" />
-    <Content Include="Views\Administrador\CargarArchivo.cshtml" />
+    <Content Include="Views\Administrador\CargarUsuarios.cshtml" />
     <Content Include="Views\Administrador\Index.cshtml" />
     <Content Include="Views\Categoria\Create.cshtml" />
     <Content Include="Views\Categoria\Delete.cshtml" />

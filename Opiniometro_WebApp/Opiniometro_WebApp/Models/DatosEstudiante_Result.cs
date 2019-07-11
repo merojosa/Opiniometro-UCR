@@ -11,9 +11,10 @@ namespace Opiniometro_WebApp.Models
 {
     using System;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class DatosEstudiante_Result
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public string Nombre_Completo { get; set; }
+        public string Carne { get; set; }
+        public string Cedula { get; set; }
     }
 }
