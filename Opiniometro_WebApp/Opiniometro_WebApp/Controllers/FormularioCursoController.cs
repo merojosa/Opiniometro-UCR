@@ -188,45 +188,24 @@ namespace Opiniometro_WebApp.Controllers
             return secciones;
         }
 
-        public void GuardarRespuestas (string CedulaEstudiante, string Grupo, string CodigoFormulario, string Respuestas)
+        public void GuardarRespuestas (string CedulaEstudiante, string CedulaProfesor, string Grupo, string CodigoFormulario, string Respuestas)
         {
-            Debug.WriteLine("\n\nGrupo: \"" + Grupo + "\"\n\n");
+            //Debug.WriteLine("\n\nGrupo: \"" + Grupo + "\"\n\n");
             var cedulaEst = JsonConvert.DeserializeObject<string>(CedulaEstudiante);
-            var grupoEval = JsonConvert.DeserializeObject<Grupo>(Grupo);
+            var cedulaProf = JsonConvert.DeserializeObject<string>(CedulaProfesor);
+            var grupoParcial = JsonConvert.DeserializeAnonymousType(Grupo, new { Anno = "", Semestre = "", SiglaCurso = "", NumeroGrupo = ""});
+            var grupoEval = new Grupo
+            {
+                AnnoGrupo = Convert.ToInt16(grupoParcial.Anno),
+                SemestreGrupo = Convert.ToByte(grupoParcial.Semestre),
+                SiglaCurso = grupoParcial.SiglaCurso,
+                Numero = Convert.ToByte(grupoParcial.NumeroGrupo)
+            };
             var codigoF = JsonConvert.DeserializeObject<string>(CodigoFormulario);
             var fecha = DateTime.Now;
             var listaRespuestas = JsonConvert.DeserializeObject<RespuestaModel[]>(Respuestas);
 
-            /*if(grupoEval.Profesor.Count < 1)
-            {
-                return;
-            }
-            var cedulaProf = grupoEval.Profesor.ElementAt(0).CedulaProfesor;*/
-            var listaForms = from g in db.Grupo
-                               where grupoEval.AnnoGrupo == g.AnnoGrupo && grupoEval.SemestreGrupo == g.SemestreGrupo && grupoEval.SiglaCurso == g.SiglaCurso && grupoEval.Numero == g.Numero 
-                               select g;
-            if (listaForms.Count() < 1)
-            {
-                Debug.WriteLine("\n\n\n\n\n\nAIUDAAA");
-                Debug.WriteLine(grupoEval.AnnoGrupo + " " + grupoEval.SemestreGrupo + " " + grupoEval.SiglaCurso + " " + grupoEval.Numero + "\n\n\n\n\n");
-                return;
-            }
-            var cedulaProf = listaForms.ElementAt(0).Profesor.ElementAt(0).CedulaProfesor;
-
-            Debug.WriteLine("\n\nEstudiante: " + cedulaEst + "\nProfesor: " + cedulaProf + "\nGrupo: " + grupoEval.AnnoGrupo + " " + grupoEval.SemestreGrupo + " " + grupoEval.SiglaCurso + " " + grupoEval.Numero);
-            Debug.WriteLine("Formulario: " + codigoF + "\nFecha: " + fecha.ToShortDateString() + "\n\nRespuestas:");
-
-            foreach(var r in listaRespuestas)
-            {
-                Debug.WriteLine("Item " + r.IdItem + " en sección " + r.TituloSeccion + ": ");
-                foreach(var h in r.HilerasDeRespuesta)
-                {
-                    Debug.WriteLine("   \""+h+"\"");
-                }
-                Debug.WriteLine("  Observación: \"" + r.Observacion + "\"");
-            }
-            return;
-
+            // tuplas contiene todas las tuplas por insertar a la base.
             var tuplas = new List<Responde>();
 
             foreach (RespuestaModel respuesta in listaRespuestas)
@@ -246,12 +225,30 @@ namespace Opiniometro_WebApp.Controllers
                             SiglaGrupoResp = grupoEval.SiglaCurso,
                             Observacion = respuesta.Observacion,
                             Respuesta = hileraRespuesta,
-                            RespuestaProfesor = ""
+                            RespuestaProfesor = null
                         });
                 }
             }
 
-            // tuplas contiene todas las tuplas por insertar a la base.
+            var formResp = new Formulario_Respuesta
+            {
+                Fecha = fecha,
+                CodigoFormulario = codigoF,
+                CedulaPersona = cedulaEst,
+                CedulaProfesor = cedulaProf,
+                AnnoGrupo = grupoEval.AnnoGrupo,
+                SemestreGrupo = grupoEval.SemestreGrupo,
+                NumeroGrupo = grupoEval.Numero,
+                SiglaGrupo = grupoEval.SiglaCurso,
+                Completado = true
+            };
+
+            if (ModelState.IsValid)
+            {
+                db.Formulario_Respuesta.Add(formResp);
+                db.Responde.AddRange(tuplas.AsEnumerable());
+                db.SaveChanges();
+            }
         }
 
         // Esto podria servir para empezar a romper el codigo (separar en metodos)

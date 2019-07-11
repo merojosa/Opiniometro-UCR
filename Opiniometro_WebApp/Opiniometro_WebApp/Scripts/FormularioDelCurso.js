@@ -115,7 +115,7 @@ function Estrella() {
 function recolectarRespuestas()
 {
     var cedEst = document.getElementsByClassName("cedEstudiante")[0].textContent;
-    //var cedProf = document.getElementsByClassName("cedProfesor")[0].textContent;
+    var cedProf = document.getElementsByClassName("cedProfesor")[0].textContent;
     var codigoFormulario = document.getElementsByClassName("codFormulario")[0].textContent;
 
     var datosGrupo = document.getElementsByClassName("datos-grupo");
@@ -127,8 +127,8 @@ function recolectarRespuestas()
     }
     var respuestasFormulario = [];
 
-
-    alert(`Enviando respuestas para: ${grupo.Anno} ${grupo.Semestre} ${grupo.SiglaCurso} ${grupo.NumeroGrupo}`);
+    alert(`Profesor: ${cedProf}`);
+    //alert(`Enviando respuestas para: ${grupo.Anno} ${grupo.Semestre} ${grupo.SiglaCurso} ${grupo.NumeroGrupo}`);
 
     var secciones = document.getElementsByClassName("seccion");
     for (var s = 0; s < secciones.length; s++) {
@@ -189,14 +189,10 @@ function recolectarRespuestas()
         } // for (var p = 0; p < preguntas.length; p++)
         
     } // for (var s = 0; s < secciones.length; s++)
-
-    /*for (var i = 0; i < respuestasFormulario.length; ++i) {
-        alert(respuestasFormulario[i].idItem);
-    }*/
     $.post("FormularioCurso/GuardarRespuestas",
         {
             CedulaEstudiante: JSON.stringify(cedEst),
-            //CedulaProfesor: JSON.stringify(cedProf),
+            CedulaProfesor: JSON.stringify(cedProf),
             Grupo: JSON.stringify(grupo),
             CodigoFormulario: JSON.stringify(codigoFormulario),
             Respuestas: JSON.stringify(respuestasFormulario)
