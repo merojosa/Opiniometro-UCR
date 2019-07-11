@@ -72,7 +72,7 @@ namespace Opiniometro_WebApp.Models
         [Remote("IsNombrePerfilAvailable", "Perfil", ErrorMessage = "Este nombre ya está en uso.")]
         [StringLength(30, ErrorMessage = "El límite de este campo son de 30 caracteres.")]
         [Required(ErrorMessage = "Este campo es requerido.")]
-        [RegularExpression("^[a-zA-Z0-9\\s]*$", ErrorMessage = "Solo se permiten números y letras sin tilde.")]
+        [RegularExpression("([a-zA-z0-9]*(\\s)*)*$", ErrorMessage = "Solo se permiten números y letras sin tilde.")]
         public string Nombre { get; set; }
 
         [StringLength(80, ErrorMessage = "El límite de este campo son de 80 caracteres.")]
@@ -131,7 +131,7 @@ namespace Opiniometro_WebApp.Models
 
         [Required]
         [StringLength(50, ErrorMessage = "El {o} debe contener hasta un máximo de {1} caracteres.")]
-        [RegularExpression(@"([\w]+\.)([\w])(@ucr.ac.cr)", ErrorMessage = "Formato de correo institucional invalido.")]
+        [RegularExpression(@"([\w]+\.)([\w]+)(@ucr.ac.cr)", ErrorMessage = "Formato de correo institucional inválido.")]
         [DataType(DataType.EmailAddress)]
         public string CorreoInstitucional; //6
 
@@ -186,7 +186,7 @@ namespace Opiniometro_WebApp.Models
     {
         [Required]
         [StringLength(50)]
-        [RegularExpression(@"([\w]+\.)([\w])(@ucr.ac.cr)")]
+        [RegularExpression(@"([\w]+\.)([\w]+)(@ucr.ac.cr)", ErrorMessage = "Formato de correo institucional inválido.")]
         [DataType(DataType.EmailAddress)]
         public string CorreoInstitucional;
 
@@ -203,6 +203,9 @@ namespace Opiniometro_WebApp.Models
 
         [Required]
         public System.Guid Id;
+
+
+        public bool RecuperarContrasenna;
     }
 
     public class EstudianteMetadata
@@ -244,7 +247,7 @@ namespace Opiniometro_WebApp.Models
 
         [Required]
         [StringLength(50)]
-        [RegularExpression(@"([\w]+\.)([\w])(@ucr.ac.cr)")]
+        [RegularExpression(@"([\w]+\.)([\w]+)(@ucr.ac.cr)", ErrorMessage = "Formato de correo institucional inválido.")]
         [DataType(DataType.EmailAddress)]
         public string CorreoInstitucional;
 

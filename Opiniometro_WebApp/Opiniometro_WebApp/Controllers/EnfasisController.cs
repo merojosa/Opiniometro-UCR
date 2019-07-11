@@ -33,7 +33,7 @@ namespace Opiniometro_WebApp.Controllers
                                 enfasis = e
                             };
 
-                return View(query);
+                return View("Ver Enfasis", query);
             }
         }
     }

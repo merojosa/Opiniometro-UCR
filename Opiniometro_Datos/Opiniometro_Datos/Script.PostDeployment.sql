@@ -129,6 +129,113 @@ BEGIN
 END
 GO
 
+--Trigger de validación de modificar Persona
+IF OBJECT_ID('TR_ValidacionModificarPersona') IS NOT NULL
+	DROP TRIGGER TR_ValidacionModificarPersona
+GO
+CREATE TRIGGER TR_ValidacionModificarPersona
+ON Persona INSTEAD OF UPDATE
+AS
+BEGIN
+	BEGIN TRY
+		SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;	--Nivel 0: Cambio de nivel de transacción
+		BEGIN TRANSACTION ValidacionModificarPersona	--Nivel 2: Transaction
+			BEGIN
+				DECLARE @Cedula				CHAR(10)
+				DECLARE @Nombre1			NVARCHAR(51)
+				DECLARE @Nombre2			NVARCHAR(51)
+				DECLARE @Apellido1			NVARCHAR(51)
+				DECLARE @Apellido2			NVARCHAR(51)
+				DECLARE @Direccion			NVARCHAR(257)
+				DECLARE @CedulaUpdate		CHAR(10)
+
+				SET @Cedula				= (SELECT Cedula FROM inserted)
+				SET @Nombre1			= (SELECT Nombre1 FROM inserted)
+				SET @Nombre2			= (SELECT Nombre2 FROM inserted)
+				SET @Apellido1			= (SELECT Apellido1 FROM inserted)
+				SET @Apellido2			= (SELECT Apellido2 FROM inserted)
+				SET @CedulaUpdate		= (SELECT Cedula FROM deleted)
+
+				IF((@nombre1 IS NOT NULL) AND (@Apellido1 IS NOT NULL) AND (@Apellido2 IS NOT NULL) AND (LEN(@Cedula) <= 9) 
+					AND (LEN(@Nombre1) <= 50) AND (LEN(@Nombre2) <= 50) AND (LEN(@Apellido1) <= 50) AND (LEN(@Apellido2) <= 50))
+				BEGIN
+					UPDATE Persona
+					SET Cedula = @Cedula, Nombre1 = @Nombre1, Nombre2 = @Nombre2, Apellido1 = @Apellido1, Apellido2 = @Apellido2
+					WHERE Cedula = @Cedula;
+
+					IF(@Cedula = @CedulaUpdate)
+					BEGIN
+						UPDATE Usuario
+						SET @Cedula = Cedula
+						WHERE Cedula = @CedulaUpdate;
+					END
+				END
+				ELSE
+				BEGIN
+					Raiserror('Los campos no pueden estar vacíos o exceden el tamaño permitido.', 16, 1)  
+					Return  
+				END
+			END
+		COMMIT TRANSACTION ValidacionModificarPersona	--Nivel 2: Transaction
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
+	END TRY
+
+	BEGIN CATCH
+		PRINT 'ERROR: ' + ERROR_MESSAGE();
+		ROLLBACK TRANSACTION ValidacionModificarPersona
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
+	END CATCH
+
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
+END;
+GO
+
+--Trigger de validación de modificar Usuario
+IF OBJECT_ID('TR_ValidacionModificarUsuario') IS NOT NULL
+	DROP TRIGGER TR_ValidacionModificarUsuario
+GO
+CREATE TRIGGER TR_ValidacionModificarUsuario
+ON Usuario INSTEAD OF UPDATE
+AS
+BEGIN
+	BEGIN TRY	--Nivel 1: Try
+		SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;	--Nivel 0: Cambio de nivel de transacción
+		BEGIN TRANSACTION ValidacionModificarUsuario	--Nivel 2: Transaction
+			ALTER TABLE Usuario NOCHECK CONSTRAINT FK_Usu_Per
+			
+			BEGIN
+				DECLARE @CedulaBusqueda		CHAR(10)
+				DECLARE @Correo				NVARCHAR(101)
+
+				SET @Correo				= (SELECT CorreoInstitucional FROM inserted)
+
+				IF((@correo IS NOT NULL) AND (@correo LIKE '%@ucr.ac.cr') AND (LEN(@Correo) <= 100))
+				BEGIN
+					UPDATE Usuario
+					SET CorreoInstitucional = @Correo
+					WHERE Cedula = @CedulaBusqueda;
+				END
+				ELSE
+				BEGIN
+					RAISERROR('El correo no puede estar vacío y debe ser del tipo "nombre@ucr.ac.cr".', 16, 1)  
+					RETURN  
+				END
+			END
+
+			ALTER TABLE Usuario CHECK CONSTRAINT FK_Usu_Per
+		COMMIT TRANSACTION ValidacionModificarUsuario	--Nivel 2: Transaction
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
+	END TRY
+
+	BEGIN CATCH
+		PRINT 'ERROR: ' + ERROR_MESSAGE();
+		ROLLBACK TRANSACTION ValidacionModificarUsuario
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
+	END CATCH	--Nivel 1: Try
+
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 0: Cambio de nivel de transacción
+END;
+GO
 
 IF OBJECT_ID('SP_ObtenerPermisosUsuario') IS NOT NULL
 	DROP PROCEDURE SP_ObtenerPermisosUsuario
@@ -243,6 +350,81 @@ as
 	WHERE CorreoInstitucional = @correo;
 go
 
+--Procedimiento almacenado de modificar (Poner o Quitar) Perfil a Usuario
+IF OBJECT_ID('SP_ModificarPerfilUsuario') IS NOT NULL
+	DROP PROCEDURE SP_ModificarPerfilUsuario
+GO
+CREATE PROCEDURE SP_ModificarPerfilUsuario
+	@correo		nvarchar(100),
+	@perfil		nvarchar(30),
+	@modifica	bit
+as
+BEGIN
+	BEGIN TRY	--Nivel 0: Try
+		SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;	--Nivel 1: Cambio de nivel de transacción
+		BEGIN TRANSACTION T_ModificarPerfilUsuario	--Nivel 2: Transaction
+			IF(@modifica = 1)
+			BEGIN
+				
+				IF(0 = (select count(*)
+						from Tiene_Usuario_Perfil_Enfasis
+						where CorreoInstitucional = @correo and NombrePerfil = @perfil))
+				BEGIN
+					INSERT INTO Tiene_Usuario_Perfil_Enfasis
+					VALUES	(@correo, 0, 'SC-01234', @perfil) --Sigla que tienen todos los usuarios"
+				END
+
+
+			END
+			ELSE --Si (modifica = 0) O (modifica = NULL)
+			BEGIN
+				DELETE FROM Tiene_Usuario_Perfil_Enfasis 
+				WHERE ((CorreoInstitucional = @correo) AND (NombrePerfil = @perfil)); 
+			END
+		COMMIT TRANSACTION T_ModificarPerfilUsuario	--Nivel 2: Transaction
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 1: Cambio de nivel de transacción
+	END TRY
+
+	BEGIN CATCH
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;	--Nivel 1: Cambio de nivel de transacción
+		ROLLBACK TRANSACTION T_ModificarPerfilUsuario
+		PRINT 'ERROR: ' + ERROR_MESSAGE();
+
+
+	END CATCH	--Nivel 0: Try
+END
+GO
+
+--Insertar la combinacion de permiso con perfil y enfasis
+IF OBJECT_ID('SP_InsertaTablaPosee') IS NOT NULL
+	DROP PROCEDURE SP_InsertaTablaPosee
+GO
+CREATE PROCEDURE SP_InsertaTablaPosee
+	@NumeroEnf tinyint,
+	@Sigla nvarchar(10),
+	@NombrePerfil varchar(30),
+	@IdPermiso smallint,
+	@Numero_Error int out
+AS
+BEGIN
+	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+	set @Numero_Error = 0
+
+	Begin try
+		begin transaction AgregaPosee
+			insert into Posee_Enfasis_Perfil_Permiso
+			values (@NumeroEnf, @Sigla, @NombrePerfil, @IdPermiso)
+		commit transaction AgregaPosee
+	end try
+	Begin catch
+		set @Numero_Error = (SELECT ERROR_NUMBER())
+		rollback transaction AgregaPosee
+	End catch
+
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+END
+go
+
 --JJAPH
 IF OBJECT_ID('MostrarEstudiantes', 'P') IS NOT NULL 
 	DROP PROC MostrarEstudiantes
@@ -327,7 +509,6 @@ GO
 
 IF OBJECT_ID('EditarPerfil') IS NOT NULL
 	DROP PROCEDURE EditarPerfil
-
 GO
 CREATE PROCEDURE EditarPerfil
 	@nombre varchar(30),
@@ -1138,6 +1319,7 @@ VALUES	(0, 'SC-01234', 'Estudiante', 3),
 		(0, 'SC-01234', 'Administrador', 210),
 		(0, 'SC-01234', 'Administrador', 211)
 
+		
 --Función:
 --Retorna Unique Identifier [Ver SP_agregarPersonaUsuario]
 IF OBJECT_ID('SP_GenerarContrasena') IS NOT NULL
@@ -1186,31 +1368,6 @@ BEGIN
 END
 GO
 
-IF OBJECT_ID('TR_InsertaUsuario') IS NOT NULL
-	DROP TRIGGER TR_InsertaUsuario
-GO
-CREATE TRIGGER TR_InsertaUsuario
-ON Usuario INSTEAD OF INSERT
-AS
-BEGIN
-	DECLARE @correoInstitucional NVARCHAR(51)
-	DECLARE @cedula CHAR(10)
-
-	SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
-	SET @cedula					= (SELECT Cedula FROM inserted)
-
-	IF((@correoInstitucional LIKE '%@ucr.ac.cr') AND (@correoInstitucional NOT LIKE '') AND (@cedula NOT LIKE '') AND (LEN(@correoInstitucional) <= 50) AND  (LEN(@cedula) = 9))
-	BEGIN
-		INSERT INTO Usuario (Cedula, CorreoInstitucional)
-		VALUES (@cedula, @correoInstitucional)
-	END
-	ELSE
-	BEGIN
-		RAISERROR('Hay campos no pueden estar vacíos o exceder el tamaño adecuado', 16, 1)
-		RETURN
-	END
-END;
-
 IF OBJECT_ID('TR_InsertaPersona') IS NOT NULL
 	DROP TRIGGER TR_InsertaPersona
 GO
@@ -1222,23 +1379,59 @@ BEGIN
 	DECLARE @nombre1 NVARCHAR(51)
 	DECLARE @nombre2 NVARCHAR(51)
 	DECLARE @apellido1 NVARCHAR(51)
-	DECLARE @apellido2 NVARCHAR(51)
-	--DECLARE @correoInstitucional NVARCHAR(51)
-
-	--SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
-	
+	DECLARE @apellido2 NVARCHAR(51)	
 	SET @cedula					= (SELECT Cedula FROM inserted)
 	SET @nombre1				= (SELECT Nombre1 FROM inserted)
 	SET @nombre2				= (SELECT Nombre2 FROM inserted)
 	SET @apellido1				= (SELECT Apellido1 FROM inserted)
 	SET @apellido2				= (SELECT Apellido2 FROM inserted)
-
+	SET IMPLICIT_TRANSACTIONS OFF;
+	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 	IF((@cedula NOT LIKE '') AND  (LEN(@cedula) = 9) AND (@nombre1 NOT LIKE '') AND (LEN(@nombre1) <= 50) 
-	AND  (LEN(@nombre2) <= 50)  AND (@apellido1 NOT LIKE '') AND (LEN(@apellido1) <= 50)  
+	AND (@apellido1 NOT LIKE '') AND (LEN(@apellido1) <= 50)  
 	AND (@apellido2 NOT LIKE '') AND (LEN(@apellido2) <= 50))
 	BEGIN
-		INSERT INTO PerPersona(Cedula, nombre1, nombre2, apellido1, apellido2)
-		VALUES (@cedula, @nombre1, @nombre2, @apellido1, @apellido2)
+		BEGIN TRY		
+			BEGIN TRANSACTION tInsertaPersona;
+			INSERT INTO Persona(Cedula, nombre1, nombre2, apellido1, apellido2)
+			VALUES (@cedula, @nombre1, @nombre2, @apellido1, @apellido2)
+			COMMIT TRANSACTION tInsertaPersona;
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION tInsertaPersona;
+		END CATCH
+	END
+	ELSE
+	BEGIN
+		RAISERROR('Hay campos no pueden estar vacíos o exceder el tamaño adecuado', 16, 1)
+	END
+	SET IMPLICIT_TRANSACTIONS ON;
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+END;
+
+IF OBJECT_ID('TR_InsertaUsuario') IS NOT NULL
+	DROP TRIGGER TR_InsertaUsuario
+GO
+CREATE TRIGGER TR_InsertaUsuario
+ON Usuario INSTEAD OF INSERT
+AS
+BEGIN
+	DECLARE @correoInstitucional NVARCHAR(51)
+	DECLARE @cedula CHAR(10)
+	DECLARE @contrasena NVARCHAR(50)
+	DECLARE @activo BIT
+	DECLARE @id UNIQUEIDENTIFIER
+	DECLARE @recuperarContrasena BIT
+	SET @correoInstitucional	= (SELECT CorreoInstitucional FROM inserted)
+	SET @cedula					= (SELECT Cedula FROM inserted)
+	SET @contrasena = (SELECT Contrasena FROM inserted)
+	SET @activo= (SELECT Activo FROM inserted)
+	SET @id = (SELECT Id FROM inserted)
+	SET @recuperarContrasena = (SELECT RecuperarContrasenna FROM inserted)
+	IF((@correoInstitucional LIKE '%@ucr.ac.cr') AND (@correoInstitucional NOT LIKE '') AND (@cedula NOT LIKE '') AND (LEN(@correoInstitucional) <= 50) AND  (LEN(@cedula) = 9))
+	BEGIN
+		INSERT INTO Usuario
+		VALUES (@correoInstitucional, @contrasena, @activo, @cedula, @id, @recuperarContrasena)
 	END
 	ELSE
 	BEGIN

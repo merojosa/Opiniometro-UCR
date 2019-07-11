@@ -148,7 +148,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\AdminControllerTest.cs" />
     <Compile Include="Controllers\AuthControllerTest.cs" />
     <Compile Include="Controllers\CrearFormularioControllerTest.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
@@ -156,6 +155,9 @@
     <Compile Include="Controllers\CursosMatriculadosTest.cs" />
     <Compile Include="Controllers\ItemControllerTest.cs" />
     <Compile Include="Controllers\FormularioCursoControllerTest.cs" />
+    <Compile Include="Controllers\SeleccionPermisosTest.cs" />
+    <Compile Include="Controllers\EnfasisControllerTest.cs" />
+    <Compile Include="Controllers\AdministradorControllerTest.cs" />
     <Compile Include="Controllers\VisualizarFormularioControllerTest.cs" />
     <Compile Include="Controllers\SeccionControllerTest.cs" />
     <Compile Include="Controllers\FormularioControllerTest.cs" />

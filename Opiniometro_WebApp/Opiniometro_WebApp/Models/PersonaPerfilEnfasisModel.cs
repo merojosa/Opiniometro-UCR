@@ -60,6 +60,6 @@
         
         public Persona Persona { get; set; }
         public string viejaCedula { get; set; }
-        public Usuario usuario { get; set; }
+        public Usuario Usuario { get; set; }
     }
 }

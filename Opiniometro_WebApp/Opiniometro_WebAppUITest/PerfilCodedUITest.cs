@@ -13,51 +13,54 @@ using Keyboard = Microsoft.VisualStudio.TestTools.UITesting.Keyboard;
 namespace Opiniometro_WebAppUITest
 {
     /// <summary>
-    /// Summary description for CodedUITest2
+    /// Summary description for CodedUITest1
     /// </summary>
     [CodedUITest]
-    public class CodedUITestItem
+    public class PerfilCodedUITest
     {
-        public CodedUITestItem()
+        public PerfilCodedUITest()
         {
+        }
+        [TestMethod]
+        public void CodedUITestLogin()
+        {
+            this.UIMap.PruebaIngresoAplicacion();
+            this.UIMap.ValidarBotonLogin();
+            this.UIMap.ValidarRecuperarContrasennaLink();
         }
 
         [TestMethod]
-        public void CodedUITestCrearItem()
+        public void CodedUITestExistenciaAdministrador()
         {
             this.UIMap.PruebaIngresoAplicacion();
-            
-            this.UIMap.PruebaIntentoCrearPregunta();
+            this.UIMap.ValidarLoginAdmin();
+            this.UIMap.ValidarVerPerfiles();
+            this.UIMap.ValidarPerfilAdministrador();
         }
 
         [TestMethod]
-        public void CodedUITestDespliegueDescripcion()
+        public void CodedUITestRecuperarContrasenna()
         {
             this.UIMap.PruebaIngresoAplicacion();
-            this.UIMap.PruebaIntentoCrearPregunta();
-            this.UIMap.DespliegueDescripcionComentario();
+            this.UIMap.ValidarRecuperarContrasenna();
+            this.UIMap.ValidarBotonEnviarCorreo();
         }
 
         #region Additional test attributes
-
         // You can use the following additional attributes as you write your tests:
-
-        ////Use TestInitialize to run code before running each test 
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{        
-        //    // To generate code for this test, select "Generate Code for Coded UI Test" from the shortcut menu and select one of the menu items.
-        //}
-
-        ////Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{        
-        //    // To generate code for this test, select "Generate Code for Coded UI Test" from the shortcut menu and select one of the menu items.
-        //}
-
+        //Use TestInitialize to run code before running each test
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            BrowserWindow.CurrentBrowser = "ie"; // "ie" “Chrome” “firefox”
+            this.UIMap.InicializarExplorador();
+        }
+        //Use TestCleanup to run code after each test has run
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+        }
         #endregion
-
         /// <summary>
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
@@ -74,7 +77,6 @@ namespace Opiniometro_WebAppUITest
             }
         }
         private TestContext testContextInstance;
-
         public UIMap UIMap
         {
             get
@@ -83,11 +85,9 @@ namespace Opiniometro_WebAppUITest
                 {
                     this.map = new UIMap();
                 }
-
                 return this.map;
             }
         }
-
         private UIMap map;
     }
 }

@@ -27,7 +27,6 @@ namespace Opiniometro_WebApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<Administrativo> Administrativo { get; set; }
         public virtual DbSet<Carrera> Carrera { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
@@ -472,31 +471,31 @@ namespace Opiniometro_WebApp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_GenerarContrasenaHash", idParameter, contrasenaParameter, contrasenaHash);
         }
     
-        //public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
-        //{
-        //    var diagramnameParameter = diagramname != null ?
-        //        new ObjectParameter("diagramname", diagramname) :
-        //        new ObjectParameter("diagramname", typeof(string));
+        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
     
-        //    var owner_idParameter = owner_id.HasValue ?
-        //        new ObjectParameter("owner_id", owner_id) :
-        //        new ObjectParameter("owner_id", typeof(int));
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
     
-        //    return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
-        //}
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+        }
     
-        //public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
-        //{
-        //    var diagramnameParameter = diagramname != null ?
-        //        new ObjectParameter("diagramname", diagramname) :
-        //        new ObjectParameter("diagramname", typeof(string));
+        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
     
-        //    var owner_idParameter = owner_id.HasValue ?
-        //        new ObjectParameter("owner_id", owner_id) :
-        //        new ObjectParameter("owner_id", typeof(int));
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
     
-        //    return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
-        //}
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+        }
     
         public virtual int SP_Insertar_Opciones_De_Respuestas_Seleccion_Unica(string itemid, Nullable<short> orden, string opcionrespuesta)
         {
