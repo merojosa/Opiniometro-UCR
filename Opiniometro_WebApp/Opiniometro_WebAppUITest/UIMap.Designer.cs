@@ -100,45 +100,7 @@ namespace Opiniometro_WebAppUITest
 
             // Type 'Despliegue' in 'EtiquetaObservacion' text box
             uIEtiquetaObservacionEdit1.Text = this.DespliegueDescripcionComentarioParams.UIEtiquetaObservacionEdit1Text;
-        }
-        
-        /// <summary>
-        /// Valida el ingreso a la página de asignacion de formulario
-        /// </summary>
-        public void IngresoAsignacionFormularios()
-        {
-            #region Variable Declarations
-            HtmlComboBox uIPerfilSeleccionadoComboBox = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument1.UIPerfilSeleccionadoComboBox;
-            HtmlInputButton uIAceptarButton = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument1.UIAceptarButton;
-            HtmlHyperlink uIEvaluacionesHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument2.UIEvaluacionesHyperlink;
-            HtmlHyperlink uIAsignarformularioHyperlink = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument2.UIAsignarformularioHyperlink;
-            #endregion
-
-            // Select 'Administrador' in 'perfilSeleccionado' combo box
-            uIPerfilSeleccionadoComboBox.SelectedItem = this.IngresoAsignacionFormulariosParams.UIPerfilSeleccionadoComboBoxSelectedItem;
-
-            // Click 'Aceptar' button
-            Mouse.Click(uIAceptarButton, new Point(38, 13));
-
-            // Click 'Evaluaciones' link
-            Mouse.Click(uIEvaluacionesHyperlink, new Point(40, 20));
-
-            // Click 'Asignar formulario' link
-            Mouse.Click(uIAsignarformularioHyperlink, new Point(140, 20));
-        }
-        
-        /// <summary>
-        /// Valida el titulo de asignacion de formularios
-        /// </summary>
-        public void validacionTituloAsignacionFormularios()
-        {
-            #region Variable Declarations
-            HtmlDiv uIAsignacióndeFormularPane = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIAsignacióndeFormularPane;
-            #endregion
-
-            // Verify that the 'TagName' property of 'Asignación de Formularios' pane equals 'DIV'
-            Assert.AreEqual(this.validacionTituloAsignacionFormulariosExpectedValues.UIAsignacióndeFormularPaneTagName, uIAsignacióndeFormularPane.TagName, "Error: No se encuentra el título de la página");
-        }
+        }                
         
         /// <summary>
         /// Inicializa el explorador
@@ -160,100 +122,11 @@ namespace Opiniometro_WebAppUITest
             uIHomePageInternetExplWindow.NavigateToUrl(new System.Uri(this.InicializarExploradorParams.UIHomePageInternetExplWindowUrl1));
         }
         
-        /// <summary>
-        /// Valida el texto del filtro semestre
-        /// </summary>
-        public void validacionTextoFiltroSemestre()
-        {
-            #region Variable Declarations
-            HtmlComboBox uISemestreComboBox = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UISemestreComboBox;
-            #endregion
-
-            // Verify that the 'Id' property of 'semestre' combo box equals 'semestre'
-            Assert.AreEqual(this.validacionTextoFiltroSemestreExpectedValues.UISemestreComboBoxId, uISemestreComboBox.Id, "Error en texto del filtro (\"Semestre\")");
-        }
+       
         
-        /// <summary>
-        /// Validacion en el texto del filtro año
-        /// </summary>
-        public void validacionTextoFiltroAnno()
-        {
-            #region Variable Declarations
-            HtmlComboBox uIAnoComboBox = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIAnoComboBox;
-            #endregion
-
-            // Verify that the 'Id' property of 'ano' combo box equals 'ano'
-            Assert.AreEqual(this.validacionTextoFiltroAnnoExpectedValues.UIAnoComboBoxId, uIAnoComboBox.Id, "Error en el texto del filtro(\"Año\")");
-        }
         
-        /// <summary>
-        /// Login usuario para asignarformulario
-        /// </summary>
-        public void loginUsuarioAF()
-        {
-            #region Variable Declarations
-            HtmlEdit uICorreoInstitucionalEdit = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UICorreoInstitucionalEdit;
-            HtmlEdit uIContrasenaEdit = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UIContrasenaEdit;
-            HtmlInputButton uIIngresarButton = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument.UIIngresarButton;
-            #endregion
-
-            // Type 'jose.mejiasrojas' in 'CorreoInstitucional' text box
-            uICorreoInstitucionalEdit.Text = this.loginUsuarioAFParams.UICorreoInstitucionalEditText;
-
-            // Type 'Alt, Control + q' in 'CorreoInstitucional' text box
-            Keyboard.SendKeys(uICorreoInstitucionalEdit, this.loginUsuarioAFParams.UICorreoInstitucionalEditSendKeys, (ModifierKeys.Alt | ModifierKeys.Control));
-
-            // Type 'jose.mejiasrojas@ucr.ac.cr' in 'CorreoInstitucional' text box
-            uICorreoInstitucionalEdit.Text = this.loginUsuarioAFParams.UICorreoInstitucionalEditText1;
-
-            // Type '{Tab}' in 'CorreoInstitucional' text box
-            Keyboard.SendKeys(uICorreoInstitucionalEdit, this.loginUsuarioAFParams.UICorreoInstitucionalEditSendKeys1, ModifierKeys.None);
-
-            // Type '********' in 'Contrasena' text box
-            uIContrasenaEdit.Password = this.loginUsuarioAFParams.UIContrasenaEditPassword;
-
-            // Click 'Ingresar' button
-            Mouse.Click(uIIngresarButton, new Point(29, 16));
-        }
         
-        /// <summary>
-        /// Valida el texto del filtro unidad academica
-        /// </summary>
-        public void validacionTextoFiltroUnidadAcademica()
-        {
-            #region Variable Declarations
-            HtmlComboBox uIUnidadAcademicaComboBox = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UIUnidadAcademicaComboBox;
-            #endregion
-
-            // Verify that the 'Id' property of 'unidadAcademica' combo box equals 'unidadAcademica'
-            Assert.AreEqual(this.validacionTextoFiltroUnidadAcademicaExpectedValues.UIUnidadAcademicaComboBoxId, uIUnidadAcademicaComboBox.Id, "Error en el texto del filtro(\"Unidad Academica\")");
-        }
         
-        /// <summary>
-        /// Valida el texto del filtro carrera
-        /// </summary>
-        public void validacionTextoFiltroCarrera()
-        {
-            #region Variable Declarations
-            HtmlComboBox uISiglaCarreraComboBox = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UISiglaCarreraComboBox;
-            #endregion
-
-            // Verify that the 'Id' property of 'siglaCarrera' combo box equals 'siglaCarrera'
-            Assert.AreEqual(this.validacionTextoFiltroCarreraExpectedValues.UISiglaCarreraComboBoxId, uISiglaCarreraComboBox.Id, "Error en el texto del filtro(\"Carrera\")");
-        }
-        
-        /// <summary>
-        /// Valida el texto del filtro Curso
-        /// </summary>
-        public void validacionTextoFiltroCurso()
-        {
-            #region Variable Declarations
-            HtmlComboBox uINombreCursoComboBox = this.UIOpiniómetroUCRInternWindow.UIOpiniómetroUCRDocument4.UINombreCursoComboBox;
-            #endregion
-
-            // Verify that the 'Id' property of 'nombreCurso' combo box equals 'nombreCurso'
-            Assert.AreEqual(this.validacionTextoFiltroCursoExpectedValues.UINombreCursoComboBoxId, uINombreCursoComboBox.Id, "Error en el texto del filtro(\"Curso\")");
-        }
         
         #region Properties
         public virtual PruebaIngresoAplicacionParams PruebaIngresoAplicacionParams
