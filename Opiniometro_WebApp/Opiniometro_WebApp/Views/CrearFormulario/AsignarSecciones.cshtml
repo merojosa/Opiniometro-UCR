@@ -1,16 +1,53 @@
-﻿@model Opiniometro_WebApp.Models.CopiarSeccionModel
+﻿@model Opiniometro_WebApp.Models.CopiarSeccion
 
 
 
 <h2>Copiar Secciones</h2>
 
 <div class="row ">
-    <div class="col-sm-4"><h4><strong>Codigo:</strong> @Model.Cod_Form_Dest </h4></div>
-    <div class="col-sm-8"><h4><strong>Nombre:</strong> @Model.Nom_Form_Dest</h4></div>
+    <div class="col-sm-4"><h4><strong>Codigo:</strong> @Model.Formulario.CodigoFormulario</h4></div>
+    <div class="col-sm-8"><h4><strong>Nombre:</strong> @Model.Formulario.Nombre</h4></div>
 </div>
 
 <div class="form-group">
-    @*<div class="row">
+    <div class="row">
+
+        <div class="col-sm-6">
+            <h4 align='center'><strong>@Html.Label("Banco de Preguntas")</strong></h4>
+            <table class="table table-bordered table-striped fixed_header">
+                <tr>
+                    <td>  @Html.Label("Seleccione el formulario")</td>
+                    <td>
+                        @Html.Label("Código")
+                    </td>
+                    <td>
+                        @Html.Label("Nombre")
+                    </td>
+                    
+                </tr>
+
+
+                @foreach (var item in Model.Formularios)
+                {
+                    <tr>
+                        <td>
+                            <input type="radio" name="Formu" id="Formu" value="@item.CodigoFormulario" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CodigoFormulario)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        
+                    </tr>
+                }
+
+            </table>
+
+        </div>
+
+
         <div class="col-sm-6">
             <h4 align='center'><strong>@Html.Label("Secciones")</strong></h4>
             <table class="table table-bordered table-striped fixed_header">
@@ -31,7 +68,7 @@
                 {
                     <tr>
                         <td>
-                            <input type="radio" id="seccion" name="seccion" value="@seccion.Titulo" />
+                            <input type="radio" id="seccionC" name="seccionC" value="@seccion.Titulo" />
                         </td>
                         <td>
                             @Html.DisplayFor(model => seccion.Titulo)
@@ -47,52 +84,10 @@
 
         </div>
 
-        <div class="col-sm-6">
-            <h4 align='center'><strong>@Html.Label("Banco de Preguntas")</strong></h4>
-            <table class="table table-bordered table-striped fixed_header">
-                <tr>
-                    <td></td>
-                    <td>
-                        @Html.Label("Código")
-                    </td>
-                    <td>
-                        @Html.Label("Planteamiento")
-                    </td>
-                    <td>
-                        @Html.Label("Tipo")
-                    </td>
-                </tr>
-
-
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            <input type="radio" name="item" id="item" value="@item.ItemId" />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.I)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TextoPregunta)
-                        </td>
-                        <td>
-                          
-
-                        </td>
-                    </tr>
-                }
-
-            </table>
-
-        </div>
 
 
 
-
-
-
-    </div>*@
+    </div>
     
     @Html.Label("Formulario", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
