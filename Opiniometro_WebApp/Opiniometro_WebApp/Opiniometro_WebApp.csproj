@@ -568,6 +568,7 @@
     <Content Include="Views\Auth\CambiarContrasenna.cshtml" />
     <Content Include="Views\FormularioCurso\SeleccionUnica.cshtml" />
     <Content Include="Views\FormularioCurso\Escalar.cshtml" />
+    <Content Include="Views\CrearFormulario\SeleccionUnicaVParcial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ArchivosCargados\" />

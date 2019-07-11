@@ -72,14 +72,6 @@
         </div>
     }
 
-    @using (Html.BeginForm("EnviarCorreoFormulario", "AsignarFormularios"))
-    {
-        <div>
-            <!--Enviar correo (PRUEBA)-->
-            <input type="submit" value="Enviar Correo" />
-        </div>
-    }
-
     @using (Ajax.BeginForm("AsignacionFormularioGrupo", "AsignarFormularios", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "asign-content" }))
     {
         <div class="row">
