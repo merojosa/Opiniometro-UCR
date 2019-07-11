@@ -155,6 +155,7 @@
     <Compile Include="Controllers\PerfilControllerTest.cs" />
     <Compile Include="Controllers\CursosMatriculadosTest.cs" />
     <Compile Include="Controllers\ItemControllerTest.cs" />
+    <Compile Include="Controllers\FormularioCursoControllerTest.cs" />
     <Compile Include="Controllers\VisualizarFormularioControllerTest.cs" />
     <Compile Include="Controllers\SeccionControllerTest.cs" />
     <Compile Include="Controllers\FormularioControllerTest.cs" />

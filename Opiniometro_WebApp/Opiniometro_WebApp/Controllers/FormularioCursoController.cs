@@ -25,7 +25,7 @@ namespace Opiniometro_WebApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index( string cedulaProfesor, string cedulaEstudiante, string codigoForm, int anno, int semestre, string siglaCurso, int numGrupo)
+        public ActionResult Index( string cedulaProfesor, string cedulaEstudiante, string codigoForm, short anno, int semestre, string siglaCurso, byte numGrupo)
         {
             var modelo = new FormularioPorCurso
             {
@@ -38,7 +38,7 @@ namespace Opiniometro_WebApp.Controllers
                 numGrupo = numGrupo,
                 Secciones = obtenerPreguntasFormulario(codigoForm)
             };
-            return View(modelo);
+            return View("Index",modelo);
         }
 
         public SeccionFormulario[] obtenerPreguntasFormulario(string codigoForm)
@@ -144,6 +144,11 @@ namespace Opiniometro_WebApp.Controllers
                             int posicion = 0;
 
                             string[] rango = new string[(final - inicio) + 1];
+
+                            if(inicio == 0)
+                            {
+                                rango = new string[(final - inicio)];
+                            }
                             foreach (string r in rango)
                             {
                                 rango[posicion] = valor.ToString();
@@ -188,29 +193,24 @@ namespace Opiniometro_WebApp.Controllers
             return secciones;
         }
 
-        /* Llamar con:
-         
-           $.post("GuardarRespuestas",
-                {
-                    PeriodosIndicados: JSON.stringify(cedEst),
-                    CedulaProfesor: JSON.stringify(cedProf),
-                    Grupo: ...
-                },
-                function (data, status) {
-                    // qué hacer cuando termina 
-                }
-            );
-         */
-        public void GuardarRespuestas (string CedulaEstudiante, string CedulaProfesor, string Grupo, 
-            string CodigoFormulario, string FechaRespuestas, string Respuestas)
+        public void GuardarRespuestas (string CedulaEstudiante, string CedulaProfesor, string Grupo, string CodigoFormulario, string Respuestas)
         {
+            //Debug.WriteLine("\n\nGrupo: \"" + Grupo + "\"\n\n");
             var cedulaEst = JsonConvert.DeserializeObject<string>(CedulaEstudiante);
             var cedulaProf = JsonConvert.DeserializeObject<string>(CedulaProfesor);
-            var grupoEval = JsonConvert.DeserializeObject<Grupo>(Grupo);
+            var grupoParcial = JsonConvert.DeserializeAnonymousType(Grupo, new { Anno = "", Semestre = "", SiglaCurso = "", NumeroGrupo = ""});
+            var grupoEval = new Grupo
+            {
+                AnnoGrupo = Convert.ToInt16(grupoParcial.Anno),
+                SemestreGrupo = Convert.ToByte(grupoParcial.Semestre),
+                SiglaCurso = grupoParcial.SiglaCurso,
+                Numero = Convert.ToByte(grupoParcial.NumeroGrupo)
+            };
             var codigoF = JsonConvert.DeserializeObject<string>(CodigoFormulario);
-            var fecha = JsonConvert.DeserializeObject<DateTime>(FechaRespuestas);
+            var fecha = DateTime.Now;
             var listaRespuestas = JsonConvert.DeserializeObject<RespuestaModel[]>(Respuestas);
 
+            // tuplas contiene todas las tuplas por insertar a la base.
             var tuplas = new List<Responde>();
 
             foreach (RespuestaModel respuesta in listaRespuestas)
@@ -230,39 +230,40 @@ namespace Opiniometro_WebApp.Controllers
                             SiglaGrupoResp = grupoEval.SiglaCurso,
                             Observacion = respuesta.Observacion,
                             Respuesta = hileraRespuesta,
-                            RespuestaProfesor = ""
+                            RespuestaProfesor = null
                         });
                 }
             }
 
-            // tuplas contiene todas las tuplas por insertar a la base.
+            var formResp = new Formulario_Respuesta
+            {
+                Fecha = fecha,
+                CodigoFormulario = codigoF,
+                CedulaPersona = cedulaEst,
+                CedulaProfesor = cedulaProf,
+                AnnoGrupo = grupoEval.AnnoGrupo,
+                SemestreGrupo = grupoEval.SemestreGrupo,
+                NumeroGrupo = grupoEval.Numero,
+                SiglaGrupo = grupoEval.SiglaCurso,
+                Completado = true
+            };
+
+            if (ModelState.IsValid)
+            {
+                db.Formulario_Respuesta.Add(formResp);
+                db.Responde.AddRange(tuplas.AsEnumerable());
+                db.SaveChanges();
+            }
         }
 
         // Esto podria servir para empezar a romper el codigo (separar en metodos)
         public string ObtenerOpcionesSelUnica(string id)
         {
-            //Console.WriteLine(id);
-            //List<SeleccionUnica> preguntas = new List<SeleccionUnica>();
-        /*
-            string id = p.itemId;
-            string texto = p.item;
-            bool? observacion = p.tieneObservacion;
-            int tipo = p.tipoPregunta;*/
             IEnumerable<String> opciones = from ops in db.Opciones_De_Respuestas_Seleccion_Unica
                                             where ops.ItemId == id
                                             select ops.OpcionRespuesta;
-            /*preguntas.Add(new SeleccionUnica
-            {
-                itemId = id,
-                item = texto,
-                tieneObservacion = obs,
-                tipoPregunta = tipo,
-                Opciones = opciones.ToList()
-            });*/
-            //SeleccionUnica selec = new SeleccionUnica { itemId = id, item = texto, tieneObservacion = observacion, tipoPregunta = tipo, Opciones = opciones };
             string[] op = opciones.ToArray();
 
-            //return PartialView("SeleccionUnica", selec);
             var json = JsonConvert.SerializeObject(op);
             return json;
         }

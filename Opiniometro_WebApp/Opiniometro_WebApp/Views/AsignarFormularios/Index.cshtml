@@ -37,7 +37,7 @@
                                     <!--Desplegables para los filtros-->
                                     <a> @Html.DropDownList("semestre", null, "Semestre", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeSemestre').value = this.value; this.form.submit();" }) </a>
                                     <a> @Html.DropDownList("ano", null, "Año", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeAnno').value = this.value; this.form.submit();" }) </a>
-                                    <a> @Html.DropDownList("unidadAcademica", null, "Unidad Academica", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" }) </a>
+                                    <a> @Html.DropDownList("unidadAcademica", null, "U. Académica", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeUnidad').value = this.value; this.form.submit();" }) </a>
                                     <a> @Html.DropDownList("siglaCarrera", null, "Carrera", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCarrera').value = this.value; this.form.submit();" }) </a>
                                     <a> @Html.DropDownList("nombreCurso", null, "Curso", new { @class = "btn btn-default dropdown-toggle", style = "width:130px", @onChange = "document.getElementById('changeCurso').value = this.value; this.form.submit();" }) </a>
                                     @*<b> @Html.DropDownList("profe", null, "Profesor", new { @class = "btn btn-default dropdown-toggle", style = "width:130px;" }) </b>*@
@@ -48,7 +48,7 @@
                                 <div>
                                     <!--Campo de busqueda-->
                                     <br> @Html.TextBox("SearchString", "", new { placeholder = "Nombre del curso" })
-                                    <input type="submit" value="Buscar" />
+                                    <input type="submit" class="btn btn-secondary" value="Buscar grupos" />
                                 </div>
                             </p>
                         </div>
@@ -64,19 +64,11 @@
                     <div class="panel-body">
                         <div style="height:17vh; overflow:auto;">
                             @Html.TextBox("FormSearchString", "", new { placeholder = "Nombre del formulario" })
-                            <input type="submit" value="Buscar formularios" />
+                            <input type="submit" class="btn btn-secondary" value="Buscar formularios" />
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-
-    @using (Html.BeginForm("EnviarCorreoFormulario", "AsignarFormularios"))
-    {
-        <div>
-            <!--Enviar correo (PRUEBA)-->
-            <input type="submit" value="Enviar Correo" />
         </div>
     }
 
@@ -108,7 +100,7 @@
                                             Grupo
                                         </th>
                                         <th align='left'>
-                                            Profesor
+                                            Profesor(es)
                                         </th>
                                     </tr>
                                 </thead>
@@ -163,7 +155,7 @@
             </div>*@
 
         <div align='center'>
-            <input type="submit" id="boton-asignar" value="Asignar" />
+            <input type="submit" id="boton-asignar" class="btn btn-secondary" value="Asignar" />
             <button type="button" style="display:none" id="boton-abrir-modal" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalReporte">Reporte de asignaciones</button>
         </div>
 
@@ -195,7 +187,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
 
-                <input type="submit" style="display:none" id="efectuar" value="ASIGNAR"/>
+                <input type="submit" class="btn btn-default" style="display:none" id="efectuar" value="ASIGNAR"/>
 
             </div>
 
